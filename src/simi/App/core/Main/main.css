@@ -1,0 +1,10 @@
+.root {
+    background-color: white;
+    color: rgb(var(--venia-text));
+    position: relative;
+    z-index: 1;
+}
+
+.page {
+    min-height: 100vh;
+}

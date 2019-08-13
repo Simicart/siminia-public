@@ -1,0 +1,38 @@
+#import "../Fragments/SimiPrice"
+query getProductsBySkus($currentPage: Int, $pageSize: Int, $stringSku: [String], $sort: ProductSortInput) {
+    simiproducts(pageSize: $pageSize, currentPage: $currentPage, filter: {sku: {in: $stringSku}}, sort: $sort) {
+        total_count
+        items {
+            id
+            name
+            sku
+            small_image {
+                url
+                label
+                __typename
+            }
+            short_description {
+                html
+                __typename
+            }
+            url_key
+            special_price
+            special_from_date
+            type_id
+            special_to_date
+            price {
+                ... SimiPrice
+            }
+            __typename
+        }
+        page_info {
+            total_pages
+        }
+        total_count
+        simiProductListItemExtraField {
+            sku
+            extraData
+        }
+        __typename
+    }
+}

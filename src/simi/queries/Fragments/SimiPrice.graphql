@@ -1,0 +1,44 @@
+fragment SimiPrice on ProductPrices{
+    regularPrice {
+        amount {
+            currency
+            value
+        }
+        adjustments {
+            amount {
+                currency
+                value
+            }
+            code
+            description
+        }
+    }
+    minimalPrice {
+        amount {
+            currency
+            value
+        }
+        adjustments {
+            amount {
+                currency
+                value
+            }
+            code
+            description
+        }
+    }
+    maximalPrice {
+        amount {
+            currency
+            value
+        }
+        adjustments {
+            amount {
+                currency
+                value
+            }
+            code
+            description
+        }
+    }
+}

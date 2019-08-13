@@ -1,0 +1,138 @@
+.root {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.title {
+    align-items: center;
+    line-height: 1.5;
+    padding: 1rem 1.5rem;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 1024px) {
+    .title {
+        padding: 1.5rem;
+    }
+}
+
+.productName {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.imageCarousel {
+    margin: 0 auto;
+    min-width: 300px;
+    max-width: 640px;
+    width: 60%;
+}
+
+@media (max-width: 1023px){
+    .imageCarousel {
+        width: 100%;
+    }
+}
+
+.mainActions {
+    width: 40%;
+    min-width: 300px;
+}
+
+@media (max-width: 1023px){
+    .mainActions {
+        width: 100%;
+    }
+}
+.topReview {
+    padding: 1rem 1.5rem 0 1.5rem;
+}
+.productPrice {
+    padding: 0 1.5rem;
+    padding-bottom: 15px;
+}
+.reviewBtn {
+    padding: 1rem 1.5rem 0 1.5rem;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+}
+.reviewBtn:hover {
+    text-decoration: underline;
+}
+
+.cartActions {
+    padding: 1rem 1.5rem;
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.product-quantity {
+    display: flex;
+    font-size: 17px;
+    width: 25%;
+}
+
+.product-quantity input{
+    padding: 10px;
+    border: solid #eaeaea 1px;
+    width: 100%;
+    text-align: center;
+}
+
+.add-to-cart-ctn {
+    width: 100%;
+    min-width: 200px;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+    padding: 12px;
+}
+.wishlistActions {
+    padding: 0 1.5rem 1rem;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    width: 100%;
+}
+.add-to-wishlist-btn {
+    width: 100%;
+}
+.socialShare {
+    padding: 0 1.5rem 1rem;
+}
+.socialShareItem {
+
+}
+.description {
+    margin-top: 15px;
+    width: 100%;
+    border-top: solid #eaeaea 1px;
+    padding: 1.5rem;
+}
+.techspec {
+    margin-top: 15px;
+    width: 100%;
+    border-top: solid #eaeaea 1px;
+    padding: 1.5rem;
+}
+.reviewList {
+    margin-top: 15px;
+    padding: 1.5rem;
+    width: 100%;
+    border-top: solid #eaeaea 1px;
+    margin-bottom: 25px;
+}
+.newReview {
+    margin-top: 15px;
+    padding: 1.5rem;
+    width: 100%;
+    border-top: solid #eaeaea 1px;
+    margin-bottom: 25px;
+}

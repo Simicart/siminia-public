@@ -1,0 +1,289 @@
+.app--flex {
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+}
+/* .footer-app {
+    margin-top: 40px;
+} */
+.app-newsletter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90deg, #d7282f 50%, #dcdcdc 50%);
+}
+.newsletter__text,
+.newsletter__form {
+    width: 50%;
+}
+.newsletter__text {
+    background: #d7282f;
+    color: #ffffff;
+    position: relative;
+}
+.newsletter__text .newsletter-title {
+    font-size: 21px;
+    margin: 0;
+    line-height: 29px;
+    font-weight: bold;
+    color: #fff;
+}
+.newsletter__text .arrow-triangle {
+    width: 20px;
+    display: block;
+    height: 65px;
+    background: #d7282f;
+    -webkit-clip-path: polygon(100% 50%, 0 0, 0 100%);
+    clip-path: polygon(100% 50%, 0 0, 0 100%);
+    position: absolute;
+    top: -18px;
+    right: -19px;
+}
+.newsletter__form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.newsletter__form > .email{
+    max-width: 520px;
+    margin-right: 16px;
+    width: 100%;
+    margin-bottom: 0;
+}
+.newsletter__form input {
+    padding: 10px 16px;
+}
+.newsletter__form .form-group.email > label{
+    display: none !important;
+}
+.newsletter__form button {
+    height: 45px;
+    border: 1px solid #38404a;
+    background: transparent;
+    color: #38404a;
+    border-radius: 0;
+    padding: 10px 18px;
+    font-size: 16px;
+    line-height: 24px;
+    width: 100px;
+}
+
+.pd-tb-15 {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.pd-10-15 {
+    padding: 10px 15px;
+}
+.footer-middle {
+    background: #333132;
+    color: #ffffff;
+    padding: 40px 0 50px;
+}
+.footer-middle .app--flex {
+    align-items: flex-start;
+}
+.col-custom-20pr {
+    padding-right: 24px;
+    padding-left: 24px;
+    width: 20%;
+    float: left;
+}
+.footer--custom_title {
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 29px;
+}
+.col-custom-20pr ul {
+    margin-top: 16px;
+}
+.col-custom-20pr ul li:not(:last-child) {
+    margin-bottom: 16px;
+}
+.col-custom-20pr ul li a {
+    font-size: 16px;
+    line-height: 24px;
+    color: #ffffff;
+}
+.col-custom-20pr .list-contact li,
+.col-custom-20pr .list-contact li a{
+    color: #adadad;
+    font-size: 16px;
+    text-decoration: none;
+}
+.social__md-block {
+    margin-top: 8px;
+}
+.social__md-block > a {
+    display: inline-block;
+}
+.social__md-block > a:last-child {
+    margin-right: -10px;
+}
+.facebook-icon rect {
+    fill: none;
+}
+.facebook-icon .st1,
+.twitter-icon .st0 {
+    fill: #333132;
+}
+.facebook-icon path,
+.twitter-icon path,
+.instagram-icon path {
+    fill: #adadad;
+}
+
+.instagram-icon circle {
+    fill: #adadad;
+}
+
+.social__md-block img {
+    display: inline-block;
+}
+.footer-middle .harlow-expansion-panel {
+    background: transparent;
+    box-shadow: none;
+    border-bottom: 1px solid #fff;
+}
+.footer-middle .harlow-expansion-heading {
+    padding: 0 15px;
+    background: transparent;
+}
+.footer-middle .harlow-expansion-content ul {
+    margin: 0;
+    list-style: none;
+}
+.footer-middle .harlow-expansion-heading > div:not([role="button"]) {
+    margin: 24px 0;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 24px;
+}
+.footer-middle .harlow-expansion-heading > div[role="button"] {
+    padding: 2px;
+}
+.footer-middle .harlow-expansion-content {
+    padding: 15px;
+}
+
+@media (min-width: 1200px) and (max-width: 1919px) {
+    .newsletter__form > .email {
+        width: 73%;
+    }
+}
+
+@media (max-width: 1199px) {
+    .newsletter__form > .email {
+        width: 70%;
+    }
+    .newsletter__text .arrow-triangle {
+        height: 78px;
+        top: -10px;
+    }
+}
+@media (max-width: 991px) {
+    .newsletter__form > .email{
+        width: 55%;
+    }
+    .col-custom-20pr.hidden-xs {
+        display: none;
+    }
+    .col-custom-20pr {
+        width: 33.3333334%;
+    }
+}
+@media (max-width: 767px) {
+    .app-newsletter {
+        background: #dcdcdc;
+    }
+    .pd-10-15,
+    .col-mobile-pd-0 {
+        padding: 0;
+    }
+    .app-newsletter .app--flex,
+    .footer-middle .app--flex {
+        flex-direction: column;
+        width: 100%;
+    }
+    .footer-middle .app--flex {
+        margin: 0;
+        background: transparent;
+    }
+    .footer-middle {
+        padding: 0 0 24px;
+    }
+    .newsletter__text,
+    .newsletter__form {
+        width: 100%;
+    }
+    .newsletter__text {
+        padding: 8px 52px 0;
+    }
+    .newsletter__text .newsletter-title {
+        text-align: center;
+        font-size: 16px;
+        line-height: 24px;
+    }
+    .newsletter__text .arrow-triangle {
+        -webkit-clip-path: polygon(50% 100%, 0 0, 100% 0);
+        clip-path: polygon(50% 100%, 0 0, 100% 0);
+        right: 0;
+        width: 100%;
+        height: 40px;
+        bottom: -39px;
+        top: auto;
+    }
+    .newsletter__form {
+        margin-top: 56px;
+        padding-left: 16px;
+        padding-right: 16px;
+        flex-direction: column;
+    }
+    .newsletter__form > .email,
+    .newsletter__form button {
+        width: 100%;
+    }
+    .newsletter__form > .email{
+        max-width: unset;
+        margin: 0 0 8px;
+    }
+    .newsletter__form button {
+        margin-bottom: 16px;
+    }
+    .col-custom-20pr {
+        width: 100%;
+    }
+    .col-custom-20pr ul {
+        margin: 0;
+    }
+    .col-custom-20pr {
+        text-align: left;
+    }
+    .footer--custom_title {
+        margin-top: 24px !important;
+        font-size: 16px;
+        line-height: 24px;
+        display: block;
+    }
+    .col-custom-20pr ul.list-contact {
+        margin-top: 8px;
+    }
+    .col-custom-20pr ul li:not(:last-child) {
+        margin-bottom: 8px;
+    }
+    .social__md-block > a:last-child {
+        margin: 0;
+    }
+    .social__md-block > a:first-child {
+        margin-left: -10px;
+    }
+    .footer-app svg.minus-expand,
+    .footer-app svg.add-expand {
+        height: 20px !important;
+        width: 20.95px !important;
+    }
+    .footer-middle .harlow-expansion-content{
+        padding-top: 0;
+        padding-bottom: 24px;
+    }
+}

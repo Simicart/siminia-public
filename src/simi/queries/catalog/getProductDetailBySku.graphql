@@ -1,0 +1,51 @@
+#import "../Fragments/SimiPrice"
+#import "../Fragments/ConfigurableOptions"
+#import "../Fragments/GroupOptions"
+query productDetail($sku: String, $onServer: Boolean!) {
+    productDetail: products(filter: { sku: { eq: $sku } }) {
+        items {
+            __typename
+            id
+            sku
+            type_id
+            name
+            price {
+                ... SimiPrice
+            }
+            description {
+                html
+            }
+            short_description {
+                html
+            }
+            url_key
+            special_price
+            special_from_date
+            product_links {
+                link_type
+                linked_product_sku
+                linked_product_type
+                position
+                sku
+            }
+            media_gallery_entries {
+                label
+                position
+                disabled
+                file
+            }
+            ... on ConfigurableProduct {
+                ... ConfigurableOptions
+            }
+            ... on GroupedProduct {
+                ... GroupOptions
+            }
+            meta_title @include(if: $onServer)
+            # Yes, Products have `meta_keyword` and
+            # everything else has `meta_keywords`.
+            meta_keyword @include(if: $onServer)
+            meta_description @include(if: $onServer)
+        }
+    }
+  	simiProductDetailExtraField(filter:  { sku: { eq: $sku }})
+}

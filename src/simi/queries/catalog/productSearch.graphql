@@ -1,0 +1,61 @@
+#import "../Fragments/SimiPrice"
+query productSearch($inputText: String, $currentPage: Int, $pageSize: Int, $categoryId: String, $sort: ProductSortInput, $simiFilter: String) {
+    simiproducts(search: $inputText, pageSize: $pageSize, currentPage: $currentPage, filter: {category_id: {eq: $categoryId}}, sort: $sort, simiFilter: $simiFilter) {
+        total_count
+        filters {
+            name
+            filter_items_count
+            request_var
+            filter_items_count
+            filter_items {
+                label
+                value_string
+            }
+        }
+        simi_filters {
+            name
+            filter_items_count
+            request_var
+            filter_items_count
+            filter_items {
+                label
+                value_string
+            }
+        }
+        sort_fields {
+            default
+            options {
+                value
+                label
+            }
+        }
+        items {
+            id
+            name
+            sku
+            small_image {
+                url
+                label
+            }
+            short_description {
+                html
+            }
+            url_key
+            special_price
+            special_from_date
+            type_id
+            special_to_date
+            price {
+                ... SimiPrice
+            }
+        }
+        page_info {
+            total_pages
+        }
+        total_count
+        simiProductListItemExtraField {
+            sku
+            extraData
+        }
+    }
+}

@@ -1,0 +1,45 @@
+.root {
+    display: grid;
+    gap: 0.5rem;
+    justify-items: stretch;
+    padding: 0 1.5rem;
+}
+
+.actions {
+    display: grid;
+    justify-items: center;
+    margin-top: 1rem;
+    padding: 1rem 0;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+
+.lead {
+    margin: 1rem 0;
+    text-align: center;
+}
+
+.subscribe {
+    margin-left: -0.5rem;
+}
+
+.submitButton {
+    padding: 5px 15px;
+    font-size: 16px;
+    font-weight: 600;
+    white-space: nowrap;
+    text-align: center;
+    padding-top: 10px;
+    cursor: pointer;
+    border: 0;
+    width: 100%;
+    min-width: 200px;
+    padding-bottom: 10px;
+}
+
+.submitButton:hover {
+    opacity: 0.8;
+}

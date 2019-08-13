@@ -1,0 +1,6 @@
+.root {
+}
+
+.error {
+    color: rgb(var(--venia-error));
+}

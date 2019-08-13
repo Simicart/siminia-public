@@ -1,0 +1,62 @@
+.default-list-cate {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+.home-cate-item {
+    max-width: 680px;
+    width: 49%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    position: relative;
+    cursor: pointer;
+    max-height: 300px;
+    overflow: hidden;
+    .cate-img {
+      max-height: 300px;
+      overflow: hidden;
+      height: 100%;
+      img {
+        width: 100%;
+        max-height: 300px;
+      }
+    }
+    .cate-title {
+      position: absolute;
+      line-height: 45px;
+      font-size: 37px;
+      color: #fff;
+      bottom: 0;
+      z-index: 10;
+      font-weight: bold;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background-color: rgba(33, 39, 46, 0.5);
+    }
+  }
+  
+  .cate-title .--text {
+    padding-left: 48px;
+    display: flex;
+    align-items: center;
+    min-height: 60px;
+    width: calc(100% - 60px);
+  }
+  
+  .home-cate-item {
+    .cate-arrow {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      z-index: 11;
+      width: 60px;
+      height: 60px;
+      background: #38404A;
+    }
+    &:hover .cate-arrow {
+      background: #333132;
+    }
+  }

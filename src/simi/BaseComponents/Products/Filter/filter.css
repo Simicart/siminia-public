@@ -1,0 +1,119 @@
+.dropdownplus .dropdownplus-title {
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    line-height: 24px;
+}
+.dropdownplus .dropdownplus-title:hover {
+    cursor: pointer;
+}
+.dropdownplus-title .dropdownplus-title-minus-ic {
+    width: 25px;
+    height: 25px;
+}
+
+.dropdownplus-title .dropdownplus-title-plus-ic {
+    width: 25px;
+    height: 25px;
+}
+
+@media (max-width: 1023px) {
+    .siminia-phone-filter {
+        margin-top: 16px;
+    }
+    
+    .siminia-phone-filter > .dropdownplus-title{
+        background: #2d2d2d;
+        color: white;
+        padding: 9px 15px;
+        height: 40px;
+    }
+
+    .siminia-phone-filter > .dropdownplus-title svg{
+        fill: white !important;
+    }
+
+    .filter-products {
+        border: 1px solid rgb(220, 220, 220);
+    }
+
+    .filter-products .dropdownplus {
+        padding: 16px 16px 0 16px;
+        border-bottom: 2px solid rgb(220, 220, 220);
+    }
+
+    .filter-products .dropdownplus .dropdownplus-title {
+        margin-bottom: 10px;
+    }
+
+    .filter-products .dropdownplus .dropdownplus-inner {
+        margin-bottom: 15px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .filter-products {
+        width: 175px;
+    }
+}
+
+.filter-products .title {
+    text-transform: uppercase;
+    color: #2d2d2d;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.filter-products .filter-name {
+    line-height: 20px;
+    color: white;
+    font-size: 16px;
+    margin-bottom: 16px;
+    margin-top: 24px;
+}
+
+.filter-products .filter-name-text {
+    font-size: 16px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+@media (max-width: 1023px) {
+    .filter-products .active-filter .active-filter-item {
+        border-bottom: 1px solid rgb(220, 220, 220);
+        padding: 16px 15px 15px 15px;
+    }
+    .filter-products .filter-name {
+        color: #333132;
+    }
+}
+
+@media (min-width: 1024px) {
+    .filter-products .filter-name {
+        background-color: #333132;
+        padding: 7px 17px 8px;
+    }
+
+    .filter-products .filter-name-text {
+        line-height: 25px;
+    }
+}
+
+.filter-products .filter-item-text {
+    font-weight: 400;
+}
+
+.filter-products .clear-filter {
+    font-size: 16px;
+    color: #333132;
+    padding: 0;
+    border: none;
+    margin-bottom: 12px;
+    height: 22px;
+    cursor: pointer;
+}
+
+.filter-products .clear-filter:hover {
+    color: rgb(11, 91, 40);
+}

@@ -1,0 +1,52 @@
+.bundle-option-container {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+}
+.option-content {
+    margin-bottom: 30px;
+    padding: 0 15px;
+}
+.your-customize-title {
+    font-size: 22px;
+    margin-top: 15px;
+    border-top: solid #eaeaea 1px;
+    padding-top: 15px;
+    margin-bottom: 10px;
+}
+.customize-price-bundle {
+    padding-bottom: 15px;
+    border-bottom: solid #eaeaea 1px;
+}
+.option-qty {
+    text-align: center;
+}
+.customize-price-bundle .label-price {
+    font-size: 16px;
+}
+.customize-price-bundle .price {
+    font-size: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.option-value-item-select {
+    margin-bottom: 15px;
+}
+/*
+radio
+*/
+.radio-option {
+    padding-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    display: flex;
+}
+.radio-option-input {
+    padding-top: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.radio-option > div{
+    margin-left: 5px;
+    margin-right: 5px;
+}

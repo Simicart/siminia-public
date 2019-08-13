@@ -1,0 +1,18 @@
+.menu-item-wrap {
+    width: 100%;
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    text-align: left;
+    align-items: center;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    justify-content: flex-start;
+    text-decoration: none;
+    padding-left: 8px;
+    padding-right: 8px;
+    cursor: pointer;
+}
+.menu-item-wrap.divider {
+    border-bottom: 1px solid;
+}

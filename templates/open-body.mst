@@ -1,0 +1,10 @@
+</head>
+{{> templates/js-unavailable}}
+{{#urlResolver}}
+<body data-model-type="{{type}}" data-model-id="{{id}}">
+<div style="display: none">
+    <div class="addthis_inline_share_toolbox" id="social-share"></div>
+</div>
+<button disabled class="js-push-btn" style="display: none">
+</button>
+{{/urlResolver}}

@@ -1,0 +1,19 @@
+.root {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background:#f69435;
+    color: #fff;
+    border-radius: 100%;
+    z-index: 5;
+    font-size: 12px;
+    line-height: 15px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    justify-content: center;
+    top: -3px;
+    left: 5px;
+}

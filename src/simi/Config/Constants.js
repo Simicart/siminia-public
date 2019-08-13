@@ -1,0 +1,5 @@
+export const DASHBOARD_CONFIG = 'DASHBOARD_CONFIG';
+export const STORE_CONFIG = 'STORE_CONFIG';
+export const APP_SETTINGS = 'APP_SETTINGS';
+export const SIMI_SESS_ID = 'SIMI_SESS_ID';
+export const CLIENT_VER = 'CLIENT_VER';

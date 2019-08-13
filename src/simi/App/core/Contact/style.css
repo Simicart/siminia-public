@@ -1,0 +1,86 @@
+.form-container{
+    padding: 60px 80px 70px;
+}
+
+.form-container h2{
+    color: #333132;
+    font-size: 37px;
+    font-weight: bold;
+    line-height: 45px;
+    margin: 0 0 40px;
+}
+
+.form-container .base-textField {
+    height: 45px !important;
+    border: 1px solid rgba(51, 49, 50, 0.4);
+    font-size: 16px !important;
+    padding: 10px 16px !important;
+    line-height: 24px !important;
+}
+
+.form-container .base-textareaField{
+    border: 1px solid rgba(51, 49, 50, 0.4);
+    font-size: 16px;
+    padding: 10px 16px;
+    line-height: 24px;
+    resize: vertical;
+}
+
+.requirement{
+    color: #fa0a11;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.submit-btn{
+    background-color: #0b5b28;
+    width: 100px;
+    height: 35px;
+    float: right;
+    color: white;
+    padding-top: 0;
+}
+
+@media screen and (max-width: 425px){
+    .form-container{
+        padding: 60px 0 70px;
+    }
+
+    .contact-info{
+        padding: 0 0 70px !important;
+    }
+}
+
+@media screen and (max-width: 1024px){
+    .form-container{
+        padding: 60px 0 70px !important;
+    }
+}
+
+@media screen and (min-width: 768px){
+    .contact-info{
+        padding: 145px 80px 70px;
+    }
+}
+
+
+.contact-info .contact-item{
+    padding: 12px 0;
+}
+
+.contact-item{
+    display: flex;
+    align-items: flex-start;
+    padding-left: 15px;
+}
+
+.contact-item .item-content{
+    padding-left: 18px;
+}
+
+.contact-item .contact-title {
+    font-size: 15px;
+    text-transform: uppercase;
+    padding-bottom: 5px;
+    font-weight: 600;
+}

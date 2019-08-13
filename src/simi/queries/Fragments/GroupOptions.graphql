@@ -1,0 +1,17 @@
+#import './SimiPrice'
+fragment GroupOptions on GroupedProduct{
+    items{
+        qty
+        position
+        product{
+            id
+            sku
+            name
+            type_id
+            url_key  
+            price {
+                ... SimiPrice
+            }          
+        }
+    }
+}

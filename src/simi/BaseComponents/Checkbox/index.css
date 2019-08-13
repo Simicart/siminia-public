@@ -1,0 +1,28 @@
+
+.checkbox-item {
+    font-weight: 400;
+    display: flex;
+    min-height: 24px;
+    margin-top: 8px;
+}
+
+.checkbox-item:hover {
+    cursor: pointer;
+    color: rgb(11, 91, 40);
+}
+
+.checkbox-item .checkbox-item-icon {
+    width: 16px;
+    height: 16px;
+    background-image: url("./image/checkbox_empty.svg");
+    background-size: contain;
+    margin-top: 1px;
+    margin-right: 9px;
+    background-repeat: no-repeat;
+}
+
+.checkbox-item.selected .checkbox-item-icon {
+    margin-top: 2px;
+    background-image: url("./image/checkbox_checked.svg");
+    background-repeat: no-repeat;
+}

@@ -1,0 +1,46 @@
+.harlow-expansion-panel{
+    box-shadow: none !important;
+    background: transparent !important;
+}
+.harlow-expansion-panel::before{
+    height: 0;
+    background: transparent !important;
+}
+.harlow-expansion-panel:not(:first-child){
+    margin-top: 16px;
+}
+.harlow-expansion-heading{
+    background-color: #f3f3f3;
+    padding-left: 18.57px;
+    padding-right: 24px;
+    min-height: 61px !important;
+}
+.harlow-expansion-heading > div:not([role="button"]){
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 29px;
+    margin: 16px 0;
+    color: #ffffff;
+}
+.harlow-expansion-heading > div[role="button"]{
+    -webkit-transition-property: none;
+    -moz-transition-property: none;
+    -o-transition-property: none;
+    transition-property: none;
+}
+.harlow-expansion-content{
+    padding: 24px 0 32px;
+}
+
+@media (max-width: 767px){
+    .footer-middle{
+        padding-top: 0;
+    }
+    .harlow-expansion-heading{
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    .harlow-expansion-content{
+        padding: 16px;
+    }
+}

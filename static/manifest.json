@@ -1,0 +1,15 @@
+{
+  "name": "Siminia",
+  "short_name": "Siminia",
+  "start_url": "/",
+  "theme_color": "#ff6334",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "Shop the look",
+  "icons": [{
+    "src": "/icons/siminia_circle_512.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }
+  ]
+}
