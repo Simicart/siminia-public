@@ -5,7 +5,7 @@ import Identify from "src/simi/Helper/Identify";
 import BannerItem from "./BannerItem";
 
 const Banner = props => {
-    const {classes, history, isPhone} = props;
+    const { history, isPhone} = props;
     const data = props.data.home.homebanners;
     const bannerCount = data.length;
     const configs = Identify.getStoreConfig();
@@ -31,7 +31,7 @@ const Banner = props => {
                     key={index}
                     style={{cursor: 'pointer'}}
                 >
-                    <BannerItem item={item} classes={classes} history={history} isPhone={isPhone}/>
+                    <BannerItem item={item}  history={history} isPhone={isPhone}/>
                 </div>
             )
         }
@@ -39,8 +39,8 @@ const Banner = props => {
     })
 
     return (
-        <div className={classes["banner-homepage"]}>
-            <div className="container">
+        <div className="banner-homepage">
+            <div className={`container home-container`}>
                 <Carousel {...slideSettings}>
                     {bannerData}
                 </Carousel>

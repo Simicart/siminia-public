@@ -57,8 +57,8 @@ export const toggleMessages = value => async dispatch => {
 
 export const submitShippingAddress = payload =>
     async function thunk(dispatch, getState) {
+        dispatch(actions.changeCheckoutUpdating(true));
         dispatch(checkoutActions.shippingAddress.submit(payload));
-
         const { cart, directory, user } = getState();
 
         const { cartId } = cart;
@@ -91,7 +91,7 @@ export const submitShippingAddress = payload =>
             method: 'POST',
             body: JSON.stringify({address})
         });
-
+        dispatch(actions.changeCheckoutUpdating(false));
         dispatch(checkoutActions.getShippingMethods.receive(response));
     };
 
@@ -200,6 +200,7 @@ export const fullFillAddress = () => {
 
 export const submitShippingMethod = payload =>
     async function thunk(dispatch, getState) {
+        dispatch(actions.changeCheckoutUpdating(true));
         dispatch(checkoutActions.shippingMethod.submit(payload));
 
         const { cart, user } = getState();
@@ -218,7 +219,7 @@ export const submitShippingMethod = payload =>
         let billing_address = await retrieveBillingAddress();
         const shipping_address = await retrieveShippingAddress();
 
-        if (billing_address.sameAsShippingAddress) {
+        if (!billing_address || billing_address.sameAsShippingAddress) {
             billing_address = shipping_address;
         } else {
             const { email, firstname, lastname, telephone } = shipping_address;
@@ -257,6 +258,7 @@ export const submitShippingMethod = payload =>
         }catch(error){
             dispatch(checkoutActions.shippingMethod.reject(error));
         }
+        dispatch(actions.changeCheckoutUpdating(false));
     };
 
 export const submitOrder = () =>
@@ -273,18 +275,19 @@ export const submitOrder = () =>
         const paymentMethod = await retrievePaymentMethod();
         const shipping_address = await retrieveShippingAddress();
 
-        if (billing_address.sameAsShippingAddress) {
+        if (!billing_address || billing_address.sameAsShippingAddress) {
             billing_address = shipping_address;
         } else {
-            const { email, firstname, lastname, telephone } = shipping_address;
-
-            billing_address = {
-                email,
-                firstname,
-                lastname,
-                telephone,
-                ...billing_address
-            };
+            if (shipping_address && shipping_address.email) {
+                const { email, firstname, lastname, telephone } = shipping_address;
+                billing_address = {
+                    email,
+                    firstname,
+                    lastname,
+                    telephone,
+                    ...billing_address
+                };
+            }
         }
 
         try {
@@ -301,7 +304,7 @@ export const submitOrder = () =>
             const bodyData = {
                 billingAddress: billing_address,
                 cartId: cartId,
-                email: shipping_address.email,
+                email: billing_address.email,
                 paymentMethod: {
                     additional_data: {
                         payment_method_nonce: paymentMethod.data.nonce

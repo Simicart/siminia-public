@@ -22,6 +22,11 @@
     font-weight: 600;
     text-align: center;
 }
+.productShortDesc {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0 1.5rem;
+}
 
 .imageCarousel {
     margin: 0 auto;

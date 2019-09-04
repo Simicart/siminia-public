@@ -3,7 +3,7 @@ import ArrowRight from 'src/simi/BaseComponents/Icon/TapitaIcons/ArrowLeft';
 import {cateUrlSuffix} from 'src/simi/Helper/Url';
 
 const HomeCatItem = props => {
-    const {item, history, classes, isPhone} = props;
+    const {item, history, isPhone} = props;
 
     const action = () => {
         if (item.url_path)
@@ -33,15 +33,15 @@ const HomeCatItem = props => {
 
     return (
 
-        <div role="presentation" className={classes['home-cate-item']} onClick={() => action()}>
-            <div className={"cate-img"}>
+        <div role="presentation" className="home-cate-item" onClick={() => action()}>
+            <div className="cate-img">
                 <img src={img}
                      alt={item.simicategory_name}/>
             </div>
-            <div className={classes["cate-title"]}>
-                <div className={"--text"}>{item.simicategory_name}</div>
+            <div className="cate-title">
+                <div className="--text">{item.simicategory_name}</div>
             </div>
-            <div className={classes["cate-arrow"]}>
+            <div className="cate-arrow">
                 <ArrowRight color="#fff" style={{width:60,height:60}}/>
             </div>
         </div>

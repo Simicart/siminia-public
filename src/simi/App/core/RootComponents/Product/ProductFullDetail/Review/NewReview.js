@@ -15,6 +15,8 @@ const NewReview = props => {
 
     const form_add_review = product.simiExtraField.app_reviews.form_add_reviews[0]
     const { rates } = form_add_review
+    if (!rates)
+        return ''
 
     const setData = (data) => {
         hideFogLoading()

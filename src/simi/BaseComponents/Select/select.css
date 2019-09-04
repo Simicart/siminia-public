@@ -1,0 +1,24 @@
+.wrapper {
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-template-areas: 'input icon';
+    grid-template-columns: auto 2.25rem;
+    height: 2.25rem;
+}
+
+.input {
+    background: white;
+    border: 1px solid rgb(var(--venia-text-alt));
+    border-radius: 2px;
+    color: rgb(var(--venia-text));
+    display: inline-flex;
+    flex: 0 0 100%;
+    font-size: 1rem;
+    height: 2.25rem;
+    margin: 0;
+    padding: calc(0.375rem - 1px) calc(0.625rem - 1px);
+    width: 100%;
+    -webkit-appearance: none;
+    grid-area: input-start / input-start / input-end / icon-end;
+    padding-right: calc(2.25rem - 1px);
+}

@@ -17,8 +17,6 @@
 .header-search {
     width: 100%;
     max-width: 748px;
-    margin-left: 100px;
-    margin-right: 10%;
 }
 .header-search-form {
     position: relative;
@@ -40,6 +38,27 @@
 .search-icon img {
     width: 30px;
     height: 30px;
+}
+.store-curr-switcher {
+    display: flex;
+    width: 200px;
+    position: relative;
+}
+.store-curr-switcher .storeview-switcher, .store-curr-switcher .currency-switcher {
+    padding: 12px 2px;
+    font-size: 12px;
+    position: absolute;
+    top: 0;
+}
+.store-curr-switcher .storeview-switcher {
+    left: 0;
+}
+.store-curr-switcher .currency-switcher {
+    right: 0;
+}
+.store-curr-switcher .menu-title{
+    color: #333132 !important;
+    font-size: 12px;
 }
 .right-bar{
     display: flex;
@@ -297,7 +316,7 @@ body.fixed-scroll {
     text-align: center;
     white-space: nowrap;
 }
-.menu-my-account {
+.menu-my-account, .menu-settings {
     position: absolute;
     background: #fff;
     z-index: 2;
@@ -305,9 +324,27 @@ body.fixed-scroll {
     box-shadow: 2px 2px 0 0 rgba(0,0,0,0.14);
     margin-top: 8px;
 }
-.list-menu-account {
+.list-menu-account, list-menu-settings {
     padding-top: 4px;
     padding-bottom: 4px;
+}
+.list-menu-settings > div {
+    margin-left: 0 !important;
+}
+.store-item .store-name, .currency-item .currency-name {
+    margin-left: 10px;
+}
+.store-item .not-selected,
+.currency-item .not-selected {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid;
+    display: inline-block;
+}
+.list-menu-settings .menu-title {
+    color: #333132 !important;
+    font-size: 12px;
 }
 .menu-my-account .my-account-item {
     font-size: 12px;
@@ -343,6 +380,9 @@ body.fixed-scroll {
     .header-app-bar {
         min-height: 80px;
         height: 80px;
+    }
+    .right-bar-item {
+        margin-left: 5px;
     }
     .header-search {
         margin: 0;

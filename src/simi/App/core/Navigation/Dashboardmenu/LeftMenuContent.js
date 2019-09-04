@@ -3,12 +3,14 @@ import MenuItem from 'src/simi/BaseComponents/MenuItem'
 import {configColor} from 'src/simi/Config';
 import Identify from "src/simi/Helper/Identify"
 import DownloadIcon from 'src/simi/BaseComponents/Icon/Download'
+import UserIcon from 'src/simi/BaseComponents/Icon/TapitaIcons/User'
 import {itemTypes} from './Consts'
 import PropTypes from 'prop-types'
 import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent/'
 import CateTree from './CateTree'
 import Setting from './Setting'
 import { connect } from 'src/drivers';
+import { Link } from 'react-router-dom';
 
 const styles = {
     iconMenu : {
@@ -129,9 +131,24 @@ class LeftMenuContent extends React.Component{
     
 
     renderSections() {
-        const {classes, isSignedIn} = this.props
+        const {classes, isSignedIn, leftMenuItems} = this.props
+        if (!leftMenuItems)
+            return (
+                <React.Fragment>
+                    <MenuItem 
+                        classes={classes}
+                        icon={<UserIcon style={styles.iconMenu}/>}
+                        titleStyle={styles.menu}
+                        title={Identify.__('My Account')}
+                        onClick={()=>this.handleLink('/account.html')}
+                    />
+                    <CateTree classes={classes} handleMenuItem={this.handleMenuItem.bind(this)} hideHeader={true}/>
+                    <Setting parent={this} style={styles} classes={classes}/>
+                </React.Fragment>
+            )
+            
         const items = []
-        this.parent.props.leftMenuItems.map((section) => {
+        leftMenuItems.map((section) => {
             if (section.name)
                 items.push(
                     <div className={classes["item-section"]} key={`item-section-${section.entity_id}`}>

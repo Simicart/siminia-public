@@ -74,7 +74,6 @@ class Abstract extends React.Component{
             <Switch>
                 <Route exact {...router.home}/>
                 <Route exact {...router.search_page}/>
-                <Route exact {...router.register}/>
                 <Route exact {...router.cart}/>
                 <Route exact {...router.product_detail}/>
                 <Route exact {...router.checkout}/>

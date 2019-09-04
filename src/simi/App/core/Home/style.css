@@ -248,7 +248,17 @@
         top : 50px;
     }
 }
+
+@media (max-width: 992px) {
+    .home-cate-item .cate-title {
+        font-size: 30px;
+        line-height: 36px;
+    }
+}
 @media (max-width: 767px) {
+    .home-container {
+        padding: 0;
+    }
     .harlow-homepage{
         margin-bottom: -32px;
     }

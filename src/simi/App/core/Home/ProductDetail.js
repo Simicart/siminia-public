@@ -7,7 +7,7 @@ import { GridItem } from "src/simi/BaseComponents/GridItem";
 import {applySimiProductListItemExtraField} from 'src/simi/Helper/Product'
 
 const ProductItem = props => {
-    const {classes, dataProduct, history} = props;
+    const { dataProduct, history} = props;
     const [queryResult, queryApi] = simiUseQuery(getCategory);
     const {data} = queryResult
     const {runQuery} = queryApi
@@ -39,7 +39,7 @@ const ProductItem = props => {
         return (
             <div
                 key={`horizontal-item-${item.id}`}
-                className={`${classes["horizontal-item"]} ${lastInRow? 'last':classes['middle']}`}
+                className={`horizontal-item ${lastInRow? 'last':'middle'}`}
                 style={{
                     display: 'inline-block', 
                 }}
@@ -58,7 +58,7 @@ const ProductItem = props => {
         });
         
         return (
-            <div className={classes["horizontal-flex"]} style={{
+            <div className="horizontal-flex" style={{
                 width: '100%',
                 flexWrap: 'wrap',
                 display: 'flex',
@@ -72,8 +72,8 @@ const ProductItem = props => {
     if(data.simiproducts.hasOwnProperty('items') && data.simiproducts.total_count > 0) {
         const productItem = applySimiProductListItemExtraField(data.simiproducts);
         return (
-            <div className={classes["product-list"]}>
-                <div className={classes["product-horizotal"]}>
+            <div className="product-list">
+                <div className="product-horizotal">
                     {renderProductGrid(productItem.items)}
                 </div>
             </div>

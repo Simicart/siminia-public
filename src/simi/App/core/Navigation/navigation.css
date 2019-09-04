@@ -113,7 +113,7 @@
 }
 
 .list-menu-header .menu-content .icon-menu {
-    padding: 3px 5px 0px;
+    padding: 5px 5px 0px;
 }
 .list-menu-header .menu-title {
     font-size: 14px;
@@ -135,7 +135,11 @@
 .list-menu-header .store-item .store-name {
     margin-left: 10px;
 }
-.list-menu-header .store-item .not-selected {
+.list-menu-header .currency-item .currency-name {
+    margin-left: 10px;
+}
+.list-menu-header .store-item .not-selected,
+.list-menu-header .currency-item .not-selected {
     width: 20px;
     height: 20px;
     border-radius: 50%;

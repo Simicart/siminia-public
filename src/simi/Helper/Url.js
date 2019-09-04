@@ -33,6 +33,10 @@ export const convertToSlug = (Text) => {
 Logo Url
 */
 export const logoUrl = () => {
+    const dbConfig = Identify.getAppDashboardConfigs()
+    if (dbConfig && dbConfig["app-configs"] && dbConfig["app-configs"][0] &&  dbConfig["app-configs"][0]["app_images"] && dbConfig["app-configs"][0]["app_images"]["logo"]) {
+        return dbConfig["app-configs"][0]["app_images"]["logo"]
+    }
     return window.SMCONFIGS.logo_url ?
         window.SMCONFIGS.logo_url :
     'https://www.simicart.com/skin/frontend/default/simicart2.1/images/simicart/new_logo_small.png'

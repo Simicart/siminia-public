@@ -63,6 +63,11 @@ export const createCart = () =>
             dispatch(actions.getCart.receive(cartId));
         } catch (error) {
             dispatch(actions.getCart.receive(error));
+            //cody logout + reload while getting cart failed (token outdated)
+            storage.removeItem('signin_token');
+            clearCartId();
+            window.location.reload();
+            //end cody changing
         }
     };
 

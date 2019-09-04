@@ -112,13 +112,13 @@ class CateTree extends React.Component {
 
     render(){
         const {props} = this
-        const { classes} = props
+        const { classes, hideHeader } = props
 
         const storeConfig = Identify.getStoreConfig();
         if (!storeConfig || !storeConfig.simiRootCate)
             return <div></div>
         this.renderedOnce = true
-        const primarytext = (
+        const primarytext = hideHeader?'':(
             <div className={classes["menu-content"]} id="cate-tree">
                 <div className={classes["icon-menu"]}>
                     <CateIcon style={{fill:configColor.menu_icon_color, width: 18, height: 18}}/>

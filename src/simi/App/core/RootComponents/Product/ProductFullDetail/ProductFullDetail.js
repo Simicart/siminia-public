@@ -263,6 +263,7 @@ class ProductFullDetail extends Component {
         const product = prepareProduct(props.product)
         console.log(product)
         const { type_id, name, simiExtraField } = product;
+        const short_desc = (product.short_description && product.short_description.html)?product.short_description.html:''
         const hasReview = simiExtraField && simiExtraField.app_reviews && simiExtraField.app_reviews.number
         return (
             <div className={`${classes.root} container`}>
@@ -291,6 +292,7 @@ class ProductFullDetail extends Component {
                     <div className={classes.productPrice}>
                         <ProductPrice ref={(price) => this.Price = price} data={product} configurableOptionSelection={optionSelections}/>
                     </div>
+                    <div className={classes.productShortDesc}>{ReactHTMLParse(ReactHTMLParse(short_desc))}</div>
                     <div className={classes.options}>{productOptions}</div>
                     <div className={classes.cartActions}>
                         {

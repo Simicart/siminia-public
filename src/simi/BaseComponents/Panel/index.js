@@ -7,7 +7,7 @@ import defaultClasses from './style.css';
 
 const styles = {
     container: {
-        padding: 10
+        padding: 15
     },
     header: {
         padding: 0,
@@ -39,9 +39,6 @@ class Panel extends React.Component {
         if (isBox) {
             styles.container = {
                 ...styles.container,
-                ...{
-                    border: '1px solid rgba(112, 112, 112)'
-                },
                 ...containerStyle
             }
         }
@@ -54,7 +51,7 @@ class Panel extends React.Component {
 
         return (
             <div className={`panel-container ${className}`} id={id} style={styles.container}>
-                <div className="panel-header flex" style={styles.header} onClick={(e) => this.handleToggleOpen(id)}>
+                <div role="presentation" className="panel-header flex" style={styles.header} onClick={(e) => this.handleToggleOpen(id)}>
                     <div className={`panel-title`}>{title}</div>
                     <div className={`panel-secondary-title`}>{titleSecondary}</div>
                     {isToggle && (

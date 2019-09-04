@@ -173,7 +173,7 @@ const Edit = props => {
                             validate={(value) => validateOption(value, required)} validateOnChange >
                             <Option value="" key={-1}>{Identify.__('Please select a region, state or province.')}</Option>
                             {country.available_regions.map((region, index) => {
-                                return <Option value={region.id} key={index}>{region.name}</Option>
+                                return <Option value={`${region.id}-${index}`} key={index}>{region.name}</Option>
                             })}
                         </SimiSelect>
                     </div>
@@ -314,7 +314,7 @@ const Edit = props => {
                                 >
                                     { countries.map((country, index) => {
                                         return country.full_name_locale !== null ? 
-                                            <Option value={country.id} key={index} >{country.full_name_locale}</Option> : null
+                                            <Option value={`${index}-${country.id}`} key={index} >{country.full_name_locale}</Option> : null
                                     })}
                                 </SimiSelect>
                             </div>

@@ -19,6 +19,26 @@ class Identify {
     }
 
     static __(text) {
+        const appConfig = this.getAppDashboardConfigs();
+        let config = null;
+        if (appConfig !== null) {
+            config = appConfig['app-configs'][0] || null;
+        }
+
+        const storeConfig = this.getStoreConfig();
+        try {
+            const languageCode = storeConfig.storeConfig.locale;
+            if (config.language.hasOwnProperty(languageCode)) {
+                const {language} = config;
+                const languageWithCode = language[languageCode];
+                if (languageWithCode.hasOwnProperty(text)) {
+                    return languageWithCode[text];
+                }
+            }
+        } catch (err) {
+
+        }
+
         return text
     }
 

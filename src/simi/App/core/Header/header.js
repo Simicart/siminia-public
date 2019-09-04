@@ -11,6 +11,7 @@ import { mergeClasses } from 'src/classify'
 import { Link } from 'src/drivers';
 import HeaderNavigation from './Component/HeaderNavigation'
 import MyAccount from './Component/MyAccount'
+import Settings from './Component/Settings'
 import { withRouter } from 'react-router-dom';
 import { logoUrl } from 'src/simi/Helper/Url'
 
@@ -47,13 +48,13 @@ class Header extends React.Component{
                 <Link to='/'>
                     <img 
                         src={logoUrl()}
-                        alt="siminia-logo" style={!isPhone?{width: 206, height: 48}:{width: 135, height: 32}}/>
+                        alt="siminia-logo" style={!isPhone?{width: 240, height: 40}:{width: 180, height: 30}}/>
                 </Link>
             </div>
         )
     }
 
-    renderSearhForm = () => {
+    renderSearchForm = () => {
         return(
             <div className={`${this.classes['header-search']} header-search`}>
                 <Suspense fallback={null}>
@@ -66,25 +67,33 @@ class Header extends React.Component{
     }
 
     renderRightBar = () => {
+        const {classes} = this
         return(
-            <div className={this.classes['right-bar']}>
-                <div className={this.classes['right-bar-item']} id="my-account">
-                    <MyAccount classes={this.classes}/>
+            <div className={classes['right-bar']}>
+                {
+                    !this.state.isPhone && (
+                    <div className={classes['right-bar-item']} id="header-settings">
+                        <Settings classes={classes}/>
+                    </div>
+                    )
+                }
+                <div className={classes['right-bar-item']} id="my-account">
+                    <MyAccount classes={classes}/>
                 </div>
                 <div 
-                    className={this.classes['right-bar-item']} id="wish-list" 
+                    className={classes['right-bar-item']} id="wish-list" 
                 >
                     <Link to={'/wishlist.html'}>
-                        <div className={this.classes['item-icon']} style={{display: 'flex', justifyContent: 'center'}}>
+                        <div className={classes['item-icon']} style={{display: 'flex', justifyContent: 'center'}}>
                             <WishList style={{width: 30, height: 30, display: 'block'}} />
                         </div>
-                        <div className={this.classes['item-text']}>
+                        <div className={classes['item-text']}>
                             {Identify.__('Favourites')}
                         </div>
                     </Link>
                 </div>
-                <div className={this.classes['right-bar-item']}>
-                    <CartTrigger classes={this.classes}/>
+                <div className={classes['right-bar-item']}>
+                    <CartTrigger classes={classes}/>
                 </div>
             </div>
         )
@@ -106,7 +115,7 @@ class Header extends React.Component{
                         </div>
                     </div>
                 </div>
-                {this.renderSearhForm()}
+                {this.renderSearchForm()}
                 <div id="id-message">
                     <TopMessage/>
                     <ToastMessage/>
@@ -127,7 +136,7 @@ class Header extends React.Component{
                 <div className="container">
                     <div className={this.classes['header-app-bar']}>
                         {this.renderLogo()}
-                        {this.renderSearhForm()}
+                        {this.renderSearchForm()}
                         {this.renderRightBar()}
                     </div>
                 </div>

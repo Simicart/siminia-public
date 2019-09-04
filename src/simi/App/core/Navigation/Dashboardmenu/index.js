@@ -58,19 +58,16 @@ class Dashboardmenu extends React.Component {
     }
     
     renderLeftMenu = () => {
-        if (this.props.leftMenuItems) {
-            return (
-                <LeftMenuContent 
-                    classes={this.props.classes} 
-                    ref={node => this.leftMenu = node} 
-                    leftMenuItems={this.props.leftMenuItems} 
-                    isPhone={this.props.isPhone}
-                    handleLink={this.handleLink.bind(this)}
-                    parent={this}
-                />
-            )
-        }
-        return
+        return (
+            <LeftMenuContent 
+                classes={this.props.classes} 
+                ref={node => this.leftMenu = node} 
+                leftMenuItems={this.props.leftMenuItems} 
+                isPhone={this.props.isPhone}
+                handleLink={this.handleLink.bind(this)}
+                parent={this}
+            />
+        )
     }
 
 

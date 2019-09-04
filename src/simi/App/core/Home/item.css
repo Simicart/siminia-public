@@ -49,6 +49,7 @@ Grid item
     margin: 0;
 }
 
+
 @media (min-width: 1024px) {
     .harlows-product-grid-item {
         padding: 1px 0px 93px 0px;

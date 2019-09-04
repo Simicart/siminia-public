@@ -1,7 +1,9 @@
 import React from 'react'
 import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent'
-import CreateAccountPage from 'src/components/CreateAccountPage/index';
-import Home from 'src/simi/App/core/RootComponents/CMS/Home'
+
+const Home = (props) => {
+    return <LazyComponent component={() => import(/* webpackChunkName: "Home"*/'src/simi/App/core/RootComponents/CMS/Home')} {...props}/>
+}
 
 const Checkout = (props) => {
     return <LazyComponent component={() => import(/* webpackChunkName: "Checkout"*/'src/components/Checkout')} {...props}/>
@@ -56,10 +58,6 @@ const router = {
     search_page: {
         path: '/search.html',
         render : (props) => <Search {...props}/>
-    },
-    register: {
-        path: '/create-account',
-        render : (props) => <CreateAccountPage {...props}/>
     },
     cart : {
         path : '/cart.html',

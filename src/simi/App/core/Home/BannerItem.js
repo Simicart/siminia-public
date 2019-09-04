@@ -3,7 +3,7 @@ import {Colorbtn} from 'src/simi/BaseComponents/Button'
 import {productUrlSuffix, cateUrlSuffix} from 'src/simi/Helper/Url';
 
 const BannerItem = props => {
-    const {classes, history, item, isPhone} = props;
+    const { history, item, isPhone } = props;
 
     const renderBannerTitle = item => {
         let action = () => {}
@@ -25,13 +25,13 @@ const BannerItem = props => {
         }
 
         return(
-            <div role="presentation" className={classes["banner-title"]} onClick={action}>
-                <div className={classes["bannner-content"]}>
-                    <div className={classes["title"]}>{item.banner_title}</div>
+            <div role="presentation" className="banner-title" onClick={action}>
+                <div className="bannner-content">
+                    <div className="title">{item.banner_title}</div>
                 </div>
                 <Colorbtn 
                     text={"Show"}
-                    className={`${classes["banner-action"]}`}/>
+                    className="banner-action"/>
             </div>
         )
     }
@@ -57,7 +57,7 @@ const BannerItem = props => {
     return (
         <div 
             style={{position: 'relative', maxWidth: w, minHeight: h}} 
-            className={classes['banner-item']}
+            className="banner-item"
         >
             {renderBannerTitle(item)}
             <img className="img-responsive" width={w} height={h} src={img} alt={item.banner_title}/>

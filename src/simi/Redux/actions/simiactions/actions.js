@@ -4,6 +4,7 @@ const prefix = 'SIMIACTIONS';
 const actionTypes = [
     'CHANGE_SAMPLE_VALUE',
     'TOGGLE_MESSAGES',
+    'CHANGE_CHECKOUT_UPDATING',
 ];
 
 export default createActions(...actionTypes, { prefix });

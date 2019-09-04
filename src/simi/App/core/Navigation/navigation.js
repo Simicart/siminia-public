@@ -87,7 +87,7 @@ const Navigation = props => {
                 }
             }
         }
-        if (leftMenuItems || bottomMenuItems) 
+        //if (leftMenuItems || bottomMenuItems) 
             return (
                 <Dashboardmenu 
                     className={className} 

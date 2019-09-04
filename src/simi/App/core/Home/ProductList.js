@@ -2,7 +2,7 @@ import React from 'react'
 import ProductDetail from './ProductDetail';
 
 const ProductList = props => {
-    const {classes, homeData, history} = props;
+    const { homeData, history} = props;
     const renderListProduct = () => {
         if(
             homeData.home.hasOwnProperty('homeproductlists')   
@@ -14,17 +14,17 @@ const ProductList = props => {
             const productList = homeData.home.homeproductlists.homeproductlists.map((item, index) => {
                 if (item.category_id)
                     return (
-                        <div className={classes["default-productlist-item"]} key={index}>
-                            <div className={classes["default-productlist-title"]}>
+                        <div className="default-productlist-item" key={index}>
+                            <div className="default-productlist-title">
                                 {item.list_title}
                             </div>
-                            <ProductDetail dataProduct={item} classes={classes} history={history}/>
+                            <ProductDetail dataProduct={item} history={history}/>
                         </div>
                     )
                 return ''
             });
             return (
-                <div className={classes["productlist-content"]}>
+                <div className="productlist-content">
                     {productList}
                 </div>
             )
@@ -32,7 +32,7 @@ const ProductList = props => {
     }
 
     return (
-        <div className={classes['default-home-product-list']}>
+        <div className='default-home-product-list'>
             <div className="container">
                 {renderListProduct()}
             </div>

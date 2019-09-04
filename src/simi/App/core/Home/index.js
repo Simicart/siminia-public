@@ -2,17 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { getHomeData } from 'src/simi/Model/Home';
 import Banner from './Banner';
 import HomeCat from "./HomeCat";
-import defaultClasses from './style.css';
-import classify from 'src/classify';
+//import defaultClasses from './style.css';
 import LoadingSpiner from 'src/simi/BaseComponents/Loading/LoadingSpiner'
 import { withRouter } from 'react-router-dom';
-import { compose } from 'redux';
 import ProductList from './ProductList';
 import Identify from 'src/simi/Helper/Identify';
 import * as Constants from 'src/simi/Config/Constants';
-// import './home.scss'
+require('./home.scss');
 const Home = props => {
-    const { classes, history } = props;
+    const {  history } = props;
     const [isPhone, setIsPhone] = useState(window.innerWidth < 1024)
     const simiSessId = Identify.getDataFromStoreage(Identify.LOCAL_STOREAGE, Constants.SIMI_SESS_ID)
     const cached_home = simiSessId?Identify.ApiDataStorage(`home_lite_${simiSessId}`):null
@@ -49,15 +47,12 @@ const Home = props => {
 
     return (
         <React.Fragment>
-            <Banner data={data} classes={classes} history={history} isPhone={isPhone}/>
-            <HomeCat catData={data} classes={classes} history={history} isPhone={isPhone}/>
-            <ProductList homeData={data} classes={classes} history={history}/>
+            <Banner data={data} history={history} isPhone={isPhone}/>
+            <HomeCat catData={data} history={history} isPhone={isPhone}/>
+            <ProductList homeData={data} history={history}/>
         </React.Fragment>
 
     );
 }
 
-export default compose(
-    classify(defaultClasses),
-    withRouter
-)(Home);
+export default withRouter(Home);

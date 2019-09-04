@@ -1,7 +1,6 @@
 .root {
     --flow-footer-height: 5.5rem;
     position: relative;
-    margin-top: 520px;
 }
 
 .body {

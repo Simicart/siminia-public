@@ -5,6 +5,7 @@ import simiActions from 'src/simi/Redux/actions/simiactions';
 
 const initialState = {
     simiValue: 'cody_initialize_value',
+    simiCheckoutUpdating: false,
     simiMessages: [],// [{type: 'success', message: 'sample', auto_dismiss: true}]
 };
 
@@ -19,6 +20,12 @@ const reducerMap = {
         return {
             ...state,
             simiMessages: payload
+        };
+    },
+    [simiActions.changeCheckoutUpdating]: (state, { payload }) => {
+        return {
+            ...state,
+            simiCheckoutUpdating: payload
         };
     },
 };
