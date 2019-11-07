@@ -133,7 +133,6 @@ class Label extends Abstract{
     }
 
     renderLabel =(item=this.props.data)=>{
-        const {classes} = this.props
         const style = {
             display : 'inline-block',
             marginRight : '10px',
@@ -147,7 +146,7 @@ class Label extends Abstract{
         const classValue = 'option-label-'+this.props.id;
         const product = item.products.valueOf();
         let label = (
-            <div data-product={product} className={`${classes['option-label']} ${classValue} text `}
+            <div data-product={product} className={`option-label ${classValue} text `}
                  style={{
                 ...style,
                 ...{
@@ -164,8 +163,8 @@ class Label extends Abstract{
                     margin : 0,
                     overflow: 'hidden'
                 }}>{item.label}</p>
-                <div className={classes["label-line"]}>
-                    <div className={classes["line"]}></div>
+                <div className="label-line">
+                    <div className="line"></div>
                 </div>
             </div>
         );
@@ -173,13 +172,13 @@ class Label extends Abstract{
             const base_img = item.hasOwnProperty('base_image') && item.base_image ?
                 <img className='hidden' src={item.base_image} alt={item.base_image}/> : null;
             label = (
-                <div data-product={product} className={`${classes['option-label']} ${classValue}`} style={style} >
+                <div data-product={product} className={`option-label' ${classValue}`} style={style} >
                     <img style={imgStyle} src={item.option_image} alt={item.label}/>
                     {base_img}
-                    <div className={classes["label-line"]}>
+                    <div className="label-line">
                         <div className="line"></div>
                     </div>
-                    <div className={classes["label-check-selected"]}>
+                    <div className="label-check-selected">
                         <CheckIcon style={{fill:'#fff'}}/>
                     </div>
                 </div>
@@ -187,7 +186,7 @@ class Label extends Abstract{
         }else if(item.type === 'color'){
             if(this.colourNameToHex(item.label)){
                 label = (
-                    <div data-product={product} className={`${classes['option-label']} ${classValue}`}
+                    <div data-product={product} className={`option-label ${classValue}`}
                          style={{
                              ...style,
                              ...{
@@ -198,10 +197,10 @@ class Label extends Abstract{
                              }
                          }}
                     >
-                        <div className={classes["label-line"]}>
+                        <div className="label-line">
                             <div className="line"/>
                         </div>
-                        <div className={classes["label-check-selected"]}>
+                        <div className="label-check-selected">
                             <CheckIcon style={{fill:'#fff'}}/>
                         </div>
                     </div>

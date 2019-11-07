@@ -21,15 +21,15 @@ class Text extends Abstract {
     };
 
     renderTextField = ()=>{
-        const {id, classes} = this.props
+        const {id} = this.props
         return(
-            <div className={classes["option-text-field"]}>
+            <div className="option-text-field">
                 <input
                     id="text-field"
                     name={`option[${id}]`}
                     value={this.state.value}
                     onChange={this.handleChange}
-                    className={classes["form-control"]}
+                    className="form-control"
                     style={{
                         width : '100%',
                         background : '#f2f2f2',
@@ -42,13 +42,13 @@ class Text extends Abstract {
     };
 
     renderTextArea =()=>{
-        const {id, classes} = this.props
+        const {id} = this.props
         return (
-            <div className={classes["form-group"]}>
+            <div className="form-group">
                 <textarea 
                     name={`option[${id}]`}
                     id="option-text-area"  
-                    className={classes["form-control"]} rows="5" style={{
+                    className="form-control" rows="5" style={{
                     background : '#f2f2f2',
                     border : 'none',
                     boxShadow : 'none'

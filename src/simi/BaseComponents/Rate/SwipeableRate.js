@@ -43,13 +43,13 @@ class SwipeableRate extends React.Component {
             }
             if (i + 1 <= this.rate) {
                 star.push(
-                    <span role="presentation" key={i} id={id} className={rate_point + " rate-star  active " + select}
+                    <span role="presentation" key={i} id={id} className={rate_point + " rate-star " + select}
                           onClick={() => this.handleChangeRate(this.rate_code, i)} data-key={rate_key}
                           data-point={point}><ToggleStar style={{height: this.size + 'px', width: this.size + 'px',fill:configColor.button_background}}/></span>
                 );
             } else {
                 star.push(
-                    <span role="presentation" key={i} id={id} className={rate_point + " rate-star  active"}
+                    <span role="presentation" key={i} id={id} className={rate_point + " rate-star "}
                           onClick={() => this.handleChangeRate(this.rate_code, i)} data-key={rate_key}
                           data-point={point}><ToggleStar style={{fill : '#e0e0e0',height: this.size + 'px', width: this.size + 'px'}}/></span>
                 );

@@ -1,16 +1,14 @@
 import React from 'react';
 import { func, string } from 'prop-types';
-import { mergeClasses } from 'src/classify';
-import defaultClass from './index.css';
 import { showFogLoading, hideFogLoading } from 'src/simi/BaseComponents/Loading/GlobalLoading';
 import { updateCoupon } from 'src/simi/Model/Cart';
 import Identify from 'src/simi/Helper/Identify';
 import { Whitebtn } from 'src/simi/BaseComponents/Button'
 import Close from 'src/simi/BaseComponents/Icon/TapitaIcons/Close'
+require ('./style.scss')
 
 const Coupon = (props) => {
-    const { value, toggleMessages, getCartDetails, classes } = props;
-    const classesM = mergeClasses(defaultClass, classes);
+    const { value, toggleMessages, getCartDetails } = props;
     let clearCoupon = false;
     const handleCoupon = (type = '') => {
         let coupon = document.querySelector('#coupon_field').value;
@@ -52,15 +50,15 @@ const Coupon = (props) => {
         hideFogLoading();
     }
 
-    return <div className={`${classesM["coupon-code"]}`} id={classesM["cart-coupon-form"]}>
-        <div className={classesM["coupon-code-title"]}>{Identify.__('Promo code')}</div>
-        <div className={classesM["coupon-code-area-tablet"]}>
+    return <div className='coupon-code'>
+        <div className="coupon-code-title">{Identify.__('Promo code')}</div>
+        <div className="coupon-code-area-tablet">
             <input id="coupon_field" type="text" placeholder={Identify.__('enter code here')} defaultValue={value} />
-            {value && <button className={classesM['btn-clear-coupon']} onClick={()=>handleCoupon('clear')}>
+            {value && <button className='btn-clear-coupon' onClick={()=>handleCoupon('clear')}>
                         <Close style={{width:15,height:15}}/>
                     </button>   }
         </div>
-        <Whitebtn id={classesM["submit-coupon"]} onClick={() => handleCoupon()} text={Identify.__('Apply')} />
+        <Whitebtn id="submit-coupon" className={`${Identify.isRtl() ? "submit-coupon-rtl" : 'submit-coupon'}`} onClick={() => handleCoupon()} text={Identify.__('Apply')} />
     </div>
 }
 

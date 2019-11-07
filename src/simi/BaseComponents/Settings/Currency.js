@@ -7,6 +7,7 @@ import ListItemNested from 'src/simi/BaseComponents/MuiListItem/Nested';
 import {configColor} from 'src/simi/Config';
 import MenuItem from "src/simi/BaseComponents/MenuItem";
 import {showFogLoading} from 'src/simi/BaseComponents/Loading/GlobalLoading'
+import  * as Constants from 'src/simi/Config/Constants'
 
 import { Util } from '@magento/peregrine';
 const { BrowserPersistence } = Util;
@@ -24,6 +25,7 @@ class Currency extends StoreView {
         let appSettings = Identify.getAppSettings()
         const cartId = storage.getItem('cartId')
         const signin_token = storage.getItem('signin_token')
+        const simiSessId = Identify.getDataFromStoreage(Identify.LOCAL_STOREAGE, Constants.SIMI_SESS_ID)
         appSettings = appSettings?appSettings:{}
         const currentStoreId = parseInt(appSettings.store_id, 10);
         CacheHelper.clearCaches()
@@ -34,6 +36,7 @@ class Currency extends StoreView {
             storage.setItem('cartId', cartId)
         if (signin_token)
             storage.setItem('signin_token', signin_token)
+        Identify.storeDataToStoreage(Identify.LOCAL_STOREAGE, Constants.SIMI_SESS_ID, simiSessId)
         Identify.storeAppSettings(appSettings);
         window.location.reload()
     }

@@ -1,21 +1,19 @@
 import React from 'react';
 import {  func, shape, string } from 'prop-types';
-import classify, { mergeClasses } from 'src/classify';
 import Button from 'src/components/Button';
-import defaultClasses from './thankyou.css';
 import { getOrderInformation, getAccountInformation } from 'src/selectors/checkoutReceipt';
 import { connect } from 'src/drivers';
-import { compose } from 'redux';
 import actions from 'src/actions/checkoutReceipt';
 import { hideFogLoading } from 'src/simi/BaseComponents/Loading/GlobalLoading';
 import Identify from 'src/simi/Helper/Identify';
 import TitleHelper from 'src/simi/Helper/TitleHelper'
 
+require('./thankyou.scss')
+
 const Thankyou = props => {
     hideFogLoading()
     const {  history, order } = props;
 
-    const classes = mergeClasses(defaultClasses, props.classes);
 
     const hasOrderId = () => {
         return (order && order.id) ||  Identify.findGetParameter('order_increment_id');
@@ -44,11 +42,11 @@ const Thankyou = props => {
             {TitleHelper.renderMetaHeader({
                 title:Identify.__('Thank you for your purchase!')
             })}
-            <div className={classes.root}>
-                <div className={classes.body}>
-                    <h2 className={classes.header}>{Identify.__('Thank you for your purchase!')}</h2>
-                    <div className={classes.textBlock}>{Identify.__('You will receive an order confirmation email with order status and other details.')}</div>
-                    <div className={classes.textBlock}>{Identify.__('You can also visit your account page for more information.')}</div>
+            <div className="root">
+                <div className="body">
+                    <h2 className='header'>{Identify.__('Thank you for your purchase!')}</h2>
+                    <div className='textBlock'>{Identify.__('You will receive an order confirmation email with order status and other details.')}</div>
+                    <div className='textBlock'>{Identify.__('You can also visit your account page for more information.')}</div>
                     <Button onClick={handleViewOrderDetails}>
                         {Identify.__('View Order Details')}
                     </Button>
@@ -59,11 +57,6 @@ const Thankyou = props => {
 };
 
 Thankyou.propTypes = {
-    classes: shape({
-        body: string,
-        footer: string,
-        root: string
-    }),
     order: shape({
         id: string
     }).isRequired,
@@ -92,10 +85,7 @@ const mapDispatchToProps = {
     reset
 };
 
-export default compose(
-    classify(defaultClasses),
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
 )(Thankyou);

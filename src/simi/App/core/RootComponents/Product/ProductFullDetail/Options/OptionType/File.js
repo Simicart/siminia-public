@@ -13,7 +13,6 @@ class File extends Abstract {
     }
 
     render(){
-        const {classes} = this.props
         const notes = []
         const ObjOptions = this.props.data
         if (!ObjOptions.input_name)
@@ -21,21 +20,21 @@ class File extends Abstract {
 
         if (ObjOptions.file_extension)
             notes.push(
-                <p className={classes["note"]} key="file_extension">
+                <p className="note" key="file_extension">
                     {Identify.__('Compatible file extensions to upload:')} {ObjOptions.file_extension}
                 </p>
             )
         
         if (ObjOptions.image_size_x && parseInt(ObjOptions.image_size_x))
             notes.push(
-                <p className={classes["note"]} key="image_size_x">
+                <p className="note" key="image_size_x">
                     {Identify.__(`Maximum image width: %@px`).replace('%@', ObjOptions.image_size_x)}
                 </p>
             )
         
         if (ObjOptions.image_size_y && parseInt(ObjOptions.image_size_y))
             notes.push(
-                <p className={classes["note"]} key="image_size_y">
+                <p className="note" key="image_size_y">
                     {Identify.__(`Maximum image height: %@px`).replace('%@', ObjOptions.image_size_y)}
                 </p>
             )

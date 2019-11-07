@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { bool, func, object } from 'prop-types';
+import { bool, func } from 'prop-types';
 import { Form } from 'informed';
 import Field from 'src/components/Field';
 import TextInput from 'src/components/TextInput';
 import { isRequired } from 'src/util/formValidators';
-import classes from './signIn.css';
 import Identify from 'src/simi/Helper/Identify'
 import {configColor} from 'src/simi/Config'
 import TitleHelper from 'src/simi/Helper/TitleHelper'
+
+require('./signIn.scss');
 
 class SignIn extends Component {
     static propTypes = {
@@ -18,16 +19,16 @@ class SignIn extends Component {
 
     render() {
         return (
-            <div className={classes.root}>
+            <div className='root sign-in-form'>
                 {TitleHelper.renderMetaHeader({
                     title:Identify.__('Sign In')
                 })}
                 <Form
-                    className={classes.form}
+                    className='form'
                     getApi={this.setFormApi}
                     onSubmit={() => this.onSignIn()}
                 >
-                    <Field label="Email" required={true}>
+                    <Field label={Identify.__("Email")} required={true}>
                         <TextInput
                             autoComplete="email"
                             field="email"
@@ -35,7 +36,7 @@ class SignIn extends Component {
                             validateOnBlur
                         />
                     </Field>
-                    <Field label="Password" required={true}>
+                    <Field label={Identify.__("Password")} required={true}>
                         <TextInput
                             autoComplete="current-password"
                             field="password"
@@ -44,24 +45,24 @@ class SignIn extends Component {
                             validateOnBlur
                         />
                     </Field>
-                    <div className={classes.signInButtonCtn}>
+                    <div className='signInButtonCtn'>
                         <button 
-                            priority="high" className={classes.signInButton} type="submit" 
+                            priority="high" className='signInButton' type="submit" 
                             style={{backgroundColor: configColor.button_background, color: configColor.button_text_color}}>
                             {Identify.__('Sign In')}
                         </button>
                     </div>
                     <button
                         type="button"
-                        className={classes.forgotPassword}
+                        className='forgotPassword'
                         onClick={this.handleForgotPassword}
                     >
                         {Identify.__('Forgot password?')}
                     </button>
                 </Form>
-                <div className={classes.signInDivider} />
-                <div className={classes.showCreateAccountButtonCtn}>
-                    <button priority="high" className={classes.showCreateAccountButton} onClick={this.showCreateAccountForm} type="submit">
+                <div className='signInDivider' />
+                <div className='showCreateAccountButtonCtn'>
+                    <button priority="high" className='showCreateAccountButton' onClick={this.showCreateAccountForm} type="submit">
                         {Identify.__('Create an Account')}
                     </button>
                 </div>

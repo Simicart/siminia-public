@@ -89,7 +89,7 @@ class Item extends React.Component {
         
         const image = item.product_image && (
             <div 
-                className={classes["siminia-product-image"]}
+                className="siminia-product-image"
                 style={{borderColor: configColor.image_border_color,
                     backgroundColor: 'white'
                 }}>
@@ -103,7 +103,7 @@ class Item extends React.Component {
                 </Link>
                 <span 
                     role="presentation"
-                    className={classes["trash-item"]}
+                    className="trash-item"
                     style={{
                         position: 'absolute', bottom: 1, left: 1, width: 30, height: 30, 
                         cursor: 'pointer', zIndex: 1}} 
@@ -114,28 +114,28 @@ class Item extends React.Component {
         );
 
         const itemAction = 
-            <div className={classes["product-item-action"]}>
+            <div className="product-item-action">
                 {
                     item.type_id === 'simple' &&
                     <Colorbtn 
                         style={{backgroundColor: configColor.button_background, color: configColor.button_text_color}}
-                        className={classes["grid-add-cart-btn"]} 
+                        className="grid-add-cart-btn"
                         onClick={() => this.addToCart(item.wishlist_item_id, this.location)}
                         text={addToCartString}/>
                 }
                 <Link 
-                    className={classes["view-link"]}
+                    className="view-link"
                     to={this.location}
                 >{Identify.__('View')}</Link>
             </div>
         
         return (
-            <div className={`${classes['product-item']} ${classes['siminia-product-grid-item']} ${item.type_id !== 'simple'?classes['two-btn']:classes['one-btn']}`}>
+            <div className={`'product-item siminia-product-grid-item ${item.type_id !== 'simple'?'two-btn': 'one-btn'}`}>
                 {image}
-                <div className={classes["siminia-product-des"]}>
-                    <Link to={this.location} className={classes["product-name"]}>{ReactHTMLParse(item.product_name)}</Link>
+                <div className="siminia-product-des">
+                    <Link to={this.location} className="product-name">{ReactHTMLParse(item.product_name)}</Link>
                     <div 
-                        className={classes["prices-layout"]} 
+                        className="prices-layout"
                         id={`price-${item.product_id}`} 
                         style={{color: configColor.price_color}}>
                         {formatPrice(parseFloat(item.product_price))}

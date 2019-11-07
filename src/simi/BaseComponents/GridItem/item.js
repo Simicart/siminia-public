@@ -31,9 +31,9 @@ const Griditem = props => {
             item_data: item
         },
     }
-    
+
     const image = (
-        <div 
+        <div
             role="presentation"
             className={itemClasses["siminia-product-image"]}
             style={{borderColor: configColor.image_border_color,
@@ -59,7 +59,7 @@ const Griditem = props => {
             }
             <div className={itemClasses["siminia-product-des"]}>
                 {
-                    (simiExtraField && simiExtraField.app_reviews) && 
+                    (simiExtraField && simiExtraField.app_reviews) &&
                     (
                         <div className={itemClasses["item-review-rate"]}>
                             <StaticRate rate={simiExtraField.app_reviews.rate} classes={itemClasses}/>
@@ -70,7 +70,7 @@ const Griditem = props => {
                     )
                 }
                 <div role="presentation" className={`${itemClasses["product-name"]} ${itemClasses["small"]}`} onClick={()=>props.handleLink(location)}>{ReactHTMLParse(name)}</div>
-                <div role="presentation" className={itemClasses["prices-layout"]} id={`price-${id}`} onClick={()=>props.handleLink(location)}>
+                <div role="presentation" className={`${itemClasses["prices-layout"]} ${Identify.isRtl() ? itemClasses["prices-layout-rtl"] : ''}`} id={`price-${id}`} onClick={()=>props.handleLink(location)}>
                     <Price
                         prices={price} type={type_id}
                     />

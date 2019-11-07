@@ -7,7 +7,9 @@ import { getAccountInformation } from 'src/selectors/checkoutReceipt';
 import checkoutReceiptActions from 'src/actions/checkoutReceipt';
 import actions from './actions';
 
-const { request } = RestApi.Magento2;
+// const { request } = RestApi.Magento2;
+import { request } from 'src/simi/Network/RestMagento'
+
 const { BrowserPersistence } = Util;
 const storage = new BrowserPersistence();
 

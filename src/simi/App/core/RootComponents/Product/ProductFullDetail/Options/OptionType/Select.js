@@ -34,15 +34,14 @@ class Select extends Abstract {
     };
 
     renderWithBundle = (data) => {
-        const {classes} = this.props
         const options = data.selections;
         const items = [];
         for (const i in options) {
             const item = options[i];
             const element = (
                 <MenuItem key={Identify.randomString(5)} name={this.props.key_field} value={parseInt(i,10)}>
-                    <div className={classes["option-row"]} style={{alignItems : 'center',fontFamily: 'Montserrat , sans-serif'}}>
-                        {<OptionLabel title={item.name} type_id='bundle' classes={classes} item={item} style={{alignItems : 'center'}}/>}
+                    <div className="option-row" style={{alignItems : 'center',fontFamily: 'Montserrat , sans-serif'}}>
+                        {<OptionLabel title={item.name} type_id='bundle' item={item} style={{alignItems : 'center'}}/>}
                     </div>
                 </MenuItem>
             );
@@ -52,14 +51,13 @@ class Select extends Abstract {
     };
 
     renderWithCustom = (data) => {
-        const {classes} = this.props
         const values = data.values;
         if(values instanceof Array && values.length > 0){
             const items = values.map(item => {
                 return (
                     <MenuItem key={Identify.randomString(5)} value={parseInt(item.id,10)}>
-                        <div className={classes["option-row"]} style={{alignItems : 'center'}}>
-                            {<OptionLabel title={item.title}  classes={classes} item={item} style={{alignItems : 'center'}}/>}
+                        <div className="option-row" style={{alignItems : 'center'}}>
+                            {<OptionLabel title={item.title} item={item} style={{alignItems : 'center'}}/>}
                         </div>
                     </MenuItem>
                 );
@@ -71,7 +69,7 @@ class Select extends Abstract {
     };
 
     render = () => {
-        const {data, classes} = this.props;
+        const {data} = this.props;
         const type_id = this.props.parent.getProductType();
         let items = null;
         if(type_id === 'bundle'){
@@ -80,7 +78,7 @@ class Select extends Abstract {
             items = this.renderWithCustom(data)
         }
         return (
-            <div className={classes["option-value-item-select"]}>
+            <div className="option-value-item-select">
                 <FormControl  style={{color : '#333',marginTop:20}} fullWidth={true}>
                     <SelectField
                         value={this.state.value}
@@ -91,7 +89,7 @@ class Select extends Abstract {
                         }}
                     >
                         <MenuItem key={Identify.randomString(5)} value={0}>
-                            <div className={classes["option-row"]} style={{alignItems : 'center',fontSize:16,fontWeight:100}}>
+                            <div className="option-row" style={{alignItems : 'center',fontSize:16,fontWeight:100}}>
                                 <em>{Identify.__('Choose a selection')}</em>
                             </div>
                         </MenuItem>

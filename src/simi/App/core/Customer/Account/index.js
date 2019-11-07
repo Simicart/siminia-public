@@ -2,7 +2,7 @@ import React from 'react'
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Identify from "src/simi/Helper/Identify";
-import defaultClasses from './style.css'
+import defaultClasses from './style.scss'
 import LogoutIcon from 'src/simi/BaseComponents/Icon/TapitaIcons/Logout'
 import CloseIcon from 'src/simi/BaseComponents/Icon/TapitaIcons/Close'
 import MenuIcon from 'src/simi/BaseComponents/Icon/Menu'
@@ -94,9 +94,8 @@ class CustomerLayout extends React.Component{
     }
 
     handleToggleMenu = ()=>{
-        const {classes} = this.props
-        $(`.${classes['list-menu-item']}`).slideToggle('fast')
-        $(`.${classes['menu-toggle']}`).find('svg').toggleClass('hidden')
+        $('list-menu-item').slideToggle('fast')
+        $('menu-toggle').find('svg').toggleClass('hidden')
     }
 
     handleLink = (link) => {
@@ -118,38 +117,38 @@ class CustomerLayout extends React.Component{
     }
 
     renderMenu = () => {
-        const {classes, firstname, lastname} = this.props
+        const {firstname, lastname} = this.props
         const menuConfig = this.getMenuConfig()
         const {page} = this.state;
         const menu = menuConfig.map(item => {
-            const active = item.page.toString().indexOf(page) > -1 || (page === classes['order-detail'] && item.page === classes['my-order']) ? classes['active'] : '';
+            const active = item.page.toString().indexOf(page) > -1 || (page === 'order-detail' && item.page === 'my-order') ? 'active' : '';
 
             return item.enable ?
                 <MenuItem key={item.title}
                           onClick={()=> item.page ==='webtrack-login' ? this.redirectExternalLink(item.url) : this.handleLink(item.url)}
-                          className={`${classes['customer-menu-item']} ${item.page} ${active}`}>
-                    <div className={classes["menu-item-title"]}>
+                          className={`'customer-menu-item' ${item.page} ${active}`}>
+                    <div className="menu-item-title">
                         {Identify.__(item.title)}
                     </div>
                 </MenuItem> : null
         },this)
         return(
-            <div className={classes["dashboard-menu"]}>
-                <div className={classes["menu-header"]}>
-                    <div className={classes["welcome-customer"]}>
+            <div className="dashboard-menu">
+                <div className="menu-header">
+                    <div className="welcome-customer">
                         {Identify.__("Welcome, %s").replace('%s', firstname + ' ' + lastname)}
                     </div>
-                    <div role="presentation" className={classes["menu-logout"]} onClick={()=>this.handleLink('/logout.html')}>
+                    <div role="presentation" className="menu-logout" onClick={()=>this.handleLink('/logout.html')}>
                         <div className="hidden-xs">{Identify.__('Log out')}</div>
                         <LogoutIcon color={`#D7282F`} style={{width:18,height:18,marginRight:8, marginLeft:10}}/>
                     </div>
-                    <div role="presentation" className={classes["menu-toggle"]} onClick={()=>this.handleToggleMenu()}>
+                    <div role="presentation" className="menu-toggle" onClick={()=>this.handleToggleMenu()}>
                         <MenuIcon color={`#fff`} style={{width:30,height:30, marginTop: 1}}/>
                         <CloseIcon className={`hidden`} color={`#fff`} style={{width:16,height:16, marginTop:7, marginLeft: 9, marginRight: 5}}/>
                     </div>
                 </div>
-                <div className={classes["list-menu-item"]}>
-                    <MenuList className={classes['list-menu-item-content']}>
+                <div className="list-menu-item">
+                    <MenuList className='list-menu-item-content'>
                         {menu}
                     </MenuList>
                 </div>
@@ -169,25 +168,25 @@ class CustomerLayout extends React.Component{
         let content = null;
         switch (page) {
             case 'dashboard':
-                content = <Dashboard customer={data} classes={this.props.classes} history={this.props.history} isPhone={this.state.isPhone}/>
+                content = <Dashboard customer={data} history={this.props.history} isPhone={this.state.isPhone}/>
                 break;
             case 'address-book':
                 content = <AddressBook />
                 break;
             case 'edit':
-                content = <Profile data={data} history={this.props.history} isPhone={this.state.isPhone} classes={this.props.classes}/>
+                content = <Profile data={data} history={this.props.history} isPhone={this.state.isPhone}/>
                 break;
             case 'my-order':
-                content = <MyOrder data={data} isPhone={this.state.isPhone} classes={this.props.classes} history={this.props.history}/>
+                content = <MyOrder data={data} isPhone={this.state.isPhone} history={this.props.history}/>
                 break;
             case 'newsletter':
-                content = <Newsletter classes={this.props.classes}/>
+                content = <Newsletter />
                 break;
             case 'order-detail':
-                content = <OrderDetail classes={this.props.classes} history={this.props.history} isPhone={this.state.isPhone}/>
+                content = <OrderDetail  history={this.props.history} isPhone={this.state.isPhone}/>
                 break;
             case 'wishlist':
-                content = <Wishlist history={this.props.history} classes={this.props.classes}/>
+                content = <Wishlist history={this.props.history} />
                 break;
             default :
                 content = 'customer dashboard 2'
@@ -197,31 +196,30 @@ class CustomerLayout extends React.Component{
 
     componentDidMount(){
         this.setIsPhone()
-        this.pushTo = '/login.html';
-        const {isSignedIn, history, classes} = this.props
-        if(!isSignedIn){
-            history.push(this.pushTo);
-            return
-        }
-        $('body').addClass(classes['body-customer-dashboard'])
+        $('body').addClass('body-customer-dashboard')
     }
 
     componentWillUnmount(){
-        const {classes} = this.props
-        $('body').removeClass(classes['body-customer-dashboard'])
+        $('body').removeClass('body-customer-dashboard')
     }
 
     render() {
         const {page}= this.state;
-        const {classes} = this.props
+        const {isSignedIn, history} = this.props
+        this.pushTo = '/login.html';
+        if(!isSignedIn){
+            history.push(this.pushTo);
+            return ''
+        }
+
         return (
             <React.Fragment>
-                <div className={`${classes['customer-dashboard']} ${page}`} style={{minHeight:window.innerHeight-200}}>
+                <div className={`customer-dashboard ${page}`} style={{minHeight:window.innerHeight-200}}>
                     <BreadCrumb history={this.props.history} breadcrumb={[{name:'Home', link:'/'},{name:'Account'}]}/>
-                    <div className={`${classes['container']} container`}>
-                        <div className={classes["dashboard-layout"]}>
+                    <div className='container'>
+                        <div className="dashboard-layout">
                             {this.renderMenu()}
-                            <div className={`${classes['dashboard-content']}`}>
+                            <div className='dashboard-content'>
                                 {this.renderContent()}
                             </div>
                         </div>

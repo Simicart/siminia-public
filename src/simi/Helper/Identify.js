@@ -33,6 +33,8 @@ class Identify {
                 const languageWithCode = language[languageCode];
                 if (languageWithCode.hasOwnProperty(text)) {
                     return languageWithCode[text];
+                } else if (languageWithCode.hasOwnProperty(text.toLowerCase())) {
+                    return languageWithCode[text.toLowerCase()];
                 }
             }
         } catch (err) {
@@ -44,9 +46,12 @@ class Identify {
 
     static isRtl() {
         let is_rtl = false;
-        const configs = this.getStoreConfig();
-        if (configs !== null && configs.storeview && configs.storeview.base && configs.storeview.base.is_rtl) {
-            is_rtl = parseInt(configs.storeview.base.is_rtl, 10) === 1;
+        const storeConfigs = this.getStoreConfig();
+
+        const configs = storeConfigs && storeConfigs.hasOwnProperty('simiStoreConfig') ? storeConfigs.simiStoreConfig : null;
+
+        if (configs !== null && configs.config && configs.config.base && configs.config.base.is_rtl) {
+            is_rtl = parseInt(configs.config.base.is_rtl, 10) === 1;
         }
         return is_rtl;
     }
@@ -102,9 +107,21 @@ class Identify {
     static getAppDashboardConfigs() {
         let data = this.getDataFromStoreage(this.SESSION_STOREAGE, Constants.DASHBOARD_CONFIG);
         if (data === null) {
+            //init dashboard config
             data = window.DASHBOARD_CONFIG;
-            if (data)
-                this.storeDataToStoreage(this.SESSION_STOREAGE, Constants.DASHBOARD_CONFIG, data);
+            if (data) {
+                try {
+                    let languages = {}
+                    if (languages = data['app-configs'][0]['language']) {
+                        for(const locale in languages) {
+                            for(const term in languages[locale]) {
+                                languages[locale][term.toLowerCase()] = languages[locale][term]
+                            }
+                        }
+                    }
+                } catch (err) {console.log(err)}
+                this.storeDataToStoreage(this.SESSION_STOREAGE, Constants.DASHBOARD_CONFIG, data)
+            }
         }
         return data;
     }

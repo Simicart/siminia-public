@@ -37,7 +37,7 @@ response:
     # handled by the top-level 'proxy' object, which is a ProxyResolver
     # that passes the request through to the backing Magento server.
     - matches: request.url.pathname
-      pattern: '^/(graphql|rest|media)(/|$)'
+      pattern: '^/(graphql|rest|media|pub)(/|$)'
       use: proxy
     # Requests to create an account are handled by the top-level 'index'
     # object, which returns a generic app shell
@@ -56,6 +56,14 @@ response:
     - matches: request.url.pathname
       pattern: '^/simistatic/.'
       use: static
+      #param contain simiforceproxy would use proxy directly to magento site
+    - matches: request.url.search
+      pattern: 'simiforceproxy'
+      use: proxy
+      #path contain simiforceproxy would use proxy directly to magento site
+    - matches: request.url.pathname
+      pattern: 'simiforceproxy'
+      use: proxy
     # Requests with a URL key are handled by the top-level 'appShell' object.
     # The existence of a URL key is determined using the top-level 'urlKey'
     # object.
@@ -64,9 +72,14 @@ response:
       use: appShell
     # Requests to the document root, i.e. having no URL key, is also handled
     # by the top-level 'appShell' object.
+    # siminia handle home page with index (no url resolver)
     - matches: request.url.pathname
       pattern: '^/$'
-      use: appShell
+      use: index
+    # custom routes
+    - matches: request.url.pathname
+      pattern: '^/(cart.html|product.html|checkout.html|account.html|login.html|logout.html|wishlist.html|orderhistory.html|orderdetails.html|profile.html|addresses.html|newsletter.html|paypal_express.html)'
+      use: index
   # If the none of the tested conditions pass, the default handler for the
   # request is the top-level 'bundles' object, which is a DirectoryResolver that
   # serves the Webpack output assets from the './dist' folder.
@@ -227,14 +240,6 @@ resource:
         inline:
           model: genericObject
           template: './templates/generic-shell.mst'
-    #custom routes
-    - matches: request.url.pathname
-      pattern: '^/(cart.html|product.html|checkout.html|account.html|login.html|logout.html|wishlist.html|orderhistory.html|orderdetails.html|profile.html|addresses.html|newsletter.html|paypal_express.html)'
-      use:
-        inline:
-          model: genericObject
-          template: './templates/generic-shell.mst'
-
   default:
     # If none of the resolver conditions pass, no 'model' property is set and
     # this resource object sets the template property to the notfound-shell
@@ -391,7 +396,7 @@ index:
       engine: mustache
       template: './templates/generic-shell.mst'
       provide:
-        isDevelopment: isDevelopment
+        bundles: assetManifest.bundles
 
 # The static object is a DirectoryResolver that allows access to the files
 # inside the project's './static' directory.

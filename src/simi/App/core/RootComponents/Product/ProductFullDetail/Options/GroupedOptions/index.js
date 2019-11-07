@@ -3,15 +3,10 @@ import Identify from 'src/simi/Helper/Identify';
 import Price from 'src/simi/BaseComponents/Price'
 import OptionBase from '../OptionBase'
 import {Qty} from 'src/simi/BaseComponents/Input'
-import defaultClasses from './groupedoptions.css'
+
+require('./groupedoptions.scss')
 
 class GroupOptions extends OptionBase {
-
-    constructor(props) {
-        super(props)
-        this.classes = defaultClasses
-    }
-
     renderOptions =()=>{
         const attributes = this.data;
         const objOptions = [];
@@ -41,23 +36,21 @@ class GroupOptions extends OptionBase {
     };
 
     renderContentAttribute = (attribute) => {
-        const {classes} = this
         const id = attribute.product.id
         const qty = attribute.qty;
         return (
-            <div id={`attribute-${id}`} key={Identify.randomString(5)} className={`row ${classes['product-options-group-item']}`}>
+            <div id={`attribute-${id}`} key={Identify.randomString(5)} className={`row product-options-group-item`}>
                 <div className={`col-sm-8 col-xs-8 ${Identify.isRtl()? 'pull-right' : ''}`}>
-                    <div className={classes["option-title"]} style={{fontWeight : 500}}>{attribute.product.name}</div>
-                    <Price type={attribute.product.type_id} prices={attribute.product.price} classes={classes}/>
+                    <div className="option-title" style={{fontWeight : 500}}>{attribute.product.name}</div>
+                    <Price type={attribute.product.type_id} prices={attribute.product.price}/>
                 </div>
                 <div className={`col-sm-4 col-xs-4 text-center ${Identify.isRtl()? 'pull-right' : ''}`}>
                     {
                         <Qty 
-                            classes={classes}
                             dataId={id}
                             key={id}
                             value={qty} 
-                            className={`${classes['option-qty']} option-qty option-qty-${id}`} 
+                            className={`option-number option-qty option-qty-${id}`} 
                             inputStyle={{margin: '0 15px', borderRadius: 0, border: 'solid #eaeaea 1px', maxWidth: 50}} 
                             onChange={() => this.updatePrices()}
                         />
@@ -84,7 +77,7 @@ class GroupOptions extends OptionBase {
 
     render(){
         return (
-            <div>
+            <div className="grouped-options">
                 {this.renderOptions()}
             </div>
         )

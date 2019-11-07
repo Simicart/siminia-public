@@ -7,7 +7,7 @@
     {{/model}}
   {{> templates/open-body }}
     <div id="root">
-        Loading {{model.title}}...
+        {{> templates/splash}}
     </div>
   {{> templates/seed-bundles}}
 {{> templates/close-document}}

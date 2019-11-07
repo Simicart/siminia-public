@@ -7,7 +7,6 @@ import getCustomerInfoQuery from 'src/simi/queries/getCustomerInfo.graphql';
 import TitleHelper from 'src/simi/Helper/TitleHelper';
 
 const MyOrder = props => {
-    const { classes } = props;
     const [queryResult, queryApi] = simiUseQuery(getCustomerInfoQuery, false);
     const { data } = queryResult
     const { runQuery } = queryApi;
@@ -27,17 +26,17 @@ const MyOrder = props => {
     }
 
     return (
-        <div className={classes['account-my-orders-history']}>
+        <div className='account-my-orders-history'>
             {TitleHelper.renderMetaHeader({
                 title: Identify.__('My Orders'),
                 desc: Identify.__('My Orders') 
             })}
-            <div className={classes["customer-page-title"]}>
-                <div className={classes["customer-page-title"]}>
+            <div className="customer-page-title">
+                <div className="customer-page-title">
                     {Identify.__("My Orders")}
                 </div>
-                <div className={classes['account-my-orders']}>
-                    <OrderHistory classes={classes} data={data} showForDashboard={false} />
+                <div className='account-my-orders'>
+                    <OrderHistory data={data} showForDashboard={false} />
                 </div>
             </div>
         </div>

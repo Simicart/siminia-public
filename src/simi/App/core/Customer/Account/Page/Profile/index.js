@@ -11,10 +11,9 @@ import {
 
 class Profile extends Component {
     render() {
-        const {classes} = this.props;
         return (
-            <div className={classes['account-information-area']}>
-                <PageTitle title={'Account Information'} classes={classes}/>
+            <div className='account-information-area'>
+                <PageTitle title={'Account Information'}/>
                 <ProfileForm {...this.props}/>
             </div>
         )

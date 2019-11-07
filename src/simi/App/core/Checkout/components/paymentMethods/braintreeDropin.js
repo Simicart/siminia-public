@@ -10,18 +10,19 @@
  *   https://braintree.github.io/braintree-web-drop-in/docs/current/Dropin.html#requestPaymentMethod.
  */
 
-import React, { useEffect, useState, useCallback } from 'react';
-import { bool, func, shape, string } from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { bool, func } from 'prop-types';
 import { Util } from '@magento/peregrine';
 
-import defaultClasses from './braintreeDropin.css';
-import { mergeClasses } from 'src/classify';
 import dropIn from 'braintree-web-drop-in';
+
+require('./braintreeDropin.scss')
 
 const { BrowserPersistence } = Util;
 const storage = new BrowserPersistence();
 const authorization = process.env.BRAINTREE_TOKEN;
 const CONTAINER_ID = 'braintree-dropin-container';
+
 
 /**
  * This BraintreeDropin component has two purposes which lend to its
@@ -33,7 +34,6 @@ const CONTAINER_ID = 'braintree-dropin-container';
 
 const BraintreeDropin = props => {
     const { onError, onSuccess, shouldRequestPaymentNonce } = props;
-    const classes = mergeClasses(defaultClasses, props.classes);
     const [isError, setIsError] = useState(false);
     const [dropinInstance, setDropinInstance] = useState();
 
@@ -121,7 +121,7 @@ const BraintreeDropin = props => {
 
     if (isError) {
         return (
-            <span className={classes.error}>
+            <span className='error'>
                 There was an error loading payment options. Please try again
                 later.
             </span>
@@ -129,17 +129,13 @@ const BraintreeDropin = props => {
     }
 
     return (
-        <div className={classes.root}>
+        <div className='root'>
             <div id={CONTAINER_ID} />
         </div>
     );
 };
 
 BraintreeDropin.propTypes = {
-    classes: shape({
-        root: string,
-        error: string
-    }),
     onError: func.isRequired,
     onSuccess: func.isRequired,
     shouldRequestPaymentNonce: bool

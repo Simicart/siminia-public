@@ -15,8 +15,6 @@ export const Qty = (props)=>{
         direction : 'ltr'
     };
     style = {...style,...props.inputStyle};
-    let className = classes['option-number']?classes['option-number']:''
-    className +=  " " + props.className
 
     const changedValue = (e) => {
         if (!e.target)
@@ -38,7 +36,7 @@ export const Qty = (props)=>{
             type="number"
             defaultValue={value}
             pattern="[1-9]*"
-            className={className}
+            className={props.className}
             style={style}
             data-id={dataId}
             onChange={e => changedValue(e)}

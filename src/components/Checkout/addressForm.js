@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import Identify from 'src/simi/Helper/Identify'
 import { Form } from 'informed';
 import memoize from 'memoize-one';
 import { bool, func, shape, string, array } from 'prop-types';
@@ -95,7 +96,7 @@ class AddressForm extends Component {
                 <div className={classes.body}>
                     <h2 className={classes.heading}>Shipping Address</h2>
                     <div className={classes.firstname}>
-                        <Field label="First Name">
+                        <Field label={Identify.__("First Name")}>
                             <TextInput
                                 id={classes.firstname}
                                 field="firstname"
@@ -104,7 +105,7 @@ class AddressForm extends Component {
                         </Field>
                     </div>
                     <div className={classes.lastname}>
-                        <Field label="Last Name">
+                        <Field label={Identify.__("Last Name")}>
                             <TextInput
                                 id={classes.lastname}
                                 field="lastname"
@@ -113,7 +114,7 @@ class AddressForm extends Component {
                         </Field>
                     </div>
                     <div className={classes.street0}>
-                        <Field label="Street">
+                        <Field label={Identify.__("Street")}>
                             <TextInput
                                 id={classes.street0}
                                 field="street[0]"
@@ -122,7 +123,7 @@ class AddressForm extends Component {
                         </Field>
                     </div>
                     <div className={classes.city}>
-                        <Field label="City">
+                        <Field label={Identify.__("City")}>
                             <TextInput
                                 id={classes.city}
                                 field="city"
@@ -131,7 +132,7 @@ class AddressForm extends Component {
                         </Field>
                     </div>
                     <div className={classes.postcode}>
-                        <Field label="ZIP">
+                        <Field label={Identify.__("ZIP")}>
                             <TextInput
                                 id={classes.postcode}
                                 field="postcode"
@@ -140,7 +141,7 @@ class AddressForm extends Component {
                         </Field>
                     </div>
                     <div className={classes.region_code}>
-                        <Field label="State">
+                        <Field label={Identify.__("State")}>
                             <TextInput
                                 id={classes.region_code}
                                 field="region_code"
@@ -153,7 +154,7 @@ class AddressForm extends Component {
                         </Field>
                     </div>
                     <div className={classes.telephone}>
-                        <Field label="Phone">
+                        <Field label={Identify.__("Phone")}>
                             <TextInput
                                 id={classes.telephone}
                                 field="telephone"
@@ -162,7 +163,7 @@ class AddressForm extends Component {
                         </Field>
                     </div>
                     <div className={classes.email}>
-                        <Field label="Email">
+                        <Field label={Identify.__("Email")}>
                             <TextInput
                                 id={classes.email}
                                 field="email"

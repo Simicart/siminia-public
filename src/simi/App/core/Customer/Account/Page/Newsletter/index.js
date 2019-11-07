@@ -8,7 +8,7 @@ import { connect } from 'src/drivers';
 import { Simiquery, SimiMutation } from 'src/simi/Network/Query'
 import CUSTOMER_NEWSLETTER from 'src/simi/queries/customerNewsletter.graphql';
 import CUSTOMER_NEWSLETTER_UPDATE from 'src/simi/queries/customerNewsletterUpdate.graphql';
-import defaultClasses from './style.css';
+import defaultClasses from './style.scss';
 import { toggleMessages } from 'src/simi/Redux/actions/simiactions';
 
 class Newsletter extends React.Component {
@@ -18,12 +18,12 @@ class Newsletter extends React.Component {
     }
 
     render() {
-        const {user, classes} = this.props;
+        const {user, } = this.props;
         return (
-            <div className={classes['newsletter-wrap']}>
+            <div className='newsletter-wrap'>
                 {TitleHelper.renderMetaHeader({title:Identify.__('Newsletter')})}
                 <h1>{Identify.__('Newsletter Subscription')}</h1>
-                <div className={classes['subscription-title']}>{Identify.__('Subscription option')}</div>
+                <div className='subscription-title'>{Identify.__('Subscription option')}</div>
                 <Simiquery query={CUSTOMER_NEWSLETTER}>
                     {({ loading, error, data }) => {
                         if (error) return <div>Data Fetch Error</div>;
@@ -51,7 +51,7 @@ class Newsletter extends React.Component {
                                     }
                                     return (
                                     <>
-                                        <div className={classes["account-newsletter"]}>
+                                        <div className="account-newsletter">
                                             <input id="checkbox-subscribe" type="checkbox" onChange={(e)=> {
                                                 if (!user.email) return false;
                                                 clicked = true;

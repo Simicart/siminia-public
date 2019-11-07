@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Identify from 'src/simi/Helper/Identify'
 import { bool, func, object, shape, string } from 'prop-types';
 import { Form } from 'informed';
 
@@ -62,7 +63,7 @@ class SignIn extends Component {
                         getApi={this.setFormApi}
                         onSubmit={onSignIn}
                     >
-                        <Field label="Email" required={true}>
+                        <Field label={Identify.__("Email")} required={true}>
                             <TextInput
                                 autoComplete="email"
                                 field="email"
@@ -70,7 +71,7 @@ class SignIn extends Component {
                                 validateOnBlur
                             />
                         </Field>
-                        <Field label="Password" required={true}>
+                        <Field label={Identify.__("Password")} required={true}>
                             <TextInput
                                 autoComplete="current-password"
                                 field="password"

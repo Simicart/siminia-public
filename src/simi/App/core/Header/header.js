@@ -14,6 +14,7 @@ import MyAccount from './Component/MyAccount'
 import Settings from './Component/Settings'
 import { withRouter } from 'react-router-dom';
 import { logoUrl } from 'src/simi/Helper/Url'
+require('./header.scss');
 
 const SearchForm = React.lazy(() => import('./Component/SearchForm'));
 
@@ -26,27 +27,29 @@ class Header extends React.Component{
         this.classes = mergeClasses(defaultClasses, this.props.classes)
     }
 
-    setIsPhone(){
-        const obj = this;
-        $(window).resize(function () {
-            const width = window.innerWidth;
-            const isPhone = width < 1024;
-            if(obj.state.isPhone !== isPhone){
-                obj.setState({isPhone})
-            }
-        })
+    setMinPhone = () => {
+        const width = window.innerWidth;
+        const isPhone = width < 1024;
+        if (this.state.isPhone !== isPhone){
+            this.setState({isPhone})
+        }
     }
 
     componentDidMount(){
-        this.setIsPhone();
+        window.addEventListener('resize', this.setMinPhone);
     }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.setMinPhone);
+    }
+
 
     renderLogo = () => {
         const {isPhone} = this.state;
         return (
             <div className={`${this.classes['search-icon']} ${this.classes['header-logo']}`} >
                 <Link to='/'>
-                    <img 
+                    <img
                         src={logoUrl()}
                         alt="siminia-logo" style={!isPhone?{width: 240, height: 40}:{width: 180, height: 30}}/>
                 </Link>
@@ -56,7 +59,7 @@ class Header extends React.Component{
 
     renderSearchForm = () => {
         return(
-            <div className={`${this.classes['header-search']} header-search`}>
+            <div className={`${this.classes['header-search']} header-search ${Identify.isRtl() ? this.classes['header-search-rtl'] : ''}`}>
                 <Suspense fallback={null}>
                         <SearchForm
                             history={this.props.history}
@@ -69,7 +72,7 @@ class Header extends React.Component{
     renderRightBar = () => {
         const {classes} = this
         return(
-            <div className={classes['right-bar']}>
+            <div className={`${classes['right-bar']} ${Identify.isRtl() ? 'right-bar-rtl' : ''}`}>
                 {
                     !this.state.isPhone && (
                     <div className={classes['right-bar-item']} id="header-settings">
@@ -80,8 +83,8 @@ class Header extends React.Component{
                 <div className={classes['right-bar-item']} id="my-account">
                     <MyAccount classes={classes}/>
                 </div>
-                <div 
-                    className={classes['right-bar-item']} id="wish-list" 
+                <div
+                    className={classes['right-bar-item']} id="wish-list"
                 >
                     <Link to={'/wishlist.html'}>
                         <div className={classes['item-icon']} style={{display: 'flex', justifyContent: 'center'}}>
@@ -92,7 +95,7 @@ class Header extends React.Component{
                         </div>
                     </Link>
                 </div>
-                <div className={classes['right-bar-item']}>
+                <div className={`${classes['right-bar-item']} ${Identify.isRtl() ? 'right-bar-item-rtl' : ''}`}>
                     <CartTrigger classes={classes}/>
                 </div>
             </div>
@@ -128,7 +131,7 @@ class Header extends React.Component{
 
     render(){
         this.classes = mergeClasses(defaultClasses, this.props.classes);
-        if(window.innerWidth < 1024){
+        if(this.state.isPhone){
             return this.renderViewPhone()
         }
         return(

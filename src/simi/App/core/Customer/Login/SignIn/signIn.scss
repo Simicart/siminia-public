@@ -1,0 +1,86 @@
+.root.sign-in-form {
+    display: grid;
+    gap: 0.5rem;
+    justify-items: stretch;
+    padding: 0 1.5rem;
+}
+
+$white: white;
+$red: red;
+$gray: #38404A;
+
+.sign-in-form{
+    .forgotPassword {
+        display: block;
+        text-decoration: underline;
+        font-size: 16px;
+    }
+    
+    .form {
+        display: grid;
+        row-gap: 1rem;
+    }
+    
+    .modal {
+        visibility: hidden;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+    }
+    
+    .modal_active {
+        visibility: visible;
+        opacity: 0.9;
+    }
+    
+    .showCreateAccountButtonCtn, .signInButtonCtn {
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+    
+    .showCreateAccountButton,
+    .signInButton {
+        padding: 5px 15px;
+        font-size: 16px;
+        font-weight: 600;
+        white-space: nowrap;
+        text-align: center;
+        padding-top: 10px;
+        cursor: pointer;
+        border: 0;
+        width: 100%;
+        min-width: 200px;
+        padding-bottom: 10px;
+    }
+    
+    .signInButton:hover {
+        opacity: 0.8;
+    }
+    
+    .showCreateAccountButton {
+        background-color: $white;
+        color: $gray;
+        padding-top: 11px;
+        border: solid $gray 1px;
+        font-weight: 400;
+    }
+    
+    .showCreateAccountButton:hover {
+        padding-top: 9px;
+        border: solid $gray 2px;
+    }
+    
+    .signInDivider {
+        border-style: solid;
+        border-width: 0 0 1px;
+        margin: 2rem 1rem;
+    }
+    
+    .signInError {
+        color: $red;
+        text-align: center;
+    }
+}
+

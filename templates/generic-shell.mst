@@ -1,13 +1,8 @@
 {{> templates/open-document}}
-    {{#model}}
-    <title>{{title}} - Siminia</title>
-    {{/model}}
-    {{^model}}
     <title>Siminia</title>
-    {{/model}}
   {{> templates/open-body }}
     <div id="root">
-        Loading {{model.title}}...
+        {{> templates/splash}}
     </div>
   {{> templates/seed-bundles}}
 {{> templates/close-document}}

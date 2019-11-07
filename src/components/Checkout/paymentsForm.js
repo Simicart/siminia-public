@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import Identify from 'src/simi/Helper/Identify'
 import { Form } from 'informed';
 import { array, bool, func, shape, string } from 'prop-types';
 
@@ -105,7 +106,7 @@ class PaymentsForm extends Component {
         return (
             <Fragment>
                 <div className={classes.street0}>
-                    <Field label="Street">
+                    <Field label={Identify.__("Street")}>
                         <TextInput
                             id={classes.street0}
                             field="street[0]"
@@ -114,7 +115,7 @@ class PaymentsForm extends Component {
                     </Field>
                 </div>
                 <div className={classes.city}>
-                    <Field label="City">
+                    <Field label={Identify.__("City")}>
                         <TextInput
                             id={classes.city}
                             field="city"
@@ -123,7 +124,7 @@ class PaymentsForm extends Component {
                     </Field>
                 </div>
                 <div className={classes.region_code}>
-                    <Field label="State">
+                    <Field label={Identify.__("State")}>
                         <TextInput
                             id={classes.region_code}
                             field="region_code"
@@ -136,7 +137,7 @@ class PaymentsForm extends Component {
                     </Field>
                 </div>
                 <div className={classes.postcode}>
-                    <Field label="ZIP">
+                    <Field label={Identify.__("ZIP")}>
                         <TextInput
                             id={classes.postcode}
                             field="postcode"
@@ -170,7 +171,7 @@ class PaymentsForm extends Component {
                     <div className={classes.address_check}>
                         <Checkbox
                             field="addresses_same"
-                            label="Billing address same as shipping address"
+                            label={Identify.__("Billing address same as shipping address")}
                         />
                     </div>
                     {!formState.values.addresses_same &&

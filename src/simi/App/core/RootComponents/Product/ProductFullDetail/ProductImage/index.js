@@ -7,7 +7,8 @@ import isProductConfigurable from 'src/util/isProductConfigurable';
 import { resourceUrl } from 'src/simi/Helper/Url'
 import findMatchingVariant from 'src/util/findMatchingProductVariant';
 import { transparentPlaceholder } from 'src/shared/images';
-import classes from './style.css'
+require('./style.scss')
+
 
 const $ = window.$;
 
@@ -60,7 +61,7 @@ class ProductImage extends React.Component {
             ? resourceUrl(item.file, { type: 'image-product', width: 640 })
             : transparentPlaceholder
             return (
-                <div key={Identify.randomString(5)} style={{cursor: 'pointer', backgroundColor: '#ffffff'}}>
+                <div key={Identify.randomString(5)} style={{cursor: 'pointer', backgroundColor: '#ffffff'}} className="carousel-image-container">
                     <img width={width} src={src} height={width} alt={item.url}
                          style={{objectFit: 'scale-down'}}
                     />
@@ -149,7 +150,7 @@ class ProductImage extends React.Component {
         this.images = this.sortedImages()
         const {images} = this
         return (
-            <div className={classes['product-detail-carousel']}>
+            <div className="product-detail-carousel">
                 <Carousel 
                         key={(images && images[0] && images[0].file) ? images[0].file : Identify.randomString(5)}
                         showArrows={this.showArrows}  

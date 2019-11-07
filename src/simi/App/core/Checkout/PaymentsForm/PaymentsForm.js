@@ -1,18 +1,16 @@
 import React, { useCallback, useState } from 'react';
 import { Form } from 'informed';
-import { array, shape, string, object } from 'prop-types';
+import { array, object } from 'prop-types';
 
-import { mergeClasses } from 'src/classify';
-import defaultClasses from './PaymentsForm.css';
 import PaymentsFormItems from '../components/paymentsFormItems';
 
+require('./PaymentsForm.scss')
 /**
  * A wrapper around the payment form. This component's purpose is to maintain
  * the submission state as well as prepare/set initial values.
  */
 const PaymentsForm = props => {
     const { initialValues } = props;
-    const classes = mergeClasses(defaultClasses, props.classes);
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -22,7 +20,6 @@ const PaymentsForm = props => {
 
     const formChildrenProps = {
         ...props,
-        classes,
         isSubmitting,
         setIsSubmitting
     };
@@ -30,7 +27,7 @@ const PaymentsForm = props => {
 
     return (
         <Form
-            className={classes.root}
+            className='root'
             initialValues={initialValues}
             onSubmit={handleSubmit}
         >
@@ -40,9 +37,6 @@ const PaymentsForm = props => {
 };
 
 PaymentsForm.propTypes = {
-    classes: shape({
-        root: string
-    }),
     initialValues: object,
     paymentMethods: array
 };

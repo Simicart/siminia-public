@@ -57,9 +57,8 @@ class PaginationTable extends Pagination {
     }
 
     renderDropDown = () => {
-        const {classes} = this.props;
         return(
-            <select itemType="number" className={classes['dropdown-show-item']} onChange={this.changeLimit}>
+            <select itemType="number" className='dropdown-show-item' onChange={this.changeLimit}>
                 <option value={Number(10)}>10</option>
                 <option value={20}>20</option>
                 <option value={30}>30</option>
@@ -69,7 +68,6 @@ class PaginationTable extends Pagination {
 
     renderPageNumber = (total)=> {
         // Logic for displaying page numbers
-        const { classes } = this.props;
         if(!this.props.showPageNumber) return null;
         const pageNumbers = [];
         let totalItem = total;
@@ -87,7 +85,7 @@ class PaginationTable extends Pagination {
                     key={number}
                     id={number}
                     onClick={(e)=>this.changePage(e)}
-                    className={`${classes['page-nums']} ${classes[active]}`}
+                    className={`'page-nums' ${active}`}
                 >
                     {number}
                 </li>
@@ -113,9 +111,9 @@ class PaginationTable extends Pagination {
                 alignItems : 'center',
                 fontSize : 14,
             }}>
-                <li className={classes["icon-page-number"]} onClick={()=>this.handleChangePage(false, total)}>{prevPageIcon}</li>
+                <li className="icon-page-number" onClick={()=>this.handleChangePage(false, total)}>{prevPageIcon}</li>
                 {renderPageNumbers}
-                <li className={classes["icon-page-number"]} onClick={()=>this.handleChangePage(true, total)}>{nextPageIcon}</li>
+                <li className="icon-page-number" onClick={()=>this.handleChangePage(true, total)}>{nextPageIcon}</li>
             </ul>
         ):'';
         let {currentPage,limit} = this.state;
@@ -123,7 +121,7 @@ class PaginationTable extends Pagination {
         let firstItem = lastItem - limit+1;
         lastItem = lastItem > totalItem ? totalItem : lastItem;
         let itemsPerPage = (
-            <div className={classes["icon-page-number"]}>
+            <div className="icon-page-number">
                 {
                     this.props.showInfoItem &&
                     <span style={{marginRight : 10,fontSize : 16}}>
@@ -133,7 +131,7 @@ class PaginationTable extends Pagination {
             </div>
         );
         return (
-            <div className={classes["config-page"]}
+            <div className="config-page"
                  style={{
                      display : 'flex',
                      alignItems : 'center',
@@ -154,7 +152,6 @@ class PaginationTable extends Pagination {
 
     renderPagination = () => {
         let {data, currentPage, limit} = this.state;
-        const {classes} = this.props;
         if(data.length > 0){
             // Logic for displaying current todos
             const indexOfLastTodo = currentPage * limit;
@@ -167,7 +164,7 @@ class PaginationTable extends Pagination {
             let total = data.length;
             return (
                 <React.Fragment>
-                    <table className={`col-xs-12 ${classes["table-striped"]} ${classes["table-siminia"]}`}>
+                    <table className='col-xs-12 table-striped table-siminia'>
                         {this.renderColumnTitle()}
                         <tbody>{items}</tbody>
                     </table>

@@ -10,6 +10,7 @@ import SubmitButton from './submitButton';
 
 import classify from 'src/classify';
 import Button from 'src/components/Button';
+import Identify from 'src/simi/Helper/Identify'
 import defaultClasses from './form.css';
 
 class Form extends Component {
@@ -160,27 +161,27 @@ class Form extends Component {
             <Fragment>
                 <div className={classes.body}>
                     <Section
-                        label="Ship To"
+                        label={Identify.__("Ship To")}
                         onClick={this.editAddress}
                         showEditIcon={hasShippingAddress}
                     >
                         {this.shippingAddressSummary}
                     </Section>
                     <Section
-                        label="Pay With"
+                        label={Identify.__("Pay With")}
                         onClick={this.editPaymentMethod}
                         showEditIcon={hasPaymentMethod}
                     >
                         {this.paymentMethodSummary}
                     </Section>
                     <Section
-                        label="Use"
+                        label={Identify.__("Use")}
                         onClick={this.editShippingMethod}
                         showEditIcon={hasShippingMethod}
                     >
                         {this.shippingMethodSummary}
                     </Section>
-                    <Section label="TOTAL">
+                    <Section label={Identify.__("TOTAL")}>
                         <Price
                             currencyCode={cart.totals.quote_currency_code}
                             value={cart.totals.subtotal || 0}

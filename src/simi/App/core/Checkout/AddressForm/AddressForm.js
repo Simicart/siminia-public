@@ -1,12 +1,12 @@
 import React, { useCallback, useMemo } from 'react';
-import { Form } from 'informed';
 import { array, bool, func, object, shape, string } from 'prop-types';
 
-import { mergeClasses } from 'src/classify';
-import defaultClasses from './AddressForm.css';
 import isObjectEmpty from 'src/util/isObjectEmpty';
 import FormFields from '../components/formFields';
 import Identify from 'src/simi/Helper/Identify';
+import { smoothScrollToView } from 'src/simi/Helper/Behavior';
+
+require('./AddressForm.scss')
 
 const fields = [
     'city',
@@ -54,10 +54,11 @@ const AddressForm = props => {
         submitting,
         billingForm,
         billingAddressSaved,
-        submitBilling
+        submitBilling,
+        is_virtual,
     } = props;
 
-    const classes = mergeClasses(defaultClasses, props.classes);
+    const formId = props.id?props.id:Identify.randomString()
     const validationMessage = isAddressInvalid ? invalidAddressMessage : null;
 
     let initialFormValues = initialValues;
@@ -67,7 +68,7 @@ const AddressForm = props => {
         if (isObjectEmpty(initialValues)) {
             initialFormValues = DEFAULT_FORM_VALUES;
         } else {
-            if (initialValues.sameAsShippingAddress) {
+            if (initialValues.sameAsShippingAddress && !is_virtual) {
                 initialFormValues = {
                     addresses_same: true
                 };
@@ -122,7 +123,7 @@ const AddressForm = props => {
                 value: id
             })
         );
-        initialCountry = values.country || '' //countries[0].id;
+        initialCountry = values.country_id || '' //countries[0].id;
     } else {
         selectableCountries = [];
         initialCountry = '';
@@ -139,23 +140,50 @@ const AddressForm = props => {
         [submitBilling]
     );
 
-    const handleSubmit = useCallback(
-        values => {
-            if (values.hasOwnProperty('addresses_same')) delete values.addresses_same
-            if (values.hasOwnProperty('selected_address_field')) delete values.selected_address_field
-            if (values.hasOwnProperty('password')) delete values.password
-            if (values.save_in_address_book) {
-                values.save_in_address_book = 1;
-            } else {
-                values.save_in_address_book = 0;
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const submitValues = JSON.parse(JSON.stringify(values))
+        let formValid = true
+        $(`#${formId} input, #${formId} select`).each(function () {
+            const inputField = $(this)
+            if (inputField) {
+                const value = inputField.val()
+                if ((inputField.hasClass('isrequired') || inputField.attr('isrequired') === 'isrequired') && !value) {
+                    inputField.addClass('warning')
+                    formValid = false
+                    smoothScrollToView(inputField, 350, 50)
+                    return false
+                }
+                inputField.removeClass('warning')
+                const name = inputField.attr('name')
+                if (name) {
+                    if (name === 'street[0]') {
+                        submitValues.street = [value]
+                    } else if (name === 'street[1]') { 
+                        submitValues.street.push(value)
+                    } else if (name === 'emailaddress') { 
+                        submitValues['email'] = value
+                    } else {
+                        submitValues[name] = value
+                    }
+                }
             }
-            submit(JSON.parse(JSON.stringify(values)));
-            if (!billingForm && !billingAddressSaved) {
-                handleSubmitBillingSameFollowShipping();
-            }
-        },
-        [submit]
-    );
+        });
+        if (!formValid)
+            return
+        if (submitValues.hasOwnProperty('addresses_same')) delete submitValues.addresses_same
+        if (submitValues.hasOwnProperty('selected_address_field')) delete submitValues.selected_address_field
+        if (submitValues.hasOwnProperty('password')) delete submitValues.password
+        if (submitValues.save_in_address_book) {
+            submitValues.save_in_address_book = 1;
+        } else {
+            submitValues.save_in_address_book = 0;
+        }
+        submit(JSON.parse(JSON.stringify(submitValues)));
+        if (!billingForm && !billingAddressSaved) {
+            handleSubmitBillingSameFollowShipping();
+        }
+    }
 
     const handleFormReset = () => {
         Object.keys(values).forEach(k => values[k] = null)
@@ -163,46 +191,30 @@ const AddressForm = props => {
 
     const formChildrenProps = {
         ...props,
-        classes,
         submitting,
         submit,
         validationMessage,
         initialCountry,
         selectableCountries,
         configFields,
-        handleFormReset
+        handleFormReset,
+        formId
     };
 
     return (
-        <Form
-            className={classes.root}
-            initialValues={values}
+        <form 
+            id={formId}
             onSubmit={handleSubmit}
-            key={Identify.randomString()}
+            className='root'
             style={{ display: 'inline-block', width: '100%' }}
         >
-            <FormFields {...formChildrenProps} />
-        </Form>
+            <FormFields {...formChildrenProps}/>
+        </form>
     );
 };
 
 AddressForm.propTypes = {
-    classes: shape({
-        body: string,
-        button: string,
-        city: string,
-        email: string,
-        firstname: string,
-        footer: string,
-        heading: string,
-        lastname: string,
-        postcode: string,
-        root: string,
-        region_code: string,
-        street0: string,
-        telephone: string,
-        validation: string
-    }),
+    id: string,
     countries: array,
     invalidAddressMessage: string,
     initialValues: object,

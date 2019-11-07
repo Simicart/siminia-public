@@ -8,7 +8,7 @@ const PageTitle = props => {
             {TitleHelper.renderMetaHeader({
                 title:Identify.__(props.title)
             })}
-            <div className={props.classes["customer-page-title"]}>{props.title}</div>
+            <div className="customer-page-title">{props.title}</div>
         </React.Fragment>
     )
 }

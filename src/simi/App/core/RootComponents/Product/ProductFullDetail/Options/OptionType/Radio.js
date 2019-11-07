@@ -29,16 +29,15 @@ class RadioField extends Abstract {
                 }
         }
         const items = [];
-        const {classes} = this.props
         for (const i in options) {
             const item = options[i];
-            const label  = <OptionLabel title={item.name} classes={classes} item={item} type_id={this.type_id}/>
+            const label  = <OptionLabel title={item.name} item={item} type_id={this.type_id}/>
             const element = (
                 <div 
                     role="presentation" 
-                    className={`${classes['radio-option']} radio-option-${this.key} radio-option-${i}`}
+                    className={`radio-option radio-option-${this.key} radio-option-${i}`}
                     key={i} onClick={(e) => this.updateCheck(e, i)} >
-                    <div className={`${classes['radio-option-input']} `}>
+                    <div className={`radio-option-input `}>
                         <input 
                             type="radio" 
                             name={`radio-${item.name}`} 
@@ -59,7 +58,6 @@ class RadioField extends Abstract {
     renderWithCustom = (data)=>{
         const {value} = this.state
         const values = data.values;
-        const {classes} = this.props
         if (data && data.isRequired === '0') {
             if (values[0] && values[0].id !== 0)
                 values.unshift({
@@ -71,9 +69,9 @@ class RadioField extends Abstract {
             return (
                 <div 
                     role="presentation" 
-                    className={`${classes['radio-option']} radio-option-${this.key} radio-option-${item.id}`} 
+                    className={`radio-option radio-option-${this.key} radio-option-${item.id}`} 
                     key={item.id} onClick={(e) => this.updateCheck(e, item.id)} >
-                    <div  className={`${classes['radio-option-input']} `}>
+                    <div  className={`radio-option-input `}>
                         <input 
                             type="radio" 
                             name={`radio-${data.id}`} 
@@ -82,7 +80,7 @@ class RadioField extends Abstract {
                             onChange={() => {}} 
                         />
                     </div>
-                    <OptionLabel title={item.title} classes={classes} item={item}/>
+                    <OptionLabel title={item.title} item={item}/>
                 </div>
             )
         })

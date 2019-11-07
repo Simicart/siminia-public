@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
-import defaultClass from './ccType.css';
 import Identify from 'src/simi/Helper/Identify';
 import CardHelper from 'src/simi/Helper/Card';
 import Button from 'src/components/Button';
+
+require('./ccType.scss')
+
 const $ = window.$;
 
 const ccType = (props) => {
@@ -279,9 +281,9 @@ const ccType = (props) => {
                 </label>
                 <input name="cc_cvc" id="cc_cvc" ref={cvcRef} defaultValue={initialValues && initialValues.hasOwnProperty('cvc') ? initialValues.cvc : ''} className="form-control" type="text" />
             </div>
-            {errorMsg && <div className={defaultClass["cc-msg-error"]}>{errorMsg}</div>}
+            {errorMsg && <div className="cc-msg-error">{errorMsg}</div>}
             <Button
-                className={defaultClass['submitCC']}
+                className='submitCC'
                 style={{ marginTop: 10, marginBottom: 20 }}
                 type="button"
                 onClick={() => submitCC()}

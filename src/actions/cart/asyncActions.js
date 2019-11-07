@@ -4,7 +4,9 @@ import { closeDrawer, toggleDrawer } from 'src/actions/app';
 import checkoutActions from 'src/actions/checkout';
 import actions from './actions';
 
-const { request } = RestApi.Magento2;
+// const { request } = RestApi.Magento2;
+import { request } from 'src/simi/Network/RestMagento'
+
 const { BrowserPersistence } = Util;
 const storage = new BrowserPersistence();
 

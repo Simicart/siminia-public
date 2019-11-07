@@ -4,7 +4,8 @@ import Loading from 'src/simi/BaseComponents/Loading';
 import Identify from 'src/simi/Helper/Identify';
 import Pagination from 'src/simi/BaseComponents/Pagination';
 import {StaticRate} from 'src/simi/BaseComponents/Rate'
-import classes from './reviewList.css';
+
+require('./reviewList.scss');
 
 const ReviewList = props => {
 
@@ -17,12 +18,12 @@ const ReviewList = props => {
     const renderListItem = () => {
         if(data && data.reviews && data.reviews.length) {
             return (
-                <div className={classes["list-review-item"]}>
-                    <Pagination data={data.reviews} renderItem={renderItem} classes={classes}/>
+                <div className="list-review-item">
+                    <Pagination data={data.reviews} renderItem={renderItem} />
                 </div>
             )
         }
-        return <div className={classes["text-center"]}>
+        return <div className="text-center">
             {Identify.__('Review is empty')}
         </div>
     };
@@ -32,48 +33,48 @@ const ReviewList = props => {
             const rating_votes = item.votes.map((rate, index) => {
                 const point = rate.value;
                 return (
-                   <div className={classes["rating-votes"]} key={index}>
-                       <div className={classes["label-rate"]}>{Identify.__(rate.label)}</div>
-                       <div className={classes["item-rating"]}><Rate rate={parseInt(point,10)} size={13}/></div>
+                   <div className="rating-votes" key={index}>
+                       <div className="label-rate">{Identify.__(rate.label)}</div>
+                       <div className="item-rating"><Rate rate={parseInt(point,10)} size={13}/></div>
                    </div>
                )
             });
             const created = (
-                        <div className={`${classes["item-created"]} flex`}>
+                        <div className="item-created flex">
                             <span>{item.created_at}</span>
                             <span style={{margin : '0 5px'}}>{Identify.__('By')}</span>
                             <span>{item.nickname}</span>
                         </div>
                     )
             return(
-                <div className={`${classes["review-item"]} ${classes["item"]}`} key={item.review_id}>
-                    <div className={`${classes["item-title"]} flex`}>{item.title}</div>
-                    <div className={classes["review-item-detail"]}>
-                        <div className={classes["item-votes"]}>
+                <div className="review-item item" key={item.review_id}>
+                    <div className="item-title flex">{item.title}</div>
+                    <div className="review-item-detail">
+                        <div className="item-votes">
                             {rating_votes}
                         </div>
-                        <div className={classes["item-review-content"]} >
-                            <div className={classes["item-detail"]}>{item.detail}</div>
+                        <div className="item-review-content" >
+                            <div className="item-detail">{item.detail}</div>
                             {created}
                         </div>
                     </div>
-                    <div className={classes["clearfix"]}></div>
+                    <div className="clearfix"></div>
                 </div>
             )
         }
 
         return(
-            <div className={`${classes["review-item"]} ${classes["item"]}`} key={item.review_id}>
-                <div className={`${classes["item-title"]} flex`}>{item.title}</div>
-                <div className={classes["review-item-detail"]}>
-                    <div className={classes["item-rate"]}><StaticRate rate={item.rate_points} /></div>
-                    <div className={`${classes["item-created"]} flex`} style={{marginLeft : Identify.isRtl() ? 0 : 'auto',marginRight : Identify.isRtl() ? 'auto' : 0}}>
+            <div className="review-item item" key={item.review_id}>
+                <div className="item-title flex">{item.title}</div>
+                <div className="review-item-detail">
+                    <div className="item-rate"><StaticRate rate={item.rate_points} /></div>
+                    <div className="item-created flex" style={{marginLeft : Identify.isRtl() ? 0 : 'auto',marginRight : Identify.isRtl() ? 'auto' : 0}}>
                         <span>{item.created_at}</span>
                         <span style={{margin : '0 5px'}}>By</span>
                         <span>{item.nickname}</span>
                     </div>
                 </div>
-                <div className={classes["item-detail"]}>{item.detail}</div>
+                <div className="item-detail">{item.detail}</div>
             </div>
         )
     };
@@ -109,7 +110,7 @@ const ReviewList = props => {
 
     return (
         <div>
-            <h2 className={classes.reviewlistTitle}>
+            <h2 className="review-list-title">
                 <span>{Identify.__('Customer Reviews')}</span>
             </h2>
             {renderListItem()}

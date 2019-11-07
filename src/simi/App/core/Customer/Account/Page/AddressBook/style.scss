@@ -1,0 +1,317 @@
+.address-book h1{font-size: 36px;font-weight: normal;}
+.address-book .default-address{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.address-book .address-label{
+    font-size: 24px;
+    line-height: normal;
+    font-weight: bold;
+    border-bottom: 1px solid #dcdcdc;
+    color: #2d2d2d;
+    padding: 5px 0px;
+}
+.address-book .address-content{
+    padding: 10px 0px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.address-book .billing-address{
+    background-color: #ffffff;
+    padding: 24px;
+    margin-right: 30px;
+    margin-top: 30px;
+    width: 100%;
+    flex: 1 1;
+}
+.address-book .shipping-address{
+    background-color: #ffffff;
+    padding: 24px;
+    margin-right: 30px;
+    margin-top: 30px;
+    width: 100%;
+    flex: 1 1;
+}
+
+.address-book .box-title{
+    color: #2d2d2d;
+    font-weight: bold;
+    font-size: 18px;
+}
+.address-book .box-content{}
+.address-book .box-content > address{
+    font-size: 18px;
+    line-height: 24px;
+    margin: 10px 0px;
+}
+.address-book .box-action{}
+.address-book .box-action > a{}
+.address-book .box-action > a > span{
+    color: #2335c5;
+}
+
+.address-book .address-content .box-title{}
+.address-book .address-content .box-content{}
+.address-book .address-content .box-content > address{}
+.address-book .billing-address .box-title{}
+.address-book .billing-address .box-content{}
+.address-book .billing-address .box-content > address{}
+.address-book .shipping-address .box-title{}
+.address-book .shipping-address .box-content{}
+.address-book .shipping-address .box-content > address{}
+
+.address-book .additional-address{}
+.address-book .additional-address .address-label{}
+.address-book .additional-address .table-wrap{
+    padding: 10px 0px;
+    margin-top: 10px;
+}
+.address-book .additional-address .table-wrap table{
+    font-size: 16px;
+    color: #3d3d3d;
+    background-color: #fafafa;
+    width: 100%;
+}
+.address-book .additional-address .table-wrap table > thead{
+    background-color: #dcdcdc;
+}
+.address-book .additional-address .table-wrap table > tbody{
+}
+.address-book .additional-address .table-wrap table tr{
+}
+.address-book .additional-address .table-wrap table tr:nth-child(2n){
+    background-color: #eaeaea;
+}
+.address-book .additional-address .table-wrap table tr th{
+    padding: 5px;
+    font-size: 14px;
+}
+.address-book .additional-address .table-wrap table tr td{
+    padding: 5px;
+}
+.address-book .additional-address .table-wrap a{
+    padding: 5px;
+    color: #2335c5;
+}
+.address-book .additional-address .table-wrap a.edit{
+    color: #2335c5;
+}
+.address-book .additional-address .table-wrap a.delete{
+    color: #f78787;
+}
+.address-book .additional-address .pagination{
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.address-book .additional-address .pagination > ul{
+    display: inline-block;
+    width: 55%;
+    text-align: right;
+}
+.address-book .additional-address .pagination > ul li{
+    min-width: 30px;
+    height: 22px;
+    margin: 5px;
+    display: inline-block;
+    background-color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 22px;
+}
+.address-book .additional-address .pagination > ul li:hover{
+    background-color: #fbc96a;
+}
+.address-book .additional-address .pagination > ul li.active{
+    background-color: #fbc96a;
+}
+.address-book .additional-address .pagination > ul li.disabled{
+    background-color: #eaeaea;
+    color: #b5b5b5;
+}
+.address-book .additional-address .pagination > ul li.disabled > a{
+    color: #b5b5b5;
+    cursor: auto;
+}
+.address-book .additional-address .pagination > ul li > a{
+    text-decoration: none;
+    user-select: none;
+    display: block;
+    line-height: 22px;
+    padding: 0px;
+}
+.address-book .additional-address .pagination > ul li > a:visited,
+.address-book .additional-address .pagination > ul li > a:visited{
+    text-decoration: none;
+    user-select: none;
+}
+.address-book .additional-address .pagination .info{
+    min-width: 150px;
+    line-height: 32px;
+}
+.address-book .additional-address .pagination .info span{}
+.address-book .additional-address .pagination .options-size{
+    min-width: 150px;
+    line-height: 32px;
+}
+.address-book .additional-address .pagination .options-size > span{}
+.address-book .additional-address .pagination .options-size > select{
+    border: 1px solid #eaeaea;
+    margin: 0px 5px;
+}
+.address-book .additional-address .pagination .options-size > select option{}
+
+.address-book .btn{
+    background-color: #5074c7;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+}
+.address-book .btn.add-new-address{
+    background-color: #5074c7;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+}
+.address-book .btn:hover{
+    opacity: .8;
+}
+
+.address-book .edit-address form{}
+.address-book .edit-address .col-left{
+    margin-top: 0px;
+    margin-bottom: 30px;
+}
+.address-book .edit-address .col-right{
+    margin-top: 0px;
+    margin-bottom: 30px;
+}
+.address-book .edit-address .col-label{
+    font-size: 30px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+.address-book .edit-address .form-button{}
+.address-book .edit-address .form-row{
+    min-height: 34px;
+    padding: 2px 0px;
+    margin: 5px 0px;
+}
+.address-book .edit-address .address-field-label {
+    font-size: 14px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+.address-book .edit-address .address-field-label.req::after {
+    color: #ee0000;
+    content: " *";
+}
+
+.address-book .edit-address .form-row input.warning, .address-book .edit-address .form-row select.warning {
+    box-shadow: 0 0 5px -2px #ee0000;
+}
+
+.address-book .edit-address .form-row label span{}
+.address-book .edit-address .form-row input{
+    width: 100%;
+    height: 34px;
+    line-height: 30px;
+    margin: 2px 0px;
+    padding: 2px 10px;
+    user-select: none;
+    outline: none;
+    border: 1px solid rgb(112, 112, 112);
+    &:focus {
+        outline: none;
+        border-color: rgb(0, 115, 120);
+        box-shadow: 0 0 0 2px rgb(212, 243, 238), 0 0 0.5rem 2px rgba(0, 115, 120, 0.2);
+    }
+}
+.address-book .edit-address .form-row select{
+    user-select: none;
+    outline: none;
+    border: 1px solid rgb(112, 112, 112);
+    border-radius: 2px;
+    color: rgb(33, 33, 33);
+    display: inline-flex;
+    flex: 0 0 100%;
+    font-size: 1rem;
+    height: 2.25rem;
+    margin: 0;
+    padding: calc(0.375rem - 1px) calc(2.25rem - 1px) calc(0.375rem - 1px) calc(0.625rem - 1px);
+    width: 100%;
+    -webkit-appearance: button;
+    background: white url(https://d30y9cdsu7xlg0.cloudfront.net/png/221782-200.png);
+    background-position: 97% center;
+    background-repeat: no-repeat;
+    background-size: 18px;
+
+    &:focus {
+        outline: none;
+        border-color: rgb(0, 115, 120);
+        box-shadow: 0 0 0 2px rgb(212, 243, 238), 0 0 0.5rem 2px rgba(0, 115, 120, 0.2);
+    }
+}
+.address-book .edit-address .form-row select option{}
+.address-book .edit-address .form-row .checkbox{
+    padding: 5px 10px;
+    margin: 0px;
+}
+.address-book .edit-address .form-row .checkbox input{
+    width: auto;
+    height: 22px;
+    padding: 0px;
+    margin: 0px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+.address-book .edit-address .form-row .checkbox label{
+    margin-bottom: 0px;
+    vertical-align: middle;
+}
+
+.form-row.state-province .state-option {display: flex;flex-wrap: wrap;}
+.form-row.state-province .state-option > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 1444px){
+    .address-book .additional-address {
+        .col.phone, .row.phone,
+        .col.zip, .row.zip,
+        .col.lastname, .row.lastname,
+        .col.state, .row.state
+        {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 1024px){
+    .address-book .additional-address .table-wrap table > thead {
+        display: none;
+    }
+    .address-book .additional-address tr {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 16px;
+        flex-direction: column;
+    }
+}
+@media (max-width: 768px){
+    .address-book .billing-address{
+        margin-right: 0px;
+    }
+    .address-book .shipping-address{
+        margin-right: 0px;
+    }
+}

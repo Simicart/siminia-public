@@ -1,9 +1,8 @@
 import React, { useCallback, Fragment } from 'react';
 import { useFormState, asField, BasicRadioGroup } from 'informed';
-import { array, bool, func, shape, string } from 'prop-types';
+import { array, bool, func } from 'prop-types';
 import { isRequired } from 'src/util/formValidators';
 
-import defaultClasses from './paymentsFormItems.css';
 import Button from 'src/components/Button';
 import Radio from 'src/components/RadioGroup/radio';
 import TextInput from 'src/components/TextInput';
@@ -12,6 +11,7 @@ import isObjectEmpty from 'src/util/isObjectEmpty';
 import Identify from 'src/simi/Helper/Identify';
 import BraintreeDropin from './paymentMethods/braintreeDropin';
 import CCType from './paymentMethods/ccType';
+require('./paymentsFormItems.scss')
 
 /**
  * This component is meant to be nested within an `informed` form. It utilizes
@@ -23,7 +23,6 @@ const CustomRadioPayment = asField(({ fieldState, ...props }) => (
 
 const PaymentsFormItems = props => {
     const {
-        classes,
         setIsSubmitting,
         submit,
         isSubmitting,
@@ -123,14 +122,14 @@ const PaymentsFormItems = props => {
                         frameCard = <Fragment>
                             <Field label={Identify.__("Purchase Order Number")} required>
                                 <TextInput
-                                    id={classes.purchaseorder}
+                                    id='purchaseorder'
                                     field="purchaseorder"
                                     validate={isRequired}
                                 />
 
                             </Field>
                             <Button
-                                className={classes.button}
+                                className='button'
                                 style={{ marginTop: 10, marginBottom: 20 }}
                                 type="submit"
                                 onClick={() => handleSavePO()}
@@ -143,7 +142,7 @@ const PaymentsFormItems = props => {
                         frameCard = <Fragment>
                             <BraintreeDropin shouldRequestPaymentNonce={isSubmitting} onError={handleError} onSuccess={handleSuccess} />
                             <Button
-                                className={classes.button}
+                                className="button"
                                 style={{ marginTop: 10, marginBottom: 20 }}
                                 type="button"
                                 onClick={() => handleSubmit()}
@@ -174,8 +173,8 @@ const PaymentsFormItems = props => {
 
     return (
         <Fragment>
-            <div className={classes.body}>
-                <div className={defaultClasses['payment-method-item']}>
+            <div className='body'>
+                <div className='payment-method-item'>
                     <CustomRadioPayment initialValue={paymentCode} field="payment_method" key={thisInitialValue} onChange={() => selectPaymentMethod()}>
                         {renderMethod()}
                     </CustomRadioPayment>
@@ -188,18 +187,6 @@ const PaymentsFormItems = props => {
 
 PaymentsFormItems.propTypes = {
     cancel: func.isRequired,
-    classes: shape({
-        address_check: string,
-        body: string,
-        button: string,
-        braintree: string,
-        city: string,
-        footer: string,
-        heading: string,
-        postcode: string,
-        region_code: string,
-        street0: string
-    }),
     countries: array,
     isSubmitting: bool,
     setIsSubmitting: func.isRequired,

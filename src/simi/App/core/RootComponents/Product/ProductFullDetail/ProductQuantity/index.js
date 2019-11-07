@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Quantity = props => {
-    const { classes, initialValue, onValueChange } = props;
+    const {initialValue, onValueChange } = props;
     const changedValue = () => {
         const qtyField = $('#product-detail-qty')
         let qty = parseInt(qtyField.val())
@@ -12,7 +12,7 @@ const Quantity = props => {
         $('#product-detail-qty').val(qty)
     }
     return (
-        <div className={classes['product-quantity']}>
+        <div className="product-quantity">
             <input defaultValue={initialValue} id="product-detail-qty" type="number" onChange={changedValue}/>
         </div>
     );

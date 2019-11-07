@@ -1,8 +1,8 @@
 {{> templates/open-document}}
-    <title>Siminia -- Not Found</title>
+    <title>Siminia</title>
   {{> templates/open-body }}
     <div id="root">
-        Not found!
+        {{> templates/splash}}
     </div>
   {{> templates/seed-bundles}}
 {{> templates/close-document}}

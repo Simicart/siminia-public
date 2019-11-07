@@ -47,10 +47,9 @@ class Time extends Abstract {
     };
 
     renderTimePicker = () => {
-        const {classes} = this.props
         const {time} = this.state
         return (
-            <div className={classes['time-picker-ctn']}>
+            <div className='time-picker-ctn'>
                 <MuiThemeProvider muiTheme={muiTheme}>
                     <TimePicker
                         format="ampm"
@@ -63,7 +62,7 @@ class Time extends Abstract {
                         }}
                     />
                 </MuiThemeProvider>
-                <div role="presentation" className={classes['clear-time']} onClick={()=>this.handleChangeTimePicker()}>
+                <div role="presentation" className='clear-time' onClick={()=>this.handleChangeTimePicker()}>
                     {time && <CloseIcon style={{width: 12, height: 12, fill: '#aeaeae'}}/>}
                 </div>
             </div>

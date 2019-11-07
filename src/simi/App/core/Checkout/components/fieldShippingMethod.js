@@ -1,11 +1,11 @@
 import React, { Fragment, useCallback } from 'react';
 import { useFormState } from 'informed';
 
-import defaultClasses from './fieldShippingMethod.css';
 import Select from 'src/components/Select';
+require('./fieldShippingMethod.scss')
 
 const fieldShippingMethod = (props) => {
-    const { classes, initialValue, selectableShippingMethods, availableShippingMethods, cancel, submit } = props;
+    const { initialValue, selectableShippingMethods, availableShippingMethods, cancel, submit } = props;
 
     const formState = useFormState();
 
@@ -36,8 +36,8 @@ const fieldShippingMethod = (props) => {
 
     return <Fragment>
         <div
-            className={defaultClasses['ship-method_field']}
-            id={classes.shippingMethod}
+            className="ship-method_field"
+            id="shippingMethod"
         >
             <Select
                 field="shippingMethod"

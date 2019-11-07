@@ -36,6 +36,7 @@ class Tile extends Component {
             ...restProps
         } = this.props;
         const className = classes[getClassName('root', isSelected, hasFocus)];
+
         const { label } = item;
 
         return (

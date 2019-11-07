@@ -7,12 +7,11 @@ import Radio from '../OptionType/Radio';
 import Select from '../OptionType/Select';
 import Checkbox from '../OptionType/Checkbox';
 import OptionBase from '../OptionBase'
-import defaultClasses from './bundleoption.css'
 import { formatPrice } from 'src/simi/Helper/Pricing';
 import {Qty} from 'src/simi/BaseComponents/Input'
 
+require('./bundleoption.scss');
 class BundleOption extends OptionBase {
-    classes = defaultClasses
     showingOption = false
     state = {
         configPrice: {
@@ -105,7 +104,6 @@ class BundleOption extends OptionBase {
     };
 
     renderAttribute = (type, obj, id, labelRequried) => {
-        const {classes} = this
         const hidden = obj.isMulti || type === 'checkbox' ? 'hidden' : '';
         const {selected} = this
         const attributes = this.data.bundle_options.options;
@@ -119,16 +117,16 @@ class BundleOption extends OptionBase {
         }
 
         return (
-            <div key={id} className={classes["option-select"]}>
-                <div className={classes["option-title"]} style={{fontSize : '18px',height : 30}}>
+            <div key={id} className="option-select">
+                <div className="option-title" style={{fontSize : '18px',height : 30}}>
                     <span>{obj.title} <span style={{marginLeft:'5px',color :'red'}}>{labelRequried}</span></span>
                 </div>
-                <div className={classes["option-content"]} id="bundle-options">
-                    <div className={classes["option-list"]} style={{marginBottom : '0'}}>
+                <div className="option-content" id="bundle-options">
+                    <div className="option-list" style={{marginBottom : '0'}}>
                         {this.renderContentAttribute(obj, type, id)}
                     </div>
                     {!hidden &&
-                        <div className={`${classes['bundle-option-qty']} ${type}`} data-name={id} style={{
+                        <div className={`bundle-option-qty ${type}`} data-name={id} style={{
                             marginLeft : '25px',
                             fontWeight : 600
                         }}>
@@ -136,10 +134,9 @@ class BundleOption extends OptionBase {
                             <Qty 
                                 dataId={id}
                                 key={selected[id]?selected[id]:id}
-                                className={`${classes['option-qty']} option-qty option-qty-${id}`} 
+                                className={`option-qty option-qty option-qty-${id}`} 
                                 value={defaultQty} 
                                 inputStyle={{margin: '0 15px', borderRadius: 0, border: 'solid #eaeaea 1px', maxWidth: 50, color: customQty?'black':'#aeaeae'}} 
-                                classes={classes}
                                 onChange={() => this.updatePrices()}
                                 disabled={!customQty}
                             />
@@ -151,7 +148,6 @@ class BundleOption extends OptionBase {
     }
 
     renderMultiCheckbox =(ObjOptions, id = '0')=>{
-        const {classes} = this
         const options = ObjOptions.selections;
         const values = ObjOptions.values;
         const objs = [];
@@ -166,8 +162,8 @@ class BundleOption extends OptionBase {
                 title = `${item.qty} x ${item.name}`
             }
             const element = (
-                <div key={Identify.randomString(5)} className={classes["option-row"]}>
-                    <Checkbox title={title} item={item} id={id} selected={selected} value={i} parent={this} classes={classes} type_id='bundle'/>
+                <div key={Identify.randomString(5)} className="option-row">
+                    <Checkbox title={title} item={item} id={id} selected={selected} value={i} parent={this} type_id='bundle'/>
                 </div>);
 
             objs.push(element);
@@ -176,15 +172,14 @@ class BundleOption extends OptionBase {
     };
 
     renderContentAttribute = (ObjOptions, type = 'checkbox', id = '0') => {
-        const {classes} = this
         const key = id;
         if(type === 'select'){
-            return <Select data={ObjOptions} id={key} parent={this} classes={classes} type_id='bundle'/>
+            return <Select data={ObjOptions} id={key} parent={this} type_id='bundle'/>
         }
         if (ObjOptions.isMulti) {
             return this.renderMultiCheckbox(ObjOptions, id)
         }
-        return <Radio data={ObjOptions} id={key} parent={this} classes={classes} type_id='bundle'/>
+        return <Radio data={ObjOptions} id={key} parent={this} type_id='bundle'/>
     }
 
     setParamQty =(keyQty = null)=>{
@@ -239,7 +234,7 @@ class BundleOption extends OptionBase {
     }
 
     render(){
-        const {classes, state} = this
+        const {state} = this
         const {configPrice} = state
         const {priceInclTax, priceExclTax} = configPrice
         const price_style = {
@@ -247,34 +242,34 @@ class BundleOption extends OptionBase {
         }
 
         return (
-            <div className={classes["bundle-option-container"]}>
-                <div className={classes["btn-bundle"]}>
+            <div className="bundle-option-container">
+                <div className="btn-bundle">
                     {this.renderBtnCustomize()}
                 </div>
-                <div className={`${classes["bundle-show-options"]} bundle-show-options`} style={{display : 'none'}}>
+                <div className={`bundle-show-options bundle-show-options`} style={{display : 'none'}}>
                     {this.renderOptions()}
                     {   parseInt(priceInclTax, 10) ?
                         <React.Fragment>
-                            <div className={classes["your-customize-title"]}>{Identify.__('Your Customization')}</div>
+                            <div className="your-customize-title">{Identify.__('Your Customization')}</div>
                             <div 
-                                className={`${classes["customize-price-bundle"]} customize-price-bundle`} 
+                                className={`customize-price-bundle customize-price-bundle`} 
                                 id={`customize-price-bundle`} 
                                 style={{display : (priceInclTax && priceExclTax)?'block':'none'}}>
-                                    <div className={classes["configured_price_in"]}>
-                                        <span className={`${classes['label-price']}`}>
+                                    <div className="configured_price_in">
+                                        <span className={`label-price`}>
                                             {
                                                 (priceExclTax && priceExclTax !== priceInclTax) && Identify.__('Incl. Tax')
                                             }
                                         </span>
-                                        <span className={classes["price"]} style={price_style}>
+                                        <span className="price" style={price_style}>
                                             {formatPrice(priceInclTax)}
                                         </span>
                                     </div>
                                 {
                                     (priceExclTax && priceExclTax !== priceInclTax) &&
-                                    <div className={classes["configured_price_ex"]}>
-                                        <span className={`${classes['label-price']}`}>{Identify.__('Excl. Tax')}</span>
-                                        <span className={classes["price"]} style={price_style}>
+                                    <div className="configured_price_ex">
+                                        <span className={`label-price`}>{Identify.__('Excl. Tax')}</span>
+                                        <span className="price" style={price_style}>
                                             {formatPrice(priceExclTax)}
                                         </span>
                                     </div>

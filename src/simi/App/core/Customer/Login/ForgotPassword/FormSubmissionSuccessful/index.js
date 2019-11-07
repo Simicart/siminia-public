@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 import Identify from 'src/simi/Helper/Identify'
 import {configColor} from 'src/simi/Config'
-import classes from './formSubmissionSuccessful.css';
+
+require('./formSubmissionSuccessful.scss');
 
 const FormSubmissionSuccessful = props => {
     const {successMessage} = props
@@ -11,12 +12,12 @@ const FormSubmissionSuccessful = props => {
     const { onContinue } = props;
 
     return (
-        <div>
-            <p className={classes.text}>{textMessage}</p>
-            <div className={classes.buttonContainer}>
+        <div className="form-successful">
+            <p className='text'>{textMessage}</p>
+            <div className='buttonContainer'>
                 <button 
                     onClick={onContinue}
-                    className={classes.submitButton}
+                    className='submitButton'
                     style={{backgroundColor: configColor.button_background, color: configColor.button_text_color}}>
                     {Identify.__('Continue Shopping')}
                 </button>

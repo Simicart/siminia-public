@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react'
 import Identify from 'src/simi/Helper/Identify'
-import classes from './linkedProduct.css'
 import { simiUseQuery } from 'src/simi/Network/Query' 
 import getProductsBySkus from 'src/simi/queries/catalog/getProductsBySkus.graphql'
 import Loading from "src/simi/BaseComponents/Loading"
 import { GridItem } from 'src/simi/BaseComponents/GridItem'
 import {applySimiProductListItemExtraField} from 'src/simi/Helper/Product'
+
+require('./linkedProduct.scss');
 
 const LinkedProducts = props => {
     const {product, history} = props
@@ -51,10 +52,9 @@ const LinkedProducts = props => {
                         }
                         if (itemData)
                             linkedProducts.push (
-                                <div key={index} className={classes.linkedProductItem}>
+                                <div key={index} className="linked-product-item">
                                     <GridItem
                                         item={itemData}
-                                        classes={classes}
                                         handleLink={handleLink}
                                         lazyImage={true}
                                     />
@@ -67,15 +67,15 @@ const LinkedProducts = props => {
             }
 
             return (
-                <div className={classes.linkedProductCtn}>
-                    <h2 className={classes.title}>
+                <div className="linked-product-ctn">
+                    <h2 className="title">
                         <span>
                         {
                             link_type==='related'?Identify.__('Related Products'):link_type==='crosssell'?Identify.__('You may also be interested in'):''
                         }
                         </span>
                     </h2>
-                    <div className={classes.linkedProducts}>
+                    <div className="linked-products">
                         {linkedProducts}
                     </div>
                 </div>

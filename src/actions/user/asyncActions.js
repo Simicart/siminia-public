@@ -5,7 +5,9 @@ import { getCartDetails, removeCart } from 'src/actions/cart';
 
 import actions from './actions';
 
-const { request } = RestApi.Magento2;
+// const { request } = RestApi.Magento2;
+import { request } from 'src/simi/Network/RestMagento'
+
 const { BrowserPersistence } = Util;
 const storage = new BrowserPersistence();
 

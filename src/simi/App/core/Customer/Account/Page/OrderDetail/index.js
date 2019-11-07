@@ -6,7 +6,7 @@ import { Whitebtn } from "src/simi/BaseComponents/Button";
 import Loading from "src/simi/BaseComponents/Loading";
 import ReactHTMLParse from "react-html-parser";
 import { Link } from "react-router-dom";
-import "./../../style.css";
+import "./../../style.scss";
 import { getOrderDetail, getReOrder } from 'src/simi/Model/Orders';
 import { showFogLoading, hideFogLoading } from 'src/simi/BaseComponents/Loading/GlobalLoading'
 import { toggleMessages } from 'src/simi/Redux/actions/simiactions';
@@ -15,7 +15,7 @@ import { connect } from 'src/drivers';
 const Detail = (props) => {
     const [data, setData] = useState(null)
     const [loaded, setLoaded] = useState(false)
-    const { history, classes, isPhone } = props
+    const { history, isPhone } = props
     const id = history.location.state.orderData.increment_id || null;
 
     useEffect(() => {
@@ -70,24 +70,24 @@ const Detail = (props) => {
         let html = null;
         if (data) {
             html = (
-                <div className={classes["order-detail__summary"]}>
-                    <div className={classes["detail-col"]}>
-                        <div className={classes["line-num"]}>
+                <div className="order-detail__summary">
+                    <div className="detail-col">
+                        <div className="line-num">
                             <b>{Identify.__("Order Number:")}</b>
                             <span style={{ marginLeft: 26 }}>
                                 {data.increment_id}
                             </span>
                         </div>
-                        <div className={classes["line-num"]}>
+                        <div className="line-num">
                             <b>{Identify.__("Order placed on:")}</b>
                             <span style={{ marginLeft: 16 }}>
                                 {getDateFormat(data.created_at)}
                             </span>
                         </div>
-                        <div className={classes["line-num"]}>
+                        <div className="line-num">
                             <b>{Identify.__("Order status:")}</b>
                             <span
-                                className={classes["green"]}
+                                className="green"
                                 style={{
                                     marginLeft: 42,
                                     textTransform: "capitalize"
@@ -99,10 +99,10 @@ const Detail = (props) => {
                     </div>
                     {data.shipping_address &&
                         Object.keys(data.shipping_address).length > 0 && (
-                            <div className={classes["detail-col"]}>
-                                <div className={classes["line-num"]}>
+                            <div className="detail-col">
+                                <div className="line-num">
                                     <b>{Identify.__("Delivery Address:")}</b>
-                                    <div className={`${classes["address"]} ${classes["green"]}`}>
+                                    <div className="address green">
                                         {data.shipping_address.street && (
                                             <span style={{ display: "block" }}>
                                                 {ReactHTMLParse(
@@ -155,29 +155,29 @@ const Detail = (props) => {
                 const location = `/product.html?sku=${item.simi_sku?item.simi_sku:item.sku}`
 
                 return (
-                    <div className={classes["order-detail-line"]} key={index}>
-                        <div className={`${classes["detail-order__col"]} ${classes["img-item"]}`}>
+                    <div className="order-detail-line" key={index}>
+                        <div className="detail-order__col img-item">
                             {isPhone && <b>{Identify.__('Item')}</b>}
                             <Link
                                 to={location}
-                                className={classes["img-name-col"]}
+                                className="img-name-col"
                             >
                                 <div
-                                    className={classes["img-order-container"]}
+                                    className="img-order-container"
                                     style={{}}
                                 >
                                     <img src={item.image} alt={item.name} />
                                 </div>
-                                <div className={classes["order-item-info"]}>
+                                <div className="order-item-info">
                                     <div
-                                        className={classes["des-order"]}
+                                        className="des-order"
                                         style={{}}
                                     >
-                                        <div className={classes["item-name"]}>
+                                        <div className="item-name">
                                             {ReactHTMLParse(item.name)}
                                         </div>
                                         {optionText.length > 0 && (
-                                            <div className={classes["item-options"]}>
+                                            <div className="item-options">
                                                 {optionText}
                                             </div>
                                         )}
@@ -185,22 +185,22 @@ const Detail = (props) => {
                                 </div>
                             </Link>
                         </div>
-                        <div className={`${classes["detail-order__col"]} ${classes["product-code"]}`}>
+                        <div className="detail-order__col product-code">
                             {isPhone && <b>{Identify.__('Product code')}</b>}
                             {item.sku}
                         </div>
-                        <div className={`${classes["detail-order__col"]} ${classes["item-size"]}`}>
+                        <div className="detail-order__col item-size">
                             {isPhone && <b>{Identify.__('Size')}</b>}
                             {optionText}
                         </div>
-                        <div className={`${classes["detail-order__col"]} ${classes["item-qty"]}`}>
+                        <div className="detail-order__col item-qty">
                             {isPhone && <b>{Identify.__('Quantity')}</b>}
                             <span>{parseInt(item.qty_ordered, 10)}</span>
                         </div>
-                        <div className={classes["detail-order__col"]}>
+                        <div className="detail-order__col">
                             {isPhone && <b>{Identify.__('Unit Price')}</b>}
                             <div
-                                className={classes["cart-item-value"]}
+                                className="cart-item-value"
                                 style={{}}
                             >
                                 {
@@ -208,10 +208,10 @@ const Detail = (props) => {
                                 }
                             </div>
                         </div>
-                        <div className={classes["detail-order__col"]}>
+                        <div className="detail-order__col">
                             {isPhone && <b>{Identify.__('Total Price')}</b>}
                             <div
-                                className={classes["cart-item-value"]}
+                                className="cart-item-value"
                                 style={{}}
                             >
                                 {
@@ -233,28 +233,28 @@ const Detail = (props) => {
 
         if (data) {
             html = (
-                <div className={classes["order-detail-table"]}>
-                    {!isPhone && <div className={classes["order-header"]}>
-                        <div className={classes["detail-order__col"]}>
+                <div className="order-detail-table">
+                    {!isPhone && <div className="order-header">
+                        <div className="detail-order__col">
                             {Identify.__("Item")}
                         </div>
-                        <div className={classes["detail-order__col"]}>
+                        <div className="detail-order__col">
                             {Identify.__("Product Code")}
                         </div>
-                        <div className={classes["detail-order__col"]}>
+                        <div className="detail-order__col">
                             {Identify.__("Size")}
                         </div>
-                        <div className={classes["detail-order__col"]}>
+                        <div className="detail-order__col">
                             {Identify.__("Quantity")}
                         </div>
-                        <div className={classes["detail-order__col"]}>
+                        <div className="detail-order__col">
                             {Identify.__("Unit Price")}
                         </div>
-                        <div className={classes["detail-order__col"]}>
+                        <div className="detail-order__col">
                             {Identify.__("Total price")}
                         </div>
                     </div>}
-                    <div className={classes["order-body"]}>
+                    <div className="order-body">
                         {data.order_items.length > 0
                             ? renderItem(data.order_items)
                             : Identify.__("No product found!")}
@@ -269,32 +269,32 @@ const Detail = (props) => {
         const totalPrice = data.total;
 
         return (
-            <div className={classes["detail-order-footer"]}>
-                <div className={classes["delivery-restrictions"]}>
-                    <b className={classes["title"]} style={{ display: 'block' }}>{Identify.__('Delivery Restrictions')}</b>
+            <div className="detail-order-footer">
+                <div className="delivery-restrictions">
+                    <b className="title" style={{ display: 'block' }}>{Identify.__('Delivery Restrictions')}</b>
                     <textarea name="delevery_retriction" readOnly defaultValue={data.shipping_restriction} placeholder={Identify.__('e.g. no through route, low bridges etc.')}/>
                 </div>
-                <div className={classes["box-total-price"]}>
-                    {totalPrice && <div className={classes["total-sub-price-container"]}>
-                        <div className={classes["summary-price-line"]}>
-                            <span className={classes["bold"]}>{Identify.__('Subtotal')}</span>
+                <div className="box-total-price">
+                    {totalPrice && <div className="total-sub-price-container">
+                        <div className="summary-price-line">
+                            <span className="bold">{Identify.__('Subtotal')}</span>
                             <span className="price">{totalPrice.tax ? getFormatPrice(totalPrice.subtotal_incl_tax) : getFormatPrice(totalPrice.subtotal_excl_tax)}</span>
                         </div>
-                        <div className={classes["summary-price-line"]}>
-                            <span className={classes["bold"]}>{Identify.__('Delivery')}</span>
+                        <div className="summary-price-line">
+                            <span className="bold">{Identify.__('Delivery')}</span>
                             <span className="price">{totalPrice.tax ? getFormatPrice(totalPrice.shipping_hand_incl_tax) : getFormatPrice(totalPrice.shipping_hand_excl_tax)}</span>
                         </div>
-                        <div className={classes["summary-price-line"]}>
-                            <span className={classes["bold"]}>{Identify.__('VAT')}</span>
+                        <div className="summary-price-line">
+                            <span className="bold">{Identify.__('VAT')}</span>
                             <span className="price">{getFormatPrice(totalPrice.tax)}</span>
                         </div>
-                        <div className={`${classes["summary-price-line"]} ${classes['total']}`}>
-                            <span className={classes["bold"]}>{Identify.__('Total')}</span>
-                            <span className={classes["price"]}>{totalPrice.tax ? getFormatPrice(totalPrice.grand_total_incl_tax) : getFormatPrice(totalPrice.shipping_hand_excl_tax)}</span>
+                        <div className="summary-price-line total">
+                            <span className="bold">{Identify.__('Total')}</span>
+                            <span className="price">{totalPrice.tax ? getFormatPrice(totalPrice.grand_total_incl_tax) : getFormatPrice(totalPrice.shipping_hand_excl_tax)}</span>
                         </div>
                     </div>}
 
-                    <Whitebtn className={classes["back-all-orders"]} text={Identify.__('Back to all orders')} onClick={onBackOrder} />
+                    <Whitebtn className="back-all-orders" text={Identify.__('Back to all orders')} onClick={onBackOrder} />
                 </div>
             </div>
         )
@@ -305,13 +305,13 @@ const Detail = (props) => {
     }
 
     return (
-        <div className={classes["dashboard-acc-order-detail"]}>
-            <div className={classes["customer-page-title"]}>
+        <div className="dashboard-acc-order-detail">
+            <div className="customer-page-title">
                 {Identify.__("Order overview")}
             </div>
             {renderSummary()}
             <Whitebtn
-                className={classes["back-all-orders"]}
+                className="back-all-orders"
                 text={Identify.__('Re-order')}
                 style={{ width: "20%", marginBottom: "10px" }}
                 onClick={() => {

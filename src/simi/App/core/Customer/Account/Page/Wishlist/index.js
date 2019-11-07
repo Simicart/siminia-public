@@ -6,11 +6,12 @@ import Item from "./Item";
 import {getWishlist} from 'src/simi/Model/Wishlist'
 import { toggleMessages } from 'src/simi/Redux/actions/simiactions';
 import { getCartDetails } from 'src/actions/cart';
-import classes from './index.css'
 import Pagination from 'src/simi/BaseComponents/Pagination';
 import Loading from 'src/simi/BaseComponents/Loading'
 import {hideFogLoading} from 'src/simi/BaseComponents/Loading/GlobalLoading'
 import {smoothScrollToView} from 'src/simi/Helper/Behavior'
+
+require("./index.scss");
 
 const Wishlist = props => {    
     const { history, toggleMessages, getCartDetails} = props    
@@ -45,16 +46,15 @@ const Wishlist = props => {
             <div
                 key={item.wishlist_item_id}
                 className={`${
-                    index % 4 === 0 ? classes["first"] : ""
-                } ${classes['siminia-wishlist-item']}`}
+                    index % 4 === 0 ? "first" : ""
+                } 'siminia-wishlist-item'`}
             >
                 <Item
                     item={item}
                     lazyImage={true}
                     className={`${
-                        index % 4 === 0 ? classes["first"] : ""
+                        index % 4 === 0 ? "first" : ""
                     }`}
-                    classes={classes}
                     showBuyNow={true}
                     parent={this}
                     getWishlist={getWishlistItem}
@@ -73,8 +73,7 @@ const Wishlist = props => {
             rows = (
                 <Pagination 
                     data={wishlistitems} 
-                    renderItem={renderItem} 
-                    classes={classes} 
+                    renderItem={renderItem}  
                     itemsPerPageOptions={[8, 16, 32]} 
                     limit={8}
                     itemCount={total}
@@ -87,17 +86,17 @@ const Wishlist = props => {
         rows = <Loading />
     }
     return (
-        <div className={classes["account-my-wishlist"]}>
+        <div className="account-my-wishlist">
             {TitleHelper.renderMetaHeader({
                     title:Identify.__('Favourites')
             })}
-            <div className={classes["customer-page-title"]}>
+            <div className="customer-page-title">
                 {Identify.__("Favourites")}
             </div>
-            <div className={classes["account-favourites"]}>
-                <div className={classes["product-grid"]}>
+            <div className="account-favourites">
+                <div className="product-grid">
                     {rows ? rows : (
-                        <div className={classes["no-product"]}>
+                        <div className="no-product">
                             <p>
                                 {Identify.__(
                                     "There are no products matching the selection"

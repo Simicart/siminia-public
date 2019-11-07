@@ -24,7 +24,7 @@ class ImageLightbox extends React.Component {
         if (!this.props || !this.props.images) {
             return (<div></div>);
         }
-        let images = this.props.images;
+        const images = this.props.images;
         return (
             <div>
                 {isOpen && (

@@ -2,11 +2,11 @@ import React, { useCallback } from 'react';
 import { Form } from 'informed';
 import { array, func, shape, string } from 'prop-types';
 import { formatLabelPrice } from 'src/simi/Helper/Pricing';
-import { mergeClasses } from 'src/classify';
-import defaultClasses from './ShippingForm.css';
 import Identify from 'src/simi/Helper/Identify';
 import FieldShippingMethod from '../components/fieldShippingMethod';
 import Loading from 'src/simi/BaseComponents/Loading/ReactLoading'
+require('./ShippingForm.scss')
+
 
 const ShippingForm = props => {
     const {
@@ -15,7 +15,6 @@ const ShippingForm = props => {
         shippingMethod,
         submit
     } = props;
-    const classes = mergeClasses(defaultClasses, props.classes);
 
     let initialValue;
     let selectableShippingMethods;
@@ -59,7 +58,6 @@ const ShippingForm = props => {
     );
 
     const childFieldProps = {
-        classes,
         initialValue,
         selectableShippingMethods,
         availableShippingMethods,
@@ -68,8 +66,8 @@ const ShippingForm = props => {
     }
 
     return (
-        <Form className={classes.root} onSubmit={handleSubmit} >
-            <div className={classes.body}>
+        <Form className="root" onSubmit={handleSubmit} >
+            <div className="body">
                 <FieldShippingMethod {...childFieldProps} />
             </div>
         </Form>
@@ -79,13 +77,6 @@ const ShippingForm = props => {
 ShippingForm.propTypes = {
     availableShippingMethods: array.isRequired,
     cancel: func.isRequired,
-    classes: shape({
-        body: string,
-        button: string,
-        footer: string,
-        heading: string,
-        shippingMethod: string
-    }),
     shippingMethod: string,
     submit: func.isRequired
 };

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Identify from 'src/simi/Helper/Identify'
 import { func, shape, string } from 'prop-types';
 import { Form } from 'informed';
 
@@ -77,7 +78,7 @@ class CreateAccount extends Component {
                     {`Check out faster, use multiple addresses, track
                          orders and more by creating an account!`}
                 </h3>
-                <Field label="First Name" required={true}>
+                <Field label={Identify.__("First Name")} required={true}>
                     <TextInput
                         field="customer.firstname"
                         autoComplete="given-name"
@@ -85,7 +86,7 @@ class CreateAccount extends Component {
                         validateOnBlur
                     />
                 </Field>
-                <Field label="Last Name" required={true}>
+                <Field label={Identify.__("Last Name")} required={true}>
                     <TextInput
                         field="customer.lastname"
                         autoComplete="family-name"
@@ -93,7 +94,7 @@ class CreateAccount extends Component {
                         validateOnBlur
                     />
                 </Field>
-                <Field label="Email" required={true}>
+                <Field label={Identify.__("Email")} required={true}>
                     <TextInput
                         field="customer.email"
                         autoComplete="email"
@@ -101,7 +102,7 @@ class CreateAccount extends Component {
                         validateOnBlur
                     />
                 </Field>
-                <Field label="Password">
+                <Field label={Identify.__("Password")}>
                     <TextInput
                         field="password"
                         type="password"
@@ -110,7 +111,7 @@ class CreateAccount extends Component {
                         validateOnBlur
                     />
                 </Field>
-                <Field label="Confirm Password">
+                <Field label={Identify.__("Confirm Password")}>
                     <TextInput
                         field="confirm"
                         type="password"
@@ -121,13 +122,13 @@ class CreateAccount extends Component {
                 <div className={classes.subscribe}>
                     <Checkbox
                         field="subscribe"
-                        label="Subscribe to news and updates"
+                        label={Identify.__("Subscribe to news and updates")}
                     />
                 </div>
                 <div className={classes.error}>{errorMessage}</div>
                 <div className={classes.actions}>
                     <Button type="submit" priority="high">
-                        {'Submit'}
+                        {Identify.__('Submit')}
                     </Button>
                 </div>
             </Form>

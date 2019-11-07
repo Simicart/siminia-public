@@ -60,7 +60,7 @@ Grid item
     margin-bottom: 10px;
     margin-bottom: 8px;
     text-align: start;
-    font-weight: 500;    
+    font-weight: 500;
     text-overflow: ellipsis;
     overflow: hidden;
     line-height: 22px;
@@ -150,4 +150,9 @@ Rate
 }
 .siminia-product-grid-item .incl-tax-label {
     margin-left: 8px;
+}
+
+/* rtl */
+.prices-layout-rtl{
+    text-align: right;
 }

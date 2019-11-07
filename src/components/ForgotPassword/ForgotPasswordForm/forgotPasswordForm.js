@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Identify from 'src/simi/Helper/Identify'
 import PropTypes from 'prop-types';
 import { Form } from 'informed';
 
@@ -36,7 +37,7 @@ class ForgotPasswordForm extends Component {
                 initialValues={initialValues}
                 onSubmit={onSubmit}
             >
-                <Field label="Email Address" required={true}>
+                <Field label={Identify.__("Email Address")} required={true}>
                     <TextInput
                         autoComplete="email"
                         field="email"

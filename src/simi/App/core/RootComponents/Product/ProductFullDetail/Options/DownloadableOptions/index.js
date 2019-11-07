@@ -1,19 +1,19 @@
 import React from 'react';
 import OptionBase from '../OptionBase'
-import defaultClasses from './downloadableoptions.css'
 import Checkbox from '../OptionType/Checkbox';
+import ReactHTMLParse from 'react-html-parser';
+
+require('./downloadableoptions.scss')
 
 class DownloadableOptions extends OptionBase {
     constructor(props){
         super(props);
-        this.classes = defaultClasses
         this.exclT = 0;
         this.inclT = 0;
         console.log(this.data)
     }
 
     renderOptions =()=>{
-        const {classes} = this
         const objOptions = [];
         if (this.data.download_options) {
             const attributes = this.data.download_options;
@@ -30,7 +30,7 @@ class DownloadableOptions extends OptionBase {
         }
         return (
             <div>
-                <form id="downloadableOption" className={classes["options-container"]}>
+                <form id="downloadableOption" className="options-container">
                     {objOptions}
                 </form>
             </div>
@@ -38,14 +38,13 @@ class DownloadableOptions extends OptionBase {
     };
 
     renderAttribute = (attribute, id, labelRequired)=>{
-        const {classes} = this
         return (
-            <div key={id} className={classes["option-select"]}>
-                <div className={classes["option-title"]}>
+            <div key={id} className="option-select">
+                <div className="option-title">
                     <span>{attribute.title} {labelRequired}</span>
                 </div>
-                <div className={classes["option-content"]}>
-                    <div className={classes["options-list"]}>
+                <div className="option-content">
+                    <div className="options-list">
                         {this.renderMultiCheckbox(attribute, id)}
                     </div>
                 </div>
@@ -54,7 +53,6 @@ class DownloadableOptions extends OptionBase {
     };
 
     renderMultiCheckbox =(ObjOptions, id = '0')=>{
-        const {classes} = this
         const options = ObjOptions.value;
         const objs = [];
         let {links_purchased_separately} = ObjOptions
@@ -63,11 +61,11 @@ class DownloadableOptions extends OptionBase {
         for (const i in options) {
             const item = options[i];
             const element = (
-                <div key={i} className={classes["option-row"]}>
+                <div key={i} className="option-row">
                     { 
                         links_purchased_separately ?
-                        <Checkbox id={id} title={item.title} value={item.id} parent={this} item={item} classes={classes}/> :
-                        item.title
+                        <Checkbox id={id} title={item.title} value={item.id} parent={this} item={item}/> :
+                        ReactHTMLParse(item.title)
                     }
                 </div>
             );
@@ -116,13 +114,6 @@ class DownloadableOptions extends OptionBase {
         this.parentObj.Price.setDownloadableOptionPrice(exclT, inclT);
     }
 
-    getParams = ()=>{
-        this.selected = this.selected[0];
-        this.setParamOption('links');
-        return this.params;
-    };
-
-
     checkOptionRequired =(selected = this.selected,required=this.required)=>{
         let check = true;
         for (const i in required){
@@ -137,25 +128,25 @@ class DownloadableOptions extends OptionBase {
 
     getParams = ()=>{
         if(!this.checkOptionRequired()) return false;
-            this.selected = this.selected?this.selected[0]:{};
+        this.selected = (this.selected && this.selected[0])?this.selected[0]:{};
         this.setParamOption('links');
         return this.params;
     };
 
 
     renderSamples = () => {
-        const {data, classes} = this
+        const {data} = this
         if (data.download_sample && data.download_sample.length) {
             const downloadSamples = data.download_sample[data.download_sample.length-1]
             const returnedSamples = downloadSamples.value.map((downloadSample, index) => {
                 return (
-                    <a key={index} href={downloadSample.url} target="_blank" className={classes['download-sample-item']}>
+                    <a key={index} href={downloadSample.url} target="_blank" className="download-sample-item">
                         {downloadSample.title}
                     </a>
                 )
             })
-            return <div className={classes['download-samples']}>
-                <div className={classes['download-sample-title']}>
+            return <div className="download-samples">
+                <div className="download-sample-title">
                     {downloadSamples.title}
                 </div>
                 {returnedSamples}
@@ -164,7 +155,7 @@ class DownloadableOptions extends OptionBase {
     }
     render(){
         return (
-            <div>
+            <div className="downloadable-option">
                 {this.renderOptions()}
                 {this.renderSamples()}
             </div>

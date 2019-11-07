@@ -1,0 +1,29 @@
+.linked-product-ctn {
+    margin-top: 15px;
+    padding: 1.5rem;
+    width: 100%;
+    border-top: solid #eaeaea 1px;
+    margin-bottom: 25px;
+    .title {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .linked-products {
+        width: 100%;
+        flex-wrap: nowrap;
+        overflow: auto;
+    }
+    .linked-product-item {
+        min-width: 140px;
+        display: inline-grid;
+        padding: 5px;
+        width: 25%;
+    }
+    @media (max-width: 1023px) {
+        .linked-product-item {
+            width: 50%;
+        }
+    }
+}
+
+

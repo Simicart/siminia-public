@@ -1,0 +1,107 @@
+.root.create-acc-form {
+    display: grid;
+    gap: 0.5rem;
+    justify-items: stretch;
+    padding: 0 1.5rem;
+}
+
+$color_1: red;
+
+.create-acc-form{
+    .actions {
+        display: grid;
+        justify-items: center;
+        margin-top: 1rem;
+        padding: 1rem 0;
+    }
+    
+    .error {
+        color: $color_1;
+        text-align: center;
+    }
+    
+    .lead {
+        margin: 1rem 0;
+        text-align: center;
+    }
+    
+    .subscribe {
+        margin-left: -0.5rem;
+    }
+    
+    .submitButton {
+        padding: 5px 15px;
+        font-size: 16px;
+        font-weight: 600;
+        white-space: nowrap;
+        text-align: center;
+        padding-top: 10px;
+        cursor: pointer;
+        border: 0;
+        width: 100%;
+        min-width: 200px;
+        padding-bottom: 10px;
+        &:hover{
+            opacity: 0.8;
+        }
+    }
+    
+    /* create account otp */
+    
+    .create-account-otp {
+        display: flex;
+        margin-left: auto;
+        border-radius: 3px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 7px 10px;
+        &:hover{
+            opacity: 0.8;
+        }
+    }
+    
+    .login-otp-description {
+        font-size: 11px;
+        margin: 10px 0;
+    }
+    
+    .create-account-opt .error-message {
+        color: $color_1;
+        display: none;
+    }
+    
+    .verify-phone-area {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
+    /* customize */
+    .required {
+        >span {
+            &:first-child {
+                position: relative;
+                float: left;
+                &::after {
+                    content: "(*)";
+                    position: absolute;
+                    top: 50%;
+                    right: -14px;
+                    transform: translateY(-50%);
+                }
+            }
+            &:not(:first-child) {
+                width: 100%;
+            }
+        }
+    }
+    .required.rtl-required {
+        >span {
+            &:first-child {
+                float: right;
+                margin-right: 14px;
+            }
+        }
+    }
+}
+

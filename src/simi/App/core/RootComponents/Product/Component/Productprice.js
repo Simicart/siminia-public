@@ -1,9 +1,10 @@
 import React from 'react';
 import Identify from 'src/simi/Helper/Identify';
 import Price from 'src/simi/BaseComponents/Price';
-import defaultClasses from './productprice.css'
 import ObjectHelper from 'src/simi/Helper/ObjectHelper';
 import PropTypes from 'prop-types';
+
+require('./productprice.scss');
 
 const initState = {
     customOptionPrice: {exclT:0, inclT:0},
@@ -16,7 +17,6 @@ class ProductPrice extends React.Component {
         super(props);
         const {configurableOptionSelection} = props
         this.state = {...initState, ...{sltdConfigOption: ObjectHelper.mapToObject(configurableOptionSelection)}};
-        this.classes = defaultClasses
     }
     
     setCustomOptionPrice(exclT, inclT) {
@@ -101,7 +101,6 @@ class ProductPrice extends React.Component {
     render(){
         const {data} = this.props
         const {simiExtraField} = data
-        const {classes} = this
         const prices = this.calcPrices(data.price)
 
         let stockLabel = ''
@@ -113,24 +112,24 @@ class ProductPrice extends React.Component {
         }
                 
         const priceLabel = (
-            <div className={classes['prices-layout']}>
+            <div className='prices-layout'>
                 {
                     (data.type_id !== "grouped") &&
-                    <Price config={1} key={Identify.randomString(5)} prices={prices} type={data.type_id} classes={classes}/>
+                    <Price config={1} key={Identify.randomString(5)} prices={prices} type={data.type_id}/>
                 }
             </div>
         );
         return (
-            <div className={classes['prices-container']} id={data.type_id}>
+            <div className='prices-container' id={data.type_id}>
                 {priceLabel}
-                <div className={classes['product-stock-status']}>
-                    <div className={classes['stock-status']}>
+                <div className='product-stock-status'>
+                    <div className='stock-status'>
                         {stockLabel}
                     </div>
                     {
                         data.sku && 
-                        <div className={`${classes["product-sku"]} flex`} id="product-sku">
-                            <span className={classes['sku-label']}>{Identify.__('Sku') + ": "} {data.sku}</span>
+                        <div className={`product-sku flex`} id="product-sku">
+                            <span className='sku-label'>{Identify.__('Sku') + ": "} {data.sku}</span>
                         </div>
                     }
                 </div>

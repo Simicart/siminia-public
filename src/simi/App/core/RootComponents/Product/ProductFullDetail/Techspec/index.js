@@ -1,6 +1,7 @@
 import React from 'react'
 import Identify from 'src/simi/Helper/Identify'
-import classes from './techspec.css'
+
+require('./techspec.scss');
 
 const Techspec = props => {
     const {product} = props
@@ -11,11 +12,11 @@ const Techspec = props => {
             const additional_detail = additional[i]
             if (additional_detail.value) {
                 tspecitems.push(
-                    <div className={classes.tspecitem} key={i}>
-                        <div className={classes.tspecitemtitle}>
+                    <div className="tspecitem" key={i}>
+                        <div className="tspecitemtitle">
                             {additional_detail.label}
                         </div>
-                        <div className={classes.tspecitemvalue}>
+                        <div className="tspecitemvalue">
                             {additional_detail.value}
                         </div>
                     </div>
@@ -23,8 +24,8 @@ const Techspec = props => {
             }
         }
         return (
-            <div>
-                <h2 className={classes.title}>
+            <div className="techspec">
+                <h2 className="title">
                     <span>{Identify.__('Additional Information')}</span>
                 </h2>
                 {tspecitems}

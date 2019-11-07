@@ -12,12 +12,12 @@ import CUSTOMER_ADDRESS_DELETE from 'src/simi/queries/customerAddressDelete.grap
 // import GET_COUNTRIES from 'src/simi/queries/getCountries.graphql';
 import List from './list';
 import Edit from './edit';
-import defaultClasses from './style.css';
+import defaultClasses from './style.scss';
 import { withRouter } from 'react-router-dom';
 
 const AddressBook = props => {
     
-    const {user, classes, history} = props;
+    const {user, history} = props;
     
     const [queryResult, queryApi] = simiUseQuery(CUSTOMER_ADDRESS, false);
     const { data } = queryResult;
@@ -235,11 +235,11 @@ const AddressBook = props => {
             return <div>{Identify.__("No default billing/shipping address selected.")}</div>
         }
         return (
-            <div className={classes["address-content"]}>
+            <div className="address-content">
                 { defaultBilling.id &&
-                    <div className={classes["billing-address"]}>
-                        <span className={classes["box-title"]}>{Identify.__("Default Billing Address")}</span>
-                        <div className={classes["box-content"]}>
+                    <div className="billing-address">
+                        <span className="box-title">{Identify.__("Default Billing Address")}</span>
+                        <div className="box-content">
                             <address>
                                 {defaultBilling.firstname} {defaultBilling.lastname}<br/>
                                 {(!addressConfig || addressConfig && addressConfig.street_show) && defaultBilling.street ? 
@@ -257,15 +257,15 @@ const AddressBook = props => {
                                 }
                             </address>
                         </div>
-                        <div className={classes["box-action"]}>
+                        <div className="box-action">
                             <a href="" onClick={e => editDefaultAddressHandle(e, defaultBilling.id, 'billing')}><span>{Identify.__("Change Billing Address")}</span></a>
                         </div>
                     </div>
                 }
                 { defaultShipping.id &&
-                    <div className={classes["shipping-address"]}>
-                        <span className={classes["box-title"]}>{Identify.__("Default Shipping Address")}</span>
-                        <div className={classes["box-content"]}>
+                    <div className="shipping-address">
+                        <span className="box-title">{Identify.__("Default Shipping Address")}</span>
+                        <div className="box-content">
                             <address>
                                 {defaultShipping.firstname} {defaultShipping.lastname}<br/>
                                 {(!addressConfig || addressConfig && addressConfig.street_show) && defaultShipping.street ? 
@@ -283,7 +283,7 @@ const AddressBook = props => {
                                 }
                             </address>
                         </div>
-                        <div className={classes["box-action"]}>
+                        <div className="box-action">
                             <a href="" onClick={e => editDefaultAddressHandle(e, defaultShipping.id, 'shipping')}><span>{Identify.__("Change Shipping Address")}</span></a>
                         </div>
                     </div>
@@ -293,27 +293,27 @@ const AddressBook = props => {
     }
 
     return (
-        <div className={classes["address-book"]}>
+        <div className="address-book">
             {addressEditing ? 
                 <Edit dispatchEdit={dispatch} addressData={addressEditing} countries={countries}
                     address_fields_config={addressConfig} address_option={address_option}
-                    user={user} classes={classes}/>
+                    user={user}/>
             :
             <>
                 {TitleHelper.renderMetaHeader({title:Identify.__('Address Book')})}
                 <h1>{Identify.__("Address Book")}</h1>
-                <div className={classes['default-address']}>
-                    <div className={classes["address-label"]}>{Identify.__("Default Addresses")}</div>
+                <div className='default-address'>
+                    <div className="address-label">{Identify.__("Default Addresses")}</div>
                     {data ? renderDefaultAddress() : <Loading />}
                 </div>
-                <div className={classes["additional-address"]}>
-                    <div className={classes["address-label"]}>{Identify.__("Additional Address Entries")}</div>
+                <div className="additional-address">
+                    <div className="address-label">{Identify.__("Additional Address Entries")}</div>
                     {data ? 
                         <SimiMutation mutation={CUSTOMER_ADDRESS_DELETE}>
-                            {(mutaionCallback, { data }) => {
+                            {(mutaionCallback, { }) => {
                                 return <List items={addressList} editAddress={editAddressOther} 
                                     address_fields_config={addressConfig} address_option={address_option}
-                                    mutaionCallback={mutaionCallback} dispatchDelete={deleteAddressOther} classes={classes}/>
+                                    mutaionCallback={mutaionCallback} dispatchDelete={deleteAddressOther}/>
                             }}
                         </SimiMutation>
                     : 
@@ -321,7 +321,7 @@ const AddressBook = props => {
                     }
                 </div>
                 
-                <div className={classes["btn"]+' btn '+classes["add-new-address"]}>
+                <div className={"btn" + ' btn ' + "add-new-address"}>
                     <button onClick={addNewAddress}><span>{Identify.__("Add New Address")}</span></button>
                 </div>
             </>

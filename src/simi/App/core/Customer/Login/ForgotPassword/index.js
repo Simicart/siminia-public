@@ -7,7 +7,8 @@ import Identify from 'src/simi/Helper/Identify'
 import {forgotPassword} from 'src/simi/Model/Customer'
 import {showFogLoading, hideFogLoading} from 'src/simi/BaseComponents/Loading/GlobalLoading'
 import {showToastMessage} from 'src/simi/Helper/Message';
-import classes from './forgotPassword.css';
+
+require('./forgotPassword.scss');
 
 class ForgotPassword extends Component {
 
@@ -73,7 +74,7 @@ class ForgotPassword extends Component {
                 {TitleHelper.renderMetaHeader({
                     title:Identify.__('Forgot password')
                 })}
-                <p className={classes.instructions}>
+                <p className='instructions'>
                     {Identify.__('Enter your email below to receive a password reset link')}
                 </p>
                 <ForgotPasswordForm

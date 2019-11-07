@@ -27,11 +27,10 @@ class Abstract extends React.Component {
     };
 
     updateForBundle =(value,type)=>{
-        const {classes} = this.props
         if(this.parent.getProductType() === 'bundle'){
             const {data} = this.props;
             const item = data.selections[value];
-            const input = $(`.${classes['bundle-option-qty']}.`+type+' input');
+            const input = $(`.bundle-option-qty.`+type+' input');
             if(item){
                 const qty = item.qty;
                 input.val(qty);
@@ -46,8 +45,8 @@ class Abstract extends React.Component {
                 return;
             }
             input.attr('data-value',0);
-            $(`.${classes['bundle-option-qty']}.`+type+' input').removeAttr('readonly');
-            $(`.${classes['bundle-option-qty']}.`+type+' input').val(0);
+            $(`.bundle-option-qty'.`+type+' input').removeAttr('readonly');
+            $(`.bundle-option-qty'.`+type+' input').val(0);
             $('#tier-prices-'+type+'').html('');
         }
     };

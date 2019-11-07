@@ -10,7 +10,7 @@ import AddressItem from './AddressItem';
 import TitleHelper from 'src/simi/Helper/TitleHelper';
 
 const Dashboard = props => {
-    const {classes, isPhone, customer} = props;
+    const {isPhone, customer} = props;
     const [queryResult, queryApi] = simiUseQuery(getCustomerInfoQuery, false);
     const {data} = queryResult
     const { runQuery } = queryApi;
@@ -35,33 +35,31 @@ const Dashboard = props => {
         })
         
         return (
-            <div className={classes["address-book__container"]}>
-                <div className={classes["dash-column-box"]}>
-                    <div className={classes["box-title"]}>
+            <div className="address-book__container">
+                <div className="dash-column-box">
+                    <div className="box-title">
                         {Identify.__("Default Billing Address")}
                     </div>
                     {defaultBilling ? (
                         <React.Fragment>
                              <AddressItem
                                 addressData={defaultBilling}
-                                classes={classes}
                             />
-                            <Link className={classes["edit-item"]} to={{pathname: '/addresses.html', state: { addressEditing: defaultBilling}}}>{Identify.__("Edit address")}</Link>
+                            <Link className="edit-item" to={{pathname: '/addresses.html', state: { addressEditing: defaultBilling}}}>{Identify.__("Edit address")}</Link>
                         </React.Fragment>
                     ) : <div>{Identify.__('You have not set a default billing address.  ')}</div>}
     
                 </div>
-                <div className={classes["dash-column-box"]}>
-                    <div className={classes["box-title"]}>
+                <div className="dash-column-box">
+                    <div className="box-title">
                         {Identify.__("Default Shipping Address")}
                     </div>
                     {defaultShipping ? (
                         <React.Fragment>
                             <AddressItem
                                 addressData={defaultShipping}
-                                classes={classes}
                             />
-                            <Link className={classes["edit-item"]} to={{pathname: '/addresses.html', state: { addressEditing: defaultShipping}}}>{Identify.__("Edit address")}</Link>
+                            <Link className="edit-item" to={{pathname: '/addresses.html', state: { addressEditing: defaultShipping}}}>{Identify.__("Edit address")}</Link>
                         </React.Fragment>
                     ) : <div>{Identify.__('You have not set a default shipping address.')}</div>}
                     
@@ -75,57 +73,57 @@ const Dashboard = props => {
     }
 
     return (
-        <div className={classes['my-dashboard']}>
+        <div className='my-dashboard'>
             {TitleHelper.renderMetaHeader({
                 title: Identify.__('Dashboard'),
                 desc: Identify.__('Dashboard') 
             })}
             {!isPhone ? (
-                    <div className={classes["dashboard-recent-orders"]}>
-                        <div className={classes["customer-page-title"]}>
+                    <div className="dashboard-recent-orders">
+                        <div className="customer-page-title">
                             {Identify.__("Recent Orders")}
-                            <Link className={classes["view-all"]} to='/orderhistory.html'>{Identify.__("View all")}</Link>
+                            <Link className="view-all" to='/orderhistory.html'>{Identify.__("View all")}</Link>
                         </div>
-                        <OrderHistory classes={classes} data={data} showForDashboard={true} />
+                        <OrderHistory data={data} showForDashboard={true} />
                     </div>
                 ) : (
                     <Link to="/orderhistory.html">
                         <Whitebtn
                             text={Identify.__("View recent orders")}
-                            className={classes["view-recent-orders"]}
+                            className="view-recent-orders"
                         />
                     </Link>
                     
             )}
-            <div className={classes['dashboard-acc-information']}>
-                <div className={classes['customer-page-title']}>
+            <div className='dashboard-acc-information'>
+                <div className='customer-page-title'>
                     {Identify.__("Account Information")}
                 </div>
-                <div className={classes["acc-information"]} >
-                    <div className={classes["dash-column-box"]}>
-                        <div className={classes["white-box-content"]}>
-                            <div className={classes["box-title"]}>
+                <div className="acc-information" >
+                    <div className="dash-column-box">
+                        <div className="white-box-content">
+                            <div className="box-title">
                                 {Identify.__("Contact information")}
                             </div>
-                            <p className={`${classes["desc"]} ${classes["email"]}`}>{`${customer.firstname} ${customer.lastname}`}</p>
-                            <p className={`${classes["desc"]} ${classes["email"]}`}>{customer.email}</p>
-                            <Link className={classes["edit-link"]} to={{ pathname: '/profile.html', state: {profile_edit: 'password'} }}>{Identify.__("Change password")}</Link>
+                            <p className="desc email">{`${customer.firstname} ${customer.lastname}`}</p>
+                            <p className="desc email">{customer.email}</p>
+                            <Link className="edit-link" to={{ pathname: '/profile.html', state: {profile_edit: 'password'} }}>{Identify.__("Change password")}</Link>
                         </div>
                         <Link to="/profile.html">
                             <Whitebtn
                                 text={Identify.__("Edit")}
-                                className={classes["edit-information"]}
+                                className="edit-information"
                             />
                         </Link>
                         
                     </div>
-                    <div className={classes["dash-column-box"]}>
+                    <div className="dash-column-box">
                         {data.hasOwnProperty('customer') && data.customer.hasOwnProperty('is_subscribed') ? (
-                            <div className={classes["white-box-content"]}>
-                                <div className={classes["box-title"]}>
+                            <div className="white-box-content">
+                                <div className="box-title">
                                     {Identify.__("Newsletter")}
                                 </div>
-                                <p className={classes["desc"]}>
+                                <p className="desc">
                                     {data.customer.is_subscribed === true
                                         ? Identify.__(
                                             "You are subscribed to our newsletter"
@@ -139,17 +137,17 @@ const Dashboard = props => {
                         <Link to="/newsletter.html">
                             <Whitebtn
                                 text={Identify.__("Edit")}
-                                className={classes["edit-information"]} 
+                                className="edit-information" 
                             />            
                         </Link>
                     </div>
                 </div>
             </div>
             {data.customer && data.customer.addresses && (
-                <div className={classes["dashboard-address-book"]}>
-                    <div className={classes["customer-page-title"]}>
+                <div className="dashboard-address-book">
+                    <div className="customer-page-title">
                         {Identify.__("Address Book")}
-                        <Link className={classes["view-all"]} to="/addresses.html">{Identify.__("Manage addresses")}</Link>
+                        <Link className="view-all" to="/addresses.html">{Identify.__("Manage addresses")}</Link>
                     </div>
                     {renderDefaultAddress(data.customer.addresses, data.customer.default_billing, data.customer.default_shipping)}
                 </div>

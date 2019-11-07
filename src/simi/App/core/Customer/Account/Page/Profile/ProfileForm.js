@@ -9,7 +9,7 @@ import {showFogLoading, hideFogLoading} from 'src/simi/BaseComponents/Loading/Gl
 const $ = window.$;
 
 const ProfileForm = props => {
-    const {classes, history, isPhone, data} = props;
+    const {history, isPhone, data} = props;
     // const [data, setData] = useState(data);
     const [changeForm, handleChangeForm] = useState(false);
 
@@ -73,7 +73,7 @@ const ProfileForm = props => {
             $('#strength-value').html(Identify.__(str))
         }
         if (e.target.value !== "" || e.target.value !== null) {
-            $(e.target).removeClass(classes["is-invalid"]);
+            $(e.target).removeClass("is-invalid");
         }
     }
 
@@ -85,28 +85,28 @@ const ProfileForm = props => {
             .each(function() {
                 if ($(this).val() === "" || $(this).val().length === 0) {
                     formCheck = false;
-                    $(this).addClass(classes["is-invalid"]);
+                    $(this).addClass("is-invalid");
                     msg = Identify.__("Please check some required fields");
                 } else {
-                    $(this).removeClass(classes["is-invalid"]);
+                    $(this).removeClass("is-invalid");
                     let new_pass_val = $("#harlows-edit-profile").find('input[name="new_password"]').val();
                     if ($(this).attr("name") === "email" || $(this).attr("name") === "new_email") {
                         if (!Identify.validateEmail($(this).val())) {
                             formCheck = false;
-                            $(this).addClass(classes["is-invalid"]);
+                            $(this).addClass("is-invalid");
                             msg = Identify.__("Email field is invalid");
                         }
                     }
                     if($(this).attr("name") === "new_password" && new_pass_val && new_pass_val.length < 6){
                         formCheck = false;
-                        $(this).addClass(classes["is-invalid"]);
+                        $(this).addClass("is-invalid");
                         msg = Identify.__("Password need least 6 characters!");
                     }
                     if ($(this).attr("name") === "com_password") {
                         if (
                             $(this).val() !== new_pass_val ) {
                             formCheck = false;
-                            $(this).addClass(classes["is-invalid"]);
+                            $(this).addClass("is-invalid");
                             msg = Identify.__("Confirm password is not match");
                         }
                     }
@@ -177,13 +177,13 @@ const ProfileForm = props => {
                             className={`${classes["required"]} required`}
                             onChange={e => handleOnChange(e)}
                         /> */}
-                        <div className={classes['email-not-edit']}>{Identify.__('Email cannot be edit')}</div>
+                        <div className='email-not-edit'>{Identify.__('Email cannot be edit')}</div>
                     </React.Fragment>
                 );
             case 'password': 
                 return (
                     <React.Fragment>
-                        <h4 className={classes["title"]}>{Identify.__("Change Password")}</h4>
+                        <h4 className="title">{Identify.__("Change Password")}</h4>
                         <TextBox
                             label={Identify.__("Current Password")}
                             name="old_password"
@@ -192,13 +192,12 @@ const ProfileForm = props => {
                             required
                             onChange={e => handleOnChange(e)}
                         />
-                        <div className={classes["group-password-strong"]}>
+                        <div className="group-password-strong">
                             <TextBox
                                 label={Identify.__("New password")}
                                 name="new_password"
                                 type="password"
                                 className="required"
-                                parentclasses={classes}
                                 required
                                 onChange={e => handleOnChange(e)}
                             />
@@ -219,9 +218,9 @@ const ProfileForm = props => {
 
     return (
         <form onSubmit={handleSaveProfile} id="harlows-edit-profile">
-            <div className={classes['row-edit-profile']}>
-                <div className={classes["main__edit-column"]}>
-                    <h4 className={classes["title"]}>
+            <div className='row-edit-profile'>
+                <div className="main__edit-column">
+                    <h4 className="title">
                         {Identify.__("Edit account information")}
                     </h4>
                     <TextBox
@@ -241,7 +240,7 @@ const ProfileForm = props => {
                         onChange={handleOnChange}
                     />
                     <Checkbox
-                        className={classes["first"]}
+                        className="first"
                         label={Identify.__("Change email")}
                         onClick={() => handleChangeForm(changeForm === 'email' ? false : 'email')}
                         selected={changeForm === 'email'}
@@ -254,16 +253,16 @@ const ProfileForm = props => {
                     />
                     {!isPhone && <Whitebtn
                                 text={Identify.__("Save")}
-                                className={classes["save-profile"]}
+                                className="save-profile"
                                 type="submit"
                             />}
                 </div>
-                <div className={`${classes["alternative__edit-column"]} ${(changeForm === 'email' || changeForm === 'password') ? `active`: ''}`}>
+                <div className='alternative__edit-column'>
                     {renderAlternativeForm()}
                 </div>
                 {isPhone && <Whitebtn
                                 text={Identify.__("Save")}
-                                className={classes["save-profile"]}
+                                className="save-profile"
                                 type="submit"
                             />}
             </div>

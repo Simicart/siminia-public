@@ -6,7 +6,7 @@ import {configColor} from 'src/simi/Config'
 import { Price } from '@magento/peregrine'
 import { resourceUrl, logoUrl } from 'src/simi/Helper/Url'
 import ReactHTMLParse from 'react-html-parser';
-import defaultClasses from './cartItem.css'
+require('./cartItem.scss')
 
 const CartItem = props => {
     const { currencyCode, item, isPhone, itemTotal, handleLink } = props
@@ -49,14 +49,14 @@ const CartItem = props => {
     const location = `/product.html?sku=${item.simi_sku?item.simi_sku:item.sku}`
     const image = (item.image && item.image.file)?item.image.file:item.simi_image
     return (
-        <div key={Identify.randomString(5)} className={defaultClasses['cart-siminia-item']}>
-            <div className={defaultClasses['img-and-name']}>
+        <div key={Identify.randomString(5)} className='cart-siminia-item'>
+            <div className='img-and-name'>
                 <div 
                     role="presentation"
                     onClick={() => {
                         handleLink(location)
                     }}
-                    className={defaultClasses['img-cart-container']}
+                    className='img-cart-container'
                     style={{borderColor: configColor.image_border_color}}>
                     <Image 
                         src={
@@ -69,8 +69,8 @@ const CartItem = props => {
                         } 
                         alt={item.name} />
                 </div>
-                <div className={defaultClasses['cart-item-info']}>
-                    <div className={defaultClasses['des-cart']}>
+                <div className='cart-item-info'>
+                    <div className='des-cart'>
                         <div 
                         role="presentation"
                             style={{color: configColor.content_color}}
@@ -79,18 +79,18 @@ const CartItem = props => {
                             }}>
                             <div className="item-name">{item.name}</div>
                         </div>
-                        <div className={defaultClasses['item-sku']}>{Identify.__('Product code:')} {item.sku}</div>
-                        <div className={defaultClasses['item-options']}>{optionText}</div>
+                        <div className='item-sku'>{Identify.__('Product code:')} {item.sku}</div>
+                        <div className='item-options'>{optionText}</div>
                     </div>
                     
                 </div>
             </div>
-            <div className={`${defaultClasses['sub-item']} ${defaultClasses['item-price']}`}>
-                {isPhone && <div className={defaultClasses['item-label']}>{Identify.__('Unit Price')}</div>}
-                <div className={defaultClasses['cart-item-value']} style={{color: configColor.price_color}}>{itemprice}</div>
+            <div className="sub-item item-price">
+                {isPhone && <div className='item-label'>{Identify.__('Unit Price')}</div>}
+                <div className='cart-item-value' style={{color: configColor.price_color}}>{itemprice}</div>
             </div>
-            <div className={`${defaultClasses['sub-item']} ${defaultClasses['item-qty']}`}>
-                {isPhone &&<div className={defaultClasses['item-label']}>{Identify.__('Qty')}</div>}
+            <div className='sub-item item-qty'>
+                {isPhone &&<div className='item-label'>{Identify.__('Qty')}</div>}
                 <input
                     min={1}
                     type="number"
@@ -110,14 +110,14 @@ const CartItem = props => {
                     }}
                 />
             </div>
-            <div className={`${defaultClasses['sub-item']} ${defaultClasses['item-subtotal']}`}>
-                {isPhone && <div className={defaultClasses['item-label']}>{Identify.__('Total Price')}</div>}
-                <div className={defaultClasses['cart-item-value']} style={{color: configColor.price_color}}>{subtotal}</div>
+            <div className='sub-item  item-subtotal'>
+                {isPhone && <div className='item-label'>{Identify.__('Total Price')}</div>}
+                <div className='cart-item-value' style={{color: configColor.price_color}}>{subtotal}</div>
             </div>
             <div 
                 role="button"
                 tabIndex="0"
-                className={`${defaultClasses['sub-item']} ${defaultClasses['item-delete']}`} 
+                className='sub-item item-delete' 
                 onClick={() => props.removeFromCart(item)}
                 onKeyUp={() => props.removeFromCart(item)}
             >

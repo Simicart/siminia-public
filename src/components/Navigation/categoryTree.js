@@ -46,12 +46,8 @@ class Tree extends Component {
 
                     const branches = [];
 
-                    const children = data.category.children.sort((a, b) => {
-                        if (a.position > b.position) return 1;
-                        else if (a.position == b.position && a.id > b.id)
-                            return 1;
-                        else return -1;
-                    });
+                    const children = data.category.children
+                    children.sort((a, b)=> parseFloat(a.position) - parseFloat(b.position))
 
                     const leaves = children.map(node => {
                         // allow leaf node to render if value is 1 or undefined (field not in Magento 2.3.0 schema)

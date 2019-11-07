@@ -14,7 +14,6 @@ workspaces:
 ```
 
   "workspaces": [
-    #remove "packages/venia-concept" if neccessary
 ...
     "packages/upward-spec",
     #add siminia package
