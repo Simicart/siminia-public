@@ -4,6 +4,10 @@ import Abstract from './Abstract';
 class LoadingDefault extends Abstract {
     render(){
         return this.renderLoading(
+            <img style={this.style} className="loading-svg-image" src='/static/icons/loading_ic.svg' alt="loading" />
+        )
+        /* if you want to reverse to old loading
+        return this.renderLoading(
             <svg xmlns="http://www.w3.org/2000/svg"
                  viewBox="0 0 100 100"
                  preserveAspectRatio="xMidYMid"
@@ -21,6 +25,7 @@ class LoadingDefault extends Abstract {
                 </circle>
             </svg>
         )
+        */  
     }
 }
 LoadingDefault.propTypes = {

@@ -13,10 +13,9 @@ import HeaderNavigation from './Component/HeaderNavigation'
 import MyAccount from './Component/MyAccount'
 import Settings from './Component/Settings'
 import { withRouter } from 'react-router-dom';
-import { logoUrl } from 'src/simi/Helper/Url'
+import { logoUrl } from 'src/simi/Helper/Url';
+import SearchForm from './Component/SearchForm';
 require('./header.scss');
-
-const SearchForm = React.lazy(() => import('./Component/SearchForm'));
 
 class Header extends React.Component{
     constructor(props) {
@@ -46,12 +45,17 @@ class Header extends React.Component{
 
     renderLogo = () => {
         const {isPhone} = this.state;
+        const storeConfig = Identify.getStoreConfig();
+        const storeName =
+            storeConfig && storeConfig.storeConfig
+                ? storeConfig.storeConfig.store_name
+                : '';
         return (
             <div className={`${this.classes['search-icon']} ${this.classes['header-logo']}`} >
                 <Link to='/'>
                     <img
                         src={logoUrl()}
-                        alt="siminia-logo" style={!isPhone?{width: 240, height: 40}:{width: 180, height: 30}}/>
+                        alt={storeName} style={!isPhone?{width: 240, height: 40}:{width: 180, height: 30}}/>
                 </Link>
             </div>
         )
@@ -60,11 +64,7 @@ class Header extends React.Component{
     renderSearchForm = () => {
         return(
             <div className={`${this.classes['header-search']} header-search ${Identify.isRtl() ? this.classes['header-search-rtl'] : ''}`}>
-                <Suspense fallback={null}>
-                        <SearchForm
-                            history={this.props.history}
-                        />
-                </Suspense>
+                <SearchForm history={this.props.history} />
             </div>
         )
     }
@@ -74,11 +74,7 @@ class Header extends React.Component{
         return(
             <div className={`${classes['right-bar']} ${Identify.isRtl() ? 'right-bar-rtl' : ''}`}>
                 {
-                    !this.state.isPhone && (
-                    <div className={classes['right-bar-item']} id="header-settings">
-                        <Settings classes={classes}/>
-                    </div>
-                    )
+                    !this.state.isPhone && <Settings classes={classes}/>
                 }
                 <div className={classes['right-bar-item']} id="my-account">
                     <MyAccount classes={classes}/>
@@ -120,7 +116,7 @@ class Header extends React.Component{
                 </div>
                 {this.renderSearchForm()}
                 <div id="id-message">
-                    <TopMessage/>
+                    <TopMessage history={this.props.history}/>
                     <ToastMessage/>
                 </div>
             </div>
@@ -134,18 +130,19 @@ class Header extends React.Component{
         if(this.state.isPhone){
             return this.renderViewPhone()
         }
+        const storeConfig = Identify.getStoreConfig();
         return(
             <React.Fragment>
                 <div className="container">
                     <div className={this.classes['header-app-bar']}>
                         {this.renderLogo()}
-                        {this.renderSearchForm()}
-                        {this.renderRightBar()}
+                        {storeConfig && this.renderSearchForm()}
+                        {storeConfig && this.renderRightBar()}
                     </div>
                 </div>
-                {window.innerWidth >= 1024 && <HeaderNavigation classes={this.classes}/>}
+                {(window.innerWidth >= 1024 && storeConfig)  ? <HeaderNavigation classes={this.classes}/> : ''}
                 <div id="id-message">
-                    <TopMessage/>
+                    <TopMessage history={this.props.history}/>
                     <ToastMessage/>
                 </div>
             </React.Fragment>

@@ -17,7 +17,7 @@ const Facebook = props => {
             className={props.className}
         >
             <title>icon/social/facebook</title>
-            <desc>Created with Sketch.</desc>
+            
             <rect id="Rectangle-2" className="st0" width="50" height="50" />
             <g id="Shape">
                 <path

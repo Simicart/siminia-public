@@ -1,0 +1,25 @@
+.shipping-form {
+    margin-top: 20px;
+    color: #000;
+    .shipping-form-carrier {
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 600;
+        .carrier-title {
+            margin-bottom: 6px;
+        }
+        .shipping-method {
+            margin-bottom: 15px;
+            line-height: 17px;
+            font-weight: 400;
+            display: flex;
+            cursor: pointer;
+            &:hover {
+                opacity: 0.8;
+            }
+            .radio-title {
+                padding: 5px 6px;
+            }
+        }
+    }
+}

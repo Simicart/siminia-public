@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 import LeftMenuContent from './LeftMenuContent'
 import {itemTypes} from './Consts'
 import {configColor} from 'src/simi/Config';
-import BottomMenu from './BottomMenu'
 import { connect } from 'src/drivers';
 import { toggleDrawer, closeDrawer } from 'src/actions/app';
 
@@ -61,40 +60,11 @@ class Dashboardmenu extends React.Component {
         return (
             <LeftMenuContent 
                 classes={this.props.classes} 
-                ref={node => this.leftMenu = node} 
-                leftMenuItems={this.props.leftMenuItems} 
                 isPhone={this.props.isPhone}
                 handleLink={this.handleLink.bind(this)}
                 parent={this}
             />
         )
-    }
-
-
-    renderBottomMenu = () => {
-        const {props} = this
-        this.bottomContains = {
-            cart: false,
-            menu: false,
-            search: false,
-        }
-
-        if (props.bottomMenuItems) {
-            props.bottomMenuItems.forEach(item=> {
-                const type = parseInt(item.type, 10)
-                if (type === 2)
-                    this.bottomContains.cart = true
-                else if (type === 22)
-                    this.bottomContains.search = true
-                else if (type === 20)
-                    this.bottomContains.menu = true
-            })
-            // try {
-            //     $('#siminia-main-page').css('margin-bottom', '38px')
-            // } catch (err) { console.log(err)}
-            return <BottomMenu parent={this} bottomMenuItems={props.bottomMenuItems} classes={props.classes} />
-        }
-        return <div></div>
     }
 
     render() {
@@ -103,7 +73,6 @@ class Dashboardmenu extends React.Component {
                 <aside className={this.props.className} style={{backgroundColor: configColor.menu_background}}>
                     {this.renderLeftMenu()}
                 </aside>
-                {this.renderBottomMenu()}
             </React.Fragment>
         )
     }
@@ -111,7 +80,6 @@ class Dashboardmenu extends React.Component {
 
 Dashboardmenu.contextTypes = {
     className: PropTypes.string,
-    leftMenuItems: PropTypes.object,
     router: PropTypes.object,
     classes: PropTypes.object,
     history: PropTypes.object,

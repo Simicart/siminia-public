@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Identify from 'src/simi/Helper/Identify';
 import BackIcon from 'src/simi/BaseComponents/Icon/TapitaIcons/Back'
 import NextIcon from 'src/simi/BaseComponents/Icon/TapitaIcons/Next'
+import { smoothScrollToView } from 'src/simi/Helper/Behavior';
 
 class Pagination extends React.Component {
     constructor(props){
@@ -24,6 +25,7 @@ class Pagination extends React.Component {
         if (this.props.changedPage) {
             this.props.changedPage(event.target.id)
         }
+        smoothScrollToView($("#root"));
     }
 
     changeLimit = (event) => {
@@ -60,6 +62,7 @@ class Pagination extends React.Component {
     }
 
     renderPageNumber = (total)=>{
+        const isRtl = Identify.isRtl()
         // Logic for displaying page numbers
         if(!this.props.showPageNumber) return null;
         const pageNumbers = [];
@@ -114,10 +117,10 @@ class Pagination extends React.Component {
         let nextPageIcon = null;
         let prevPageIcon = null;
         if(this.endPage < total && this.state.currentPage <= this.endPage){
-            nextPageIcon = <NextIcon style={{width: 6}}/>;
+            nextPageIcon = isRtl?<BackIcon style={{width: 6}}/>:<NextIcon style={{width: 6}}/>;
         }
         if(this.state.currentPage >= this.startPage && this.endPage > 4){
-            prevPageIcon = <BackIcon style={{width: 6}}/>;
+            prevPageIcon = isRtl?<NextIcon style={{width: 6}}/>:<BackIcon style={{width: 6}}/>;
         }
         const pagesSelection = (total>1)?(
             <ul id="page-numbers" classes={classes["page-numbers"]} style={{
@@ -137,7 +140,7 @@ class Pagination extends React.Component {
         const firstItem = lastItem - limit+1;
         lastItem = lastItem > totalItem ? totalItem : lastItem;
         const itemsPerPage = (
-            <div className={classes["items-per-page"]} style={{marginLeft : 'auto'}}>
+            <div className={classes["items-per-page"]} style={isRtl?{marginRight : 'auto'}:{marginLeft : 'auto'}}>
                 {
                     this.props.showInfoItem &&
                     <span style={{marginRight : 10,fontSize : 16}}>

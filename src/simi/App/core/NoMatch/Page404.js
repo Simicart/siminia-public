@@ -1,37 +1,38 @@
-import React from 'react'
+import React from 'react';
 import Identify from 'src/simi/Helper/Identify';
-import {configColor} from 'src/simi/Config';
+import { configColor } from 'src/simi/Config';
 import { Link } from 'react-router-dom';
+import './Page404.scss';
 
-const Page404 = ()=>{
+const Page404 = () => {
     return (
-        <div className="page-404 text-center" style={{marginTop : '20%'}}>
-            <p style={{
-                fontSize : '16px',
-                textTransform : 'uppercase'
-            }}>{Identify.__('404 error')}</p>
-            <p style={{
-                fontSize : '16px'
-            }}>{Identify.__('Page not found')}</p>
-            <div style={{marginTop: 15}}>
+        <div className="page-404 text-center">
+            <p className="title-1">{Identify.__('404')}</p>
+            <p className="title-2">{Identify.__('Page not found')}</p>
+            <p className="title-3">
+                {Identify.__(
+                    'The resource requested could not be found on this server!'
+                )}
+            </p>
+            <div style={{ marginTop: 25 }}>
                 <Link
                     to={'/'}
                     style={{
-                        padding: '5px 15px',
-                        backgroundColor : configColor.button_background,
-                        borderRadius : 5,
-                        margin : '0 auto',
-                        color : configColor.button_text_color,
-                        fontSize : '16px',
-                        textTransform : 'unset',
-                        textDecoration: 'none',
+                        padding: '10px 25px',
+                        backgroundColor: configColor.button_background,
+                        borderRadius: 0,
+                        margin: '0 auto',
+                        color: configColor.button_text_color,
+                        fontSize: '16px',
+                        textTransform: 'unset',
+                        textDecoration: 'none'
                     }}
                 >
                     {Identify.__('Back to Home')}
                 </Link>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Page404
+export default Page404;

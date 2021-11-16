@@ -87,12 +87,16 @@
     padding-right: 24px;
     padding-left: 24px;
     width: 20%;
-    float: left;
+    float: start;
+    text-align: start;
 }
 .footer--custom_title {
     font-size: 21px;
     font-weight: bold;
     line-height: 29px;
+    text-align: start;
+    width: 100%;
+    display: flex;
 }
 .col-custom-20pr ul {
     margin-top: 16px;
@@ -113,12 +117,15 @@
 }
 .social__md-block {
     margin-top: 8px;
+    justify-content: start;
+    display: flex;
+    flex-wrap: wrap;
 }
 .social__md-block > a {
     display: inline-block;
 }
 .social__md-block > a:last-child {
-    margin-right: -10px;
+    margin-inline-end: -10px;
 }
 .facebook-icon rect {
     fill: none;
@@ -165,7 +172,15 @@
 .footer-middle .harlow-expansion-content {
     padding: 15px;
 }
-
+.pd-tb-15 {
+    justify-content: start;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    display: flex;
+}
+.pd-10-15 {
+    padding: 10px 15px;
+}
 @media (min-width: 1200px) and (max-width: 1919px) {
     .newsletter__form > .email {
         width: 73%;
@@ -257,7 +272,7 @@
         margin: 0;
     }
     .col-custom-20pr {
-        text-align: left;
+        text-align: start;
     }
     .footer--custom_title {
         margin-top: 24px !important;

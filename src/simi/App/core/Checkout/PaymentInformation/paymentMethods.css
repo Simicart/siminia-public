@@ -1,0 +1,19 @@
+.root {
+    display: grid;
+}
+
+.payment_method {
+    padding: 10px 0;
+    border-bottom: solid 1px #eaeaea;
+}
+
+.payment_method:last-of-type {
+    border-bottom-width: 0;
+}
+
+.radio_label {
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: 400;
+    width: 100%;
+}

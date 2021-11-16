@@ -1,0 +1,287 @@
+.login-main-page {
+  min-height: unset !important;
+}
+#siminia-main-page {
+  .resetpass-container {
+    margin-top: 20px;
+    button {
+      background: #fff;
+      border: unset;
+      span {
+        a {
+          color: #000;
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 19px;
+          text-decoration: underline;
+          text-underline-position: under;
+        }
+      }
+    }
+  }
+}
+.forgot-password-customer {
+  max-width: 770px;
+  margin-top: 51px;
+  margin-bottom: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0px 0px 50px;
+  border: 1px solid #e0e0e0;
+  background-color: white;
+}
+.forgot-password-customer .title {
+  width: 100%;
+  padding: 30px 0;
+  text-align: center;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+.forgot-password-customer .title span {
+  width: fit-content;
+  height: 20px;
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+  margin-top: 0px;
+  color: #000;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  line-height: 20px;
+}
+.forgot-password-customer .wrap {
+  padding: 0 98px;
+}
+.forgot-password-customer .description-form {
+  display: inline-block;
+  font-weight: 300;
+  color: #727272;
+  font-size: 14px;
+  line-height: 19px;
+  margin-bottom: 0 !important;
+}
+.forgot-password-customer .description-form span {
+  color: #000;
+}
+.forgot-password-customer .form {
+  gap: 0.5rem;
+  justify-items: stretch;
+  margin-top: 15px;
+}
+.forgot-password-customer input {
+  min-height: 48px;
+  padding-left: 16px !important;
+  background-color: #f2f2f2;
+  min-width: 572px;
+  width: 100%;
+  border: unset;
+  outline: none;
+  color: #000;
+  font-size: 14px;
+  line-height: 19px;
+}
+.forgot-password-customer input::placeholder {
+  color: #727272;
+  font-size: 14px;
+  line-height: 19px;
+}
+.forgot-password-customer input:focus {
+  border-color: unset;
+  box-shadow: unset;
+  outline: none;
+}
+.forgot-password-customer .newPassword {
+  margin-bottom: 20px;
+}
+.forgot-password-customer .newPassword p,
+.forgot-password-customer .confirmPassword p {
+  padding-top: 6px;
+  display: block;
+  color: #b91c1c;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: justify;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+.forgot-password-customer .confirmPassword {
+}
+.forgot-password-customer .resetPassword {
+  margin-top: 30px;
+}
+.forgot-password-customer .resetPassword button {
+  font-size: 16px;
+  font-weight: 500 !important;
+  white-space: nowrap;
+  text-align: center;
+  padding-top: 16px !important;
+  cursor: pointer;
+  border: 0;
+  width: 100%;
+  min-width: 200px;
+  padding-bottom: 16px !important;
+  line-height: 16px !important;
+  color: #fff !important;
+  letter-spacing: 1px;
+  background-color: #000 !important;
+}
+.forgot-password-customer .resetPassword button:hover {
+  opacity: 0.8;
+}
+
+// right to left
+.rtl-root {
+  .forgot-password-customer {
+    .wrap {
+      .description-form{
+        text-align: right !important;
+      }
+      .form{
+        input{
+          padding-right: 16px !important;
+        }
+        p{
+          text-align: right !important;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .forgot-password-customer {
+    margin-top: 55px;
+  }
+}
+
+@media (max-width: 834px) {
+  .forgot-password-customer {
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+  .forgot-password-customer .title {
+    padding: 15px 0;
+  }
+  .forgot-password-customer .title span {
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 500;
+    height: 18px;
+  }
+  .forgot-password-customer .wrap {
+    padding: 0 80px;
+  }
+  .forgot-password-customer input {
+    min-width: unset !important;
+  }
+  .forgot-password-customer .newPassword span,
+  .forgot-password-customer .confirmPassword span {
+    display: inline;
+  }
+  .forgot-password-customer .newPassword p,
+  .forgot-password-customer .confirmPassword p {
+    padding-top: 8px;
+  }
+}
+
+@media (max-width: 736px) {
+  .forgot-password-customer {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .forgot-password-customer .wrap {
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 600px) {
+}
+
+@media (max-width: 530px) {
+  .forgot-password-customer .wrap {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 470px) {
+  .forgot-password-customer .title-form {
+    font-size: 16px;
+    line-height: 16px;
+  }
+  .forgot-password-customer .description-form {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 14px;
+  }
+  .forgot-password-customer .title-input {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+  }
+  .forgot-password-customer input {
+    min-height: 40px;
+    font-size: 14px;
+    line-height: 14px;
+    height: 14px;
+  }
+  .forgot-password-customer .resetPassword {
+    margin-top: 38px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .forgot-password-customer .resetPassword button {
+    max-width: 249px;
+    font-size: 14px;
+    line-height: 14px !important;
+    padding-top: 13px !important;
+    padding-bottom: 13px !important;
+    display: block;
+    margin: auto;
+  }
+}
+
+@media (max-width: 425px) {
+  .forgot-password-customer {
+    border: unset !important;
+  }
+  .forgot-password-customer .wrap {
+    padding: unset !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .forgot-password-customer {
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+    padding-bottom: 50px !important;
+    margin-top: 10px !important;
+  }
+  .forgot-password-customer .wrap {
+    padding: unset !important;
+    margin-top: 20px !important;
+  }
+  .forgot-password-customer .title {
+    padding: 12px 0;
+    max-height: 40px;
+    max-width: 343px;
+  }
+  .forgot-password-customer .title span {
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 500;
+    height: 16px;
+  }
+  .forgot-password-customer .description-form {
+    margin-top: 5px !important;
+  }
+  .forgot-password-customer .form {
+    margin-top: 30px !important;
+  }
+  .forgot-password-customer .confirmPassword {
+    margin-top: 40px !important;
+  }
+}

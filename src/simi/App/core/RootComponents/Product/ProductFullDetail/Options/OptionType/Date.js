@@ -39,10 +39,9 @@ class DateField extends Abstract {
         let m = date.getMonth() + 1;
         m = m < 10 ? "0"+m : m;
         const y = date.getFullYear();
+        const dateFM = y + '-' + m + '-' + d;
         return {
-            year : y,
-            month : parseInt(m,10),
-            day : d
+            date: dateFM
         }
     };
 

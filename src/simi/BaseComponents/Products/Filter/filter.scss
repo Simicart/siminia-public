@@ -1,0 +1,123 @@
+.left-navigation {
+    .filter-products {
+        padding: 15px 20px;
+        border: 1px solid rgb(220, 220, 220);
+        .title {
+            text-transform: uppercase;
+            color: #2d2d2d;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .filter-name {
+            line-height: 20px;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 16px;
+            margin-top: 24px;
+        }
+        .filter-name-text {
+            font-size: 16px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .dropdownplus {
+            padding: 15px 0px 10px;
+            margin-top: -1px;
+            .dropdownplus-title {
+                font-size: 16px;
+                font-weight: 600;
+                display: flex;
+                justify-content: space-between;
+                line-height: 24px;
+                svg {
+                    width: 20px !important;
+                    height: 20px !important;
+                }
+            }
+            .dropdownplus-title:hover {
+                cursor: pointer;
+            }
+            .dropdownplus-title-minus-ic {
+                width: 25px;
+                height: 25px;
+            }
+            .dropdownplus-title-plus-ic {
+                width: 25px;
+                height: 25px;
+            }
+        }
+
+        .dropdownplus:not(:last-child) {
+            border-bottom: 1px solid rgb(220, 220, 220);
+        }
+
+        .filter-item {
+            margin-top: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            /*
+            checkbox
+            */
+            input {
+                min-width: 25px;
+                width: 25px;
+                height: 16px;
+            }
+            .filter-item-text {
+                font-size: 14px;
+                .filter-item-count {
+                    margin-left: 5px;
+                    color: #888;
+                    font-size: 13px;
+                }
+            }
+        }
+        .clear-filter {
+            .action-clear {
+                font-size: 15px;
+                color: #333132;
+                padding: 0;
+                border: none;
+                margin-bottom: 12px;
+                height: 22px;
+                cursor: pointer;
+                text-align: center;
+            }
+            .action-clear:hover {
+                color: red;
+            }
+        }
+        .apply-filter {
+            height: 40px;
+            padding-top: 8px;
+            margin-top: 5px;
+            font-size: 15px;
+            width: 120px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 20px;
+        }
+        .apply-filter:hover {
+            padding-top: 7px;
+        }
+        @media (min-width: 1024px) {
+            width: 275px;
+        }
+    }
+    @media(min-width: 1024px){
+        min-width: 275px;
+    }
+}
+
+.siminia-phone-filter {
+    > .dropdownplus-title {
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+        padding: 10px 0px 5px;
+        border-top: solid 1px #eaeaea;
+        border-bottom: solid 1px #eaeaea;
+        margin-top: 15px;
+    }
+}

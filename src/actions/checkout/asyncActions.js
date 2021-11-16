@@ -1,23 +1,36 @@
 import { RestApi, Util } from '@magento/peregrine';
-
-import { closeDrawer } from 'src/actions/app';
-import { clearCartId, createCart } from 'src/actions/cart';
-import { getCountries } from 'src/actions/directory';
-import { getAccountInformation } from 'src/selectors/checkoutReceipt';
-import checkoutReceiptActions from 'src/actions/checkoutReceipt';
+const { BrowserPersistence } = Util;
+import { closeDrawer } from '../app';
+import { createCart, removeCart } from '../cart';
 import actions from './actions';
 
-// const { request } = RestApi.Magento2;
-import { request } from 'src/simi/Network/RestMagento'
-
-const { BrowserPersistence } = Util;
+const { request } = RestApi.Magento2;
 const storage = new BrowserPersistence();
 
 export const beginCheckout = () =>
     async function thunk(dispatch) {
-        dispatch(actions.begin());
-        dispatch(getShippingMethods());
-        dispatch(getCountries());
+        // Before we begin, reset the state of checkout to clear out stale data.
+        dispatch(actions.reset());
+
+        const storedAvailableShippingMethods = await retreiveAvailableShippingMethods();
+        const storedBillingAddress = await retrieveBillingAddress();
+        const storedPaymentMethod = await retrievePaymentMethod();
+        const storedShippingAddress = await retrieveShippingAddress();
+        const storedShippingMethod = await retrieveShippingMethod();
+
+        dispatch(
+            actions.begin({
+                availableShippingMethods: storedAvailableShippingMethods || [],
+                billingAddress: storedBillingAddress,
+                paymentCode: storedPaymentMethod && storedPaymentMethod.code,
+                paymentData: storedPaymentMethod && storedPaymentMethod.data,
+                shippingAddress: storedShippingAddress || {},
+                shippingMethod:
+                    storedShippingMethod && storedShippingMethod.carrier_code,
+                shippingTitle:
+                    storedShippingMethod && storedShippingMethod.carrier_title
+            })
+        );
     };
 
 export const cancelCheckout = () =>
@@ -28,103 +41,59 @@ export const cancelCheckout = () =>
 export const resetCheckout = () =>
     async function thunk(dispatch) {
         await dispatch(closeDrawer());
-        await dispatch(createCart());
         dispatch(actions.reset());
     };
 
-export const editOrder = section =>
+export const resetReceipt = () =>
     async function thunk(dispatch) {
-        dispatch(actions.edit(section));
+        await dispatch(actions.receipt.reset());
     };
-
-export const getShippingMethods = () => {
-    return async function thunk(dispatch, getState) {
-        const { cart, user } = getState();
-        const { cartId } = cart;
-
-        try {
-            // if there isn't a guest cart, create one
-            // then retry this operation
-            if (!cartId) {
-                await dispatch(createCart());
-                return thunk(...arguments);
-            }
-
-            dispatch(actions.getShippingMethods.request(cartId));
-
-            const guestEndpoint = `/rest/V1/guest-carts/${cartId}/estimate-shipping-methods`;
-            const authedEndpoint =
-                '/rest/V1/carts/mine/estimate-shipping-methods';
-            const endpoint = user.isSignedIn ? authedEndpoint : guestEndpoint;
-
-            const response = await request(endpoint, {
-                method: 'POST',
-                body: JSON.stringify({
-                    address: {
-                        country_id: 'US',
-                        postcode: null
-                    }
-                })
-            });
-
-            dispatch(actions.getShippingMethods.receive(response));
-        } catch (error) {
-            const { response } = error;
-
-            dispatch(actions.getShippingMethods.receive(error));
-
-            // check if the guest cart has expired
-            if (response && response.status === 404) {
-                // if so, clear it out, get a new one, and retry.
-                await clearCartId();
-                await dispatch(createCart());
-                return thunk(...arguments);
-            }
-        }
-    };
-};
 
 export const submitPaymentMethodAndBillingAddress = payload =>
-    async function thunk(dispatch, getState) {
-        submitBillingAddress(payload.formValues.billingAddress)(
-            dispatch,
-            getState
-        );
-        submitPaymentMethod(payload.formValues.paymentMethod)(
-            dispatch,
-            getState
-        );
+    async function thunk(dispatch) {
+        const { countries, formValues } = payload;
+        const { billingAddress, paymentMethod } = formValues;
+
+        return Promise.all([
+            dispatch(submitBillingAddress({ billingAddress, countries })),
+            dispatch(submitPaymentMethod(paymentMethod))
+        ]);
     };
 
 export const submitBillingAddress = payload =>
     async function thunk(dispatch, getState) {
-        dispatch(actions.billingAddress.submit(payload));
+        dispatch(actions.billingAddress.submit());
 
-        const { cart, directory } = getState();
+        const { cart } = getState();
 
         const { cartId } = cart;
         if (!cartId) {
             throw new Error('Missing required information: cartId');
         }
 
-        let desiredBillingAddress = payload;
-        if (!payload.sameAsShippingAddress) {
-            const { countries } = directory;
-            try {
-                desiredBillingAddress = formatAddress(payload, countries);
-            } catch (error) {
-                dispatch(actions.billingAddress.reject(error));
-                return;
-            }
-        }
+        try {
+            const { billingAddress, countries } = payload;
 
-        await saveBillingAddress(desiredBillingAddress);
-        dispatch(actions.billingAddress.accept(desiredBillingAddress));
+            let desiredBillingAddress = billingAddress;
+            if (!billingAddress.sameAsShippingAddress) {
+                desiredBillingAddress = formatAddress(
+                    billingAddress,
+                    countries
+                );
+            }
+
+            await saveBillingAddress(desiredBillingAddress);
+
+            dispatch(actions.billingAddress.accept(desiredBillingAddress));
+        } catch (error) {
+            dispatch(actions.billingAddress.reject(error));
+            throw error;
+        }
     };
 
 export const submitPaymentMethod = payload =>
     async function thunk(dispatch, getState) {
-        dispatch(actions.paymentMethod.submit(payload));
+        dispatch(actions.paymentMethod.submit());
 
         const { cart } = getState();
 
@@ -133,41 +102,93 @@ export const submitPaymentMethod = payload =>
             throw new Error('Missing required information: cartId');
         }
 
-        await savePaymentMethod(payload);
-        dispatch(actions.paymentMethod.accept(payload));
+        try {
+            await savePaymentMethod(payload);
+            dispatch(actions.paymentMethod.accept(payload));
+        } catch (error) {
+            dispatch(actions.paymentMethod.reject(error));
+            throw error;
+        }
     };
 
-export const submitShippingAddress = payload =>
+export const submitShippingAddress = (payload = {}) =>
     async function thunk(dispatch, getState) {
-        dispatch(actions.shippingAddress.submit(payload));
+        dispatch(actions.shippingAddress.submit());
 
-        const { cart, directory } = getState();
+        const {
+            formValues,
+            countries,
+            setGuestEmail,
+            setShippingAddressOnCart
+        } = payload;
+
+        const { cart, user } = getState();
 
         const { cartId } = cart;
         if (!cartId) {
             throw new Error('Missing required information: cartId');
         }
 
-        const { countries } = directory;
-        let { formValues: address } = payload;
         try {
-            address = formatAddress(address, countries);
-        } catch (error) {
-            dispatch(
-                actions.shippingAddress.reject({
-                    incorrectAddressMessage: error.message
-                })
-            );
-            return null;
-        }
+            const address = formatAddress(formValues, countries);
 
-        await saveShippingAddress(address);
-        dispatch(actions.shippingAddress.accept(address));
+            if (!user.isSignedIn) {
+                if (!formValues.email) {
+                    throw new Error('Missing required information: email');
+                }
+                await setGuestEmail({
+                    variables: {
+                        cartId,
+                        email: formValues.email
+                    }
+                });
+            }
+
+            const {
+                firstname,
+                lastname,
+                street,
+                city,
+                region_code,
+                postcode,
+                telephone,
+                country_id
+            } = address;
+
+            const { data } = await setShippingAddressOnCart({
+                variables: {
+                    cartId,
+                    firstname,
+                    lastname,
+                    street,
+                    city,
+                    region_code,
+                    postcode,
+                    telephone,
+                    country_id
+                }
+            });
+            // We can get the shipping methods immediately after setting the
+            // address. Grab it from the response and put it in the store.
+            const shippingMethods =
+                data.setShippingAddressesOnCart.cart.shipping_addresses[0]
+                    .available_shipping_methods;
+
+            // On success, save to local storage.
+            await saveAvailableShippingMethods(shippingMethods);
+            await saveShippingAddress(address);
+
+            dispatch(actions.getShippingMethods.receive(shippingMethods));
+            dispatch(actions.shippingAddress.accept(address));
+        } catch (error) {
+            dispatch(actions.shippingAddress.reject(error));
+            throw error;
+        }
     };
 
 export const submitShippingMethod = payload =>
     async function thunk(dispatch, getState) {
-        dispatch(actions.shippingMethod.submit(payload));
+        dispatch(actions.shippingMethod.submit());
 
         const { cart } = getState();
         const { cartId } = cart;
@@ -175,12 +196,17 @@ export const submitShippingMethod = payload =>
             throw new Error('Missing required information: cartId');
         }
 
-        const desiredShippingMethod = payload.formValues.shippingMethod;
-        await saveShippingMethod(desiredShippingMethod);
-        dispatch(actions.shippingMethod.accept(desiredShippingMethod));
+        try {
+            const desiredShippingMethod = payload.formValues.shippingMethod;
+            await saveShippingMethod(desiredShippingMethod);
+            dispatch(actions.shippingMethod.accept(desiredShippingMethod));
+        } catch (error) {
+            dispatch(actions.shippingMethod.reject(error));
+            throw error;
+        }
     };
 
-export const submitOrder = () =>
+export const submitOrder = ({ fetchCartId }) =>
     async function thunk(dispatch, getState) {
         dispatch(actions.order.submit());
 
@@ -197,16 +223,6 @@ export const submitOrder = () =>
 
         if (billing_address.sameAsShippingAddress) {
             billing_address = shipping_address;
-        } else {
-            const { email, firstname, lastname, telephone } = shipping_address;
-
-            billing_address = {
-                email,
-                firstname,
-                lastname,
-                telephone,
-                ...billing_address
-            };
         }
 
         try {
@@ -255,45 +271,67 @@ export const submitOrder = () =>
             });
 
             dispatch(
-                checkoutReceiptActions.setOrderInformation({
+                actions.receipt.setOrder({
                     id: response,
-                    billing_address
+                    shipping_address
                 })
             );
 
-            // Clear out everything we've saved about this cart from local storage.
-            await clearBillingAddress();
-            await clearCartId();
-            await clearPaymentMethod();
-            await clearShippingAddress();
-            await clearShippingMethod();
+            // Clear out everything we've saved about this cart from local
+            // storage. Then remove and create a new cart.
+            await clearCheckoutDataFromStorage();
+            await dispatch(removeCart());
+            dispatch(
+                createCart({
+                    fetchCartId
+                })
+            );
 
-            dispatch(actions.order.accept(response));
+            dispatch(actions.order.accept());
         } catch (error) {
             dispatch(actions.order.reject(error));
+            throw error;
         }
     };
 
-export const createAccount = history => async (dispatch, getState) => {
-    const accountInfo = getAccountInformation(getState());
+export const createAccount = ({ history }) => async (dispatch, getState) => {
+    const { checkout } = getState();
 
+    const {
+        email,
+        firstname: firstName,
+        lastname: lastName
+    } = checkout.receipt.order.shipping_address;
+
+    const accountInfo = {
+        email,
+        firstName,
+        lastName
+    };
+
+    // Once we grab what we need from checkout state we can reset.
     await dispatch(resetCheckout());
 
     history.push(`/create-account?${new URLSearchParams(accountInfo)}`);
 };
 
-export const continueShopping = history => async dispatch => {
-    await dispatch(resetCheckout());
-
-    history.push('/');
-};
-
 /* helpers */
 
-export function formatAddress(address = {}, countries = []) {
-    const country = countries.find(({ id }) => id === 'US');
+/**
+ * Formats an address in the shape the REST API expects.
+ * TODO: Can we remove this code once address submissions switch to GraphQL?
+ *
+ * This function may throw.
+ *
+ * @param {object} address - The input address.
+ * @param {object[]} countries - The list of countries data.
+ */
+export const formatAddress = (address = {}, countries = []) => {
     const { region_code } = address;
-    const { available_regions: regions } = country;
+
+    const usa = countries.find(({ id }) => id === 'US');
+    const { available_regions: regions } = usa;
+
     const region = regions.find(({ code }) => code === region_code);
 
     return {
@@ -303,6 +341,18 @@ export function formatAddress(address = {}, countries = []) {
         region: region.name,
         ...address
     };
+};
+
+async function clearAvailableShippingMethods() {
+    return storage.removeItem('availableShippingMethods');
+}
+
+async function retreiveAvailableShippingMethods() {
+    return storage.getItem('availableShippingMethods');
+}
+
+async function saveAvailableShippingMethods(methods) {
+    return storage.setItem('availableShippingMethods', methods);
 }
 
 async function clearBillingAddress() {
@@ -352,3 +402,11 @@ async function retrieveShippingMethod() {
 async function saveShippingMethod(method) {
     return storage.setItem('shippingMethod', method);
 }
+
+export const clearCheckoutDataFromStorage = async () => {
+    await clearBillingAddress();
+    await clearPaymentMethod();
+    await clearShippingAddress();
+    await clearShippingMethod();
+    await clearAvailableShippingMethods();
+};

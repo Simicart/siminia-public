@@ -1,116 +1,96 @@
-import React from 'react'
+import React, { useState, useRef, useMemo, useCallback } from 'react'
 import User from "src/simi/BaseComponents/Icon/User";
 import Identify from "src/simi/Helper/Identify";
 import MenuItem from '@material-ui/core/MenuItem'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Popper from '@material-ui/core/Popper';
-import { connect } from 'src/drivers';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'redux';
+import { useHistory } from 'react-router-dom';
+import { useUserContext } from '@magento/peregrine/lib/context/user';
 
-class MyAccount extends React.Component{
-    state = {
-        open: false,
-    };
+const MyAccount = props => {
+    const [open, setOpen] = useState(false)
+    const { classes } = props
+    const history = useHistory()
+    const anchorEl = useRef(null);
+    const [user] = useUserContext();
+    const { currentUser: { firstname }, isSignedIn } = user
 
-    handleLink(link) {
-        this.props.history.push(link)
-    }
+    const handleLink = useCallback((link) => {
+        history.push(link)
+    }, [history])
 
-    handleToggle = () => {
-        this.setState(state => ({ open: !state.open }));
-    };
+    const handleToggle = useCallback(() => {
+        setOpen(!open);
+    }, [setOpen, open])
 
-    handleClose = event => {
-        if (this.anchorEl.contains(event.target)) {
+    const handleClose = event => {
+        if (anchorEl && anchorEl.current && anchorEl.current.contains(event.target)) {
             return;
         }
-
-        this.setState({ open: false });
+        setOpen(false)
     };
 
-    handleMenuAccount = link => {
-        this.handleLink(link)
-        this.handleToggle()
-    }
+    const handleMenuAccount = useCallback(link => {
+        handleLink(link)
+        handleToggle()
+    }, [handleLink, handleToggle])
 
-    renderMyAccount = ()=>{
-        const { open } = this.state;
-        const {classes} = this.props
+    const renderMyAccount = useMemo(() => {
         return (
-            <Popper open={open} anchorEl={this.anchorEl}
-                    placement="bottom-start"
-                    transition disablePortal>
+            <Popper open={open} anchorEl={anchorEl.current}
+                placement="bottom-start"
+                transition disablePortal>
                 {({ TransitionProps }) => (
                     <Grow
                         {...TransitionProps}
                         id="menu-list-grow"
-                        style={{ transformOrigin:'center bottom' }}
+                        style={{ transformOrigin: 'center bottom' }}
                     >
 
-                            <div className={classes["menu-my-account"]}>
-                                <ClickAwayListener onClickAway={this.handleClose}>
+                        <div className={classes["menu-my-account"]}>
+                            <ClickAwayListener onClickAway={handleClose}>
                                 <div className={classes["list-menu-account"]}>
-                                    <MenuItem className={classes["my-account-item"]} onClick={()=>this.handleMenuAccount('/account.html')}>
+                                    <MenuItem className={classes["my-account-item"]} onClick={() => handleMenuAccount('/account.html')}>
                                         {Identify.__('My Account')}
                                     </MenuItem>
-                                    <MenuItem className={classes["my-account-item"]} onClick={()=>this.handleMenuAccount('/logout.html')}>
+                                    <MenuItem className={classes["my-account-item"]} onClick={() => handleMenuAccount('/logout.html')}>
                                         {Identify.__('Logout')}
                                     </MenuItem>
                                 </div>
-                                </ClickAwayListener>
-                            </div>
+                            </ClickAwayListener>
+                        </div>
                     </Grow>
                 )}
             </Popper>
         )
-    }
+    }, [classes, open, anchorEl, handleMenuAccount])
 
-    handleClickAccount = () =>{
-        const {isSignedIn} = this.props
-        if(isSignedIn){
-            this.handleToggle()
-        }else{
-            this.handleLink('/login.html')
+    const handleClickAccount = () => {
+        if (isSignedIn) {
+            handleToggle()
+        } else {
+            handleLink('/login.html')
         }
     }
 
-    render() {
-        const {props} = this
-        const {firstname, isSignedIn, classes} = props
-        const account = firstname ? 
-            <span className={classes["customer-firstname"]} style={{color:'#0F7D37'}}>
-                {`Hi, ${firstname}`}
-            </span>: Identify.__('Account')
-        return (
-            <div style={{position:'relative'}}  ref={node => {
-                this.anchorEl = node;
-            }}>
-                <div role="presentation" onClick={this.handleClickAccount}>
-                    <div className={classes["item-icon"]} style={{display: 'flex', justifyContent: 'center'}}>
-                        <User style={{width: 30, height: 30, display: 'block'}} />
-                    </div>
-                    <div className={classes["item-text"]} style={{whiteSpace : 'nowrap'}}>
-                        {account}
-                    </div>
-                </div> 
-                {isSignedIn && this.renderMyAccount()}
+    const account = firstname ?
+        <span className={classes["customer-firstname"]} style={{ color: '#0F7D37' }}>
+            {`Hi, ${firstname}`}
+        </span> : Identify.__('Account')
+    return (
+        <div style={{ position: 'relative' }} ref={anchorEl}>
+            <div role="presentation" onClick={handleClickAccount}>
+                <div className={classes["item-icon"]} style={{ display: 'flex', justifyContent: 'center' }}>
+                    <User style={{ width: 30, height: 30, display: 'block' }} />
+                </div>
+                <div className={classes["item-text"]} style={{ whiteSpace: 'nowrap' }}>
+                    {account}
+                </div>
             </div>
-        );
-    }
+            {isSignedIn ? renderMyAccount : ''}
+        </div>
+    );
 }
 
-
-const mapStateToProps = ({ user }) => {
-    const { currentUser, isSignedIn } = user;
-    const { firstname, lastname } = currentUser;
-
-    return {
-        firstname,
-        isSignedIn,
-        lastname,
-    };
-}
-
-export default compose(connect(mapStateToProps), withRouter)(MyAccount);
+export default MyAccount;

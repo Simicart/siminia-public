@@ -1,17 +1,13 @@
-import { addRequestVars } from 'src/simi/Helper/Network'
+import { addMerchantUrl } from 'src/simi/Helper/Network'
 import Identify from 'src/simi/Helper/Identify'
-import { Util, RestApi } from '@magento/peregrine';
+import { Util } from '@magento/peregrine';
 const { BrowserPersistence } = Util;
-const peregrinRequest = RestApi.Magento2.request;
 
 const prepareData = (endPoint, getData, method, header, bodyData) => {
     let requestMethod = method
-    let requestEndPoint = endPoint
+    let requestEndPoint = addMerchantUrl(endPoint)
     const requestHeader = header
     const requestBody = bodyData
-
-    //add session/store/currencies
-    getData = addRequestVars(getData)
 
     //incase no support PUT & DELETE
     try {
@@ -52,6 +48,16 @@ const prepareData = (endPoint, getData, method, header, bodyData) => {
     requestHeader['accept'] = 'application/json'
     requestHeader['content-type'] = 'application/json'
 
+
+    //simi start
+    const storeCurrency = storage.getItem('store_view_currency') || null;
+    const storeCode = storage.getItem('store_view_code') || null; //STORE_VIEW_CODE;
+    if (storeCode)
+        requestHeader['Store'] = storeCode;
+    if (storeCurrency)
+        requestHeader['Content-Currency'] = storeCurrency;
+    //simi end
+
     return {requestMethod, requestEndPoint, requestHeader, requestBody}
 }
 
@@ -81,6 +87,19 @@ export async function sendRequest(endPoint, callBack, method='GET', getData= {},
             if (response.ok) {
                 return response.json();
             }
+            /** Allow response for status 401 Unauthorized */
+            if (response.ok === false && response.statusText === 'Unauthorized') {
+                let data = {};
+                data.errors = [];
+                data.status = response.status;
+                data.statusText = response.statusText;
+                try{
+                    return response.text().then(function(text) {
+                        data.errors = [JSON.parse(text)];
+                        return data;
+                    });
+                } catch (err){}
+            }
         })
         .then(function (data) {
             if (data) {
@@ -96,20 +115,4 @@ export async function sendRequest(endPoint, callBack, method='GET', getData= {},
         }).catch((error) => {
             console.warn(error);
         });
-}
-
-
-export const request = (resourceUrl, opts) => {
-    let newResourceUrl = resourceUrl
-    if (opts && !(opts.method && opts.method!=='GET')) { //only for get method
-        const getData = addRequestVars({})
-        let dataGetString = Object.keys(getData).map(function (key) {
-            return encodeURIComponent(key) + '=' +
-                encodeURIComponent(getData[key]);
-        })
-        dataGetString = dataGetString.join('&')
-        if (dataGetString)
-            newResourceUrl += "?" + dataGetString;
-    }
-    return peregrinRequest(newResourceUrl, opts)
 }

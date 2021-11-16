@@ -1,34 +1,40 @@
 import React from 'react';
 import Loading from 'src/simi/BaseComponents/Loading'
 import Identify from 'src/simi/Helper/Identify'
-import ProductFullDetail from './ProductFullDetail';
 import getUrlKey from 'src/util/getUrlKey';
 import connectorGetProductDetailByUrl from 'src/simi/queries/catalog/getProductDetail.graphql';
 import connectorGetProductDetailBySku from 'src/simi/queries/catalog/getProductDetailBySku.graphql'
-import { Simiquery } from 'src/simi/Network/Query' 
-import {smoothScrollToView} from 'src/simi/Helper/Behavior'
+import { Simiquery } from 'src/simi/Network/Query'
+import { smoothScrollToView } from 'src/simi/Helper/Behavior'
 import { saveDataToUrl, productUrlSuffix } from 'src/simi/Helper/Url';
+import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent/';
+import Page404 from 'src/simi/App/core/NoMatch/Page404';
+
+//call chunked package along with API (for opimizing the package purpose)
+const ProductFullDetail = (props) => {
+    return <LazyComponent component={() => import('./ProductFullDetail')} {...props} />
+}
 
 const Product = props => {
-    const {preloadedData} = props
+    smoothScrollToView($('#root'))
+    const { preloadedData, history } = props
     if (preloadedData && !preloadedData.is_dummy_data) { //saved api is full api, then no need api getting anymore
         return (
             <ProductFullDetail
                 product={preloadedData}
+                history={history}
             />
         )
     }
 
-    smoothScrollToView($('#root'))
-
     const sku = Identify.findGetParameter('sku') //cases with url like: product.html?sku=ab12
-    const productQuery = sku?connectorGetProductDetailBySku:connectorGetProductDetailByUrl
-    const variables = {onServer: false}
+    const productQuery = sku ? connectorGetProductDetailBySku : connectorGetProductDetailByUrl
+    const variables = { onServer: false }
     if (sku)
-        variables.sku = sku
+        variables.sku = sku;
     else
-        variables.urlKey = getUrlKey()
-        
+        variables.urlKey = getUrlKey();
+
     return (
         <Simiquery
             query={productQuery}
@@ -41,12 +47,18 @@ const Product = props => {
                 if (data && data.productDetail) {
                     //prepare data
                     product = data.productDetail.items[0];
-                    let simiExtraField = data.simiProductDetailExtraField
-                    simiExtraField = simiExtraField?JSON.parse(simiExtraField):null
-                    product.simiExtraField = simiExtraField
-                    //save full data to quote
-                    if (product.url_key)
-                        saveDataToUrl(`/${product.url_key}${productUrlSuffix()}`, product, false)
+
+                    if (product && product.hasOwnProperty('simiExtraField')) {
+                        if (product.simiExtraField) {
+                            try {
+                                product.simiExtraField = product.simiExtraField ? JSON.parse(product.simiExtraField) : null
+                            } catch (e) {
+
+                            }
+                        }
+                    } else {
+                        return <Page404 />
+                    }
                 } else if (preloadedData) {
                     product = preloadedData
                 }
@@ -54,7 +66,7 @@ const Product = props => {
                     return (
                         <ProductFullDetail
                             product={product}
-                        />
+                            history={history} />
                     );
                 return <Loading />
             }}

@@ -29,21 +29,16 @@ class Time extends Abstract {
     };
 
     convertTime = (time) => {
-      let h = time.getHours();
-      let day_part = 'am';
-      console.log(h);
-      if(h >= 12){
-        day_part = 'pm';
-        h = h > 12 ? h - 12 : h;
-      }
-      h = h < 10 ? '0' + h : h.toString();
-      let m = time.getMinutes();
-      m = m < 10 ? '0' + m : m.toString();
-      return {
-          hour : h,
-          minute : m,
-          day_part
-      }
+        let h = time.getHours();
+        h = h < 10 ? '0' + h : h.toString();
+        let m = time.getMinutes();
+        m = m < 10 ? '0' + m : m.toString();
+        let s = time.getSeconds();
+        s = s < 10 ? '0' + s : s.toString(); 
+        const timeFM = h + ':' + m + ':' + s;
+        return {
+            time: timeFM
+        }
     };
 
     renderTimePicker = () => {

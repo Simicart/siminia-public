@@ -1,40 +1,37 @@
 query {
-  customer {
-    firstname
-    lastname
-    suffix
-    email
-    id
-    addresses {
+    customer {
+        email
         id
-        customer_id
-        firstname
-        lastname
-        company
-        telephone
-        street
-        city
-        region {
-            region
-            region_id
-            region_code
-        }
-        postcode
-        country_id
-        default_shipping
-        default_billing
-    }
-  }
-  countries {
-        id
-        two_letter_abbreviation
-        three_letter_abbreviation
-        full_name_locale
-        full_name_english
-        available_regions {
+        addresses {
             id
-            code
-            name
+            customer_id
+            firstname
+            lastname
+            company
+            telephone
+            street
+            city
+            region {
+                region
+                region_id
+                region_code
+            }
+            postcode
+            country_id
+            default_shipping
+            default_billing
         }
     }
+    #   countries {
+    #         id
+    #         two_letter_abbreviation
+    #         three_letter_abbreviation
+    #         full_name_locale
+    #         full_name_english
+    #         available_regions {
+    #             id
+    #             code
+    #             name
+    #         }
+    #     }
 }

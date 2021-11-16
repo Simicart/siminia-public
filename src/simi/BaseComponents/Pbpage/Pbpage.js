@@ -1,5 +1,5 @@
 import React from 'react'
-import LoadingSpiner from 'src/simi/BaseComponents/Loading/LoadingSpiner'
+import LoadingSpiner from 'src/simi/BaseComponents/Loading'
 import {Carousel} from 'react-responsive-carousel'
 import Connection from 'src/simi/Network/SimiConnection'
 import PropTypes from 'prop-types'

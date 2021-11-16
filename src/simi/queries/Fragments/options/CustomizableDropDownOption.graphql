@@ -1,0 +1,10 @@
+fragment CustomizableDropDownOption on CustomizableDropDownOption {
+    dropdown_value: value {
+        option_type_id
+        price_type
+        price
+        sku
+        sort_order
+        title
+    }
+}

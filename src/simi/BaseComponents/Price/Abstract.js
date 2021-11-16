@@ -10,6 +10,7 @@ const style = {
         color: configColor.special_price_color
     }
 };
+
 class Abstract extends React.Component{
     constructor(props) {
         super(props);
@@ -22,18 +23,18 @@ class Abstract extends React.Component{
         if (!price)
             return
         const {props} = this
-        const classes = props.clasess?props.clasess:{}
+        const classes = props.classes?props.classes:{}
         style.price = {...style.price,...this.props.stylePrice};
         style.specialPrice = {...style.specialPrice,...this.props.styleSpecialPrice};
         if (special) {
             return (
-                <span className={`${classes['price']}`} style={style.price}>
+                <span className={`${classes['price']} price`} style={style.price}>
                     {helperFormatPrice(price, currency)}
                 </span>
             );
         } else {
             return (
-                <span className={`${classes['price']} ${classes['old']}`} style={style.specialPrice}>
+                <span className={`${classes['price']} ${classes['old']} price old`} style={style.specialPrice}>
                     {helperFormatPrice(price, currency)}
                 </span>
             );

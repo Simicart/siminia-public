@@ -8,9 +8,9 @@
 
 .input {
     background: white;
-    border: 1px solid rgb(var(--venia-text-alt));
+    border: 1px solid rgb(var(--venia-global-color-text-alt));
     border-radius: 2px;
-    color: rgb(var(--venia-text));
+    color: rgb(var(--venia-global-color-text));
     display: inline-flex;
     flex: 0 0 100%;
     font-size: 1rem;

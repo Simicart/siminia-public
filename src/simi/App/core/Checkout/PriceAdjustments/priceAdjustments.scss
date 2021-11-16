@@ -1,0 +1,41 @@
+.simi-checkout-price-adjustment {
+    .coupon-code {
+        border: solid 1px #979797;
+        position: relative;
+        padding: 20px;
+        margin-top: 0px;
+        margin-bottom: 20px;
+        .coupon-code-title {
+            font-size: 18px;
+            line-height: 18px;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-bottom: 0;
+        }
+        .coupon-code-area {
+            margin-top: 20px;
+            .coupon_field {
+                background-color: #F0F0F0;
+                padding: 15px 10px;
+                border: none;
+                height: 45px;
+                width: 68%;
+                font-size: 14px;
+                line-height: 16px;
+                font-weight: 400;
+            }
+            .submit-coupon {
+                padding: 15px 20px;
+                border-radius: 0;
+                text-transform: uppercase;
+                height: 45px;
+                width: 32%;
+                font-size: 16px;
+                line-height: 16px;
+                font-weight: 500;
+                background-color: var(--simicolor-secondary-button_background);
+                color: var(--simicolor-secondary-button_text_color);
+            }
+        }
+    }
+}

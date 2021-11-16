@@ -3,7 +3,7 @@
     margin: 0px 10px;
     position: relative;
 }
-.siminia-product-list-item{
+.siminia-product-list-item {
     display: inline-block;
     padding: 0;
     margin: 0;
@@ -13,24 +13,23 @@
 }
 
 @media (min-width: 1024px) {
-    .siminia-product-list-item{
+    .siminia-product-list-item {
         width: 25%;
         padding-left: 22px;
     }
 }
 
 @media (min-width: 1920px) {
-    .siminia-product-list-item{
+    .siminia-product-list-item {
         padding: 0;
         margin-left: 75px;
         width: 240px;
     }
 
-    .siminia-product-list-item.first{
+    .siminia-product-list-item.first {
         margin-left: 40px;
     }
 }
-
 
 /*
 Grid item
@@ -76,14 +75,14 @@ Grid item
 .siminia-product-des .price {
     font-weight: 500;
     font-size: 14px;
-    float: left;
     margin-bottom: 3px;
 }
 
 .siminia-product-des .old {
     font-weight: 500;
     font-size: 14px;
-    float: left;
+    display: inline-block;
+    text-decoration: line-through;
 }
 
 /*
@@ -115,10 +114,13 @@ Rate
     flex-wrap: wrap;
     margin-bottom: 10px;
 }
+.item-review-rate > div:first-of-type {
+    margin-bottom: 5px;
+    margin-inline-end: 5px;
+}
 .item-review-count {
     display: inline-block;
     font-size: 14px;
-    margin: 0 5px;
     line-height: 15px;
 }
 .siminia-product-grid-item .siminia-product-des {
@@ -147,12 +149,16 @@ Rate
 .siminia-product-grid-item .prices-layout {
     font-size: 14px;
     line-height: 24px;
+    display: flex;
+}
+.siminia-product-grid-item .configurable-aslowas {
+    margin-inline-end: 5px;
 }
 .siminia-product-grid-item .incl-tax-label {
     margin-left: 8px;
 }
 
 /* rtl */
-.prices-layout-rtl{
+.prices-layout-rtl {
     text-align: right;
 }

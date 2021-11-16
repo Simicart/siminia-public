@@ -22,28 +22,38 @@ const isPasswordComplexEnough = (str = '') => {
 
 export const validators = new Map()
     .set('confirm', (value, values) => {
-        return value !== values.password ? 'Passwords must match.' : undefined;
+        return value !== values.password
+            ? { id: 'Passwords must match.' }
+            : undefined;
     })
     .set('email', value => {
         const trimmed = (value || '').trim();
 
-        if (!trimmed) return 'An email address is required.';
-        if (!trimmed.includes('@')) return 'A valid email address is required.';
+        if (!trimmed) return { id: 'An email address is required.' };
+        if (!trimmed.includes('@'))
+            return { id: 'A valid email address is required.' };
 
         return undefined;
     })
     .set('firstName', value => {
-        return !(value || '').trim() ? 'A first name is required.' : undefined;
+        return !(value || '').trim()
+            ? { id: 'A first name is required.' }
+            : undefined;
     })
     .set('lastName', value => {
-        return !(value || '').trim() ? 'A last name is required.' : undefined;
+        return !(value || '').trim()
+            ? { id: 'A last name is required.' }
+            : undefined;
     })
     .set('password', value => {
         if (!value || value.length < 8) {
-            return 'A password must contain at least 8 characters.';
+            return { id: 'A password must contain at least 8 characters.' };
         }
         if (!isPasswordComplexEnough(value)) {
-            return 'A password must contain at least 3 of the following: lowercase, uppercase, digits, special characters.';
+            return {
+                id:
+                    'A password must contain at least 3 of the following: lowercase, uppercase, digits, special characters.'
+            };
         }
 
         return undefined;
@@ -62,8 +72,10 @@ export const asyncValidators = new Map().set('email', async value => {
             body: JSON.stringify(body)
         });
 
-        return !available ? 'This email address is not available.' : null;
+        return !available
+            ? { id: 'This email address is not available.' }
+            : null;
     } catch (error) {
-        throw 'An error occurred while looking up this email address.';
+        throw { id: 'An error occurred while looking up this email address.' };
     }
 });

@@ -1,277 +1,186 @@
-const validEnv = require('./validate-environment')(process.env);
-
+const { configureWebpack, graphQL } = require('@magento/pwa-buildpack');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const {
-    WebpackTools: {
-        makeMagentoRootComponentsPlugin,
-        ServiceWorkerPlugin,
-        MagentoResolver,
-        UpwardPlugin,
-        PWADevServer
-    }
-} = require('@magento/pwa-buildpack');
-const path = require('path');
+    getMediaURL,
+    getStoreConfigData,
+    getAvailableStoresConfigData,
+    getPossibleTypes
+} = graphQL;
 
-const TerserPlugin = require('terser-webpack-plugin');
-const WebpackAssetsManifest = require('webpack-assets-manifest');
+const { DefinePlugin } = webpack;
+const { LimitChunkCountPlugin } = webpack.optimize;
 
-const themePaths = {
-    images: path.resolve(__dirname, 'images'),
-    templates: path.resolve(__dirname, 'templates'),
-    src: path.resolve(__dirname, 'src'),
-    output: path.resolve(__dirname, 'dist')
-};
-const rootComponentsDirs = ['./src/simi/App/core/RootComponents/'];
-const libs = [
-    'apollo-cache-inmemory',
-    'apollo-cache-persist',
-    'apollo-client',
-    'apollo-link-context',
-    'apollo-link-http',
-    'informed',
-    'react',
-    'react-apollo',
-    'react-dom',
-    'react-feather',
-    'react-redux',
-    'react-router-dom',
-    'redux',
-    'redux-actions',
-    'redux-thunk'
-];
-
-module.exports = async function(env) {
-    const mode = (env && env.mode) || process.env.NODE_ENV || 'development';
-    const isDevMode = mode === 'development'
-    const enableServiceWorkerDebugging =
-        validEnv.ENABLE_SERVICE_WORKER_DEBUGGING;
-
-    const serviceWorkerFileName = validEnv.SERVICE_WORKER_FILE_NAME;
-    const braintreeToken = validEnv.BRAINTREE_TOKEN;
-
-    const config = {
-        mode,
-        context: __dirname, // Node global for the running script's directory
-        entry: {
-            client: path.resolve(themePaths.src, 'index.js')
-        },
-        output: {
-            path: themePaths.output,
-            publicPath: '/',
-            filename: 'js/[name].js',
-            strictModuleExceptionHandling: true,
-            chunkFilename: 'js/[name]-[chunkhash].js'
-        },
-        module: {
-            rules: [
-                {
-                    test: /\.scss$/,
-                    use: [
-                        'style-loader',
-                        "css-loader",
-                        "sass-loader"
-                    ]
-                },
-                {
-                    test: /\.graphql$/,
-                    exclude: /node_modules/,
-                    use: [
-                        {
-                            loader: 'graphql-tag/loader'
-                        }
-                    ]
-                },
-                {
-                    include: [themePaths.src, /peregrine\/lib\//],
-                    test: /\.(mjs|js)$/,
-                    use: [
-                        {
-                            loader: 'babel-loader',
-                            options: {
-                                cacheDirectory: true,
-                                envName: mode,
-                                rootMode: 'upward'
-                            }
-                        }
-                    ]
-                },
-                {
-                    include: [themePaths.src, /venia-ui\/lib\//],
-                    test: /\.(mjs|js)$/,
-                    use: [
-                        {
-                            loader: 'babel-loader',
-                            options: {
-                                cacheDirectory: true,
-                                envName: mode,
-                                rootMode: 'upward'
-                            }
-                        }
-                    ]
-                },
-                {
-                    test: /\.css$/,
-                    use: [
-                        'style-loader',
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                importLoaders: 1,
-                                localIdentName: '[name]-[local]-[hash:base64:3]',
-                                modules: true
-                            }
-                        }
-                    ]
-                },
-                {
-                    test: /\.(jpg|svg)$/,
-                    use: [
-                        {
-                            loader: 'file-loader',
-                            options: {}
-                        }
-                    ]
-                }
-            ]
-        },
-        resolve: await MagentoResolver.configure({
-            paths: {
-                root: __dirname
-            },
-            extensions : ['.js','.jxs','.scss']
-        }),
-        plugins: [
-            // // This is necessary to emit hot updates (currently CSS only):
-            new webpack.HotModuleReplacementPlugin(),
-            await makeMagentoRootComponentsPlugin({
-                rootComponentsDirs,
-                context: __dirname
-            }),
-            new webpack.EnvironmentPlugin(validEnv),
-            new webpack.DefinePlugin({
-                'process.env': {
-                    NODE_ENV: JSON.stringify(mode),
-                    // Blank the service worker file name to stop the app from
-                    // attempting to register a service worker in index.js.
-                    // Only register a service worker when in production or in the
-                    // special case of debugging the service worker itself.
-                    SERVICE_WORKER: JSON.stringify(
-                        mode === 'production' || enableServiceWorkerDebugging
-                            ? serviceWorkerFileName
-                            : false
-                    ),
-                    BRAINTREE_TOKEN: JSON.stringify(braintreeToken)
-                }
-            }),
-            new ServiceWorkerPlugin({
-                env: { mode },
-                enableServiceWorkerDebugging,
-                serviceWorkerFileName,
-                paths: themePaths,
-                injectManifest: true,
-                injectManifestConfig: {
-                    include: [/\.js$/],
-                    swSrc: './src/sw.js',
-                    swDest: 'sw.js'
-                }
-            }),
-            new WebpackAssetsManifest({
-                output: 'asset-manifest.json',
-                entrypoints: true,
-                // Add explicit properties to the asset manifest for
-                // siminia-upward.yml to use when evaluating app shell templates.
-                transform(assets) {
-                    // All RootComponents go to prefetch, and all client scripts
-                    // go to load.
-                    assets.bundles = {
-                        load: assets.entrypoints.client.js,
-                        prefetch: []
-                    };
-                    Object.entries(assets).forEach(([name, value]) => {
-                        if (name.startsWith('RootCmp')) {
-                            const filenames = Array.isArray(value)
-                                ? value
-                                : [value];
-                            assets.bundles.prefetch.push(...filenames);
-                        }
-                    });
-                }
-            })
+module.exports = async env => {
+    /**
+     * configureWebpack() returns a regular Webpack configuration object.
+     * You can customize the build by mutating the object here, as in
+     * this example. Since it's a regular Webpack configuration, the object
+     * supports the `module.noParse` option in Webpack, documented here:
+     * https://webpack.js.org/configuration/module/#modulenoparse
+     */
+    const config = await configureWebpack({
+        context: __dirname,
+        vendor: [
+            '@apollo/client',
+            'apollo-cache-persist',
+            'informed',
+            'react',
+            'react-dom',
+            'react-feather',
+            'react-redux',
+            'react-router-dom',
+            'redux',
+            'redux-actions',
+            //simicart libs to move to vendors instead of client chunk
+            '@material-ui',
+            'react-loading-skeleton',
+            'react-html-parser',
+            'react-responsive-carousel',
+            'react-input-range',
+            'react-share',
+            'rendertron-middleware',
+            'react-responsive-modal',
+            'braintree-web-drop-in',
+            'simi-pagebuilder-react',
+            'react-image-lightbox',
+            //end simicart libs to move to vendors instead of client chunk
+            'redux-thunk'
         ],
-        optimization: {
-            splitChunks: {
-                cacheGroups: {
-                    vendor: {
-                        test: new RegExp(
-                            `[\\\/]node_modules[\\\/](${libs.join('|')})[\\\/]`
-                        ),
-                        chunks: 'all'
-                    }
-                }
+        special: {
+            'react-feather': {
+                esModules: true
             }
+        },
+        env
+    });
+
+    const mediaUrl = await getMediaURL();
+    const storeConfigData = await getStoreConfigData();
+    const { availableStores } = await getAvailableStoresConfigData();
+
+    /**
+     * Loop the available stores when there is provided STORE_VIEW_CODE
+     * in the .env file, because should set the store name from the
+     * given store code instead of the default one.
+     */
+    config.module.rules.push(
+        {
+            test: /\.scss$/,
+            use: [
+                'style-loader',
+                "css-loader",
+                "sass-loader"
+            ]
         }
-    };
-    if (mode === 'development') {
-        config.devtool = 'eval-source-map';
-        const devServerConfig = {
-            env: validEnv,
-            publicPath: config.output.publicPath,
-            graphqlPlayground: {
-                queryDirs: [path.resolve(themePaths.src, 'queries')]
+    )
+    const availableStore = availableStores.find(
+        ({ code }) => code === process.env.STORE_VIEW_CODE
+    );
+
+    global.MAGENTO_MEDIA_BACKEND_URL = mediaUrl;
+    global.LOCALE = storeConfigData.locale.replace('_', '-');
+    global.AVAILABLE_STORE_VIEWS = availableStores;
+
+    const possibleTypes = await getPossibleTypes();
+
+    config.module.noParse = [
+        /@adobe\/adobe\-client\-data\-layer/,
+        /braintree\-web\-drop\-in/
+    ];
+    config.plugins = [
+        ...config.plugins,
+        new DefinePlugin({
+            /**
+             * Make sure to add the same constants to
+             * the globals object in jest.config.js.
+             */
+            POSSIBLE_TYPES: JSON.stringify(possibleTypes),
+            STORE_NAME: availableStore
+                ? JSON.stringify(availableStore.store_name)
+                : JSON.stringify(storeConfigData.store_name),
+            STORE_VIEW_CODE: process.env.STORE_VIEW_CODE
+                ? JSON.stringify(process.env.STORE_VIEW_CODE)
+                : JSON.stringify(storeConfigData.code),
+            AVAILABLE_STORE_VIEWS: JSON.stringify(availableStores),
+            DEFAULT_LOCALE: JSON.stringify(global.LOCALE),
+            DEFAULT_COUNTRY_CODE: JSON.stringify(
+                process.env.DEFAULT_COUNTRY_CODE || 'US'
+            )
+        }),
+        new HTMLWebpackPlugin({
+            filename: 'index.html',
+            template: './template.html',
+            minify: {
+                collapseWhitespace: true,
+                removeComments: true
             }
-        };
-        const provideHost = !!validEnv.MAGENTO_BUILDPACK_PROVIDE_SECURE_HOST;
-        if (provideHost) {
-            devServerConfig.provideSecureHost = {
-                subdomain: validEnv.MAGENTO_BUILDPACK_SECURE_HOST_SUBDOMAIN,
-                exactDomain:
-                    validEnv.MAGENTO_BUILDPACK_SECURE_HOST_EXACT_DOMAIN,
-                addUniqueHash: !!validEnv.MAGENTO_BUILDPACK_SECURE_HOST_ADD_UNIQUE_HASH
+        }),
+    ];
+
+    const serverConfig = Object.assign({}, config, {
+        target: 'node',
+        devtool: false,
+        module: { ...config.module },
+        name: 'server-config',
+        output: {
+            ...config.output,
+            filename: '[name].[hash].SERVER.js',
+            strictModuleExceptionHandling: true
+        },
+        plugins: [...config.plugins]
+    });
+
+    // TODO: get LocalizationPlugin working in Node
+    const browserPlugins = new Set()
+        .add('HtmlWebpackPlugin')
+        .add('LocalizationPlugin')
+        .add('ServiceWorkerPlugin')
+        .add('VirtualModulesPlugin')
+        .add('WebpackAssetsManifest');
+
+    // remove browser-only plugins
+    serverConfig.plugins = serverConfig.plugins.filter(
+        plugin => !browserPlugins.has(plugin.constructor.name)
+    );
+
+    // remove browser-only module rules
+    serverConfig.module.rules = serverConfig.module.rules.map(rule => {
+        if (`${rule.test}` === '/\\.css$/') {
+            return {
+                ...rule,
+                oneOf: rule.oneOf.map(ruleConfig => ({
+                    ...ruleConfig,
+                    use: ruleConfig.use.filter(
+                        loaderConfig => loaderConfig.loader !== 'style-loader'
+                    )
+                }))
             };
         }
-        config.devServer = await PWADevServer.configure(devServerConfig);
 
-        // A DevServer generates its own unique output path at startup. It needs
-        // to assign the main outputPath to this value as well.
+        return rule;
+    });
 
-        config.output.publicPath = config.devServer.publicPath;
+    // add LimitChunkCountPlugin to avoid code splitting
+    serverConfig.plugins.push(
+        new LimitChunkCountPlugin({
+            maxChunks: 1
+        })
+    );
 
-        config.plugins.push(
-            new webpack.HotModuleReplacementPlugin(),
-            new UpwardPlugin(
-                config.devServer,
-                validEnv,
-                path.resolve(__dirname, validEnv.UPWARD_JS_UPWARD_PATH)
-            )
-        );
-    } else if (mode === 'production') {
-        config.performance = {
-            hints: 'warning'
+    //simicart chunk split (change runtime to a bigger chunk)
+    if (config.optimization && config.optimization.splitChunks && config.optimization.splitChunks.cacheGroups)
+        config.optimization.splitChunks.cacheGroups.runtime = {
+            test: /[\\/]src[\\/]simi[\\/]App[\\/]core[\\/]/,
+            //test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+            name: 'runtime',
+            chunks: 'all'
         };
-        if (!process.env.DEBUG_BEAUTIFY) {
-            config.optimization.minimizer = [
-                new TerserPlugin({
-                    parallel: true,
-                    cache: true,
-                    terserOptions: {
-                        ecma: 8,
-                        parse: {
-                            ecma: 8
-                        },
-                        compress: {
-                            drop_console: true
-                        },
-                        output: {
-                            ecma: 7,
-                            semicolons: false
-                        },
-                        keep_fnames: true
-                    }
-                })
-            ];
-        }
-    } else {
-        throw Error(`Unsupported environment mode in webpack config: ${mode}`);
-    }
-    return config;
+    
+    //simicart add bundle analyzer
+    //config.plugins.push(new BundleAnalyzerPlugin());
+
+    return [config, serverConfig];
 };

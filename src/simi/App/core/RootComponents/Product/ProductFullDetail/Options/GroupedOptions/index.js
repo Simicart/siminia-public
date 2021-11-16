@@ -1,6 +1,6 @@
 import React from 'react';
 import Identify from 'src/simi/Helper/Identify';
-import Price from 'src/simi/BaseComponents/Price'
+import { formatPrice as helperFormatPrice } from 'src/simi/Helper/Pricing';
 import OptionBase from '../OptionBase'
 import {Qty} from 'src/simi/BaseComponents/Input'
 
@@ -36,13 +36,16 @@ class GroupOptions extends OptionBase {
     };
 
     renderContentAttribute = (attribute) => {
-        const id = attribute.product.id
+        const { product } = attribute;
+        const id = product.id
         const qty = attribute.qty;
+        const { price_range } = product;
+
         return (
             <div id={`attribute-${id}`} key={Identify.randomString(5)} className={`row product-options-group-item`}>
                 <div className={`col-sm-8 col-xs-8 ${Identify.isRtl()? 'pull-right' : ''}`}>
                     <div className="option-title" style={{fontWeight : 500}}>{attribute.product.name}</div>
-                    <Price type={attribute.product.type_id} prices={attribute.product.price}/>
+                    <div className="price-simple">{helperFormatPrice(price_range.minimum_price.final_price.value, price_range.minimum_price.final_price.currency)}</div>
                 </div>
                 <div className={`col-sm-4 col-xs-4 text-center ${Identify.isRtl()? 'pull-right' : ''}`}>
                     {
@@ -65,7 +68,9 @@ class GroupOptions extends OptionBase {
         qty.each(function () {
             const val = $(this).val();
             const id = $(this).attr('data-id');
-            json[id] = val;
+            if(parseInt(val) > 0) {
+                json[id] = val;
+            }
         });
         this.params[keyQty] = json;
     };

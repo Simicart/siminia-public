@@ -1,27 +1,73 @@
 import { handleActions } from 'redux-actions';
 
-import actions from 'src/actions/catalog';
+import actions from '../actions/catalog';
 
 export const name = 'catalog';
 
-export const initialState = {
-    categories: null,
-    rootCategoryId: null,
+const fromPairs = pairs => {
+    const result = {};
+
+    for (const [key, value] of pairs) {
+        result[key] = value;
+    }
+
+    return result;
+};
+
+const initialState = {
+    categories: {},
     currentPage: 1,
     pageSize: 6,
     prevPageTotal: null
 };
 
 const reducerMap = {
-    [actions.getAllCategories.receive]: (state, { payload, error }) => {
-        if (error) {
+    [actions.updateCategories]: (state, { payload }) => {
+        const { id } = payload;
+        const currentCategory = state.categories[id] || {};
+
+        // if category has already been fetched, do nothing
+        if (currentCategory.children) {
             return state;
         }
 
+        // sort children by `position`
+        const children = [...payload.children].sort((a, b) => {
+            if (a.position > b.position) {
+                return 1;
+            } else if (a.position === b.position && a.id > b.id) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
+
+        // use a Map to preserve sort order
+        // since a plain object with numeric keys would lose it
+        const childMap = new Map();
+
+        // merge children and add them to the Map, keyed by `id`
+        for (const child of children) {
+            childMap.set(child.id, {
+                ...child,
+                ...(state.categories[child.id] || {}),
+                parentId: id
+            });
+        }
+
+        // merge in the fetched child last
         return {
             ...state,
-            categories: getNormalizedCategories(payload),
-            rootCategoryId: payload.id
+            categories: {
+                ...state.categories,
+                ...fromPairs(childMap),
+                [id]: {
+                    ...currentCategory,
+                    ...payload,
+                    children: [...childMap.keys()],
+                    children_count: childMap.size
+                }
+            }
         };
     },
     [actions.setCurrentPage.receive]: (state, { payload, error }) => {
@@ -47,27 +93,3 @@ const reducerMap = {
 };
 
 export default handleActions(reducerMap, initialState);
-
-/* helpers */
-
-function* extractChildCategories(category) {
-    const { childrenData } = category;
-
-    for (const child of childrenData) {
-        yield* extractChildCategories(child);
-    }
-
-    category.childrenData = childrenData.map(({ id }) => id);
-
-    yield category;
-}
-
-function getNormalizedCategories(rootCategory) {
-    const map = {};
-
-    for (const category of extractChildCategories(rootCategory)) {
-        map[category.id] = category;
-    }
-
-    return map;
-}

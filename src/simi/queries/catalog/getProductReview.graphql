@@ -1,0 +1,26 @@
+query productReview(
+    $sku: String
+    $currentPage: Int
+    $pageSize: Int
+) {
+    productDetail: simiproducts(filter: { sku: { eq: $sku } }) {
+        items {
+            id
+            sku
+            type_id
+            reviews(pageSize: $pageSize, currentPage: $currentPage) {
+                items {
+                    nickname
+                    summary
+                    text
+                    created_at
+                    average_rating
+                    ratings_breakdown {
+                        name
+                        value
+                    }
+                }
+            }
+        }
+    }
+}

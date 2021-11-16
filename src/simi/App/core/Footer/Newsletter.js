@@ -1,19 +1,15 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import TextBox from 'src/simi/BaseComponents/TextBox';
-import {Whitebtn} from 'src/simi/BaseComponents/Button';
+import { Whitebtn } from 'src/simi/BaseComponents/Button';
 import Identify from "src/simi/Helper/Identify";
 import { SimiMutation } from 'src/simi/Network/Query'
 import CUSTOMER_NEWSLETTER_UPDATE from 'src/simi/queries/customerNewsletterUpdate.graphql';
 import Loading from "src/simi/BaseComponents/Loading";
 
 const Newsletter = props => {
-    const {classes} = props;
-    console.log(classes);
+    const { classes } = props;
+
     const [email, setEmail] = useState('');
-
-    const submitNewsletter = props => {
-
-    }
 
     return (
         <div className={classes["app-newsletter"]}>
@@ -27,15 +23,15 @@ const Newsletter = props => {
                     <span className={classes["arrow-triangle"]} />
                 </div>
                 <SimiMutation mutation={CUSTOMER_NEWSLETTER_UPDATE}>
-                    {(updateCustomer, {loading, data}) => {
+                    {(updateCustomer, { loading, data }) => {
                         console.log(data);
-                        if(loading) return <Loading />
+                        if (loading) return <Loading />
                         return (
                             <form
                                 className={classes["newsletter__form"]}
                                 onSubmit={e => {
                                     e.preventDefault();
-                                    updateCustomer({variables: {email, isSubscribed: true}})
+                                    updateCustomer({ variables: { email, isSubscribed: true } })
                                 }}
                             >
                                 <TextBox
@@ -56,9 +52,9 @@ const Newsletter = props => {
                             </form>
                         )
                     }}
-                    
+
                 </SimiMutation>
-              
+
             </div>
         </div>
     )

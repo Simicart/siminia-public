@@ -1,0 +1,40 @@
+.simple-grey-dot {
+    opacity: 0.5;
+    color: #000;
+    font-size: 12px !important;
+    margin-left: 8px;
+    width: 12px;
+    height: 12px;
+    filter: invert(56%) sepia(6%) saturate(196%) hue-rotate(154deg) brightness(90%) contrast(87%)
+}
+
+.simple-grey-dot:active, .simple-grey-dot:hover, .simple-grey-dot-active {
+    opacity: 1;
+}
+
+.simple-grey-dot-active {
+    opacity: 1;
+}
+
+.orbital-dot {
+    opacity: 1;
+    font-size: 25px !important;
+    width: 22px;
+    height: 22px;
+    filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%) contrast(100%);
+}
+
+.small-horizontal-bar {
+    width: 1rem;
+    height: 2px;
+    background: #000;
+    display: inline-block;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.fashionable-pagination-container {
+    display: flex;
+    align-items: center;
+}
+

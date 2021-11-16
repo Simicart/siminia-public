@@ -1,66 +1,37 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { setContext } from 'apollo-link-context';
-import { Util } from '@magento/peregrine';
+import { render } from 'react-dom';
 
+import store from './store';
+import app from '@magento/peregrine/lib/store/actions/app';
 import { Adapter } from 'src/drivers';
-import store from 'src/store';
-import app from 'src/actions/app';
-import App from 'src/simi';
-import {initializeUI,subscribeUser} from "src/simi/Helper/SimiServiceworker";
-import './index.css';
+import { registerSW } from './registerSW';
 
-const { BrowserPersistence } = Util;
-const apiBase = new URL('/graphql', location.origin).toString();
+// server rendering differs from browser rendering
+const isServer = !globalThis.document;
 
-/**
- * The Venia adapter provides basic context objects: a router, a store, a
- * GraphQL client, and some common functions. It is not opinionated about auth,
- * so we add an auth implementation here and prepend it to the Apollo Link list.
- */
-const authLink = setContext((_, { headers }) => {
-    // get the authentication token from local storage if it exists.
-    const storage = new BrowserPersistence();
-    const token = storage.getItem('signin_token');
+// TODO: on the server, the http request should provide the origin
+const origin = isServer
+    ? process.env.MAGENTO_BACKEND_URL
+    : globalThis.location.origin;
 
-    // return the headers to the context so httpLink can read them
-    return {
-        headers: {
-            ...headers,
-            authorization: token ? `Bearer ${token}` : ''
-        }
-    };
-});
+// on the server, components add styles to this set and we render them in bulk
+const styles = new Set();
 
-ReactDOM.render(
-    <Adapter
-        apiBase={apiBase}
-        apollo={{ link: authLink.concat(Adapter.apolloLink(apiBase)) }}
-        store={store}
-    >
-        <App />
-    </Adapter>,
-    document.getElementById('root')
-);
+const tree = <Adapter origin={origin} store={store} styles={styles} />;
 
-if (process.env.SERVICE_WORKER && 'serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker
-            .register(process.env.SERVICE_WORKER)
-            .then(registration => {
-                initializeUI(registration);
-                subscribeUser(registration);
-                console.log('Service worker registered: ', registration);
-            })
-            .catch(error => {
-                console.log('Service worker registration failed: ', error);
-            });
+if (isServer) {
+    // TODO: ensure this actually renders correctly
+    import('react-dom/server').then(({ default: ReactDOMServer }) => {
+        console.log(ReactDOMServer.renderToString(tree));
+    });
+} else {
+    render(tree, document.getElementById('root'));
+    registerSW();
+
+    globalThis.addEventListener('online', () => {
+        store.dispatch(app.setOnline());
+    });
+    globalThis.addEventListener('offline', () => {
+        store.dispatch(app.setOffline());
     });
 }
-
-window.addEventListener('online', () => {
-    store.dispatch(app.setOnline());
-});
-window.addEventListener('offline', () => {
-    store.dispatch(app.setOffline());
-});

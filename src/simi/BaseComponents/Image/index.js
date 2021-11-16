@@ -1,16 +1,19 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { logoUrl } from 'src/simi/Helper/Url'
 
 const Image = props => {
-    const { src, alt } = props
-    const [imageUrl, setImageUrl] = useState(src)
-    const logo_url = logoUrl()
+    const { src, alt } = props;
+    const [imageUrl, setImageUrl] = useState(src);
+    const fallBackUrl = props.fallBackUrl ? props.fallBackUrl : logoUrl();
+    const childProps = JSON.parse(JSON.stringify(props));
+    if (childProps.fallBackUrl)
+        delete childProps.fallBackUrl;
     return (
-        <img 
-            {...props} 
-            src={imageUrl} 
-            onError={() => {if(imageUrl !== logo_url) {setImageUrl(logo_url)}}}
-            alt={alt?alt:'FallbackImg'}
+        <img
+            {...childProps}
+            src={imageUrl}
+            onError={() => { if (imageUrl !== fallBackUrl) { setImageUrl(fallBackUrl) } }}
+            alt={alt ? alt : 'FallbackImg'}
         />
     );
 }

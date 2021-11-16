@@ -5,6 +5,11 @@
     }
     .review-form {
         max-width: 600px;
+        .form-control{
+            width: 100%;
+            border-width: 1px;
+            min-height: 35px;
+        }
     }
     .your-rating-title {
         font-size: 20px;

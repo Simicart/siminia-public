@@ -1,6 +1,6 @@
 .downloadable-option {
     .options-container {
-        padding: 1.5rem 1.5rem 0 1.5rem;
+        padding: 1.5rem 0 0 0;
     }
     .option-row {
         font-size: 16px;
@@ -11,7 +11,7 @@
         margin-bottom: 15px;
     }
     .download-samples {
-        padding: 1.5rem 1.5rem 0 1.5rem;
+        padding: 1.5rem 0 0 0;
     }
     .download-sample-title {
         font-size: 20px;
@@ -22,5 +22,7 @@
         display: block;
         font-size: 16px;
         margin-bottom: 10px;
+        cursor: pointer;
+        color: #337ab7;
     }
 }

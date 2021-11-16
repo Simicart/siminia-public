@@ -5,7 +5,7 @@
 .categoryTop {
     display: flex;
     padding: 0 0 1rem 0;
-    color: rgb(var(--venia-text-alt));
+    color: rgb(var(--venia-global-color-text-alt));
     justify-content: center;
     align-items: center;
 }
@@ -19,7 +19,7 @@
     display: inline-flex;
     align-items: center;
     border-radius: 0.25rem;
-    border: 1px solid rgb(var(--venia-border));
+    border: 1px solid rgb(var(--venia-global-color-border));
     padding: 0.25rem 0.5rem;
 }
 

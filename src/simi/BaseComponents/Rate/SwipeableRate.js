@@ -33,9 +33,19 @@ class SwipeableRate extends React.Component {
         let point = 0;
         let rate_key = 0;
         let id = '';
+        const hexEncode = (value) => {
+            let hex, i;
+            var result = "";
+            for (i=0; i<value.length; i++) {
+                hex = value.charCodeAt(i).toString(16);
+                result += ("000"+hex).slice(-4);
+            }
+            return result
+        }
+        const rate_code = this.rate_code && hexEncode(this.rate_code) || '';
         for (let i = 0; i < 5; i++) {
             if (this.flag) {
-                id = this.rate_code + '-' + i
+                id = rate_code + '-' + i
             }
             if (this.rate_option) {
                 point = this.rate_option[i].value;
@@ -44,13 +54,13 @@ class SwipeableRate extends React.Component {
             if (i + 1 <= this.rate) {
                 star.push(
                     <span role="presentation" key={i} id={id} className={rate_point + " rate-star " + select}
-                          onClick={() => this.handleChangeRate(this.rate_code, i)} data-key={rate_key}
+                          onClick={() => this.handleChangeRate(rate_code, i)} data-key={rate_key}
                           data-point={point}><ToggleStar style={{height: this.size + 'px', width: this.size + 'px',fill:configColor.button_background}}/></span>
                 );
             } else {
                 star.push(
                     <span role="presentation" key={i} id={id} className={rate_point + " rate-star "}
-                          onClick={() => this.handleChangeRate(this.rate_code, i)} data-key={rate_key}
+                          onClick={() => this.handleChangeRate(rate_code, i)} data-key={rate_key}
                           data-point={point}><ToggleStar style={{fill : '#e0e0e0',height: this.size + 'px', width: this.size + 'px'}}/></span>
                 );
             }

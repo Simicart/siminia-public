@@ -1,0 +1,122 @@
+.filter-price-range{
+    margin: 35px auto 20px;
+    clear: both;
+    display: inline-block;
+    width: 100%;
+    padding: 0px 10px;
+    direction: ltr;
+    
+    .input-range__slider {
+        background: white;
+        box-shadow: 0px 0px 6px -3px black;
+        border-radius: 100%;
+        cursor: pointer;
+        display: block;
+        height: 15px;
+        width: 15px;
+        margin-top: -10px;
+        outline: none;
+        position: absolute;
+        top: 50%;
+        transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+    }
+    .price-range-rtl{
+        .input-range__slider{
+            margin-right: 1px;
+            margin-left: 0;
+        }
+        .input-range__track--active{
+            float: left;
+        }
+        .input-range__slider-container{
+            top: 50%;
+        }
+    }
+    .input-range__slider:active {
+        transform: scale(1.3);
+    }
+    .input-range__slider:focus {
+        box-shadow: 0 0 0 5px rgba(63, 81, 181, 0.2);
+    }
+    .input-range--disabled .input-range__slider {
+        background: #cccccc;
+        border: 1px solid #cccccc;
+        box-shadow: none;
+        transform: none;
+    }
+
+    .input-range__slider-container {
+        transition: left 0.3s ease-out;
+    }
+
+    .input-range__slider-container:hover {
+        z-index: 1;
+    }
+
+    .input-range__label {
+        font-size: 12px;
+        transform: translateZ(0);
+        white-space: nowrap;
+    }
+
+    .input-range__label--min,
+    .input-range__label--max {
+        bottom: -20px;
+        position: absolute;
+        color: #888888;
+    }
+
+    .input-range__label--min {
+        left: 0;
+    }
+
+    .input-range__label--max {
+        right: 0;
+    }
+
+    .input-range__label--value {
+        position: absolute;
+        background-color: #2D2E30;
+        color: white;
+        padding: 3px 6px;
+        top: -39px;
+        transform: translatex(-50%);
+    }
+
+    .input-range__label-container {
+        left: 0;
+        position: relative;
+    }
+
+    .input-range__track {
+        background: #eeeeee;
+        border-radius: 5px;
+        cursor: pointer;
+        display: block;
+        height: 5px;
+        position: relative;
+        transition: left 0.3s ease-out, width 0.3s ease-out;
+    }
+    .input-range--disabled .input-range__track {
+        background: #eeeeee;
+    }
+
+    .input-range__track--background {
+        left: 0;
+        margin-top: -3px;
+        position: absolute;
+        right: 0;
+        top: 50%;
+    }
+
+    .input-range__track--active {
+        background: rgb(246, 148, 53);
+    }
+
+    .input-range {
+        height: 12px;
+        position: relative;
+        width: 100%;
+    }
+}
+    /*# sourceMappingURL=index.css.map */

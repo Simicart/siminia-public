@@ -1,0 +1,10 @@
+fragment CustomizableFileOption on CustomizableFileOption {
+    file_value: value {
+        file_extension
+        image_size_x
+        image_size_y
+        price_type
+        price
+        sku
+    }
+}

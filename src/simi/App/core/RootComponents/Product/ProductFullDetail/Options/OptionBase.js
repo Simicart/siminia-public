@@ -23,15 +23,14 @@ class OptionBase extends React.Component {
         return <span className="price" style={{color : configColor.price_color,marginLeft:0,fontSize : 16}}>{formatPrice(price)}</span>
     };
 
-    renderLabelRequired = (show = 1) => {
-        if(show === 1){
+    renderLabelRequired = (show = true) => {
+        if(show){
             return <span className="required-label" style={{marginLeft : '5px', color : '#ff0000'}}>*</span>;
         }
         return null;
     };
 
     updatePrices=(selected = this.selected) =>{
-        console.log(selected)
         return <div></div>;
     };
 

@@ -1,26 +1,67 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'src/drivers';
 import { compose } from 'redux';
-import PropTypes from 'prop-types';
 
-import { toggleCart } from 'src/actions/cart';
 import CartCounter from './cartCounter';
 
 import Basket from "src/simi/BaseComponents/Icon/Basket";
 import classify from 'src/classify';
 import defaultClasses from './cartTrigger.css'
 import Identify from 'src/simi/Helper/Identify'
-import { Link } from 'src/drivers'
-import { resourceUrl } from 'src/simi/Helper/Url'
+import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
+import { GET_CART_DETAILS as GET_CART_DETAILS_QUERY } from 'src/simi/App/core/Cart/cartPage.gql';
+import { GET_ITEM_COUNT_QUERY } from './cartTrigger.gql';
+import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
+
+const Trigger = props => {
+    const { storeConfig, classes } = props;
+
+    const { handleClick, itemCount: itemsQty, isPhone } = useCartTrigger({
+        mutations: {
+            createCartMutation: CREATE_CART_MUTATION
+        },
+        queries: {
+            getCartDetailsQuery: GET_CART_DETAILS_QUERY,
+            getItemCountQuery: GET_ITEM_COUNT_QUERY
+        },
+        storeConfig,
+        isBasicTheme: true
+    });
+
+    const iconColor = 'rgb(var(--venia-global-color-text))';
+    const svgAttributes = {
+        stroke: iconColor
+    };
+    if (itemsQty > 0) {
+        svgAttributes.fill = iconColor;
+    }
+
+    const cartIcon = <React.Fragment>
+        <div className={classes['item-icon']} style={{ display: 'flex', justifyContent: 'center' }}>
+            <Basket style={{ width: 30, height: 30, display: 'block', margin: 0 }} />
+        </div>
+        {!isPhone &&
+            <div className={classes['item-text']}>
+                {Identify.__('Basket')}
+            </div>
+        }
+    </React.Fragment>
+
+    return (
+        <div role="presentation" className={classes.root} aria-label="Open cart page" onClick={handleClick}>
+            {cartIcon}
+            <CartCounter counter={itemsQty ? itemsQty : 0} />
+        </div>
+    )
+}
 
 
-export class Trigger extends Component {
+/* export class Trigger extends Component {
     static propTypes = {
         children: PropTypes.node,
         classes: PropTypes.shape({
             root: PropTypes.string
         }),
-        toggleCart: PropTypes.func.isRequired,
         itemsQty: PropTypes.number
     };
 
@@ -30,36 +71,37 @@ export class Trigger extends Component {
             cart: { details }
         } = this.props;
         const itemsQty = details.items_qty;
-        const iconColor = 'rgb(var(--venia-text))';
+        const iconColor = 'rgb(var(--venia-global-color-text))';
         const svgAttributes = {
             stroke: iconColor
         };
-
+        const isPhone = window.innerWidth < 1024
         if (itemsQty > 0) {
             svgAttributes.fill = iconColor;
         }
         return (
             <React.Fragment>
-                <div className={classes['item-icon']} style={{display: 'flex', justifyContent: 'center'}}>  
-                    <Basket style={{width: 30, height: 30, display: 'block', margin: 0}}/>
+                <div className={classes['item-icon']} style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Basket style={{ width: 30, height: 30, display: 'block', margin: 0 }} />
                 </div>
-                <div className={classes['item-text']}>
-                    {Identify.__('Basket')}
-                </div>
+                {!isPhone &&
+                    <div className={classes['item-text']}>
+                        {Identify.__('Basket')}
+                    </div>
+                }
             </React.Fragment>
         )
     }
 
-    render() {            
+    render() {
         const {
             classes,
-            //toggleCart,
             cart: { details }
         } = this.props;
         const { cartIcon } = this;
         const itemsQty = details.items_qty;
         return (
-            <Link 
+            <Link
                 to={resourceUrl('/cart.html')}
                 className={classes.root}
                 aria-label="Open cart page"
@@ -68,31 +110,20 @@ export class Trigger extends Component {
                 <CartCounter counter={itemsQty ? itemsQty : 0} />
             </Link>
         )
-        /*
-        return (
-            <button
-                className={classes.root}
-                aria-label="Toggle mini cart"
-                onClick={toggleCart}
-            >
-                {cartIcon}
-                <CartCounter counter={itemsQty ? itemsQty : 0} />
-            </button>
-        );
-        */
+    }
+} */
+
+const mapStateToProps = ({ simireducers }) => {
+    const { storeConfig } = simireducers;
+    return {
+        storeConfig
     }
 }
-
-const mapStateToProps = ({ cart }) => ({ cart });
-
-const mapDispatchToProps = {
-    toggleCart,
-};
 
 export default compose(
     classify(defaultClasses),
     connect(
         mapStateToProps,
-        mapDispatchToProps
+        null
     )
 )(Trigger);

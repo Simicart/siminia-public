@@ -1,0 +1,24 @@
+.root {
+    display: grid;
+    grid-template-areas:
+        'actions'
+        'items';
+    grid-template-columns: 1fr;
+    line-height: 1;
+}
+
+.images {
+}
+.siminia-product-grid-item {
+    width: 260px;
+    margin-inline-end: 15px;
+}
+.siminia-product-image {
+    height: 260px;
+    width: 260px;
+}
+.siminia-product-image img {
+    width: 258px;
+    height: 258px;
+    object-fit: contain;
+}

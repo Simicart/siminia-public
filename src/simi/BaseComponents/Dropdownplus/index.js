@@ -27,13 +27,14 @@ class Dropdownplus extends React.Component {
                     {this.props.title}
                     <div 
                         className={classes["dropdownplus-title-plus-ic"]}
-                        ref={(item) => this.plusIc = item}>
+                        ref={(item) => this.plusIc = item}
+                        style={{display: this.props.expanded?'none':'block'}}>
                         <Addic />
                     </div>
                     <div 
                         className={classes["dropdownplus-title-minus-ic"]}
                         ref={(item) => this.minusIc = item}
-                        style={{display: 'none'}}>
+                        style={{display: this.props.expanded?'block':'none'}}>
                         <Minusic />
                     </div>
                 </div>

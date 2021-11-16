@@ -1,41 +1,51 @@
-import React, { Component } from 'react';
-import { string, shape, array, number } from 'prop-types';
+import React, { useMemo, useCallback } from 'react';
+import { string, shape, array } from 'prop-types';
+import { GridItem } from 'src/simi/BaseComponents/GridItem';
 
-import classify from 'src/classify';
-import GalleryItems, { emptyData } from './items';
-import defaultClasses from './gallery.css';
-import Loading from 'src/simi/BaseComponents/Loading'
+require('./gallery.scss');
 
-class Gallery extends Component {
-    static propTypes = {
-        classes: shape({
-            filters: string,
-            items: string,
-            pagination: string,
-            root: string
-        }),
-        data: array,
-        pageSize: number
+// map Magento 2.3.1 schema changes to Venia 2.0.0 proptype shape to maintain backwards compatibility
+const mapGalleryItem = item => {
+    const { small_image } = item;
+    return {
+        ...item,
+        small_image:
+            typeof small_image === 'object' ? small_image.url : small_image
     };
+};
 
-    static defaultProps = {
-        data: emptyData
-    };
+const Gallery = props => {
+    const { items, history } = props;
 
-    render() {
-        const { classes, data, pageSize, history } = this.props;
-        const hasData = Array.isArray(data) && data.length;
-        const items = hasData ? data : emptyData;
-        
-        return (
-            <div className={classes.root}>
-                {!hasData && <Loading />}
-                <div className={classes.items}>
-                    <GalleryItems items={items} pageSize={pageSize} history={history}/>
-                </div>
-            </div>
-        );
-    }
-}
+    const handleLink = useCallback((link) => {
+        history.push(link);
+    }, []);
 
-export default classify(defaultClasses)(Gallery);
+    const galleryItems = useMemo(
+        () =>
+            items.map((item, index) => {
+                if (item === null) {
+                    return <GridItem key={index} />;
+                }
+                return <GridItem key={index} item={mapGalleryItem(item)} handleLink={handleLink} />;
+            }), [items]
+    );
+
+    return (<div className="gallery-root">
+        <div className="gallery-items">
+            {galleryItems}
+        </div>
+    </div>)
+};
+
+Gallery.propTypes = {
+    classes: shape({
+        filters: string,
+        items: string,
+        pagination: string,
+        root: string
+    }),
+    items: array.isRequired
+};
+
+export default Gallery;

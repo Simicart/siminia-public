@@ -10,7 +10,10 @@ import Identify from 'src/simi/Helper/Identify';
 import {configColor} from "src/simi/Config";
 
 class NestedListItem extends React.Component {
-    state = { open: false };
+    constructor(props){
+        super(props);
+        this.state = {open: props.opendefault?true:false}
+    }
 
     handleClick = () => {
         this.setState(state => ({ open: !state.open }));
@@ -30,6 +33,7 @@ class NestedListItem extends React.Component {
             <div>
                 <ListItem
                     {...this.props}
+                    opendefault=""
                           button
                           className={className}
                           onClick={this.handleClick}

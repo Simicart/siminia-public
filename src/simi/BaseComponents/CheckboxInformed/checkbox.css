@@ -1,0 +1,61 @@
+.root {
+    align-items: center;
+    display: grid;
+    gap: 15px;
+    grid-auto-flow: column;
+    grid-template-areas: 'input label';
+    grid-template-columns: min-content 1fr;
+    justify-items: center;
+    line-height: 1.5rem;
+}
+
+.root .input {
+    -webkit-appearance: none;
+    background: none;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    grid-area: input;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.icon {
+    grid-area: input;
+    pointer-events: none;
+    width: 24px;
+    height: 24px;
+    border: solid 1px var(--simicolor-checkbox-background);
+}
+
+.icon_checked {
+    composes: icon;
+    background-color: var(--simicolor-checkbox-check);
+}
+.icon svg {
+    fill: var(--simicolor-checkbox-background) !important;
+    color: 
+}
+.icon svg {
+    margin-top: -1px;
+    margin-inline-start: -1px;
+}
+
+.label {
+    cursor: pointer;
+    grid-area: label;
+    justify-self: start;
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: 400;
+}
+
+.input:disabled {
+    cursor: default;
+}
+
+.input:active,
+.input:focus {
+    box-shadow: -3px 3px #eaeaea;
+    outline: none;
+}

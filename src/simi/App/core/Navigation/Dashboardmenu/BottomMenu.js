@@ -4,7 +4,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import {configColor} from 'src/simi/Config';
 import Identify from 'src/simi/Helper/Identify';
 import {itemTypes} from './Consts'
-import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent/'
+//import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent/'
 import { connect } from 'src/drivers'
 
 class BottomMenu extends React.Component{
@@ -71,14 +71,14 @@ class BottomMenu extends React.Component{
                     let icon = itemType.svg_icon?itemType.svg_icon:''
                     if (item.icon)
                         icon = <img src={item.icon} alt={item.name} style={{maxWidth: 20, maxHeight: 17}}/>
-                    else if (itemType.svg_icon) {
-                        icon = (
-                            <LazyComponent 
-                                component={()=>import(`src/simi/BaseComponents/Icon/TapitaIcons/${itemType.svg_icon}`)}
-                                {...iconProps}
-                            />
-                        )
-                    }
+                    // else if (itemType.svg_icon) {
+                    //     icon = (
+                    //         <LazyComponent 
+                    //             component={()=>import(`src/simi/BaseComponents/Icon/TapitaIcons/${itemType.svg_icon}`)}
+                    //             {...iconProps}
+                    //         />
+                    //     )
+                    // }
                     if (parseInt(item.type, 10) === 2)
                         items.push(this.renderCartIcon(item, icon, itemStyle))
                     else

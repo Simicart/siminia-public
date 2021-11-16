@@ -1,135 +1,125 @@
 import React from 'react';
 import { shape, string } from 'prop-types';
 import { Form } from 'informed';
-import Checkbox from 'src/components/Checkbox';
-import Field from 'src/components/Field';
-import TextInput from 'src/components/TextInput';
+import Checkbox from '@magento/venia-ui/lib/components/Checkbox';
+import Field from '@magento/venia-ui/lib/components/Field';
+import TextInput from '@magento/venia-ui/lib/components/TextInput';
 import { validators } from './validators';
-import {configColor} from 'src/simi/Config'
-import Identify from 'src/simi/Helper/Identify'
-import TitleHelper from 'src/simi/Helper/TitleHelper'
-import { createAccount } from 'src/simi/Model/Customer'
-import {showToastMessage} from 'src/simi/Helper/Message';
-import {showFogLoading, hideFogLoading} from 'src/simi/BaseComponents/Loading/GlobalLoading';
-require('./createAccount.scss')
+import { configColor } from 'src/simi/Config';
+import Identify from 'src/simi/Helper/Identify';
+
+import { Redirect } from 'src/drivers';
+import { useCreateAccount } from 'src/simi/talons/CreateAccount/useCreateAccount';
+import { useCreateAccountPage } from '@magento/peregrine/lib/talons/CreateAccountPage/useCreateAccountPage';
+
+import { CREATE_ACCOUNT as CREATE_ACCOUNT_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
+import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
+import { GET_CART_DETAILS as GET_CART_DETAILS_QUERY } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
+import { GET_CUSTOMER as GET_CUSTOMER_QUERY } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
+import { SIGN_IN as SIGN_IN_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
+import { MERGE_CARTS as mergeCartsMutation } from '@magento/peregrine/lib/talons/SignIn/signIn.gql';
+
+require('./createAccount.scss');
 
 const CreateAccount = props => {
-    const { createAccountError } = props;
-    const errorMessage = createAccountError && (Object.keys(createAccountError).length !== 0) ? Identify.__('An error occurred. Please try again.'):null
-    let registeringEmail = null
-    let registeringPassword = null
+    const createAccountPageProps = useCreateAccountPage();
 
-    const initialValues = () => {
-        const { initialValues } = props;
-        const { email, firstName, lastName, ...rest } = initialValues;
+    const talonProps = useCreateAccount({
+        queries: {
+            createAccountQuery: CREATE_ACCOUNT_MUTATION,
+            customerQuery: GET_CUSTOMER_QUERY
+        },
+        mutations: {
+            createCartMutation: CREATE_CART_MUTATION,
+            getCartDetailsQuery: GET_CART_DETAILS_QUERY,
+            signInMutation: SIGN_IN_MUTATION,
+            mergeCartsMutation
+        },
+        initialValues: createAccountPageProps.initialValues,
+        onSubmit: createAccountPageProps.handleCreateAccount
+    });
 
-        return {
-            customer: { email, firstname: firstName, lastname: lastName },
-            ...rest
-        };
-    }
+    const {
+        errors,
+        handleSubmit,
+        isDisabled,
+        isSignedIn,
+        initialValues
+    } = talonProps;
 
-    const handleSubmit = values => {
-        let params = {
-            password : values.password,
-            confirm_password : values.confirm,
-            ...values.customer,
-            news_letter : values.subscribe ? 1 : 0
-        }
-        showFogLoading()
-        registeringEmail = values.customer.email
-        registeringPassword = values.password
-        createAccount(registerDone, params)
-    };
+    const errorMessage = errors.length
+        ? errors
+            .map(({ message }) => message)
+            .reduce((acc, msg) => msg + '\n' + acc, '')
+        : null;
 
-    const registerDone = (data) => {
-        hideFogLoading()
-        if (data.errors) {
-            console.log('nooo')
-            let errorMsg = ''
-            if (data.errors.length) {
-                data.errors.map(error => {
-                    errorMsg += error.message
-                })
-                showToastMessage(errorMsg)
-            }
-        } else {
-            props.onSignIn(registeringEmail, registeringPassword)
-        }
+    if (isSignedIn) {
+        return <Redirect to="/" />;
     }
 
 
     return (
-        <React.Fragment>
-            {TitleHelper.renderMetaHeader({
-                title:Identify.__('Create Account')
-            })}
-            <Form
-                className='root create-acc-form'
-                initialValues={initialValues}
-                onSubmit={handleSubmit}
-            >
-                <h3 className='lead'>
-                    {`Check out faster, use multiple addresses, track
-                            orders and more by creating an account!`}
-                </h3>
-                <Field label={Identify.__("First Name")} required={true}>
-                    <TextInput
-                        field="customer.firstname"
-                        autoComplete="given-name"
-                        validate={validators.get('firstName')}
-                        validateOnBlur
-                    />
-                </Field>
-                <Field label={Identify.__("Last Name")} required={true}>
-                    <TextInput
-                        field="customer.lastname"
-                        autoComplete="family-name"
-                        validate={validators.get('lastName')}
-                        validateOnBlur
-                    />
-                </Field>
-                <Field label={Identify.__("Email")} required={true}>
-                    <TextInput
-                        field="customer.email"
-                        autoComplete="email"
-                        validate={validators.get('email')}
-                        validateOnBlur
-                    />
-                </Field>
-                <Field label={Identify.__("Password")}>
-                    <TextInput
-                        field="password"
-                        type="password"
-                        autoComplete="new-password"
-                        validate={validators.get('password')}
-                        validateOnBlur
-                    />
-                </Field>
-                <Field label={Identify.__("Confirm Password")}>
-                    <TextInput
-                        field="confirm"
-                        type="password"
-                        validate={validators.get('confirm')}
-                        validateOnBlur
-                    />
-                </Field>
-                <div className='subscribe'>
-                    <Checkbox
-                        field="subscribe"
-                        label={Identify.__("Subscribe to news and updates")}
-                    />
-                </div>
-                <div className='error'>{errorMessage}</div>
-                <div className='actions'>
-                    <button
-                        priority="high" className='submitButton' type="submit"
-                        style={{backgroundColor: configColor.button_background, color: configColor.button_text_color}}>
-                        {Identify.__('Submit')}
-                    </button>
-                </div>
-            </Form>
-        </React.Fragment>
+        <Form
+            className='root create-acc-form'
+            initialValues={initialValues}
+            onSubmit={handleSubmit}>
+            <h3 className='lead'>{Identify.__('Check out faster, use multiple addresses, track orders and more by creating an account!')}</h3>
+            <Field label={Identify.__("First Name")} required={false} after={'*'}>
+                <TextInput
+                    field="customer.firstname"
+                    autoComplete="given-name"
+                    validate={validators.get('firstName')}
+                    validateOnBlur
+                />
+            </Field>
+            <Field label={Identify.__("Last Name")} required={false} after={'*'} >
+                <TextInput
+                    field="customer.lastname"
+                    autoComplete="family-name"
+                    validate={validators.get('lastName')}
+                    validateOnBlur
+                />
+            </Field>
+            <Field label={Identify.__("Email")} required={false} after={'*'} >
+                <TextInput
+                    field="customer.email"
+                    autoComplete="email"
+                    validate={validators.get('email')}
+                    validateOnBlur
+                />
+            </Field>
+            <Field label={Identify.__("Password")} required={false} after={'*'} >
+                <TextInput
+                    field="password"
+                    type="password"
+                    autoComplete="new-password"
+                    validate={validators.get('password')}
+                    validateOnBlur
+                />
+            </Field>
+            <Field label={Identify.__("Confirm Password")} required={false} after={'*'} >
+                <TextInput
+                    field="confirm"
+                    type="password"
+                    validate={validators.get('confirm')}
+                    validateOnBlur
+                />
+            </Field>
+            <div className='subscribe'>
+                <Checkbox
+                    field="subscribe"
+                    label={Identify.__("Subscribe to news and updates")}
+                />
+            </div>
+            <div className='error'>{errorMessage}</div>
+            <div className='actions'>
+                <button
+                    priority="high" className='submitButton' type="submit"
+                    style={{ backgroundColor: configColor.button_background, color: configColor.button_text_color }}>
+                    {Identify.__('Submit')}
+                </button>
+            </div>
+        </Form>
     );
 }
 

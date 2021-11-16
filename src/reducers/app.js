@@ -1,17 +1,22 @@
 import { handleActions } from 'redux-actions';
 
-import actions from 'src/actions/app';
+import actions from '../actions/app';
 
 export const name = 'app';
 
+// as far as the server is concerned, the app is always online
+const isServer = !globalThis.navigator;
+const isOnline = !isServer && navigator.onLine;
+const hasBeenOffline = !isServer && !navigator.onLine;
+
 const initialState = {
     drawer: null,
-    hasBeenOffline: !navigator.onLine,
-    isOnline: navigator.onLine,
+    hasBeenOffline,
+    isOnline,
+    isPageLoading: false,
     overlay: false,
-    searchOpen: false,
-    query: '',
-    pending: {}
+    pending: {},
+    searchOpen: false
 };
 
 const reducerMap = {
@@ -28,12 +33,6 @@ const reducerMap = {
             searchOpen: !state.searchOpen
         };
     },
-    [actions.executeSearch]: (state, { payload }) => {
-        return {
-            ...state,
-            query: payload
-        };
-    },
     [actions.setOnline]: state => {
         return {
             ...state,
@@ -45,6 +44,12 @@ const reducerMap = {
             ...state,
             isOnline: false,
             hasBeenOffline: true
+        };
+    },
+    [actions.setPageLoading]: (state, { payload }) => {
+        return {
+            ...state,
+            isPageLoading: !!payload
         };
     }
 };

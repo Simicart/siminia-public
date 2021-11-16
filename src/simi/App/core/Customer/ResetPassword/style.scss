@@ -1,0 +1,96 @@
+.reset-password-page {
+    padding: 2.5rem 3rem;
+    max-width: 1080px;
+    margin: 0 auto;
+
+    .reset-password-customer {
+        max-width: 770px;
+        margin-top: 51px;
+        margin-bottom: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0px 0px 50px;
+        border: 1px solid #e0e0e0;
+        background-color: white;
+        .rpass-heading {
+            width: 100%;
+            padding: 30px 0;
+            text-align: center;
+            box-sizing: border-box;
+            background-color: #fff;
+            text-transform: uppercase;
+            span {
+                width: fit-content;
+                height: 20px;
+                margin: auto;
+                text-align: center;
+                display: inline-block;
+                margin-top: 0px;
+                color: #000;
+                font-size: 20px;
+                font-weight: 500;
+                letter-spacing: 1px;
+                line-height: 20px;
+            }
+        }
+        .rpass-form-wrap {
+            padding: 0 98px;
+            .invalidTokenContainer {
+                margin: auto;
+                width: fit-content;
+                .invalidToken {
+                    border-left: 4px solid rgb(201, 37, 45);
+                    color: rgb(201, 37, 45);
+                    padding: 0.5rem 1rem;
+                }
+            }
+            .rpass-form-container {
+                gap: 0.5rem;
+                justify-items: stretch;
+                margin-top: 15px;
+                .rpass-form-description {
+                    display: inline-block;
+                    font-weight: 300;
+                    color: #727272;
+                    font-size: 14px;
+                    line-height: 19px;
+                    margin-bottom: 0;
+                }
+                .submitButton {
+                    font-size: 16px;
+                    font-weight: 500;
+                    white-space: nowrap;
+                    text-align: center;
+                    padding-top: 16px;
+                    border: 0;
+                    width: 100%;
+                    min-width: 200px;
+                    padding-bottom: 16px;
+                    line-height: 16px;
+                    color: #fff;
+                    letter-spacing: 1px;
+                    background-color: #000;
+                    text-transform: uppercase;
+                    margin-top: 30px;
+                    &:disabled {
+                        opacity: 0.56;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .reset-password-page {
+        padding: 1rem;
+        .reset-password-customer {
+            .rpass-heading {
+                padding: 20px 0;
+            }
+            .rpass-form-wrap {
+                padding: 0 10px;
+            }
+        }
+    }
+}

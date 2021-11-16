@@ -1,115 +1,115 @@
-import React, { Component, Fragment } from 'react';
-import { array, bool, func } from 'prop-types';
-
-import Main from 'src/simi/App/core/Main';
+import React, { Fragment, useCallback, Suspense } from 'react';
+import { array, func, shape, string } from 'prop-types';
+import Main from './App/core/Main';
+import Navigation from './App/core/Navigation';
+import Routes from './Routes';
 import Mask from 'src/simi/BaseComponents/Mask';
-import Navigation from 'src/simi/App/core/Navigation';
-import OnlineIndicator from 'src/components/OnlineIndicator';
-import ErrorNotifications from './errorNotifications';
-import renderRoutes from './renderRoutes';
-import errorRecord from 'src/util/createErrorRecord';
+import { useApp } from '@magento/peregrine/lib/talons/App/useApp';
+import { useToasts } from '@magento/peregrine';
+import ToastContainer from '@magento/venia-ui/lib/components/ToastContainer';
+import Icon from '@magento/venia-ui/lib/components/Icon';
 
-class App extends Component {
-    static propTypes = {
-        hasBeenOffline: bool,
-        isOnline: bool,
-        closeDrawer: func.isRequired,
-        markErrorHandled: func.isRequired,
-        unhandledErrors: array
-    };
+import {
+    AlertCircle as AlertCircleIcon,
+    CloudOff as CloudOffIcon,
+    Wifi as WifiIcon
+} from 'react-feather';
+import Identify from './Helper/Identify';
+import HOProgress from './ProgressBar/HOProgress';
+import globalCSS from '../index.css';
 
-    static get initialState() {
-        return {
-            renderError: null
-        };
-    }
+const OnlineIcon = <Icon src={WifiIcon} attrs={{ width: 18 }} />;
+const OfflineIcon = <Icon src={CloudOffIcon} attrs={{ width: 18 }} />;
+const ErrorIcon = <Icon src={AlertCircleIcon} attrs={{ width: 18 }} />;
 
-    shouldComponentUpdate(nextProps){
-        //avoid re-render with duplicated error
-        let update = true
-        if (nextProps.unhandledErrors && nextProps.unhandledErrors.length) {
-            const newErrLength = nextProps.unhandledErrors.length
-            if (
-                nextProps.unhandledErrors[newErrLength-1] &&
-                this.unhandledErrors &&
-                this.unhandledErrors[newErrLength-2] &&
-                this.unhandledErrors[newErrLength-2].loc === nextProps.unhandledErrors[newErrLength-1].loc
-                )
-                update = false
-            this.unhandledErrors = nextProps.unhandledErrors
-        }
-        return update
-    }
-    
-    get errorFallback() {
-        const { renderError } = this.state;
-        if (renderError) {
-            const errors = [
-                errorRecord(renderError, window, this, renderError.stack)
-            ];
-            return (
-                <Fragment>
-                    <Main isMasked={true} />
-                    <Mask isActive={true} />
-                    <ErrorNotifications
-                        errors={errors}
-                        onDismissError={this.recoverFromRenderError}
-                    />
-                </Fragment>
-            );
-        }
-    }
+const ERROR_MESSAGE = Identify.__('Sorry! An unexpected error occurred.');
 
-    get onlineIndicator() {
-        const { hasBeenOffline, isOnline } = this.props;
+const App = props => {
+    const { markErrorHandled, renderError, unhandledErrors } = props;
+    const [, { addToast }] = useToasts();
+    // const storeConfig = Identify.getStoreConfig();
+    const handleIsOffline = useCallback(() => {
+        addToast({
+            type: 'error',
+            icon: OfflineIcon,
+            message: Identify.__(
+                'You are offline. Some features may be unavailable.'
+            ),
+            timeout: 3000
+        });
+    }, [addToast]);
 
-        // Only show online indicator when
-        // online after being offline
-        return hasBeenOffline ? <OnlineIndicator isOnline={isOnline} /> : null;
-    }
+    const handleIsOnline = useCallback(() => {
+        addToast({
+            type: 'info',
+            icon: OnlineIcon,
+            message: Identify.__('You are online.'),
+            timeout: 3000
+        });
+    }, [addToast]);
 
-    // Defining this static method turns this component into an ErrorBoundary,
-    // which can re-render a fallback UI if any of its descendant components
-    // throw an exception while rendering.
-    // This is a common implementation: React uses the returned object to run
-    // setState() on the component. <App /> then re-renders with a `renderError`
-    // property in state, and the render() method below will render a fallback
-    // UI describing the error if the `renderError` property is set.
-    static getDerivedStateFromError(renderError) {
-        return { renderError };
-    }
+    const handleError = useCallback(
+        (error, id, loc, handleDismissError) => {
+            const errorToastProps = {
+                icon: ErrorIcon,
+                message: `${ERROR_MESSAGE}\nDebug: ${id} ${loc}`,
+                onDismiss: remove => {
+                    handleDismissError();
+                    remove();
+                },
+                timeout: 15000,
+                type: 'error'
+            };
 
-    recoverFromRenderError = () => window.location.reload();
+            addToast(errorToastProps);
+        },
+        [ERROR_MESSAGE, addToast]
+    );
 
-    state = App.initialState;
+    const talonProps = useApp({
+        handleError,
+        handleIsOffline,
+        handleIsOnline,
+        markErrorHandled,
+        renderError,
+        unhandledErrors
+    });
 
-    render() {
-        const { errorFallback } = this;
-        if (errorFallback) {
-            return errorFallback;
-        }
-        const {
-            closeDrawer,
-            markErrorHandled,
-            unhandledErrors
-        } = this.props;
-        const { onlineIndicator } = this;
-        
+    const { hasOverlay, handleCloseDrawer } = talonProps;
+
+    if (renderError) {
         return (
             <Fragment>
-                <Main>
-                    {onlineIndicator}
-                    {renderRoutes()}
-                </Main>
-                <Mask dismiss={closeDrawer} />
-                <Navigation />
-                <ErrorNotifications
-                    errors={unhandledErrors}
-                    onDismissError={markErrorHandled}
-                />
+                <Main isMasked={true} />
+                <Mask isActive={true} />
+                <ToastContainer />
             </Fragment>
         );
     }
-}
+
+    return (
+        <Fragment>
+            <HOProgress />
+            <Main isMasked={hasOverlay}>
+                <Routes />
+            </Main>
+            <Mask isActive={hasOverlay} dismiss={handleCloseDrawer} />
+            <Suspense fallback={null}>
+                <Navigation />
+            </Suspense>
+            <ToastContainer />
+        </Fragment>
+    );
+};
+
+App.propTypes = {
+    markErrorHandled: func.isRequired,
+    renderError: shape({
+        stack: string
+    }),
+    unhandledErrors: array
+};
+
+App.globalCSS = globalCSS;
 
 export default App;

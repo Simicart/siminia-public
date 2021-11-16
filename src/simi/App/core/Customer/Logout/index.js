@@ -1,30 +1,24 @@
-import React from 'react'
-import { connect } from 'src/drivers';
-import { simiSignOut } from 'src/simi/Redux/actions/simiactions';
-import Loading from 'src/simi/BaseComponents/Loading';
+import React, { useEffect } from 'react';
 
-var loggingOut = false
+import { useMyAccount } from 'src/simi/talons/MyAccount/useMyAccount';
+import { SIGN_OUT as SIGN_OUT_MUTATION } from '@magento/peregrine/lib/talons/Header/accountMenu.gql';
 
 const Logout = props => {
-    const { simiSignOut, history, isSignedIn } = props
-    if (isSignedIn) {
-        if (!loggingOut) {
-            loggingOut = true;
-            simiSignOut({ history })
+    const { history } = props;
+
+    const { handleSignOut, isSignedIn } = useMyAccount({
+        signOutMutation: SIGN_OUT_MUTATION
+    });
+
+    useEffect(() => {
+        if (isSignedIn) {
+            handleSignOut();
         } else {
-            console.log('Already logging out')
+            history.push('/');
         }
-    } else
-        history.push('/')
-    return <Loading />
-}
+    }, [isSignedIn, handleSignOut]);
 
-const mapStateToProps = ({ user }) => {
-    const { isSignedIn } = user
-    return {
-        isSignedIn
-    };
-}
+    return null;
+};
 
-
-export default connect(mapStateToProps, { simiSignOut })(Logout);
+export default Logout;

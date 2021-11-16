@@ -8,7 +8,8 @@ import defaultClasses from './suggestedCategories.css';
 import ReactHTMLParse from 'react-html-parser';
 
 const SuggestedCategories = props => {
-    const { categories, limit, onNavigate, value } = props;
+    const { limit, onNavigate, value } = props;
+    const categories = props.categories ? props.categories : [];
     const classes = mergeClasses(defaultClasses, props.classes);
 
     const handleClick = useCallback(() => {

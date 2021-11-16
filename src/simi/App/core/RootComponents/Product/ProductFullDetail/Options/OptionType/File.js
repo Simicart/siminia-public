@@ -15,38 +15,44 @@ class File extends Abstract {
     render(){
         const notes = []
         const ObjOptions = this.props.data
-        if (!ObjOptions.input_name)
-            return ''
+        // if (!ObjOptions.input_name)
+        //     return ''
 
-        if (ObjOptions.file_extension)
+        const { file_value } = ObjOptions;
+        let extensionsAllow = '';
+        if (file_value.file_extension) {
             notes.push(
                 <p className="note" key="file_extension">
-                    {Identify.__('Compatible file extensions to upload:')} {ObjOptions.file_extension}
+                    {Identify.__('Compatible file extensions to upload:')} {file_value.file_extension}
                 </p>
             )
+            let extArr = file_value.file_extension.split(',');
+            extArr = extArr.map(i => '.' + i.trim());
+            extensionsAllow = extArr.join(',');
+        }
         
-        if (ObjOptions.image_size_x && parseInt(ObjOptions.image_size_x))
+        if (file_value.image_size_x && parseInt(file_value.image_size_x))
             notes.push(
                 <p className="note" key="image_size_x">
-                    {Identify.__(`Maximum image width: %@px`).replace('%@', ObjOptions.image_size_x)}
+                    {Identify.__(`Maximum image width: %@px`).replace('%@', file_value.image_size_x)}
                 </p>
             )
         
-        if (ObjOptions.image_size_y && parseInt(ObjOptions.image_size_y))
+        if (file_value.image_size_y && parseInt(file_value.image_size_y))
             notes.push(
                 <p className="note" key="image_size_y">
-                    {Identify.__(`Maximum image height: %@px`).replace('%@', ObjOptions.image_size_y)}
+                    {Identify.__(`Maximum image height: %@px`).replace('%@', file_value.image_size_y)}
                 </p>
             )
             
         return (
             <div>
-                <input name={ObjOptions.input_name} 
+                <input name={`custom_file_${this.props.id}`} 
                         id={this.props.id} 
                         parent={this} 
                         type="file"
                         onChange={() => this.selectedFile(this.props.id)}
-                        accept={`.${ObjOptions.file_extension}`}
+                        accept={`.${extensionsAllow}`}
                         style={{marginBottom: 10}}
                         />
                 {notes}

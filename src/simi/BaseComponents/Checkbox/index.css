@@ -17,12 +17,31 @@
     background-image: url("./image/checkbox_empty.svg");
     background-size: contain;
     margin-top: 1px;
-    margin-right: 9px;
+    margin-inline-end: 9px;
     background-repeat: no-repeat;
 }
 
 .checkbox-item.selected .checkbox-item-icon {
-    margin-top: 2px;
-    background-image: url("./image/checkbox_checked.svg");
-    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+}
+.checkbox-item.selected .checkbox-item-icon .checkbox-item-icon-inside {
+    color: #101820;
+    font-family: Linearicons;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    margin: 4px;
+}
+.checkbox-item.selected .checkbox-item-icon .checkbox-item-icon-inside::before {
+    content: "\e934";
+}
+.checkbox-item span.checkbox-item-text {
+    color: #101820;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
 }

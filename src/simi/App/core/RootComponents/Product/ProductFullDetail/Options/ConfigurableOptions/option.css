@@ -1,13 +1,12 @@
 .root {
-    border-bottom: 1px solid rgb(var(--venia-border));
-    margin: 0 1.5rem;
-    padding: 1.75rem 0;
+    margin-top: 20px;
 }
 
 .title {
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.5;
-    margin-bottom: 1.5rem;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin: 0 0 7px;
 }
-

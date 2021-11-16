@@ -1,0 +1,106 @@
+.cart-estimate-shipping-tax {
+    font-weight: 400;
+    color: #000;
+    .cart-estimate-title {
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .cart-estimate-inner {
+        margin-top: 5px;
+        font-size: 14px;
+
+        .estimate-field-label {
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        .estimate-field-value {
+            margin-top: 6px;
+        }
+        .country-field .estimate-countries-states {
+            z-index: 2;
+        }
+        i.dropdownoption-title-down-ic, i.dropdownoption-title-up-ic {
+            font-size: 14px;
+        }
+        .estimate-countries-states {
+            position: relative;
+            width: 100%;
+            background-color: #f2f2f2;
+            border: none;
+            cursor: pointer;
+            border-radius: 0;
+            min-height: 40px;
+            .dropdownoption-title {
+                max-height: unset;
+                padding-top: 4px;
+                color: #000;
+                .dropdown-title {
+                    max-width: 90%;
+                    overflow: hidden;
+                }
+                i {
+                    width: 14px;
+                    margin-top: 6px;
+                }
+            }
+            .dropdownoption-inner {
+                margin-top: 0px;
+                margin-bottom: 0px;
+                .country-state-selection-list {
+                    top: 40px;
+                    left: 0px;
+                    position: absolute;
+                    background-color: white;
+                    width: 100%;
+                    padding: 0 15px;
+                    list-style: none;
+                    max-height: 303px;
+                    overflow: auto;
+                    border: solid #f2f2f2 1px;
+                    li {
+                        font-size: 14px;
+                        line-height: 19px;
+                        padding: 10px 0;
+                        border-bottom: solid #f2f2f2 1px;
+                        color: #4f4f4f;
+                        &:hover {
+                            color: #000;
+                        }
+                    }
+                }
+            }
+        }
+        .estimate-state-input,
+        .estimate-zipcode-input {
+            width: 100%;
+            background-color: #f2f2f2;
+            padding: 11px 16px;
+            border: none;
+        }
+    }
+    .est-shipping {
+        margin-top: 20px;
+        color: #000;
+        .est-shipping-carrier {
+            font-size: 14px;
+            line-height: 18px;
+            font-weight: 600;
+            .carrier-title {
+                margin-bottom: 6px;
+            }
+            .est-shipping-method {
+                margin-bottom: 10px;
+                line-height: 17px;
+                font-weight: 400;
+                display: flex;
+                cursor: pointer;
+                &:hover {
+                    opacity: 0.8;
+                }
+                .radio-title {
+                    padding: 5px 6px;
+                }
+            }
+        }
+    }
+}

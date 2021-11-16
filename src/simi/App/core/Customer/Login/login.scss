@@ -6,42 +6,83 @@
     background-size: cover;
     background-position: top center;
     background-repeat: no-repeat;
+    .login-container {
+        max-width: 420px;
+        margin-top: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 55px 15px;
+        box-shadow: 0px 0px 35px -18px #000;
+        border-radius: 5px;
+        background-color: white;
+        height: auto;
+        .login-header {
+            display: flex;
+            margin-bottom: 35px;
+            .login-header-back {
+                width: 20%;
+                margin-top: 8px;
+                cursor: pointer;
+            }
+            .login-header-title {
+                width: 100%;
+                text-align: center;
+                font-size: 24px;
+                font-weight: 600;
+            }
+        }
+        .signIn_closed {
+            display: none;
+        }
+        .form_closed {
+            display: none;
+        }
+    }
+    span[class*='fieldIcons-root'] {
+        height: 45px;
+    }
+    label[class*='field-label'] {
+        margin-top: 5px;
+        font-size: 14px;
+        line-height: 18px;
+    }
+    input[class*='textInput-input'] {
+        height: 45px;
+        border: 1px solid rgba(51, 49, 50, 0.4);
+        font-size: 16px;
+        padding: 10px 16px;
+        line-height: 24px;
+        border-radius: 4px;
+        width: 100%;
+    }
+    p[class*='message-root_error'] {
+        margin-bottom: 0;
+        font-size: 12px;
+        font-weight: 400;
+        color: rgb(197, 56, 52);
+    }
 }
-.login-container {
-    max-width: 420px;
-    margin-top: 15px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 55px 15px;
-    box-shadow: 0px 0px 35px -18px #000;
-    border-radius: 5px;
-    background-color: white;
-    height: auto;
-}
-.signIn_closed {
-    display: none;
-}
+
 .modal_active {
     left: 0;
 }
-.form_closed {
-    display: none;
-}
-.login-header {
-    display: flex;
-    margin-bottom: 35px;
-}
-.login-header-back {
-    width: 20%;
-    margin-top: 8px;
-    cursor: pointer;
-}
-.login-header-title {
-    width: 100%;
-    text-align: center;
-    font-size: 24px;
-    font-weight: 600;
-}
-.login-header.has-back-btn .login-header-title{
+
+.login-header.has-back-btn .login-header-title {
     width: 60%;
+}
+
+.rtl-root {
+    .login-background {
+        .login-container {
+            .login-header {
+                // flex-direction: row-reverse;
+                .login-header-back {
+                    text-align: right;
+                    svg {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+        }
+    }
 }

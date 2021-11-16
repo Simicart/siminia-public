@@ -6,9 +6,9 @@ const PageTitle = props => {
     return (
         <React.Fragment>
             {TitleHelper.renderMetaHeader({
-                title:Identify.__(props.title)
+                title: Identify.__(props.title)
             })}
-            <div className="customer-page-title">{props.title}</div>
+            <div className="customer-page-title">{Identify.__(props.title)}</div>
         </React.Fragment>
     )
 }

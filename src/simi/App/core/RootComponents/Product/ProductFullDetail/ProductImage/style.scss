@@ -1,3 +1,7 @@
 .product-detail-carousel .carousel-slider {
     border: solid #eaeaea 1px;
+    direction: ltr;
+    li.slide {
+        background: none;
+    }
 }

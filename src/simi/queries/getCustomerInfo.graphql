@@ -3,6 +3,7 @@ query customerInfo
   customerOrders {
     items {
       increment_id
+      order_number
       id
       created_at
       grand_total

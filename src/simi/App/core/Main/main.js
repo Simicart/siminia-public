@@ -1,71 +1,101 @@
-import React, { Component } from 'react';
-import { bool } from 'prop-types';
+import React, { useEffect } from 'react';
 
 import Footer from '../Footer';
-import Header from 'src/simi/App/core/Header'
-import Identify from 'src/simi/Helper/Identify'
-import {saveCategoriesToDict} from 'src/simi/Helper/Url'
-import Connection from 'src/simi/Network/SimiConnection'
-import LoadingComponent  from 'src/simi/BaseComponents/Loading'
-import * as Constants from 'src/simi/Config/Constants';
-import simiStoreConfigDataQuery from 'src/simi/queries/getStoreConfigData.graphql'
-import { Simiquery } from 'src/simi/Network/Query'
+import Header from 'src/simi/App/core/Header';
+import Identify from 'src/simi/Helper/Identify';
+import Connection from 'src/simi/Network/SimiConnection';
+import LoadingComponent from 'src/simi/BaseComponents/Loading';
+import resolveUrl from 'src/simi/queries/urlResolver.graphql';
 import classes from './main.css';
+import { simiUseQuery as useQuery } from 'src/simi/Network/Query';
+import TitleHelper from 'src/simi/Helper/TitleHelper';
+import GET_HOME_DATA from 'src/simi/queries/homeData';
+import { getDataFromUrl } from 'src/simi/Helper/Url';
 
-class Main extends Component {
+const Main = props => {
+    const { storeConfig } = props;
+    let pathName = window.location.pathname;
+    let isHome;
+    if (pathName && pathName.length > 1) {
+        //
+    } else {
+        if (pathName === '/' || pathName === '') isHome = true;
+        pathName = false;
+    }
 
-    componentDidMount() {
-        const dbConfig = Identify.getAppDashboardConfigs()
+    useEffect(() => {
+        const dbConfig = Identify.getAppDashboardConfigs();
         if (!dbConfig) {
             Connection.connectSimiCartServer('GET', true, this);
         }
+    }, []);
+
+    const urlDataFromDict = getDataFromUrl(pathName);
+    const { data: urlResolveData } = useQuery(resolveUrl, {
+        variables: {
+            urlKey: pathName
+        },
+        skip: !pathName || (urlDataFromDict && urlDataFromDict.id)
+    });
+
+    const { data: homeData } = useQuery(GET_HOME_DATA, {
+        skip: !isHome
+    });
+
+    if (
+        pathName &&
+        !urlResolveData &&
+        (!urlDataFromDict || !urlDataFromDict.id)
+    )
+        return '';
+    if (isHome && !homeData) return '';
+    if (!storeConfig) return '';
+
+    try {
+        const splashScreen = document.getElementById('splash-screen');
+        if (splashScreen) splashScreen.style.display = 'none';
+    } catch (err) {
+        console.warn('no splash screen found');
     }
 
-    static propTypes = {
-        isMasked: bool
-    };
-
-    get classes() {
-        const { classes } = this.props;
-
-        return ['page', 'root'].reduce(
-            (acc, val) => ({ ...acc, [val]: classes[`${val}`] }),
-            {}
-        );
-    }
-
-    mainContent(storeConfig = null) {
-        return (
-            <React.Fragment>
-                <Header storeConfig={storeConfig}/>
-                <div id="data-breadcrumb"/>
-                {storeConfig ? <div className={classes.page} id="siminia-main-page">{this.props.children}</div> : <LoadingComponent />}
-                <Footer />
-            </React.Fragment>
-        )
-    }
-    render() {
-        return (
-            <main className={classes.root}>
-                <div className="app-loading" style={{display:'none'}} id="app-loading">
-                    <LoadingComponent/>
-                </div>
-                { Identify.getDataFromStoreage(Identify.SESSION_STOREAGE, Constants.STORE_CONFIG) ?
-                    this.mainContent(Identify.getDataFromStoreage(Identify.SESSION_STOREAGE, Constants.STORE_CONFIG)) :
-                    <Simiquery query={simiStoreConfigDataQuery}>
-                        {({ data }) => {
-                            if (data && data.storeConfig) {
-                                Identify.saveStoreConfig(data)
-                                saveCategoriesToDict(data.simiRootCate)
-                                return this.mainContent(data)
-                            }
-                            return this.mainContent()
-                        }}
-                    </Simiquery>
-                }
-            </main>
-        );
-    }
-}
+    return (
+        <main className={classes.root}>
+            <div
+                className="app-loading"
+                style={{ display: 'none' }}
+                id="app-loading"
+            >
+                <LoadingComponent />
+            </div>
+            {storeConfig &&
+            storeConfig.simiStoreConfig &&
+            storeConfig.simiStoreConfig.config &&
+            storeConfig.simiStoreConfig.config.base &&
+            storeConfig.simiStoreConfig.config.base.default_title
+                ? TitleHelper.renderMetaHeader({
+                      title:
+                          storeConfig.simiStoreConfig.config.base.default_title,
+                      desc:
+                          storeConfig.simiStoreConfig.config.base
+                              .default_description,
+                      meta_other: [
+                          <meta
+                              name="keywords"
+                              content={
+                                  storeConfig.simiStoreConfig.config.base
+                                      .default_keywords
+                              }
+                              key="keywords"
+                          />
+                      ]
+                  })
+                : ''}
+            <Header storeConfig={storeConfig} />
+            <div id="data-breadcrumb" className={classes.breadcrumb} />
+            <div id="siminia-main-page">{props.children}</div>
+            <Footer />
+        </main>
+    );
+};
 
 export default Main;

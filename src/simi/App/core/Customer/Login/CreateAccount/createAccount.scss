@@ -7,28 +7,40 @@
 
 $color_1: red;
 
-.create-acc-form{
+.create-acc-form {
     .actions {
         display: grid;
         justify-items: center;
         margin-top: 1rem;
         padding: 1rem 0;
     }
-    
+
     .error {
         color: $color_1;
         text-align: center;
     }
-    
+
     .lead {
         margin: 1rem 0;
         text-align: center;
+        font-size: 16px;
     }
-    
+
     .subscribe {
-        margin-left: -0.5rem;
+        input {
+            width: 1.5rem;
+            height: 1.5rem;
+            cursor: pointer;
+            outline: unset;
+        }
+        span[class*='checkbox-label'] {
+            margin-top: 10px;
+            margin-inline-start: 12px;
+            font-size: 13px;
+            cursor: pointer;
+        }
     }
-    
+
     .submitButton {
         padding: 5px 15px;
         font-size: 16px;
@@ -41,13 +53,13 @@ $color_1: red;
         width: 100%;
         min-width: 200px;
         padding-bottom: 10px;
-        &:hover{
+        &:hover {
             opacity: 0.8;
         }
     }
-    
+
     /* create account otp */
-    
+
     .create-account-otp {
         display: flex;
         margin-left: auto;
@@ -56,34 +68,34 @@ $color_1: red;
         font-weight: 600;
         cursor: pointer;
         padding: 7px 10px;
-        &:hover{
+        &:hover {
             opacity: 0.8;
         }
     }
-    
+
     .login-otp-description {
         font-size: 11px;
         margin: 10px 0;
     }
-    
+
     .create-account-opt .error-message {
         color: $color_1;
         display: none;
     }
-    
+
     .verify-phone-area {
         margin-top: 10px;
         margin-bottom: 10px;
     }
-    
+
     /* customize */
     .required {
-        >span {
+        > span {
             &:first-child {
                 position: relative;
                 float: left;
                 &::after {
-                    content: "(*)";
+                    content: '(*)';
                     position: absolute;
                     top: 50%;
                     right: -14px;
@@ -96,7 +108,7 @@ $color_1: red;
         }
     }
     .required.rtl-required {
-        >span {
+        > span {
             &:first-child {
                 float: right;
                 margin-right: 14px;
@@ -104,4 +116,3 @@ $color_1: red;
         }
     }
 }
-

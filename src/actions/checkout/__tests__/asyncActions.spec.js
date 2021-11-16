@@ -1,18 +1,13 @@
-import { RestApi } from '@magento/peregrine';
-
-import { dispatch, getState } from 'src/store';
+import { Magento2 } from '../../../../RestApi';
 import {
     mockGetItem,
-    mockSetItem,
-    mockRemoveItem
-} from '@magento/util/simplePersistence';
-
+    mockRemoveItem,
+    mockSetItem
+} from '../../../../util/simplePersistence';
 import actions from '../actions';
 import {
     beginCheckout,
-    editOrder,
     formatAddress,
-    getShippingMethods,
     resetCheckout,
     submitBillingAddress,
     submitShippingAddress,
@@ -21,12 +16,14 @@ import {
     submitShippingMethod,
     submitPaymentMethodAndBillingAddress
 } from '../asyncActions';
-import checkoutReceiptActions from 'src/actions/checkoutReceipt';
 
-jest.mock('src/store');
+jest.mock('../../../../RestApi');
+jest.mock('../../../../util/simplePersistence');
 
+const { request } = Magento2;
+const dispatch = jest.fn();
+const getState = jest.fn();
 const thunkArgs = [dispatch, getState];
-const { request } = RestApi.Magento2;
 
 const address = {
     country_id: 'US',
@@ -51,10 +48,12 @@ const paymentMethod = {
     title: 'Check / Money order'
 };
 
+const fetchCartId = jest.fn().mockResolvedValue();
+
 beforeAll(() => {
     getState.mockImplementation(() => ({
         cart: { cartId: 'CART_ID' },
-        directory: { countries },
+        checkout: { countries },
         user: { isSignedIn: false }
     }));
 });
@@ -77,117 +76,58 @@ describe('beginCheckout', () => {
     });
 
     test('beginCheckout thunk returns undefined', async () => {
-        const result = await beginCheckout()(...thunkArgs);
+        const result = await beginCheckout({
+            fetchCartId
+        })(...thunkArgs);
 
         expect(result).toBeUndefined();
     });
 
     test('beginCheckout thunk dispatches actions', async () => {
-        await beginCheckout()(...thunkArgs);
+        await beginCheckout({
+            fetchCartId
+        })(...thunkArgs);
 
-        expect(dispatch).toHaveBeenNthCalledWith(1, actions.begin());
-        // TODO: test fails but "Compared values have no visual difference."
-        // expect(dispatch).toHaveBeenNthCalledWith(2, cartActions.getShippingMethods());
-        // expect(dispatch).toHaveBeenNthCalledWith(3, directoryActions.getCountries());
-        expect(dispatch).toHaveBeenCalledTimes(3);
+        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenNthCalledWith(1, actions.reset());
+        expect(dispatch).toHaveBeenNthCalledWith(
+            2,
+            actions.begin(expect.any(Object))
+        );
     });
 });
 
 describe('resetCheckout', () => {
     test('resetCheckout() returns a thunk', () => {
-        expect(resetCheckout()).toBeInstanceOf(Function);
+        expect(
+            resetCheckout({
+                fetchCartId
+            })
+        ).toBeInstanceOf(Function);
     });
 
     test('resetCheckout thunk returns undefined', async () => {
-        const result = await resetCheckout()(...thunkArgs);
+        const result = await resetCheckout({
+            fetchCartId
+        })(...thunkArgs);
 
         expect(result).toBeUndefined();
     });
 
     test('resetCheckout thunk dispatches actions', async () => {
-        await resetCheckout()(...thunkArgs);
+        await resetCheckout({
+            fetchCartId
+        })(...thunkArgs);
 
         expect(dispatch).toHaveBeenNthCalledWith(1, expect.any(Function));
-        expect(dispatch).toHaveBeenNthCalledWith(2, expect.any(Function));
-        expect(dispatch).toHaveBeenNthCalledWith(3, actions.reset());
-        expect(dispatch).toHaveBeenCalledTimes(3);
-    });
-});
-
-describe('editOrder', () => {
-    test('editOrder() returns a thunk', () => {
-        expect(editOrder()).toBeInstanceOf(Function);
-    });
-
-    test('editOrder thunk returns undefined', async () => {
-        const result = await editOrder()(...thunkArgs);
-
-        expect(result).toBeUndefined();
-    });
-
-    test('editOrder thunk dispatches actions', async () => {
-        const payload = 'PAYLOAD';
-        await editOrder(payload)(...thunkArgs);
-
-        expect(dispatch).toHaveBeenCalledWith(actions.edit(payload));
-        expect(dispatch).toHaveBeenCalledTimes(1);
-    });
-});
-
-describe('getShippingMethods', () => {
-    test('getShippingMethods() returns a thunk', () => {
-        expect(getShippingMethods()).toBeInstanceOf(Function);
-    });
-
-    test('getShippingMethods thunk returns undefined', async () => {
-        const result = await getShippingMethods()(...thunkArgs);
-
-        expect(result).toBeUndefined();
-    });
-
-    test('getShippingMethods thunk dispatches actions on success', async () => {
-        // Mock the estimate-shipping-methods response.
-        const MOCK_RESPONSE = [];
-        request.mockResolvedValueOnce(MOCK_RESPONSE);
-
-        await getShippingMethods()(...thunkArgs);
-
-        expect(dispatch).toHaveBeenNthCalledWith(
-            1,
-            actions.getShippingMethods.request('CART_ID')
-        );
-        expect(dispatch).toHaveBeenNthCalledWith(
-            2,
-            actions.getShippingMethods.receive(MOCK_RESPONSE)
-        );
+        expect(dispatch).toHaveBeenNthCalledWith(2, actions.reset());
         expect(dispatch).toHaveBeenCalledTimes(2);
-    });
-
-    test('getShippingMethods thunk dispatches actions on failure', async () => {
-        // Mock the estimate-shipping-methods response.
-        const error = new Error('ERROR');
-        request.mockRejectedValueOnce(error);
-
-        await getShippingMethods()(...thunkArgs);
-
-        expect(dispatch).toHaveBeenNthCalledWith(
-            1,
-            actions.getShippingMethods.request('CART_ID')
-        );
-        expect(dispatch).toHaveBeenNthCalledWith(
-            2,
-            actions.getShippingMethods.receive(error)
-        );
-        expect(dispatch).toHaveBeenCalledTimes(2);
-    });
-
-    test('its thunk uses the proper endpoint when the user is signed in', async () => {
-        // TODO
     });
 });
 
 describe('submitPaymentMethodAndBillingAddress', () => {
     const payload = {
+        countries,
         formValues: {
             billingAddress: address,
             paymentMethod: paymentMethod
@@ -198,33 +138,31 @@ describe('submitPaymentMethodAndBillingAddress', () => {
         expect(submitPaymentMethodAndBillingAddress()).toBeInstanceOf(Function);
     });
 
-    test('submitPaymentMethodAndBillingAddress thunk returns undefined', async () => {
-        const result = await submitPaymentMethodAndBillingAddress(payload)(
-            ...thunkArgs
-        );
-
-        expect(result).toBeUndefined();
-    });
-
     test('submitPaymentMethodAndBillingAddress thunk dispatches paymentMethod and billing address actions', async () => {
         await submitPaymentMethodAndBillingAddress(payload)(...thunkArgs);
 
-        expect(dispatch).toHaveBeenCalledWith(
-            actions.billingAddress.submit(payload.formValues.billingAddress)
-        );
-        expect(dispatch).toHaveBeenCalledWith(
-            actions.paymentMethod.submit(payload.formValues.paymentMethod)
-        );
+        // submitBillingAddress
+        expect(dispatch).toHaveBeenCalledWith(expect.any(Function));
+        // submitPaymentMethod
+        expect(dispatch).toHaveBeenCalledWith(expect.any(Function));
     });
 });
 
 describe('submitBillingAddress', () => {
-    const sameAsShippingPayload = {
+    const billingAddressSameAsShipping = {
         sameAsShippingAddress: true
     };
-    const differentFromShippingPayload = {
+    const billingAddressDifferentFromShipping = {
         sameAsShippingAddress: false,
         ...address
+    };
+    const sameAddressesPayload = {
+        billingAddress: billingAddressSameAsShipping,
+        countries
+    };
+    const differentAddressesPayload = {
+        billingAddress: billingAddressDifferentFromShipping,
+        countries
     };
 
     test('submitBillingAddress() returns a thunk', () => {
@@ -232,7 +170,7 @@ describe('submitBillingAddress', () => {
     });
 
     test('submitBillingAddress thunk returns undefined', async () => {
-        const result = await submitBillingAddress(sameAsShippingPayload)(
+        const result = await submitBillingAddress(sameAddressesPayload)(
             ...thunkArgs
         );
 
@@ -240,35 +178,35 @@ describe('submitBillingAddress', () => {
     });
 
     test('submitBillingAddress thunk dispatches actions on success', async () => {
-        await submitBillingAddress(sameAsShippingPayload)(...thunkArgs);
+        await submitBillingAddress(sameAddressesPayload)(...thunkArgs);
 
         expect(dispatch).toHaveBeenNthCalledWith(
             1,
-            actions.billingAddress.submit(sameAsShippingPayload)
+            actions.billingAddress.submit()
         );
         expect(dispatch).toHaveBeenNthCalledWith(
             2,
-            actions.billingAddress.accept(sameAsShippingPayload)
+            actions.billingAddress.accept(billingAddressSameAsShipping)
         );
         expect(dispatch).toHaveBeenCalledTimes(2);
     });
 
     test('submitBillingAddress thunk dispatches actions on success when using separate address', async () => {
-        await submitBillingAddress(differentFromShippingPayload)(...thunkArgs);
+        await submitBillingAddress(differentAddressesPayload)(...thunkArgs);
 
         expect(dispatch).toHaveBeenNthCalledWith(
             1,
-            actions.billingAddress.submit(differentFromShippingPayload)
+            actions.billingAddress.submit()
         );
         expect(dispatch).toHaveBeenNthCalledWith(
             2,
-            actions.billingAddress.accept(differentFromShippingPayload)
+            actions.billingAddress.accept(billingAddressDifferentFromShipping)
         );
         expect(dispatch).toHaveBeenCalledTimes(2);
     });
 
     test('submitBillingAddress thunk saves to storage on success', async () => {
-        await submitBillingAddress(sameAsShippingPayload)(...thunkArgs);
+        await submitBillingAddress(sameAddressesPayload)(...thunkArgs);
 
         expect(mockSetItem).toHaveBeenCalledWith('billing_address', {
             sameAsShippingAddress: true
@@ -276,7 +214,7 @@ describe('submitBillingAddress', () => {
     });
 
     test('submitBillingAddress thunk saves to storage on success when using separate address', async () => {
-        await submitBillingAddress(differentFromShippingPayload)(...thunkArgs);
+        await submitBillingAddress(differentAddressesPayload)(...thunkArgs);
 
         expect(mockSetItem).toHaveBeenCalledWith('billing_address', {
             sameAsShippingAddress: false,
@@ -287,16 +225,35 @@ describe('submitBillingAddress', () => {
     test('submitBillingAddress thunk throws if there is no cart', async () => {
         getState.mockImplementationOnce(() => ({
             cart: {},
-            directory: { countries }
+            user: { isSignedIn: false }
         }));
         await expect(
-            submitBillingAddress(sameAsShippingPayload)(...thunkArgs)
+            submitBillingAddress(sameAddressesPayload)(...thunkArgs)
         ).rejects.toThrow('cartId');
     });
 });
 
 describe('submitShippingAddress', () => {
-    const payload = { type: 'shippingAddress', formValues: address };
+    const addressData = ['SomeAddressData'];
+    const payload = {
+        countries,
+        formValues: address,
+        setGuestEmail: jest.fn().mockResolvedValue(),
+        setShippingAddressOnCart: jest.fn().mockResolvedValue({
+            data: {
+                setShippingAddressesOnCart: {
+                    cart: {
+                        shipping_addresses: [
+                            {
+                                available_shipping_methods: addressData
+                            }
+                        ]
+                    }
+                }
+            }
+        }),
+        type: 'shippingAddress'
+    };
 
     test('submitShippingAddress() returns a thunk', () => {
         expect(submitShippingAddress()).toBeInstanceOf(Function);
@@ -311,15 +268,19 @@ describe('submitShippingAddress', () => {
     test('submitShippingAddress thunk dispatches actions on success', async () => {
         await submitShippingAddress(payload)(...thunkArgs);
 
+        expect(dispatch).toHaveBeenCalledTimes(3);
         expect(dispatch).toHaveBeenNthCalledWith(
             1,
-            actions.shippingAddress.submit(payload)
+            actions.shippingAddress.submit()
         );
         expect(dispatch).toHaveBeenNthCalledWith(
             2,
+            actions.getShippingMethods.receive(addressData)
+        );
+        expect(dispatch).toHaveBeenNthCalledWith(
+            3,
             actions.shippingAddress.accept(address)
         );
-        expect(dispatch).toHaveBeenCalledTimes(2);
     });
 
     test('submitShippingAddress thunk saves to storage on success', async () => {
@@ -331,7 +292,8 @@ describe('submitShippingAddress', () => {
     test('submitShippingAddress thunk throws if there is no cart', async () => {
         getState.mockImplementationOnce(() => ({
             cart: {},
-            directory: { countries }
+            checkout: { countries },
+            user: { isSignedIn: false }
         }));
         await expect(
             submitShippingAddress(payload)(...thunkArgs)
@@ -357,7 +319,7 @@ describe('submitPaymentMethod', () => {
 
         expect(dispatch).toHaveBeenNthCalledWith(
             1,
-            actions.paymentMethod.submit(payload)
+            actions.paymentMethod.submit()
         );
         expect(dispatch).toHaveBeenNthCalledWith(
             2,
@@ -377,7 +339,8 @@ describe('submitPaymentMethod', () => {
 
     test('submitPaymentMethod thunk throws if there is no cart', async () => {
         getState.mockImplementationOnce(() => ({
-            cart: {}
+            cart: {},
+            user: { isSignedIn: false }
         }));
 
         await expect(
@@ -412,7 +375,7 @@ describe('submitShippingMethod', () => {
 
         expect(dispatch).toHaveBeenNthCalledWith(
             1,
-            actions.shippingMethod.submit(payload)
+            actions.shippingMethod.submit()
         );
         expect(dispatch).toHaveBeenNthCalledWith(
             2,
@@ -433,7 +396,8 @@ describe('submitShippingMethod', () => {
 
     test('submitShippingMethod thunk throws if there is no cart', async () => {
         getState.mockImplementationOnce(() => ({
-            cart: {}
+            cart: {},
+            user: { isSignedIn: false }
         }));
 
         await expect(
@@ -473,15 +437,23 @@ describe('submitOrder', () => {
     };
 
     test('submitOrder() returns a thunk', () => {
-        expect(submitOrder()).toBeInstanceOf(Function);
+        expect(
+            submitOrder({
+                fetchCartId
+            })
+        ).toBeInstanceOf(Function);
     });
 
     test('submitOrder thunk returns undefined', async () => {
-        mockGetItem.mockImplementationOnce(
-            () => mockBillingAddressSameAsShipping
-        );
+        mockGetItem
+            .mockImplementationOnce(() => mockBillingAddressSameAsShipping)
+            .mockImplementationOnce(() => mockPaymentMethod)
+            .mockImplementationOnce(() => mockShippingAddress)
+            .mockImplementationOnce(() => mockShippingMethod);
 
-        const result = await submitOrder()(...thunkArgs);
+        const result = await submitOrder({
+            fetchCartId
+        })(...thunkArgs);
 
         expect(result).toBeUndefined();
     });
@@ -494,7 +466,7 @@ describe('submitOrder', () => {
                 },
                 cartId: 'CART_ID'
             },
-            directory: { countries },
+            checkout: { countries },
             user: { isSignedIn: false }
         };
 
@@ -511,28 +483,32 @@ describe('submitOrder', () => {
         const response = 1;
         request.mockResolvedValueOnce(response).mockResolvedValueOnce(response);
 
-        await submitOrder()(...thunkArgs);
+        await submitOrder({
+            fetchCartId
+        })(...thunkArgs);
 
+        expect(dispatch).toHaveBeenCalledTimes(5);
         expect(dispatch).toHaveBeenNthCalledWith(1, actions.order.submit());
         expect(dispatch).toHaveBeenNthCalledWith(
             2,
-            checkoutReceiptActions.setOrderInformation({
+            actions.receipt.setOrder({
                 id: response,
-                billing_address: expect.any(Object)
+                shipping_address: expect.any(Object)
             })
         );
-        expect(dispatch).toHaveBeenNthCalledWith(
-            3,
-            actions.order.accept(response)
-        );
-        expect(dispatch).toHaveBeenCalledTimes(3);
+        expect(dispatch).toHaveBeenNthCalledWith(3, expect.any(Function));
+        expect(dispatch).toHaveBeenNthCalledWith(4, expect.any(Function));
+        expect(dispatch).toHaveBeenNthCalledWith(5, actions.order.accept());
 
-        expect(mockRemoveItem).toHaveBeenNthCalledWith(1, 'billing_address');
-        expect(mockRemoveItem).toHaveBeenNthCalledWith(2, 'cartId');
-        expect(mockRemoveItem).toHaveBeenNthCalledWith(3, 'paymentMethod');
-        expect(mockRemoveItem).toHaveBeenNthCalledWith(4, 'shipping_address');
-        expect(mockRemoveItem).toHaveBeenNthCalledWith(5, 'shippingMethod');
         expect(mockRemoveItem).toHaveBeenCalledTimes(5);
+        expect(mockRemoveItem).toHaveBeenNthCalledWith(1, 'billing_address');
+        expect(mockRemoveItem).toHaveBeenNthCalledWith(2, 'paymentMethod');
+        expect(mockRemoveItem).toHaveBeenNthCalledWith(3, 'shipping_address');
+        expect(mockRemoveItem).toHaveBeenNthCalledWith(4, 'shippingMethod');
+        expect(mockRemoveItem).toHaveBeenNthCalledWith(
+            5,
+            'availableShippingMethods'
+        );
     });
 
     test('submitOrder thunk dispatches actions and clears local storage on success when addresses are different', async () => {
@@ -543,7 +519,7 @@ describe('submitOrder', () => {
                 },
                 cartId: 'CART_ID'
             },
-            directory: { countries },
+            checkout: { countries },
             user: { isSignedIn: false }
         };
 
@@ -560,28 +536,32 @@ describe('submitOrder', () => {
         const response = 1;
         request.mockResolvedValueOnce(response).mockResolvedValueOnce(response);
 
-        await submitOrder()(...thunkArgs);
+        await submitOrder({
+            fetchCartId
+        })(...thunkArgs);
 
+        expect(dispatch).toHaveBeenCalledTimes(5);
         expect(dispatch).toHaveBeenNthCalledWith(1, actions.order.submit());
         expect(dispatch).toHaveBeenNthCalledWith(
             2,
-            checkoutReceiptActions.setOrderInformation({
+            actions.receipt.setOrder({
                 id: response,
-                billing_address: expect.any(Object)
+                shipping_address: expect.any(Object)
             })
         );
-        expect(dispatch).toHaveBeenNthCalledWith(
-            3,
-            actions.order.accept(response)
-        );
-        expect(dispatch).toHaveBeenCalledTimes(3);
+        expect(dispatch).toHaveBeenNthCalledWith(3, expect.any(Function));
+        expect(dispatch).toHaveBeenNthCalledWith(4, expect.any(Function));
+        expect(dispatch).toHaveBeenNthCalledWith(5, actions.order.accept());
 
-        expect(mockRemoveItem).toHaveBeenNthCalledWith(1, 'billing_address');
-        expect(mockRemoveItem).toHaveBeenNthCalledWith(2, 'cartId');
-        expect(mockRemoveItem).toHaveBeenNthCalledWith(3, 'paymentMethod');
-        expect(mockRemoveItem).toHaveBeenNthCalledWith(4, 'shipping_address');
-        expect(mockRemoveItem).toHaveBeenNthCalledWith(5, 'shippingMethod');
         expect(mockRemoveItem).toHaveBeenCalledTimes(5);
+        expect(mockRemoveItem).toHaveBeenNthCalledWith(1, 'billing_address');
+        expect(mockRemoveItem).toHaveBeenNthCalledWith(2, 'paymentMethod');
+        expect(mockRemoveItem).toHaveBeenNthCalledWith(3, 'shipping_address');
+        expect(mockRemoveItem).toHaveBeenNthCalledWith(4, 'shippingMethod');
+        expect(mockRemoveItem).toHaveBeenNthCalledWith(
+            5,
+            'availableShippingMethods'
+        );
     });
 
     test('submitOrder thunk dispatches actions on failure', async () => {
@@ -594,7 +574,13 @@ describe('submitOrder', () => {
         const error = new Error('ERROR');
         request.mockRejectedValueOnce(error);
 
-        await submitOrder()(...thunkArgs);
+        try {
+            await submitOrder({
+                fetchCartId
+            })(...thunkArgs);
+        } catch (err) {
+            // intentional throw
+        }
 
         expect(dispatch).toHaveBeenNthCalledWith(1, actions.order.submit());
         expect(dispatch).toHaveBeenNthCalledWith(
@@ -606,14 +592,15 @@ describe('submitOrder', () => {
 
     test('submitOrder thunk throws if there is no cart', async () => {
         getState.mockImplementationOnce(() => ({
-            cart: {}
+            cart: {},
+            user: { isSignedIn: false }
         }));
 
-        await expect(submitOrder()(...thunkArgs)).rejects.toThrow('cartId');
-    });
-
-    test('its thunk uses the proper endpoints when the user is signed in', async () => {
-        // TODO
+        await expect(
+            submitOrder({
+                fetchCartId
+            })(...thunkArgs)
+        ).rejects.toThrow('cartId');
     });
 });
 

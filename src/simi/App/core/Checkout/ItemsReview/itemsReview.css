@@ -1,0 +1,23 @@
+.items_review_container {
+    padding: 0;
+    margin-top: 15px;
+}
+
+.items_container {
+    display: grid;
+    padding: 0;
+}
+
+.total_quantity {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    border-bottom: solid 1px #E4E4E4;
+    padding-bottom: 4px;
+}
+.total_quantity_label {
+    padding-top: 5px;
+}

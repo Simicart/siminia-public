@@ -24,24 +24,28 @@
         margin-bottom: 5px;
         flex-wrap: wrap;
     }
-    .item-detail {
-        padding: 0 0.5rem;
-    }
-    /*
-    pagination
-    */
+
     .config-page {
         margin-top: 15px;
         flex-wrap: wrap;
     }
-    /*
-    rate
-    */
+
     .item-rate {
+        margin-bottom: 10px;
+    }
+    .item-votes {
         margin-bottom: 10px;
     }
     .item-created {
         font-size: 12px;
         margin-left: auto;
+        margin-bottom: 5px;
+    }
+    .load-more {
+        text-align: right;
+        .btn-load-more {
+            display: inline-block;
+            cursor: pointer;
+        }
     }
 }

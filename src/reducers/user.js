@@ -5,7 +5,7 @@ const { BrowserPersistence } = Util;
 
 const storage = new BrowserPersistence();
 
-import actions from 'src/actions/user';
+import actions from '../actions/user';
 
 export const name = 'user';
 
@@ -17,43 +17,33 @@ const initialState = {
         firstname: '',
         lastname: ''
     },
-    getDetailsError: {},
+    getDetailsError: null,
     isGettingDetails: false,
+    isResettingPassword: false,
     isSignedIn: isSignedIn(),
-    isSigningIn: false,
-    forgotPassword: {
-        email: '',
-        isInProgress: false
-    },
-    signInError: {}
+    resetPasswordError: null,
+    token: storage.getItem('signin_token')
 };
 
 const reducerMap = {
-    [actions.signIn.request]: state => {
-        return {
-            ...state,
-            isSigningIn: true,
-            signInError: {}
-        };
-    },
-    [actions.signIn.receive]: (state, { payload, error }) => {
-        if (error) {
-            return {
-                ...initialState,
-                signInError: payload
-            };
-        }
-
+    [actions.setToken]: (state, { payload }) => {
         return {
             ...state,
             isSignedIn: true,
-            isSigningIn: false
+            token: payload
+        };
+    },
+    [actions.clearToken]: state => {
+        return {
+            ...state,
+            isSignedIn: false,
+            token: null
         };
     },
     [actions.getDetails.request]: state => {
         return {
             ...state,
-            getDetailsError: {},
+            getDetailsError: null,
             isGettingDetails: true
         };
     },
@@ -69,47 +59,35 @@ const reducerMap = {
         return {
             ...state,
             currentUser: payload,
+            getDetailsError: null,
             isGettingDetails: false
         };
     },
-    [actions.createAccountError.receive]: (state, { payload }) => {
-        return {
-            ...state,
-            createAccountError: payload
-        };
-    },
-    [actions.resetCreateAccountError.receive]: state => {
-        return {
-            ...state,
-            createAccountError: {}
-        };
-    },
-    [actions.resetPassword.request]: (state, { payload }) => {
-        return {
-            ...state,
-            forgotPassword: {
-                email: payload,
-                isInProgress: true
-            }
-        };
-    },
+    [actions.resetPassword.request]: state => ({
+        ...state,
+        isResettingPassword: true
+    }),
     // TODO: handle the reset password response from the API.
-    [actions.resetPassword.receive]: state => state,
-    [actions.completePasswordReset]: (state, { payload }) => {
-        const { email } = payload;
+    [actions.resetPassword.receive]: (state, { payload, error }) => {
+        if (error) {
+            return {
+                ...state,
+                isResettingPassword: false,
+                resetPasswordError: payload
+            };
+        }
 
         return {
             ...state,
-            forgotPassword: {
-                email,
-                isInProgress: false
-            }
+            isResettingPassword: false,
+            resetPasswordError: null
         };
     },
-    [actions.signIn.reset]: () => {
+    [actions.reset]: () => {
         return {
             ...initialState,
-            isSignedIn: isSignedIn()
+            isSignedIn: false,
+            token: null
         };
     }
 };

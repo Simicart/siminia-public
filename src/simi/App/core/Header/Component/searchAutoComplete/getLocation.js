@@ -4,8 +4,11 @@ export default (searchValue, categoryId) => {
     const uri = new URL('/search.html', window.location);
 
     // update the query params
-    uri.searchParams.set('query', searchValue);
-    uri.searchParams.set('category', categoryId);
+    uri.searchParams.set('q', searchValue);
+    uri.searchParams.set(
+        'filter',
+        JSON.stringify({ category_id: [categoryId] })
+    );
 
     const { pathname, search } = uri;
 

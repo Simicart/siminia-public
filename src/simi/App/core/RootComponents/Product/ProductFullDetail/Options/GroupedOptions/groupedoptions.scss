@@ -1,5 +1,5 @@
 .grouped-options {
-    padding: 1rem 1.5rem;
+    padding: 1rem 0;
 
     .product-options-group-item {
         margin-top: 15px;
@@ -9,5 +9,12 @@
     }
     .option-number {
         text-align: center;
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Firefox */
+        -moz-appearance: textfield;
     }
 }

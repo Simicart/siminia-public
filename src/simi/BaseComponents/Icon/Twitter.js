@@ -17,7 +17,7 @@ const Twitter = props => {
             className={props.className}
         >
             <title>icon/social/twitter</title>
-            <desc>Created with Sketch.</desc>
+            
             <g id="Shape">
                 <path
                     id="path-1_1_"

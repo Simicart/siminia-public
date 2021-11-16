@@ -1,0 +1,54 @@
+.root {
+    border: none;
+    border-radius: 0px;
+    display: grid;
+    padding: 0;
+    row-gap: 15px;
+}
+
+.shippingMethodLoading {
+    text-align: center;
+}
+
+.done {
+    border: none;
+    border-radius: 0px;
+    padding: 0;
+}
+
+.editingHeading {
+    font-weight: 600;
+    text-transform: uppercase;
+    padding-inline-start: 40px;
+    margin-top: 3px;
+    font-size: 18px;
+    line-height: 18px;
+}
+
+.form {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    row-gap: 15px;
+}
+
+.formButtons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.formButtons button {
+    background: none;
+    background-color: var(--simicolor-button_background);
+    color: var(--simicolor-button_text_color);
+    font-size: 16px;
+    line-height: 19px;
+    padding: 15px 30px 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0;
+}
+
+.formButtons button:hover {
+    opacity: 0.8;
+}

@@ -1,8 +1,5 @@
 import React from 'react'
-import Arrowup from "src/simi/BaseComponents/Icon/TapitaIcons/ArrowUp"
-
-import defaultClasses from './index.css'
-import { mergeClasses } from 'src/classify'
+require ('./index.scss')
 
 class Dropdownoption extends React.Component {
     sliding = false
@@ -24,25 +21,21 @@ class Dropdownoption extends React.Component {
     }
 
     render() {
-        const propsClasses = this.props.classes?this.props.classes:{}
-        const classes = mergeClasses(defaultClasses, propsClasses);
         return (
-            <div className={`${classes['dropdownoption']} ${this.props.className}`}>
-                <div role="presentation" className={classes['dropdownoption-title']} onClick={() => this.handleToggle()}>
-                    {this.props.title}
-                    <div 
-                        className={classes["dropdownoption-title-down-ic"]}
-                        ref={(item) => this.downIc = item}>
-                        <Arrowup />
+            <div role="presentation" className={`dropdownoption ${this.props.className}`} onClick={() => this.handleToggle()}>
+                <div role="presentation" className='dropdownoption-title' >
+                    <div className="dropdown-title">
+                        {this.props.title}
                     </div>
-                    <div 
-                        className={classes["dropdownoption-title-up-ic"]}
-                        ref={(item) => this.upIc = item}>
-                        <Arrowup />
-                    </div>
+                        <i 
+                        ref={(item) => this.downIc = item}
+                        className="dropdownoption-title-down-ic icon-chevron-down icons"></i>
+                        <i 
+                        ref={(item) => this.upIc = item}
+                        className="dropdownoption-title-up-ic icon-chevron-up icons"></i>
                 </div>
                 <div 
-                    className={classes["dropdownoption-inner"]}
+                    className="dropdownoption-inner"
                     ref={(item) => this.content = item}
                     style={{display: this.props.expanded?'block':'none'}}>
                     {this.props.children}

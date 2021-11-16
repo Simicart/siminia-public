@@ -11,7 +11,7 @@ const Trash = props => {
                 className={props.className}
                 style={style}>
                 <title>Delete</title>
-                <desc>Created with Sketch.</desc>
+                
                 <g id="Shape">
                     <path id="path-1_1_" d="M23.1,21v12.7c0,0.4-0.3,0.7-0.7,0.7H21c-0.4,0-0.7-0.3-0.7-0.7V21c0-0.4,0.3-0.7,0.7-0.7h1.4
                         C22.8,20.3,23.1,20.6,23.1,21z M28.9,20.3h-1.4c-0.4,0-0.7,0.3-0.7,0.7v12.7c0,0.4,0.3,0.7,0.7,0.7h1.4c0.4,0,0.7-0.3,0.7-0.7V21

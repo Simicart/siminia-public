@@ -1,0 +1,41 @@
+.coupon-code {
+    margin-top: 20px;
+
+    .coupon-code-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-weight: 500;
+        font-size: 16px;
+        margin-bottom: 10px;
+        svg {
+            vertical-align: middle;
+        }
+    }
+
+    .coupon-code-area {
+        &.coupon-close {
+            display: none;
+        }
+        &.coupon-open {
+            display: flex;
+        }
+        .btn-clear-coupon {
+            position: absolute;
+            right: 10px;
+            top: 12px;
+            z-index: 9;
+            cursor: pointer;
+            max-height: 15px;
+        }
+
+        .submit-coupon {
+            background-color: #101820;
+            color: #fff;
+            height: 48px;
+            &.loading {
+                opacity: 0.8;
+            }
+        }
+    }
+}

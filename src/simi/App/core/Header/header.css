@@ -26,7 +26,7 @@
     height: 34px;
     padding-left: 16px;
     padding-right: 30px;
-    border: 1px solid #DCDCDC;
+    border: 1px solid #dcdcdc;
 }
 .header-search-form .search-icon {
     display: inline-block;
@@ -35,16 +35,22 @@
     top: 2px;
     cursor: pointer;
 }
+.search-icon a {
+    display: block;
+}
+
 .search-icon img {
     width: 30px;
     height: 30px;
+    object-fit: contain;
 }
 .store-curr-switcher {
     display: flex;
     width: 200px;
     position: relative;
 }
-.store-curr-switcher .storeview-switcher, .store-curr-switcher .currency-switcher {
+.store-curr-switcher .storeview-switcher,
+.store-curr-switcher .currency-switcher {
     padding: 12px 2px;
     font-size: 12px;
     position: absolute;
@@ -56,11 +62,11 @@
 .store-curr-switcher .currency-switcher {
     right: 0;
 }
-.store-curr-switcher .menu-title{
+.store-curr-switcher .menu-title {
     color: #333132 !important;
     font-size: 12px;
 }
-.right-bar{
+.right-bar {
     display: flex;
     align-items: center;
 }
@@ -69,26 +75,49 @@
     font-size: 12px;
     cursor: pointer;
     z-index: 50;
-    margin-left: 35px;
+    margin-inline-start: 35px;
+}
+.right-bar-item a:hover {
+    text-decoration: none !important;
 }
 .right-bar-item .item-icon img {
     width: 30px;
     height: 30px;
 }
+.right-bar-item .item-icon .currency_ic {
+    width: 30px;
+    height: 30px;
+    padding: 8px 0px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 800;
+}
+.right-bar-item .item-icon .storeview_ic {
+    width: 30px;
+    height: 30px;
+}
+/* .right-bar-item .item-icon .storeview_ic > div{
+    zoom: 0.8;
+    margin: 4px auto 0;
+    -moz-transform: scale(0.8);
+} */
 .right-bar-item:hover .item-icon {
     opacity: 0.6;
 }
 .right-bar-item .item-text {
     line-height: 19px;
+    color: #333132 !important;
 }
 .app-nav {
-    height: 43px;
+    min-height: 43px;
     background: #333132;
     color: #fff;
 }
 .main-nav {
     display: flex;
     position: relative;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .main-nav .nav-item {
     padding: 10px 40px;
@@ -97,7 +126,6 @@
     line-height: 24px;
     font-weight: 600;
     white-space: nowrap;
-    margin-right: 70px;
     color: white;
     text-decoration: none;
     display: block;
@@ -137,7 +165,7 @@
         width: 1000px;
     }
 }
-.main-nav .nav-mega-item .mega-lv1-name{
+.main-nav .nav-mega-item .mega-lv1-name {
     color: #333132;
     text-decoration: none;
     margin-top: 24px;
@@ -162,7 +190,7 @@
     overflow: hidden;
 }
 
-.main-nav .active .nav-mega-item .mega-image img{
+.main-nav .active .nav-mega-item .mega-image img {
     width: 100%;
 }
 
@@ -173,7 +201,7 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    background: #0F7D37;
+    background: #0f7d37;
     color: #fff;
     border-radius: 100%;
     z-index: 5;
@@ -198,7 +226,7 @@
     width: 348px;
     text-align: left;
     position: relative;
-    border: 2px solid #DCDCDC;
+    border: 2px solid #dcdcdc;
     background: #fff;
 }
 .list-cart-items {
@@ -215,7 +243,7 @@
     height: 80px;
     min-width: 80px;
     margin-right: 16px;
-    border: 1px solid #DCDCDC;
+    border: 1px solid #dcdcdc;
 }
 .cart-item-img img {
     width: 100%;
@@ -240,7 +268,7 @@
 .mini-cart-total {
     margin-top: 18px;
     padding: 10px 24px;
-    background: #DCDCDC;
+    background: #dcdcdc;
     font-size: 16px;
     line-height: 24px;
     display: flex;
@@ -258,7 +286,7 @@
     padding: 16px 24px;
 }
 .mini-cart-action .btn-cart {
-    background: #0B5B28;
+    background: #0b5b28;
     font-size: 16px;
     line-height: 24px;
     font-weight: lighter;
@@ -269,11 +297,11 @@
     right: 0;
     bottom: 0;
     top: 155px;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 99;
     display: none;
 }
-.mini-cart-overlay-top{
+.mini-cart-overlay-top {
     position: fixed;
     left: 0;
     right: 0;
@@ -286,8 +314,8 @@
 .mini-cart-arrow {
     width: 18px;
     height: 18px;
-    border-left: 2px solid #DCDCDC;
-    border-top: 2px solid #DCDCDC;
+    border-left: 2px solid #dcdcdc;
+    border-top: 2px solid #dcdcdc;
     position: absolute;
     top: -10px;
     right: 30px;
@@ -316,30 +344,34 @@ body.fixed-scroll {
     text-align: center;
     white-space: nowrap;
 }
-.menu-my-account, .menu-settings {
+.menu-my-account,
+.menu-settings {
     position: absolute;
     background: #fff;
     z-index: 2;
     border: 1px solid #f3f3f3;
-    box-shadow: 2px 2px 0 0 rgba(0,0,0,0.14);
+    box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.14);
     margin-top: 8px;
+    min-width: 150px;
 }
-.list-menu-account, list-menu-settings {
+.list-menu-account,
+list-menu-settings {
     padding-top: 4px;
     padding-bottom: 4px;
 }
 .list-menu-settings > div {
     margin-left: 0 !important;
 }
-.store-item .store-name, .currency-item .currency-name {
-    margin-left: 10px;
+.store-item .store-name,
+.currency-item .currency-name {
+    margin-inline-start: 10px;
 }
 .store-item .not-selected,
 .currency-item .not-selected {
     width: 20px;
     height: 20px;
-    border-radius: 50%;
-    border: 1px solid;
+    /* border-radius: 50%;
+    border: 1px solid; */
     display: inline-block;
 }
 .list-menu-settings .menu-title {
@@ -353,28 +385,13 @@ body.fixed-scroll {
     text-align: center;
     justify-content: center;
 }
-.siminia-wrapper{
+.siminia-wrapper {
     -webkit-transition: all 0.2s ease-in;
     -o-transition: all 0.2s ease-in;
     transition: all 0.2s ease-in;
 }
 .text-active {
-    color: #0F7D37 !important;
-}
-@media (min-width: 1920px) {
-    .main-nav {
-        justify-content : unset;
-    }
-    .main-nav .nav-item {
-        margin-right: 110px;
-
-    }
-}
-@media (max-width: 1250px) {
-    .main-nav .nav-item {
-        padding: 10px 20px;
-        margin-right: 40px;
-    }
+    color: #0f7d37 !important;
 }
 @media (max-width: 1023px) {
     .header-app-bar {
@@ -402,7 +419,7 @@ body.fixed-scroll {
     .header-search-form input::placeholder {
         font-size: 16px;
     }
-    .mini-cart-view{
+    .mini-cart-view {
         position: fixed;
         left: 0;
         right: 0;

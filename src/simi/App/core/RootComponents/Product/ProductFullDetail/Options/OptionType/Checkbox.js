@@ -12,21 +12,21 @@ class CheckboxField extends Abstract {
             checked
         }
     }
-    
+
     updateCheck = () => {
         this.setState((oldState) => {
             const checked = !oldState.checked;
             const key = this.props.id;
-            let mutilChecked = this.props.parent.selected[key];
-            mutilChecked = mutilChecked instanceof Array ? mutilChecked : [];
+            let multiChecked = this.props.parent.selected[key];
+            multiChecked = multiChecked instanceof Array ? multiChecked : [];
             if(checked){
-                mutilChecked.push(this.props.value);
+                multiChecked.push(this.props.value);
 
             }else{
-                const index = mutilChecked.indexOf(this.props.value);
-                mutilChecked.splice(index,1);
+                const index = multiChecked.indexOf(this.props.value);
+                multiChecked.splice(index,1);
             }
-            this.updateSelected(key,mutilChecked);
+            this.updateSelected(key,multiChecked);
             return {checked };
         });
     };

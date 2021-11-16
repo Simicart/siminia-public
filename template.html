@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="<%= global.LOCALE %>" data-image-optimizing-origin="<%= process.env.IMAGE_OPTIMIZING_ORIGIN %>"
+    data-media-backend="<%= global.MAGENTO_MEDIA_BACKEND_URL %>">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff6334">
+    <link rel="manifest" href="/manifest.json">
+
+    <title>SimiCart Demo PWA</title>
+
+    <!--
+            Apple Specific Tags
+
+            To be included until Safari supports WebAppManifest
+            See Docs:
+            - https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html
+            - https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
+        -->
+    <!--
+            Apple Icons for Homescreen
+            Sizes: https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/app-icon/
+        -->
+    <link rel="icon" type="image/x-icon" href="/static/icons/siminia_square_512.png" />
+    <link rel="apple-touch-icon" href="/static/icons/siminia_square_512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png">
+    <link rel="preconnect" href="<%= process.env.MAGENTO_BACKEND_URL %>">
+    <script type="text/javascript">
+        var SMCONFIGS = {
+            //magento url, end with slash
+            merchant_url: "<%= process.env.MAGENTO_BACKEND_URL %>",
+            //for pwastudio, call api directly to merchant instead of calling via upward
+            directly_request: false,
+            simicart_url: "https://www.simicart.com/appdashboard/rest/app_configs/",
+            simicart_authorization: "Qg5xhysRKGQe2K01n2qg7KL8rKpO9GmZXsxf0Z6",
+            notification_api: "/rest/V1/simiconnector/",
+            logo_url: "https://www.simicart.com/skin/frontend/default/simicart2.1/images/simicart/new_logo_small.png",
+            //eg. url is https://codymap.com/magento23 and media url must include pub, value should be 'magento23/pub/'
+            media_url_prefix: 'pub/'
+        };
+    </script>
+    <script src="/static/simistatic/app_configs.js"></script>
+    <script src="/static/simistatic/jquery.min.js"></script>
+    <script type="text/javascript">
+        window.addEventListener('error', function (e) {
+            if (
+                e && e.target &&
+                (
+                    (e.target.src && (typeof e.target.src === 'string') && e.target.src.indexOf('runtime') !== -1) ||
+                    (e.target.src && (typeof e.target.src === 'string') && e.target.src.indexOf('client') !== -1) ||
+                    (e.target.src && (typeof e.target.src === 'string') && e.target.src.indexOf('vendors') !== -1) ||
+                    (e.message && e.message == 'Script error.')
+                )
+            ) {
+                console.log('Version is outdated - old client file not found')
+                try {
+                    if (typeof (caches) !== "undefined") {
+                        caches.keys().then(function (names) {
+                            for (const name of names)
+                                caches.delete(name);
+                        });
+                    }
+
+                    navigator.serviceWorker.getRegistrations().then(
+                        function (registrations) {
+                            for (let registration of registrations) {
+                                registration.unregister();
+                            }
+                        });
+                } catch (err) {
+                    console.log(err)
+                }
+                try {
+                    sessionStorage.clear();
+                    localStorage.setItem("CLIENT_VER", null);
+                    window.location.reload();
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+        }, true);
+    </script>
+    <style>
+        /* override & pre-styling containers for cls opmization purpose */
+        .container {
+            display: block;
+        }
+
+        #root .container,
+        #root .container-fluid {
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        @media (min-width: 768px) {
+            #root .container {
+                width: 750px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            #root .container {
+                width: 970px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            #root .container {
+                width: 1170px;
+            }
+        }
+
+        @media (min-width: 1920px) {
+            #root .container {
+                width: 1430px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="/static/simistatic/core-theme-style.css" media="print" onload="this.media='all'">
+    </link>
+    <!-- fashion style 
+    <link rel="stylesheet" href="/static/simistatic/style.css" media="print" onload="this.media='all'"></link>
+    -->
+</head>
+
+<body>
+    <script type="text/javascript">/*precache*//*endprecache*/</script>
+    <div style="display: none">
+        <div class="addthis_inline_share_toolbox" id="social-share"></div>
+    </div>
+    <div id="root"></div>
+
+    <div class="splash-screen" id="splash-screen" style="margin-top:0;text-align:center;width: 100%;top: 0;left: 0;">
+        <div id="" style="width: 100%; height: auto; margin: 0 auto 0;">
+            <img id="splash-img"
+                style="position: absolute; left: 50%; top: 50%; -webkit-transform: translateY(-50%) translateX(-50%); z-index:-1; width: 100%; max-width: 1024px"
+                src="/static/simistatic/images/simicart-splash-desktop.svg">
+        </div>
+    </div>
+
+    <!-- Fallback for when JavaScript is disabled. -->
+    <noscript>
+        <style>
+            .fallback-nojs {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .fallback-nojs a {
+                color: currentColor;
+            }
+
+            .fallback-closed {
+                height: 40vh;
+            }
+        </style>
+        <div class="fallback-nojs">
+            <img class="fallback-closed" alt="JavaScript is disabled" src="/venia-static/veniaClosed.png">
+            <h1 class="fallback-heading">Oops! JavaScript is disabled</h1>
+            <div>
+                To browse the Venia store,<br>
+                <a href="https://www.enable-javascript.com">enable JavaScript in your browser.</a>
+            </div>
+        </div>
+    </noscript>
+</body>
+
+</html>

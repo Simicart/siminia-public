@@ -1,6 +1,18 @@
 import React from 'react';
 import {Helmet} from "react-helmet";
 
+function updateTracking(title) {
+    try {
+        if (window.$zopim)
+            window.$zopim.livechat.sendVisitorPath({
+                url: window.location,
+                title: title
+            });
+    } catch (err) {
+        console.warn(err)
+    }
+}
+
 class TitleHelper {
     static renderMetaHeader = (props = {title:null,desc:null,meta_other:[]})=>{
         let meta = null;
@@ -13,6 +25,8 @@ class TitleHelper {
                 meta = props.meta_other
             }
         }
+        if (props.title)
+            updateTracking(props.title)
         return (
             <Helmet>
                 {props.title && (

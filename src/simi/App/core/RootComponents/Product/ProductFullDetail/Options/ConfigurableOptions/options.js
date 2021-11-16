@@ -24,7 +24,11 @@ class Options extends Component {
     render() {
         const { handleSelectionChange, props } = this;
         const { options } = props;
-
+        // sort attribute size to first
+        if (options.length && options.filter(({ attribute_code }) => attribute_code === "size")
+            && options.filter(({ attribute_code }) => attribute_code === "size").length) {
+            options.unshift(options.splice(options.findIndex(elt => elt.attribute_code === "size"), 1)[0]);
+        }
         return options.map(option => (
             <Option
                 {...option}

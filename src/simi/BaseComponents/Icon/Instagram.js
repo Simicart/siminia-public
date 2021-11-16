@@ -17,7 +17,7 @@ const Instagram = props => {
             className={props.className}
         >
             <title>icon/social/instagram</title>
-            <desc>Created with Sketch.</desc>
+            
             <circle id="Oval" className="st0" cx="24.6" cy="24.9" r="2.6" />
             <path
                 id="Shape"

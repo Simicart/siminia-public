@@ -26,8 +26,8 @@ class PaginationTable extends Pagination {
                         {columns}
                     </tr>
                 </thead>
-            ) 
-            
+            )
+
         }
     }
 
@@ -85,7 +85,7 @@ class PaginationTable extends Pagination {
                     key={number}
                     id={number}
                     onClick={(e)=>this.changePage(e)}
-                    className={`'page-nums' ${active}`}
+                    className={`page-nums ${active}`}
                 >
                     {number}
                 </li>
@@ -96,7 +96,7 @@ class PaginationTable extends Pagination {
         {
             this.props.itemsPerPageOptions.map((item, index) => {
                     option_limit.push(<option key={index} value={item} >{item}</option>);
-                    return null 
+                    return null
                 }
             );
         }
@@ -111,9 +111,9 @@ class PaginationTable extends Pagination {
                 alignItems : 'center',
                 fontSize : 14,
             }}>
-                <li className="icon-page-number" onClick={()=>this.handleChangePage(false, total)}>{prevPageIcon}</li>
+                <li className="pgn-page-number" onClick={()=>this.handleChangePage(false, total)}>{prevPageIcon}</li>
                 {renderPageNumbers}
-                <li className="icon-page-number" onClick={()=>this.handleChangePage(true, total)}>{nextPageIcon}</li>
+                <li className="pgn-page-number" onClick={()=>this.handleChangePage(true, total)}>{nextPageIcon}</li>
             </ul>
         ):'';
         let {currentPage,limit} = this.state;
@@ -121,7 +121,7 @@ class PaginationTable extends Pagination {
         let firstItem = lastItem - limit+1;
         lastItem = lastItem > totalItem ? totalItem : lastItem;
         let itemsPerPage = (
-            <div className="icon-page-number">
+            <div className="pgn-page-number">
                 {
                     this.props.showInfoItem &&
                     <span style={{marginRight : 10,fontSize : 16}}>
@@ -142,7 +142,7 @@ class PaginationTable extends Pagination {
                 <div style={{display:"flex", alignItems:"center"}}>
                     {itemsPerPage}
                     <div style={{display:"flex"}}>
-                        {Identify.__("Show")} {this.renderDropDown()}{Identify.__(" per page")}
+                        {Identify.__("Show")} {this.renderDropDown()} {Identify.__("per page")}
                     </div>
                 </div>
                 {pagesSelection}

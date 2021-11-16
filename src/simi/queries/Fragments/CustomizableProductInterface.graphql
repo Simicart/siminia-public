@@ -1,0 +1,81 @@
+fragment CustomizableProductInterface on CustomizableProductInterface {
+    options {
+        title
+        required
+        sort_order
+        option_id
+        ... on CustomizableAreaOption {
+            area_value: value {
+                max_characters
+                price_type
+                price
+                sku
+            }
+        }
+        ... on CustomizableCheckboxOption {
+            checkbox_value: value {
+                option_type_id
+                price_type
+                price
+                sku
+                sort_order
+                title
+            }
+        }
+        ... on CustomizableDateOption {
+            date_value: value {
+                price_type
+                price
+                sku
+            }
+        }
+        ... on CustomizableDropDownOption {
+            dropdown_value: value {
+                option_type_id
+                price_type
+                price
+                sku
+                sort_order
+                title
+            }
+        }
+        ... on CustomizableFieldOption {
+            field_value: value {
+                max_characters
+                price_type
+                price
+                sku
+            }
+        }
+        ... on CustomizableFileOption {
+            file_value: value {
+                file_extension
+                image_size_x
+                image_size_y
+                price_type
+                price
+                sku
+            }
+        }
+        ... on CustomizableMultipleOption {
+            multiple_value: value {
+                option_type_id
+                price_type
+                price
+                sku
+                sort_order
+                title
+            }
+        }
+        ... on CustomizableRadioOption {
+            radio_value: value {
+                option_type_id
+                price_type
+                price
+                sku
+                sort_order
+                title
+            }
+        }
+    }
+}

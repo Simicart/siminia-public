@@ -1,252 +1,251 @@
 import React from 'react';
-import Identify from 'src/simi/Helper/Identify'
-import defaultClasses from './filter.css';
-import Checkbox from 'src/simi/BaseComponents/Checkbox'
-import Dropdownplus from 'src/simi/BaseComponents/Dropdownplus'
-import { mergeClasses } from 'src/classify'
+import Identify from 'src/simi/Helper/Identify';
+import Dropdownplus from 'src/simi/BaseComponents/Dropdownplus';
 import { withRouter } from 'react-router-dom';
-import { formatPrice } from 'src/simi/Helper/Pricing';
+import RangeSlider from './RangeSlider';
+import memoize from 'memoize-one';
+import { Whitebtn } from 'src/simi/BaseComponents/Button';
+import { useWindowSize } from '@magento/peregrine';
 
-class Filter extends React.Component {
-    constructor(props) {
-        super(props);
-        const isPhone = window.innerWidth < 1024 ;
-        this.state = {isPhone}
-        this.rowFilterAttributes = []
-        this.rowsActived = []
-        this.filtersToApply = {}
-        this.classes = mergeClasses(this.props.classes, defaultClasses)
-        this.activedItems = {}
-    }
+require('./filter.scss');
 
-    setIsPhone(){
-        const obj = this;
-        $(window).resize(function () {
-            const width = window.innerWidth;
-            const isPhone = width < 1024;
-            if(obj.state.isPhone !== isPhone){
-                obj.setState({isPhone})
-            }
-        })
-    }
+const dropDownPlusClasses = {
+    dropdownplus: 'dropdownplus',
+    'dropdownplus-title': 'dropdownplus-title',
+    'dropdownplus-inner': 'dropdownplus-inner'
+};
 
-    componentDidMount(){
-        this.setIsPhone();
-    }
+const Filter = props => {
+    const {
+        data,
+        filterData,
+        history,
+        location,
+        total_count,
+        maxPrice,
+        minPrice
+    } = props;
 
-    renderActivedFilters() {
-        const {props} = this
-        const {filterData} = props
-        if (props.data)
-            this.items = props.data;
+    let filtersToApply = filterData ? filterData : {};
+    let rowFilterAttributes = [];
 
-        if (this.items && this.items.length !== 0) {
-            if (this.activedItems !== filterData && this.items && this.items.length !== 0) {
-                this.activedItems = filterData;
-                this.rowsActived = []
-                this.items.map((item) => {
-                    const is_price = item.request_var === 'price'
-                    if (is_price) {
-                        if (this.activedItems[item.request_var]) {
-                            let filter_item_label = this.activedItems[item.request_var]
-                            const splited_prices = filter_item_label.split('-')
-                            if (splited_prices.length === 2) {
-                                if (splited_prices[1])
-                                    filter_item_label = <>{formatPrice(parseFloat(splited_prices[0]))} - {formatPrice(parseFloat(splited_prices[1]))}</>
-                                else
-                                    filter_item_label = <>{formatPrice(parseFloat(splited_prices[0]))} {Identify.__('and above')}</>
-                            }
-                            this.rowsActived.push(this.renderActivedFilterItem(item, filter_item_label))
-                        }
-                    } else if (item && item.request_var && item.filter_items && this.activedItems[item.request_var]) {
-                        item.filter_items.map((filter_item)=> {
-                            if (
-                                (filter_item.value_string === String(this.activedItems[item.request_var]))
-                            ) {
-                                const filter_item_label = filter_item.label
-                                this.rowsActived.push(this.renderActivedFilterItem(item, filter_item_label))
-                            }
-                        })
-                    }
-                })
+    const windowSize = useWindowSize();
+    const isPhone = windowSize.innerWidth < 1024;
 
-                return (
-                    <div>{this.rowsActived}</div>
+    const renderFilterItemsOptions = memoize(item => {
+        let options = [];
+        if (item) {
+            if (item.filter_items !== null) {
+                options = item.filter_items.map(
+                    function(optionItem) {
+                        const name = (
+                            <span className="filter-item-text">
+                                {$('<div/>')
+                                    .html(Identify.__(optionItem.label))
+                                    .text()}
+                                {optionItem.items_count && (
+                                    <span className="filter-item-count">
+                                        ({optionItem.items_count})
+                                    </span>
+                                )}
+                            </span>
+                        );
+                        return (
+                            <div
+                                role="presentation"
+                                className="filter-item"
+                                key={
+                                    item.request_var +
+                                    '_' +
+                                    optionItem.value_string
+                                }
+                            >
+                                <input
+                                    type="checkbox"
+                                    defaultChecked={
+                                        filtersToApply[item.request_var] &&
+                                        filtersToApply[
+                                            item.request_var
+                                        ].includes(optionItem.value_string)
+                                    }
+                                    onChange={() => {
+                                        clickedFilter(
+                                            item.request_var,
+                                            optionItem.value_string
+                                        );
+                                    }}
+                                />
+                                <span className="filter-item-text">{name}</span>
+                            </div>
+                        );
+                    },
+                    this,
+                    item
                 );
             }
         }
-    }
+        return options;
+    });
 
-    renderActivedFilterItem(item, filter_item_label) {
-        const { classes } = this
+    const renderRangePrices = memoize(filterData => {
+        const from = minPrice;
+        const to = maxPrice;
+        let left = minPrice;
+        let right = maxPrice;
+        if (
+            filterData &&
+            filterData['price'] &&
+            typeof filterData['price'] === 'string'
+        ) {
+            const activeRange = filterData['price'].split('-');
+            left = activeRange[0];
+            right = activeRange[1];
+        }
+
         return (
-            <div key={Identify.randomString(5)} className={classes["active-filter-item"]}>
-                <div className={classes["filter-name"]}>
-                    <span className={`${classes['filter-name-text']} ${classes['root-menu']}`}>{Identify.__(item.name)}</span>
-                </div>
-                {
-                    <Checkbox
-                        classes={this.classes}
-                        key={Identify.randomString(5)}
-                        className={classes["filter-item"]}
-                        onClick={() => this.deleteFilter(item.request_var)}
-                        label={filter_item_label}
-                        selected={true}
-                    /> 
-                }
-            </div>
-        )
-    }
-    
-    renderFilterItems() {
-        const {props, classes} = this
+            <RangeSlider
+                priceFrom={Number(from)}
+                priceTo={Number(to)}
+                clickedFilter={clickedFilter}
+                leftPrice={Number(left)}
+                rightPrice={Number(right)}
+                location={location}
+                filterData={filterData}
+            />
+        );
+    });
 
-        if (props.data)
-            this.items = props.data;
-        if (this.items && this.items.length !== 0) {
-            if (this.filterAttributes !== this.items) {
-                this.filterAttributes = this.items
-                this.rowFilterAttributes = []
-                this.filterAttributes.map((item, index) => {
-                    const styles = {}
-                    if (index === 0 && !this.items.layer_state)
-                        styles.marginTop = 0 
-                    const name = <span className={`${classes['filter-name-text']} ${classes['root-menu']}`}>{Identify.__(item.name)}</span>
-                    const filterOptions = this.renderFilterItemsOptions(item)
-                    if (filterOptions.length > 0 && !this.activedItems[item.request_var]) {
-                        this.rowFilterAttributes.push(
-                            this.state.isPhone?
-                            <Dropdownplus 
-                                key={Identify.randomString(5)}
-                                classes={this.classes}
-                                title={Identify.__(item.name)}
-                                expanded={this.filtersToApply[item.request_var]?true:false}
-                            >
-                                <div 
-                                    id={`filter-option-items-${item.request_var}`} 
-                                    className={classes["filter-option-items"]}>
-                                    {this.renderFilterItemsOptions(item)}
-                                </div>
-                            </Dropdownplus>
-                            :
-                            <div key={Identify.randomString(5)}>
-                                <div className={classes["filter-name"]} style={styles}>{name}</div>
-                                <div className={classes["filter-option-items"]}>{this.renderFilterItemsOptions(item)}</div>
-                            </div>
-                        )
-                    }
-                    return null
-                }, this);
-            }
-            return (
-                <div>{this.rowFilterAttributes}</div>
+    const renderFilterItems = () => {
+        rowFilterAttributes = [];
+        if (maxPrice && minPrice !== undefined && minPrice < maxPrice && total_count > 0) {
+            rowFilterAttributes.push(
+                <Dropdownplus
+                    classes={dropDownPlusClasses}
+                    key={Identify.randomString(5)}
+                    title={Identify.__('Price')}
+                    expanded={filtersToApply['price'] ? true : false}
+                >
+                    <div
+                        id={`filter-option-items-price`}
+                        className="filter-option-items"
+                    >
+                        {renderRangePrices(filterData)}
+                    </div>
+                </Dropdownplus>
             );
         }
-    }
 
-    renderFilterItemsOptions(item)
-    {
-        const { classes} = this
-        let options= [];
-        if(item){
-            if(item.filter_items !== null){
-                options = item.filter_items.map(function (optionItem) {
-                    const name = <span className={classes["filter-item-text"]}>
-                        {$("<div/>").html(Identify.__(optionItem.label)).text()}
-                        </span>;
-                    return (
-                        <Checkbox
-                            key={Identify.randomString(5)}
-                            id={`filter-item-${item.request_var}-${optionItem.value_string}`}
-                            className={classes["filter-item"]}
-                            classes={classes}
-                            onClick={()=>{
-                                this.clickedFilter(item.request_var, optionItem.value_string);
-                            }}
-                            label={name}
-                            selected={this.filtersToApply[item.request_var] === optionItem.value_string}
-                        />
+        if (data && data.length !== 0) {
+            data.map((item, index) => {
+                const filterOptions = renderFilterItemsOptions(item);
+                if (filterOptions.length > 0) {
+                    rowFilterAttributes.push(
+                        <Dropdownplus
+                            classes={dropDownPlusClasses}
+                            key={index}
+                            title={Identify.__(item.name)}
+                            expanded={
+                                filtersToApply[item.request_var] ? true : false
+                            }
+                        >
+                            <div
+                                id={`filter-option-items-${item.request_var}`}
+                                className="filter-option-items"
+                            >
+                                {filterOptions}
+                            </div>
+                        </Dropdownplus>
                     );
-                }, this, item);
-            }
+                }
+                return null;
+            }, this);
         }
-        return options
+        return <div>{rowFilterAttributes}</div>;
     };
-    
-    renderClearButton() {
-        const { classes, props} = this
-        const {filterData} = props
-        
-        return this.state.isPhone?'':
-        (filterData)
-        ? (<div className={classes["action-clear"]}>
-                <div 
-                    role="presentation"
-                    onClick={() => this.clearFilter()}
-                    className={classes["clear-filter"]}>{Identify.__('Clear all')}</div>
-            </div>
-        ) : <div className={classes["clear-filter"]}></div>
-    }
 
-    clearFilter() {
-        const {history, location} = this.props
+    const renderClearButton = () => {
+        return props.filterData ? (
+            <div className="clear-filter">
+                <div
+                    role="presentation"
+                    onClick={() => clearFilter()}
+                    className="action-clear"
+                >
+                    {Identify.__('Clear all')}
+                </div>
+            </div>
+        ) : (
+            <div className="clear-filter" />
+        );
+    };
+
+    const clearFilter = () => {
+        document.getElementById('root-product-list').scrollIntoView({ behavior: 'smooth' });
         const { search } = location;
         const queryParams = new URLSearchParams(search);
         queryParams.delete('filter');
         history.push({ search: queryParams.toString() });
-    }
+    };
 
-    deleteFilter(attribute) {
-        const {history, location, filterData} = this.props
+    const applyFilter = () => {
+        document.getElementById('root-product-list').scrollIntoView({ behavior: 'smooth' });
         const { search } = location;
-        const filterParams = filterData?filterData:{}
-        delete filterParams[attribute]
-        const queryParams = new URLSearchParams(search);
-        queryParams.set('filter', JSON.stringify(filterParams));
-        history.push({ search: queryParams.toString() });
-    }
-    
-    clickedFilter(attribute, value) {
-        const {history, location, filterData} = this.props
-        const { search } = location;
-        const filterParams = filterData?filterData:{}
-        filterParams[attribute] = value
         const queryParams = new URLSearchParams(search);
         queryParams.set('page', 1);
+        queryParams.set('filter', JSON.stringify(filtersToApply));
+        history.push({ search: queryParams.toString() });
+    };
+
+    const deleteFilter = attribute => {
+        const { search } = location;
+        const filterParams = filterData ? filterData : {};
+        delete filterParams[attribute];
+        const queryParams = new URLSearchParams(search);
         queryParams.set('filter', JSON.stringify(filterParams));
         history.push({ search: queryParams.toString() });
-    }
-    
-    render() {
-        const {props, classes} = this
-        const {filterData} = props
-        this.items = props.data?this.props.data:null;
-        const activeFilter = filterData?
-            (
-                <div className={classes["active-filter"]}>
-                    {this.renderActivedFilters()}
-                </div>
-            ):
-            ''
-        const filterProducts = 
-                <div className={`${classes['filter-products']}`}>
-                    {this.renderClearButton()}
-                    {activeFilter}
-                    {this.renderFilterItems()}
-                </div>
-        if (this.rowsActived.length === 0 && this.rowFilterAttributes.length === 0)
-                return ''
-                
-        return this.state.isPhone?
+    };
+
+    const clickedFilter = (attribute, value) => {
+        const newFiltersToApply = filtersToApply;
+        if (attribute === 'price') newFiltersToApply[attribute] = value;
+        else {
+            const existedValue = newFiltersToApply[attribute];
+            if (!existedValue) newFiltersToApply[attribute] = [value];
+            else {
+                const index = existedValue.indexOf(value);
+                if (index > -1) {
+                    if (existedValue.length > 1)
+                        newFiltersToApply[attribute].splice(index, 1);
+                    else delete newFiltersToApply[attribute];
+                } else newFiltersToApply[attribute].push(value);
+            }
+        }
+        filtersToApply = newFiltersToApply;
+    };
+
+    const filterProducts = (
+        <div className="filter-products">
+            {renderClearButton()}
+            {renderFilterItems()}
+            <Whitebtn
+                className="apply-filter"
+                onClick={() => applyFilter()}
+                text={Identify.__('Apply')}
+            />
+        </div>
+    );
+
+    return isPhone ? (
         <Dropdownplus
-            className={classes["siminia-phone-filter"]}
+            classes={dropDownPlusClasses}
+            className="siminia-phone-filter"
             title={Identify.__('Filter')}
-            classes={classes}
         >
             {filterProducts}
         </Dropdownplus>
-        :filterProducts;
-    }
-}
+    ) : (
+        filterProducts
+    );
+};
 
-export default (withRouter)(Filter);
+export default withRouter(Filter);

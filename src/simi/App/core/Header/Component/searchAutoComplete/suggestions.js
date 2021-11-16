@@ -15,13 +15,14 @@ const Suggestions = props => {
         setVisible(false);
     }, [setVisible]);
 
-    if (!visible || !filters || !items) {
+    if (!visible || !items) {
         return null;
     }
-
-    const categoryFilter =
-        filters.find(({ name }) => name === 'Category') || {};
-    const categories = categoryFilter.filter_items || [];
+    let categoryFilter;
+    if (filters && filters.length) {
+        categoryFilter = filters.find(({ name }) => name === 'Category') || {};
+    }
+    const categories = categoryFilter ? categoryFilter.filter_items : [];
 
     return (
         <Fragment>

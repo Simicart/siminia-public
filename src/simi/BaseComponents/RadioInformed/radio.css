@@ -1,0 +1,54 @@
+.root {
+    align-items: center;
+    color: #000;
+    display: grid;
+    gap: 15px;
+    grid-auto-flow: column;
+    grid-template-areas: "input label";
+    grid-template-columns: min-content 1fr;
+    margin: 0;
+    justify-items: center;
+    line-height: 14px;
+}
+
+.input {
+    -webkit-appearance: none;
+    background: none;
+    background-clip: content-box;
+    border: 7px solid transparent;
+    border-radius: 50%;
+    grid-area: input;
+    margin: 0;
+    z-index: 2;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.input:checked {
+    background-color: var(--simicolor-radio-dot);
+    margin-top: 0;
+    border: 5px solid transparent;
+}
+
+.radioCircle {
+    width: 24px;
+    height: 24px;
+    border: solid 1px var(--simicolor-radio-border);
+    border-radius: 100%;
+    grid-area: input;
+}
+
+.label {
+    font-size: 14px;
+    line-height: 14px;
+    grid-area: label;
+    font-weight: 400;
+    justify-self: start;
+}
+
+.input:active,
+.input:focus {
+    box-shadow: -3px 3px #eaeaea;
+    outline: none;
+}

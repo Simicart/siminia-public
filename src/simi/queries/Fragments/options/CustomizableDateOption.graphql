@@ -1,0 +1,7 @@
+fragment CustomizableDateOption on CustomizableDateOption {
+    date_value: value {
+        price_type
+        price
+        sku
+    }
+}

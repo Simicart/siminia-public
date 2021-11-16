@@ -26,7 +26,7 @@ const NavMegaitem = props => {
 
                         return (
                             <Link 
-                                className={classes["mega-lv2-name"]}
+                                className={`${classes["mega-lv2-name"]} mega-lv2-name`}
                                 key={indexlv2} 
                                 to={location}>
                                 {itemlv2.name}
@@ -41,11 +41,11 @@ const NavMegaitem = props => {
                 return (
                     <div key={index}>
                         <Link
-                            className={classes["mega-lv1-name"]}
+                            className={`${classes["mega-lv1-name"]} mega-lv2-name`}
                             to={location}>
                             {item.name}
                         </Link>
-                        <div className={classes["mega-lv1-sub-cats"]}>
+                        <div className={`${classes["mega-lv1-sub-cats"]}  mega-lv1-sub-cats`}>
                             {subChildLevel2}
                         </div>
                     </div>
@@ -62,10 +62,10 @@ const NavMegaitem = props => {
             }
 
             return (
-                <div className={classes["nav-mega-item"]} id={props.id}>
+                <div className={`${classes["nav-mega-item"]} nav-mega-item`} id={props.id}>
                     <div 
                     role="presentation"
-                    className={classes["mega-content"]}
+                    className={`${classes["mega-content"]} mega-content`}
                     onClick={() => {
                         if (props.toggleMegaItemContainer)
                             props.toggleMegaItemContainer()}
@@ -73,9 +73,11 @@ const NavMegaitem = props => {
                         {childCatGroups}
                     </div>
                     {
-                        <div className={`${classes["mega-image"]} hidden-xs`}>
-                            <img src={rootItem.image_url ? rootItem.image_url : 'https://www.simicart.com/media/simicart/mockup-ps-simipwa.png'} alt={rootItem.image_url}/>
-                        </div>
+                        rootItem.image_url && (
+                            <div className={`${classes["mega-image"]} mega-image hidden-xs`}>
+                                <img src={rootItem.image_url} alt={rootItem.image_url}/>
+                            </div>
+                        )
                     }
                 </div>
             )

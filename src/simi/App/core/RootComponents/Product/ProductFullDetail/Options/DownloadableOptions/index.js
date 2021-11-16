@@ -10,21 +10,33 @@ class DownloadableOptions extends OptionBase {
         super(props);
         this.exclT = 0;
         this.inclT = 0;
-        console.log(this.data)
     }
 
     renderOptions =()=>{
+    
         const objOptions = [];
-        if (this.data.download_options) {
-            const attributes = this.data.download_options;
+        if (this.data.downloadable_product_links) {
+            const { downloadable_product_links, links_purchased_separately } = this.data;
             let labelRequired = "";
-            for (const i in attributes) {
-                const attribute = attributes[i];
-                if (parseInt(attribute.isRequired, 10) === 1) {
-                    labelRequired = this.renderLabelRequired(1);
-                    this.required.push(0)
+            for (const i in downloadable_product_links) {
+                const attribute = downloadable_product_links[i];
+                const link = attribute.sample_url
+                const price = attribute.price
+    
+                let linkId = i
+                if(link) {
+                    const positionLink = link.indexOf('link_id');
+                    linkId = link.substring((positionLink + 8), link.length)
+                    linkId = linkId.substring(0, 1)
                 }
-                const element = this.renderAttribute(attribute, i, labelRequired);
+                if (links_purchased_separately) {
+                    labelRequired = this.renderLabelRequired(1);
+                    this.required.push(linkId)
+                }
+                if(parseFloat(price) <= 0) {
+                    this.selected[linkId] = [linkId]
+                }
+                const element = this.renderAttribute(attribute, parseInt(linkId), labelRequired);
                 objOptions.push(element);
             }
         }
@@ -40,9 +52,9 @@ class DownloadableOptions extends OptionBase {
     renderAttribute = (attribute, id, labelRequired)=>{
         return (
             <div key={id} className="option-select">
-                <div className="option-title">
-                    <span>{attribute.title} {labelRequired}</span>
-                </div>
+                {this.data.links_title && <div className="option-title">
+                    <span>{this.data.links_title} {labelRequired}</span>
+                </div>}
                 <div className="option-content">
                     <div className="options-list">
                         {this.renderMultiCheckbox(attribute, id)}
@@ -53,64 +65,86 @@ class DownloadableOptions extends OptionBase {
     };
 
     renderMultiCheckbox =(ObjOptions, id = '0')=>{
-        const options = ObjOptions.value;
-        const objs = [];
-        let {links_purchased_separately} = ObjOptions
-        links_purchased_separately = parseInt(links_purchased_separately, 10) === 1
+        // const options = ObjOptions.value;
+        // const objs = [];
+        // let {links_purchased_separately} = ObjOptions
+        // links_purchased_separately = parseInt(links_purchased_separately, 10) === 1
 
-        for (const i in options) {
-            const item = options[i];
-            const element = (
-                <div key={i} className="option-row">
-                    { 
-                        links_purchased_separately ?
-                        <Checkbox id={id} title={item.title} value={item.id} parent={this} item={item}/> :
-                        ReactHTMLParse(item.title)
-                    }
-                </div>
-            );
+        // for (const i in options) {
+        //     const item = options[i];
+        //     const element = (
+        //         <div key={i} className="option-row">
+        //             { 
+        //                 links_purchased_separately ?
+        //                 <Checkbox id={id} title={item.title} value={item.id} parent={this} item={item}/> :
+        //                 ReactHTMLParse(item.title)
+        //             }
+        //         </div>
+        //     );
 
-            objs.push(element);
-        }
-        return objs;
+        //     objs.push(element);
+        // }
+        // return objs;
+
+        const { links_purchased_separately } = this.data;
+
+        return <div className="option-row">
+            {links_purchased_separately ? <Checkbox id={id} title={ObjOptions.title} value={Number(id)} parent={this} item={ObjOptions} /> : ReactHTMLParse(ObjOptions.title)}
+        </div>;
     };
 
     updatePrices = (selected = this.selected)=>{
         let exclT = 0;
         let inclT = 0;
-        const downloadableOptions = this.data.download_options;
-        selected = selected[0];
+        const downloadableOptions = this.data.downloadable_product_links;
+       
         for (const d in downloadableOptions) {
             const option = downloadableOptions[d];
-            const values = option.value;
-            for (const v in values) {
-                const value = values[v];
-                if (Array.isArray(selected)) {
-                    if (selected.indexOf(value.id) !== -1) {
-                        if (value.price_excluding_tax) {
-                            exclT += parseFloat(value.price_excluding_tax.price);
-                            inclT += parseFloat(value.price_including_tax.price);
-                        } else {
-                            //excl and incl is equal when server return only one price
-                            exclT += parseFloat(value.price);
-                            inclT += parseFloat(value.price);
-                        }
-                    }
-                } else {
-                    if (value.id === selected) {
-                        //add price
-                        if (value.price_excluding_tax) {
-                            exclT += parseFloat(value.price_excluding_tax.price);
-                            inclT += parseFloat(value.price_including_tax.price);
-                        } else {
-                            //excl and incl is equal when server return only one price
-                            exclT += parseFloat(value.price);
-                            inclT += parseFloat(value.price);
+            if (Array.isArray(selected)) {
+                if (selected.indexOf(d) !== -1) {
+                    exclT += parseFloat(option.price);
+                    inclT += parseFloat(option.price);
+                }
+            } else {
+                for(const i in selected) {
+                    const select = selected[i]
+                    if(select && select.length && select.length > 0) {
+                        if(select[0] === (Number(d) + 1)) {
+                            exclT += parseFloat(option.price);
+                            inclT += parseFloat(option.price);
                         }
                     }
                 }
             }
+            // for (const v in values) {
+            //     const value = values[v];
+            //     if (Array.isArray(selected)) {
+            //         if (selected.indexOf(value.id) !== -1) {
+            //             if (value.price_excluding_tax) {
+            //                 exclT += parseFloat(value.price_excluding_tax.price);
+            //                 inclT += parseFloat(value.price_including_tax.price);
+            //             } else {
+            //                 //excl and incl is equal when server return only one price
+            //                 exclT += parseFloat(value.price);
+            //                 inclT += parseFloat(value.price);
+            //             }
+            //         }
+            //     } else {
+            //         if (value.id === selected) {
+            //             //add price
+            //             if (value.price_excluding_tax) {
+            //                 exclT += parseFloat(value.price_excluding_tax.price);
+            //                 inclT += parseFloat(value.price_including_tax.price);
+            //             } else {
+            //                 //excl and incl is equal when server return only one price
+            //                 exclT += parseFloat(value.price);
+            //                 inclT += parseFloat(value.price);
+            //             }
+            //         }
+            //     }
+            // }
         }
+
         this.parentObj.Price.setDownloadableOptionPrice(exclT, inclT);
     }
 
@@ -128,7 +162,13 @@ class DownloadableOptions extends OptionBase {
 
     getParams = ()=>{
         if(!this.checkOptionRequired()) return false;
-        this.selected = (this.selected && this.selected[0])?this.selected[0]:{};
+        const newSelected = {}
+        for (const i in this.selected) {
+            newSelected[i] = i
+        }
+        this.selected = newSelected
+        // this.selected = (this.selected && this.selected[0])?this.selected[0]:{};
+        // console.log(this.selected)
         this.setParamOption('links');
         return this.params;
     };
@@ -136,18 +176,19 @@ class DownloadableOptions extends OptionBase {
 
     renderSamples = () => {
         const {data} = this
-        if (data.download_sample && data.download_sample.length) {
-            const downloadSamples = data.download_sample[data.download_sample.length-1]
-            const returnedSamples = downloadSamples.value.map((downloadSample, index) => {
+        if (data.downloadable_product_samples && data.downloadable_product_samples.length) {
+            // const downloadSamples = data.download_sample[data.download_sample.length-1]
+            const { downloadable_product_samples } = data;
+            const returnedSamples = downloadable_product_samples.map((downloadSample, index) => {
                 return (
-                    <a key={index} href={downloadSample.url} target="_blank" className="download-sample-item">
+                    <a key={index} href={downloadSample.sample_url} target="_blank" className="download-sample-item">
                         {downloadSample.title}
                     </a>
                 )
             })
             return <div className="download-samples">
                 <div className="download-sample-title">
-                    {downloadSamples.title}
+                    {/* {downloadSamples.title} */}
                 </div>
                 {returnedSamples}
             </div>

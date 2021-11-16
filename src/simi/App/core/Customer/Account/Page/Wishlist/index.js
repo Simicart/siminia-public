@@ -3,82 +3,66 @@ import { connect } from 'src/drivers';
 import Identify from 'src/simi/Helper/Identify'
 import TitleHelper from 'src/simi/Helper/TitleHelper'
 import Item from "./Item";
-import {getWishlist} from 'src/simi/Model/Wishlist'
 import { toggleMessages } from 'src/simi/Redux/actions/simiactions';
 import { getCartDetails } from 'src/actions/cart';
 import Pagination from 'src/simi/BaseComponents/Pagination';
 import Loading from 'src/simi/BaseComponents/Loading'
-import {hideFogLoading} from 'src/simi/BaseComponents/Loading/GlobalLoading'
-import {smoothScrollToView} from 'src/simi/Helper/Behavior'
+import { hideFogLoading } from 'src/simi/BaseComponents/Loading/GlobalLoading'
+import { smoothScrollToView } from 'src/simi/Helper/Behavior'
+import { useWishlist } from 'src/simi/talons/Wishlist/useWishlist';
 
 require("./index.scss");
 
-const Wishlist = props => {    
-    const { history, toggleMessages, getCartDetails} = props    
-    const [data, setData] = useState(null)
+const Wishlist = props => {
+    const { history, toggleMessages, getCartDetails } = props
 
-    const gotWishlist = (data) => {
-        hideFogLoading()
-        if (data.errors && data.errors.length) {
-            const errors = data.errors.map(error => {
-                return {
-                    type: 'error',
-                    message: error.message,
-                    auto_dismiss: true
-                }
-            });
-            toggleMessages(errors)
-        } else {
-            setData(data)
-        }
-    }
-
-    const getWishlistItem = () => {
-        getWishlist(gotWishlist, {limit: 9999, no_price: 1})
-    }
-
-    if (!data) {
-        getWishlistItem()
-    }
+    const {
+        data,
+        isLoading,
+        addToCart,
+        deleteItem
+    } = useWishlist({ toggleMessages });
 
     const renderItem = (item, index) => {
         return (
             <div
-                key={item.wishlist_item_id}
+                key={item.id}
                 className={`${
                     index % 4 === 0 ? "first" : ""
-                } 'siminia-wishlist-item'`}
+                    } siminia-wishlist-item`}
             >
                 <Item
                     item={item}
                     lazyImage={true}
                     className={`${
                         index % 4 === 0 ? "first" : ""
-                    }`}
+                        }`}
                     showBuyNow={true}
-                    parent={this}
-                    getWishlist={getWishlistItem}
                     toggleMessages={toggleMessages}
                     getCartDetails={getCartDetails}
                     history={history}
-                /> 
+                    addWishlistToCart={addToCart}
+                    removeItem={deleteItem}
+                />
             </div>
         )
     }
 
     let rows = null
-    if (data && data.wishlistitems) {
-        const {wishlistitems, total} = data
-        if (total && wishlistitems && wishlistitems.length) {
+    if (data && data.items) {
+        const { items, items_count } = data
+        if (items_count && items && items.length) {
             rows = (
-                <Pagination 
-                    data={wishlistitems} 
-                    renderItem={renderItem}  
-                    itemsPerPageOptions={[8, 16, 32]} 
-                    limit={8}
-                    itemCount={total}
-                    changedPage={()=>smoothScrollToView($('#root'))}
-                    changeLimit={()=>smoothScrollToView($('#root'))}
+                <Pagination
+                    data={items}
+                    renderItem={renderItem}
+                    itemsPerPageOptions={[8, 16, 32]}
+                    showItemPerPage={false}
+                    showInfoItem={false}
+                    limit={12}
+                    itemCount={items_count}
+                    changedPage={() => smoothScrollToView($('#root'))}
+                    changeLimit={() => smoothScrollToView($('#root'))}
                 />
             )
         }
@@ -88,7 +72,7 @@ const Wishlist = props => {
     return (
         <div className="account-my-wishlist">
             {TitleHelper.renderMetaHeader({
-                    title:Identify.__('Favourites')
+                title: Identify.__('Favourites')
             })}
             <div className="customer-page-title">
                 {Identify.__("Favourites")}

@@ -1,67 +1,37 @@
-import { RestApi } from '@magento/peregrine';
-import { Util } from '@magento/peregrine';
-import { refresh } from 'src/util/router-helpers';
-import { getCartDetails, removeCart } from 'src/actions/cart';
+import { RestApi, Util } from '@magento/peregrine';
+const { BrowserPersistence } = Util;
+import { removeCart } from '../cart';
+import { clearCheckoutDataFromStorage } from '../checkout';
 
 import actions from './actions';
 
-// const { request } = RestApi.Magento2;
-import { request } from 'src/simi/Network/RestMagento'
-
-const { BrowserPersistence } = Util;
 const storage = new BrowserPersistence();
 
-export const signIn = credentials =>
-    async function thunk(...args) {
-        const [dispatch] = args;
+export const signOut = (payload = {}) =>
+    async function thunk(dispatch) {
+        const { revokeToken } = payload;
 
-        dispatch(actions.signIn.request());
-
-        try {
-            const body = {
-                username: credentials.username,
-                password: credentials.password
-            };
-
-            const response = await request(
-                '/rest/V1/integration/customer/token',
-                {
-                    method: 'POST',
-                    body: JSON.stringify(body)
-                }
-            );
-
-            setToken(response);
-
-            await dispatch(actions.signIn.receive(response));
-
-            // Now that we're signed in, get this user's details.
-            dispatch(getUserDetails());
-
-            // Now that we're signed in, forget the old (guest) cart
-            // and fetch this customer's cart.
-            await dispatch(removeCart());
-            dispatch(getCartDetails({ forceRefresh: true }));
-        } catch (error) {
-            dispatch(actions.signIn.receive(error));
+        if (revokeToken) {
+            // Send mutation to revoke token.
+            try {
+                await revokeToken();
+            } catch (error) {
+                console.error('Error Revoking Token', error);
+            }
         }
+
+        // Remove token from local storage and Redux.
+        await dispatch(clearToken());
+        await dispatch(actions.reset());
+        await clearCheckoutDataFromStorage();
+
+        // Now that we're signed out, forget the old (customer) cart.
+        // We don't need to create a new cart here because we're going to refresh
+        // the page immediately after.
+        await dispatch(removeCart());
     };
 
-export const signOut = ({ history }) => async dispatch => {
-    // Sign the user out in local storage and Redux.
-    await clearToken();
-    await dispatch(actions.signIn.reset());
-
-    // Now that we're signed out, forget the old (customer) cart
-    // and fetch a new guest cart.
-    await dispatch(removeCart());
-    dispatch(getCartDetails({ forceRefresh: true }));
-
-    // Finally, go back to the first page of the browser history.
-    refresh({ history });
-};
-
-export const getUserDetails = () =>
+export const getUserDetails = ({ fetchUserDetails }) =>
     async function thunk(...args) {
         const [dispatch, getState] = args;
         const { user } = getState();
@@ -70,77 +40,49 @@ export const getUserDetails = () =>
             dispatch(actions.getDetails.request());
 
             try {
-                const userDetails = await request('/rest/V1/customers/me', {
-                    method: 'GET'
+                const { data } = await fetchUserDetails({
+                    fetchPolicy: 'no-cache'
                 });
 
-                dispatch(actions.getDetails.receive(userDetails));
+                dispatch(actions.getDetails.receive(data.customer));
             } catch (error) {
                 dispatch(actions.getDetails.receive(error));
             }
         }
     };
 
-export const createNewUserRequest = accountInfo =>
-    async function thunk(...args) {
-        const [dispatch] = args;
-
-        dispatch(actions.resetCreateAccountError.request());
-
-        try {
-            await request('/rest/V1/customers', {
-                method: 'POST',
-                body: JSON.stringify(accountInfo)
-            });
-
-            await dispatch(
-                signIn({
-                    username: accountInfo.customer.email,
-                    password: accountInfo.password
-                })
-            );
-        } catch (error) {
-            dispatch(actions.createAccountError.receive(error));
-
-            /*
-             * Throw error again to notify async action which dispatched handleCreateAccount.
-             */
-            throw error;
-        }
-    };
-
-export const createAccount = accountInfo => async dispatch => {
-    /*
-     * Server validation error is handled in handleCreateAccount.
-     * We set createAccountError in Redux and throw error again
-     * to notify redux-thunk action which dispatched handleCreateAccount action.
-     */
-    try {
-        await dispatch(createNewUserRequest(accountInfo));
-    } catch (e) {}
-};
-
 export const resetPassword = ({ email }) =>
     async function thunk(...args) {
         const [dispatch] = args;
 
-        dispatch(actions.resetPassword.request(email));
+        dispatch(actions.resetPassword.request());
 
         // TODO: actually make the call to the API.
         // For now, just return a resolved promise.
-        const response = await Promise.resolve(email);
+        await Promise.resolve(email);
 
-        dispatch(actions.resetPassword.receive(response));
+        dispatch(actions.resetPassword.receive());
     };
 
-export const completePasswordReset = email => async dispatch =>
-    dispatch(actions.completePasswordReset(email));
+export const setToken = token =>
+    async function thunk(...args) {
+        const [dispatch] = args;
 
-async function setToken(token) {
-    // TODO: Get correct token expire time from API
-    return storage.setItem('signin_token', token, 3600);
-}
+        // Store token in local storage.
+        // TODO: Get correct token expire time from API
+        storage.setItem('signin_token', token, 3600);
 
-async function clearToken() {
-    return storage.removeItem('signin_token');
-}
+        // Persist in store
+        dispatch(actions.setToken(token));
+    };
+
+export const clearToken = () =>
+    async function thunk(...args) {
+        const [dispatch] = args;
+
+        // Clear token from local storage
+        storage.removeItem('signin_token');
+
+        // Remove from store
+        dispatch(actions.clearToken());
+    };

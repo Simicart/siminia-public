@@ -6,11 +6,11 @@ import ErrorIcon from 'src/simi/BaseComponents/Icon/Error'
 import Success from 'src/simi/BaseComponents/Icon/Success'
 import WarningIcon from 'src/simi/BaseComponents/Icon/Warning'
 import CloseIcon from 'src/simi/BaseComponents/Icon/TapitaIcons/Close'
-import { connect } from 'src/drivers';
 import {
     toggleMessages
 } from 'src/simi/Redux/actions/simiactions';
 import { compose } from 'redux';
+import { connect } from 'src/drivers';
 import classify from 'src/classify';
 
 class TopMessage extends React.Component {
@@ -104,6 +104,20 @@ class TopMessage extends React.Component {
         return simiMessages.map((msg, id) => {
             return this.renderMsg(msg, id)
         }, this)
+    }
+
+    componentWillMount() {
+        const { toggleMessages, history } = this.props
+        if (history)
+            this.unlisten = history.listen((location, action) => {
+                if (toggleMessages)
+                    toggleMessages([])
+            });
+    }
+
+    componentWillUnmount() {
+        if (this.unlisten)
+            this.unlisten();
     }
 
     render() {

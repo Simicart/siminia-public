@@ -1,0 +1,10 @@
+fragment CustomizableRadioOption on CustomizableRadioOption {
+    radio_value: value {
+        option_type_id
+        price_type
+        price
+        sku
+        sort_order
+        title
+    }
+}

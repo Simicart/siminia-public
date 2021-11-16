@@ -1,0 +1,8 @@
+fragment CustomizableAreaOption on CustomizableAreaOption {
+    area_value: value {
+        max_characters
+        price_type
+        price
+        sku
+    }
+}

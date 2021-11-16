@@ -1,6 +1,6 @@
 {
     "projects": {
-        "siminia": {
+        "venia": {
             "schemaPath": "lastCachedGraphQLSchema.json",
             "extensions": {
                 "endpoints": {

@@ -4,10 +4,10 @@ import { BasicSelect, Option, asField } from 'informed';
 import { compose } from 'redux';
 
 import classify from 'src/classify';
-import { FieldIcons, Message } from 'src/components/Field';
+import { FieldIcons, Message } from '@magento/venia-ui/lib/components/Field';
 import defaultClasses from './select.css';
 
-import Icon from 'src/components/Icon';
+import Icon from '@magento/venia-ui/lib/components/Icon';
 import ChevronDownIcon from 'react-feather/dist/icons/chevron-down';
 
 const arrow = <Icon src={ChevronDownIcon} size={18} />;

@@ -1,7 +1,5 @@
 import React from 'react'
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core'
 import Minus from "src/simi/BaseComponents/Icon/Minus";
 import Add from "src/simi/BaseComponents/Icon/Add";
 import classify from 'src/classify';
@@ -16,13 +14,13 @@ const Expansion = props => {
     };
 
     return (
-        <ExpansionPanel
+        <Accordion
             className={classes["harlow-expansion-panel"]}
             defaultExpanded={defaultExp}
             expanded={expandedMain === `harlow-epx-${id}`}
             onChange={handleCollapse(`harlow-epx-${id}`)}
         >
-            <ExpansionPanelSummary
+            <AccordionSummary
                 className={classes["harlow-expansion-heading"]}
                 expandIcon={
                     expandedMain === `harlow-epx-${id}` ? (
@@ -37,14 +35,14 @@ const Expansion = props => {
                 }
             >
                 {title}
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails
+            </AccordionSummary>
+            <AccordionDetails
                 className={classes["harlow-expansion-content"]}
                 style={{ display: "block" }}
             >
                 {content}
-            </ExpansionPanelDetails>
-        </ExpansionPanel>
+            </AccordionDetails>
+        </Accordion>
     )
 }
 

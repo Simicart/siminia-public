@@ -1,8 +1,16 @@
-.form-container{
+.contact-ctn {
+    display: flex;
+}
+.contact-info {
     padding: 60px 80px 70px;
+    width: 50%;
+}
+.form-container {
+    padding: 60px 80px 70px;
+    width: 50%;
 }
 
-.form-container h2{
+.form-container h2 {
     color: #333132;
     font-size: 37px;
     font-weight: bold;
@@ -16,66 +24,49 @@
     font-size: 16px !important;
     padding: 10px 16px !important;
     line-height: 24px !important;
+    margin-bottom: 10px;
+    width: 100%;
 }
 
-.form-container .base-textareaField{
+.form-container .base-textareaField {
     border: 1px solid rgba(51, 49, 50, 0.4);
     font-size: 16px;
     padding: 10px 16px;
     line-height: 24px;
     resize: vertical;
+    margin-bottom: 10px;
+    width: 100%;
+}
+.contact-action-flex {
+    display: flex;
+    justify-content: space-between;
 }
 
-.requirement{
+.requirement {
     color: #fa0a11;
     font-size: 12px;
     line-height: 20px;
 }
 
-.submit-btn{
-    background-color: #0b5b28;
+.submit-btn {
     width: 100px;
     height: 35px;
-    float: right;
     color: white;
-    padding-top: 0;
+    padding-top: 0 !important;
 }
 
-@media screen and (max-width: 425px){
-    .form-container{
-        padding: 60px 0 70px;
-    }
-
-    .contact-info{
-        padding: 0 0 70px !important;
-    }
-}
-
-@media screen and (max-width: 1024px){
-    .form-container{
-        padding: 60px 0 70px !important;
-    }
-}
-
-@media screen and (min-width: 768px){
-    .contact-info{
-        padding: 145px 80px 70px;
-    }
-}
-
-
-.contact-info .contact-item{
+.contact-info .contact-item {
     padding: 12px 0;
 }
 
-.contact-item{
+.contact-item {
     display: flex;
     align-items: flex-start;
-    padding-left: 15px;
+    padding-inline-start: 15px;
 }
 
-.contact-item .item-content{
-    padding-left: 18px;
+.contact-item .item-content {
+    padding-inline-start: 18px;
 }
 
 .contact-item .contact-title {
@@ -83,4 +74,18 @@
     text-transform: uppercase;
     padding-bottom: 5px;
     font-weight: 600;
+}
+
+@media screen and (max-width: 1024px) {
+    .contact-ctn {
+        flex-wrap: wrap;
+    }
+    .contact-info {
+        padding: 20px 15px;
+        width: 100%;
+    }
+    .form-container {
+        padding: 20px 15px;
+        width: 100%;
+    }
 }

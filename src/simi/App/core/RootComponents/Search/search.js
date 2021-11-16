@@ -1,149 +1,100 @@
 import React from 'react';
-import Identify from 'src/simi/Helper/Identify'
 import { Redirect } from 'src/drivers';
-import {Simiquery} from 'src/simi/Network/Query'
-import gql from 'graphql-tag';
+import { compose } from 'redux';
 
 import classify from 'src/classify';
-import getQueryParameterValue from 'src/util/getQueryParameterValue';
-import Loading from 'src/simi/BaseComponents/Loading'
+import Identify from 'src/simi/Helper/Identify';
 import defaultClasses from './search.css';
-import PRODUCT_SEARCH from 'src/simi/queries/catalog/productSearch.graphql';
-import Products from 'src/simi/BaseComponents/Products'
-import CloseIcon from 'src/simi/BaseComponents/Icon/TapitaIcons/Close';
-import { compose } from 'redux';
+import Products from 'src/simi/BaseComponents/Products';
 import { withRouter } from 'react-router-dom';
-import {applySimiProductListItemExtraField} from 'src/simi/Helper/Product'
-
-var sortByData = null
-var filterData = null
-
-const getCategoryNameQr = gql`
-    query getCategoryName($id: Int!) {
-        category(id: $id) {
-            name
-        }
-    }
-`;
+import Skeleton from 'react-loading-skeleton';
+import NoProductsFound from 'src/simi/BaseComponents/Products/NoProductsFound';
+import { useSearchContentSimiPagination } from 'src/simi/talons/Search/useSearchContentSimiPagination';
+import TitleHelper from 'src/simi/Helper/TitleHelper';
+import BreadCrumb from "src/simi/BaseComponents/BreadCrumb";
 
 const Search = props => {
     const { classes, location, history } = props;
-    
-    let currentPage = Identify.findGetParameter('page')
-    currentPage = currentPage?Number(currentPage):1
-    let pageSize = Identify.findGetParameter('product_list_limit')
-    pageSize = pageSize?Number(pageSize):window.innerWidth < 1024?12:24
-    sortByData = null
-    const productListOrder = Identify.findGetParameter('product_list_order')
-    const productListDir = Identify.findGetParameter('product_list_dir')
-    const newSortByData = productListOrder?productListDir?{[productListOrder]: productListDir.toUpperCase()}:{[productListOrder]: 'ASC'}:null
-    if (newSortByData && (!sortByData || !ObjectHelper.shallowEqual(sortByData, newSortByData))) {
-        sortByData = newSortByData
-    }
-    filterData = null
-    const productListFilter = Identify.findGetParameter('filter')
-    if (productListFilter) {
-        if (JSON.parse(productListFilter)){
-            filterData = productListFilter
-        }
-    }
 
-    const inputText = getQueryParameterValue({
+    const loadStyle = 2; // 1: button load-more, 2: pagination
+
+    const talonProps = useSearchContentSimiPagination({
         location,
-        queryParameter: 'query'
+        parameter1: 'page',
+        parameter2: 'product_list_limit',
+        initialTotalPages: 1,
+        defaultInitialPageSize: 12,
+        defaultInitialPage: 1
     });
-    const categoryId = getQueryParameterValue({
-        location,
-        queryParameter: 'category'
-    });
+
+    const {
+        products,
+        error,
+        loading,
+        pageSize,
+        sortByData,
+        appliedFilter,
+        cateEmpty,
+        pageControl,
+        inputText
+    } = talonProps;
 
     if (!inputText) {
-        return <Redirect to="/" />;
+        <Redirect to="/" />;
     }
 
-    const queryVariable = categoryId
-        ? { inputText, categoryId }
-        : { inputText };
+    if (error) return <div>{Identify.__('Data Fetch Error')}</div>;
 
-    queryVariable.pageSize = pageSize
-    queryVariable.currentPage = currentPage
-    if (filterData)
-        queryVariable.simiFilter = filterData
-    if (sortByData)
-        queryVariable.sort = sortByData
-
-    const handleClearCategoryFilter = () => {
-        history.push(`/search.html?query=${inputText}`) 
-    }
-
-    const getCategoryName = (categoryId, classes) => (
-        <div className={classes.categoryFilters}>
-            <button
-                className={classes.categoryFilter}
-                onClick={handleClearCategoryFilter}
-            >
-                <small className={classes.categoryFilterText}>
-                    <Simiquery
-                        query={getCategoryNameQr}
-                        variables={{ id: categoryId }}
-                    >
-                        {({ loading, error, data }) => {
-                            if (error) return null;
-                            if (loading) return 'Loading...';
-                            return data.category.name;
-                        }}
-                    </Simiquery>
-                </small>
-                <CloseIcon
-                    style={{width: 12, height: 13}}
-                />
-            </button>
-        </div>
-    );
-
-    return (
-        <Simiquery query={PRODUCT_SEARCH} variables={queryVariable}>
-            {({ loading, error, data }) => {
-                if (error) return <div>Data Fetch Error</div>;
-                if (loading) return <Loading />;
-
-                if (data) {
-                    data.products = applySimiProductListItemExtraField(data.simiproducts)
-                    if (data.products.simi_filters)
-                        data.products.filters = data.products.simi_filters
-                }
-            
-                if (data.products.items.length === 0)
-                    return (
-                        <div className={classes.noResult}>
-                            No results found!
+    if (!products || !products.products)
+        return (
+            <div className="container simi-fadein">
+                <article className="products-gallery-root">
+                    <Skeleton width="100%" height={50} />
+                    <div className="product-list-container-siminia">
+                        <div key="siminia-left-navigation-filter"
+                            className="left-navigation" ><Skeleton height={600} /></div>
+                        <div className="listing-product">
+                            <div className={`result-title`}><Skeleton count={3} /></div>
+                            <section className="gallery">
+                                <div className="gallery-root">
+                                    <div className="gallery-items">
+                                        <div role="presentation" className="siminia-product-grid-item"><Skeleton height={250} /></div>
+                                        <div role="presentation" className="siminia-product-grid-item"><Skeleton height={250} /></div>
+                                        <div role="presentation" className="siminia-product-grid-item"><Skeleton height={250} /></div>
+                                        <div role="presentation" className="siminia-product-grid-item"><Skeleton height={250} /></div>
+                                        <div role="presentation" className="siminia-product-grid-item"><Skeleton height={250} /></div>
+                                        <div role="presentation" className="siminia-product-grid-item"><Skeleton height={250} /></div>
+                                    </div>
+                                </div>
+                            </section>
+                            <div className="product-grid-pagination">
+                                <Skeleton />
+                            </div>
                         </div>
-                    );
-                    
-                const title = Identify.__(`Search results for '%s'`).replace('%s', inputText);
-
-                return (
-                    <div className={`${classes.root} container`}>
-                        <div className={classes.categoryTop}>
-                            {categoryId &&
-                                getCategoryName(categoryId, classes)}
-                        </div>
-                        <Products
-                            title={title}
-                            history={props.history}
-                            location={props.location}
-                            classes={classes}
-                            currentPage={currentPage}
-                            pageSize={pageSize}
-                            data={loading ? null : data}
-                            sortByData={sortByData}
-                            filterData={filterData?JSON.parse(productListFilter):null}
-                        />
                     </div>
-                );
-            }}
-        </Simiquery>
-    );
+                </article>
+            </div>
+        );
+
+    const breadcrumb = [{ name: Identify.__("Home"), link: '/' }, { name: Identify.__("Search") }, { name: Identify.__("Search results for: '" + inputText + "'"), link: '/search.html?q=' + inputText }];
+    const title = Identify.__(`Search results for: '%s'`).replace('%s', inputText);
+
+    return (<div className={`${classes.root} container simi-fadein`}>
+        {TitleHelper.renderMetaHeader({ title })}
+        <BreadCrumb breadcrumb={breadcrumb} history={history} />
+        {pageControl.totalPages > 0 ? <Products
+            type={'category'}
+            title={title}
+            history={history}
+            pageSize={pageSize}
+            data={products}
+            sortByData={sortByData}
+            filterData={appliedFilter}
+            loading={loading}
+            loadStyle={loadStyle}
+            pageControl={pageControl}
+        /> : <NoProductsFound />}
+    </div>);
 }
 
 export default compose(withRouter, classify(defaultClasses))(Search);

@@ -12,7 +12,7 @@ const Arrowup = props => {
                 className={props.className}
             style={style}>
             <title>icon/arrow/arrow-up</title>
-            <desc>Created with Sketch.</desc>
+            
             <g id="Mask">
             </g>
             <g>

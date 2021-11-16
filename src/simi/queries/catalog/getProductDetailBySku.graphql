@@ -1,16 +1,23 @@
 #import "../Fragments/SimiPrice"
 #import "../Fragments/ConfigurableOptions"
 #import "../Fragments/GroupOptions"
-query productDetail($sku: String, $onServer: Boolean!) {
-    productDetail: products(filter: { sku: { eq: $sku } }) {
+#import "../Fragments/DownloadableProduct"
+#import "../Fragments/BundleProduct"
+#import "../Fragments/CustomizableProductInterface"
+query productDetail($sku: String) {
+    productDetail: simiproducts(filter: { sku: { eq: $sku } }) {
         items {
             __typename
             id
             sku
             type_id
             name
+            small_image {
+                url
+                label
+            }
             price {
-                ... SimiPrice
+                ...SimiPrice
             }
             description {
                 html
@@ -21,6 +28,7 @@ query productDetail($sku: String, $onServer: Boolean!) {
             url_key
             special_price
             special_from_date
+            stock_status
             product_links {
                 link_type
                 linked_product_sku
@@ -35,17 +43,39 @@ query productDetail($sku: String, $onServer: Boolean!) {
                 file
             }
             ... on ConfigurableProduct {
-                ... ConfigurableOptions
+                ...ConfigurableOptions
             }
             ... on GroupedProduct {
-                ... GroupOptions
+                ...GroupOptions
             }
-            meta_title @include(if: $onServer)
+            ... on DownloadableProduct {
+                ...DownloadableProduct
+            }
+            ... on BundleProduct {
+                ...BundleProduct
+            }
+            ... on CustomizableProductInterface {
+                ...CustomizableProductInterface
+            }
+            simiExtraField
+            meta_title
             # Yes, Products have `meta_keyword` and
             # everything else has `meta_keywords`.
-            meta_keyword @include(if: $onServer)
-            meta_description @include(if: $onServer)
+            meta_keyword
+            meta_description
+            rating_summary
+            review_count
+            # price_tiers {
+            #     quantity
+            #     final_price {
+            #         currency
+            #         value
+            #     }
+            #     discount {
+            #         amount_off
+            #         percent_off
+            #     }
+            # }
         }
     }
-  	simiProductDetailExtraField(filter:  { sku: { eq: $sku }})
 }

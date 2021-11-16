@@ -37,10 +37,18 @@ class Tile extends Component {
         } = this.props;
         const className = classes[getClassName('root', isSelected, hasFocus)];
 
-        const { label } = item;
+        const { label, swatch_data } = item;
+        let swatchStyle = {};
+        if (swatch_data) {
+            if (swatch_data.hasOwnProperty('thumbnail')) {
+                swatchStyle = { background: `url(${swatch_data.thumbnail})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' };
+            } else {
+                swatchStyle = { background: swatch_data.value };
+            }
+        }
 
         return (
-            <button {...restProps} className={className}>
+            <button {...restProps} className={`${className} ${isSelected ? 'selected' : ''} tile-option-item`} style={swatchStyle}>
                 <span>{label}</span>
             </button>
         );

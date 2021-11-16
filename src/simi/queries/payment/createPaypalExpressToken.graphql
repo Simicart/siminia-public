@@ -1,0 +1,20 @@
+mutation ($cartId: String!){
+    createPaypalExpressToken(
+        input: {
+            cart_id: $cartId
+            code: "paypal_express"
+            express_button: true
+            urls: {
+                return_url: "paypal_express.html"
+                cancel_url: "paypal_express_failure.html"
+            }
+        }
+    )
+    {
+        token
+        paypal_urls{
+            start
+            edit
+        }
+    }
+}

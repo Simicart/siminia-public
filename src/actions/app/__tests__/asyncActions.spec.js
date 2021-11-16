@@ -1,14 +1,9 @@
-import { dispatch, getState } from 'src/store';
 import actions from '../actions';
 import { closeDrawer, toggleDrawer, toggleSearch } from '../asyncActions';
 
-jest.mock('src/store');
-
+const dispatch = jest.fn();
+const getState = jest.fn();
 const thunkArgs = [dispatch, getState];
-
-afterEach(() => {
-    dispatch.mockClear();
-});
 
 test('toggleDrawer() to return a thunk', () => {
     expect(toggleDrawer()).toBeInstanceOf(Function);

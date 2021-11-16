@@ -1,16 +1,23 @@
 #import "../Fragments/SimiPrice"
 #import "../Fragments/ConfigurableOptions"
 #import "../Fragments/GroupOptions"
-query productDetail($urlKey: String, $onServer: Boolean!) {
-    productDetail: products(filter: { url_key: { eq: $urlKey } }) {
+#import "../Fragments/DownloadableProduct"
+#import "../Fragments/BundleProduct"
+#import "../Fragments/CustomizableProductInterface"
+query productDetail($urlKey: String) {
+    productDetail: simiproducts(filter: { url_key: { eq: $urlKey } }) {
         items {
             __typename
             id
             sku
             type_id
             name
+            small_image {
+                url
+                label
+            }
             price {
-                ... SimiPrice
+                ...SimiPrice
             }
             description {
                 html
@@ -28,6 +35,7 @@ query productDetail($urlKey: String, $onServer: Boolean!) {
                 position
                 sku
             }
+            stock_status
             media_gallery_entries {
                 label
                 position
@@ -35,15 +43,37 @@ query productDetail($urlKey: String, $onServer: Boolean!) {
                 file
             }
             ... on ConfigurableProduct {
-                ... ConfigurableOptions
+                ...ConfigurableOptions
             }
             ... on GroupedProduct {
-                ... GroupOptions
+                ...GroupOptions
             }
+            ... on DownloadableProduct {
+                ...DownloadableProduct
+            }
+            ... on BundleProduct {
+                ...BundleProduct
+            }
+            ... on CustomizableProductInterface {
+                ...CustomizableProductInterface
+            }
+            simiExtraField
             meta_title
-            meta_keyword @include(if: $onServer)
+            meta_keyword
             meta_description
+            rating_summary
+            review_count
+            price_tiers {
+                quantity
+                final_price {
+                    currency
+                    value
+                }
+                discount {
+                    amount_off
+                    percent_off
+                }
+            }
         }
     }
-  	simiProductDetailExtraField(filter: { url_key: { eq: $urlKey } })
 }

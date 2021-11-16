@@ -1,0 +1,142 @@
+body.siminia-react-confirm-alert-body-element {
+    overflow: hidden;
+}
+
+.siminia-react-confirm-alert-blur {
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+}
+
+.siminia-react-confirm-alert-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.siminia-react-confirm-alert-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    background: rgba(0, 0, 0, 0.8);
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: center;
+    -ms-align-items: center;
+    align-items: center;
+    opacity: 0;
+    -webkit-animation: siminia-react-confirm-alert-fadeIn 0.1s 0.1s forwards;
+    -moz-animation: siminia-react-confirm-alert-fadeIn 0.1s 0.1s forwards;
+    -o-animation: siminia-react-confirm-alert-fadeIn 0.1s 0.1s forwards;
+    animation: siminia-react-confirm-alert-fadeIn 0.1s 0.1s forwards;
+}
+
+.siminia-react-confirm-alert-body {
+    padding: 30px 95px 45px 94px;
+    text-align: left;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.34);
+    color: #666;
+    .siminia-react-confirm-alert-close {
+        display: flex;
+        justify-content: flex-end;
+        font-size: 15px;
+        color: #000;
+        i {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+    > h2 {
+        margin-top: 0;
+    }
+    > h3 {
+        margin: 0;
+        font-size: 16px;
+        text-align: center;
+        line-height: 22px;
+    }
+
+    .siminia-react-confirm-alert-button-group {
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+        justify-content: center;
+        margin-top: 34px;
+        > button {
+            outline: none;
+            background: #333;
+            border: none;
+            display: inline-block;
+            padding: 6px 18px;
+            color: #eee;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 13px 20px;
+            &:not(:last-of-type) {
+                margin-inline-end: 16px;
+            }
+        }
+    }
+}
+
+@media (max-width: 1023px) {
+    .siminia-react-confirm-alert-body {
+        width: 100%;
+        overflow-x: auto;
+        .siminia-react-confirm-alert-button-group {
+            flex-wrap: wrap;
+            > button {
+                width: 100%;
+                &:not(:last-of-type) {
+                    margin-bottom: 10px;
+                    margin-inline-end: 0px;
+                }
+            }
+        }
+    }
+}
+
+@-webkit-keyframes siminia-react-confirm-alert-fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes siminia-react-confirm-alert-fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes siminia-react-confirm-alert-fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes siminia-react-confirm-alert-fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

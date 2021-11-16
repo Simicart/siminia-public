@@ -1,0 +1,16 @@
+.root {
+    display: grid;
+    grid-template-areas:
+        'actions'
+        'items';
+    grid-template-columns: 1fr;
+    line-height: 1;
+}
+
+.images {
+    min-width: 170px;
+    width: 30%;
+    flex-shrink: 0;
+    margin-inline-end: 10px;
+    margin-bottom: 35px;
+}

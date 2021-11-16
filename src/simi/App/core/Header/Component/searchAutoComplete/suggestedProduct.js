@@ -5,7 +5,7 @@ import classify from 'src/classify';
 import { Link } from 'src/drivers';
 import { resourceUrl } from 'src/simi/Helper/Url'
 import ReactHTMLParse from 'react-html-parser';
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'src/simi/BaseComponents/LazyLoad';
 
 import defaultClasses from './suggestedProduct.css';
 import { logoUrl } from 'src/simi/Helper/Url'
@@ -14,7 +14,7 @@ import { productUrlSuffix } from 'src/simi/Helper/Url';
 
 const SuggestedProduct = props => {
     const handleClick = () => {
-        const { onNavigate } = this.props;
+        const { onNavigate } = props;
         if (typeof onNavigate === 'function') {
             onNavigate();
         }

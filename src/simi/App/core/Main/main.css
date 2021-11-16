@@ -1,10 +1,12 @@
 .root {
     background-color: white;
-    color: rgb(var(--venia-text));
+    color: rgb(var(--venia-global-color-text));
     position: relative;
     z-index: 1;
+    min-height: 70vh;
 }
 
-.page {
-    min-height: 100vh;
+.breadcrumb > div > div {
+    padding-top: 30px;
+    padding-bottom: 10px;
 }

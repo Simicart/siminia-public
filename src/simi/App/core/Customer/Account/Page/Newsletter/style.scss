@@ -1,14 +1,21 @@
-.newsletter-wrap{
-    h1{
-        font-size: 36px;
-        font-weight: normal;
-        margin-bottom: 20px;
+.newsletter-form {
+    > label {
+        margin-left: 0;
     }
-    .subscription-title{
-        font-size: 22px;
-        font-weight: normal;
-        border-bottom: 1px solid #c5c5c5;
-        padding: 10px 0px;
+    > p {
+        margin-top: 20px;
         margin-bottom: 10px;
+    }
+    .buttonsContainer {
+        margin-top: 30px;
+        text-align: right;
+    }
+}
+
+.rtl-root {
+    .newsletter-form {
+        .buttonsContainer {
+            text-align: left;
+        }
     }
 }
