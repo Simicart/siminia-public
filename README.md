@@ -64,3 +64,13 @@ NODE_ENV=production PORT=8080 yarn run stage:siminia
 ```
 MAGENTO_BACKEND_URL=https://your.magento.site.com/
 ```
+
+
+## 6. Use your own tapita PageBuilder credentials:
+
+Create your account at [Tapita](https://tapita.io/pagebuilder/)
+
+Use integration token generated to fill in the file at: packages/siminia/src/simi/App/core/NoMatch/ResolveUrlResult.js
+```
+const integrationToken = 'your-token';
+```
