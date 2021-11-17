@@ -11,7 +11,7 @@ cd pwa-studio
 git checkout release/11.0
 ```
 
-## 2. Modify package.json
+## 2. Modify package.json at PWA studio root folder
 
 workspaces:
 ```
