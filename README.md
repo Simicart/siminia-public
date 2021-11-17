@@ -38,7 +38,7 @@ scripts (modify the build script and add siminia scripts):
 ```
 cd  packages
 git clone https://github.com/Simicart/siminia-public
-cd siminia
+cd siminia-public
 git checkout 11.0/main
 yarn install
 yarn run build
