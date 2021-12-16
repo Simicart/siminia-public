@@ -11,6 +11,7 @@ class Simple extends Abstract {
         let price_excluding_tax = <div />;
         let price_including_tax = <div />;
         let price = <div />;
+        
         if (this.prices.has_special_price) {
             if (
                 this.prices.show_ex_in_price !== null &&

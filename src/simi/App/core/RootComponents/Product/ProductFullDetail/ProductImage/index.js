@@ -6,7 +6,7 @@ import isProductConfigurable from 'src/util/isProductConfigurable';
 import { resourceUrl, getUrlBuffer } from 'src/simi/Helper/Url'
 import findMatchingVariant from 'src/util/findMatchingProductVariant';
 import { transparentPlaceholder } from '@magento/peregrine/lib/util/images';
-import ImageLightbox from "src/simi/BaseComponents/SimiImageLightbox";
+import ImageLightbox from "./ImageLightbox";
 
 require('./style.scss');
 

@@ -80,7 +80,7 @@ export const cateUrlSuffix = () => {
     try {
         const storeConfig = Identify.getStoreConfig();
         const suffix =
-            storeConfig.simiStoreConfig.config.catalog.seo.category_url_suffix;
+            storeConfig.simiStoreConfig.config.catalog.seo.category_url_suffix || '';
         Identify.storeDataToStoreage(
             Identify.SESSION_STOREAGE,
             'CATEGORY_URL_SUFFIX',
@@ -102,7 +102,7 @@ export const productUrlSuffix = () => {
     try {
         const storeConfig = Identify.getStoreConfig();
         const suffix =
-            storeConfig.simiStoreConfig.config.catalog.seo.product_url_suffix;
+            storeConfig.simiStoreConfig.config.catalog.seo.product_url_suffix || '';
         Identify.storeDataToStoreage(
             Identify.LOCAL_STOREAGE,
             'PRODUCT_URL_SUFFIX',

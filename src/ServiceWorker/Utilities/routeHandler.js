@@ -34,5 +34,7 @@ export const isHTMLRoute = url =>
     url.pathname.indexOf('Store') === -1 &&
     url.pathname.indexOf('Secure') === -1 &&
     url.pathname.indexOf('magento') === -1 &&
+    url.pathname.indexOf('pub') === -1 &&
+    url.pathname.indexOf('static') === -1 &&
     (url.pathname.indexOf('admin') === -1 &&
         url.pathname.indexOf('secure') === -1);

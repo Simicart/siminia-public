@@ -1,6 +1,7 @@
 import * as Constants from 'src/simi/Config/Constants';
 import CacheHelper from 'src/simi/Helper/CacheHelper';
 import isObjectEmpty from 'src/util/isObjectEmpty';
+import { CACHE_PERSIST_PREFIX } from '@magento/peregrine/lib/Apollo/constants';
 
 class Identify {
     static SESSION_STOREAGE = 1;
@@ -122,7 +123,10 @@ class Identify {
     }
 
     static clearStoreConfig() {
-        localStorage.removeItem('apollo-cache-persist');
+        const storeConfig = this.getStoreConfig();
+        if (storeConfig && storeConfig.storeConfig && storeConfig.storeConfig.code) {
+            localStorage.removeItem(`${CACHE_PERSIST_PREFIX}-${storeConfig.storeConfig.code}`);
+        }
         sessionStorage.removeItem('LOCAL_URL_DICT');
         sessionStorage.removeItem(Constants.STORE_CONFIG);
     }

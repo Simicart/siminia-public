@@ -7,7 +7,7 @@ import Page404 from './Page404';
 import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent/';
 import { usePbFinder } from 'simi-pagebuilder-react';
 const endPoint = 'https://tapita.io/pb/graphql/';
-const integrationToken = '33p59hvSkxI0MpmV37HQWZjUx5ZZYhNg1629360101';
+const integrationToken = '14FJiubdB8n3Byig2IkpfM6OiS6RTO801622446444';
 const PageBuilderComponent = props => {
     return (
         <LazyComponent
@@ -74,10 +74,9 @@ const ResolveUrlResult = props => {
                 data.urlResolver.id
             );
             if (result) return result;
-        } else {
-            if (pbLoading) {
-                return '';
-            }
+        }
+        if (pbLoading || pathname !== pathToFind) {
+            return '';
         }
         return <Page404 />;
     }
