@@ -1,4 +1,8 @@
 # siminia
+## 0. Prepare your magento site with:
+
+- Magento version >= 2.4.2 && PWA studio 11
+- Got [SimiCart Connector extension](https://github.com/Simicart/SimiCart-Magento2.x) and [SimiCart Connector GraphQl extension](https://github.com/Simicart/SimiCart-Magento2.x-GraphQl) installed
 
 ## 1. Clone pwa-studio
 ```
@@ -7,7 +11,7 @@ cd pwa-studio
 git checkout release/11.0
 ```
 
-## 2. Modify package.json
+## 2. Modify package.json at PWA studio root folder
 
 workspaces:
 ```
@@ -34,7 +38,7 @@ scripts (modify the build script and add siminia scripts):
 ```
 cd  packages
 git clone https://github.com/Simicart/siminia-public
-cd siminia
+cd siminia-public
 git checkout 11.0/main
 yarn install
 yarn run build
@@ -54,17 +58,11 @@ NODE_ENV=production PORT=8080 yarn run stage:siminia
 
 ## 5. Use your own backend magento
 
-### Prepare your magento site with:
-
-- Magento version >= 2.4.2
-- Got [SimiCart Connector extension](https://github.com/Simicart/SimiCart-Magento2.x) and [SimiCart Connector GraphQl extension](https://github.com/Simicart/SimiCart-Magento2.x-GraphQl) installed
-
 ### Update configuration at packages/siminia/.env
 
 ```
 MAGENTO_BACKEND_URL=https://your.magento.site.com/
 ```
-
 
 ## 6. Use your own tapita PageBuilder credentials:
 
