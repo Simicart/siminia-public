@@ -3,6 +3,18 @@
     data-media-backend="<%= global.MAGENTO_MEDIA_BACKEND_URL %>">
 
 <head>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-K9JRDMD');
+    </script>
+    <!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -134,6 +146,29 @@
 
 <body>
     <script type="text/javascript">/*precache*//*endprecache*/</script>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K9JRDMD" height="0" width="0"
+            style="display:none;visibility:hidden">
+        </iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <script type="text/javascript">
+        window.onload = function () {
+            setTimeout(function () {
+                var script_tag = document.createElement('script');
+                script_tag.type = 'text/javascript';
+                script_tag.text = `
+            var $zoho=$zoho || {};$zoho.salesiq = $zoho.salesiq || {widgetcode:"d6afa6408e48fd3ef9de553a3f90eea54336b0d8288bb633e66eb5f8134ea820", values:{},ready:function(){}};var d=document;s=d.createElement("script");s.type="text/javascript";s.id="zsiqscript";s.defer=true;s.src="https://salesiq.zoho.com/widget";t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t);
+            $zoho.salesiq.ready=function()
+            {
+            $zoho.salesiq.floatbutton.coin.hidetooltip();
+            }
+            `;
+                document.body.appendChild(script_tag);
+            }, 2200);
+        }</script>
+    <div id='zsiqwidget'></div>
     <div style="display: none">
         <div class="addthis_inline_share_toolbox" id="social-share"></div>
     </div>
