@@ -1,15 +1,6 @@
-import React, {
-    Fragment,
-    Suspense,
-    useMemo,
-    useState,
-    useEffect,
-    useRef
-} from 'react';
+import React, { Suspense, useMemo, useState, useEffect, useRef } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { arrayOf, bool, number, shape, string } from 'prop-types';
 import { Form } from 'informed';
-import { Info } from 'react-feather';
 
 import Price from '../PriceWrapper/Price';
 import { useProductFullDetail } from 'src/simi/talons/ProductFullDetail/useProductFullDetail';
@@ -17,7 +8,6 @@ import { isProductConfigurable } from '@magento/peregrine/lib/util/isProductConf
 
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
-import Button from '@magento/venia-ui/lib/components/Button';
 import Carousel from '../ProductImageCarousel';
 import FormError from '@magento/venia-ui/lib/components/FormError';
 import { QuantityFields } from '../Cart/ProductListing/quantity';
@@ -70,17 +60,12 @@ const ProductBuilderFullDetail = props => {
         handleSelectionChange,
         isOutOfStock,
         isAddToCartDisabled,
-        isSupportedProductType,
-        mediaGalleryEntries,
         productDetails,
         wishlistButtonProps,
         optionSelections,
         optionCodes,
         extraPrice,
-        switchExtraPriceForNormalPrice,
-        upsellProducts,
-        crosssellProducts,
-        relatedProducts
+        switchExtraPriceForNormalPrice
     } = talonProps;
     const { formatMessage } = useIntl();
     const [forceRerender, setForceRerender] = useState(0);
@@ -339,7 +324,9 @@ const ProductBuilderFullDetail = props => {
                             if (productReview)
                                 productReview.current.togglePopup();
                         }}
-                        className={classes.noReview}
+                        className={`${classes.noReview} ${
+                            reviewProps.className
+                        }`}
                         {...reviewProps}
                     >
                         <FormattedMessage
@@ -400,7 +387,7 @@ const ProductBuilderFullDetail = props => {
                         <div className={classes.relatedTitle}>
                             {formatMessage({ id: listTitle })}
                         </div>
-                        <div {...itemProps} style={productGridStyle}>
+                        <div {...itemProps} id={null} style={productGridStyle}>
                             <ProductGrid
                                 item={{
                                     dataParsed: {
