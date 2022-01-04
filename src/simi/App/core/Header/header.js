@@ -35,7 +35,7 @@ const Header = props => {
 
     const storeConfig = Identify.getStoreConfig();
     const [userData] = useUserContext();
-    
+
     const { isSignedIn } = userData;
     const renderRightBar = () => {
         return (
@@ -176,11 +176,13 @@ const Header = props => {
         <React.Fragment>
             {!isSimpleHeader && (
                 <div className={classes.switchersContainer}>
-                    {storeConfig && (
+                    {storeConfig ? (
                         <div className={`${classes.switchers} container`}>
                             <StoreSwitcher />
                             <CurrencySwitcher />
                         </div>
+                    ) : (
+                        <div style={{ height: 37 }} />
                     )}
                 </div>
             )}
@@ -200,13 +202,17 @@ const Header = props => {
                             classes['header-app-bar-rtl']} container`}
                     >
                         {renderLogo()}
-                        {storeConfig && !isSimpleHeader && renderSearchForm()}
-                        {storeConfig && !isSimpleHeader && renderRightBar()}
+                        {!isSimpleHeader && renderSearchForm()}
+                        {!isSimpleHeader && renderRightBar()}
                     </div>
                 </div>
-                {window.innerWidth >= 1024 && storeConfig && !isSimpleHeader ? (
+                {window.innerWidth >= 1024 && !isSimpleHeader ? (
                     <div className={classes['header-megamenu-ctn']}>
-                        <MegaMenu classes={classes} />
+                        {storeConfig ? (
+                            <MegaMenu classes={classes} />
+                        ) : (
+                            <div style={{ height: 44 }} />
+                        )}
                     </div>
                 ) : (
                     ''

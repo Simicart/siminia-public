@@ -42,6 +42,7 @@ query storeConfigData {
         default_title
         default_keywords
         default_description
+        root_category_id
     }
     availableStores {
         category_url_suffix
