@@ -1,0 +1,39 @@
+.root {
+    composes: h-auto from global;
+    margin-left: 0rem;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+
+    /* Permanent height to prevent pop-in. */
+    height: 1.1rem;
+
+    /* Show ellipses when overflowing. */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0.5rem 0rem;
+}
+.root > a:nth-child(1){
+    padding-inline-start: 0px;
+}
+
+.text {
+    padding: 0.25rem;
+}
+
+.text:last-child {
+    color: #0058AC;
+}
+
+.divider {
+    composes: text;
+}
+
+.link {
+    composes: text;
+    text-decoration: underline;
+}
+
+.currentCategory {
+    composes: text;
+}

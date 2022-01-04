@@ -3,6 +3,8 @@ import { usePagination } from 'src/simi/talons/Pagination/usePagination';
 import Identify from 'src/simi/Helper/Identify';
 import BackIcon from 'src/simi/BaseComponents/Icon/TapitaIcons/Back';
 import NextIcon from 'src/simi/BaseComponents/Icon/TapitaIcons/Next';
+import { randomString } from 'src/simi/Helper/String';
+import { useIntl } from 'react-intl';
 
 const SimiPagination = props => {
     const {
@@ -33,7 +35,7 @@ const SimiPagination = props => {
         setEndPage: setEndPage,
         setPageAndLimit: setPageAndLimit
     });
-
+    const { formatMessage } = useIntl();
     const { changePage, handleChangePage, changeLimit } = talonProps;
 
     const renderPageNumber = total => {
@@ -53,10 +55,10 @@ const SimiPagination = props => {
             let active =
                 number === currentPage
                     ? {
-                        borderRadius: '15px',
-                        background: '#eaeaea',
-                        fontWeight: 600
-                    }
+                          borderRadius: '15px',
+                          background: '#eaeaea',
+                          fontWeight: 600
+                      }
                     : {};
             active = {
                 ...active,
@@ -77,7 +79,9 @@ const SimiPagination = props => {
                     id={number}
                     onClick={e => changePage(e, 'root-product-list')}
                     style={active}
-                    className={`pagination-page-number-item ${(number === currentPage) ? 'active' : ''}`}
+                    className={`pagination-page-number-item ${
+                        number === currentPage ? 'active' : ''
+                    }`}
                 >
                     {number}
                 </li>
@@ -87,7 +91,7 @@ const SimiPagination = props => {
         if (itemsPerPageOptions) {
             itemsPerPageOptions.map(item => {
                 option_limit.push(
-                    <option key={Identify.randomString(5)} value={item}>
+                    <option key={randomString(5)} value={item}>
                         {item}
                     </option>
                 );
@@ -100,15 +104,15 @@ const SimiPagination = props => {
             nextPageIcon = isRtl ? (
                 <BackIcon style={{ width: 6 }} />
             ) : (
-                    <NextIcon style={{ width: 6 }} />
-                );
+                <NextIcon style={{ width: 6 }} />
+            );
         }
         if (currentPage > 1) {
             prevPageIcon = isRtl ? (
                 <NextIcon style={{ width: 6 }} />
             ) : (
-                    <BackIcon style={{ width: 6 }} />
-                );
+                <BackIcon style={{ width: 6 }} />
+            );
         }
         const pagesSelection =
             total > 1 ? (
@@ -158,8 +162,8 @@ const SimiPagination = props => {
                     </li>
                 </ul>
             ) : (
-                    ''
-                );
+                ''
+            );
 
         let lastItem = currentPage * pageSize;
         const firstItem = lastItem - pageSize + 1;
@@ -170,17 +174,20 @@ const SimiPagination = props => {
                 style={isRtl ? { marginRight: 'auto' } : { marginLeft: 'auto' }}
             >
                 {showInfoItem && (
-                    <span className="item-from-to" style={{ marginRight: 10, fontSize: 16 }}>
-                        {Identify.__('Items %a - %b of %c')
+                    <span
+                        className="item-from-to"
+                        style={{ marginRight: 10, fontSize: 16 }}
+                    >
+                        {formatMessage({ id: 'Items %a - %b of %c' })
                             .replace('%a', firstItem)
                             .replace('%b', lastItem)
                             .replace('%c', totalItem)}
                     </span>
                 )}
-                {(option_limit.length) ? (
+                {option_limit.length ? (
                     <React.Fragment>
                         <span style={{ fontWeight: 600, fontSize: 16 }}>
-                            {Identify.__('Show')}
+                            {formatMessage({ id: 'Show' })}
                         </span>
                         <span
                             className="items-per-page-select"
@@ -192,7 +199,7 @@ const SimiPagination = props => {
                             <select
                                 value={pageSize}
                                 id="limit"
-                                onBlur={() => { }}
+                                onBlur={() => {}}
                                 onChange={e => changeLimit(e)}
                                 style={{
                                     border: 'none',
@@ -205,10 +212,12 @@ const SimiPagination = props => {
                             </select>
                         </span>
                         <span style={{ fontWeight: 400, fontSize: 16 }}>
-                            {Identify.__('per page')}
+                            {formatMessage({ id: 'per page' })}
                         </span>
-                    </React.Fragment>) :
-                ''}
+                    </React.Fragment>
+                ) : (
+                    ''
+                )}
             </div>
         );
 

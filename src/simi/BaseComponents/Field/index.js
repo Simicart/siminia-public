@@ -3,18 +3,21 @@ import React from 'react';
 import { bool, node, shape, string } from 'prop-types';
 
 import { mergeClasses } from 'src/classify';
-import defaultClasses from './field.css';
-import Identify from 'src/simi/Helper/Identify';
+import defaultClasses from './field.module.css';
+import { useIntl } from 'react-intl';
 
 const Field = props => {
     const { children, id, label, optional, required } = props;
+    const { formatMessage } = useIntl();
     const classes = mergeClasses(defaultClasses, props.classes);
     const optionalSymbol = optional ? (
-        <span className={classes.optional}>{Identify.__('Optional')}</span>
+        <span className={classes.optional}>
+            {formatMessage({ id: 'Optional' })}
+        </span>
     ) : null;
 
     const requiredSymbol = required ? (
-        <span className={classes.required}>{Identify.__('*')}</span>
+        <span className={classes.required}>{formatMessage({ id: '*' })}</span>
     ) : null;
 
     return (

@@ -1,11 +1,7 @@
 export function showFogLoading() {
-    $(document).ready(function () {
-        $('#app-loading').css({display: 'flex'});
-    });
+    document.getElementById('app-loading').style.display = 'flex';
 }
 
 export function hideFogLoading() {
-    $(document).ready(function () {
-        $('#app-loading').css({display: 'none'});
-    });
+    document.getElementById('app-loading').style.display = 'none';
 }

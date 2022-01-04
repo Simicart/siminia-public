@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useProducts } from 'src/simi/talons/TapitaPageBuilder/useProducts';
 //import GalleryItem from '@magento/venia-ui/lib/components/Gallery/item';
 import GalleryItem from './GalleryItem';
-import defaultClasses from './list.css';
+import defaultClasses from './list.module.css';
 import { mergeClasses } from '@magento/venia-ui/lib/classify';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 

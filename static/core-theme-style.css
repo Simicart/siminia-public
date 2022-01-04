@@ -1,0 +1,499 @@
+html {
+    font-size: 15px;
+}
+
+#root.rtl-root {
+    direction: rtl;
+}
+body {
+    font-size: 14px;
+}
+#siminia-main-page {
+    min-height: 100vw;
+}
+
+#root textarea,
+#root input[type='password'],
+#root input[type='text'],
+#root input:not([type]),
+#root select {
+    border-radius: 0;
+}
+
+#root select,
+#root textarea,
+#root input[type='password'],
+#root input[type='text'],
+#root input:not([type]) {
+    border-color: rgb(223, 225, 226);
+    border-width: 1px;
+}
+#root select:focus,
+#root input[type='password']:focus,
+#root input[type='text']:focus,
+#root input:focus {
+    box-shadow: none;
+    outline: none;
+}
+#root label {
+    font-size: 0.88rem;
+}
+
+@media (min-width: 768px) {
+    #siminia-main-page {
+        min-height: 70vh;
+    }
+}
+
+.flex {
+    display: flex;
+}
+ul {
+    list-style: none;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+/**
+ * App loading
+ * */
+div#app-loading {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    display: -ms-flexbox;
+    display: flex;
+    background: #ffffff;
+    z-index: 100000;
+    opacity: 0.7;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+/**
+ * Toast mesage
+ * */
+
+#toast-message-global {
+    position: fixed;
+    top: 40%;
+    z-index: 9999999;
+    opacity: 0.9;
+    width: 75%;
+    left: 50%;
+    margin-left: -37.5%;
+    display: flex;
+    justify-content: center;
+}
+
+#toast-message-content {
+    color: #fff;
+    font-size: 14px;
+    line-height: 19px;
+    max-width: 400px;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+        0 1px 2px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 2px 4px 0 rgba(130, 130, 130, 0.74);
+    background-color: #000;
+    padding: 11.5px 30px;
+    text-align: center;
+}
+#toast-success-global {
+    position: fixed;
+    top: 40%;
+    z-index: 9999999;
+    opacity: 0.9;
+    width: 75%;
+    left: 50%;
+    margin-left: -37.5%;
+    display: flex;
+    justify-content: center;
+}
+
+#toast-success-content {
+    color: #fff;
+    font-size: 14px;
+    line-height: 19px;
+    max-width: 400px;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+        0 1px 2px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 2px 4px 0 rgba(130, 130, 130, 0.74);
+    background-color: #42902b;
+    padding: 11.5px 30px;
+    text-align: center;
+}
+
+.success-message {
+    background: #42902b !important;
+}
+
+.container:after,
+.container:before {
+    display: table;
+    content: ' ';
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: transparent;
+}
+
+/* bootstrap */
+* {
+    box-sizing: border-box;
+}
+.container:after,
+.container:before {
+    display: table;
+    content: ' ';
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: transparent;
+}
+.text-center {
+    text-align: center;
+}
+.text-right {
+    text-align: right;
+}
+/* end bootstrap */
+
+/*
+carousel.min.js react-responsive-carousel/lib/styles/carousel.min.css
+*/
+.carousel .control-arrow,
+.carousel.carousel-slider .control-arrow {
+    -webkit-transition: all 0.25s ease-in;
+    -moz-transition: all 0.25s ease-in;
+    -ms-transition: all 0.25s ease-in;
+    -o-transition: all 0.25s ease-in;
+    transition: all 0.25s ease-in;
+    opacity: 0.4;
+    position: absolute;
+    z-index: 2;
+    top: 20px;
+    background: 0 0;
+    border: 0;
+    font-size: 32px;
+    cursor: pointer;
+}
+.carousel .control-arrow:hover {
+    opacity: 1;
+}
+.carousel .control-arrow:before,
+.carousel.carousel-slider .control-arrow:before {
+    margin: 0 5px;
+    display: inline-block;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    content: '';
+}
+.carousel .control-disabled.control-arrow {
+    opacity: 0;
+    cursor: inherit;
+    display: none;
+}
+.carousel .control-prev.control-arrow {
+    left: 0;
+}
+.carousel .control-prev.control-arrow:before {
+    border-right: 8px solid #fff;
+}
+.carousel .control-next.control-arrow {
+    right: 0;
+}
+.carousel .control-next.control-arrow:before {
+    border-left: 8px solid #fff;
+}
+.carousel {
+    position: relative;
+    width: 100%;
+}
+.carousel * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.carousel img {
+    width: 100%;
+    display: inline-block;
+    pointer-events: none;
+}
+.carousel .carousel {
+    position: relative;
+}
+.carousel .control-arrow {
+    outline: 0;
+    border: 0;
+    background: 0 0;
+    top: 50%;
+    margin-top: -13px;
+    font-size: 18px;
+}
+.carousel .thumbs-wrapper {
+    margin: 20px;
+    overflow: hidden;
+}
+.carousel .thumbs {
+    -webkit-transition: all 0.15s ease-in;
+    -moz-transition: all 0.15s ease-in;
+    -ms-transition: all 0.15s ease-in;
+    -o-transition: all 0.15s ease-in;
+    transition: all 0.15s ease-in;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    position: relative;
+    list-style: none;
+    white-space: nowrap;
+}
+.carousel .thumb {
+    -webkit-transition: border 0.15s ease-in;
+    -moz-transition: border 0.15s ease-in;
+    -ms-transition: border 0.15s ease-in;
+    -o-transition: border 0.15s ease-in;
+    transition: border 0.15s ease-in;
+    display: inline-block;
+    width: 80px;
+    margin-right: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    border: 3px solid #fff;
+    padding: 2px;
+}
+.carousel .thumb.selected,
+.carousel .thumb:hover {
+    border: 3px solid #333;
+    padding: 2px;
+}
+.carousel .thumb img {
+    vertical-align: top;
+}
+.carousel.carousel-slider {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+}
+.carousel.carousel-slider .control-arrow {
+    top: 0;
+    color: #fff;
+    font-size: 26px;
+    bottom: 0;
+    margin-top: 0;
+    padding: 5px;
+}
+.carousel.carousel-slider .control-arrow:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+.carousel .slider-wrapper {
+    overflow: hidden;
+    margin: auto;
+    width: 100%;
+    -webkit-transition: height 0.15s ease-in;
+    -moz-transition: height 0.15s ease-in;
+    -ms-transition: height 0.15s ease-in;
+    -o-transition: height 0.15s ease-in;
+    transition: height 0.15s ease-in;
+}
+.carousel .slider-wrapper.axis-horizontal .slider {
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+}
+.carousel .slider-wrapper.axis-horizontal .slider .slide {
+    flex-direction: column;
+    flex-flow: column;
+}
+.carousel .slider-wrapper.axis-vertical {
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+}
+.carousel .slider-wrapper.axis-vertical .slider {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+.carousel .slider {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    list-style: none;
+    width: 100%;
+}
+.carousel .slider.animated {
+    -webkit-transition: all 0.35s ease-in-out;
+    -moz-transition: all 0.35s ease-in-out;
+    -ms-transition: all 0.35s ease-in-out;
+    -o-transition: all 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out;
+}
+.carousel .slide {
+    min-width: 100%;
+    margin: 0;
+    position: relative;
+    text-align: center;
+    background: #000;
+}
+.carousel .slide img {
+    width: 100%;
+    vertical-align: top;
+    border: 0;
+}
+.carousel .slide iframe {
+    display: inline-block;
+    width: calc(100% - 80px);
+    margin: 0 40px 40px;
+    border: 0;
+}
+.carousel .slide .legend {
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    margin-left: -45%;
+    width: 90%;
+    border-radius: 10px;
+    background: #000;
+    color: #fff;
+    padding: 10px;
+    font-size: 12px;
+    text-align: center;
+    opacity: 0.25;
+    -webkit-transition: opacity 0.35s ease-in-out;
+    -moz-transition: opacity 0.35s ease-in-out;
+    -ms-transition: opacity 0.35s ease-in-out;
+    -o-transition: opacity 0.35s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
+}
+.carousel .control-dots {
+    position: absolute;
+    bottom: 0;
+    margin: 10px 0;
+    text-align: center;
+    width: 100%;
+}
+@media (min-width: 960px) {
+    .carousel .control-dots {
+        bottom: 0;
+    }
+}
+.carousel .control-dots .dot {
+    -webkit-transition: opacity 0.25s ease-in;
+    -moz-transition: opacity 0.25s ease-in;
+    -ms-transition: opacity 0.25s ease-in;
+    -o-transition: opacity 0.25s ease-in;
+    transition: opacity 0.25s ease-in;
+    opacity: 0.3;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+    background: #fff;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 8px;
+}
+.carousel .control-dots .dot.selected,
+.carousel .control-dots .dot:hover {
+    opacity: 1;
+}
+.carousel .carousel-status {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    font-size: 10px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+    color: #fff;
+}
+.carousel:hover .slide .legend {
+    opacity: 1;
+}

@@ -1,0 +1,24 @@
+.download-samples {
+    .sample-title {
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 0.4rem;
+    }
+
+    .samples-list {
+        margin-bottom: 1rem;
+        margin-inline-start: 0.5rem;
+
+        .sample-link {
+            margin-bottom: 0.4rem;
+            .download-sample-item {
+                text-decoration: underline;
+                font-size: 0.8rem;
+
+                &:hover {
+                    color: #6166b3;
+                }
+            }
+        }
+    }
+}

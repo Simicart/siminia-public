@@ -1,5 +1,5 @@
 import React from "react";
-import defaultClasses from "./index.css";
+import defaultClasses from "./index.module.css";
 export const Colorbtn = props => {
     return (
         <React.Fragment>

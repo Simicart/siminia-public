@@ -1,52 +1,12 @@
 import * as Constants from 'src/simi/Config/Constants';
 import CacheHelper from 'src/simi/Helper/CacheHelper';
 import isObjectEmpty from 'src/util/isObjectEmpty';
+
 import { CACHE_PERSIST_PREFIX } from '@magento/peregrine/lib/Apollo/constants';
 
 class Identify {
     static SESSION_STOREAGE = 1;
     static LOCAL_STOREAGE = 2;
-
-    /*
-    String
-    */
-
-    static randomString(charCount = 20) {
-        let text = '';
-        const possible =
-            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < charCount; i++)
-            text += possible.charAt(
-                Math.floor(Math.random() * possible.length)
-            );
-        return btoa(text + Date.now());
-    }
-
-    static __(text) {
-        const appConfig = this.getAppDashboardConfigs();
-        let config = null;
-        if (appConfig !== null) {
-            config = appConfig['app-configs'][0] || null;
-        }
-
-        const storeConfig = this.getStoreConfig();
-        try {
-            const languageCode = storeConfig.storeConfig.locale;
-            if (config.language.hasOwnProperty(languageCode)) {
-                const { language } = config;
-                const languageWithCode = language[languageCode];
-                if (languageWithCode.hasOwnProperty(text)) {
-                    return languageWithCode[text];
-                } else if (
-                    languageWithCode.hasOwnProperty(text.toLowerCase())
-                ) {
-                    return languageWithCode[text.toLowerCase()];
-                }
-            }
-        } catch (err) {}
-
-        return text;
-    }
 
     static isRtl() {
         let is_rtl = false;
@@ -64,7 +24,12 @@ class Identify {
             configs.config.base.is_rtl
         ) {
             is_rtl = parseInt(configs.config.base.is_rtl, 10) === 1;
-        }
+        } else if (
+            storeConfigs &&
+            storeConfigs.storeConfig &&
+            storeConfigs.storeConfig.locale.indexOf('ar') !== -1
+        )
+            is_rtl = true;
         return is_rtl;
     }
 
@@ -123,9 +88,16 @@ class Identify {
     }
 
     static clearStoreConfig() {
+        localStorage.removeItem('apollo-cache-persist');
         const storeConfig = this.getStoreConfig();
-        if (storeConfig && storeConfig.storeConfig && storeConfig.storeConfig.code) {
-            localStorage.removeItem(`${CACHE_PERSIST_PREFIX}-${storeConfig.storeConfig.code}`);
+        if (
+            storeConfig &&
+            storeConfig.storeConfig &&
+            storeConfig.storeConfig.code
+        ) {
+            localStorage.removeItem(
+                `${CACHE_PERSIST_PREFIX}-${storeConfig.storeConfig.code}`
+            );
         }
         sessionStorage.removeItem('LOCAL_URL_DICT');
         sessionStorage.removeItem(Constants.STORE_CONFIG);

@@ -63,17 +63,14 @@ export const analyticRemoveCartGTM = (name, id, price, qty = 1) => {
 
 export const analyticsViewDetailsGTM = (product) => {
     if (window.dataLayer) {
-        const { simiExtraField } = product;
-        const { attribute_values } = simiExtraField;
-        const { entity_id, price, name } = attribute_values;
+        const { id, price, name } = product;
         dataLayer.push({
             'ecommerce': {
                 'event': 'productDetailView',
                 'detail': {
                     'products': [{
                         'name': name,
-                        'id': entity_id || 0,
-                        'price': price || 0
+                        'id': id || 0
                     }]
                 },
                 'event': 'product_detail_view'
@@ -111,14 +108,14 @@ export const analyticImpressionsGTM = (products, category = '', list_name = '') 
                 storeConfig.categories.items[0] : {};
             const config = storeConfig && storeConfig.simiStoreConfig && storeConfig.simiStoreConfig.config || {};
             const currency = storeConfig && storeConfig.simiStoreConfig && storeConfig.simiStoreConfig.currency || 'USD';
-            let brands = new Map();
+            const brands = new Map();
             if (config.brands) {
                 config.brands.map((item) => {
                     brands.set(item.option_id, item.name);
                     return item;
                 });
             }
-            let categories = new Map();
+            const categories = new Map();
             if (rootCate.children) {
                 rootCate.children.map((item) => {
                     categories.set(item.id, item);
@@ -126,15 +123,15 @@ export const analyticImpressionsGTM = (products, category = '', list_name = '') 
                 });
                 categories.set(rootCate.id, rootCate);
             }
-            let impressions = [];
+            const impressions = [];
             for (let i = 0, len = products.length; i < len; i++) {
-                let extraAttributes = products[i].simiExtraField && products[i].simiExtraField.attribute_values || {};
-                let price = products[i].price && (products[i].price.minimalPrice || products[i].price.regularPrice) || {};
-                let catIds = extraAttributes.category_ids || [];
-                let _p_cat = products[i].categories && products[i].categories.pop() || categories.get(parseInt(catIds.pop()));
-                let brandId = extraAttributes.brand || '';
-                let brand = brands.get(brandId);
-                let impressObj = {
+                const extraAttributes = products[i].simiExtraField && products[i].simiExtraField.attribute_values || {};
+                const price = products[i].price && (products[i].price.minimalPrice || products[i].price.regularPrice) || {};
+                const catIds = extraAttributes.category_ids || [];
+                const _p_cat = products[i].categories && products[i].categories.pop() || categories.get(parseInt(catIds.pop()));
+                const brandId = extraAttributes.brand || '';
+                const brand = brands.get(brandId);
+                const impressObj = {
                     'name': products[i].name,       // Name or ID is required.
                     'id': products[i].id,
                     'brand': brand || '',

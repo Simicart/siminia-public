@@ -15,7 +15,7 @@ import {
 
 let sortByData = null;
 let filterData = null;
-let loadedData = null;
+const loadedData = null;
 
 export const useSearchContentPagination = props => {
     const { location, productsPageDesktop, productsPagePhone } = props;

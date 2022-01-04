@@ -1,11 +1,15 @@
 import React from 'react';
-import Identify from 'src/simi/Helper/Identify';
-import Dropdownplus from 'src/simi/BaseComponents/Dropdownplus';
-import { withRouter } from 'react-router-dom';
+import Dropdownplus from '../../../BaseComponents/Dropdownplus';
+import Dropdownoption from '../../../BaseComponents/Dropdownoption';
+import { useHistory, useLocation } from 'react-router-dom';
 import RangeSlider from './RangeSlider';
 import memoize from 'memoize-one';
-import { Whitebtn } from 'src/simi/BaseComponents/Button';
 import { useWindowSize } from '@magento/peregrine';
+import { randomString } from 'src/simi/Helper/String';
+import { useIntl } from 'react-intl';
+import { CheckSquare, Square } from 'react-feather';
+import Button from '@magento/venia-ui/lib/components/Button/button';
+import { smoothScrollToView } from 'src/simi/Helper/Behavior';
 
 require('./filter.scss');
 
@@ -15,17 +19,22 @@ const dropDownPlusClasses = {
     'dropdownplus-inner': 'dropdownplus-inner'
 };
 
+const checkedIcon = <CheckSquare />;
+const uncheckedIcon = <Square />;
+
 const Filter = props => {
     const {
         data,
         filterData,
-        history,
-        location,
         total_count,
         maxPrice,
-        minPrice
+        minPrice,
+        priceSeparator
     } = props;
+    const history = useHistory();
+    const location = useLocation();
 
+    const { formatMessage } = useIntl();
     let filtersToApply = filterData ? filterData : {};
     let rowFilterAttributes = [];
 
@@ -40,9 +49,12 @@ const Filter = props => {
                     function(optionItem) {
                         const name = (
                             <span className="filter-item-text">
-                                {$('<div/>')
-                                    .html(Identify.__(optionItem.label))
-                                    .text()}
+                                <span
+                                    className="filter-item-text"
+                                    dangerouslySetInnerHTML={{
+                                        __html: optionItem.label
+                                    }}
+                                />
                                 {optionItem.items_count && (
                                     <span className="filter-item-count">
                                         ({optionItem.items_count})
@@ -51,7 +63,7 @@ const Filter = props => {
                             </span>
                         );
                         return (
-                            <div
+                            <label
                                 role="presentation"
                                 className="filter-item"
                                 key={
@@ -75,8 +87,14 @@ const Filter = props => {
                                         );
                                     }}
                                 />
+                                <span className="filter-item-checked">
+                                    {checkedIcon}
+                                </span>
+                                <span className="filter-item-unchecked">
+                                    {uncheckedIcon}
+                                </span>
                                 <span className="filter-item-text">{name}</span>
-                            </div>
+                            </label>
                         );
                     },
                     this,
@@ -97,7 +115,7 @@ const Filter = props => {
             filterData['price'] &&
             typeof filterData['price'] === 'string'
         ) {
-            const activeRange = filterData['price'].split('-');
+            const activeRange = filterData['price'].split(priceSeparator);
             left = activeRange[0];
             right = activeRange[1];
         }
@@ -111,19 +129,25 @@ const Filter = props => {
                 rightPrice={Number(right)}
                 location={location}
                 filterData={filterData}
+                priceSeparator={priceSeparator}
             />
         );
     });
 
     const renderFilterItems = () => {
         rowFilterAttributes = [];
-        if (maxPrice && minPrice !== undefined && minPrice < maxPrice && total_count > 0) {
+        if (
+            maxPrice &&
+            minPrice !== undefined &&
+            minPrice < maxPrice &&
+            total_count > 0
+        ) {
             rowFilterAttributes.push(
                 <Dropdownplus
                     classes={dropDownPlusClasses}
-                    key={Identify.randomString(5)}
-                    title={Identify.__('Price')}
-                    expanded={filtersToApply['price'] ? true : false}
+                    key={randomString(5)}
+                    title={formatMessage({ id: 'Price' })}
+                    expanded={true}
                 >
                     <div
                         id={`filter-option-items-price`}
@@ -143,7 +167,7 @@ const Filter = props => {
                         <Dropdownplus
                             classes={dropDownPlusClasses}
                             key={index}
-                            title={Identify.__(item.name)}
+                            title={item.name}
                             expanded={
                                 filtersToApply[item.request_var] ? true : false
                             }
@@ -171,7 +195,7 @@ const Filter = props => {
                     onClick={() => clearFilter()}
                     className="action-clear"
                 >
-                    {Identify.__('Clear all')}
+                    {formatMessage({ id: 'Clear all' })}
                 </div>
             </div>
         ) : (
@@ -180,7 +204,9 @@ const Filter = props => {
     };
 
     const clearFilter = () => {
-        document.getElementById('root-product-list').scrollIntoView({ behavior: 'smooth' });
+        document
+            .getElementById('root-product-list')
+            .scrollIntoView({ behavior: 'smooth' });
         const { search } = location;
         const queryParams = new URLSearchParams(search);
         queryParams.delete('filter');
@@ -188,12 +214,15 @@ const Filter = props => {
     };
 
     const applyFilter = () => {
-        document.getElementById('root-product-list').scrollIntoView({ behavior: 'smooth' });
+        document
+            .getElementById('root-product-list')
+            .scrollIntoView({ behavior: 'smooth' });
         const { search } = location;
         const queryParams = new URLSearchParams(search);
         queryParams.set('page', 1);
         queryParams.set('filter', JSON.stringify(filtersToApply));
         history.push({ search: queryParams.toString() });
+        smoothScrollToView(document.getElementById('root'));
     };
 
     const deleteFilter = attribute => {
@@ -223,29 +252,29 @@ const Filter = props => {
         filtersToApply = newFiltersToApply;
     };
 
-    const filterProducts = (
-        <div className="filter-products">
-            {renderClearButton()}
-            {renderFilterItems()}
-            <Whitebtn
-                className="apply-filter"
-                onClick={() => applyFilter()}
-                text={Identify.__('Apply')}
-            />
-        </div>
-    );
+    const filterProducts =
+        data && data.length ? (
+            <div className="filter-products">
+                {renderClearButton()}
+                {renderFilterItems()}
+                <Button onClick={() => applyFilter()} priority="high">
+                    {formatMessage({ id: 'Apply' })}
+                </Button>
+            </div>
+        ) : (
+            ''
+        );
 
     return isPhone ? (
-        <Dropdownplus
-            classes={dropDownPlusClasses}
+        <Dropdownoption
             className="siminia-phone-filter"
-            title={Identify.__('Filter')}
+            title={formatMessage({ id: 'Filter' })}
         >
             {filterProducts}
-        </Dropdownplus>
+        </Dropdownoption>
     ) : (
         filterProducts
     );
 };
 
-export default withRouter(Filter);
+export default Filter;

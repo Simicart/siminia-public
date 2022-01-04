@@ -1,0 +1,18 @@
+.griditem-price-ctn {
+    .price {
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: 600;
+        color: #e02020;
+    }
+    .regular-price .price {
+        font-weight: 400;
+        color: #4f4f4f;
+    }
+    .sale_off {
+        display: none;
+    }
+    .regular-price-label {
+        display: none;
+    }
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import classify from 'src/classify';
-import defaultClasses from './richText.css';
+import defaultClasses from './richText.module.css';
 
 const toHTML = str => ({ __html: str });
 

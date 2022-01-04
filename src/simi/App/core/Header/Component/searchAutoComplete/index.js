@@ -10,9 +10,9 @@ import {
 import { convertMagentoFilterToSimiFilter } from 'src/simi/Helper/Product';
 import Suggestions from './suggestions';
 import Close from 'src/simi/BaseComponents/Icon/TapitaIcons/Close';
-import defaultClasses from './searchAutoComplete.css';
-import Identify from 'src/simi/Helper/Identify';
+import defaultClasses from './searchAutoComplete.module.css';
 import debounce from 'lodash.debounce';
+import { useIntl } from 'react-intl';
 
 function useOutsideAlerter(ref, setVisible) {
     function handleClickOutside(event) {
@@ -31,6 +31,7 @@ function useOutsideAlerter(ref, setVisible) {
 
 const SearchAutoComplete = props => {
     const { setVisible, visible, value } = props;
+    const { formatMessage } = useIntl();
 
     //handle click outsite
     const wrapperRef = useRef(null);
@@ -100,18 +101,17 @@ const SearchAutoComplete = props => {
     }, [oriData, filterResult]);
 
     if (error) {
-        message = Identify.__('An error occurred while fetching results.');
+        message = formatMessage({
+            id: 'An error occurred while fetching results.'
+        });
     } else if (loading) {
-        message = Identify.__('Fetching results...');
+        message = formatMessage({ id: 'Fetching results...' });
     } else if (!data) {
-        message = Identify.__('Search for a product');
+        message = formatMessage({ id: 'Search for a product' });
     } else if (!data.products.items.length) {
-        message = Identify.__('No results were found.');
+        message = formatMessage({ id: 'No results were found.' });
     } else {
-        message = Identify.__('%s items').replace(
-            '%s',
-            data.products.items.length
-        );
+        message = data.products.items.length + formatMessage({ id: 'Items' });
     }
 
     return (

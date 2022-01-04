@@ -1,0 +1,23 @@
+//to style pb
+.smProductBuilderRoot {
+    .spb-item::-webkit-scrollbar {
+        display: none;
+    }
+    .spb-item {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+    .type_productbuilder_productbreadcrumb > div {
+        max-width: 100%;
+        margin-inline-start: 0;
+    }
+    .spb-item {
+        &.type_productbuilder_productimage {
+            padding: 0;
+        }
+    }
+    .spb-item-root {
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+}

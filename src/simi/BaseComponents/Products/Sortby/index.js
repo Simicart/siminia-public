@@ -1,23 +1,18 @@
 import React from 'react';
-import Identify from 'src/simi/Helper/Identify';
-import Check from 'src/simi/BaseComponents/Icon/TapitaIcons/SingleSelect';
+import { Check } from 'react-feather';
 import { configColor } from 'src/simi/Config';
 import Dropdownoption from 'src/simi/BaseComponents/Dropdownoption/';
 import { withRouter } from 'react-router-dom';
-
-import Icon from '@magento/venia-ui/lib/components/Icon';
-import ChevronDownIcon from 'react-feather/dist/icons/chevron-down';
-
-const arrow = <Icon src={ChevronDownIcon} size={18} />;
+import { useIntl } from 'react-intl';
+import { capitalizeEachWords, randomString } from 'src/simi/Helper/String';
 
 const Sortby = props => {
     const { history, location, sortByData, data } = props;
     const { search } = location;
-    let dropdownItem = null;
+    const { formatMessage } = useIntl();
 
     const changedSortBy = item => {
-        if (dropdownItem && item) {
-            dropdownItem.handleToggle();
+        if (item) {
             const queryParams = new URLSearchParams(search);
             queryParams.set('product_list_order', item.key);
             queryParams.set('product_list_dir', item.direction);
@@ -52,46 +47,59 @@ const Sortby = props => {
         });
     } else {
         orders = [
-            { value: 'name', key: 'name', direction: 'asc' },
-            { value: 'name', key: 'Name', direction: 'desc' },
-            { value: 'price', key: 'Price', direction: 'asc' },
-            { value: 'price', key: 'Price', direction: 'desc' }
+            {
+                value: 'position',
+                key: 'position',
+                direction: 'asc',
+                showDir: false
+            },
+            {
+                value: 'relevance',
+                key: 'relevance',
+                direction: 'asc',
+                showDir: false
+            },
+            { value: 'name', key: 'name', direction: 'asc', showDir: true },
+            { value: 'name', key: 'name', direction: 'desc', showDir: true },
+            { value: 'price', key: 'price', direction: 'asc', showDir: true },
+            { value: 'price', key: 'price', direction: 'desc', showDir: true }
         ];
     }
 
-    let sortByTitle = Identify.__('Sort by');
+    let sortByTitle = formatMessage({ id: 'Sort by' });
 
     selections = orders.map(item => {
         let itemCheck = '';
-        const itemTitle = item.value;
+        let itemTitle = item.value;
+        itemTitle = capitalizeEachWords(formatMessage({ id: itemTitle }));
+        if (item.showDir) {
+            itemTitle += formatMessage({ id: ': ' });
+            itemTitle +=
+                item.direction === 'asc'
+                    ? formatMessage({ id: 'Low to High' })
+                    : formatMessage({ id: 'High to Low' });
+        }
+
         if (
             sortByData &&
             sortByData[`${item.key}`] === item.direction.toUpperCase()
         ) {
+            sortByTitle = itemTitle;
             itemCheck = (
                 <span className="is-selected">
-                    <Check
-                        color={configColor.button_background}
-                        style={{ width: 16, height: 16, marginRight: 4 }}
-                    />
+                    <Check size={20} />
                 </span>
             );
-            sortByTitle =
-                item.direction === 'asc'
-                    ? Identify.__(itemTitle + ' (asc)')
-                    : Identify.__(itemTitle + ' (desc)');
         }
 
         return (
             <div
                 role="presentation"
-                key={Identify.randomString(5)}
+                key={randomString(5)}
                 className="dir-item"
                 onClick={() => changedSortBy(item)}
             >
-                <div className="dir-title">
-                    {item.direction === 'asc' ? '↑' : '↓'} {itemTitle}
-                </div>
+                <div className="dir-title">{itemTitle}</div>
                 <div className="dir-check">{itemCheck}</div>
             </div>
         );
@@ -103,12 +111,7 @@ const Sortby = props => {
                 <span />
             ) : (
                 <div className="sort-by-select">
-                    <Dropdownoption
-                        title={sortByTitle}
-                        ref={item => {
-                            dropdownItem = item;
-                        }}
-                    >
+                    <Dropdownoption title={sortByTitle}>
                         {selections}
                     </Dropdownoption>
                 </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { mergeClasses } from '@magento/venia-ui/lib/classify';
 import { useQuery } from '@apollo/client';
 import { GET_MEGA_MENU } from './megaMenu.gql';
-import defaultClasses from './index.css';
+import defaultClasses from './index.module.css';
 import { Link } from 'src/drivers';
 
 export const recursiveFindCate = (cateArr, idToFind) => {

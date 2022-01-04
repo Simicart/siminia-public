@@ -10,7 +10,7 @@ import Field from '@magento/venia-ui/lib/components/Field';
 import TextInput from '@magento/venia-ui/lib/components/TextInput';
 import { isRequired } from '@magento/venia-ui/lib/util/formValidators';
 
-import defaultClasses from './password.css';
+import defaultClasses from './password.module.css';
 
 const Password = props => {
     const {

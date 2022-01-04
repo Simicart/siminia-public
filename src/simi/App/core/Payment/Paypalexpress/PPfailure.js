@@ -1,9 +1,12 @@
-import Identify from 'src/simi/Helper/Identify'
 import { showToastMessage } from 'src/simi/Helper/Message';
+import { useIntl } from 'react-intl';
 const PPfailure = props => {
-    const {history} = props
-    showToastMessage(Identify.__('Express Checkout has been canceled.'))
-    history.push('/cart.html')
-    return ''
-}
-export default PPfailure
+    const { formatMessage } = useIntl();
+    const { history } = props;
+    showToastMessage(
+        formatMessage({ id: 'Express Checkout has been canceled.' })
+    );
+    history.push('/cart');
+    return '';
+};
+export default PPfailure;

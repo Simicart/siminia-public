@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'src/drivers';
-import classes from './mask.css';
+import classes from './mask.module.css';
 
 const Mask = props => {
     const { drawer } = props;

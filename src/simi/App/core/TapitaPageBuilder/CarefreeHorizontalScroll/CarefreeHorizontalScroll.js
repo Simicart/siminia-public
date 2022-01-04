@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {FashionableDotPagination} from './FashionableDotPagination';
 import {randomString} from "./randomString";
-import defaultClasses from './index.css';
+import defaultClasses from './index.module.css';
 
 let slidedTheSlider = false;
 
@@ -43,7 +43,7 @@ export const CarefreeHorizontalScroll = (props) => {
                 }`,
             ).children;
             const target = elements.item(index);
-            target.scrollIntoView({block: 'nearest', inline: 'start'});
+            target.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'start'});
         }
     }, [children, currentIndex, numberOfChildren, unqId]);
 

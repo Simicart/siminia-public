@@ -25,8 +25,7 @@ import { saveCategoriesToDict } from 'src/simi/Helper/Url';
 const LocaleProvider = props => {
     const [messages, setMessages] = useState(null);
     const { data } = useQuery(GET_LOCALE, {
-        fetchPolicy: 'cache-and-network',
-        nextFetchPolicy: 'cache-first'
+        fetchPolicy: 'no-cache'
     });
 
     const language = useMemo(() => {
@@ -54,9 +53,10 @@ const LocaleProvider = props => {
                     setMessages(data.default);
                 })
                 .catch(error => {
-                    console.error(
-                        `Unable to load translation file. \n${error}`
-                    );
+                    // no need to warning on this
+                    // console.error(
+                    //     `Unable to load translation file. \n${error}`
+                    // );
                 });
         }
     }, [fetchLocale, language]);
@@ -70,24 +70,30 @@ const LocaleProvider = props => {
             throw error;
         }
     };
-
     useEffect(() => {
         let storeConfig;
         if (data && data.storeConfig && props.setStoreConfig) {
             storeConfig = data;
             Identify.saveStoreConfig(data);
+
+            //if uncomment this - should comment out useDelayedTransition() at src/simi/app.js
+            /*
             if (
                 storeConfig.categories &&
                 storeConfig.categories.items &&
                 storeConfig.categories.items[0]
             )
                 saveCategoriesToDict(storeConfig.categories.items[0]);
+            */
             props.setStoreConfig(data);
             if (
-                storeConfig.simiStoreConfig &&
-                storeConfig.simiStoreConfig.config &&
-                parseInt(storeConfig.simiStoreConfig.config.base.is_rtl, 10) ===
-                    1
+                (storeConfig.simiStoreConfig &&
+                    storeConfig.simiStoreConfig.config &&
+                    parseInt(
+                        storeConfig.simiStoreConfig.config.base.is_rtl,
+                        10
+                    ) === 1) ||
+                language.indexOf('ar') !== -1
             ) {
                 try {
                     document.getElementById('root').classList.add('rtl-root');
@@ -99,13 +105,42 @@ const LocaleProvider = props => {
         }
     }, [data]);
 
+    let mergedMessage = {};
+    if (language) {
+        if (messages) {
+            mergedMessage = { ...messages };
+        }
+        const dashboardConfig = Identify.getAppDashboardConfigs();
+        const localeFormated = language.replace('-', '_');
+        if (
+            dashboardConfig &&
+            dashboardConfig['app-configs'] &&
+            dashboardConfig['app-configs'][0] &&
+            dashboardConfig['app-configs'][0]['language'] &&
+            dashboardConfig['app-configs'][0]['language'][localeFormated]
+        ) {
+            const simiDbLConfig =
+                dashboardConfig['app-configs'][0]['language'][localeFormated];
+            //map venia locale file to translated json from dashboard
+            Object.keys(mergedMessage).forEach(key => {
+                if (mergedMessage[key] && simiDbLConfig[mergedMessage[key]]) {
+                    mergedMessage[key] = simiDbLConfig[mergedMessage[key]];
+                }
+            });
+            mergedMessage = {
+                ...mergedMessage,
+                ...simiDbLConfig
+            };
+        }
+    }
+
     return (
         <IntlProvider
             key={language}
             {...props}
             defaultLocale={DEFAULT_LOCALE}
             locale={language}
-            messages={messages}
+            messages={mergedMessage}
             onError={handleIntlError}
         />
     );

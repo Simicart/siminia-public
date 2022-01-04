@@ -1,0 +1,42 @@
+.optionRoot {
+    font-size: 0.8rem;
+    border-top: 1px solid #d8d8d8;
+    margin-top: 1rem;
+}
+
+.optionItem {
+}
+
+.optionTitle {
+    margin-bottom: 0.6rem;
+}
+
+.optionTitleSpan {
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.optionContent {
+    font-size: 0.8rem;
+}
+
+.optionList label {
+    margin-bottom: 0.6rem;
+}
+
+.summaryWrapper {
+    padding-inline-start: 0.4rem;
+    font-size: 0.8rem;
+}
+
+.summaryItem {
+    margin-bottom: 0.3rem;
+}
+
+.summaryItemTitle {
+    margin-top: 0.5rem;
+}
+
+.label-option-price {
+    font-weight: bold !important;
+}

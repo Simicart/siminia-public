@@ -1,0 +1,109 @@
+.root {
+    padding: 30px 50px;
+}
+.title {
+    text-transform: uppercase;
+    color: #111111;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 18px;
+    text-align: center;
+}
+.errorText {
+    color: rgb(var(--venia-global-color-error));
+    line-height: var(--venia-global-lineHeight-300);
+}
+
+.lineItems {
+    display: grid;
+    grid-gap: 0.75rem;
+    grid-template-columns: 1fr auto;
+    color: #111111;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 14px;
+    margin-top: 30px;
+    font-weight: 400;
+}
+
+.lineItemLabel {
+    justify-self: start;
+    color: #111111;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 14px;
+    font-weight: 400;
+}
+
+.price {
+    justify-self: end;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.totalLabel {
+    composes: lineItemLabel;
+    font-weight: var(--venia-global-fontWeight-semibold);
+    color: #111111;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 14px;
+    margin-top: 10px;
+}
+
+.totalPrice {
+    composes: price;
+    font-weight: var(--venia-global-fontWeight-semibold);
+    color: #e02020;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 14px;
+    margin-top: 10px;
+}
+
+.priceUpdating {
+    composes: price;
+    opacity: 0;
+}
+
+.checkoutButton_container {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    margin-top: 44px;
+    /* min-height: 5.5rem; */
+    width: 100%;
+}
+.checkoutButton_container > button {
+    height: 50px;
+    min-width: 294px;
+    border-radius: 4px;
+    background-color: #0058ac;
+    border-width: 0 !important;
+}
+.checkoutButton_container > button > span {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 16px;
+}
+@media (max-width: 768px) {
+    .root {
+        padding: 25px 15px;
+    }
+    .checkoutButton_container > button {
+        width: 100%;
+    }
+    .totalLabel {
+        font-size: 20px;
+        line-height: 14px;
+    }
+    .totalPrice {
+        font-size: 20px;
+        line-height: 14px;
+    }
+}

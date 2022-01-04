@@ -4,8 +4,7 @@ import { Link } from 'src/drivers';
 
 import { mergeClasses } from 'src/classify';
 import getLocation from './getLocation';
-import defaultClasses from './suggestedCategories.css';
-import ReactHTMLParse from 'react-html-parser';
+import defaultClasses from './suggestedCategories.module.css';
 
 const SuggestedCategories = props => {
     const { limit, onNavigate, value } = props;
@@ -28,7 +27,7 @@ const SuggestedCategories = props => {
                     onClick={handleClick}
                 >
                     <strong className={classes.value}>{value}</strong>
-                    <span>{` in ${ReactHTMLParse(label)}`}</span>
+                    <span>{` in ${label}`}</span>
                 </Link>
             </li>
         ));

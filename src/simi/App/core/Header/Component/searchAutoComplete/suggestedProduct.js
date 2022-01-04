@@ -1,15 +1,14 @@
 import React from 'react';
 import { func, number, shape, string } from 'prop-types';
-import Price from 'src/simi/BaseComponents/Price'
+import Price from 'src/simi/BaseComponents/GridItem/Price';
 import classify from 'src/classify';
 import { Link } from 'src/drivers';
-import { resourceUrl } from 'src/simi/Helper/Url'
-import ReactHTMLParse from 'react-html-parser';
+import { resourceUrl } from 'src/simi/Helper/Url';
 import LazyLoad from 'src/simi/BaseComponents/LazyLoad';
 
-import defaultClasses from './suggestedProduct.css';
-import { logoUrl } from 'src/simi/Helper/Url'
-import Image from 'src/simi/BaseComponents/Image'
+import defaultClasses from './suggestedProduct.module.css';
+import { logoUrl } from 'src/simi/Helper/Url';
+import Image from 'src/simi/BaseComponents/Image';
 import { productUrlSuffix } from 'src/simi/Helper/Url';
 
 const SuggestedProduct = props => {
@@ -18,34 +17,43 @@ const SuggestedProduct = props => {
         if (typeof onNavigate === 'function') {
             onNavigate();
         }
-    }
-    const logo_url = logoUrl()
+    };
+    const logo_url = logoUrl();
     const { classes, url_key, small_image, name, price, type_id } = props;
     const uri = resourceUrl(`/${url_key}${productUrlSuffix()}`);
-    const place_holder_img = <img alt={name} src={logo_url} style={{maxWidth: 60, maxHeight: 60}}/>
+    const place_holder_img = (
+        <img
+            alt={name}
+            src={logo_url}
+            style={{ maxWidth: 60, maxHeight: 60 }}
+        />
+    );
 
     return (
         <Link className={classes.root} to={uri} onClick={handleClick}>
             <span className={classes.image}>
-                <LazyLoad 
-                    placeholder={place_holder_img}>
+                <LazyLoad placeholder={place_holder_img}>
                     <Image
                         alt={name}
-                        src={small_image? resourceUrl(small_image, {
-                            type: 'image-product',
-                            width: 60
-                        }) : logoUrl()}
-                        style={{maxWidth: 60, maxHeight: 60}}
+                        src={
+                            small_image
+                                ? resourceUrl(small_image, {
+                                      type: 'image-product',
+                                      width: 60
+                                  })
+                                : logoUrl()
+                        }
+                        style={{ maxWidth: 60, maxHeight: 60 }}
                     />
                 </LazyLoad>
             </span>
-            <span className={classes.name}>{ReactHTMLParse(name)}</span>
+            <span className={classes.name}>{name}</span>
             <span className={classes.price}>
                 <Price prices={price} type={type_id} classes={classes} />
             </span>
         </Link>
     );
-}
+};
 
 SuggestedProduct.propTypes = {
     url_key: string.isRequired,

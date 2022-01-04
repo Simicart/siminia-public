@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import classify from 'src/classify';
 import PropTypes from 'prop-types';
+import Identify from 'src/simi/Helper/Identify';
 
-import defaultClasses from './cartCounter.css';
+import defaultClasses from './cartCounter.module.css';
 
 class CartCounter extends Component {
     static propTypes = {
@@ -15,7 +16,12 @@ class CartCounter extends Component {
     render() {
         const { counter, classes } = this.props;
         return counter > 0 ? (
-            <span className={classes.root}>{counter}</span>
+            <span
+                className={classes.root}
+                style={Identify.isRtl() ? { left: 18 } : { right: 18 }}
+            >
+                {counter}
+            </span>
         ) : null;
     }
 }

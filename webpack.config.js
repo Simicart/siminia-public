@@ -1,6 +1,7 @@
 const { configureWebpack, graphQL } = require('@magento/pwa-buildpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const fs = require('fs');
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const {
@@ -12,6 +13,19 @@ const {
 
 const { DefinePlugin } = webpack;
 const { LimitChunkCountPlugin } = webpack.optimize;
+
+const getCleanTemplate = templateFile => {
+    return new Promise(resolve => {
+        fs.readFile(templateFile, 'utf8', (err, data) => {
+            resolve(
+                data.replace(
+                    /(?<inlineddata><!-- Inlined Data -->.*\s<!-- \/Inlined Data -->)/gs,
+                    ''
+                )
+            );
+        });
+    });
+};
 
 module.exports = async env => {
     /**
@@ -28,24 +42,23 @@ module.exports = async env => {
             'apollo-cache-persist',
             'informed',
             'react',
-            'react-dom',
             'react-feather',
             'react-redux',
             'react-router-dom',
             'redux',
             'redux-actions',
             //simicart libs to move to vendors instead of client chunk
-            '@material-ui',
-            'react-loading-skeleton',
-            'react-html-parser',
             'react-responsive-carousel',
-            'react-input-range',
             'react-share',
             'rendertron-middleware',
             'react-responsive-modal',
-            'braintree-web-drop-in',
             'simi-pagebuilder-react',
             'react-image-lightbox',
+            'graphql',
+            '@formatjs',
+            '@apollo/client',
+            '@magento/venia-ui',
+            '@magento/peregrine',
             //end simicart libs to move to vendors instead of client chunk
             'redux-thunk'
         ],
@@ -68,13 +81,15 @@ module.exports = async env => {
      */
     config.module.rules.push(
         {
-            test: /\.scss$/,
+            test: /\.s[ac]ss$/i,
             use: [
-                'style-loader',
+                // Creates `style` nodes from JS strings
+                "style-loader",
+                // Translates CSS into CommonJS
                 "css-loader",
-                "sass-loader"
-            ]
-        }
+                "sass-loader",
+            ],
+        }, 
     )
     const availableStore = availableStores.find(
         ({ code }) => code === process.env.STORE_VIEW_CODE
@@ -85,6 +100,26 @@ module.exports = async env => {
     global.AVAILABLE_STORE_VIEWS = availableStores;
 
     const possibleTypes = await getPossibleTypes();
+
+    const htmlWebpackConfig = {
+        filename: 'index.html',
+        minify: {
+            collapseWhitespace: true,
+            removeComments: true
+        } 
+    };
+
+    // Strip UPWARD mustache from template file during watch
+    if (
+        process.env.npm_lifecycle_event &&
+        process.env.npm_lifecycle_event.includes('watch')
+    ) {
+        htmlWebpackConfig.templateContent = await getCleanTemplate(
+            './template.html'
+        );
+    } else {
+        htmlWebpackConfig.template = './template.html';
+    }
 
     config.module.noParse = [
         /@adobe\/adobe\-client\-data\-layer/,
@@ -110,14 +145,7 @@ module.exports = async env => {
                 process.env.DEFAULT_COUNTRY_CODE || 'US'
             )
         }),
-        new HTMLWebpackPlugin({
-            filename: 'index.html',
-            template: './template.html',
-            minify: {
-                collapseWhitespace: true,
-                removeComments: true
-            }
-        }),
+        new HTMLWebpackPlugin(htmlWebpackConfig)
     ];
 
     const serverConfig = Object.assign({}, config, {
@@ -129,6 +157,9 @@ module.exports = async env => {
             ...config.output,
             filename: '[name].[hash].SERVER.js',
             strictModuleExceptionHandling: true
+        },
+        optimization: {
+            minimize: false
         },
         plugins: [...config.plugins]
     });
@@ -173,12 +204,12 @@ module.exports = async env => {
     //simicart chunk split (change runtime to a bigger chunk)
     if (config.optimization && config.optimization.splitChunks && config.optimization.splitChunks.cacheGroups)
         config.optimization.splitChunks.cacheGroups.runtime = {
-            test: /[\\/]src[\\/]simi[\\/]App[\\/]core[\\/]/,
+            test: /([\\/]node_modules[\\/]\@magento[\\/]venia\-ui[\\/])/,
             //test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
             name: 'runtime',
             chunks: 'all'
         };
-    
+
     //simicart add bundle analyzer
     //config.plugins.push(new BundleAnalyzerPlugin());
 

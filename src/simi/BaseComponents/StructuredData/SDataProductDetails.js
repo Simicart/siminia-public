@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from "react-helmet";
 
 const SDataProductDetails = props => {
-    let product = props.product ? props.product : {};
+    const product = props.product ? props.product : {};
     let ratingSum;
     if (product.rating_summary && product.review_count) {
         ratingSum = product.rating_summary * 5 / 100;

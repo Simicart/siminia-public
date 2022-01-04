@@ -1,0 +1,8 @@
+.checkbox-item-new {
+    display: flex;
+
+}
+
+.checkbox-item-new .checkbox-item-icon {
+    margin-right: 0.3rem;
+}

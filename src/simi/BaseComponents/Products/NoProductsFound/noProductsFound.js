@@ -2,7 +2,7 @@ import React from 'react';
 import { number, string, shape } from 'prop-types';
 
 import { mergeClasses } from 'src/classify';
-import defaultClasses from './noProductsFound.css';
+import defaultClasses from './noProductsFound.module.css';
 
 // TODO: get categoryUrlSuffix from graphql storeOptions when it is ready
 

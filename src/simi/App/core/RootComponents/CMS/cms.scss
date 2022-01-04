@@ -1,4 +1,13 @@
-.static-page {
+ul,
+li {
+    list-style: none;
+}
+.customer-service,
+.term-and-condition-page,
+.policy-cms-page {
+    max-width: 1280px;
+    padding: 15px;
+    margin: 0 auto;
     &.international-page {
         color: #777777;
         // padding: 15px;
@@ -272,7 +281,7 @@
     }
 }
 
-.static-page .policy-cms-page {
+.policy-cms-page {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -326,7 +335,7 @@
 }
 
 @media (max-width: 1023px) {
-    .static-page .policy-cms-page {
+    .policy-cms-page {
         .policy-title {
             width: 100%;
         }

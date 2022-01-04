@@ -1,13 +1,12 @@
 import { useQuery } from '@apollo/client';
 import { useCallback, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useDropdown } from '@magento/peregrine/lib/hooks/useDropdown';
 import { BrowserPersistence } from '@magento/peregrine/lib/util';
-import Identify from 'src/simi/Helper/Identify';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
-import DEFAULT_OPERATIONS from './storeSwitcher.gql';
-import { getDataFromUrl } from 'src/simi/Helper/Url';
+import DEFAULT_OPERATIONS from '@magento/peregrine/lib/talons/Header/storeSwitcher.gql';
+import Identify from 'src/simi/Helper/Identify';
+import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
 
 const storage = new BrowserPersistence();
 
@@ -62,9 +61,13 @@ const mapAvailableOptions = (config, stores) => {
  */
 
 export const useStoreSwitcher = (props = {}) => {
+    const storeConfig = Identify.getStoreConfig();
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
-    const { getUrlResolverData } = operations;
-    const history = useHistory();
+    const {
+        getStoreConfigData,
+        getUrlResolverData,
+        getAvailableStoresData
+    } = operations;
     const { pathname } = useLocation();
     const {
         elementRef: storeMenuRef,
@@ -73,31 +76,35 @@ export const useStoreSwitcher = (props = {}) => {
         triggerRef: storeMenuTriggerRef
     } = useDropdown();
 
-    const storeConfig = Identify.getStoreConfig();
+    const { data: storeConfigDataOri } = useQuery(getStoreConfigData, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first',
+        skip: !!(storeConfig && storeConfig.storeConfig)
+    });
+    const storeConfigData = storeConfigDataOri || storeConfig;
 
-    const urlDataFromDict = getDataFromUrl(pathname);
-    const { data: urlResolverData } = useQuery(getUrlResolverData, {
+    const { data: urlResolverData } = useQuery(RESOLVE_URL, {
         fetchPolicy: 'cache-first',
-        skip: urlDataFromDict && urlDataFromDict.id,
-        variables: { url: pathname }
+        variables: { url: pathname },
+        skip: !pathname || pathname === '/'
     });
 
-    const availableStoresData =
-        storeConfig && storeConfig.availableStores
-            ? {
-                  availableStores: storeConfig.availableStores
-              }
-            : null;
-    const storeConfigData =
-        storeConfig && storeConfig.storeConfig
-            ? {
-                  storeConfig: storeConfig.storeConfig
-              }
-            : null;
+    const { data: availableStoresDataOri } = useQuery(getAvailableStoresData, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first',
+        skip: !!(storeConfig && storeConfig.availableStores)
+    });
+    const availableStoresData = availableStoresDataOri || storeConfig;
 
     const currentStoreName = useMemo(() => {
         if (storeConfigData) {
             return storeConfigData.storeConfig.store_name;
+        }
+    }, [storeConfigData]);
+
+    const currentGroupName = useMemo(() => {
+        if (storeConfigData) {
+            return storeConfigData.storeConfig.store_group_name;
         }
     }, [storeConfigData]);
 
@@ -108,12 +115,10 @@ export const useStoreSwitcher = (props = {}) => {
     }, [storeConfigData]);
 
     const pageType = useMemo(() => {
-        if (urlDataFromDict) {
-            return urlDataFromDict.sku ? 'PRODUCT' : 'CATEGORY';
-        } else if (urlResolverData && urlResolverData.urlResolver) {
-            return urlResolverData.urlResolver.type;
+        if (urlResolverData && urlResolverData.route) {
+            return urlResolverData.route.type;
         }
-    }, [urlResolverData, urlDataFromDict]);
+    }, [urlResolverData]);
 
     // availableStores => mapped options or empty map if undefined.
     const availableStores = useMemo(() => {
@@ -150,9 +155,9 @@ export const useStoreSwitcher = (props = {}) => {
     // Get pathname with suffix based on page type
     const getPathname = useCallback(
         storeCode => {
-            // Use window.location.pathname to get the path with the store view code
+            // Use globalThis.location.pathname to get the path with the store view code
             // pathname from useLocation() does not include the store view code
-            const pathname = window.location.pathname;
+            const pathname = globalThis.location.pathname;
 
             if (pageType === 'CATEGORY') {
                 const currentSuffix =
@@ -190,9 +195,10 @@ export const useStoreSwitcher = (props = {}) => {
             if (!availableStores.has(storeCode)) return;
 
             const pathName = getPathname(storeCode);
-            const params = window.location.search || '';
+            const params = globalThis.location.search || '';
 
             Identify.clearStoreConfig(); //simi remove saved store config
+
             storage.setItem('store_view_code', storeCode);
             storage.setItem(
                 'store_view_currency',
@@ -204,7 +210,7 @@ export const useStoreSwitcher = (props = {}) => {
             );
 
             // Handle updating the URL if the store code should be present.
-            // In this block we use `window.location.assign` to work around the
+            // In this block we use `globalThis.location.assign` to work around the
             // static React Router basename, which is changed on initialization.
             if (process.env.USE_STORE_CODE_IN_URL === 'true') {
                 // Check to see if we're on a page outside of the homepage
@@ -222,34 +228,35 @@ export const useStoreSwitcher = (props = {}) => {
                             `/${storeCode}`
                         )}${params}`;
 
-                        window.location.assign(newPath);
+                        globalThis.location.assign(newPath);
                     } else {
                         // Otherwise include it and reload.
                         const newPath = `/${storeCode}${pathName}${params}`;
 
-                        window.location.assign(newPath);
+                        globalThis.location.assign(newPath);
                     }
                 } else {
-                    window.location.assign(`/${storeCode}`);
+                    globalThis.location.assign(`/${storeCode}`);
                 }
             } else {
                 // Refresh the page to re-trigger the queries once code/currency
                 // are saved in local storage.
-                // history.go(0);
-                window.location.assign(`${pathName}${params}`);
+                globalThis.location.assign(`${pathName}${params}`);
             }
         },
-        [getPathname, availableStores]
+        [availableStores, getPathname]
     );
 
     const handleTriggerClick = useCallback(() => {
         // Toggle Stores Menu.
         setStoreMenuIsOpen(isOpen => !isOpen);
     }, [setStoreMenuIsOpen]);
-    
+
     return {
-        currentStoreName,
         availableStores,
+        currentGroupName,
+        currentStoreName,
+        storeGroups,
         storeMenuRef,
         storeMenuTriggerRef,
         storeMenuIsOpen,

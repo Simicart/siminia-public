@@ -1,12 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useApolloClient, useQuery, useMutation } from '@apollo/client';
+import { useApolloClient, useQuery, useMutation, gql } from '@apollo/client';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { useAppContext } from '@magento/peregrine/lib/context/app';
 import { useAwaitQuery } from '@magento/peregrine/lib/hooks/useAwaitQuery';
 import { useWindowSize } from '@magento/peregrine';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
-import { gql } from '@apollo/client';
+import { useDropdown } from '@magento/peregrine/lib/hooks/useDropdown';
+
+/**
+ * Routes to hide the mini cart on.
+ */
+const DENIED_MINI_CART_ROUTES = ['/checkout'];
 
 const CHECK_USER_IS_AUTHED = gql`
     query simiCheckUserIsAuthed($cartId: String) {
@@ -21,15 +26,26 @@ export const useCartTrigger = props => {
     const {
         mutations: { createCartMutation },
         queries: { getCartDetailsQuery, getItemCountQuery },
-        storeConfig,
-        isBasicTheme
+        storeConfig
     } = props;
-    const history = useHistory()
+    const history = useHistory();
+    const location = useLocation();
+    const [isHidden, setIsHidden] = useState(() =>
+        DENIED_MINI_CART_ROUTES.includes(location.pathname)
+    );
     const apolloClient = useApolloClient();
     const [{ drawer }, { toggleDrawer, closeDrawer }] = useAppContext();
     const [{ isSignedIn }, { signOut }] = useUserContext();
-    const [reloadInterval, setReloadInterval] = useState(1)
-    const [{ cartId }, { getCartDetails }] = useCartContext();
+    const [reloadInterval, setReloadInterval] = useState(1);
+    const [{ cartId }] = useCartContext();
+
+    const {
+        elementRef: miniCartRef,
+        expanded: miniCartIsOpen,
+        setExpanded: setMiniCartIsOpen,
+        triggerRef: miniCartTriggerRef
+    } = useDropdown();
+
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
 
@@ -49,20 +65,22 @@ export const useCartTrigger = props => {
             cartId,
             reloadInterval
         },
-        skip: (!cartId || !isSignedIn),
+        skip: !cartId || !isSignedIn
     });
 
     useEffect(() => {
         if (
-            userIsAuthedData && userIsAuthedData.simiCheckUserIsAuthed &&
-            (userIsAuthedData.simiCheckUserIsAuthed.token_valid === false || userIsAuthedData.simiCheckUserIsAuthed.cart_editable === false)
+            userIsAuthedData &&
+            userIsAuthedData.simiCheckUserIsAuthed &&
+            (userIsAuthedData.simiCheckUserIsAuthed.token_valid === false ||
+                userIsAuthedData.simiCheckUserIsAuthed.cart_editable === false)
         ) {
             signOut();
-            setTimeout(function () {
+            setTimeout(function() {
                 window.location.replace('/');
             }, 500);
         }
-    })
+    });
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -71,20 +89,31 @@ export const useCartTrigger = props => {
         return () => clearInterval(interval);
     }, []);
 
-    const itemCount = (data && data.cart) ? data.cart.total_quantity : 0;
+    useEffect(() => {
+        setIsHidden(DENIED_MINI_CART_ROUTES.includes(location.pathname));
+    }, [location]);
 
-    const handleClick = useCallback(async () => {
-        if (isBasicTheme && history) {
-            history.push('/cart.html');
-        } else if (isPhone && history)
-            history.push('/cart.html');
-        else
-            toggleDrawer('cart')
-    }, [history, isPhone, toggleDrawer, isBasicTheme]);
+    const itemCount = data && data.cart ? data.cart.total_quantity : 0;
+
+    const handleTriggerClick = useCallback(() => {
+        // Open the mini cart.
+        setMiniCartIsOpen(isOpen => !isOpen);
+    }, [setMiniCartIsOpen]);
+
+    const handleLinkClick = useCallback(() => {
+        // Send the user to the cart page.
+        history.push('/cart');
+    }, [history]);
 
     return {
-        handleClick,
+        handleLinkClick,
+        handleTriggerClick,
         itemCount,
-        isPhone
+        isPhone,
+        miniCartIsOpen,
+        miniCartRef,
+        hideCartTrigger: isHidden,
+        setMiniCartIsOpen,
+        miniCartTriggerRef
     };
 };

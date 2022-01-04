@@ -157,7 +157,7 @@ async function checkVersionPwa(){
         })
         .then(function (data) {
             if(data && data.pwa && data.pwa.hasOwnProperty('pwa_studio_client_ver_number') && data.pwa.pwa_studio_client_ver_number && localStorage){
-                let pwa_build_time = localStorage.getItem("CLIENT_VER");
+                const pwa_build_time = localStorage.getItem("CLIENT_VER");
                 if(!pwa_build_time || pwa_build_time === null){
                     localStorage.setItem("CLIENT_VER",data.pwa.pwa_studio_client_ver_number);
                 }else{
@@ -167,7 +167,7 @@ async function checkVersionPwa(){
                         unregister();
                         if(caches){
                             caches.keys().then(function(names) {
-                                for (let name of names)
+                                for (const name of names)
                                     if(name.indexOf('sw-precache') >= 0){
                                         caches.delete(name);
                                     }

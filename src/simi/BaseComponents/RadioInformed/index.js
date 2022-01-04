@@ -3,7 +3,7 @@ import { Circle } from 'react-feather';
 import { node, shape, string } from 'prop-types';
 import { Radio } from 'informed';
 import classify from 'src/classify';
-import defaultClasses from './radio.css';
+import defaultClasses from './radio.module.css';
 
 
 export const RadioOption = props => {

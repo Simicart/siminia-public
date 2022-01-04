@@ -1,0 +1,276 @@
+.root {
+    --content-width: 22.5rem;
+    height: 0;
+    overflow: visible;
+    left: -100vw;
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    transition: opacity 192ms var(--venia-global-anim-out),
+        visibility 192ms var(--venia-global-anim-out),
+        /* Adding delay to move container off the screen after previous transitions happened */
+            left 0s 192ms;
+    visibility: hidden;
+    width: calc(100vw - 2rem);
+    /* max-width wider than header to let dropdown to move left on wider screens while still staying near the trigger */
+    max-width: calc(
+        var(--venia-global-maxWidth) + var(--content-width) * 2 - 8rem
+    );
+    z-index: 3;
+    transform: translate3d(-50%, 0, 0);
+}
+/* .contents_open div:nth-child(1) div:nth-child(2) > div a:nth-child(2){
+    color: #000000;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 22px;
+} 
+.contents_open div:nth-child(1) div:nth-child(2) > div span:nth-child(5){
+    color: #E02020;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 24px;
+} */
+.title{
+    color: #111111;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 16px;
+    margin-bottom: 38px;
+}
+.root_open {
+    composes: root;
+    left: 50%;
+    opacity: 1;
+    transition: opacity 224ms var(--venia-global-anim-in),
+        visibility 224ms var(--venia-global-anim-in), left 0s;
+    visibility: visible;
+}
+
+.contents {
+    background-color: rgb(var(--venia-global-color-background));
+    border-radius: 1px;
+    box-shadow: 0 1px 6px rgb(var(--venia-global-color-gray-900) / 0.2);
+    display: grid;
+    /* These heights may change based on PWA-605 and should be based on 1.5 and 2.5 visible items. */
+    max-height: 50rem;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate3d(0, -8px, 0);
+    transition-duration: 192ms;
+    transition-property: transform;
+    transition-timing-function: var(--venia-global-anim-out);
+    width: var(--content-width);
+}
+
+.contents_open {
+    composes: contents;
+
+    transform: translate3d(0, 4px, 0);
+    transition-duration: 224ms;
+    transition-timing-function: var(--venia-global-anim-in);
+}
+
+.header {
+    align-items: center;
+    /* border-bottom: 2px solid rgb(var(--venia-global-color-gray-100)); */
+    display: grid;
+    font-size: var(--venia-global-typography-heading-XS-fontSize);
+    font-weight: 600;
+    grid-template-columns: 1fr auto;
+    line-height: var(--venia-global-typography-heading-lineHeight);
+    margin: 0 1rem;
+    padding: 0rem 0.5rem;
+    row-gap: 1rem;
+    border-top: 2px solid #0058AC;
+}
+
+.stockStatusMessageContainer {
+    grid-column-end: span 2;
+}
+
+.stockStatusMessageContainer:empty {
+    display: none;
+}
+
+.body {
+    max-height: 25rem;
+    min-height: 10rem;
+    overflow-y: scroll;
+    padding: 1.5rem;
+   
+}
+
+.quantity {
+    opacity: 1;
+    transition-delay: 64ms;
+    transition-duration: 384ms;
+    transition-property: opacity;
+    transition-timing-function: var(--venia-global-anim-standard);
+}
+
+.quantity_loading {
+    composes: quantity;
+    opacity: 0.5;
+}
+
+.price {
+    opacity: 1;
+    transition-delay: 64ms;
+    transition-duration: 384ms;
+    transition-property: opacity;
+    transition-timing-function: var(--venia-global-anim-standard);
+    display: grid;
+    grid-gap: 0.75rem;
+    grid-template-columns: 1fr 1fr;
+    color: #111111;
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: 14px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+.labelSubtotal, .priceSubtotal{
+  color: #111111;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 14px;
+  font-weight: initial;
+}
+
+.labelSubtotal, .labelGrandTotal{
+    justify-self: start;
+}
+.priceSubtotal, .priceGrandTotal{
+    justify-self: end;
+}
+.price_loading {
+    composes: quantity;
+    opacity: 0.5;
+}
+
+.footer {
+    /* align-items: center; */
+    /* border-top: 2px solid rgb(var(--venia-global-color-gray)); */
+    display: grid;
+    grid-gap: 0.75rem;
+    /* font-size: var(--venia-typography-body-S-fontSize); */
+    /* justify-items: center; */
+    /* line-height: var(--venia-typography-body-lineHeight); */
+    /* margin: 0 1rem; */
+    /* min-height: 3rem; */
+    /* overflow: hidden; */
+    /* padding: 1rem; */
+    grid-template-columns: 1fr 1fr;
+    margin-top: 17px;
+    padding: 0px 24px 32px 24px;
+}
+
+.goToCheckoutButton {
+    justify-self: end;
+    align-items: center;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: auto;
+    text-align: center;
+    border-color: #0058ac;
+    background: #0058ac;
+    color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    min-width: 166px!important;
+    max-width: 100%;
+    min-height: 50px;
+    outline: none;
+    padding: calc(0.5rem + 1px) 1.5rem calc(0.5rem - 1px);
+    padding-top: 9px;
+    text-transform: uppercase;
+    transition-duration: 256ms;
+    transition-property: background-color, border-color, color;
+    transition-timing-function: var(--venia-global-anim-standard);
+}
+.goToCheckoutButton span{
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 16px;
+
+}
+.viewCartButton span{
+    color: #0058AC;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 16px;
+}
+.viewCartButton {
+    min-width: 166px!important;
+    background-color: #FFFFFF;
+    justify-self: start;
+    align-items: center;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: auto;
+    text-align: center;
+    border-color: #0058ac;
+    color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    min-height: 50px;
+    outline: none;
+    padding: calc(0.5rem + 1px) 1.5rem calc(0.5rem - 1px);
+    padding-top: 9px;
+    text-transform: uppercase;
+    transition-duration: 256ms;
+    transition-property: background-color, border-color, color;
+    transition-timing-function: var(--venia-global-anim-standard);
+}
+
+.emptyCart {
+    display: grid;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.emptyMessage {
+    margin: auto;
+    color: #111111;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 14px;
+}
+
+.continue{
+    display: block;
+    box-sizing: border-box;
+    min-height: 50px;
+    background-color: #0058B2;
+    padding-top: 22px ;
+    padding-inline-start : 40px;
+    padding-bottom: 18px;
+    padding-inline-end: 40px; 
+    color: #FFFFFF;
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 14px;
+    text-transform: uppercase;
+}

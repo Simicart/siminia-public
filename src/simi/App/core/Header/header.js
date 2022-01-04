@@ -1,152 +1,232 @@
-import React, { Suspense } from 'react'
-import Identify from "src/simi/Helper/Identify";
-import WishList from 'src/simi/BaseComponents/Icon/WishList'
-import MenuIcon from 'src/simi/BaseComponents/Icon/Menu'
-import ToastMessage from 'src/simi/BaseComponents/Message/ToastMessage'
-import TopMessage from 'src/simi/BaseComponents/Message/TopMessage'
-import NavTrigger from './Component/navTrigger'
-import CartTrigger from './cartTrigger'
-import defaultClasses from './header.css'
-import { mergeClasses } from 'src/classify'
+import React, { useEffect } from 'react';
+import Identify from 'src/simi/Helper/Identify';
+import WishList from 'src/simi/BaseComponents/Icon/WishList';
+import MenuIcon from 'src/simi/BaseComponents/Icon/Menu';
+import ToastMessage from 'src/simi/BaseComponents/Message/ToastMessage';
+import NavTrigger from './Component/navTrigger';
+import CartTrigger from './cartTrigger';
+import { useStyle } from '@magento/venia-ui/lib/classify';
 import { Link } from 'src/drivers';
-import HeaderNavigation from './Component/HeaderNavigation'
-import MyAccount from './Component/MyAccount'
-import Settings from './Component/Settings'
-import { withRouter } from 'react-router-dom';
+import MegaMenu from '@magento/venia-ui/lib/components/MegaMenu/megaMenu';
+import MyAccount from './Component/MyAccount';
+import { useHistory, useLocation } from 'react-router-dom';
 import { logoUrl } from 'src/simi/Helper/Url';
 import SearchForm from './Component/SearchForm';
-require('./header.scss');
+import StoreSwitcher from '@magento/venia-ui/lib/components/Header/storeSwitcher';
+import CurrencySwitcher from '@magento/venia-ui/lib/components/Header/currencySwitcher';
+import PageLoadingIndicator from '@magento/venia-ui/lib/components/PageLoadingIndicator';
+import { useUserContext } from '@magento/peregrine/lib/context/user';
+import { useWindowSize } from '@magento/peregrine';
+import { useIntl } from 'react-intl';
 
-class Header extends React.Component{
-    constructor(props) {
-        super(props);
-        this._mounted = true;
-        const isPhone = window.innerWidth < 1024 ;
-        this.state = {isPhone}
-        this.classes = mergeClasses(defaultClasses, this.props.classes)
-    }
+import defaultClasses from './header.module.css';
 
-    setMinPhone = () => {
-        const width = window.innerWidth;
-        const isPhone = width < 1024;
-        if (this.state.isPhone !== isPhone){
-            this.setState({isPhone})
-        }
-    }
+const Header = props => {
+    const history = useHistory();
+    const location = useLocation();
+    const classes = useStyle(defaultClasses, props.classes);
+    const { formatMessage } = useIntl();
+    const windowSize = useWindowSize();
+    const isPhone = windowSize.innerWidth < 1024;
+    const isSimpleHeader =
+        location &&
+        location.pathname &&
+        (location.pathname === '/checkout' || location.pathname === '/cart');
 
-    componentDidMount(){
-        window.addEventListener('resize', this.setMinPhone);
-    }
+    const storeConfig = Identify.getStoreConfig();
+    const [userData] = useUserContext();
+    
+    const { isSignedIn } = userData;
+    const renderRightBar = () => {
+        return (
+            <div
+                className={`${classes['right-bar']} ${
+                    Identify.isRtl() ? 'right-bar-rtl' : ''
+                }`}
+            >
+                <div className={classes['right-bar-item']} id="my-account">
+                    <MyAccount classes={classes} userData={userData} />
+                </div>
+                <div className={classes['right-bar-item']} id="wish-list">
+                    <Link to={isSignedIn ? '/wishlist' : '/sign-in'}>
+                        <div
+                            className={classes['item-icon']}
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center'
+                            }}
+                        >
+                            <WishList
+                                style={{
+                                    width: 35,
+                                    height: 35,
+                                    display: 'block'
+                                }}
+                            />
+                        </div>
+                        <div className={classes['item-text']}>
+                            {formatMessage({ id: 'Wishlist' })}
+                        </div>
+                    </Link>
+                </div>
+                <div
+                    className={`${classes['right-bar-item']} ${
+                        Identify.isRtl() ? classes['right-bar-item-rtl'] : ''
+                    }`}
+                >
+                    <CartTrigger classes={classes} />
+                </div>
+            </div>
+        );
+    };
 
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.setMinPhone);
-    }
-
-
-    renderLogo = () => {
-        const {isPhone} = this.state;
+    const renderLogo = () => {
         const storeConfig = Identify.getStoreConfig();
         const storeName =
             storeConfig && storeConfig.storeConfig
                 ? storeConfig.storeConfig.store_name
                 : '';
         return (
-            <div className={`${this.classes['search-icon']} ${this.classes['header-logo']}`} >
-                <Link to='/'>
+            <div
+                className={`${classes['search-icon']} ${
+                    classes['header-logo']
+                }`}
+            >
+                <Link to="/">
                     <img
                         src={logoUrl()}
-                        alt={storeName} style={!isPhone?{width: 240, height: 40}:{width: 180, height: 30}}/>
+                        alt={storeName}
+                        style={{
+                            objectPosition: isPhone
+                                ? 'center'
+                                : Identify.isRtl()
+                                ? 'right'
+                                : 'left',
+                            objectFit: 'contain',
+                            width: isPhone ? 180 : 240,
+                            height: isPhone ? 30 : 40
+                        }}
+                    />
                 </Link>
             </div>
-        )
-    }
+        );
+    };
 
-    renderSearchForm = () => {
-        return(
-            <div className={`${this.classes['header-search']} header-search ${Identify.isRtl() ? this.classes['header-search-rtl'] : ''}`}>
-                <SearchForm history={this.props.history} />
+    const renderSearchForm = () => {
+        return (
+            <div
+                className={`${classes['header-search']} ${
+                    Identify.isRtl() ? classes['header-search-rtl'] : ''
+                }`}
+            >
+                <SearchForm history={history} />
             </div>
-        )
-    }
-
-    renderRightBar = () => {
-        const {classes} = this
-        return(
-            <div className={`${classes['right-bar']} ${Identify.isRtl() ? 'right-bar-rtl' : ''}`}>
-                {
-                    !this.state.isPhone && <Settings classes={classes}/>
-                }
-                <div className={classes['right-bar-item']} id="my-account">
-                    <MyAccount classes={classes}/>
-                </div>
-                <div
-                    className={classes['right-bar-item']} id="wish-list"
-                >
-                    <Link to={'/wishlist.html'}>
-                        <div className={classes['item-icon']} style={{display: 'flex', justifyContent: 'center'}}>
-                            <WishList style={{width: 30, height: 30, display: 'block'}} />
-                        </div>
-                        <div className={classes['item-text']}>
-                            {Identify.__('Favourites')}
-                        </div>
-                    </Link>
-                </div>
-                <div className={`${classes['right-bar-item']} ${Identify.isRtl() ? 'right-bar-item-rtl' : ''}`}>
-                    <CartTrigger classes={classes}/>
-                </div>
-            </div>
-        )
-    }
-
-    renderViewPhone = () => {
-        return(
-            <div>
-                <div className="container">
-                    <div className={this.classes['header-app-bar']}>
-                        <NavTrigger>
-                            <MenuIcon color="#333132" style={{width:30,height:30}}/>
-                        </NavTrigger>
-                        {this.renderLogo()}
-                        <div className={this.classes['right-bar']}>
-                            <div className={this.classes['right-bar-item']}>
-                                <CartTrigger />
+        );
+    };
+    if (isPhone) {
+        return (
+            <React.Fragment>
+                <header id="siminia-main-header">
+                    <div
+                        style={{
+                            backgroundColor: 'rgba(255,255,255,0.92)',
+                            backdropFilter: 'blur(10px)'
+                        }}
+                    >
+                        <div className="container">
+                            <div
+                                className={`${
+                                    classes['header-app-bar']
+                                } ${Identify.isRtl() &&
+                                    classes['header-app-bar-rtl']}`}
+                            >
+                                <NavTrigger>
+                                    {!isSimpleHeader && (
+                                        <MenuIcon
+                                            color="#333132"
+                                            style={{ width: 35, height: 35 }}
+                                        />
+                                    )}
+                                </NavTrigger>
+                                {renderLogo()}
+                                <div className={classes['right-bar']}>
+                                    {!isSimpleHeader && (
+                                        <div
+                                            className={
+                                                classes['right-bar-item']
+                                            }
+                                        >
+                                            <CartTrigger />
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                {this.renderSearchForm()}
-                <div id="id-message">
-                    <TopMessage history={this.props.history}/>
-                    <ToastMessage/>
-                </div>
-            </div>
-
-
-        )
+                    <div id="id-message">
+                        <ToastMessage />
+                    </div>
+                </header>
+                {!isSimpleHeader && renderSearchForm()}
+            </React.Fragment>
+        );
     }
 
-    render(){
-        this.classes = mergeClasses(defaultClasses, this.props.classes);
-        if(this.state.isPhone){
-            return this.renderViewPhone()
-        }
-        const storeConfig = Identify.getStoreConfig();
-        return(
-            <React.Fragment>
-                <div className="container">
-                    <div className={this.classes['header-app-bar']}>
-                        {this.renderLogo()}
-                        {storeConfig && this.renderSearchForm()}
-                        {storeConfig && this.renderRightBar()}
+    return (
+        <React.Fragment>
+            {!isSimpleHeader && (
+                <div className={classes.switchersContainer}>
+                    {storeConfig && (
+                        <div className={`${classes.switchers} container`}>
+                            <StoreSwitcher />
+                            <CurrencySwitcher />
+                        </div>
+                    )}
+                </div>
+            )}
+            <header id="siminia-main-header">
+                <div
+                    style={{
+                        backgroundColor: isSimpleHeader
+                            ? 'rgba(255,255,255,0.8)'
+                            : 'white',
+                        backdropFilter: isSimpleHeader ? 'blur(10px)' : 'unset'
+                    }}
+                >
+                    <div
+                        className={`${
+                            classes['header-app-bar']
+                        } ${Identify.isRtl() &&
+                            classes['header-app-bar-rtl']} container`}
+                    >
+                        {renderLogo()}
+                        {storeConfig && !isSimpleHeader && renderSearchForm()}
+                        {storeConfig && !isSimpleHeader && renderRightBar()}
                     </div>
                 </div>
-                {(window.innerWidth >= 1024 && storeConfig)  ? <HeaderNavigation classes={this.classes}/> : ''}
-                <div id="id-message">
-                    <TopMessage history={this.props.history}/>
-                    <ToastMessage/>
-                </div>
-            </React.Fragment>
-        )
-    }
-}
-export default (withRouter)(Header)
+                {window.innerWidth >= 1024 && storeConfig && !isSimpleHeader ? (
+                    <div className={classes['header-megamenu-ctn']}>
+                        <MegaMenu classes={classes} />
+                    </div>
+                ) : (
+                    ''
+                )}
+                <PageLoadingIndicator
+                    absolute
+                    classes={{
+                        root_absolute: classes.pageLoadingIndRoot,
+                        indicator_off: classes.indicator_off,
+                        indicator_loading: classes.indicator_loading,
+                        indicator_done: classes.indicator_done
+                    }}
+                />
+            </header>
+
+            <div id="id-message">
+                <ToastMessage />
+            </div>
+        </React.Fragment>
+    );
+};
+
+export default Header;

@@ -1,0 +1,45 @@
+@import 'mediaQueryCustomOption';
+
+.custom-options {
+    padding: 0 15px;
+    @include mobile {
+        margin: 0 0.4rem;
+    }
+    @include tablet {
+        margin: 0 0.6rem;
+    }
+
+    .option-select + .option-select {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+
+        @include mobile {
+            margin-top: 1rem;
+        }
+        @include tablet {
+            margin-top: 0.6rem;
+        }
+    }
+
+    .option-select {
+        border-top: 1px solid #d8d8d8;
+
+        .custom-content-wrapper {
+            margin-top: 1rem;
+        }
+    }
+
+    .option-title {
+        margin-bottom: 0.4rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .option-list > div {
+        margin-bottom: 0.2rem;
+    }
+
+    .option-select:first-child {
+        border-top: none;
+    }
+}

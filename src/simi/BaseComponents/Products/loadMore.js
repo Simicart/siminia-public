@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Identify from 'src/simi/Helper/Identify';
 import Loading from 'src/simi/BaseComponents/Loading/ReactLoading';
+import { useIntl } from 'react-intl';
 
 const LoadMore = props => {
     const { items, itemCount, currentPage, updateSetPage, loading } = props;
-    console.log(props);
+    const { formatMessage } = useIntl();
     if (itemCount < 1 || items.length >= itemCount) return null;
 
     const handleSetPage = num => {
@@ -27,7 +27,7 @@ const LoadMore = props => {
                         loadingStyle={{ fill: 'white' }}
                     />
                 ) : (
-                    Identify.__('Load More')
+                    formatMessage({ id: 'Load More' })
                 )}
             </div>
         </div>

@@ -1,0 +1,17 @@
+.root {
+    min-width: 30%;
+    margin-inline-end: 1rem;
+}
+
+.siminia-product-grid-item {
+    width: 260px;
+}
+.siminia-product-image {
+    height: 260px;
+    width: 260px;
+}
+.siminia-product-image img {
+    width: 258px;
+    height: 258px;
+    object-fit: contain;
+}

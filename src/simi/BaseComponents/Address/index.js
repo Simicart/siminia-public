@@ -4,7 +4,7 @@ const AddressItem = (props) => {
 
     const { data } = props;
     const classes = props.classes?props.classes:{}
-    let add_ress_1, add_ress_2 = '';
+    let add_ress_1; let add_ress_2 = '';
     if (data.street && Array.isArray(data.street) && data.street.length > 0) {
         add_ress_1 = data.street[0];
         add_ress_2 = data.street[1];

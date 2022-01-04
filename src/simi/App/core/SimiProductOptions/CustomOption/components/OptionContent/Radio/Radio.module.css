@@ -1,0 +1,15 @@
+.input {
+    box-shadow: none !important;
+}
+
+.label-option-price {
+    font-weight: bold !important;
+}
+
+.radioLabel {
+    font-size: 0.8rem;
+    color: #555555;
+}
+.root{
+    display: block !important;
+}

@@ -1,0 +1,11 @@
+.input {
+    box-shadow: none !important;
+}
+
+.label-option-price {
+    font-weight: bold !important;
+}
+
+.root{
+    display: block !important;
+}

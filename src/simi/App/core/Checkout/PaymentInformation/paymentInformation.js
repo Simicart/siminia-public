@@ -1,21 +1,18 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { Form } from 'informed';
 import { shape, func, string, bool, instanceOf } from 'prop-types';
 
-import { usePaymentInformation } from 'src/simi/talons/CheckoutPage/PaymentInformation/usePaymentInformation';
-import CheckoutError from 'src/simi/talons/CheckoutPage/CheckoutError';
-import Identify from 'src/simi/Helper/Identify'
+import { usePaymentInformation } from '@magento/peregrine/lib/talons/CheckoutPage/PaymentInformation/usePaymentInformation';
+import CheckoutError from '@magento/peregrine/lib/talons/CheckoutPage/CheckoutError';
 
-import PaymentMethods from './paymentMethods';
-import Summary from './summary';
-import { mergeClasses } from 'src/classify';
-import EditModal from './editModal';
-
-import paymentInformationOperations from './paymentInformation.gql';
-
-import defaultClasses from './paymentInformation.css';
+import { useStyle } from '@magento/venia-ui/lib/classify';
+import defaultClasses from '@magento/venia-ui/lib/components/CheckoutPage/PaymentInformation/paymentInformation.module.css';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 
-import { CHECKOUT_STEP } from 'src/simi/talons/CheckoutPage/useCheckoutPage'
+const PaymentMethods = React.lazy(() => import('./paymentMethods'));
+const EditModal = React.lazy(() => import('@magento/venia-ui/lib/components/CheckoutPage/PaymentInformation/editModal'));
+const Summary = React.lazy(() => import('@magento/venia-ui/lib/components/CheckoutPage/PaymentInformation/summary'));
 
 const PaymentInformation = props => {
     const {
@@ -27,15 +24,14 @@ const PaymentInformation = props => {
         checkoutError
     } = props;
 
-    const classes = mergeClasses(defaultClasses, propClasses);
+    const classes = useStyle(defaultClasses, propClasses);
 
     const talonProps = usePaymentInformation({
         onSave,
         checkoutError,
         resetShouldSubmit,
         setCheckoutStep,
-        shouldSubmit,
-        ...paymentInformationOperations
+        shouldSubmit
     });
 
     const {
@@ -43,45 +39,48 @@ const PaymentInformation = props => {
         handlePaymentError,
         handlePaymentSuccess,
         hideEditModal,
-        isEditModalActive,
         isLoading,
-        setDoneEditing,
+        isEditModalActive,
         showEditModal
     } = talonProps;
 
-    const editModal = isEditModalActive ? (
-        <EditModal onClose={hideEditModal} />
+    if (isLoading) {
+        return (
+            <LoadingIndicator classes={{ root: classes.loading }}>
+                <FormattedMessage
+                    id={'checkoutPage.loadingPaymentInformation'}
+                    defaultMessage={'Fetching Payment Information'}
+                />
+            </LoadingIndicator>
+        );
+    }
+
+    const paymentInformation = doneEditing ? (
+        <Summary onEdit={showEditModal} />
+    ) : (
+        <Form>
+            <PaymentMethods
+                onPaymentError={handlePaymentError}
+                onPaymentSuccess={handlePaymentSuccess}
+                resetShouldSubmit={resetShouldSubmit}
+                shouldSubmit={shouldSubmit}
+            />
+        </Form>
+    );
+
+    const editModal = doneEditing ? (
+        <Suspense fallback={null}>
+            <EditModal onClose={hideEditModal} isOpen={isEditModalActive} />
+        </Suspense>
     ) : null;
 
-    //return payment methods Node to avoid rerender PaymentMethods (causes error on payment form)
     return (
-        <React.Fragment>
-            {isLoading ?
-                <LoadingIndicator classes={{ root: classes.loading }}>
-                    {Identify.__('Fetching Payment Information')}
-                </LoadingIndicator> : ''}
-            <div className={classes.root} style={{ display: isLoading ? 'none' : 'block' }}>
-                <div className={classes.payment_info_container}>
-                    <div style={{ display: doneEditing ? 'block' : 'none' }}>
-                        <Summary onEdit={() => {
-                            setCheckoutStep(CHECKOUT_STEP.PAYMENT);
-                            resetShouldSubmit();
-                            setDoneEditing();
-                        }
-                        } />
-                    </div>
-                    <div style={{ display: doneEditing ? 'none' : 'block' }}>
-                        <PaymentMethods
-                            onPaymentError={handlePaymentError}
-                            onPaymentSuccess={handlePaymentSuccess}
-                            resetShouldSubmit={resetShouldSubmit}
-                            shouldSubmit={shouldSubmit}
-                        />
-                    </div>
-                </div>
-                {editModal}
+        <div className={classes.root}>
+            <div className={classes.payment_info_container}>
+                <Suspense fallback={null}>{paymentInformation}</Suspense>
             </div>
-        </React.Fragment>
+            {editModal}
+        </div>
     );
 };
 

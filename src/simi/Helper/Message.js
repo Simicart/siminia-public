@@ -1,8 +1,8 @@
-export const showToastMessage = (message,time = 4000) => {
-    $('#toast-message-content').text(message);
-    $('#toast-message-global').show();
-    setTimeout(function () {
-        $('#toast-message-content').text("");
-        $('#toast-message-global').hide();
-    },time );
-}
+export const showToastMessage = (message, time = 4000) => {
+    document.getElementById('toast-message-content').innerHTML = message;
+    document.getElementById('toast-message-global').style.display = 'flex';
+    setTimeout(function() {
+        document.getElementById('toast-message-content').innerHTML = '';
+        document.getElementById('toast-message-global').style.display = 'none';
+    }, time);
+};

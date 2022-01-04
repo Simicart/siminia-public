@@ -1,8 +1,0 @@
-fragment CustomizableFieldOption on CustomizableFieldOption {
-    field_value: value {
-        max_characters
-        price_type
-        price
-        sku
-    }
-}

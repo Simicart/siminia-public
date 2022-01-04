@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
 import { toggleDrawer } from 'src/actions/app';
-import defaultClasses from './navTrigger.css';
+import defaultClasses from './navTrigger.module.css';
 
 class Trigger extends Component {
     static propTypes = {

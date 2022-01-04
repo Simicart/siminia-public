@@ -1,8 +1,8 @@
 import React from 'react';
-import gql from 'graphql-tag';
-import { HOPrice as Price } from 'src/simi/Helper/Pricing'
+import { FormattedMessage, useIntl } from 'react-intl';
+import Price from '@magento/venia-ui/lib/components/Price';
 
-import { mergeClasses } from 'src/classify'
+import { useStyle } from '@magento/venia-ui/lib/classify';
 /**
  * A component that renders the shipping summary line item after address and
  * method are selected
@@ -11,8 +11,9 @@ import { mergeClasses } from 'src/classify'
  * @param {Object} props.data fragment response data
  */
 const ShippingSummary = props => {
-    const classes = mergeClasses({}, props.classes);
+    const classes = useStyle({}, props.classes);
     const { data, isCheckout } = props;
+    const { formatMessage } = useIntl();
 
     // Don't render estimated shipping until an address has been provided and
     // a method has been selected.
@@ -22,66 +23,31 @@ const ShippingSummary = props => {
 
     const shipping = data[0].selected_shipping_method.amount;
 
+    const shippingLabel = isCheckout
+        ? formatMessage({
+              id: 'shippingSummary.shipping',
+              defaultMessage: 'Shipping'
+          })
+        : formatMessage({
+              id: 'shippingSummary.estimatedShipping',
+              defaultMessage: 'Estimated Shipping'
+          });
+
     // For a value of "0", display "FREE".
     const price = shipping.value ? (
         <Price value={shipping.value} currencyCode={shipping.currency} />
     ) : (
-        <span>{'FREE'}</span>
+        <span>
+            <FormattedMessage id={'global.free'} defaultMessage={'FREE'} />
+        </span>
     );
 
     return (
         <>
-            <span className={classes.lineItemLabel}>
-                {isCheckout ? 'Shipping' : 'Estimated Shipping'}
-            </span>
+            <span className={classes.lineItemLabel}>{shippingLabel}</span>
             <span className={classes.price}>{price}</span>
         </>
     );
 };
-
-export const ShippingSummaryFragment = gql`
-    fragment ShippingSummaryFragment on Cart {
-        id
-        shipping_addresses {
-            customer_notes
-            firstname
-            lastname
-            company
-            street
-            city
-            region {
-                code
-                label
-                region_id
-            }
-            postcode
-            country {
-                code
-                label
-            }
-            telephone
-            available_shipping_methods {
-                carrier_code
-                method_code
-                carrier_title
-                method_title
-                amount {
-                    currency
-                    value
-                }
-            }
-            selected_shipping_method {
-                carrier_code
-                method_code
-                carrier_title
-                method_title
-                amount {
-                    currency
-                    value
-                }
-            }
-        }
-    }
-`;
 
 export default ShippingSummary;

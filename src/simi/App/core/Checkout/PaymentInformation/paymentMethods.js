@@ -1,28 +1,15 @@
 import React from 'react';
 import { shape, string, bool, func } from 'prop-types';
-import { RadioGroup } from 'informed';
+import { useIntl } from 'react-intl';
 
-import { usePaymentMethods } from 'src/simi/talons/CheckoutPage/PaymentInformation/usePaymentMethods';
+import { usePaymentMethods } from '@magento/peregrine/lib/talons/CheckoutPage/PaymentInformation/usePaymentMethods';
 
-import { mergeClasses } from 'src/classify';
-import Radio from 'src/simi/BaseComponents/RadioInformed';
-import CreditCard from './creditCard';
-import PlainOffline from './SimiPayments/PlainOffline';
-import PurchaseOrder from './SimiPayments/PurchaseOrder/index';
-import StripeIntegration from './SimiPayments/StripeIntegration/index';
-import paymentMethodOperations from './paymentMethods.gql';
-import defaultClasses from './paymentMethods.css';
-
-const PAYMENT_METHOD_COMPONENTS_BY_CODE = {
-    braintree: CreditCard,
-    checkmo: PlainOffline,
-    banktransfer: PlainOffline,
-    cashondelivery: PlainOffline,
-    purchaseorder: PurchaseOrder,
-    paypal_express: PlainOffline,
-    stripe_payments: StripeIntegration,
-    // etc
-};
+import { useStyle } from '@magento/venia-ui/lib/classify';
+import RadioGroup from '@magento/venia-ui/lib/components/RadioGroup';
+import Radio from '@magento/venia-ui/lib/components/RadioGroup/radio';
+import defaultClasses from '@magento/venia-ui/lib/components/CheckoutPage/PaymentInformation/paymentMethods.module.css';
+import payments from './paymentMethodCollection';
+import Identify from 'src/simi/Helper/Identify';
 
 const PaymentMethods = props => {
     const {
@@ -33,68 +20,92 @@ const PaymentMethods = props => {
         shouldSubmit
     } = props;
 
-    const classes = mergeClasses(defaultClasses, propClasses);
+    const { formatMessage } = useIntl();
 
-    const talonProps = usePaymentMethods({
-        ...paymentMethodOperations
-    });
+    const classes = useStyle(defaultClasses, propClasses);
+
+    const talonProps = usePaymentMethods({});
 
     const {
         availablePaymentMethods,
         currentSelectedPaymentMethod,
         initialSelectedMethod,
-        isVirtual,
         isLoading
     } = talonProps;
 
     if (isLoading) {
         return null;
     }
-    
-    const radios = availablePaymentMethods.map((paymentObj) => {
-        const { code, title } = paymentObj
-        // If we don't have an implementation for a method type, ignore it.
-        if (!Object.keys(PAYMENT_METHOD_COMPONENTS_BY_CODE).includes(code)) {
-            return;
-        }
 
-        const isSelected = currentSelectedPaymentMethod === code;
-        const PaymentMethodComponent = PAYMENT_METHOD_COMPONENTS_BY_CODE[code];
-        const renderedComponent = isSelected ? (
-            <PaymentMethodComponent
-                onPaymentSuccess={onPaymentSuccess}
-                onPaymentError={onPaymentError}
-                resetShouldSubmit={resetShouldSubmit}
-                shouldSubmit={shouldSubmit}
-                paymentCode={code}
-                paymentObj={paymentObj}
-                isVirtual={isVirtual}
-            />
-        ) : null;
+    Identify.storeDataToStoreage(
+        Identify.LOCAL_STOREAGE,
+        'simi_selected_payment_code',
+        currentSelectedPaymentMethod
+    );
 
-        return (
-            <div key={code} className={classes.payment_method}>
-                <Radio
-                    label={title}
-                    value={code}
-                    classes={{
-                        label: classes.radio_label
-                    }}
-                    checked={isSelected}
+    const radios = availablePaymentMethods
+        .map(({ code, title }) => {
+            // If we don't have an implementation for a method type, ignore it.
+            if (!Object.keys(payments).includes(code)) {
+                return;
+            }
+
+            const id = `paymentMethod--${code}`;
+            const isSelected = currentSelectedPaymentMethod === code;
+            const PaymentMethodComponent = payments[code];
+            const renderedComponent = isSelected ? (
+                <PaymentMethodComponent
+                    onPaymentSuccess={onPaymentSuccess}
+                    onPaymentError={onPaymentError}
+                    resetShouldSubmit={resetShouldSubmit}
+                    shouldSubmit={shouldSubmit}
                 />
-                {renderedComponent}
-            </div>
-        );
-    });
+            ) : null;
+
+            return (
+                <div key={code} className={classes.payment_method}>
+                    <Radio
+                        id={id}
+                        label={title}
+                        value={code}
+                        classes={{
+                            label: classes.radio_label
+                        }}
+                        checked={isSelected}
+                    />
+                    {renderedComponent}
+                </div>
+            );
+        })
+        .filter(paymentMethod => !!paymentMethod);
+
+    const noPaymentMethodMessage = !radios.length ? (
+        <div className={classes.payment_errors}>
+            <span>
+                {formatMessage({
+                    id: 'checkoutPage.paymentLoadingError',
+                    defaultMessage: 'There was an error loading payments.'
+                })}
+            </span>
+            <span>
+                {formatMessage({
+                    id: 'checkoutPage.refreshOrTryAgainLater',
+                    defaultMessage: 'Please refresh or try again later.'
+                })}
+            </span>
+        </div>
+    ) : null;
 
     return (
         <div className={classes.root}>
             <RadioGroup
+                classes={{ root: classes.radio_group }}
                 field="selectedPaymentMethod"
                 initialValue={initialSelectedMethod}
             >
                 {radios}
             </RadioGroup>
+            {noPaymentMethodMessage}
         </div>
     );
 };

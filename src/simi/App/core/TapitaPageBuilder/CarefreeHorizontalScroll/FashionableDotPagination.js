@@ -1,5 +1,5 @@
 import React from 'react';
-import defaultClasses from './FashionableDotPagination.css';
+import defaultClasses from './FashionableDotPagination.module.css';
 
 const generateClass = (clo, icl, ...cl) => {
     const entries = (cl || []).filter(x => !!x);

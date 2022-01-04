@@ -127,6 +127,11 @@ const ItemFragment = gql`
         }
         rating_summary
         review_count
+        ... on CustomizableProductInterface {
+            options {
+                title
+            }
+        }
     }
 `;
 
@@ -149,15 +154,6 @@ const GET_PRODUCTS = gql`
             }
             page_info {
                 total_pages
-            }
-            aggregations {
-                label
-                count
-                attribute_code
-                options {
-                    label
-                    value
-                }
             }
         }
     }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classify from 'src/classify';
-import defaultClasses from './notFound.css';
+import defaultClasses from './notFound.module.css';
 
 class NotFound extends Component {
     // TODO: Should not be a default here, we just don't have

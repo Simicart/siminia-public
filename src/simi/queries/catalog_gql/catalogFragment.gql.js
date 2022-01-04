@@ -4,18 +4,16 @@ export const CategoryFragment = gql`
     fragment CategoryFragment on CategoryTree {
         description
         url_key
+        url_path
         name
         id
         image
         breadcrumbs {
             category_id
+            category_level
             category_name
             category_url_key
-        }
-        simiCategoryCms {
-            display_mode
-            cms_identifier
-            cms
+            category_url_path
         }
         meta_title
         meta_keywords
@@ -23,7 +21,7 @@ export const CategoryFragment = gql`
     }
 `;
 
-const SimiPriceFragment = gql`
+export const SimiPriceFragment = gql`
     fragment SimiPriceFragment on ProductPrices {
         regularPrice {
             amount {
@@ -144,15 +142,6 @@ export const ProductOfListFragment = gql`
         price {
             ...SimiPriceFragment
         }
-        ... on ConfigurableProduct {
-            ...ConfigurableOptionsFragment
-        }
-        ... on CustomizableProductInterface {
-            options {
-                option_id
-                required
-            }
-        }
         price_tiers {
             quantity
             final_price {
@@ -162,7 +151,11 @@ export const ProductOfListFragment = gql`
         }
         rating_summary
         review_count
+        ... on CustomizableProductInterface {
+            options {
+                title
+            }
+        }
     }
     ${SimiPriceFragment}
-    ${ConfigurableOptionsFragment}
 `;

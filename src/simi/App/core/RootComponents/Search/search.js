@@ -1,20 +1,21 @@
 import React from 'react';
 import { Redirect } from 'src/drivers';
+import { useIntl } from 'react-intl';
 import { compose } from 'redux';
 
 import classify from 'src/classify';
-import Identify from 'src/simi/Helper/Identify';
-import defaultClasses from './search.css';
+import defaultClasses from './search.module.css';
 import Products from 'src/simi/BaseComponents/Products';
 import { withRouter } from 'react-router-dom';
-import Skeleton from 'react-loading-skeleton';
+import CategoryContentShimmer from '@magento/venia-ui/lib/RootComponents/Category/categoryContent.shimmer';
 import NoProductsFound from 'src/simi/BaseComponents/Products/NoProductsFound';
 import { useSearchContentSimiPagination } from 'src/simi/talons/Search/useSearchContentSimiPagination';
 import TitleHelper from 'src/simi/Helper/TitleHelper';
-import BreadCrumb from "src/simi/BaseComponents/BreadCrumb";
+import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
 
 const Search = props => {
     const { classes, location, history } = props;
+    const { formatMessage } = useIntl();
 
     const loadStyle = 2; // 1: button load-more, 2: pagination
 
@@ -43,58 +44,41 @@ const Search = props => {
         <Redirect to="/" />;
     }
 
-    if (error) return <div>{Identify.__('Data Fetch Error')}</div>;
+    if (error) return <div>{formatMessage({ id: 'Data Fetch Error' })}</div>;
 
-    if (!products || !products.products)
-        return (
-            <div className="container simi-fadein">
-                <article className="products-gallery-root">
-                    <Skeleton width="100%" height={50} />
-                    <div className="product-list-container-siminia">
-                        <div key="siminia-left-navigation-filter"
-                            className="left-navigation" ><Skeleton height={600} /></div>
-                        <div className="listing-product">
-                            <div className={`result-title`}><Skeleton count={3} /></div>
-                            <section className="gallery">
-                                <div className="gallery-root">
-                                    <div className="gallery-items">
-                                        <div role="presentation" className="siminia-product-grid-item"><Skeleton height={250} /></div>
-                                        <div role="presentation" className="siminia-product-grid-item"><Skeleton height={250} /></div>
-                                        <div role="presentation" className="siminia-product-grid-item"><Skeleton height={250} /></div>
-                                        <div role="presentation" className="siminia-product-grid-item"><Skeleton height={250} /></div>
-                                        <div role="presentation" className="siminia-product-grid-item"><Skeleton height={250} /></div>
-                                        <div role="presentation" className="siminia-product-grid-item"><Skeleton height={250} /></div>
-                                    </div>
-                                </div>
-                            </section>
-                            <div className="product-grid-pagination">
-                                <Skeleton />
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        );
+    if (!products || !products.products) return <CategoryContentShimmer />;
 
-    const breadcrumb = [{ name: Identify.__("Home"), link: '/' }, { name: Identify.__("Search") }, { name: Identify.__("Search results for: '" + inputText + "'"), link: '/search.html?q=' + inputText }];
-    const title = Identify.__(`Search results for: '%s'`).replace('%s', inputText);
+    const breadcrumb = [
+        { name: formatMessage({ id: 'Home' }), link: '/' },
+        { name: formatMessage({ id: 'Search results for' }) + ' ' + inputText }
+    ];
+    const title = formatMessage({ id: 'Search results for' }) + ' ' + inputText;
 
-    return (<div className={`${classes.root} container simi-fadein`}>
-        {TitleHelper.renderMetaHeader({ title })}
-        <BreadCrumb breadcrumb={breadcrumb} history={history} />
-        {pageControl.totalPages > 0 ? <Products
-            type={'category'}
-            title={title}
-            history={history}
-            pageSize={pageSize}
-            data={products}
-            sortByData={sortByData}
-            filterData={appliedFilter}
-            loading={loading}
-            loadStyle={loadStyle}
-            pageControl={pageControl}
-        /> : <NoProductsFound />}
-    </div>);
-}
+    return (
+        <div className={`${classes.root} container simi-fadein`}>
+            {TitleHelper.renderMetaHeader({ title })}
+            <Breadcrumbs breadcrumb={breadcrumb} history={history} />
+            {pageControl.totalPages > 0 ? (
+                <Products
+                    type={'category'}
+                    title={title}
+                    history={history}
+                    pageSize={pageSize}
+                    data={products}
+                    sortByData={sortByData}
+                    filterData={appliedFilter}
+                    loading={loading}
+                    loadStyle={loadStyle}
+                    pageControl={pageControl}
+                />
+            ) : (
+                <NoProductsFound />
+            )}
+        </div>
+    );
+};
 
-export default compose(withRouter, classify(defaultClasses))(Search);
+export default compose(
+    withRouter,
+    classify(defaultClasses)
+)(Search);

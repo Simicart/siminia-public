@@ -4,7 +4,7 @@ import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { mergeClasses } from 'src/classify';
 import SuggestedCategories from './suggestedCategories';
 import SuggestedProducts from './suggestedProducts';
-import defaultClasses from './suggestions.css';
+import defaultClasses from './suggestions.module.css';
 
 const Suggestions = props => {
     const { products, searchValue, setVisible, visible } = props;

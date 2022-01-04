@@ -2,3 +2,5 @@ node_modules
 esm
 dist
 lastCachedGraphQLSchema.json
+yarn-error.log
+.env

@@ -1,0 +1,25 @@
+.product-detail-carousel .carousel-slider {
+    direction: ltr;
+}
+.product-detail-carousel .carousel-slider li.slide {
+    background: none;
+}
+
+.product-detail-carousel .carousel-slider img {
+    max-height: 700px;
+}
+
+
+.image-carousel {
+    margin: 0 auto;
+    min-width: 300px;
+    max-width: 640px;
+    width: 60%;
+}
+
+@media (max-width: 1023px) {
+    .image-carousel {
+        width: 100%;
+        min-height: 100vw;
+    }
+}

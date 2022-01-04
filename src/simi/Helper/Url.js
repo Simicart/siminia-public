@@ -8,7 +8,7 @@ export const getUrlBuffer = () => {
 };
 
 export const resourceUrl = (path, { type, width } = {}) => {
-    let urlBuffer = getUrlBuffer();
+    const urlBuffer = getUrlBuffer();
     let result = makeOptimizedUrl(path, { type, width });
     //fix error when path is not full url, when the result does not directory ./pub
     if (
@@ -53,19 +53,21 @@ export const convertToSlug = Text => {
 Logo Url
 */
 export const logoUrl = () => {
-    const dbConfig = Identify.getAppDashboardConfigs();
+    const magentoConfig = Identify.getStoreConfig();
+
     if (
-        dbConfig &&
-        dbConfig['app-configs'] &&
-        dbConfig['app-configs'][0] &&
-        dbConfig['app-configs'][0]['app_images'] &&
-        dbConfig['app-configs'][0]['app_images']['logo']
+        magentoConfig &&
+        magentoConfig['storeConfig'] &&
+        magentoConfig['storeConfig'].header_logo_src &&
+        magentoConfig['storeConfig'].base_media_url
     ) {
-        return dbConfig['app-configs'][0]['app_images']['logo'];
+        const url = new URL(
+            './logo/' + magentoConfig['storeConfig'].header_logo_src,
+            magentoConfig['storeConfig'].base_media_url
+        );
+        return url.href;
     }
-    return window.SMCONFIGS.logo_url
-        ? window.SMCONFIGS.logo_url
-        : 'https://www.simicart.com/skin/frontend/default/simicart2.1/images/simicart/new_logo_small.png';
+    return 'https://www.simicart.com/skin/frontend/default/simicart2.1/images/simicart/new_logo_small.png';
 };
 
 /*
@@ -79,8 +81,7 @@ export const cateUrlSuffix = () => {
     if (savedSuffix) return savedSuffix;
     try {
         const storeConfig = Identify.getStoreConfig();
-        const suffix =
-            storeConfig.simiStoreConfig.config.catalog.seo.category_url_suffix || '';
+        const suffix = storeConfig.storeConfig.category_url_suffix;
         Identify.storeDataToStoreage(
             Identify.SESSION_STOREAGE,
             'CATEGORY_URL_SUFFIX',
@@ -101,8 +102,7 @@ export const productUrlSuffix = () => {
     if (savedSuffix) return savedSuffix;
     try {
         const storeConfig = Identify.getStoreConfig();
-        const suffix =
-            storeConfig.simiStoreConfig.config.catalog.seo.product_url_suffix || '';
+        const suffix = storeConfig.storeConfig.product_url_suffix;
         Identify.storeDataToStoreage(
             Identify.LOCAL_STOREAGE,
             'PRODUCT_URL_SUFFIX',

@@ -1,0 +1,10 @@
+.siminia-white-btn {
+    background-color: white;
+    height: 45px;
+    font-size: 16px;
+    text-align: center;
+    color: #38404a;
+    padding-top: 11px;
+    border: solid #38404a 1px;
+    cursor: pointer;
+}

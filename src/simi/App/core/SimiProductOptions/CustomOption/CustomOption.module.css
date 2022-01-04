@@ -1,0 +1,20 @@
+.label-option-price {
+    font-weight: bold !important;
+}
+
+.label-option-text {
+    font-size: 0.8rem;
+}
+
+.summary-entry-statement {
+    color: #555555;
+    font-size: 0.8rem;
+}
+
+.summaryItemTitle {
+    font-size: 0.8rem;
+}
+
+.summaryItem {
+    padding-top: 0.3rem;
+}

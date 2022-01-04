@@ -8,8 +8,6 @@ const IDX_ALPHA3 = 3;
 const IDX_TLD = 4;
 
 const lazyLoadCountryMap = (mapName, keyIndex) => {
-    console.log(mapName)
-    console.log(keyIndex)
     if (!window.simi_global_map_name)
         window.simi_global_map_name = []
     if (!window.simiflag_global_country_list)

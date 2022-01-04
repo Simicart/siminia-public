@@ -5,7 +5,7 @@ import { compose } from 'redux';
 
 import classify from 'src/classify';
 import { FieldIcons, Message } from '@magento/venia-ui/lib/components/Field';
-import defaultClasses from './select.css';
+import defaultClasses from './select.module.css';
 
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import ChevronDownIcon from 'react-feather/dist/icons/chevron-down';

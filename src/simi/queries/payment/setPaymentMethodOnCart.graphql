@@ -1,22 +1,70 @@
-mutation (
-    $cartId: String!,
-    $payerId: String!,
-    $token: String!
-){
-    setPaymentMethodOnCart(input: {
-        cart_id: $cartId
-        payment_method: {
-            code: "paypal_express"
-            paypal_express: {
-                payer_id: $payerId
-                token: $token
+mutation($cartId: String!, $payerId: String!, $token: String!) {
+    setPaymentMethodOnCart(
+        input: {
+            cart_id: $cartId
+            payment_method: {
+                code: "paypal_express"
+                paypal_express: { payer_id: $payerId, token: $token }
             }
         }
-    }) {
+    ) {
         cart {
             selected_payment_method {
                 code
                 title
+            }
+            id
+            email
+            total_quantity
+            shipping_addresses {
+                firstname
+                lastname
+                street
+                city
+                region {
+                    label
+                }
+                postcode
+                country {
+                    label
+                }
+
+                selected_shipping_method {
+                    carrier_title
+                    method_title
+                }
+            }
+            items {
+                id
+                product {
+                    id
+                    name
+                    thumbnail {
+                        url
+                    }
+                    ... on ConfigurableProduct {
+                        variants {
+                            attributes {
+                                uid
+                            }
+                            product {
+                                id
+                                thumbnail {
+                                    url
+                                }
+                            }
+                        }
+                    }
+                }
+                quantity
+                ... on ConfigurableCartItem {
+                    configurable_options {
+                        id
+                        option_label
+                        value_id
+                        value_label
+                    }
+                }
             }
         }
     }

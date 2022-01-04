@@ -5,6 +5,7 @@ import store from './store';
 import app from '@magento/peregrine/lib/store/actions/app';
 import { Adapter } from 'src/drivers';
 import { registerSW } from './registerSW';
+import './index.css';
 
 // server rendering differs from browser rendering
 const isServer = !globalThis.document;

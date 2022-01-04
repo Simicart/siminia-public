@@ -1,6 +1,6 @@
 import React from 'react';
 import { mergeClasses } from '@magento/venia-ui/lib/classify';
-import defaultClasses from './scroll.css';
+import defaultClasses from './scroll.module.css';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 import { CarefreeHorizontalScroll } from '../CarefreeHorizontalScroll/CarefreeHorizontalScroll';
 import { useQuery } from '@apollo/client';
@@ -21,7 +21,6 @@ export const CategoryScroll = props => {
 
     const { data, loading } = useQuery(GET_MEGA_MENU);
 
-    console.log('kek', data);
     const classes = mergeClasses(defaultClasses, props.classes);
     const { dataParsed } = item;
 

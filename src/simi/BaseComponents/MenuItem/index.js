@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import {configColor} from "src/simi/Config";
 import PropTypes from 'prop-types';
-import defaultClasses from './menuitem.css'
+import defaultClasses from './menuitem.module.css'
 import { mergeClasses } from 'src/classify'
 
 class MenuItem extends Component {

@@ -1,0 +1,15 @@
+.label-option-price {
+    font-weight: bold !important;
+}
+
+.checkbox-item-text {
+    font-size: 0.8rem !important;
+    color: #555555;
+    font-weight: normal !important;
+
+}
+
+.checkbox-item-new {
+    composes: checkbox-item-new from 'src/simi/BaseComponents/Checkbox_new/index.module.css';
+    align-items: end;
+}

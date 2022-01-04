@@ -1,16 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import gql from 'graphql-tag';
-import { useProductListingTableActions } from 'src/simi/talons/CartPage/ProductListing/useProductListingTableActions';
-import { AvailableShippingMethodsCartFragment } from 'src/simi/App/core/Cart/PriceAdjustments/ShippingMethods/shippingMethodsFragments.gql';
-import { CartPageFragment } from '../cartPageFragments.gql';
-import { Colorbtn } from 'src/simi/BaseComponents/Button';
-import Identify from 'src/simi/Helper/Identify';
+import { Whitebtn } from 'src/simi/BaseComponents/Button';
+import { useProductListingTableActions } from 'src/simi/talons/Cart/useProductListingTableActions';
 import { showToastMessage } from 'src/simi/Helper/Message';
 import { showFogLoading } from 'src/simi/BaseComponents/Loading/GlobalLoading';
+import { confirmAlert } from 'src/simi/BaseComponents/ConfirmAlert';
+import { CartPageFragment } from '@magento/peregrine/lib/talons/CartPage/cartPageFragments.gql.js';
+import { AvailableShippingMethodsCartFragment } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/ShippingMethods/shippingMethodsFragments.gql.js';
+import { FormattedMessage } from 'react-intl';
+require('./productListingTableActions.scss');
 
 const ProductListingTableActions = props => {
     const { handleLink, setIsCartUpdating, items } = props
-
+ 
     const talonProps = useProductListingTableActions({
         mutations: {
             massUpdateShoppingCart: UPDATE_QUANTITY_MUTATION,
@@ -18,9 +20,8 @@ const ProductListingTableActions = props => {
         },
         setIsCartUpdating
     });
-
+    
     const { handleMassUpdateItem, errorMessage } = talonProps
-
     if (errorMessage) {
         showToastMessage(errorMessage)
     }
@@ -45,40 +46,55 @@ const ProductListingTableActions = props => {
         })
 
         if(!isValidQty){
-            showToastMessage(Identify.__('Quantity must be 0 or positive number !'));
+            showToastMessage('Quantity must be 0 or positive number !');
         }else{
             showFogLoading()
             handleMassUpdateItem(quantityObj, deleteAll)
         }
     }
-
-
+    const clickedRemoveAll = () => {
+        confirmAlert({
+            title: '',
+            className: 'fashioncart-confirm-alert',
+            message: 'Are you sure you about remove this item from the shopping cart?',
+            buttons: [
+                {
+                    label: 'Cancel',
+                    className: 'confirm-alert-cancel',
+                },
+                {
+                    label: 'Ok',
+                    className: 'confirm-alert-ok',
+                    onClick: () => {
+                        updateShoppingCart(true)
+                    }
+                }
+            ]
+        });
+    }
     return (
         <div className="cart-list-table-action">
-            <Colorbtn
+             <Whitebtn
+                    onClick={() => clickedRemoveAll()}
+                    className="remove-all-products"
+                    text={<FormattedMessage
+                        id={'productListingTableActions.removeAll'}
+                        defaultMessage={'Remove All Products'}/>}
+                />
+            <div className="right-buttons">
+                <Whitebtn 
                 className="continue-shopping"
                 onClick={() => handleLink('/')}
-                text={Identify.__('Continue Shopping')}
+                text = { <FormattedMessage
+                        id={'productListingTableActions.continue'}
+                        defaultMessage={'Continue Shopping'}/>}
             />
-            <div className="right-buttons">
-                <Colorbtn
-                    className="clear-all-item"
-                    onClick={() => updateShoppingCart(true)}
-                    text={Identify.__('Clear All Items')}
-                />
-
-                <Colorbtn
-                    className="update-shopping-cart"
-                    onClick={() => updateShoppingCart(false)}
-                    text={Identify.__('Update Shopping Cart')}
-                />
             </div>
         </div>
     )
 }
 
 export default ProductListingTableActions
-
 
 export const MASS_UPDATE_QUANTITY_MUTATION = gql`
     mutation updateItemQuantity(

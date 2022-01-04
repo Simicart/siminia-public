@@ -1,27 +1,15 @@
-export { default as Navigation } from './navigation';
+import React from 'react';
+import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent';
 
-import { connect } from 'src/drivers';
-import { closeDrawer } from 'src/actions/app';
-import { createCart, getCartDetails } from 'src/actions/cart';
-import Navigation from './navigation';
-
-const mapStateToProps = ({ app, cart, simireducers }) => {
-    const { drawer } = app
-    const { cartId } = cart
-    const { storeConfig } = simireducers;
-    return {
-        drawer,
-        cartId,
-        storeConfig
-    }
-}
-const mapDispatchToProps = {
-    closeDrawer,
-    createCart,
-    getCartDetails
+const LazyNavCtn = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "LazyNav"*/ './navigation')
+            }
+            {...props}
+        />
+    );
 };
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Navigation);
+//export default LazyNavCtn;
+export {default } from './navigation';

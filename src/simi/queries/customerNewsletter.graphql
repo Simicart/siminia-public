@@ -1,8 +1,0 @@
-{
-  customer {
-    firstname
-    email
-    is_subscribed
-    id
-  }
-}

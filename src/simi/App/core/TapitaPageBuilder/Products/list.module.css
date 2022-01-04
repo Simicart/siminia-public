@@ -1,0 +1,56 @@
+.smpbProductListWrapper {
+    width: 100%;
+}
+
+.smpbProductListCtn::-webkit-scrollbar {
+    display: none;
+}
+
+.smpbProductListCtn {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    padding: 0 5px 85px;
+}
+.scrollNavCtn {
+    display: flex;
+    width: 60px;
+    margin-left: auto;
+    margin-top: 10px;
+    justify-content: space-between;
+}
+.scrollNavCtn > div {
+    padding: 2px;
+    cursor: pointer;
+}
+.scrollNavCtn > div.navDisabled {
+    opacity: 0.3 !important;
+}
+
+.scrollNavCtn > div:hover {
+    opacity: 0.8;
+}
+
+.root {
+    display: grid;
+    grid-template-areas:
+        'actions'
+        'items';
+    grid-template-columns: 1fr;
+    line-height: 1;
+    margin-inline-end: 5rem;
+}
+
+.images {
+    min-width: 170px;
+    width: 30%;
+    flex-shrink: 0;
+    margin-inline-end: 10px;
+    margin-bottom: 35px;
+}
+
+@media (max-width: 1024px) {
+    .scrollNavCtn {
+        display: none;
+    }
+}

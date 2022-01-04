@@ -1,19 +1,14 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
-import { GiftCardFragment } from './GiftCards/giftCardFragments';
-import { ProductListingFragment } from './ProductListing/productListingFragments';
-import { PriceSummaryFragment } from './PriceSummary/priceSummaryFragments';
-import { AppliedCouponsFragment } from './PriceAdjustments/CouponCode/couponCodeFragments';
+import { GiftCardFragment } from '@magento/peregrine/lib/talons/CartPage/GiftCards/giftCardFragments.gql';
+import { ProductListingFragment } from './ProductListing/productListingFragments.gql';
+import { PriceSummaryFragment } from '@magento/peregrine/lib/talons/CartPage/PriceSummary/priceSummaryFragments.gql';
+import { AppliedCouponsFragment } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/CouponCode/couponCodeFragments.gql';
 
 export const CartPageFragment = gql`
     fragment CartPageFragment on Cart {
         id
         total_quantity
-        email
-        is_virtual
-        applied_coupons {
-            code
-        }
         ...AppliedCouponsFragment
         ...GiftCardFragment
         ...ProductListingFragment

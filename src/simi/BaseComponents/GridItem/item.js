@@ -1,30 +1,44 @@
 import React, { useMemo } from 'react';
-import defaultClasses from './item.css';
+import defaultClasses from './item.module.css';
 import { configColor } from 'src/simi/Config';
 import PropTypes from 'prop-types';
-import ReactHTMLParse from 'react-html-parser';
 import { mergeClasses } from 'src/classify';
-import { HOPrice } from 'src/simi/Helper/Pricing';
-import Price from 'src/simi/BaseComponents/Price';
+import Price from './Price';
 import { prepareProduct } from 'src/simi/Helper/Product';
 import { Link } from 'src/drivers';
 import LazyLoad from 'src/simi/BaseComponents/LazyLoad';
 import Image from 'src/simi/BaseComponents/Image';
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import Identify from 'src/simi/Helper/Identify';
+import { Heart } from 'react-feather';
 import {
     productUrlSuffix,
     saveDataToUrl,
     resourceUrl,
     logoUrl
 } from 'src/simi/Helper/Url';
+import { useIntl } from 'react-intl';
+import Icon from '@magento/venia-ui/lib/components/Icon';
+import { useGridItem } from '../../talons/Category/useGridItem';
+import { useHistory } from 'react-router-dom';
+import { useCartContext } from '@magento/peregrine/lib/context/cart';
+import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToListButton';
+// const AddToListButton = React.lazy(() =>
+//     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
+// );
+const HeartIcon = <Icon size={20} src={Heart} />;
 
 const Griditem = props => {
     const { lazyImage } = props;
+    const { formatMessage } = useIntl();
     const item = prepareProduct(props.item);
     const logo_url = logoUrl();
-    const { classes } = props;
-    if (!item) return '';
+    const { classes, styles = {} } = props;
+    const history = useHistory();
+    const [{ cartId }] = useCartContext();
+    const handleLink = linkInput => {
+        history.push(linkInput);
+    };
     const itemClasses = mergeClasses(defaultClasses, classes);
     const {
         name,
@@ -36,9 +50,11 @@ const Griditem = props => {
         rating_summary,
         review_count
     } = item;
+
     const product_url = `/${url_key}${productUrlSuffix()}`;
 
-    saveDataToUrl(product_url, item);
+    //if uncomment this - should comment out useDelayedTransition() at src/simi/app.js
+    //saveDataToUrl(product_url, item);
 
     const location = {
         pathname: product_url,
@@ -47,6 +63,12 @@ const Griditem = props => {
             item_data: item
         }
     };
+    const { handleAddCart, handleAddCompare, loading, isPhone } = useGridItem({
+        location,
+        handleLink,
+        cartId
+    });
+
     let imageUrl = small_image;
     //comment out this line when server got issue decoding images
     imageUrl = resourceUrl(imageUrl, { type: 'image-product', width: 260 });
@@ -78,12 +100,14 @@ const Griditem = props => {
             </div>
         </div>
     );
-
+    const productOutStock = item.stock_status === 'OUT_OF_STOCK';
     return (
         <div
-            className={`${itemClasses['product-item']} ${
+            className={` ${
                 itemClasses['siminia-product-grid-item']
-            } siminia-product-grid-item`}
+            } siminia-product-grid-item ${productOutStock &&
+                itemClasses['item-outstock']}`}
+            style={styles['siminia-product-grid-item']}
         >
             {lazyImage ? (
                 <LazyLoad
@@ -100,6 +124,16 @@ const Griditem = props => {
             ) : (
                 image
             )}
+            {item.price && item.price.has_special_price ? (
+                <div
+                    className={itemClasses.discountBadge}
+                    style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
+                >
+                    {`-${item.price.discount_percent}%`}
+                </div>
+            ) : (
+                ''
+            )}
             <div className={itemClasses['siminia-product-des']}>
                 {review_count ? (
                     <div className={itemClasses['item-review-rate']}>
@@ -110,8 +144,8 @@ const Griditem = props => {
                         <span className={itemClasses['item-review-count']}>
                             ({review_count}{' '}
                             {review_count
-                                ? Identify.__('Reviews')
-                                : Identify.__('Review')}
+                                ? formatMessage({ id: 'Reviews' })
+                                : formatMessage({ id: 'Review' })}
                             )
                         </span>
                     </div>
@@ -123,11 +157,9 @@ const Griditem = props => {
                     className={`${itemClasses['product-name']} ${
                         itemClasses['small']
                     }`}
-                    onClick={() => props.handleLink(location)}
-                >
-                    {ReactHTMLParse(name)}
-                </div>
-
+                    onClick={() => handleLink(location)}
+                    dangerouslySetInnerHTML={{ __html: name }}
+                />
                 <div className={`${itemClasses['price-each-product']}`}>
                     <div
                         role="presentation"
@@ -137,13 +169,12 @@ const Griditem = props => {
                                 : ''
                         }`}
                         id={`price-${id}`}
-                        onClick={() => props.handleLink(location)}
                     >
                         {type_id === 'configurable' && (
                             <div
                                 className={itemClasses['configurable-aslowas']}
                             >
-                                {Identify.__('As low as')}
+                                {formatMessage({ id: 'As low as' })}
                             </div>
                         )}
                         <Price
@@ -154,13 +185,44 @@ const Griditem = props => {
                     </div>
                 </div>
             </div>
+            <div
+                className={`${itemClasses['product-grid-actions']} ${loading &&
+                    itemClasses['action-loading']}`}
+            >
+                <button
+                    className={itemClasses['product-grid-addcartbtn']}
+                    onClick={() => {
+                        if (!loading && !productOutStock) handleAddCart(item);
+                    }}
+                >
+                    {formatMessage({
+                        id: productOutStock
+                            ? 'Out of stock'
+                            : loading
+                            ? 'Adding'
+                            : 'Add To Cart'
+                    })}
+                </button>
+                <div className={itemClasses['product-grid-wishlistbtn']}>
+                    <AddToListButton
+                        icon={HeartIcon}
+                        item={{
+                            quantity: 1,
+                            sku: item.sku
+                        }}
+                        classes={{
+                            root: itemClasses['wlbtnroot'],
+                            root_selected: itemClasses['wlbtnselected']
+                        }}
+                    />
+                </div>
+            </div>
         </div>
     );
 };
 
 Griditem.contextTypes = {
     item: PropTypes.object,
-    handleLink: PropTypes.func,
     classes: PropTypes.object,
     lazyImage: PropTypes.bool
 };

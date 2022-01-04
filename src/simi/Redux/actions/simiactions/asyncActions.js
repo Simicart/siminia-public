@@ -6,7 +6,6 @@ import { getCartDetails, removeCart } from 'src/actions/cart';
 import { getUserDetails, setToken } from 'src/actions/user';
 import { refresh } from 'src/util/router-helpers';
 
-
 const { BrowserPersistence } = Util;
 const storage = new BrowserPersistence();
 
@@ -18,23 +17,22 @@ export const beginCheckout = () =>
 
 export const changeSampleValue = value => async dispatch => {
     dispatch(actions.changeSampleValue(value));
-}
+};
 
 export const setStoreConfig = value => async dispatch => {
     dispatch(actions.setStoreConfig(value));
-}
+};
 
 export const simiSignedIn = response => async dispatch => {
-    localStorage.removeItem('M2_VENIA_BROWSER_PERSISTENCE__cartId')
+    localStorage.removeItem('M2_VENIA_BROWSER_PERSISTENCE__cartId');
     dispatch(removeCart());
     dispatch(setToken(response));
     dispatch(getUserDetails()).then(() => dispatch(fullFillAddress()));
     dispatch(getCartDetails({ forceRefresh: true }));
     // dispatch(fullFillAddress());
-}
+};
 
 export const simiSignOut = ({ history }) => async dispatch => {
-
     // Sign the user out in local storage and Redux.
     await clearToken();
 
@@ -46,10 +44,10 @@ export const simiSignOut = ({ history }) => async dispatch => {
     // remove address
     storage.removeItem('cartId');
     storage.removeItem('signin_token');
-    sessionStorage.removeItem("shipping_address");
-    sessionStorage.removeItem("billing_address");
-    localStorage.removeItem("SIMI_SESS_ID")
-    localStorage.removeItem('M2_VENIA_BROWSER_PERSISTENCE__cartId')
+    sessionStorage.removeItem('shipping_address');
+    sessionStorage.removeItem('billing_address');
+    localStorage.removeItem('SIMI_SESS_ID');
+    localStorage.removeItem('M2_VENIA_BROWSER_PERSISTENCE__cartId');
     await clearBillingAddress();
     await clearShippingAddress();
 
@@ -57,10 +55,6 @@ export const simiSignOut = ({ history }) => async dispatch => {
     refresh({ history });
 };
 
-export const toggleMessages = value => async dispatch => {
-    dispatch(actions.toggleMessages(value));
-}
-
 export const saveCustomerDetail = value => async dispatch => {
     dispatch(userActions.getDetails.receive(value));
-}
+};

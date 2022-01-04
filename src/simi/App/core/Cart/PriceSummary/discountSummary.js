@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react';
-import gql from 'graphql-tag';
-import { HOPrice as Price } from 'src/simi/Helper/Pricing'
+import { FormattedMessage } from 'react-intl';
+import Price from '@magento/venia-ui/lib/components/Price';
 
-import { mergeClasses } from 'src/classify';
+import { useStyle } from '@magento/venia-ui/lib/classify';
+
+const MINUS_SYMBOL = '-';
 
 const DEFAULT_AMOUNT = {
     currency: 'USD',
@@ -36,14 +38,19 @@ const getDiscount = (discounts = []) => {
  * @param {Object} props.data fragment response data
  */
 const DiscountSummary = props => {
-    const classes = mergeClasses({}, props.classes);
+    const classes = useStyle({}, props.classes);
     const discount = getDiscount(props.data);
 
     return discount.value ? (
         <Fragment>
-            <span className={classes.lineItemLabel}>{'Discounts applied'}</span>
+            <span className={classes.lineItemLabel}>
+                <FormattedMessage
+                    id={'discountSummary.lineItemLabel'}
+                    defaultMessage={'Discounts applied'}
+                />
+            </span>
             <span className={classes.price}>
-                {'-'}
+                {MINUS_SYMBOL}
                 <Price
                     value={discount.value}
                     currencyCode={discount.currency}
@@ -52,17 +59,5 @@ const DiscountSummary = props => {
         </Fragment>
     ) : null;
 };
-
-export const DiscountSummaryFragment = gql`
-    fragment DiscountSummaryFragment on CartPrices {
-        discounts {
-            amount {
-                currency
-                value
-            }
-            label
-        }
-    }
-`;
 
 export default DiscountSummary;

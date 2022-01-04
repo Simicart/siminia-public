@@ -1,52 +1,69 @@
-import React, { Fragment, useCallback, Suspense } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import { useIntl } from 'react-intl';
 import { array, func, shape, string } from 'prop-types';
 import Main from './App/core/Main';
 import Navigation from './App/core/Navigation';
-import Routes from './Routes';
+import Routes from '@magento/venia-ui/lib/components/Routes';
 import Mask from 'src/simi/BaseComponents/Mask';
 import { useApp } from '@magento/peregrine/lib/talons/App/useApp';
 import { useToasts } from '@magento/peregrine';
 import ToastContainer from '@magento/venia-ui/lib/components/ToastContainer';
 import Icon from '@magento/venia-ui/lib/components/Icon';
+import {
+    HeadProvider,
+    StoreTitle
+} from '@magento/venia-ui/lib/components/Head';
+import useDelayedTransition from './talons/useDelayedTransition';
 
 import {
     AlertCircle as AlertCircleIcon,
     CloudOff as CloudOffIcon,
     Wifi as WifiIcon
 } from 'react-feather';
-import Identify from './Helper/Identify';
-import HOProgress from './ProgressBar/HOProgress';
-import globalCSS from '../index.css';
+import globalCSS from '../index.module.css';
 
 const OnlineIcon = <Icon src={WifiIcon} attrs={{ width: 18 }} />;
 const OfflineIcon = <Icon src={CloudOffIcon} attrs={{ width: 18 }} />;
 const ErrorIcon = <Icon src={AlertCircleIcon} attrs={{ width: 18 }} />;
 
-const ERROR_MESSAGE = Identify.__('Sorry! An unexpected error occurred.');
-
 const App = props => {
     const { markErrorHandled, renderError, unhandledErrors } = props;
+    const { formatMessage } = useIntl();
     const [, { addToast }] = useToasts();
-    // const storeConfig = Identify.getStoreConfig();
+    //if comment out this, should uncomment saveDataToUrl at: src/simi/BaseComponents/GridItem/item.js
+    // and saveCategoriesToDict at src/override/localeProvider.js
+    // use custom useDelayedTransition to fix megamenu always make globalThis.avoidDelayedTransition true.
+    useDelayedTransition();
+
+    const ERROR_MESSAGE = formatMessage({
+        id: 'app.errorUnexpected',
+        defaultMessage: 'Sorry! An unexpected error occurred.'
+    });
+
     const handleIsOffline = useCallback(() => {
         addToast({
             type: 'error',
             icon: OfflineIcon,
-            message: Identify.__(
-                'You are offline. Some features may be unavailable.'
-            ),
+            message: formatMessage({
+                id: 'app.errorOffline',
+                defaultMessage:
+                    'You are offline. Some features may be unavailable.'
+            }),
             timeout: 3000
         });
-    }, [addToast]);
+    }, [addToast, formatMessage]);
 
     const handleIsOnline = useCallback(() => {
         addToast({
             type: 'info',
             icon: OnlineIcon,
-            message: Identify.__('You are online.'),
+            message: formatMessage({
+                id: 'app.infoOnline',
+                defaultMessage: 'You are online.'
+            }),
             timeout: 3000
         });
-    }, [addToast]);
+    }, [addToast, formatMessage]);
 
     const handleError = useCallback(
         (error, id, loc, handleDismissError) => {
@@ -76,29 +93,34 @@ const App = props => {
     });
 
     const { hasOverlay, handleCloseDrawer } = talonProps;
-
+    const mainComponent = useMemo(
+        () => (
+            <Main>
+                {renderError ? '' : <Routes />}
+            </Main>
+        ),
+        [renderError]
+    );
     if (renderError) {
         return (
-            <Fragment>
-                <Main isMasked={true} />
+            <HeadProvider>
+                <StoreTitle />
+                {mainComponent}
                 <Mask isActive={true} />
                 <ToastContainer />
-            </Fragment>
+            </HeadProvider>
         );
     }
 
     return (
-        <Fragment>
-            <HOProgress />
-            <Main isMasked={hasOverlay}>
-                <Routes />
-            </Main>
+        <HeadProvider>
+            {/* move StoreTitle to main to avoid querying too many APIs
+            <StoreTitle />*/}
+            {mainComponent}
             <Mask isActive={hasOverlay} dismiss={handleCloseDrawer} />
-            <Suspense fallback={null}>
-                <Navigation />
-            </Suspense>
+            <Navigation />
             <ToastContainer />
-        </Fragment>
+        </HeadProvider>
     );
 };
 

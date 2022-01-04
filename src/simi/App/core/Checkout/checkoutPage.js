@@ -1,43 +1,44 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import { shape, string } from 'prop-types';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { AlertCircle as AlertCircleIcon } from 'react-feather';
+import { Link, Redirect } from 'react-router-dom';
 
 import { useWindowSize, useToasts } from '@magento/peregrine';
 import {
     CHECKOUT_STEP,
     useCheckoutPage
-} from 'src/simi/talons/CheckoutPage/useCheckoutPage';
+} from '@magento/peregrine/lib/talons/CheckoutPage/useCheckoutPage';
 
+import { useStyle } from '@magento/venia-ui/lib/classify';
 import Button from '@magento/venia-ui/lib/components/Button';
+import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
-import AddressBook from './AddressBook';
-import OrderSummary from './OrderSummary';
+import StockStatusMessage from '@magento/venia-ui/lib/components/StockStatusMessage';
+import FormError from '@magento/venia-ui/lib/components/FormError';
+import AddressBook from '@magento/venia-ui/lib/components/CheckoutPage/AddressBook';
+import GuestSignIn from '@magento/venia-ui/lib/components/CheckoutPage/GuestSignIn';
+import OrderSummary from '@magento/venia-ui/lib/components/CheckoutPage/OrderSummary';
 import PaymentInformation from './PaymentInformation';
-import PriceAdjustments from './PriceAdjustments';
-import ShippingMethod from './ShippingMethod';
-import ShippingInformation from './ShippingInformation';
-import OrderConfirmationPage from './OrderConfirmationPage';
-import ItemsReview from './ItemsReview';
+import payments from './PaymentInformation/paymentMethodCollection';
+import PriceAdjustments from '@magento/venia-ui/lib/components/CheckoutPage/PriceAdjustments';
+import ShippingMethod from '@magento/venia-ui/lib/components/CheckoutPage/ShippingMethod';
+import ShippingInformation from '@magento/venia-ui/lib/components/CheckoutPage/ShippingInformation';
+import OrderConfirmationPage from '@magento/venia-ui/lib/components/CheckoutPage/OrderConfirmationPage';
+import ItemsReview from '@magento/venia-ui/lib/components/CheckoutPage/ItemsReview';
 
-import CheckoutPageOperations from './checkoutPage.gql.js';
-
-import { mergeClasses } from 'src/classify';
-
-import defaultClasses from './checkoutPage.css';
-
-import TitleHelper from 'src/simi/Helper/TitleHelper'
-import Identify from 'src/simi/Helper/Identify'
-import { Link, Redirect } from 'src/drivers';
-import TitleNumber from './titleNumber';
-import ReactLoading from 'src/simi/BaseComponents/Loading/ReactLoading';
+import defaultClasses from './checkoutPage.module.css';
+import ScrollAnchor from '@magento/venia-ui/lib/components/ScrollAnchor/scrollAnchor';
 
 const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
 
+import Identify from 'src/simi/Helper/Identify';
+
 const CheckoutPage = props => {
-    const { classes: propClasses } = props;
-    const talonProps = useCheckoutPage({
-        ...CheckoutPageOperations
-    });
+    const { classes: propClasses, history } = props;
+    const { formatMessage } = useIntl();
+    const talonProps = useCheckoutPage();
 
     const {
         /**
@@ -45,10 +46,11 @@ const CheckoutPage = props => {
          * SHIPPING_ADDRESS, SHIPPING_METHOD, PAYMENT, REVIEW
          */
         activeContent,
+        availablePaymentMethods,
+        cartItems,
         checkoutStep,
         customer,
         error,
-        handleSignIn,
         handlePlaceOrder,
         hasError,
         isCartEmpty,
@@ -61,26 +63,31 @@ const CheckoutPage = props => {
         placeOrderLoading,
         setCheckoutStep,
         setIsUpdating,
-        shippingMethodSelected,
         setShippingInformationDone,
+        scrollShippingInformationIntoView,
         setShippingMethodDone,
+        scrollShippingMethodIntoView,
         setPaymentInformationDone,
+        shippingInformationRef,
+        shippingMethodRef,
         resetReviewOrderButtonClicked,
         handleReviewOrder,
         reviewOrderButtonClicked,
-        isVirtual,
-        toggleActiveContent
+        toggleAddressBookContent,
+        toggleSignInContent
     } = talonProps;
 
     const [, { addToast }] = useToasts();
-
     useEffect(() => {
         if (hasError) {
             const message =
                 error && error.message
                     ? error.message
-                    : Identify.__('Oops! An error occurred while submitting. Please try again.');
-
+                    : formatMessage({
+                          id: 'checkoutPage.errorSubmit',
+                          defaultMessage:
+                              'Oops! An error occurred while submitting. Please try again.'
+                      });
             addToast({
                 type: 'error',
                 icon: errorIcon,
@@ -93,73 +100,113 @@ const CheckoutPage = props => {
                 console.error(error);
             }
         }
-    }, [addToast, error, hasError]);
+    }, [addToast, error, formatMessage, hasError]);
 
-    useEffect(() => {
-        if (
-            (checkoutStep === CHECKOUT_STEP.REVIEW) && !isUpdating &&
-            !placeOrderLoading && !orderDetailsLoading && !orderNumber && !isCartEmpty && !isLoading
-            && !orderDetailsData
-        ) {
-            handlePlaceOrder();
-        }
-    }, [checkoutStep, isUpdating, placeOrderLoading, orderDetailsLoading, handlePlaceOrder, orderNumber, isCartEmpty, isLoading, orderDetailsData])
-
-    const classes = mergeClasses(defaultClasses, propClasses);
+    const classes = useStyle(defaultClasses, propClasses);
 
     const windowSize = useWindowSize();
     const isMobile = windowSize.innerWidth <= 960;
 
     let checkoutContent;
-    
-    if (orderNumber) {
-        if (
-            orderDetailsData && orderDetailsData.cart && orderDetailsData.cart.items
-            && orderDetailsData.cart.items.length
-        ) {
-            Identify.storeDataToStoreage(Identify.SESSION_STOREAGE, 'simi_last_success_order_data', orderDetailsData)
-            window.history.pushState('', '', '/checkout.html?lastOrderId=' + orderNumber)
-        }
-        const lastSuccessOrderData = Identify.getDataFromStoreage(Identify.SESSION_STOREAGE, 'simi_last_success_order_data')
+
+    const heading = isGuestCheckout
+        ? formatMessage({
+              id: 'checkoutPage.guestCheckout',
+              defaultMessage: 'Guest Checkout'
+          })
+        : formatMessage({
+              id: 'checkoutPage.checkout',
+              defaultMessage: 'Checkout'
+          });
+
+    if (orderNumber && orderDetailsData) {
+        Identify.storeDataToStoreage(Identify.SESSION_STOREAGE, 'simi_last_success_order_data', orderDetailsData);
+        return <Redirect to={`/checkout-success?orderNumber=${orderNumber}`} />;
+        /*
         return (
             <OrderConfirmationPage
-                data={lastSuccessOrderData ? lastSuccessOrderData : orderDetailsData}
+                data={orderDetailsData}
                 orderNumber={orderNumber}
             />
         );
-    } else if (!Identify.isEnabledCheckoutAsGuest() && isGuestCheckout) {
-        return <Redirect to="/login.html" />
+        */
     } else if (isLoading) {
         return fullPageLoadingIndicator;
     } else if (isCartEmpty) {
         checkoutContent = (
             <div className={classes.empty_cart_container}>
                 <div className={classes.heading_container}>
-                    <h1 className={classes.heading}>
-                        {isGuestCheckout ? Identify.__('Guest Checkout') : Identify.__('Checkout')}
-                    </h1>
+                    <h1 className={classes.heading}>{heading}</h1>
                 </div>
-                <h3>{Identify.__('There are no items in your cart.')}</h3>
+                <h3>
+                    <FormattedMessage
+                        id={'checkoutPage.emptyMessage'}
+                        defaultMessage={'There are no items in your cart.'}
+                    />
+                </h3>
             </div>
         );
     } else {
-        const loginButton = isGuestCheckout ? (
-            <div className={classes.signin_container}>
-                <Link className={classes.sign_in} to={{ pathname: '/login.html', state: { checkout: true } }}>
-                    {Identify.__('Login and Checkout Faster')}
-                </Link>
+        const signInContainerElement = isGuestCheckout ? (
+            <div className={classes.signInContainer}>
+                <span className={classes.signInLabel}>
+                    <FormattedMessage
+                        id={'checkoutPage.signInLabel'}
+                        defaultMessage={'Sign in for Express Checkout'}
+                    />
+                </span>
+                <Button
+                    className={classes.signInButton}
+                    onClick={toggleSignInContent}
+                    priority="normal"
+                >
+                    <FormattedMessage
+                        id={'checkoutPage.signInButton'}
+                        defaultMessage={'Sign In'}
+                    />
+                </Button>
             </div>
         ) : null;
 
-        const shippingMethodSection = <ShippingMethod
-            pageIsUpdating={isUpdating}
-            onSave={setShippingMethodDone}
-            setPageIsUpdating={setIsUpdating}
-        />;
+        const shippingMethodSection =
+            checkoutStep >= CHECKOUT_STEP.SHIPPING_METHOD ? (
+                <ShippingMethod
+                    pageIsUpdating={isUpdating}
+                    onSave={setShippingMethodDone}
+                    onSuccess={scrollShippingMethodIntoView}
+                    setPageIsUpdating={setIsUpdating}
+                />
+            ) : (
+                <h3 className={classes.shipping_method_heading}>
+                    <FormattedMessage
+                        id={'checkoutPage.shippingMethodStep'}
+                        defaultMessage={'2. Shipping Method'}
+                    />
+                </h3>
+            );
 
-        const paymentInformationSection = (
-            <React.Fragment>
-                <div className={classes.paymentInfoTitle}>{Identify.__('Payment Information')}</div>
+        const formErrors = [];
+        const paymentMethods = Object.keys(payments);
+
+        // If we have an implementation, or if this is a "zero" checkout,
+        // we can allow checkout to proceed.
+        const isPaymentAvailable = !!availablePaymentMethods.find(
+            ({ code }) => code === 'free' || paymentMethods.includes(code)
+        );
+
+        if (!isPaymentAvailable) {
+            formErrors.push(
+                new Error(
+                    formatMessage({
+                        id: 'checkoutPage.noPaymentAvailable',
+                        defaultMessage: 'Payment is currently unavailable.'
+                    })
+                )
+            );
+        }
+
+        const paymentInformationSection =
+            checkoutStep >= CHECKOUT_STEP.PAYMENT ? (
                 <PaymentInformation
                     onSave={setPaymentInformationDone}
                     checkoutError={error}
@@ -167,118 +214,223 @@ const CheckoutPage = props => {
                     setCheckoutStep={setCheckoutStep}
                     shouldSubmit={reviewOrderButtonClicked}
                 />
-            </React.Fragment>
+            ) : (
+                <h3 className={classes.payment_information_heading}>
+                    <FormattedMessage
+                        id={'checkoutPage.paymentInformationStep'}
+                        defaultMessage={'3. Payment Information'}
+                    />
+                </h3>
+            );
 
-        );
-
-        const priceAdjustmentsSection = (
-            <div className={classes.price_adjustments_container}>
-                <PriceAdjustments setPageIsUpdating={setIsUpdating} />
-            </div>
-        );
+        const priceAdjustmentsSection =
+            checkoutStep === CHECKOUT_STEP.PAYMENT ? (
+                <div className={classes.price_adjustments_container}>
+                    <PriceAdjustments setPageIsUpdating={setIsUpdating} />
+                </div>
+            ) : null;
 
         const reviewOrderButton =
-            checkoutStep >= CHECKOUT_STEP.PAYMENT ? (
+            checkoutStep === CHECKOUT_STEP.PAYMENT ? (
                 <Button
                     onClick={handleReviewOrder}
                     priority="high"
-                    className={`${classes.review_order_button} ${(isLoading || placeOrderLoading || orderDetailsLoading || !shippingMethodSelected) ? classes.review_order_button_loading : ''}`}
-                    disabled={reviewOrderButtonClicked || isUpdating || (!shippingMethodSelected && !isVirtual)}
-                >
-                    {
-                        (placeOrderLoading || orderDetailsLoading || reviewOrderButtonClicked) ?
-                            <ReactLoading divStyle={{ marginTop: 0, position: 'absolute', top: 5, left: 0, height: 45 }} loadingStyle={{ height: 45, fill: 'white' }} /> :
-                            Identify.__('Place Order')
+                    className={classes.review_order_button}
+                    disabled={
+                        reviewOrderButtonClicked ||
+                        isUpdating ||
+                        !isPaymentAvailable
                     }
+                >
+                    <FormattedMessage
+                        id={'checkoutPage.reviewOrder'}
+                        defaultMessage={'Review Order'}
+                    />
                 </Button>
             ) : null;
 
-        const itemsReview = <div className={classes.items_review_container}>
-            <ItemsReview orderNumber={orderNumber} />
-        </div>
+        const itemsReview =
+            checkoutStep === CHECKOUT_STEP.REVIEW ? (
+                <div className={classes.items_review_container}>
+                    <ItemsReview />
+                </div>
+            ) : null;
 
-        const orderSummary = <div className={classes.summaryContainer}>
-            <OrderSummary isUpdating={isUpdating} />
-        </div>
+        const placeOrderButton =
+            checkoutStep === CHECKOUT_STEP.REVIEW ? (
+                <Button
+                    onClick={e => {
+                        const selectedPaymentMethod = Identify.getDataFromStoreage(
+                            Identify.LOCAL_STOREAGE,
+                            'simi_selected_payment_code'
+                        );
+                        if (selectedPaymentMethod === 'paypal_express') {
+                            history.push('/paypal_express.html');
+                            return;
+                        }
+                        handlePlaceOrder(e);
+                    }}
+                    priority="high"
+                    className={classes.place_order_button}
+                    disabled={
+                        isUpdating || placeOrderLoading || orderDetailsLoading
+                    }
+                >
+                    <FormattedMessage
+                        id={'checkoutPage.placeOrder'}
+                        defaultMessage={'Place Order'}
+                    />
+                </Button>
+            ) : null;
+
+        // If we're on mobile we should only render price summary in/after review.
+        const shouldRenderPriceSummary = !(
+            isMobile && checkoutStep < CHECKOUT_STEP.REVIEW
+        );
+
+        const orderSummary = shouldRenderPriceSummary ? (
+            <div className={classes.summaryContainer}>
+                <OrderSummary isUpdating={isUpdating} />
+            </div>
+        ) : null;
+
+        let headerText;
+
+        if (isGuestCheckout) {
+            headerText = formatMessage({
+                id: 'checkoutPage.guestCheckout',
+                defaultMessage: 'Guest Checkout'
+            });
+        } else if (customer.default_shipping) {
+            headerText = formatMessage({
+                id: 'checkoutPage.reviewAndPlaceOrder',
+                defaultMessage: 'Review and Place Order'
+            });
+        } else {
+            headerText = formatMessage(
+                { id: 'checkoutPage.greeting', defaultMessage: 'Welcome' },
+                { firstname: customer.firstname }
+            );
+        }
 
         const checkoutContentClass =
             activeContent === 'checkout'
                 ? classes.checkoutContent
                 : classes.checkoutContent_hidden;
 
+        const stockStatusMessageElement = (
+            <Fragment>
+                <FormattedMessage
+                    id={'checkoutPage.stockStatusMessage'}
+                    defaultMessage={
+                        'An item in your cart is currently out-of-stock and must be removed in order to Checkout. Please return to your cart to remove the item.'
+                    }
+                />
+                <Link className={classes.cartLink} to={'/cart'}>
+                    <FormattedMessage
+                        id={'checkoutPage.returnToCart'}
+                        defaultMessage={'Return to Cart'}
+                    />
+                </Link>
+            </Fragment>
+        );
         checkoutContent = (
             <div className={checkoutContentClass}>
                 <div className={classes.heading_container}>
-                    <h1 className={classes.heading}>
-                        {Identify.__('Checkout')}
-                    </h1>
-                    <div className={classes.heading_strike} />
+                    <FormError
+                        classes={{
+                            root: classes.formErrors
+                        }}
+                        errors={formErrors}
+                    />
+                    <StockStatusMessage
+                        cartItems={cartItems}
+                        message={stockStatusMessageElement}
+                    />
+                    <h1 className={classes.heading}>{headerText}</h1>
                 </div>
-                {loginButton}
-                <div className={`${classes["simi-checkout-column"]} ${isVirtual && classes["simi-checkout-page-virtual"]}`}>
-                    {
-                        isVirtual ?
-                            <React.Fragment>
-                                <div className={classes["checkout-col-1"]}>
-                                    <div className={classes.payment_information_container}>
-                                        {paymentInformationSection}
-                                    </div>
-                                </div>
-                                <div className={classes["checkout-col-2"]}>
-                                    {priceAdjustmentsSection}
-                                </div>
-                            </React.Fragment> :
-                            <React.Fragment>
-                                <div className={classes["checkout-col-1"]}>
-                                    <div className={classes.shipping_information_container}>
-                                        <TitleNumber number={1} />
-                                        <ShippingInformation
-                                            onSave={setShippingInformationDone}
-                                            toggleActiveContent={toggleActiveContent}
-                                        />
-                                    </div>
-                                </div>
-                                <div className={classes["checkout-col-2"]}>
-                                    <div className={classes.shipping_method_container}>
-                                        <TitleNumber number={2} />
-                                        {shippingMethodSection}
-                                    </div>
-                                    <div className={classes.payment_information_container}>
-                                        <TitleNumber number={3} />
-                                        {paymentInformationSection}
-                                    </div>
-                                    {priceAdjustmentsSection}
-                                </div>
-                            </React.Fragment>
-                    }
-                    <div className={classes["checkout-col-3"]}>
-                        <h3 className={classes["checkout-order-summery-title"]}>{'Order Summary'}</h3>
-                        {itemsReview}
-                        {orderSummary}
-                        {reviewOrderButton}
-                        {/* {placeOrderButton} */}
-                    </div>
+                {signInContainerElement}
+                <div className={classes.shipping_information_container}>
+                    <ScrollAnchor ref={shippingInformationRef}>
+                        <ShippingInformation
+                            onSave={setShippingInformationDone}
+                            onSuccess={scrollShippingInformationIntoView}
+                            toggleActiveContent={toggleAddressBookContent}
+                        />
+                    </ScrollAnchor>
                 </div>
-            </div >
+                <div className={classes.shipping_method_container}>
+                    <ScrollAnchor ref={shippingMethodRef}>
+                        {shippingMethodSection}
+                    </ScrollAnchor>
+                </div>
+                <div className={classes.payment_information_container}>
+                    {paymentInformationSection}
+                </div>
+                {priceAdjustmentsSection}
+                {reviewOrderButton}
+                {itemsReview}
+                {orderSummary}
+                {placeOrderButton}
+            </div>
         );
     }
 
     const addressBookElement = !isGuestCheckout ? (
         <AddressBook
             activeContent={activeContent}
-            toggleActiveContent={toggleActiveContent}
+            toggleActiveContent={toggleAddressBookContent}
+            onSuccess={scrollShippingInformationIntoView}
+        />
+    ) : null;
+
+    const signInElement = isGuestCheckout ? (
+        <GuestSignIn
+            isActive={activeContent === 'signIn'}
+            toggleActiveContent={toggleSignInContent}
         />
     ) : null;
 
     return (
-        <div className={`${classes.root} container`}>
-            {TitleHelper.renderMetaHeader({
-                title: Identify.__('Checkout')
-            })}
+        <div className={classes.root}>
+            <StoreTitle>
+                {formatMessage({
+                    id: 'checkoutPage.titleCheckout',
+                    defaultMessage: 'Checkout'
+                })}
+            </StoreTitle>
             {checkoutContent}
             {addressBookElement}
+            {signInElement}
         </div>
     );
 };
 
 export default CheckoutPage;
+
+CheckoutPage.propTypes = {
+    classes: shape({
+        root: string,
+        checkoutContent: string,
+        checkoutContent_hidden: string,
+        heading_container: string,
+        heading: string,
+        cartLink: string,
+        stepper_heading: string,
+        shipping_method_heading: string,
+        payment_information_heading: string,
+        signInContainer: string,
+        signInLabel: string,
+        signInButton: string,
+        empty_cart_container: string,
+        shipping_information_container: string,
+        shipping_method_container: string,
+        payment_information_container: string,
+        price_adjustments_container: string,
+        items_review_container: string,
+        summaryContainer: string,
+        formErrors: string,
+        review_order_button: string,
+        place_order_button: string
+    })
+};

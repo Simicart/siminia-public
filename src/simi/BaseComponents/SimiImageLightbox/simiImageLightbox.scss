@@ -40,19 +40,13 @@
         opacity: 1;
         z-index: 1;
         width: 100%;
-        text-align: right;
         background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: flex-end;
         span {
-            margin-right: 15px;
-            font-size: 20px;
+            margin-inline-end: 15px;
+            padding: 5px;
         }
-    }
-
-    .close:hover,
-    .close:focus {
-        color: #999;
-        text-decoration: none;
-        cursor: pointer;
     }
 
     .mySlides {
@@ -165,9 +159,4 @@
         background-color: rgba(0, 0, 0, 0.8);
         opacity: 0.6;
     }
-
-    // .lighbox-modal .modal-content {
-    //     top: 25%;
-    //     transform: none;
-    // }
 }

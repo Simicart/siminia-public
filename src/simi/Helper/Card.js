@@ -1,7 +1,7 @@
 class Card {
     static getCards() {
-        let defaultFormat = /(\d{1,4})/g;
-        let cardTypes = [
+        const defaultFormat = /(\d{1,4})/g;
+        const cardTypes = [
             {
                 type: 'VI',
                 pattern: /^4/,

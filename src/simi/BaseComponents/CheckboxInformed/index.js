@@ -5,7 +5,7 @@ import { compose } from 'redux';
 
 import classify from 'src/classify';
 import { Message } from '@magento/venia-ui/lib/components/Field';
-import defaultClasses from './checkbox.css';
+import defaultClasses from './checkbox.module.css';
 import { default as CheckedIcon } from 'src/simi/BaseComponents/Icon/Checked'
 
 export const Checkbox = props => {

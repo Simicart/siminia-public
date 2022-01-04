@@ -1,0 +1,18 @@
+.partial-slider-child-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    overflow: hidden;
+}
+.type_partial_slider::-webkit-scrollbar {
+    display: none;
+}
+.spb-item.type_product_grid {
+    padding: 8px 8px 60px !important;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+.spb-item.type_product_grid::-webkit-scrollbar {
+    display: none;
+}

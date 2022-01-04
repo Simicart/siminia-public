@@ -1,7 +1,7 @@
 import React from 'react';
-import './style.css'
+import './style.module.css'
 import classify from 'src/classify';
-import defaultClasses from './style.css';
+import defaultClasses from './style.module.css';
 import PropTypes from 'prop-types';
 
 const TextBox = props => {

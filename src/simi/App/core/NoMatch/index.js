@@ -1,61 +1,122 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Loading from 'src/simi/BaseComponents/Loading';
-import Identify from 'src/simi/Helper/Identify';
-import { getDataFromUrl } from 'src/simi/Helper/Url';
-import ResolveUrlResult from './ResolveUrlResult';
+import Product from 'src/simi/App/core/RootComponents/Product';
+import Page404 from './Page404';
+import { useQuery } from '@apollo/client';
+import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
+// import CMS from 'src/simi/App/core/RootComponents/CMS';
+const CMS = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "CMS"*/ 'src/simi/App/core/RootComponents/CMS')
+            }
+            {...props}
+        />
+    );
+};
+const Category = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "SimiCategory"*/ 'src/simi/App/core/RootComponents/Category')
+            }
+            {...props}
+        />
+    );
+};
 
-var parseFromDoc = true;
 const TYPE_PRODUCT = 'PRODUCT';
 const TYPE_CATEGORY = 'CATEGORY';
 const TYPE_CMS_PAGE = 'CMS_PAGE';
 
-const NoMatch = props => {
-    const { Product, Category, CMS } = props;
-    const { location } = props;
-    const renderByTypeAndId = (type, id, preloadedData = null) => {
-        if (type === TYPE_PRODUCT)
-            return <Product {...props} preloadedData={preloadedData} />;
-        else if (type === TYPE_CATEGORY)
-            return <Category {...props} id={parseInt(id, 10)} />;
-        else if (type === TYPE_CMS_PAGE)
-            return <CMS {...props} id={parseInt(id, 10)} />;
-    };
-
-    if (
-        parseFromDoc &&
-        document.body.getAttribute('data-model-type') &&
-        document.body.getAttribute('data-model-id')
-    ) {
-        parseFromDoc = false;
-        const type = document.body.getAttribute('data-model-type');
-        const id = document.body.getAttribute('data-model-id');
-        const result = renderByTypeAndId(type, id);
-        if (result) return result;
-    } else if (location && location.pathname) {
-        parseFromDoc = false;
-        const pathname = location.pathname;
-
-        //load from dict
-        const dataFromDict = getDataFromUrl(pathname);
-        if (dataFromDict && dataFromDict.id) {
-            let type = TYPE_CATEGORY;
-            const id = dataFromDict.id;
-            if (dataFromDict.sku) {
-                type = TYPE_PRODUCT;
+//pagebuilder import and creds
+import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent/';
+import { usePbFinder } from 'simi-pagebuilder-react';
+const endPoint = 'https://tapita.io/pb/graphql/';
+const integrationToken = '14FJiubdB8n3Byig2IkpfM6OiS6RTO801622446444';
+export const PageBuilderComponent = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "PageBuilderComponent"*/ 'src/simi/App/core/TapitaPageBuilder/PageBuilderComponent')
             }
-            const result = renderByTypeAndId(type, id, dataFromDict);
-            if (result) return result;
+            {...props}
+        />
+    );
+};
+//store code
+import { BrowserPersistence } from '@magento/peregrine/lib/util';
+const storage = new BrowserPersistence();
+
+const NoMatch = props => {
+    const { location } = props;
+    const pathname = location.pathname;
+
+    const storeCode = storage.getItem('store_view_code') || null;
+    const pbFinderProps = usePbFinder({
+        endPoint,
+        integrationToken,
+        storeCode
+    });
+    const {
+        allPages,
+        loading: pbLoading,
+        pageMaskedId,
+        findPage,
+        pathToFind,
+        pageData
+    } = pbFinderProps;
+
+    const { data } = useQuery(RESOLVE_URL, {
+        variables: {
+            url: pathname
+        },
+        skip: !pathname || pathname === '/',
+        fetchPolicy: 'cache-first'
+    });
+
+    useEffect(() => {
+        if (pathname) {
+            if (!pageMaskedId || pathname !== pathToFind) findPage(pathname);
         }
-        //get type from server
+    }, [pathname, pageMaskedId, pathToFind, findPage]);
+
+    if (pageMaskedId && pageMaskedId !== 'notfound') {
         return (
-            <ResolveUrlResult
-                pathname={pathname}
-                renderByTypeAndId={renderByTypeAndId}
-            />
+            <div className="pagebuilder-component-ctn">
+                <PageBuilderComponent
+                    key={pageMaskedId}
+                    endPoint={endPoint}
+                    maskedId={pageMaskedId}
+                    pageData={
+                        pageData && pageData.publish_items ? pageData : false
+                    }
+                />
+            </div>
         );
     }
 
-    parseFromDoc = false;
+    if (data) {
+        if (data.route && data.route.type) {
+            const { type } = data.route;
+            if (type === TYPE_PRODUCT)
+                return (
+                    <Product
+                        {...{ ...props, ...data.route, ...{ pbFinderProps } }}
+                    />
+                );
+            else if (type === TYPE_CATEGORY)
+                return <Category {...{ ...props, ...data.route }} />;
+            else if (type === TYPE_CMS_PAGE)
+                return <CMS {...{ ...props, ...data.route }} />;
+        } else {
+            if (pbLoading || pathname !== pathToFind) {
+                return '';
+            }
+        }
+        return <Page404 />;
+    }
     return <Loading />;
 };
 export default NoMatch;

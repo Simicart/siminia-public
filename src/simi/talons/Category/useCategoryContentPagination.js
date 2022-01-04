@@ -172,11 +172,6 @@ export const useCategoryContentPagination = props => {
             ? true
             : false;
 
-    const cmsData =
-        products && products.category && products.category.simiCategoryCms
-            ? products.category.simiCategoryCms
-            : null;
-
     return {
         products,
         error,
@@ -185,7 +180,6 @@ export const useCategoryContentPagination = props => {
         sortByData,
         appliedFilter,
         cateEmpty,
-        cmsData,
         pageControl
     };
 };

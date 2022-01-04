@@ -1,0 +1,247 @@
+.root {
+    display: grid;
+    row-gap: 0.5rem;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-bottom: solid 1px #0058ac;
+}
+
+.item {
+    align-items: start;
+    display: grid;
+    grid-gap: 0.5rem 1rem;
+    grid-template-areas: 'image details remove';
+    grid-template-columns: 100px 1fr min-content;
+}
+.item > li > button > span > svg {
+    stroke: rgba(18, 18, 18);
+    width: 24px;
+    height: 24px;
+}
+.item_disabled {
+    composes: item;
+    opacity: 0.5;
+}
+
+.errorText {
+    color: rgb(var(--venia-global-color-error));
+    line-height: var(--venia-global-lineHeight-300);
+}
+
+.errorText:empty {
+    display: none;
+}
+
+.imageContainer {
+    grid-area: image;
+}
+
+.imageRoot {
+    height: 100%;
+}
+
+.image {
+    background-color: transparent;
+    /* border: solid 1px rgb(var(--venia-global-color-border)); */
+    border-radius: 2px;
+    height: 100%;
+    object-fit: contain;
+    object-position: top;
+}
+
+.details {
+    display: grid;
+    gap: 0.5rem;
+    grid-area: details;
+    grid-template-areas:
+        'name name name'
+        'options options options'
+        'price price price'
+        'quantity quantity quantity';
+    grid-template-columns: 1fr 1fr max-content;
+    line-height: 1.5;
+}
+.labelPrice {
+    color: #111111;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 19px;
+}
+.name {
+    grid-area: name;
+    color: #000000;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 32px;
+}
+.name a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.1rem;
+    text-decoration-thickness: 0.13rem;
+}
+
+.price {
+    grid-area: price;
+    color: #e02020;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 24px;
+}
+
+.quantity {
+    align-items: start;
+    display: grid;
+    grid-area: quantity;
+    justify-items: left;
+    margin-top: 15px;
+}
+
+.quantity .title {
+    color: #111111;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
+    margin-bottom: 10px;
+}
+.quantity input {
+    font-weight: 500 !important;
+    border-color: transparent !important;
+}
+.quantity > form > div > span {
+    box-sizing: border-box;
+    height: 45px;
+    width: 45px;
+    border: 1px solid #979797;
+    background-color: #ffffff;
+}
+.quantity > form > div > span > span > input {
+    background-color: #ffffff !important;
+    color: #111111;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 22px;
+}
+.kebab {
+    grid-area: remove;
+    position: relative;
+    padding: 0.25rem 0.5rem;
+    font-size: var(--venia-typography-body-S-fontSize);
+}
+
+.options {
+    grid-area: options;
+    font-size: var(--venia-typography-body-S-fontSize);
+    display: grid;
+    grid-gap: 0.125rem;
+    font-weight: 300;
+    color: rgba(18, 18, 18);
+    letter-spacing: 0.06rem;
+}
+
+.optionLabel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+}
+.optionLabel span:first-of-type {
+    color: #111111;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 19px;
+    font-weight: 600;
+    margin-inline-end: 3px;
+    margin-inline-start: 0;
+}
+.optionLabel span {
+    margin-inline-start: 3px;
+    color: #111111;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 19px;
+    font-weight: 400;
+}
+.stockStatusMessage {
+    color: rgb(var(--venia-global-color-error));
+    font-size: var(--venia-global-fontSize-100);
+    font-weight: var(--venia-global-fontWeight-semibold);
+    grid-area: stock;
+}
+
+.stockStatusMessage:empty {
+    display: none;
+}
+
+.addToListButton {
+    --stroke: rgb(var(--venia-global-color-teal));
+    align-content: center;
+    column-gap: 1rem;
+    display: inline-flex;
+    font-size: 11px;
+    width: 100%;
+    padding: 0.6rem;
+    padding-right: 1.6rem;
+    padding-bottom: 0.72rem;
+    padding-top: 14px;
+}
+
+.addToListButton_selected {
+    display: none;
+}
+.addToListButton span {
+    margin-top: 7px;
+}
+
+@media (max-width: 640px) {
+    .details {
+        grid-template: none;
+        font-size: 12px;
+        line-height: 16px;
+        gap: 8px;
+    }
+
+    .name,
+    .options,
+    .price,
+    .stockStatusMessage,
+    .quantity {
+        grid-area: auto;
+        font-size: 12px;
+        line-height: 17px;
+    }
+    .name {
+        font-size: 14px;
+        line-height: 19px;
+    }
+
+    .optionLabel dt {
+        font-size: 12px;
+        line-height: 17px;
+    }
+    .optionLabel dd {
+        font-size: 12px;
+        line-height: 17px;
+    }
+
+    .quantity {
+        justify-items: start;
+    }
+
+    .quantity .title {
+        font-size: 14px;
+        line-height: 19px;
+        margin-bottom: 3px;
+    }
+
+    .item {
+        grid-template-columns: 96px 1fr min-content;
+    }
+    .sectionMenuItem {
+        padding-inline-end: 0;
+        padding-inline-start: 0;
+    }
+}

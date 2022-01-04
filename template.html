@@ -12,17 +12,17 @@
     <title>SimiCart Demo PWA</title>
 
     <!--
-            Apple Specific Tags
+                Apple Specific Tags
 
-            To be included until Safari supports WebAppManifest
-            See Docs:
-            - https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html
-            - https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
-        -->
+                To be included until Safari supports WebAppManifest
+                See Docs:
+                - https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html
+                - https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
+            -->
     <!--
-            Apple Icons for Homescreen
-            Sizes: https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/app-icon/
-        -->
+                Apple Icons for Homescreen
+                Sizes: https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/app-icon/
+            -->
     <link rel="icon" type="image/x-icon" href="/static/icons/siminia_square_512.png" />
     <link rel="apple-touch-icon" href="/static/icons/siminia_square_512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png">
@@ -41,8 +41,7 @@
             media_url_prefix: 'pub/'
         };
     </script>
-    <script src="/static/simistatic/app_configs.js"></script>
-    <script src="/static/simistatic/jquery.min.js"></script>
+    <script src="https://www.simicart.com/appdashboard/rest/app_configs?source=<%= process.env.MAGENTO_BACKEND_URL %>&bear_token=Qg5xhysRKGQe2K01n2qg7KL8rKpO9GmZXsxf0Z6&pwa=1&js=1"></script>
     <script type="text/javascript">
         window.addEventListener('error', function (e) {
             if (
@@ -82,6 +81,9 @@
             }
         }, true);
     </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <style>
         /* override & pre-styling containers for cls opmization purpose */
         .container {
@@ -114,17 +116,20 @@
             }
         }
 
-        @media (min-width: 1920px) {
+        @media (min-width: 1440px) {
+            #root .container {
+                width: 1370px;
+            }
+        }
+
+        @media (min-width: 1620px) {
             #root .container {
                 width: 1430px;
             }
         }
     </style>
-    <link rel="stylesheet" href="/static/simistatic/core-theme-style.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/static/core-theme-style.css?v=12.0.0" media="print" onload="this.media='all'">
     </link>
-    <!-- fashion style 
-    <link rel="stylesheet" href="/static/simistatic/style.css" media="print" onload="this.media='all'"></link>
-    -->
 </head>
 
 <body>
@@ -133,14 +138,15 @@
         <div class="addthis_inline_share_toolbox" id="social-share"></div>
     </div>
     <div id="root"></div>
-
-    <div class="splash-screen" id="splash-screen" style="margin-top:0;text-align:center;width: 100%;top: 0;left: 0;">
-        <div id="" style="width: 100%; height: auto; margin: 0 auto 0;">
-            <img id="splash-img"
-                style="position: absolute; left: 50%; top: 50%; -webkit-transform: translateY(-50%) translateX(-50%); z-index:-1; width: 100%; max-width: 1024px"
-                src="/static/simistatic/images/simicart-splash-desktop.svg">
-        </div>
-    </div>
+    <!--
+            <div class="splash-screen" id="splash-screen" style="margin-top:0;text-align:center;width: 100%;top: 0;left: 0;">
+                <div id="" style="width: 100%; height: auto; margin: 0 auto 0;">
+                    <img id="splash-img"
+                        style="position: absolute; left: 50%; top: 50%; -webkit-transform: translateY(-50%) translateX(-50%); z-index:-1; width: 100%; max-width: 1024px"
+                        src="/static/images/simicart-splash-desktop.svg">
+                </div>
+            </div>
+        -->
 
     <!-- Fallback for when JavaScript is disabled. -->
     <noscript>
@@ -161,7 +167,6 @@
             }
         </style>
         <div class="fallback-nojs">
-            <img class="fallback-closed" alt="JavaScript is disabled" src="/venia-static/veniaClosed.png">
             <h1 class="fallback-heading">Oops! JavaScript is disabled</h1>
             <div>
                 To browse the Venia store,<br>

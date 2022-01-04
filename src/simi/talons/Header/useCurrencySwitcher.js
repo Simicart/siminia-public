@@ -4,8 +4,13 @@ import { useHistory } from 'react-router-dom';
 import { useDropdown } from '@magento/peregrine/lib/hooks/useDropdown';
 import { useTypePolicies } from '@magento/peregrine';
 import { BrowserPersistence } from '@magento/peregrine/lib/util';
-import DEFAULT_OPERATIONS, { CUSTOM_TYPES } from './currencySwitcher.gql';
 import Identify from 'src/simi/Helper/Identify';
+
+import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
+
+import DEFAULT_OPERATIONS, {
+    CUSTOM_TYPES
+} from '@magento/peregrine/lib/talons/Header/currencySwitcher.gql';
 
 const storage = new BrowserPersistence();
 
@@ -25,41 +30,45 @@ const storage = new BrowserPersistence();
  */
 
 export const useCurrencySwitcher = (props = {}) => {
-    const {
-        operations = DEFAULT_OPERATIONS,
-        typePolicies = CUSTOM_TYPES
-    } = props;
+    const storeConfig = Identify.getStoreConfig();
+    const { typePolicies = CUSTOM_TYPES } = props;
+
+    const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const { getCurrencyQuery } = operations;
 
     useTypePolicies(typePolicies);
 
-    // const { data: currencyData } = useQuery(getCurrencyQuery, {
-    //     fetchPolicy: 'cache-and-network',
-    //     nextFetchPolicy: 'cache-first'
-    // });
+    const { data: currencyDataOri } = useQuery(getCurrencyQuery, {
+        fetchPolicy: 'cache-first',
+        skip: storeConfig && storeConfig.currency
+    });
+    let dataFromConfig;
+    if (storeConfig && storeConfig.currency) {
+        dataFromConfig = JSON.parse(JSON.stringify(storeConfig));
+        dataFromConfig.currency.current_currency_code =
+            storage.getItem('store_view_currency') ||
+            dataFromConfig.currency.default_display_currency_code;
+    }
+    const currencyData = currencyDataOri || dataFromConfig;
 
-    // const currentCurrencyCode = useMemo(() => {
-    //     if (currencyData) {
-    //         return currencyData.currency.current_currency_code;
-    //     }
-    // }, [currencyData]);
+    const currentCurrencyCode = useMemo(() => {
+        if (currencyData) {
+            return currencyData.currency.current_currency_code;
+        }
+    }, [currencyData]);
 
-    // const availableCurrencies = useMemo(() => {
-    //     if (currencyData) {
-    //         return currencyData.currency.available_currency_codes;
-    //     }
-    // }, [currencyData]);
-    //simi use currencies from settings, cause the listing is missing currency name
-    const merchantConfigs = Identify.getStoreConfig();
-    const currentCurrencyCode = merchantConfigs.simiStoreConfig.config.base.currency_code
-    const availableCurrencies = merchantConfigs.simiStoreConfig.config.base.currencies;
+    const availableCurrencies = useMemo(() => {
+        if (currencyData) {
+            return currencyData.currency.available_currency_codes;
+        }
+    }, [currencyData]);
 
     const history = useHistory();
 
     const handleSwitchCurrency = useCallback(
         currencyCode => {
             // Do nothing when currency code is not present in available currencies
-            //simi comment if (!availableCurrencies.includes(currencyCode)) return;
+            if (!availableCurrencies.includes(currencyCode)) return;
             Identify.clearStoreConfig() //simi remove saved store config
             storage.setItem('store_view_currency', currencyCode);
 

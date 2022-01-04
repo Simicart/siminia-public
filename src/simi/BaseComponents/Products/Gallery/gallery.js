@@ -1,12 +1,12 @@
-import React, { useMemo, useCallback } from 'react';
-import { string, shape, array } from 'prop-types';
-import { GridItem } from 'src/simi/BaseComponents/GridItem';
+import React, {useMemo, useCallback} from 'react';
+import {string, shape, array} from 'prop-types';
+import {GridItem} from 'src/simi/BaseComponents/GridItem';
 
 require('./gallery.scss');
 
 // map Magento 2.3.1 schema changes to Venia 2.0.0 proptype shape to maintain backwards compatibility
 const mapGalleryItem = item => {
-    const { small_image } = item;
+    const {small_image} = item;
     return {
         ...item,
         small_image:
@@ -15,9 +15,9 @@ const mapGalleryItem = item => {
 };
 
 const Gallery = props => {
-    const { items, history } = props;
+    const {items, history, overRideClasses = {}, styles} = props;
 
-    const handleLink = useCallback((link) => {
+    const handleLink = useCallback(link => {
         history.push(link);
     }, []);
 
@@ -25,17 +25,28 @@ const Gallery = props => {
         () =>
             items.map((item, index) => {
                 if (item === null) {
-                    return <GridItem key={index} />;
+                    return '';
                 }
-                return <GridItem key={index} item={mapGalleryItem(item)} handleLink={handleLink} />;
-            }), [items]
+                return (
+                    <GridItem
+                        key={index}
+                        item={mapGalleryItem(item)}
+                        handleLink={handleLink}
+                        classes={overRideClasses}
+                        styles={styles}
+                    />
+                );
+            }),
+        [items, styles]
     );
 
-    return (<div className="gallery-root">
-        <div className="gallery-items">
-            {galleryItems}
+    return (
+        <div className={`${overRideClasses["gallery-root"] || ""} gallery-root`}>
+            <div className={`${overRideClasses["gallery-items"] || ""} gallery-items`}>
+                {galleryItems}
+            </div>
         </div>
-    </div>)
+    );
 };
 
 Gallery.propTypes = {
@@ -45,7 +56,9 @@ Gallery.propTypes = {
         pagination: string,
         root: string
     }),
-    items: array.isRequired
+    items: array.isRequired,
+    overRideClasses: shape(),
+    styles: shape()
 };
 
 export default Gallery;

@@ -1,5 +1,9 @@
 import React from 'react';
 import Identify from './Identify';
+import CurrencySymbol from '@magento/venia-ui/lib/components/CurrencySymbol';
+
+import { BrowserPersistence } from '@magento/peregrine/lib/util';
+const storage = new BrowserPersistence();
 
 export const HOPrice = props => {
     const { value, currencyCode } = props;
@@ -11,38 +15,51 @@ export const formatPrice = (price, currencyCode = null) => {
         price = parseFloat(price);
     }
     const storeConfig = Identify.getStoreConfig();
-    if (
-        storeConfig &&
-        storeConfig.simiStoreConfig &&
-        storeConfig.simiStoreConfig.config &&
-        storeConfig.simiStoreConfig.config.base
-    ) {
+    if (storeConfig && storeConfig.storeConfig) {
         const negativeVal = price < 0;
         price = Math.abs(price);
-        const { base } = storeConfig.simiStoreConfig.config;
-        const { currencies } = base;
-        let currency_symbol = currencyCode;
-        if (!currencyCode || currencyCode === base.currency_code)
-            currency_symbol = base.currency_symbol || base.currency_code;
+        let base = {};
+        let currency_symbol = false;
         if (
-            currencies instanceof Array &&
-            currencies.length &&
-            currencyCode !== base.currency_code &&
-            currencies.find(({ value }) => currencyCode === value)
+            storeConfig.simiStoreConfig &&
+            storeConfig.simiStoreConfig.config &&
+            storeConfig.simiStoreConfig.config.base
         ) {
-            const foundSymbol = currencies.find(
-                ({ value }) => currencyCode === value
-            );
-            currency_symbol = foundSymbol.symbol;
+            base = storeConfig.simiStoreConfig.config.base;
+            const { currencies } = base;
+            if (!currencyCode || currencyCode === base.currency_code)
+                currency_symbol = base.currency_symbol || base.currency_code;
+            if (
+                currencies instanceof Array &&
+                currencies.length &&
+                currencyCode !== base.currency_code &&
+                currencies.find(({ value }) => currencyCode === value)
+            ) {
+                const foundSymbol = currencies.find(
+                    ({ value }) => currencyCode === value
+                );
+                currency_symbol = foundSymbol.symbol;
+            }
         }
-        const currency_position = base.currency_position;
-        const decimal_separator = base.decimal_separator;
-        const thousand_separator = base.thousand_separator;
-        const max_number_of_decimals = base.max_number_of_decimals;
+
+        const currency_code =
+            storage.getItem('store_view_currency') ||
+            (storeConfig && storeConfig.storeConfig
+                ? storeConfig.storeConfig.base_currency_code
+                : '');
+        const currency_position = base.currency_position || 'before';
+        const decimal_separator = base.decimal_separator || '.';
+        const thousand_separator = base.thousand_separator || ',';
+        const max_number_of_decimals = base.max_number_of_decimals || 2;
         const currencyBefore = currency_position === 'before';
         currency_symbol = (
             <span className={`simi-currency-symbol ${currency_position}`}>
-                {currency_symbol}
+                {currency_symbol || (
+                    <CurrencySymbol
+                        currencyCode={currency_code}
+                        currencyDisplay={'narrowSymbol'}
+                    />
+                )}
             </span>
         );
         return (
@@ -143,59 +160,6 @@ export const getCurrencySymbol = () => {
     ) {
         const { base } = storeConfig.simiStoreConfig.config;
         return base.currency_symbol || base.currency_code;
-    }
-    return '';
-};
-
-export const formatPriceLabel = (price, currencyCode = null) => {
-    if (typeof price !== 'number') {
-        price = parseFloat(price);
-    }
-    const simiGetStoreConfig = Identify.getStoreConfig();
-    if (
-        simiGetStoreConfig &&
-        simiGetStoreConfig.simiStoreConfig &&
-        simiGetStoreConfig.simiStoreConfig.config &&
-        simiGetStoreConfig.simiStoreConfig.config.base
-    ) {
-        const negativeVal = price < 0;
-        price = Math.abs(price);
-        const { base } = simiGetStoreConfig.simiStoreConfig.config;
-        const {
-            currencies,
-            currency_position,
-            decimal_separator,
-            thousand_separator,
-            max_number_of_decimals
-        } = base;
-        let currency_symbol = currencyCode;
-        if (!currencyCode || currencyCode === base.currency_code)
-            currency_symbol = base.currency_symbol || base.currency_code;
-        if (
-            currencies instanceof Array &&
-            currencies.length &&
-            currencyCode !== base.currency_code &&
-            currencies.find(({ value }) => currencyCode === value)
-        ) {
-            const foundSymbol = currencies.find(
-                ({ value }) => currencyCode === value
-            );
-            currency_symbol = foundSymbol.symbol;
-        }
-
-        const putThousandToPrice = putThousandsSeparators(
-            price,
-            thousand_separator,
-            decimal_separator,
-            max_number_of_decimals
-        );
-
-        return (
-            (negativeVal ? '-' : '') +
-            (currency_position === 'before' ? currency_symbol : '') +
-            putThousandToPrice +
-            (currency_position !== 'before' ? currency_symbol : '')
-        );
     }
     return '';
 };

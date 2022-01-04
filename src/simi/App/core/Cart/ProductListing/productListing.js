@@ -1,90 +1,99 @@
-import React, { Fragment, useCallback } from 'react';
-import gql from 'graphql-tag';
-import { useProductListing } from 'src/simi/talons/CartPage/ProductListing/useProductListing';
-import { ProductListingFragment } from './productListingFragments';
-import CartItem from './CartItem';
-import Identify from 'src/simi/Helper/Identify';
-import ProductListingTableActions from './productListingTableActions'
+import React, { Fragment, useCallback, Suspense } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useProductListing } from '@magento/peregrine/lib/talons/CartPage/ProductListing/useProductListing';
+import DEFAULT_OPERATIONS from './productListing.gql';
 
+import { useStyle } from '@magento/venia-ui/lib/classify';
+import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
+import defaultClasses from './productListing.module.css';
+import Product from './product';
+import ProductListingTableActions from './productListingTableActions';
+
+const EditModal = React.lazy(() => import('./EditModal'));
+/**
+ * A child component of the CartPage component.
+ * This component renders the product listing on the cart page.
+ *
+ * @param {Object} props
+ * @param {Function} props.setIsCartUpdating Function for setting the updating state of the cart.
+ * @param {Object} props.classes CSS className overrides.
+ * See [productListing.module.css]{@link https://github.com/magento/pwa-studio/blob/develop/packages/venia-ui/lib/components/CartPage/ProductListing/productListing.module.css}
+ * for a list of classes you can override.
+ *
+ * @returns {React.Element}
+ *
+ * @example <caption>Importing into your project</caption>
+ * import ProductListing from "@magento/venia-ui/lib/components/CartPage/ProductListing";
+ */
 const ProductListing = props => {
-    const { setIsCartUpdating, isPhone, cartCurrencyCode, history, toggleMessages } = props;
-    const talonProps = useProductListing({
-        queries: {
-            getProductListing: GET_PRODUCT_LISTING
-        }
-    });
-    const { activeEditItem, isLoading, items, setActiveEditItem } = talonProps;
+    const {
+        onAddToWishlistSuccess,
+        setIsCartUpdating,
+        fetchCartDetails,
+        history
+    } = props;
 
-    const handleLink = useCallback((link) => {
-        history.push(link);
-    }, [history])
+    const talonProps = useProductListing({ operations: DEFAULT_OPERATIONS });
+
+    const {
+        activeEditItem,
+        isLoading,
+        items,
+        setActiveEditItem,
+        wishlistConfig
+    } = talonProps;
+    const handleLink = useCallback(
+        link => {
+            history.push(link);
+        },
+        [history]
+    );
+    const classes = useStyle(defaultClasses, props.classes);
 
     if (isLoading) {
-        return ''
+        return (
+            <LoadingIndicator>
+                <FormattedMessage
+                    id={'productListing.loading'}
+                    defaultMessage={'Fetching Cart...'}
+                />
+            </LoadingIndicator>
+        );
     }
 
     if (items.length) {
-        const obj = [];
-        for (const i in items) {
-            const item = items[i];
-            if (item)
-                obj.push(
-                    <CartItem
-                        key={item.id}
-                        item={item}
-                        currencyCode={cartCurrencyCode}
-                        handleLink={handleLink}
-                        history={history}
-                        miniOrMobile={isPhone}
+        const productComponents = items.map(product => (
+            <Product
+                item={product}
+                key={product.id}
+                setActiveEditItem={setActiveEditItem}
+                setIsCartUpdating={setIsCartUpdating}
+                onAddToWishlistSuccess={onAddToWishlistSuccess}
+                fetchCartDetails={fetchCartDetails}
+                wishlistConfig={wishlistConfig}
+            />
+        ));
+
+        return (
+            <Fragment>
+                <ul className={classes.root}>{productComponents}</ul>
+                <ProductListingTableActions
+                    handleLink={handleLink}
+                    setIsCartUpdating={setIsCartUpdating}
+                    items={items}
+                />
+                <Suspense fallback={null}>
+                    <EditModal
+                        item={activeEditItem}
+                        setIsCartUpdating={setIsCartUpdating}
                         setActiveEditItem={setActiveEditItem}
-                        setIsCartUpdating={setIsCartUpdating}
                     />
-                );
-        }
-        return isPhone ? (
-            <div className="cart-list">
-                {obj}
-            </div>
-        ) : (
-                <Fragment>
-                    <table className="cart-list-table">
-                        <tbody>
-                            <tr className="cart-list-table-header">
-                                <th style={{ width: '42.2%' }}>
-                                    {Identify.__('Items')}
-                                </th>
-                                <th style={{ width: '16.8%' }}>
-                                    {Identify.__('Price')}
-                                </th>
-                                <th style={{ width: '24.2%' }}>
-                                    {Identify.__('Quantity')}
-                                </th>
-                                <th style={{ width: '16.8%' }}>
-                                    {Identify.__('Subtotal')}
-                                </th>
-                            </tr>
-                            {obj}
-                        </tbody>
-                    </table>
-                    <ProductListingTableActions
-                        handleLink={handleLink}
-                        setIsCartUpdating={setIsCartUpdating}
-                        items={items}
-                    />
-                </Fragment>
-            )
+                </Suspense>
+            </Fragment>
+        );
     }
+
     return null;
 };
-
-export const GET_PRODUCT_LISTING = gql`
-    query getProductListing($cartId: String!) {
-        cart(cart_id: $cartId) @connection(key: "Cart") {
-            id
-            ...ProductListingFragment
-        }
-    }
-    ${ProductListingFragment}
-`;
 
 export default ProductListing;

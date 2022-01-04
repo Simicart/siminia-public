@@ -5,7 +5,7 @@
  * @param {String} value
  */
 export const parseNumber = (value) => {
-    var isDot, isComa;
+    var isDot; var isComa;
 
     if (typeof value !== 'string') {
         return parseFloat(value);

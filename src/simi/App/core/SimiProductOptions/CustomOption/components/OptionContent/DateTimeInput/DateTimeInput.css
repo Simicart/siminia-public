@@ -1,0 +1,17 @@
+.datetime-input-magic {
+    border-bottom: 1px solid #333;
+    padding: 0 0.4rem;
+    font-size: 0.8rem;
+    color: #555555;;
+}
+
+.button-custom-date {
+    cursor: pointer;
+    padding: 5px 15px;
+    border: 0;
+    border-radius: 4px !important;
+    background-color: #1979c3;
+    font: inherit;
+    color: #fff;
+}
+

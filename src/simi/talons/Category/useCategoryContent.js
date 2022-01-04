@@ -208,11 +208,6 @@ export const useCategoryContent = props => {
             ? true
             : false;
 
-    const cmsData =
-        products && products.category && products.category.simiCategoryCms
-            ? products.category.simiCategoryCms
-            : null;
-
     return {
         products,
         error,
@@ -221,7 +216,6 @@ export const useCategoryContent = props => {
         sortByData,
         appliedFilter,
         cateEmpty,
-        cmsData,
         pageControl
     };
 };

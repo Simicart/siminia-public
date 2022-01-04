@@ -1,0 +1,133 @@
+.cart-list-table-action {
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+    color: #000000;
+    text-transform: uppercase;
+    .remove-all-products {
+        border: none;
+        color: #0058b2;
+        font-size: 16px;
+        letter-spacing: 0;
+        line-height: 22px;
+        text-decoration: underline;
+        text-transform: initial;
+        font-weight: 500;
+        padding-top: 14px;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    .right-buttons {
+        box-sizing: border-box;
+        min-width: 210px;
+        border: 1px solid #0058ac;
+        background-color: #ffffff;
+    }
+    .continue-shopping {
+        border: none;
+        font-weight: 500;
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+    .right-buttons > div {
+        color: #0058ac;
+        font-size: 16px;
+        letter-spacing: 0;
+        font-weight: 500;
+        line-height: 22px;
+        padding-top: 15px;
+        min-height: 50px;
+    }
+    @media (max-width: 768px) {
+        flex-wrap: wrap;
+        margin-top: 24px;
+        .right-buttons {
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 45px;
+            font-size: 16px;
+            border: 1px solid #0058ac;
+            background-color: #ffffff;
+        }
+        .right-buttons > div {
+            color: #0058ac;
+            font-size: 16px;
+            font-weight: 600;
+            height: 100%;
+            padding-top: 11px;
+            min-height: 45px;
+        }
+        .remove-all-products {
+            border: none;
+            color: #0058b2;
+            font-weight: 600;
+            width: 100%;
+            text-decoration: underline;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+    }
+}
+.fashioncart-confirm-alert {
+    .siminia-react-confirm-alert-body {
+        height: 194px;
+        width: 522px;
+        border-radius: 4px;
+        background-color: #ffffff;
+        h3 {
+            color: #111111;
+            font-size: 14px;
+            letter-spacing: 0;
+            line-height: 19px;
+            text-align: center;
+        }
+        .siminia-react-confirm-alert-button-group {
+            margin-top: 52px;
+            button {
+                text-transform: uppercase;
+                box-sizing: border-box;
+                border-radius: 4px;
+                font-size: 14px;
+                font-weight: bold;
+                letter-spacing: 0;
+                line-height: 16px;
+                height: 50px;
+                width: 184px;
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+            .confirm-alert-cancel {
+                border: 1px solid #0058b2;
+                background-color: #fff;
+                color: #0058b2;
+            }
+            .confirm-alert-ok {
+                background-color: #0058b2;
+                color: #ffffff;
+            }
+        }
+    }
+    @media (max-width: 1023px) {
+        .siminia-react-confirm-alert-body {
+            overflow: hidden;
+            height: 175px;
+            width: 498px;
+            h3 {
+                font-size: 13px;
+            }
+            .siminia-react-confirm-alert-button-group {
+                margin-top: 30px;
+                button {
+                    line-height: 6px;
+                    height: 30px;
+                    width: 120px;
+                    margin-inline-end: 10px;
+                }
+            }
+        }
+    }
+}

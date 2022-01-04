@@ -1,0 +1,5 @@
+.input {
+    composes: input from 'node_modules/@magento/venia-ui/lib/components/TextInput/textInput.module.css';
+    font-size: 0.8rem;
+    color: #555555;
+}

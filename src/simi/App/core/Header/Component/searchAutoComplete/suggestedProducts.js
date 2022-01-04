@@ -4,7 +4,7 @@ import { arrayOf, func, number, oneOfType, shape, string } from 'prop-types';
 import { mergeClasses } from 'src/classify';
 import mapProduct from './mapProduct';
 import SuggestedProduct from './suggestedProduct';
-import defaultClasses from './suggestedProducts.css';
+import defaultClasses from './suggestedProducts.module.css';
 
 const SuggestedProducts = props => {
     const { limit, onNavigate, products } = props;

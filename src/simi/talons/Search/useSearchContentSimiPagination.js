@@ -15,7 +15,7 @@ import {
 
 let sortByData = null;
 let filterData = null;
-let loadedData = null;
+const loadedData = null;
 
 // use pagination follow site magento default ( change both page and pagesize)
 export const useSearchContentSimiPagination = props => {

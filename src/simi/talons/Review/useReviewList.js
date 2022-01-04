@@ -44,7 +44,7 @@ export const useReviewList = props => {
 
     const dataReview = useMemo(() => {
         if (data && data.hasOwnProperty('productDetail') && data.productDetail && data.productDetail.items) {
-            let { items } = data.productDetail.items[0].reviews;
+            const { items } = data.productDetail.items[0].reviews;
             if (!loadedReview) {
                 loadedReview = data;
             } else {
@@ -74,7 +74,7 @@ export const useReviewList = props => {
                     variables: formValues
                 });
 
-                smoothScrollToView($('#root'));
+                smoothScrollToView(document.getElementById('root'));
             } catch {
                 // we have an onError link that logs errors, and FormError already renders this error, so just return
                 // to avoid triggering the success callback
@@ -83,7 +83,7 @@ export const useReviewList = props => {
             hideFogLoading();
         }, []);
 
-    let isSubmittedReview = useMemo(
+    const isSubmittedReview = useMemo(
         () => {
             return reviewed;
         }, [reviewed, thisPage]

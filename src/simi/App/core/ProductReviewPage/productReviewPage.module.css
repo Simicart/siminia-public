@@ -1,0 +1,49 @@
+.root {
+    display: grid;
+    padding: 2rem 3rem;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 20% auto;
+}
+
+/* .container {
+    display: flex;
+    justify-content: center;    
+} */
+.heading {
+    text-transform: capitalize;
+    font-size: 32px;
+    letter-spacing: 0;
+    line-height: 43px;
+    font-family: poppins;
+    margin-bottom: 16px;
+    color: #111111;
+}
+.headingTotal {
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 18px;
+    font-family: poppins;
+    margin-bottom: 30px;
+    color: #111111;
+}
+
+
+.emptyReviewwMessage {
+   text-align: center;
+}
+
+@media screen and (min-width: 959px) {
+    
+    .wrapper {
+        display: grid;
+        grid-template-columns: 20% auto;
+    }
+    .container {
+        padding: 0 3rem;
+    }
+   
+}

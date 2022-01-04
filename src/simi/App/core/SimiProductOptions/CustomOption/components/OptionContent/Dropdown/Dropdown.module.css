@@ -1,0 +1,10 @@
+.label-option-price {
+    font-weight: bold !important;
+}
+
+.input {
+    composes: input from 'node_modules/@magento/venia-ui/lib/components/Select/select.module.css';
+    font-size: 0.8rem;
+    border: 1px solid #E8E8E8 !important;
+    color: #555555;
+}

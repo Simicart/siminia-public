@@ -1,0 +1,13 @@
+.root {
+    display: grid;
+    grid-gap: 2rem 1rem;
+    color: #000000;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 32px;
+}
+.root > li{
+    border-bottom: 1px solid #0058AC;
+    padding-bottom: 17px;
+}

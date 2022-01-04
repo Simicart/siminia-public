@@ -1,202 +1,131 @@
-import React, { useCallback, useEffect } from 'react';
-import { useCartPage } from 'src/simi/talons/CartPage/useCartPage';
-import { GET_CART_DETAILS } from './cartPage.gql';
-import TitleHelper from 'src/simi/Helper/TitleHelper';
-import Identify from 'src/simi/Helper/Identify';
-import {
-    showFogLoading,
-    hideFogLoading
-} from 'src/simi/BaseComponents/Loading/GlobalLoading';
-import { useWindowSize } from '@magento/peregrine';
-import { Colorbtn } from 'src/simi/BaseComponents/Button';
-import ProductListing from './ProductListing';
-import { showToastMessage } from 'src/simi/Helper/Message';
+import React, { useEffect } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { Check } from 'react-feather';
+import { useCartPage } from '@magento/peregrine/lib/talons/CartPage/useCartPage';
+import { useStyle } from '@magento/venia-ui/lib/classify';
+import { useToasts } from '@magento/peregrine';
+
+import Icon from '@magento/venia-ui/lib/components/Icon';
+import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
+import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
+import StockStatusMessage from '@magento/venia-ui/lib/components/StockStatusMessage';
+import PriceAdjustments from './PriceAdjustments';
 import PriceSummary from './PriceSummary';
-import Coupon from './PriceAdjustments/CouponCode';
-import Estimate from './Estimate';
-import EmptyCart from './EmptyCart';
+import ProductListing from './ProductListing';
+import defaultClasses from './cartPage.module.css';
 
-require('./cart.scss');
-let toggledErrMessOnce = false;
+const CheckIcon = <Icon size={20} src={Check} />;
 
+/**
+ * Structural page component for the shopping cart.
+ * This is the main component used in the `/cart` route in Venia.
+ * It uses child components to render the different pieces of the cart page.
+ *
+ * @see {@link https://venia.magento.com/cart}
+ *
+ * @param {Object} props
+ * @param {Object} props.classes CSS className overrides for the component.
+ * See [cartPage.module.css]{@link https://github.com/magento/pwa-studio/blob/develop/packages/venia-ui/lib/components/CartPage/cartPage.module.css}
+ * for a list of classes you can override.
+ *
+ * @returns {React.Element}
+ *
+ * @example <caption>Importing into your project</caption>
+ * import CartPage from "@magento/venia-ui/lib/components/CartPage";
+ */
 const CartPage = props => {
-    const { toggleMessages, history, location } = props;
-    const talonProps = useCartPage({
-        queries: {
-            getCartDetails: GET_CART_DETAILS
-        }
-    });
+    const talonProps = useCartPage();
+    const { history } = props;
     const {
-        handleSignIn,
+        cartItems,
         hasItems,
-        isSignedIn,
         isCartUpdating,
+        fetchCartDetails,
+        onAddToWishlistSuccess,
         setIsCartUpdating,
         shouldShowLoadingIndicator,
-        cart,
-        errors,
-        queryError
+        wishlistSuccessProps,
     } = talonProps;
+   
+    const classes = useStyle(defaultClasses, props.classes);
+    const { formatMessage } = useIntl();
+    const [, { addToast }] = useToasts();
 
-    const windowSize = useWindowSize();
-    const isPhone = windowSize.innerWidth < 1024;
-
-    const cartCurrencyCode =
-        cart &&
-        cart.prices &&
-        cart.prices.grand_total &&
-        cart.prices.grand_total.currency;
-
-    if (
-        location &&
-        location.search &&
-        location.search.indexOf('payment=false') !== -1
-    ) {
-        if (!toggledErrMessOnce) {
-            toggledErrMessOnce = true;
-            if (toggleMessages) {
-                toggleMessages([
-                    {
-                        type: 'error',
-                        message: Identify.__(
-                            'An error occurred while making the transaction. Please try again.'
-                        ),
-                        auto_dismiss: false
-                    }
-                ]);
-            }
-        }
-    }
     useEffect(() => {
-        if (errors.length && toggleMessages) {
-            errors.map(error => {
-                toggleMessages([
-                    { type: 'error', message: error, auto_dismiss: false }
-                ]);
-            });
+        if (wishlistSuccessProps) {
+            addToast({ ...wishlistSuccessProps, icon: CheckIcon });
         }
-    }, [errors]);
+    }, [addToast, wishlistSuccessProps]);
 
-    const couponCode = () => {
-        const childCPProps = {
-            toggleMessages,
-            setIsCartUpdating,
-            defaultOpen: !isPhone
-        };
-        return (
-            <div className="cart-coupon-form">
-                <div className="cart-coupon-form-title1">
-                    {Identify.__('Apply Discount Code')}
-                </div>
-                <div className="cart-coupon-form-title2">
-                    {Identify.__('Enter discount code')}
-                </div>
-                <Coupon {...childCPProps} />
-            </div>
-        );
-    };
-
-    const handleGoCheckout = useCallback(() => {
-        if (errors && errors.length && errors[0]) showToastMessage(errors[0]);
-        else if (!Identify.isEnabledCheckoutAsGuest() && !isSignedIn) {
-            history.push('/login.html');
-        } else history.push('/checkout.html');
-    }, [cart, history, errors]);
-
-    if (isCartUpdating || shouldShowLoadingIndicator) {
-        showFogLoading();
-    } else {
-        hideFogLoading();
+    if (shouldShowLoadingIndicator) {
+        return fullPageLoadingIndicator;
     }
 
-    if (!hasItems) {
-        if (isCartUpdating) {
-            return '';
-        } else {
-            return (
-                <div className="cart-page">
-                    <div className="empty-cart">
-                        <EmptyCart />
-                    </div>
-                </div>
-            );
-        }
-    }
-
-    return (
-        <div className="container cart-page">
-            {TitleHelper.renderMetaHeader({
-                title: Identify.__('Shopping Cart')
-            })}
-            <div className="cart-header">
-                {hasItems ? (
-                    <div className="cart-title">
-                        <div>{Identify.__('Shopping cart')}</div>
-                    </div>
-                ) : (
-                    ''
-                )}
-            </div>
-            <ProductListing
-                setIsCartUpdating={newValue => {
-                    //if we're having an error, and updated something, need to reload the cart to clean the errors from apollo useQuery
-                    if (
-                        !newValue &&
-                        isCartUpdating &&
-                        queryError &&
-                        queryError.graphQLErrors
-                    ) {
-                        window.location.reload();
-                    }
-                    setIsCartUpdating(newValue);
-                }}
-                isPhone={isPhone}
-                cartCurrencyCode={cartCurrencyCode}
-                history={history}
+    const productListing = hasItems ? (
+        <ProductListing
+            onAddToWishlistSuccess={onAddToWishlistSuccess}
+            setIsCartUpdating={setIsCartUpdating}
+            fetchCartDetails={fetchCartDetails}
+            history={history}
+        />
+    ) : (
+        <h3>
+            <FormattedMessage
+                id={'cartPage.noItems'}
+                defaultMessage={'You have no items in your shopping cart.'}
             />
-            {isCartUpdating ? (
-                ''
-            ) : (
-                <div className="cart-footer row">
-                    {!isPhone && (
-                        <div className="col-md-4">
-                            {cart &&
-                                (!errors || !errors.length) &&
-                                couponCode()}
-                        </div>
-                    )}
-                    {!isPhone && (
-                        <div className="col-md-4">
-                            {cart &&
-                                !cart.is_virtual &&
-                                (!errors || !errors.length) && <Estimate />}
-                        </div>
-                    )}
-                    <div className="col-md-4">
-                        <div className="total-section">
-                            <div className="total-section-title">
-                                {isPhone
-                                    ? Identify.__('Summary')
-                                    : Identify.__('Total')}
-                            </div>
-                            {isPhone &&
-                                (!errors || !errors.length) &&
-                                couponCode()}
-                            <div className="summary">
-                                <PriceSummary isUpdating={isCartUpdating} />
-                            </div>
-                            <div className="cart-btn-section">
-                                <Colorbtn
-                                    id="go-checkout"
-                                    className="go-checkout"
-                                    onClick={() => handleGoCheckout()}
-                                    text={Identify.__('Proceed to checkout')}
-                                />
-                            </div>
-                        </div>
+        </h3>
+    );
+
+    const priceAdjustments = hasItems ? (
+        <PriceAdjustments setIsCartUpdating={setIsCartUpdating} />
+    ) : null;
+
+    const priceSummary = hasItems ? (
+        <PriceSummary isUpdating={isCartUpdating} />
+    ) : null;
+
+    const totalQuantity = cartItems.length ? (
+        <span> {cartItems.reduce((total,item) => { return total += item.quantity},0)}  
+            <FormattedMessage
+            id={'cartPage.itemsCount'}
+            defaultMessage={' Item(s)'}
+            /> 
+        </span>
+    ) : null;    
+    return (
+        <div className={classes.root}>
+            <StoreTitle>
+                {formatMessage({
+                    id: 'cartPage.title',
+                    defaultMessage: 'Cart'
+                })}
+            </StoreTitle>
+            <div className={classes.heading_container}>
+                <h1 className={classes.heading}>
+                    <FormattedMessage
+                        id={'cartPage.headingCart'}
+                        defaultMessage={'Shopping Cart'}
+                    />
+                </h1>
+                <h1 className={classes.items_count}>
+                    {totalQuantity} 
+                </h1>
+                <div className={classes.stockStatusMessageContainer}>
+                    <StockStatusMessage cartItems={cartItems} />
+                </div>
+            </div>
+            <div className={classes.body}>
+                <div className={classes.items_container}>{productListing}</div>
+                <div className={classes.price_adjustments_container}>
+                    {priceAdjustments}
+                </div>
+                <div className={classes.summary_container}>
+                    <div className={classes.summary_contents}>
+                        {priceSummary}
                     </div>
                 </div>
-            )}
+            </div>
         </div>
     );
 };

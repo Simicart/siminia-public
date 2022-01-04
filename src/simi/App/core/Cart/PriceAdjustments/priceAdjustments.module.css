@@ -1,0 +1,28 @@
+.root {
+    border: 1px solid rgb(0, 88, 178, 0.5);
+    border-bottom: none;
+}
+.root > div {
+    border: none;
+}
+.root > div > div {
+    border-bottom: 1px solid rgb(0, 88, 178, 0.5);
+}
+.sectionRoot {
+    font-size: 18px;
+}
+.sectionRoot span[class*='label'] {
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .root {
+        font-size: 16px;
+    }
+    .sectionTitle {
+        font-size: 16px;
+    }
+    .sectionRoot span[class*='label'] {
+        font-size: 14px;
+    }
+}

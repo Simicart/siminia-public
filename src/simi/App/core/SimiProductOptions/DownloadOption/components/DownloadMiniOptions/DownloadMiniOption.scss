@@ -1,0 +1,18 @@
+.options-container {
+    .option-select {
+        .option-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 0.4rem;
+        }
+    }
+
+    .checkbox-list {
+
+        margin-inline-start: 0.5rem;
+
+        > div {
+            margin-bottom: 0.4rem;
+        }
+    }
+}
