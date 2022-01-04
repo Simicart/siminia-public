@@ -1,5 +1,15 @@
 import { gql } from '@apollo/client';
-import { SimiPriceFragment } from 'src/simi/queries/catalog_gql/catalogFragment.gql';
+const sizeChartEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_SIZE_CHART &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_SIZE_CHART) === 1;
+
+const productLabelEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL) === 1;
 
 export const ProductDetailsFragment = gql`
     fragment ProductDetailsFragment on ProductInterface {
@@ -16,6 +26,43 @@ export const ProductDetailsFragment = gql`
         }
         id
         uid
+        ${
+            sizeChartEnabled
+                ? `
+            mp_sizeChart {
+                rule_id
+                name
+                rule_content
+                template_styles
+                enabled
+                display_type
+                conditions_serialized
+                attribute_code
+                demo_templates
+                priority
+                rule_description
+            }
+        `
+                : ``
+        }
+        ${
+            productLabelEnabled
+                ? `
+            mp_label_data {
+                list_position
+                list_position_grid
+                label_image
+                rule_id
+                label_font
+                label_font_size
+                label_color
+                label_template
+                label
+                
+            }        
+        `
+                : ``
+        }
         media_gallery_entries {
             # id is deprecated and unused in our code, but lint rules require we
             # request it if available

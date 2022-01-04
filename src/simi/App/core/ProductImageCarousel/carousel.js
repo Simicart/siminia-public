@@ -7,7 +7,7 @@ import { transparentPlaceholder } from '@magento/peregrine/lib/util/images';
 import { Carousel } from 'react-responsive-carousel';
 import ImageLightbox from './ImageLightbox';
 import { resourceUrl, getUrlBuffer, logoUrl } from 'src/simi/Helper/Url';
-
+import ProductLabel from '../ProductFullDetail/ProductLabel';
 import './style.css';
 import { useWindowSize } from '@magento/peregrine';
 
@@ -173,7 +173,7 @@ const ProductImageCarousel = props => {
                         }
                     />
                 ) : (
-                    carouselImages.map(function(item) {
+                    carouselImages.map(function(item, index) {
                         const src = item.file
                             ? resourceUrl(item.file, {
                                   type: 'image-product',
@@ -195,6 +195,10 @@ const ProductImageCarousel = props => {
                                     alt={item.url}
                                     style={{ objectFit: 'contain' }}
                                 />
+                                {index == 0 ? 
+                                <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} />
+                            : null}
+
                             </div>
                         );
                     })

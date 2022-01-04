@@ -19,7 +19,7 @@ import { QuantityFields } from '../Cart/ProductListing/quantity';
 import RichContent from '@magento/venia-ui/lib/components/RichContent/richContent';
 import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductOptions';
 import defaultClasses from './productFullDetail.module.css';
-
+import SizeChart from './SizeChart'
 const WishlistButton = React.lazy(() =>
     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
 );
@@ -28,6 +28,7 @@ const SimiProductOptions = React.lazy(() => import('../SimiProductOptions'));
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import { ProductDetailExtraProducts } from './productDetailExtraProducts';
 import ProductReview from './ProductReview';
+import ProductLabel from './ProductLabel'
 
 require('./productFullDetail.scss');
 
@@ -75,6 +76,7 @@ const ProductFullDetail = props => {
     }
 
     const classes = useStyle(defaultClasses, props.classes);
+    console.log('oroeasd', product);
 
     const options = isProductConfigurable(product) ? (
         <Suspense fallback={<ProductOptionsShimmer />}>
@@ -252,7 +254,10 @@ const ProductFullDetail = props => {
                             product={product}
                             optionSelections={optionSelections}
                             optionCodes={optionCodes}
+                            labelData={product.mp_label_data.length > 0 ? product.mp_label_data : null}
                         />
+                        {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
+
                     </section>
 
                     <FormError
@@ -264,6 +269,10 @@ const ProductFullDetail = props => {
                     <div className="wrapperOptions">
                         <section className={classes.options}>
                             {options}
+                            {product.mp_sizeChart && product.mp_sizeChart.display_type == "popup" ? 
+                        <SizeChart sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null} />
+                    : null}
+
                             <div className="wrapperPrice">
                                 <span className="labelPrice">
                                     <FormattedMessage
@@ -321,6 +330,9 @@ const ProductFullDetail = props => {
                                 <WishlistButton {...wishlistButtonProps} />
                             </Suspense>
                         </section>
+                        {product.mp_sizeChart && product.mp_sizeChart.display_type == "inline" ? 
+                        <SizeChart sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null} />
+                    : null}
                     </div>
                     <section className={classes.description}>
                         <span className={classes.descriptionTitle}>
@@ -343,6 +355,10 @@ const ProductFullDetail = props => {
                     </section>
                 </Form>
             </div>
+            {
+                product.mp_sizeChart && product.mp_sizeChart.display_type == "tab" ?
+                <SizeChart sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null}/>
+            : null}
             <ProductReview  product={product} ref={productReview} />
             <ProductDetailExtraProducts
                 classes={classes}

@@ -177,6 +177,20 @@ const CheckoutSuccess = props => {
     );
 };
 
+
+const Brands = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "Brands"*/ 'src/simi/App/core/ShopByBrand/components/brands')
+            }
+            {...props}
+        />
+    );
+};
+
+
+
 const Routes = props => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
@@ -213,6 +227,12 @@ const Routes = props => {
                     path="/checkout"
                     render={props => <Checkout {...props} />}
                 />
+                <Route
+                    exact
+                    path="/brands.html"
+                    render={props => <Brands {...props} />}
+                />
+               
                 <Route
                     exact
                     path="/sign-in"

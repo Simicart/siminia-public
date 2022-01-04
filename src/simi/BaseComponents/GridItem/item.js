@@ -23,6 +23,7 @@ import { useGridItem } from '../../talons/Category/useGridItem';
 import { useHistory } from 'react-router-dom';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToListButton';
+import ProductLabel from '../../App/core/ProductFullDetail/ProductLabel';
 // const AddToListButton = React.lazy(() =>
 //     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
 // );
@@ -48,7 +49,8 @@ const Griditem = props => {
         type_id,
         small_image,
         rating_summary,
-        review_count
+        review_count,
+        mp_label_data
     } = item;
 
     const product_url = `/${url_key}${productUrlSuffix()}`;
@@ -96,6 +98,7 @@ const Griditem = props => {
                         alt={name}
                         fallBackUrl={small_image}
                     />
+                    <ProductLabel productLabel = {mp_label_data ? mp_label_data : null} label_tyle="gallery"/>
                 </Link>
             </div>
         </div>

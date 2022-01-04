@@ -20,6 +20,18 @@ export const getCateNoFilter = gql`
         ) {
             items {
                 ...ProductOfListFragment
+                mp_label_data {
+                list_position
+                list_position_grid
+                label_image
+                rule_id
+                label_font
+                label_font_size
+                label_color
+                label_template
+                label
+                
+            }
             }
             page_info {
                 total_pages

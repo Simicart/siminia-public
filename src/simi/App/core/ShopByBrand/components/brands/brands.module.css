@@ -1,0 +1,190 @@
+.breadCrumb {
+    margin-left: 1rem;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    height: 1.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 15px;
+}
+.breadCrumbLink {
+    padding: 0.25rem;
+    text-decoration: underline;
+}
+.breadCrumbSeparator {
+    padding: 0.25rem;
+}
+.breadCrumbText {
+    padding: 0.25rem;
+}
+.brandPageHeader {
+    background-color: #0ed08e;
+    padding: 15px;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 50px;
+}
+.brandPageTitle {
+    font-size: 3.5em;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: normal;
+}
+.brandPageSearchBox {
+    position: relative;
+    max-width: 790px;
+    text-align: left;
+    margin: 0 auto;
+}
+.brandPageSearchInput {
+    display: block;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out .15s;
+    padding: 20px 10px 20px 50px !important;
+    height: auto !important;
+    margin-bottom: 40px;
+    margin-top: 1em;
+}
+.searchResult {
+    position: absolute;
+    max-height: 2000px;
+    z-index: 9999;
+    top: 63px;
+    left: 0px;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    background: #FFF;
+    cursor: default;
+    overflow: auto;
+    -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+    -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+    box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+    border-top: 0;
+    padding: 10px 0;
+}
+.brandPageIcon {
+    position: absolute;
+    right: 20px;
+    top: 18px;
+}
+.searchItem {
+    padding: 4px 9px;
+    margin-inline-end: 9px;
+    white-space: nowrap;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+}
+.searchItemPhotoWrapper {
+    width: 70px;
+    max-width: 70px;
+    min-width: 70px;
+}
+.searchItemPhoto {
+    width: 100%;
+    height: auto;
+    border: 0;
+}
+.searchItemInfo {
+    padding: 4px 15px;
+}
+.searchItemName {
+    font-size: 18px;
+    color: #333333;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+.searchItemDesc {
+    color: #333333;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.dictList {
+    margin-top: 20px;
+    border-top: solid 1px #dfdfdf;
+    padding-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 30px 15px 20px 15px;
+}
+.dictOption {
+    cursor: pointer;
+    color: inherit;
+    position: relative;
+    padding: 10px 14px;
+    line-height: 20px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    position: relative;
+    min-width: 38px;
+    float: left;
+    margin-bottom: 5px;
+    margin-left: 2px;
+}
+.dictOption.selected {
+    background-color: #0ed08e;
+    color: white;
+}
+.dictOption.disabled {
+    color: lightgray;
+}
+
+.brandListContent {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    padding: 5px 15px;
+    justify-content: flex-start;
+}
+
+.alphabetHeader {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eaeaea;
+    width: 100%;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.brandItem {
+    padding: 10px 5px 20px;
+    margin-inline-end: 15px;
+}
+.brandItem:hover{
+    border: solid 1px #dfdfdf;
+    -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+    -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+    box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+}
+.brandItemImageWrapper {
+    width: 100%;
+    padding-top: 100%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.brandItemInfo {
+    margin-top: 5px;
+    text-align: center;
+    font-size: 15px;
+}
+.listItemSortDescription {
+    margin-top: 10px;
+}
