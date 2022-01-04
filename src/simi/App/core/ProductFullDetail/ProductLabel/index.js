@@ -11,7 +11,7 @@ const ProductLabel = props => {
     const { productLabel,label_tyle } = props;
     console.log('productlabel', label_tyle);
 
-    if (!productLabel) {
+    if (!productLabel || productLabel.length == 0) {
         return null;
     }
 
