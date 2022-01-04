@@ -316,7 +316,7 @@ const ProductBuilderFullDetail = props => {
             if (reviewProps.style) reviewProps.style.flexDirection = 'row';
             if (pDetails && pDetails.review_count && pDetails.rating_summary) {
                 return (
-                    <section className={classes.reviewSum}>
+                    <div className={classes.reviewSum} {...reviewProps}>
                         <StaticRate
                             rate={product.rating_summary}
                             classes={{
@@ -330,7 +330,7 @@ const ProductBuilderFullDetail = props => {
                                 : formatMessage({ id: 'Review' })}
                             )
                         </span>
-                    </section>
+                    </div>
                 );
             } else
                 return (
@@ -340,6 +340,7 @@ const ProductBuilderFullDetail = props => {
                                 productReview.current.togglePopup();
                         }}
                         className={classes.noReview}
+                        {...reviewProps}
                     >
                         <FormattedMessage
                             id="productFullDetail.noReview"
