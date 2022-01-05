@@ -51,11 +51,13 @@ const OrderHistoryPage = props => {
 };
 
 const OrderDetailPage = props => {
-    return <LazyComponent 
-        component={() => import('src/simi/App/core/OrderDetailPage')}
-        {...props}    
-    />
-}
+    return (
+        <LazyComponent
+            component={() => import('src/simi/App/core/OrderDetailPage')}
+            {...props}
+        />
+    );
+};
 
 //import AccountInformationPage from '@magento/venia-ui/lib/components/AccountInformationPage';
 const AccountInformationPage = props => {
@@ -255,7 +257,7 @@ const Routes = props => {
                     path="/order-history"
                     render={props => <OrderHistoryPage {...props} />}
                 />
-                <Route 
+                <Route
                     exact
                     path="/order-history/:orderId"
                     render={props => <OrderDetailPage {...props} />}
@@ -340,9 +342,9 @@ const Routes = props => {
                  */}
                 <Route
                     render={props => (
-                        <NoMatch
-                            {...props}
-                        />
+                        <div style={{ minHeight: '100vh' }}>
+                            <NoMatch {...props} />
+                        </div>
                     )}
                 />
             </Switch>

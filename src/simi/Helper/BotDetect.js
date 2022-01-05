@@ -38,3 +38,7 @@ export const isRendertron = () => {
         return false;
     }
 }
+
+export const isHeadlessChrome = () => {
+    return window.smIsLightHouse === true;
+}
