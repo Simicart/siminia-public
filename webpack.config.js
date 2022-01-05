@@ -52,12 +52,10 @@ module.exports = async env => {
             'react-share',
             'rendertron-middleware',
             'react-responsive-modal',
-            'simi-pagebuilder-react',
             'react-image-lightbox',
             'graphql',
             '@formatjs',
             '@apollo/client',
-            '@magento/venia-ui',
             '@magento/peregrine',
             //end simicart libs to move to vendors instead of client chunk
             'redux-thunk'
@@ -204,7 +202,7 @@ module.exports = async env => {
     //simicart chunk split (change runtime to a bigger chunk)
     if (config.optimization && config.optimization.splitChunks && config.optimization.splitChunks.cacheGroups)
         config.optimization.splitChunks.cacheGroups.runtime = {
-            test: /([\\/]node_modules[\\/]\@magento[\\/]venia\-ui[\\/])/,
+            test: /([\\/](venia-ui|simi-pagebuilder-react|react-dom)[\\/])/,
             //test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
             name: 'runtime',
             chunks: 'all'
