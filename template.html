@@ -51,6 +51,26 @@
         }
     </script>
     <script type="text/javascript">
+        //prefetch pagebuilder data
+        var pbFetchingUrl = 'https://tapita.io/pb/publishedpb/?integrationToken=14FJiubdB8n3Byig2IkpfM6OiS6RTO801622446444';
+        try {
+            fetch(pbFetchingUrl)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((result) => {
+                    if (
+                        result &&
+                        result.data &&
+                        result.data.spb_page
+                    )
+                        window.smPbPagesByToken = result;
+                })
+        } catch (err) {
+
+        }
+    </script>
+    <script type="text/javascript">
         var SMCONFIGS = {
             //magento url, end with slash
             merchant_url: "<%= process.env.MAGENTO_BACKEND_URL %>",
