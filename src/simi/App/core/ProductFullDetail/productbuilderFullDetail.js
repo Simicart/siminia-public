@@ -22,7 +22,7 @@ const WishlistButton = React.lazy(() =>
 );
 const Options = React.lazy(() => import('../ProductOptions'));
 const SimiProductOptions = React.lazy(() => import('../SimiProductOptions'));
-import { PageBuilderComponent } from 'src/simi/App/core/NoMatch';
+import PageBuilderComponent from 'src/simi/App/core/TapitaPageBuilder/PageBuilderComponent';
 
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import ProductReview from './ProductReview';
