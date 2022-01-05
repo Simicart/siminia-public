@@ -5,13 +5,12 @@ import { connect } from 'src/drivers';
 import defaultClasses from './navigation.module.css';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Identify from 'src/simi/Helper/Identify';
-import { useNavigation } from '@magento/peregrine/lib/talons/Navigation/useNavigation';
+import { useNavigation } from '../../../talons/Navigation/useNavigation';
 
 const HONavigation = props => {
     //use this hook to force-fetch user data on reload logged in
-    const talonProps = useNavigation();
-
     const { storeConfig } = props;
+    const talonProps = useNavigation({ storeConfig });
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
     const classes = useStyle(defaultClasses, props.classes);

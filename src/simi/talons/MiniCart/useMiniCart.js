@@ -1,43 +1,145 @@
-import { useState , useEffect } from 'react';
-import { useAppContext } from '@magento/peregrine/lib/context/app';
+import { useCallback, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useQuery, useMutation } from '@apollo/client';
+
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
-import { simiUseQuery } from 'src/simi/Network/Query';
+import { deriveErrorMessage } from '@magento/peregrine/lib/util/deriveErrorMessage';
+import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
+import DEFAULT_OPERATIONS from '@magento/peregrine/lib/talons/MiniCart/miniCart.gql';
+import Identify from 'src/simi/Helper/Identify';
 
+/**
+ *
+ * @param {Function} props.setIsOpen - Function to toggle the mini cart
+ * @param {DocumentNode} props.operations.miniCartQuery - Query to fetch mini cart data
+ * @param {DocumentNode} props.operations.removeItemMutation - Mutation to remove an item from cart
+ *
+ * @returns {
+ *      closeMiniCart: Function,
+ *      errorMessage: String,
+ *      handleEditCart: Function,
+ *      handleProceedToCheckout: Function,
+ *      handleRemoveItem: Function,
+ *      loading: Boolean,
+ *      productList: Array<>,
+ *      subTotal: Number,
+ *      totalQuantity: Number
+ *      configurableThumbnailSource: String
+ *  }
+ */
 export const useMiniCart = props => {
+    const { setIsOpen } = props;
+    const storeConfig = Identify.getStoreConfig();
+
+    const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const {
-        queries: { getCartDetails }
-    } = props;
+        removeItemMutation,
+        miniCartQuery,
+        getStoreConfigQuery
+    } = operations;
+
     const [{ cartId }] = useCartContext();
-    const [{ drawer }, { closeDrawer }] = useAppContext();
-    const [activeEditItem, setActiveEditItem] = useState(null);
-    const [isCartUpdating, setIsCartUpdating] = useState(false);
+    const history = useHistory();
 
-    const { called, data, loading } = simiUseQuery(getCartDetails, {
-        fetchPolicy: 'cache-and-network',
-        // Don't make this call if we don't have a cartId
-        skip: !cartId,
-        variables: { cartId }
-    });
+    const { data: miniCartData, loading: miniCartLoading } = useQuery(
+        miniCartQuery,
+        {
+            fetchPolicy: 'cache-and-network',
+            nextFetchPolicy: 'cache-first',
+            variables: { cartId },
+            skip: !cartId
+        }
+    );
 
+    // const { data: storeConfigData } = useQuery(getStoreConfigQuery, {
+    //     fetchPolicy: 'cache-and-network'
+    // });
 
-    useEffect(() => {
-        // Let the cart page know it is updating while we're waiting on network data.
-        setIsCartUpdating(loading);
-    }, [loading]);
+    const configurableThumbnailSource = useMemo(() => {
+        if (storeConfig && storeConfig.storeConfig) {
+            return storeConfig.storeConfig.configurable_thumbnail_source;
+        }
+    }, [storeConfig]);
 
+    const storeUrlSuffix = useMemo(() => {
+        if (storeConfig && storeConfig.storeConfig) {
+            return storeConfig.storeConfig.product_url_suffix;
+        }
+    }, [storeConfig]);
 
-    const hasItems = !!(data && data.cart.total_quantity);
-    const shouldShowLoadingIndicator = called && loading && !hasItems;
+    const [
+        removeItem,
+        {
+            loading: removeItemLoading,
+            called: removeItemCalled,
+            error: removeItemError
+        }
+    ] = useMutation(removeItemMutation);
+
+    const totalQuantity = useMemo(() => {
+        if (!miniCartLoading && miniCartData) {
+            return miniCartData.cart.total_quantity;
+        }
+    }, [miniCartData, miniCartLoading]);
+
+    const subTotal = useMemo(() => {
+        if (!miniCartLoading && miniCartData) {
+            return miniCartData.cart.prices.subtotal_excluding_tax;
+        }
+    }, [miniCartData, miniCartLoading]);
+
+    const productList = useMemo(() => {
+        if (!miniCartLoading && miniCartData) {
+            return miniCartData.cart.items;
+        }
+    }, [miniCartData, miniCartLoading]);
+
+    const closeMiniCart = useCallback(() => {
+        setIsOpen(false);
+    }, [setIsOpen]);
+
+    const handleRemoveItem = useCallback(
+        async id => {
+            try {
+                await removeItem({
+                    variables: {
+                        cartId,
+                        itemId: id
+                    }
+                });
+            } catch (e) {
+                // Error is logged by apollo link - no need to double log.
+            }
+        },
+        [cartId, removeItem]
+    );
+
+    const handleProceedToCheckout = useCallback(() => {
+        setIsOpen(false);
+        history.push('/checkout');
+    }, [history, setIsOpen]);
+
+    const handleEditCart = useCallback(() => {
+        setIsOpen(false);
+        history.push('/cart');
+    }, [history, setIsOpen]);
+
+    const derivedErrorMessage = useMemo(
+        () => deriveErrorMessage([removeItemError]),
+        [removeItemError]
+    );
 
     return {
-        hasItems,
-        isCartUpdating,
-        setIsCartUpdating,
-        shouldShowLoadingIndicator,
-        cart: (data && data.cart) ? data.cart: null,
-        isOpen : drawer === 'cart',
-        closeDrawer,
-        activeEditItem,
-        setActiveEditItem
+        closeMiniCart,
+        errorMessage: derivedErrorMessage,
+        handleEditCart,
+        handleProceedToCheckout,
+        handleRemoveItem,
+        loading: miniCartLoading || (removeItemCalled && removeItemLoading),
+        productList,
+        subTotal,
+        totalQuantity,
+        configurableThumbnailSource,
+        storeUrlSuffix
     };
 };
