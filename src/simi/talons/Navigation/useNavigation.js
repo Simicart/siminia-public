@@ -19,6 +19,7 @@ const ancestors = {
 };
 
 export const useNavigation = (props = {}) => {
+    const { storeConfig } = props;
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const { getCustomerQuery, getRootCategoryId } = operations;
     // retrieve app state from context
@@ -32,15 +33,15 @@ export const useNavigation = (props = {}) => {
         getUserDetails({ fetchUserDetails });
     }, [fetchUserDetails, getUserDetails]);
 
-    const { data: getRootCategoryData } = useQuery(getRootCategoryId, {
-        fetchPolicy: 'cache-first'
-    });
+    // const { data: getRootCategoryData } = useQuery(getRootCategoryId, {
+    //     fetchPolicy: 'cache-first',
+    // });
 
     const rootCategoryId = useMemo(() => {
-        if (getRootCategoryData) {
-            return getRootCategoryData.storeConfig.root_category_id;
+        if (storeConfig && storeConfig.storeConfig) {
+            return storeConfig.storeConfig.root_category_id;
         }
-    }, [getRootCategoryData]);
+    }, [storeConfig]);
 
     // extract relevant data from app state
     const { drawer } = appState;

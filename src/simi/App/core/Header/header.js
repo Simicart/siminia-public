@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Identify from 'src/simi/Helper/Identify';
 import WishList from 'src/simi/BaseComponents/Icon/WishList';
 import MenuIcon from 'src/simi/BaseComponents/Icon/Menu';
@@ -10,7 +10,7 @@ import { Link } from 'src/drivers';
 import MegaMenu from '@magento/venia-ui/lib/components/MegaMenu/megaMenu';
 import MyAccount from './Component/MyAccount';
 import { useHistory, useLocation } from 'react-router-dom';
-import { logoUrl } from 'src/simi/Helper/Url';
+import { logoUrl } from '../../../Helper/Url';
 import SearchForm from './Component/SearchForm';
 import StoreSwitcher from '@magento/venia-ui/lib/components/Header/storeSwitcher';
 import CurrencySwitcher from '@magento/venia-ui/lib/components/Header/currencySwitcher';
@@ -18,8 +18,13 @@ import PageLoadingIndicator from '@magento/venia-ui/lib/components/PageLoadingIn
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useWindowSize } from '@magento/peregrine';
 import { useIntl } from 'react-intl';
+import { isBot, isHeadlessChrome } from '../../../Helper/BotDetect';
 
 import defaultClasses from './header.module.css';
+
+// check if bot or headless chrome / wont get cart to avoid perf accection
+// can modify deeper on  peregrine/lib/context/cart.js:83 to avoid creating cart - db wasting - https://prnt.sc/2628k9h
+const isBotOrHeadless = isBot() || isHeadlessChrome();
 
 const Header = props => {
     const history = useHistory();
@@ -28,6 +33,7 @@ const Header = props => {
     const { formatMessage } = useIntl();
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
+
     const isSimpleHeader =
         location &&
         location.pathname &&
@@ -74,7 +80,7 @@ const Header = props => {
                         Identify.isRtl() ? classes['right-bar-item-rtl'] : ''
                     }`}
                 >
-                    <CartTrigger classes={classes} />
+                    {!isBotOrHeadless && <CartTrigger classes={classes} />}
                 </div>
             </div>
         );
@@ -150,7 +156,7 @@ const Header = props => {
                                 </NavTrigger>
                                 {renderLogo()}
                                 <div className={classes['right-bar']}>
-                                    {!isSimpleHeader && (
+                                    {!isSimpleHeader && !isBotOrHeadless && (
                                         <div
                                             className={
                                                 classes['right-bar-item']

@@ -43,6 +43,7 @@ query storeConfigData {
         default_keywords
         default_description
         root_category_id
+        configurable_thumbnail_source
     }
     availableStores {
         category_url_suffix

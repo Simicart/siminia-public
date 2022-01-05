@@ -28,6 +28,17 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png">
     <link rel="preconnect" href="<%= process.env.MAGENTO_BACKEND_URL %>">
     <script type="text/javascript">
+        window.smIsLightHouse = false;
+        if (navigator && navigator.userAgent) {
+            var botPattern = "(Lighthouse)";
+            var re = new RegExp(botPattern, 'i');
+            var userAgent = navigator.userAgent;
+            if (re.test(userAgent)) {
+                window.smIsLightHouse = true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
         var SMCONFIGS = {
             //magento url, end with slash
             merchant_url: "<%= process.env.MAGENTO_BACKEND_URL %>",

@@ -7,7 +7,7 @@ import {
 import { bool, shape, string } from 'prop-types';
 
 import { useScrollLock, Price, useToasts } from '@magento/peregrine';
-import { useMiniCart } from '@magento/peregrine/lib/talons/MiniCart/useMiniCart';
+import { useMiniCart } from '../../../talons/MiniCart/useMiniCart';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 
 import Button from '@magento/venia-ui/lib/components/Button';

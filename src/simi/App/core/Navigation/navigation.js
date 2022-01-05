@@ -9,9 +9,8 @@ import { useNavigation } from '../../../talons/Navigation/useNavigation';
 
 const HONavigation = props => {
     //use this hook to force-fetch user data on reload logged in
-    const talonProps = useNavigation();
-
     const { storeConfig } = props;
+    const talonProps = useNavigation({ storeConfig });
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
     const classes = useStyle(defaultClasses, props.classes);
