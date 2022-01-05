@@ -28,6 +28,17 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png">
     <link rel="preconnect" href="<%= process.env.MAGENTO_BACKEND_URL %>">
     <script type="text/javascript">
+        window.smIsLightHouse = false;
+        if (navigator && navigator.userAgent) {
+            var botPattern = "(Lighthouse)";
+            var re = new RegExp(botPattern, 'i');
+            var userAgent = navigator.userAgent;
+            if (re.test(userAgent)) {
+                window.smIsLightHouse = true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
         var SMCONFIGS = {
             //magento url, end with slash
             merchant_url: "<%= process.env.MAGENTO_BACKEND_URL %>",
@@ -148,15 +159,13 @@
         <div class="addthis_inline_share_toolbox" id="social-share"></div>
     </div>
     <div id="root"></div>
-    <!--
-            <div class="splash-screen" id="splash-screen" style="margin-top:0;text-align:center;width: 100%;top: 0;left: 0;">
-                <div id="" style="width: 100%; height: auto; margin: 0 auto 0;">
-                    <img id="splash-img"
-                        style="position: absolute; left: 50%; top: 50%; -webkit-transform: translateY(-50%) translateX(-50%); z-index:-1; width: 100%; max-width: 1024px"
-                        src="/static/images/simicart-splash-desktop.svg">
-                </div>
-            </div>
-        -->
+    <div class="splash-screen" id="splash-screen" style="margin-top:0;text-align:center;width: 100%;top: 0;left: 0;">
+        <div id="" style="width: 100%; height: auto; margin: 0 auto 0;">
+            <img id="splash-img"
+                style="position: absolute; left: 50%; top: 50%; -webkit-transform: translateY(-50%) translateX(-50%); z-index:-1; width: 100%; max-width: 1024px"
+                src="/static/images/simicart-splash-desktop.svg">
+        </div>
+    </div>
 
     <!-- Fallback for when JavaScript is disabled. -->
     <noscript>

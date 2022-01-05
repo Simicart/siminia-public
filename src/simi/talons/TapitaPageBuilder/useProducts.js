@@ -170,7 +170,7 @@ export const useProducts = props => {
     if (sortData) variables.sort = sortData;
     const result = useQuery(GET_PRODUCTS, {
         variables,
-        fetchPolicy: 'cache-and-network'
+        fetchPolicy: 'cache-first'
     });
     const { data, loading } = result;
     return {
