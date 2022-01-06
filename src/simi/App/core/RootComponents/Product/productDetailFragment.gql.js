@@ -58,6 +58,7 @@ export const ProductDetailsFragment = gql`
                 label_color
                 label_template
                 label
+                priority
                 
             }        
         `

@@ -10,7 +10,7 @@ import { resourceUrl, getUrlBuffer, logoUrl } from 'src/simi/Helper/Url';
 import ProductLabel from '../ProductFullDetail/ProductLabel';
 import './style.css';
 import { useWindowSize } from '@magento/peregrine';
-
+import { DEFAULT_WIDTH_TO_HEIGHT_RATIO } from '@magento/venia-ui/lib/util/images';
 const IMAGE_WIDTH = 640;
 
 /**
@@ -195,15 +195,25 @@ const ProductImageCarousel = props => {
                                     alt={item.url}
                                     style={{ objectFit: 'contain' }}
                                 />
-                                {index == 0 ? 
-                                <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} />
-                            : null}
-
+                                {/* {index == 0 ? 
+                                <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} width={IMAGE_WIDTH} height={IMAGE_WIDTH/DEFAULT_WIDTH_TO_HEIGHT_RATIO} />
+                            : null} */}
                             </div>
                         );
                     })
                 )}
             </Carousel>
+
+            <ProductLabel
+                productLabel={
+                    product.mp_label_data.length > 0
+                        ? product.mp_label_data
+                        : null
+                }
+                width={IMAGE_WIDTH}
+                height={IMAGE_WIDTH / DEFAULT_WIDTH_TO_HEIGHT_RATIO}
+            />
+
             {renderLightBox && renderImageLightboxBlock()}
         </div>
     );

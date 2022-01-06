@@ -30,6 +30,7 @@ export const getCateNoFilter = gql`
                 label_color
                 label_template
                 label
+                priority
                 
             }
             }

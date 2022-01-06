@@ -24,10 +24,13 @@ import { useHistory } from 'react-router-dom';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToListButton';
 import ProductLabel from '../../App/core/ProductFullDetail/ProductLabel';
+import { DEFAULT_WIDTH_TO_HEIGHT_RATIO } from '@magento/venia-ui/lib/util/images';
+
 // const AddToListButton = React.lazy(() =>
 //     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
 // );
 const HeartIcon = <Icon size={20} src={Heart} />;
+const IMAGE_WIDTH = 650
 
 const Griditem = props => {
     const { lazyImage } = props;
@@ -98,7 +101,7 @@ const Griditem = props => {
                         alt={name}
                         fallBackUrl={small_image}
                     />
-                    <ProductLabel productLabel = {mp_label_data ? mp_label_data : null} label_tyle="gallery"/>
+                    <ProductLabel productLabel = {mp_label_data ? mp_label_data : null} label_tyle="gallery" width={IMAGE_WIDTH} height={IMAGE_WIDTH/DEFAULT_WIDTH_TO_HEIGHT_RATIO}/>
                 </Link>
             </div>
         </div>
