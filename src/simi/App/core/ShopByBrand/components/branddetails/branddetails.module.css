@@ -1,0 +1,49 @@
+.rootDetails {
+    padding: 5px 15px;
+}
+.breadCrumb {
+    margin-left: 1rem;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    height: 1.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 15px;
+}
+.breadCrumbLink {
+    padding: 0.25rem;
+    text-decoration: underline;
+}
+.breadCrumbSeparator {
+    padding: 0.25rem;
+}
+.breadCrumbText {
+    padding: 0.25rem;
+}
+.rootDetails h1 {
+    padding: 10px 15px;
+    font-size: 22px;
+}
+.brandCategories {
+    border-top: solid 1px #eaeaea;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: solid 1px #eaeaea;
+}
+.brandCategoriesTitle {
+    margin-bottom: 15px;
+    padding: 0px 15px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.brandCategoryItem {
+    display: inline-block;
+    padding: 15px;
+    border: solid 1px #eaeaea;
+    margin-inline-start: 10px;
+}
+
+.brandCategoryItem:hover {
+    opacity: 0.8;
+}

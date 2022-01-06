@@ -192,7 +192,27 @@ const Brands = props => {
     );
 };
 
+const BrandDetails = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BrandDetails"*/ 'src/simi/App/core/ShopByBrand/components/branddetails/index.js')
+            }
+            {...props}
+        />
+    );
+};
 
+const BrandCategory = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BrandCategory"*/ 'src/simi/App/core/ShopByBrand/components/category/index.js')
+            }
+            {...props}
+        />
+    );
+};
 
 const Routes = props => {
     const { pathname } = useLocation();
@@ -253,12 +273,21 @@ const Routes = props => {
                     path="/brands.html"
                     render={props => <Brands {...props} />}
                 />
-               
+               <Route
+                    exact
+                    path="/brands/category/:categoryUrl?"
+                    render={props => <BrandCategory {...props} />}
+                />
+                <Route
+                    exact
+                    path="/brands/:brandUrl?"
+                    render={props => <BrandDetails {...props} />}
+                />
                 <Route
                     exact
                     path="/sign-in"
                     render={props => <Login {...props} />}
-                />
+                /> 
                 <Route
                     exact
                     path="/create-account"

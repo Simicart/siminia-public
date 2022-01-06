@@ -74,6 +74,9 @@ export const ProductDetailsFragment = gql`
             file
         }
         meta_description
+        mpbrand{
+            image
+        }
         name
         price {
             regularPrice {

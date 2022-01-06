@@ -322,4 +322,7 @@
     .imageCarousel {
         margin-inline-start: 0px;
     }
+    .noReview{
+        padding-inline-start: 0px;
+    }
 }

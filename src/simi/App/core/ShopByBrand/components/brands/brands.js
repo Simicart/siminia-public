@@ -62,7 +62,7 @@ const Brands = props => {
                         </div>
                     );
                 }
-                const urlKey = '/brand/' + (item.url_key ? item.url_key : item.default_value.toLowerCase()) + '.html';
+                const urlKey = '/brands/' + (item.url_key ? item.url_key : item.default_value.toLowerCase()) + '.html';
                 brandListItems.push(
                     <div key={item.brand_id} className={classes.brandItem} style={{ flexBasis: `${brand_list_logo_width + 10}px` }}>
                         {

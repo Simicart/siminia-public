@@ -29,6 +29,8 @@ import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import { ProductDetailExtraProducts } from './productDetailExtraProducts';
 import ProductReview from './ProductReview';
 import ProductLabel from './ProductLabel'
+import Pdetailsbrand from './Pdetailsbrand';
+
 
 require('./productFullDetail.scss');
 
@@ -203,6 +205,7 @@ const ProductFullDetail = props => {
                         <section className={classes.title}>
                             <h1 className={classes.productName}>
                                 {productDetails.name}
+                                <Pdetailsbrand product={product}/>
                             </h1>
                         </section>
                     </div>
