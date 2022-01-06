@@ -11,8 +11,7 @@ import { GET_CART_DETAILS as GET_CART_DETAILS_QUERY } from 'src/simi/App/core/Ca
 import { GET_ITEM_COUNT_QUERY } from './cartTrigger.gql';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 import { useIntl } from 'react-intl';
-
-const MiniCart = React.lazy(() => import('../MiniCart'));
+import MiniCart from '../MiniCart';
 
 const Trigger = props => {
     const { storeConfig, classes: propClasses } = props;
