@@ -33,9 +33,10 @@ const TYPE_CMS_PAGE = 'CMS_PAGE';
 //pagebuilder import and creds
 import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent/';
 import { usePbFinder } from 'simi-pagebuilder-react';
-const endPoint = 'https://tapita.io/pb/graphql/';
-const integrationToken = '14FJiubdB8n3Byig2IkpfM6OiS6RTO801622446444';
+export const endPoint = 'https://tapita.io/pb/graphql/';
+export const integrationToken = '14FJiubdB8n3Byig2IkpfM6OiS6RTO801622446444';
 import PageBuilderComponent from 'src/simi/App/core/TapitaPageBuilder/PageBuilderComponent';
+
 //store code
 import { BrowserPersistence } from '@magento/peregrine/lib/util';
 const storage = new BrowserPersistence();
