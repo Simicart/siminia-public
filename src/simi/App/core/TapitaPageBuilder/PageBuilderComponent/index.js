@@ -9,7 +9,7 @@ import { useHistory, Link } from 'react-router-dom';
 import './pagebuilder.css';
 
 const PageBuilderComponent = props => {
-    const { key, endPoint, maskedId, pageData, overRender } = props;
+    const { key, endPoint, maskedId, pageData, overRender, toPreview } = props;
     const history = useHistory();
     return (
         <PbComponent
@@ -25,6 +25,7 @@ const PageBuilderComponent = props => {
             history={history}
             Link={Link}
             overRender={overRender}
+            toPreview={toPreview}
         />
     );
 };

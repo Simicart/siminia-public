@@ -1,10 +1,11 @@
 import React, { Suspense } from 'react';
 import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Switch, useLocation, useParams } from 'react-router-dom';
 //import MagentoRoute from '@magento/venia-ui/lib/components/MagentoRoute';
 import { useScrollTopOnChange } from '@magento/peregrine/lib/hooks/useScrollTopOnChange';
-import NoMatch from '../simi/App/core/NoMatch';
+import NoMatch, { endPoint } from '../simi/App/core/NoMatch';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
+import PageBuilderComponent from '../simi/App/core/TapitaPageBuilder/PageBuilderComponent';
 import Login from 'src/simi/App/core/Customer/Login';
 // const Login = props => {
 //     return (
@@ -193,6 +194,24 @@ const Routes = props => {
                  * Client-side routes are injected by BabelRouteInjectionPlugin here.
                  * Siminia's are defined in packages/siminia/src/targets/siminia-intercept.js
                  */}
+                <Route
+                    exact
+                    path="/pbpreview/:pbMaskedId"
+                    render={props => (
+                        <div className="pagebuilder-component-ctn">
+                            <PageBuilderComponent
+                                key="pb-preview"
+                                endPoint={endPoint}
+                                maskedId={
+                                    props.match && props.match.params.pbMaskedId
+                                        ? props.match.params.pbMaskedId
+                                        : ''
+                                }
+                                toPreview={true}
+                            />
+                        </div>
+                    )}
+                />
                 <Route
                     exact
                     path="/search.html"
