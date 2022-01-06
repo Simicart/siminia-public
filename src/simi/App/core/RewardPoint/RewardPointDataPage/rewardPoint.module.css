@@ -1,0 +1,95 @@
+.root {
+    display: grid;
+    padding: 2rem 3rem;
+    /* row-gap: 2rem; */
+}
+.wrapper {
+    display: grid;
+    grid-template-columns: 20% auto;
+}
+@media (max-width: 960px) {
+    .wrapper {
+        display: grid;
+        grid-template-columns: auto;
+    }
+}
+.wrapperContainer {
+    margin: 0 20px
+}
+
+.block1,
+.block2,
+.block3 {
+    flex: 1 0 auto;
+    margin: 20px 20px;
+    height: 50px;
+    text-align: center;
+}
+.point1,
+.point2,
+.point3 {
+    height: 50px;
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    color: #fff
+}
+.point1 {
+    background: #649162;
+}
+.point2 {
+    background: rgb(15, 81, 224);
+}
+.point3 {
+    background: rgb(92, 141, 139);
+}
+.rewardPointData {
+    display: flex;
+    margin-bottom: 30px;
+    margin-left: 20px;
+}
+.rewardPointTransaction {
+    margin-left: 20px;
+}
+.rewardNotification {
+    margin-left: 20px;
+}
+.linkButton {
+    margin-left: 15px;
+    font-size: 16px;
+    color:rgb(22, 18, 248)
+}
+th,
+td {
+    border-bottom: 1px solid #ddd;
+}
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+tr {
+    height: 50px;
+}
+btn {
+    text-decoration: none !important;
+}
+.rewardPageTitle {
+    margin: 40px 0 25px 20px;
+    border-bottom: 1px solid #224bbb;
+    font-size: 20px;
+}
+.rewardTitle {
+    margin: 40px 0 25px;
+    border-bottom: 1px solid #224bbb;
+    font-size: 20px;
+}
+
+.label {
+    margin-top: 10px;
+    text-align: center;
+    line-height: 10px;
+}

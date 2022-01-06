@@ -51,13 +51,23 @@ const OrderHistoryPage = props => {
 };
 
 const OrderDetailPage = props => {
-    return (
-        <LazyComponent
-            component={() => import('src/simi/App/core/OrderDetailPage')}
-            {...props}
-        />
-    );
-};
+    return <LazyComponent 
+        component={() => import('src/simi/App/core/OrderDetailPage')}
+        {...props}    
+    />
+}
+const RewardPointsPage = props => {
+    return <LazyComponent 
+        component={() => import('src/simi/App/core/RewardPoint/RewardPointDataPage')}
+        {...props}    
+    />
+}
+const RewardTransactions = props => {
+    return <LazyComponent 
+        component={() => import('src/simi/App/core/RewardPoint/RewardTransactions')}
+        {...props}    
+    />
+}
 
 //import AccountInformationPage from '@magento/venia-ui/lib/components/AccountInformationPage';
 const AccountInformationPage = props => {
@@ -179,20 +189,6 @@ const CheckoutSuccess = props => {
     );
 };
 
-
-const Brands = props => {
-    return (
-        <LazyComponent
-            component={() =>
-                import(/* webpackChunkName: "Brands"*/ 'src/simi/App/core/ShopByBrand/components/brands')
-            }
-            {...props}
-        />
-    );
-};
-
-
-
 const Routes = props => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
@@ -229,12 +225,6 @@ const Routes = props => {
                     path="/checkout"
                     render={props => <Checkout {...props} />}
                 />
-                <Route
-                    exact
-                    path="/brands.html"
-                    render={props => <Brands {...props} />}
-                />
-               
                 <Route
                     exact
                     path="/sign-in"
@@ -277,7 +267,7 @@ const Routes = props => {
                     path="/order-history"
                     render={props => <OrderHistoryPage {...props} />}
                 />
-                <Route
+                <Route 
                     exact
                     path="/order-history/:orderId"
                     render={props => <OrderDetailPage {...props} />}
@@ -286,6 +276,16 @@ const Routes = props => {
                     exact
                     path="/product-review"
                     render={props => <ProductReviewPage {...props} />}
+                />
+                <Route
+                    exact
+                    path="/reward-points"
+                    render={props => <RewardPointsPage {...props} />}
+                />
+                <Route
+                    exact
+                    path="/reward-transactions"
+                    render={props => <RewardTransactions {...props} />}
                 />
                 <Route
                     exact
@@ -362,9 +362,9 @@ const Routes = props => {
                  */}
                 <Route
                     render={props => (
-                        <div style={{ minHeight: '100vh' }}>
-                            <NoMatch {...props} />
-                        </div>
+                        <NoMatch
+                            {...props}
+                        />
                     )}
                 />
             </Switch>

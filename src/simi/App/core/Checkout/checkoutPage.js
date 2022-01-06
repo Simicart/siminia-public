@@ -19,10 +19,8 @@ import StockStatusMessage from '@magento/venia-ui/lib/components/StockStatusMess
 import FormError from '@magento/venia-ui/lib/components/FormError';
 import AddressBook from '@magento/venia-ui/lib/components/CheckoutPage/AddressBook';
 import GuestSignIn from '@magento/venia-ui/lib/components/CheckoutPage/GuestSignIn';
-import OrderSummary from '@magento/venia-ui/lib/components/CheckoutPage/OrderSummary';
 import PaymentInformation from './PaymentInformation';
 import payments from './PaymentInformation/paymentMethodCollection';
-import PriceAdjustments from '@magento/venia-ui/lib/components/CheckoutPage/PriceAdjustments';
 import ShippingMethod from '@magento/venia-ui/lib/components/CheckoutPage/ShippingMethod';
 import ShippingInformation from '@magento/venia-ui/lib/components/CheckoutPage/ShippingInformation';
 import OrderConfirmationPage from '@magento/venia-ui/lib/components/CheckoutPage/OrderConfirmationPage';
@@ -32,6 +30,8 @@ import defaultClasses from './checkoutPage.module.css';
 import ScrollAnchor from '@magento/venia-ui/lib/components/ScrollAnchor/scrollAnchor';
 
 const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
+import OrderSummary from './OrderSummary/orderSummary';
+import PriceAdjustments from '../Cart/PriceAdjustments/priceAdjustments';
 
 import Identify from 'src/simi/Helper/Identify';
 
