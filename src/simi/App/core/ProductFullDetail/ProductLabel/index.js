@@ -24,7 +24,10 @@ const ProductLabel = props => {
 
     const src = listlabel[0].label_template;
     const styles = JSON.parse(listlabel[0].list_position);
-    const styleLabel = "div {background-color: blue}"
+    const styleLabel = listlabel[0].list_css ? parseFloat(listlabel[0].list_css.split("rotate(")[1].split("de")) : null
+
+
+
     const width = styles.label.width;
     const height = styles.label.height;
     const left = 800 - 114 - width
@@ -41,7 +44,9 @@ const ProductLabel = props => {
                         left: 0,
                         zIndex: 3,
                         width: width,
-                        height: height
+                        height: height,
+                        position: "absolute",
+
                     };
                     break;
                 case 'tc':
@@ -151,6 +156,7 @@ const ProductLabel = props => {
                     left: 0,
                     zIndex: 3,
                     width: widthMb,
+                    position: "absolute"
                     // height: height
                 };
                 break;
@@ -198,6 +204,17 @@ const ProductLabel = props => {
                 break;
         }
     }
+    const positionLabelText = { ...position, transform: `rotate(${styleLabel}deg) translate(30px, 20px)`, zIndex: 4, position: "absolute",color: listlabel[0].label_color }
+    const positionLabelTextGallery = {
+        top: 0,
+        left: 0,
+        zIndex: 4,
+        width: widthMb,
+        position: "absolute",
+        transform: `rotate(${styleLabel}deg) translate(-21px, 2px)`,
+        color: listlabel[0].label_color
+    }
+    console.log("hahsahs", positionLabelText);
     if (!listlabel[0].label) {
 
         return (
@@ -212,10 +229,9 @@ const ProductLabel = props => {
         );
     }
     return <React.Fragment>
-       
-        <div style={position} className='productLabel'>{listlabel[0].label}</div>
+        <div style={!label_tyle ? positionLabelText : positionLabelTextGallery} className='productLabel'>{listlabel[0].label}</div>
         <img className="label-image" src={src} alt="img-" style={position} />
-        
+
     </React.Fragment>
 };
 

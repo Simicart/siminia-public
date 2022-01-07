@@ -31,6 +31,7 @@ export const getCateNoFilter = gql`
                 label_template
                 priority
                 label
+                list_css
                 
             }
             }

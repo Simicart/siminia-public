@@ -18,6 +18,7 @@ const SizeChart = props => {
     // let sheet = document.createElement('style');
     // sheet.innerHTML = styles;
     // document.body.appendChild(sheet);
+    // console.log("stylesss", styles);
 
     const renderSizeChart = type => {
         let html = null;
