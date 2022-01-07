@@ -33,9 +33,10 @@ export const useBrands = props => {
         error: brandsError
     } = useQuery(GET_BRANDS_LIST, {
         variables: {
-            pageSize: 10,
+            pageSize: 199,
             currentPage: 1,
-        }
+        },
+        fetchPolicy:"cache-and-network"
     });
    
     const [startWith, setStartWith] = useState('');
