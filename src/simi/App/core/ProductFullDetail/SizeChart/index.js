@@ -13,8 +13,8 @@ const SizeChart = props => {
     if (!item) {
         return null;
     }
-    console.log('itemm', item);
     const styles = item.template_styles;
+    
     // let sheet = document.createElement('style');
     // sheet.innerHTML = styles;
     // document.body.appendChild(sheet);
