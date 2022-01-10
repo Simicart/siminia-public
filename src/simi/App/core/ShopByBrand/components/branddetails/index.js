@@ -1,5 +1,5 @@
 import React from "react";
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Link, useParams } from "react-router-dom";
 import { useBrandDetails } from '../../talons/useBrandDetails';
 import defaultClasses from './branddetails.module.css';
@@ -7,10 +7,12 @@ import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/Loadi
 import { Title, Meta } from '@magento/venia-ui/lib/components/Head';
 import Categories from './bdetailscategories';
 import Products from './products/index';
+import Breadcrumbs from "src/simi/BaseComponents/Breadcrumbs";
 
-const BrandDetails = () => {
+const BrandDetails = (props) => {
     const classes = defaultClasses
     const { brandUrl = "" } = useParams();
+    const { formatMessage } = useIntl();
     const { brandData, brandLoading, derivedErrorMessage } = useBrandDetails({ url_key: brandUrl.replace('.html', '') });
     if (brandLoading)
         return fullPageLoadingIndicator;
@@ -27,18 +29,27 @@ const BrandDetails = () => {
         );
 
     const brandInformation = brandData.mpbrand.items[0]
+    const breadcrumbs = [
+        { 
+            name: formatMessage({id: 'brandDetails.home', defaultMessage: 'Home'}), 
+            link: '/' 
+        }, 
+        {
+            name: formatMessage({id: 'brandDetails.brands',defaultMessage: 'Brands'}), 
+            link: '/brands.html'
+        },
+        {
+            name: formatMessage({id: 'brandDetails.brand',defaultMessage: 'Brands'}), 
+        },
 
+    ];
     return (
         <div className={classes.rootDetails}>
             <Title>{brandInformation.meta_title}</Title>
             <Meta name="description" content={brandInformation.meta_description} />
             <Meta name="keywords" content={brandInformation.meta_keywords} />
             <div className={classes.breadCrumb}>
-                <Link className={classes.breadCrumbLink} to="/">{`Home`}</Link>
-                <span className={classes.breadCrumbSeparator}>{`/`}</span>
-                <Link className={classes.breadCrumbLink} to="/brands.html">{`Brands`}</Link>
-                <span className={classes.breadCrumbSeparator}>{`/`}</span>
-                <span className={classes.breadCrumbText}>{`Brands`}</span>
+                <Breadcrumbs breadcrumb={breadcrumbs} history={props.history} />
             </div>
             <h1>{brandInformation.page_title}</h1>
             <Categories classes={classes} />

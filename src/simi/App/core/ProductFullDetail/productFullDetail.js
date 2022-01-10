@@ -30,7 +30,7 @@ import { ProductDetailExtraProducts } from './productDetailExtraProducts';
 import ProductReview from './ProductReview';
 import ProductLabel from './ProductLabel'
 import Pdetailsbrand from './Pdetailsbrand';
-import getUrlKey from '/Users/bachvanhieu/Documents/work/pwa-studio/packages/siminia/src/util/getUrlKey.js'
+// import getUrlKey from '/Users/bachvanhieu/Documents/work/pwa-studio/packages/siminia/src/util/getUrlKey.js'
 
 require('./productFullDetail.scss');
 
@@ -78,11 +78,9 @@ const ProductFullDetail = props => {
         smoothScrollToView(document.querySelector('.reviewsContainer'));
     }
 
-    const test = getUrlKey()
-    console.log(test);
 
     const classes = useStyle(defaultClasses, props.classes);
-    console.log('oroeasd', product);
+    
 
     const options = isProductConfigurable(product) ? (
         <Suspense fallback={<ProductOptionsShimmer />}>

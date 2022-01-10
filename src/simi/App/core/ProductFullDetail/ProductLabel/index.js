@@ -20,7 +20,7 @@ const ProductLabel = props => {
 
     const listlabel = [...productLabel].sort((a, b) => (a.priority > b.priority) ? 1 : -1)
     console.log('listlabel', listlabel[0].list_css);
-    console.log('listlabel', listlabel[0].list_position);
+    console.log('listlabel', productLabel);
 
     const src = listlabel[0].label_template;
     const styles = JSON.parse(listlabel[0].list_position);
@@ -32,6 +32,9 @@ const ProductLabel = props => {
     const height = styles.label.height;
     const left = 800 - 114 - width
     const btTop = 800 - 114 - height
+    
+    const topCenterLeft = 350 - height
+
     const widthMb = 80
     let position;
     if (!label_tyle) {
@@ -54,21 +57,29 @@ const ProductLabel = props => {
                     break;
                 case 'tr':
                     position = {
-                        top: 0,
-                        left: left,
+                        top: -9,
+                        left: "75%",
                         zIndex: 3,
                         width: width,
                         height: height
                     };
                     break;
                 case 'cl':
-                    position = {};
+                    position = {
+                        position: "absolute",
+                        left: 0,
+                        top: topCenterLeft,
+                    };
                     break;
                 case 'cc':
                     position = {};
                     break;
                 case 'cr':
-                    position = {};
+                    position = {
+                        position: "absotule",
+                        left: `55%`,
+                        top: topCenterLeft
+                    };
                     break;
                 case 'bl':
                     position = {
@@ -84,8 +95,8 @@ const ProductLabel = props => {
                     break;
                 case 'br':
                     position = {
-                        top: '90%',
-                        left: '84%',
+                        top: '75%',
+                        left: '73%',
                         zIndex: 3,
                         width: width,
                         height: height
@@ -108,7 +119,7 @@ const ProductLabel = props => {
                     break;
                 case 'tr':
                     position = {
-                        top: "0%",
+                        top: "-5px",
                         left: '67%',
                         zIndex: 3,
                         width: widthMb,
@@ -116,13 +127,21 @@ const ProductLabel = props => {
                     };
                     break;
                 case 'cl':
-                    position = {};
+                    position = {
+                        position: "absolute",
+                        left: 0,
+                        top: topCenterLeft,
+                    };
                     break;
                 case 'cc':
                     position = {};
                     break;
                 case 'cr':
-                    position = {};
+                    position = {
+                        position: "absotule",
+                        left: `55%`,
+                        top: topCenterLeft
+                    };
                     break;
                 case 'bl':
                     position = {
@@ -138,10 +157,10 @@ const ProductLabel = props => {
                     break;
                 case 'br':
                     position = {
-                        top: '90%',
-                        left: '69%',
+                        top: '75%',
+                        left: '70%',
                         zIndex: 3,
-                        width: widthMb,
+                        width: "30%",
                         // height: height
                     };
                     break;
@@ -152,7 +171,7 @@ const ProductLabel = props => {
         switch (listlabel[0].list_position_grid) {
             case 'tl':
                 position = {
-                    top: "-37%",
+                    top: "-33%",
                     left: 0,
                     zIndex: 3,
                     width: widthMb,
@@ -173,13 +192,20 @@ const ProductLabel = props => {
                 };
                 break;
             case 'cl':
-                position = {};
+                position = {
+                    position: "absolute",
+                    left: 0,
+                    width: widthMb,
+                };
                 break;
             case 'cc':
                 position = {};
                 break;
             case 'cr':
-                position = {};
+                position = {
+                    position: "absolute",
+                    width: widthMb
+                };
                 break;
             case 'bl':
                 position = {
@@ -195,7 +221,7 @@ const ProductLabel = props => {
                 break;
             case 'br':
                 position = {
-                    top: '90%',
+                    top: '45%',
                     left: '69%',
                     zIndex: 3,
                     width: widthMb,
@@ -204,10 +230,13 @@ const ProductLabel = props => {
                 break;
         }
     }
-    const positionLabelText = { ...position, transform: `rotate(${styleLabel}deg) translate(30px, 20px)`, zIndex: 4, position: "absolute",color: listlabel[0].label_color }
+    const positionLabelText = { ...position, transform: `rotate(${styleLabel}deg) translate(30px, 20px)`, zIndex: 4, position: "absolute", color: listlabel[0].label_color }
     const positionLabelTextGallery = {
-        top: 0,
-        left: 0,
+        // top: 0,
+        // left: 0,
+        ...position,
+        top: 21,
+        marginLeft: 13,
         zIndex: 4,
         width: widthMb,
         position: "absolute",
