@@ -7,6 +7,7 @@ import ProductGrid from 'src/simi/App/core/TapitaPageBuilder/Products/grid';
 import Category from 'src/simi/App/core/TapitaPageBuilder/Category';
 import { useHistory, Link } from 'react-router-dom';
 import { isBot } from 'src/simi/Helper/BotDetect';
+import LzL from 'src/simi/BaseComponents/LazyLoad';
 import './pagebuilder.css';
 
 const PageBuilderComponent = props => {
@@ -14,9 +15,21 @@ const PageBuilderComponent = props => {
     const history = useHistory();
     return (
         <PbComponent
-            ProductList={ProductList}
-            ProductGrid={ProductGrid}
-            ProductScroll={ProductScroll}
+            ProductList={props => (
+                <LzL>
+                    <ProductList {...props} />
+                </LzL>
+            )}
+            ProductGrid={props => (
+                <LzL>
+                    <ProductGrid {...props} />
+                </LzL>
+            )}
+            ProductScroll={props => (
+                <LzL>
+                    <ProductScroll {...props} />
+                </LzL>
+            )}
             CategoryScroll={CategoryScroll}
             Category={Category}
             key={key}
@@ -27,7 +40,7 @@ const PageBuilderComponent = props => {
             Link={Link}
             overRender={overRender}
             toPreview={toPreview}
-            lazyloadPlaceHolder={<div />}
+            lazyloadPlaceHolder={isBot() ? null : <div />}
         />
     );
 };
