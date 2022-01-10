@@ -6,17 +6,17 @@ import { useScrollTopOnChange } from '@magento/peregrine/lib/hooks/useScrollTopO
 import NoMatch, { endPoint } from '../simi/App/core/NoMatch';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import PageBuilderComponent from '../simi/App/core/TapitaPageBuilder/PageBuilderComponent';
-import Login from 'src/simi/App/core/Customer/Login';
-// const Login = props => {
-//     return (
-//         <LazyComponent
-//             component={() =>
-//                 import(/* webpackChunkName: "Login"*/ 'src/simi/App/core/Customer/Login')
-//             }
-//             {...props}
-//         />
-//     );
-// };
+//import Login from 'src/simi/App/core/Customer/Login';
+const Login = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "Login"*/ 'src/simi/App/core/Customer/Login')
+            }
+            {...props}
+        />
+    );
+};
 //import CreateAccountPage from '@magento/venia-ui/lib/components/CreateAccountPage';
 const CreateAccountPage = props => {
     return (
