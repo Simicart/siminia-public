@@ -12,9 +12,8 @@ import './style.css';
 import { useWindowSize } from '@magento/peregrine';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import { useQuery } from '@apollo/client';
-// import getUrlKey from '/Users/bachvanhieu/Documents/work/pwa-studio/packages/siminia/src/util/getUrlKey.js'
 import getUrlKey from '../../../../../src/util/getUrlKey'
-import DEFAULT_OPERATIONS from '/Users/bachvanhieu/Documents/work/pwa-studio/packages/siminia/src/simi/App/core/ProductFullDetail/ProductLabel/productLabel.gql.js'
+import DEFAULT_OPERATIONS from '../../core/ProductFullDetail/ProductLabel/productLabel.gql'
 
 const IMAGE_WIDTH = 640;
 
