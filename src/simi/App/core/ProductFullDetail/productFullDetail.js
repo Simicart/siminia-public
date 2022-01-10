@@ -9,7 +9,7 @@ import { configColor } from 'src/simi/Config';
 
 import { useProductFullDetail } from 'src/simi/talons/ProductFullDetail/useProductFullDetail';
 import { isProductConfigurable } from '@magento/peregrine/lib/util/isProductConfigurable';
-import { smoothScrollToView } from 'src/simi/Helper/Behavior'
+import { smoothScrollToView } from 'src/simi/Helper/Behavior';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
 import Button from '@magento/venia-ui/lib/components/Button';
@@ -19,7 +19,7 @@ import { QuantityFields } from '../Cart/ProductListing/quantity';
 import RichContent from '@magento/venia-ui/lib/components/RichContent/richContent';
 import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductOptions';
 import defaultClasses from './productFullDetail.module.css';
-import SizeChart from './SizeChart'
+import SizeChart from './SizeChart';
 const WishlistButton = React.lazy(() =>
     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
 );
@@ -28,9 +28,8 @@ const SimiProductOptions = React.lazy(() => import('../SimiProductOptions'));
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import { ProductDetailExtraProducts } from './productDetailExtraProducts';
 import ProductReview from './ProductReview';
-import ProductLabel from './ProductLabel'
+import ProductLabel from './ProductLabel';
 import Pdetailsbrand from './Pdetailsbrand';
-// import getUrlKey from '/Users/bachvanhieu/Documents/work/pwa-studio/packages/siminia/src/util/getUrlKey.js'
 
 require('./productFullDetail.scss');
 
@@ -47,7 +46,6 @@ const ERROR_MESSAGE_TO_FIELD_MAPPING = {
 const ERROR_FIELD_TO_MESSAGE_MAPPING = {
     quantity: 'The requested quantity is not available.'
 };
-
 
 const ProductFullDetail = props => {
     const { product, history } = props;
@@ -76,11 +74,9 @@ const ProductFullDetail = props => {
     const productReview = useRef(null);
     const scrollToReview = () => {
         smoothScrollToView(document.querySelector('.reviewsContainer'));
-    }
-
+    };
 
     const classes = useStyle(defaultClasses, props.classes);
-    
 
     const options = isProductConfigurable(product) ? (
         <Suspense fallback={<ProductOptionsShimmer />}>
@@ -207,7 +203,7 @@ const ProductFullDetail = props => {
                         <section className={classes.title}>
                             <h1 className={classes.productName}>
                                 {productDetails.name}
-                                <Pdetailsbrand product={product}/>
+                                <Pdetailsbrand product={product} />
                             </h1>
                         </section>
                     </div>
@@ -226,7 +222,10 @@ const ProductFullDetail = props => {
                     product.review_count &&
                     product.rating_summary ? (
                         <div className="wrapperReviewSum">
-                            <section onClick={()=> scrollToReview()} className={classes.reviewSum}>
+                            <section
+                                onClick={() => scrollToReview()}
+                                className={classes.reviewSum}
+                            >
                                 <StaticRate
                                     backgroundColor={configColor.content_color}
                                     rate={product.rating_summary}
@@ -259,10 +258,13 @@ const ProductFullDetail = props => {
                             product={product}
                             optionSelections={optionSelections}
                             optionCodes={optionCodes}
-                            labelData={product.mp_label_data.length > 0 ? product.mp_label_data : null}
+                            labelData={
+                                product.mp_label_data.length > 0
+                                    ? product.mp_label_data
+                                    : null
+                            }
                         />
                         {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
-
                     </section>
 
                     <FormError
@@ -274,9 +276,16 @@ const ProductFullDetail = props => {
                     <div className="wrapperOptions">
                         <section className={classes.options}>
                             {options}
-                            {product.mp_sizeChart && product.mp_sizeChart.display_type == "popup" ? 
-                        <SizeChart sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null} />
-                    : null}
+                            {product.mp_sizeChart &&
+                            product.mp_sizeChart.display_type == 'popup' ? (
+                                <SizeChart
+                                    sizeChart={
+                                        product.mp_sizeChart
+                                            ? product.mp_sizeChart
+                                            : null
+                                    }
+                                />
+                            ) : null}
 
                             <div className="wrapperPrice">
                                 <span className="labelPrice">
@@ -335,9 +344,16 @@ const ProductFullDetail = props => {
                                 <WishlistButton {...wishlistButtonProps} />
                             </Suspense>
                         </section>
-                        {product.mp_sizeChart && product.mp_sizeChart.display_type == "inline" ? 
-                        <SizeChart sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null} />
-                    : null}
+                        {product.mp_sizeChart &&
+                        product.mp_sizeChart.display_type == 'inline' ? (
+                            <SizeChart
+                                sizeChart={
+                                    product.mp_sizeChart
+                                        ? product.mp_sizeChart
+                                        : null
+                                }
+                            />
+                        ) : null}
                     </div>
                     <section className={classes.description}>
                         <span className={classes.descriptionTitle}>
@@ -360,11 +376,15 @@ const ProductFullDetail = props => {
                     </section>
                 </Form>
             </div>
-            {
-                product.mp_sizeChart && product.mp_sizeChart.display_type == "tab" ?
-                <SizeChart sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null}/>
-            : null}
-            <ProductReview  product={product} ref={productReview} />
+            {product.mp_sizeChart &&
+            product.mp_sizeChart.display_type == 'tab' ? (
+                <SizeChart
+                    sizeChart={
+                        product.mp_sizeChart ? product.mp_sizeChart : null
+                    }
+                />
+            ) : null}
+            <ProductReview product={product} ref={productReview} />
             <ProductDetailExtraProducts
                 classes={classes}
                 products={relatedProducts}

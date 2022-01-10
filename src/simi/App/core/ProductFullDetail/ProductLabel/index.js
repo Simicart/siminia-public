@@ -4,41 +4,35 @@ import { useIntl } from 'react-intl';
 import { Helmet } from 'react-helmet';
 require('./styles.scss');
 
-
 const IMAGE_WIDTH = 640;
-
-
 
 const ProductLabel = props => {
     const { productLabel, label_tyle } = props;
-
 
     if (!productLabel || productLabel.length == 0) {
         return null;
     }
 
-
-    const listlabel = [...productLabel].sort((a, b) => (a.priority > b.priority) ? 1 : -1)
-    console.log('listlabel', listlabel[0].list_css);
-    console.log('listlabel', productLabel);
+    const listlabel = [...productLabel].sort((a, b) =>
+        a.priority > b.priority ? 1 : -1
+    );
 
     const src = listlabel[0].label_template;
     const styles = JSON.parse(listlabel[0].list_position);
-    const styleLabel = listlabel[0].list_css ? parseFloat(listlabel[0].list_css.split("rotate(")[1].split("de")) : null
-
-
+    const styleLabel = listlabel[0].list_css
+        ? parseFloat(listlabel[0].list_css.split('rotate(')[1].split('de'))
+        : null;
 
     const width = styles.label.width;
     const height = styles.label.height;
-    const left = 800 - 114 - width
-    const btTop = 800 - 114 - height
-    
-    const topCenterLeft = 350 - height
+    const left = 800 - 114 - width;
+    const btTop = 800 - 114 - height;
 
-    const widthMb = 80
+    const topCenterLeft = 350 - height;
+
+    const widthMb = 80;
     let position;
     if (!label_tyle) {
-
         if (window.innerWidth > 767) {
             switch (listlabel[0].list_position_grid) {
                 case 'tl':
@@ -48,8 +42,7 @@ const ProductLabel = props => {
                         zIndex: 3,
                         width: width,
                         height: height,
-                        position: "absolute",
-
+                        position: 'absolute'
                     };
                     break;
                 case 'tc':
@@ -58,7 +51,7 @@ const ProductLabel = props => {
                 case 'tr':
                     position = {
                         top: -9,
-                        left: "75%",
+                        left: '75%',
                         zIndex: 3,
                         width: width,
                         height: height
@@ -66,9 +59,9 @@ const ProductLabel = props => {
                     break;
                 case 'cl':
                     position = {
-                        position: "absolute",
+                        position: 'absolute',
                         left: 0,
-                        top: topCenterLeft,
+                        top: topCenterLeft
                     };
                     break;
                 case 'cc':
@@ -76,7 +69,7 @@ const ProductLabel = props => {
                     break;
                 case 'cr':
                     position = {
-                        position: "absotule",
+                        position: 'absotule',
                         left: `55%`,
                         top: topCenterLeft
                     };
@@ -107,10 +100,10 @@ const ProductLabel = props => {
             switch (listlabel[0].list_position_grid) {
                 case 'tl':
                     position = {
-                        top: "0%",
+                        top: '0%',
                         left: 0,
                         zIndex: 3,
-                        width: widthMb,
+                        width: widthMb
                         // height: height
                     };
                     break;
@@ -119,18 +112,18 @@ const ProductLabel = props => {
                     break;
                 case 'tr':
                     position = {
-                        top: "-5px",
+                        top: '-5px',
                         left: '67%',
                         zIndex: 3,
-                        width: widthMb,
+                        width: widthMb
                         // height: height
                     };
                     break;
                 case 'cl':
                     position = {
-                        position: "absolute",
+                        position: 'absolute',
                         left: 0,
-                        top: topCenterLeft,
+                        top: topCenterLeft
                     };
                     break;
                 case 'cc':
@@ -138,7 +131,7 @@ const ProductLabel = props => {
                     break;
                 case 'cr':
                     position = {
-                        position: "absotule",
+                        position: 'absotule',
                         left: `55%`,
                         top: topCenterLeft
                     };
@@ -148,7 +141,7 @@ const ProductLabel = props => {
                         top: '90%',
                         left: 0,
                         zIndex: 3,
-                        width: widthMb,
+                        width: widthMb
                         // height: height
                     };
                     break;
@@ -160,22 +153,21 @@ const ProductLabel = props => {
                         top: '75%',
                         left: '70%',
                         zIndex: 3,
-                        width: "30%",
+                        width: '30%'
                         // height: height
                     };
                     break;
             }
         }
-    }
-    else {
+    } else {
         switch (listlabel[0].list_position_grid) {
             case 'tl':
                 position = {
-                    top: "-33%",
+                    top: '-33%',
                     left: 0,
                     zIndex: 3,
                     width: widthMb,
-                    position: "absolute"
+                    position: 'absolute'
                     // height: height
                 };
                 break;
@@ -184,8 +176,8 @@ const ProductLabel = props => {
                 break;
             case 'tr':
                 position = {
-                    top: "-6%",
-                    left: "74%",
+                    top: '-6%',
+                    left: '74%',
                     zIndex: 3,
                     width: 66,
                     height: 96
@@ -193,9 +185,9 @@ const ProductLabel = props => {
                 break;
             case 'cl':
                 position = {
-                    position: "absolute",
+                    position: 'absolute',
                     left: 0,
-                    width: widthMb,
+                    width: widthMb
                 };
                 break;
             case 'cc':
@@ -203,7 +195,7 @@ const ProductLabel = props => {
                 break;
             case 'cr':
                 position = {
-                    position: "absolute",
+                    position: 'absolute',
                     width: widthMb
                 };
                 break;
@@ -212,7 +204,7 @@ const ProductLabel = props => {
                     top: '44%',
                     left: 0,
                     zIndex: 3,
-                    width: widthMb,
+                    width: widthMb
                     // height: height
                 };
                 break;
@@ -224,13 +216,19 @@ const ProductLabel = props => {
                     top: '45%',
                     left: '69%',
                     zIndex: 3,
-                    width: widthMb,
+                    width: widthMb
                     // height: height
                 };
                 break;
         }
     }
-    const positionLabelText = { ...position, transform: `rotate(${styleLabel}deg) translate(30px, 20px)`, zIndex: 4, position: "absolute", color: listlabel[0].label_color }
+    const positionLabelText = {
+        ...position,
+        transform: `rotate(${styleLabel}deg) translate(30px, 20px)`,
+        zIndex: 4,
+        position: 'absolute',
+        color: listlabel[0].label_color
+    };
     const positionLabelTextGallery = {
         // top: 0,
         // left: 0,
@@ -239,13 +237,12 @@ const ProductLabel = props => {
         marginLeft: 13,
         zIndex: 4,
         width: widthMb,
-        position: "absolute",
+        position: 'absolute',
         transform: `rotate(${styleLabel}deg) translate(-21px, 2px)`,
         color: listlabel[0].label_color
-    }
-    console.log("hahsahs", positionLabelText);
-    if (!listlabel[0].label) {
+    };
 
+    if (!listlabel[0].label) {
         return (
             <React.Fragment>
                 <img
@@ -257,11 +254,24 @@ const ProductLabel = props => {
             </React.Fragment>
         );
     }
-    return <React.Fragment>
-        <div style={!label_tyle ? positionLabelText : positionLabelTextGallery} className='productLabel'>{listlabel[0].label}</div>
-        <img className="label-image" src={src} alt="img-" style={position} />
-
-    </React.Fragment>
+    return (
+        <React.Fragment>
+            <div
+                style={
+                    !label_tyle ? positionLabelText : positionLabelTextGallery
+                }
+                className="productLabel"
+            >
+                {listlabel[0].label}
+            </div>
+            <img
+                className="label-image"
+                src={src}
+                alt="img-"
+                style={position}
+            />
+        </React.Fragment>
+    );
 };
 
 export default ProductLabel;
