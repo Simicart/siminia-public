@@ -9,3 +9,14 @@
     - 'done'
   'Backlog':
     - 'maybe later'
+'Feature-Rich':
+  'To do':
+    - 'confirmed'
+  'In progress':
+    - 'in progress'
+  'Review':
+    - 'wanting reviews'
+  'Done':
+    - 'done'
+  'Backlog':
+    - 'maybe later'
