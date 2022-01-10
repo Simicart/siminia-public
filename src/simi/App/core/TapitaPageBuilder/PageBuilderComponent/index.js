@@ -6,6 +6,7 @@ import ProductList from 'src/simi/App/core/TapitaPageBuilder/Products/list';
 import ProductGrid from 'src/simi/App/core/TapitaPageBuilder/Products/grid';
 import Category from 'src/simi/App/core/TapitaPageBuilder/Category';
 import { useHistory, Link } from 'react-router-dom';
+import { isBot } from 'src/simi/Helper/BotDetect';
 import './pagebuilder.css';
 
 const PageBuilderComponent = props => {
@@ -26,6 +27,7 @@ const PageBuilderComponent = props => {
             Link={Link}
             overRender={overRender}
             toPreview={toPreview}
+            lazyloadPlaceHolder={<div />}
         />
     );
 };
