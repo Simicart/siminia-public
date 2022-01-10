@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    target-branch: "develop"
+    schedule:
+      interval: "monthly"
+    allow:
+      - dependency-type: "direct"
+
+  - package-ecosystem: "npm"
+    directory: "/example"
+    target-branch: "develop"
+    schedule:
+      interval: "monthly"
