@@ -83,7 +83,9 @@ export const ProductDetailExtraProducts = props => {
 
     const move = direction => () => {
         const outerContainer = containerRef.current;
-        const container = outerContainer.querySelector('.gallery-items');
+        const container = outerContainer.querySelector(
+            `.${classes['gallery-items']}`
+        );
         const productLength = container.children
             ? container.children.length
             : 0;
@@ -147,19 +149,21 @@ export const ProductDetailExtraProducts = props => {
                 </div>
             </div>
             <div className={classes['upsell-container']} ref={containerRef}>
-                <Gallery
-                    items={products}
-                    history={history}
-                    overRideClasses={classes}
-                    styles={{
-                        'siminia-product-grid-item': {
-                            minWidth: defaultIfNull(
-                                containerVisibleWidth / numberOfEntries,
-                                'unset'
-                            )
-                        }
-                    }}
-                />
+                {numberOfEntries && containerVisibleWidth ? (
+                    <Gallery
+                        items={products}
+                        history={history}
+                        overRideClasses={classes}
+                        styles={{
+                            'siminia-product-grid-item': {
+                                minWidth:
+                                    containerVisibleWidth / numberOfEntries
+                            }
+                        }}
+                    />
+                ) : (
+                    ''
+                )}
             </div>
         </div>
     );
