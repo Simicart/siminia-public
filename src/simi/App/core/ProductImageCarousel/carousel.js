@@ -156,6 +156,10 @@ const ProductImageCarousel = props => {
         />
     );
 
+    const imageWidth = document.querySelector(".product-detail-carousel").offsetWidth
+
+    
+    
     return (
         <div className="product-detail-carousel" id="product-detail-carousel">
             <Carousel
@@ -219,7 +223,7 @@ const ProductImageCarousel = props => {
                     })
                 )}
             </Carousel>
-            <ProductLabel productLabel = {loading ? null : data.products.items[0].mp_label_data} />
+            <ProductLabel imageWidth={imageWidth} productLabel = {loading ? null : data.products.items[0].mp_label_data} />
 
             {renderLightBox && renderImageLightboxBlock()}
         </div>

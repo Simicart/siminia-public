@@ -120,7 +120,11 @@ const CheckoutPage = props => {
           });
 
     if (orderNumber && orderDetailsData) {
-        Identify.storeDataToStoreage(Identify.SESSION_STOREAGE, 'simi_last_success_order_data', orderDetailsData);
+        Identify.storeDataToStoreage(
+            Identify.SESSION_STOREAGE,
+            'simi_last_success_order_data',
+            orderDetailsData
+        );
         return <Redirect to={`/checkout-success?orderNumber=${orderNumber}`} />;
         /*
         return (
