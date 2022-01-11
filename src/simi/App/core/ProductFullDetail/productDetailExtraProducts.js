@@ -47,10 +47,6 @@ export const ProductDetailExtraProducts = props => {
     const { classes: _classes, products, history, children } = props;
 
     const containerRef = useRef(null);
-    const [test, setTest] = useState(
-        containerRef.current ? containerRef.current.clientWidth : null
-    );
-
     const { innerWidth } = useWindowSize();
 
     const numberOfEntries = useMemo(() => {
@@ -62,23 +58,10 @@ export const ProductDetailExtraProducts = props => {
             return 2;
         }
     }, [innerWidth]);
-    useEffect(() => {
-        const containerVisibleWidth = containerRef.current
-            ? containerRef.current.clientWidth
-            : null;
-        if (containerVisibleWidth != test) {
-            setTest(containerVisibleWidth);
-        }
-    }, [containerRef]);
 
     if (products.length === 0) {
         return null;
     }
-
-    const containerVisibleWidth = containerRef.current
-        ? containerRef.current.clientWidth
-        : null;
-
     const classes = mergeClasses(defaultClass, _classes);
 
     const move = direction => () => {
@@ -149,15 +132,15 @@ export const ProductDetailExtraProducts = props => {
                 </div>
             </div>
             <div className={classes['upsell-container']} ref={containerRef}>
-                {numberOfEntries && containerVisibleWidth ? (
+                {numberOfEntries ? (
                     <Gallery
                         items={products}
                         history={history}
                         overRideClasses={classes}
                         styles={{
                             'siminia-product-grid-item': {
-                                minWidth:
-                                    containerVisibleWidth / numberOfEntries
+                                minWidth: 100 / numberOfEntries + '%',
+                                maxWidth: 100 / numberOfEntries + '%'
                             }
                         }}
                     />
