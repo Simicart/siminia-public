@@ -44,7 +44,7 @@ const BrandDetails = (props) => {
 
     ];
     return (
-        <div className={classes.rootDetails}>
+        <div className={`${classes.rootDetails} container` }>
             <Title>{brandInformation.meta_title}</Title>
             <Meta name="description" content={brandInformation.meta_description} />
             <Meta name="keywords" content={brandInformation.meta_keywords} />

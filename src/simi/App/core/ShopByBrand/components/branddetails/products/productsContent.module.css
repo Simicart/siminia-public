@@ -1,11 +1,21 @@
 .sortedBy{
     display: flex;
     justify-content: center;
+    
+    
 }
 .headerBtn{
     display: flex;
-    justify-content: center;
+    justify-content: right;
+    margin-bottom: 25px;
 }
-.root{
-    background-color: red;
+
+.headerBtn > div {
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 0px;
+}
+
+.headerBtn > div button{
+    border:none;
 }
