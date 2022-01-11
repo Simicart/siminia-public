@@ -1,9 +1,29 @@
 import React, { useEffect } from 'react';
 import Loading from 'src/simi/BaseComponents/Loading';
-import Product from 'src/simi/App/core/RootComponents/Product';
-import Page404 from './Page404';
 import { useQuery } from '@apollo/client';
 import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
+//import Page404 from './Page404';
+const Page404 = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "Page404"*/ './Page404')
+            }
+            {...props}
+        />
+    );
+};
+//import Product from '../RootComponents/Product';
+const Product = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "SimiProductDetails"*/ '../RootComponents/Product')
+            }
+            {...props}
+        />
+    );
+};
 // import CMS from 'src/simi/App/core/RootComponents/CMS';
 const CMS = props => {
     return (
@@ -31,11 +51,11 @@ const TYPE_CATEGORY = 'CATEGORY';
 const TYPE_CMS_PAGE = 'CMS_PAGE';
 
 //pagebuilder import and creds
-import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent/';
+import { LazyComponent } from '../../../BaseComponents/LazyComponent/';
 import { usePbFinder } from 'simi-pagebuilder-react';
-const endPoint = 'https://tapita.io/pb/graphql/';
-const integrationToken = '14FJiubdB8n3Byig2IkpfM6OiS6RTO801622446444';
-import PageBuilderComponent from 'src/simi/App/core/TapitaPageBuilder/PageBuilderComponent';
+export const endPoint = 'https://tapita.io/pb/graphql/';
+export const integrationToken = '149NbMq20jsTkleXftqn3hNh2Epj17TMV1641796505';
+import PageBuilderComponent from '../TapitaPageBuilder/PageBuilderComponent';
 
 //store code
 import { BrowserPersistence } from '@magento/peregrine/lib/util';
