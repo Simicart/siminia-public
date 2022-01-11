@@ -291,8 +291,7 @@
     display: none;
 }
 
-.siminia-product-grid-item {
-    min-width: 25rem;
+.gallery-items .siminia-product-grid-item {
 }
 
 .product-grid-actions {

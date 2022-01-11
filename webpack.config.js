@@ -55,6 +55,8 @@ module.exports = async env => {
             'informed',
             'react-helmet-async',
             'react-lazyload',
+            'react-easy-swipe',
+            'events',
             //end simicart libs to move to vendors instead of client chunk
             'redux-thunk'
         ],
@@ -202,7 +204,7 @@ module.exports = async env => {
         config.optimization.splitChunks.cacheGroups
     )
         config.optimization.splitChunks.cacheGroups.runtime = {
-            test: /([\\/](simi-pagebuilder-react|react-dom|@formatjs|react-router|history|node-libs-browser)[\\/])/,
+            test: /([\\/](simi-pagebuilder-react|react-dom|@formatjs|react-router|history|node-libs-browser|zen-observable|generator-runtime|GridItem|LazyComponent|PageBuilderComponent)[\\/])/,
             //test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
             name: 'runtime',
             chunks: 'all'
