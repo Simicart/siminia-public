@@ -1,0 +1,11 @@
+.sortedBy{
+    display: flex;
+    justify-content: center;
+}
+.headerBtn{
+    display: flex;
+    justify-content: center;
+}
+.root{
+    background-color: red;
+}

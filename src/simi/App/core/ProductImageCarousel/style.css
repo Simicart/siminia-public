@@ -8,6 +8,9 @@
 .product-detail-carousel .carousel-slider img {
     max-height: 700px;
 }
+.product-detail-carousel {
+    position: relative;
+}
 
 
 .image-carousel {

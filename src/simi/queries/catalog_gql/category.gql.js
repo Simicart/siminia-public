@@ -29,7 +29,9 @@ export const getCateNoFilter = gql`
                 label_font_size
                 label_color
                 label_template
+                priority
                 label
+                list_css
                 
             }
             }

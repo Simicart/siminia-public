@@ -52,13 +52,13 @@ export const ProductDetailsFragment = gql`
                 list_position
                 list_position_grid
                 label_image
-                rule_id
+                
                 label_font
                 label_font_size
                 label_color
                 label_template
+                priority
                 label
-                
             }        
         `
                 : ``
@@ -74,6 +74,9 @@ export const ProductDetailsFragment = gql`
             file
         }
         meta_description
+        mpbrand{
+            image
+        }
         name
         price {
             regularPrice {
