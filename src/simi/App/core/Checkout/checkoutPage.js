@@ -30,7 +30,7 @@ import ItemsReview from '@magento/venia-ui/lib/components/CheckoutPage/ItemsRevi
 
 import defaultClasses from './checkoutPage.module.css';
 import ScrollAnchor from '@magento/venia-ui/lib/components/ScrollAnchor/scrollAnchor';
-
+import { useCartContext } from '@magento/peregrine/lib/context/cart';
 const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
 
 import Identify from 'src/simi/Helper/Identify';
@@ -39,6 +39,9 @@ const CheckoutPage = props => {
     const { classes: propClasses, history } = props;
     const { formatMessage } = useIntl();
     const talonProps = useCheckoutPage();
+
+    const [{ cartId }] = useCartContext();
+    console.log("cartIdd", cartId);
 
     const {
         /**
