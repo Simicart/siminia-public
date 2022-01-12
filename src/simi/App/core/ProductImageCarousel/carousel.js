@@ -156,10 +156,8 @@ const ProductImageCarousel = props => {
         />
     );
 
-    const imageWidth = document.querySelector(".product-detail-carousel").offsetWidth
+    const imageWidth =document.querySelector(".product-detail-carousel") ? document.querySelector(".product-detail-carousel").offsetWidth : null
 
-    
-    
     return (
         <div className="product-detail-carousel" id="product-detail-carousel">
             <Carousel
