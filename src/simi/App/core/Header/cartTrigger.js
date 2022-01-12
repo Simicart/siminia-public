@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense } from 'react';
+import React, { Fragment, Suspense, useEffect } from 'react';
 import { connect } from 'src/drivers';
 
 import CartCounter from './cartCounter';
@@ -11,9 +11,8 @@ import { GET_CART_DETAILS as GET_CART_DETAILS_QUERY } from 'src/simi/App/core/Ca
 import { GET_ITEM_COUNT_QUERY } from './cartTrigger.gql';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 import { useIntl } from 'react-intl';
-
 const MiniCart = React.lazy(() => import('../MiniCart'));
-
+let miniCartOpenOnce = false;
 const Trigger = props => {
     const { storeConfig, classes: propClasses } = props;
     const classes = useStyle(defaultClasses, propClasses);
@@ -47,6 +46,10 @@ const Trigger = props => {
     if (itemsQty > 0) {
         svgAttributes.fill = iconColor;
     }
+
+    useEffect(() => {
+        if (miniCartIsOpen) miniCartOpenOnce = true;
+    }, [miniCartIsOpen]);
 
     const cartIcon = (
         <Fragment>
@@ -87,19 +90,24 @@ const Trigger = props => {
             >
                 {cartIcon}
             </div>
-            <Suspense fallback={null}>
-                <MiniCart
-                    isOpen={miniCartIsOpen}
-                    setIsOpen={setMiniCartIsOpen}
-                    ref={miniCartRef}
-                    classes={{
-                        root: classes['minicartRoot'] + ' container',
-                        root_open: classes['minicartRootOpen'] + ' container',
-                        checkoutButton: classes['checkoutButton'],
-                        body: classes['miniCartBody']
-                    }}
-                />
-            </Suspense>
+            {miniCartIsOpen || miniCartOpenOnce ? (
+                <Suspense fallback={null}>
+                    <MiniCart
+                        isOpen={miniCartIsOpen}
+                        setIsOpen={setMiniCartIsOpen}
+                        ref={miniCartRef}
+                        classes={{
+                            root: classes['minicartRoot'] + ' container',
+                            root_open:
+                                classes['minicartRootOpen'] + ' container',
+                            checkoutButton: classes['checkoutButton'],
+                            body: classes['miniCartBody']
+                        }}
+                    />
+                </Suspense>
+            ) : (
+                ''
+            )}
         </Fragment>
     );
 };

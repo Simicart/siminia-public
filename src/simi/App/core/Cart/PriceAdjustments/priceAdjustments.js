@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { func } from 'prop-types';
 
@@ -8,6 +8,11 @@ import { Accordion, Section } from '@magento/venia-ui/lib/components/Accordion';
 import GiftCardSection from '@magento/venia-ui/lib/components/CartPage/PriceAdjustments/giftCardSection';
 
 import defaultClasses from './priceAdjustments.module.css';
+import Button from '@magento/venia-ui/lib/components/Button';
+import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
+import { useGetRewardPointData } from '../../../../talons/RewardPoint/useGetRewardPointData';
+import { useCartContext } from '@magento/peregrine/lib/context/cart';
+import app from '@magento/peregrine/lib/context/app';
 
 const CouponCode = React.lazy(() => import('./CouponCode'));
 // const GiftOptions = React.lazy(() =>
@@ -33,9 +38,35 @@ const ShippingMethods = React.lazy(() => import('./ShippingMethods'));
  */
 const PriceAdjustments = props => {
     const classes = useStyle(defaultClasses, props.classes);
+    const [{ cartId }] = useCartContext();
+    const [rewardPoint, setRewardPoint] = useState(0);
+    const { spendRewardPointHandle, flatData } = usePriceSummary();
+    const { priceData } = flatData;
+    const mpRewardSpent = priceData && priceData.filter(function(rewardData) {
+        return rewardData.code == 'mp_reward_spent';
+    })
+    const { customerRewardPoint } = useGetRewardPointData();
+    const balance = customerRewardPoint.point_balance;
+    let rewardPointSelected;
+    if(mpRewardSpent) rewardPointSelected = mpRewardSpent[0].value;
 
     const { setIsCartUpdating } = props;
     const { formatMessage } = useIntl();
+    const applyHandle = () => {
+        spendRewardPointHandle({
+            variables: {
+                cart_id: cartId,
+                points: rewardPoint,
+                rule_id: 'rate',
+                address_information: {}
+            }
+        });
+    };
+    const rewardPointEnabled =
+        window.SMCONFIGS &&
+        window.SMCONFIGS.plugins &&
+        window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
+        parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
     return (
         <div className={classes.root}>
@@ -72,6 +103,49 @@ const PriceAdjustments = props => {
                         <CouponCode setIsCartUpdating={setIsCartUpdating} />
                     </Suspense>
                 </Section>
+                {rewardPointEnabled ? (
+                    <Section
+                        id={'reward_points'}
+                        title={formatMessage({
+                            id: 'priceAdjustments.rewardPoint',
+                            defaultMessage: 'Reward Points'
+                        })}
+                        classes={{
+                            root: classes.sectionRoot,
+                            title: classes.sectionTitle
+                        }}
+                    >
+                        <Suspense fallback={<LoadingIndicator />}>
+                            <div className={classes.userBalance}>
+                                You have {balance} points
+                            </div>
+                            <input
+                                type="range"
+                                className={classes.slider}
+                                min={0}
+                                max={balance}
+                                step={1}
+                                value={rewardPoint || rewardPointSelected}
+                                onChange={e => {
+                                    setRewardPoint(e.target.value);
+                                }}
+                            />
+                            <div className={classes.pointSpend}>
+                                <span>You will spend</span>
+                                <input
+                                    value={rewardPoint || rewardPointSelected}
+                                    onChange={e => {
+                                        setRewardPoint(e.target.value);
+                                    }}
+                                    className={classes.pointInput}
+                                />
+                            </div>
+                            <Button priority="high" onClick={applyHandle}>
+                                Apply
+                            </Button>
+                        </Suspense>
+                    </Section>
+                ) : null}
                 <GiftCardSection setIsCartUpdating={setIsCartUpdating} />
                 {/* <Section
                     id={'gift_options'}

@@ -6,17 +6,17 @@ import { useScrollTopOnChange } from '@magento/peregrine/lib/hooks/useScrollTopO
 import NoMatch, { endPoint } from '../simi/App/core/NoMatch';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import PageBuilderComponent from '../simi/App/core/TapitaPageBuilder/PageBuilderComponent';
-import Login from 'src/simi/App/core/Customer/Login';
-// const Login = props => {
-//     return (
-//         <LazyComponent
-//             component={() =>
-//                 import(/* webpackChunkName: "Login"*/ 'src/simi/App/core/Customer/Login')
-//             }
-//             {...props}
-//         />
-//     );
-// };
+//import Login from 'src/simi/App/core/Customer/Login';
+const Login = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "Login"*/ 'src/simi/App/core/Customer/Login')
+            }
+            {...props}
+        />
+    );
+};
 //import CreateAccountPage from '@magento/venia-ui/lib/components/CreateAccountPage';
 const CreateAccountPage = props => {
     return (
@@ -52,13 +52,23 @@ const OrderHistoryPage = props => {
 };
 
 const OrderDetailPage = props => {
-    return (
-        <LazyComponent
-            component={() => import('src/simi/App/core/OrderDetailPage')}
-            {...props}
-        />
-    );
-};
+    return <LazyComponent 
+        component={() => import('src/simi/App/core/OrderDetailPage')}
+        {...props}    
+    />
+}
+const RewardPointsPage = props => {
+    return <LazyComponent 
+        component={() => import('src/simi/App/core/RewardPoint/RewardPointDataPage')}
+        {...props}    
+    />
+}
+const RewardTransactions = props => {
+    return <LazyComponent 
+        component={() => import('src/simi/App/core/RewardPoint/RewardTransactions')}
+        {...props}    
+    />
+}
 
 //import AccountInformationPage from '@magento/venia-ui/lib/components/AccountInformationPage';
 const AccountInformationPage = props => {
@@ -179,7 +189,6 @@ const CheckoutSuccess = props => {
         />
     );
 };
-
 
 const Brands = props => {
     return (
@@ -325,7 +334,7 @@ const Routes = props => {
                     path="/order-history"
                     render={props => <OrderHistoryPage {...props} />}
                 />
-                <Route
+                <Route 
                     exact
                     path="/order-history/:orderId"
                     render={props => <OrderDetailPage {...props} />}
@@ -334,6 +343,16 @@ const Routes = props => {
                     exact
                     path="/product-review"
                     render={props => <ProductReviewPage {...props} />}
+                />
+                <Route
+                    exact
+                    path="/reward-points"
+                    render={props => <RewardPointsPage {...props} />}
+                />
+                <Route
+                    exact
+                    path="/reward-transactions"
+                    render={props => <RewardTransactions {...props} />}
                 />
                 <Route
                     exact
@@ -410,9 +429,9 @@ const Routes = props => {
                  */}
                 <Route
                     render={props => (
-                        <div style={{ minHeight: '100vh' }}>
-                            <NoMatch {...props} />
-                        </div>
+                        <NoMatch
+                            {...props}
+                        />
                     )}
                 />
             </Switch>

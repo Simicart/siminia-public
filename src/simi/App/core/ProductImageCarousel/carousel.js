@@ -10,6 +10,10 @@ import { resourceUrl, getUrlBuffer, logoUrl } from 'src/simi/Helper/Url';
 import ProductLabel from '../ProductFullDetail/ProductLabel';
 import './style.css';
 import { useWindowSize } from '@magento/peregrine';
+import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
+import { useQuery } from '@apollo/client';
+import getUrlKey from '../../../../../src/util/getUrlKey'
+import DEFAULT_OPERATIONS from '../../core/ProductFullDetail/ProductLabel/productLabel.gql'
 
 const IMAGE_WIDTH = 640;
 
@@ -35,6 +39,17 @@ const ProductImageCarousel = props => {
 
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
+    const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
+    const { getProductLabel } = operations;
+
+    const { data, error, loading } = useQuery(getProductLabel, {
+        fetchPolicy: 'cache-and-network',
+        variables: {
+            urlKey: getUrlKey()
+        }
+    });
+   
+    
 
     useEffect(() => {
         if (lightbox && lightbox.current && autoToggleLightBox !== false) {
@@ -195,15 +210,17 @@ const ProductImageCarousel = props => {
                                     alt={item.url}
                                     style={{ objectFit: 'contain' }}
                                 />
-                                {index == 0 ? 
+                                {/* {index == 0 ? 
                                 <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} />
-                            : null}
+                            : null} */}
 
                             </div>
                         );
                     })
                 )}
             </Carousel>
+            <ProductLabel productLabel = {loading ? null : data.products.items[0].mp_label_data} />
+
             {renderLightBox && renderImageLightboxBlock()}
         </div>
     );

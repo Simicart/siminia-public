@@ -19,8 +19,13 @@ const LeftMenu = props => {
     const { label } = props;
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
+    const rewardPointEnabled =
+        window.SMCONFIGS &&
+        window.SMCONFIGS.plugins &&
+        window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
+        parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
-    const listMenuContent = [
+    let listMenuContent = [
         'Order History',
         'WishList',
         'Address Book',
@@ -28,9 +33,10 @@ const LeftMenu = props => {
         'Product Review',
         'Communications',
         'Account Information',
-        'Account Subcriptions'
+        'Account Subcriptions',
     ];
-    const iconList = [
+    const rewardMenuContent = ['Reward Points', 'Reward Transactions'];
+    let iconList = [
         <Icon className={classes.icon} size={22} src={Trello} />,
         <Icon className={classes.icon} size={22} src={Heart} />,
         <Icon className={classes.icon} size={22} src={Tag} />,
@@ -38,8 +44,17 @@ const LeftMenu = props => {
         <Icon className={classes.icon} size={22} src={Check} />,
         <Icon className={classes.icon} size={22} src={Users} />,
         <Icon className={classes.icon} size={22} src={Info} />,
-        <Icon className={classes.icon} size={22} src={Check} />
+        <Icon className={classes.icon} size={22} src={Check} />,
     ];
+    const rewardIconList = [
+        <Icon className={classes.icon} size={22} src={Users} />,
+        <Icon className={classes.icon} size={22} src={Users} />
+    ];
+    if(rewardPointEnabled){
+        listMenuContent = listMenuContent.concat(rewardMenuContent);
+        iconList = iconList.concat(rewardIconList)
+        }
+
     const MenuItems = listMenuContent.map((item, index) => {
         const reformat = item.replace(/\s/g, '-');
         const urlText = reformat.toLowerCase();
@@ -59,13 +74,12 @@ const LeftMenu = props => {
         <div className={classes.wrapper}>
             {MenuItems}
             <div className={classes.logout}>
-            <Link  to="/logout.html">
-                {formatMessage({
-                    id: 'Log out',
-                    defaultMessage: 'Log out'
-                })}
-            </Link>
-
+                <Link to="/logout.html">
+                    {formatMessage({
+                        id: 'Log out',
+                        defaultMessage: 'Log out'
+                    })}
+                </Link>
             </div>
         </div>
     );

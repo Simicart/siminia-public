@@ -1,22 +1,30 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
 import Footer from '../Footer';
 import Header from '../Header';
 import LoadingComponent from 'src/simi/BaseComponents/Loading';
 import classes from './main.module.css';
-import {StoreTitle} from '@magento/venia-ui/lib/components/Head';
-import {BrowserPersistence} from '@magento/peregrine/lib/util';
+import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
+import { BrowserPersistence } from '@magento/peregrine/lib/util';
+import LzL from 'src/simi/BaseComponents/LazyLoad';
 
 const storage = new BrowserPersistence();
-import {Helmet} from 'react-helmet';
+import { Helmet } from 'react-helmet';
 
 const Main = props => {
-    const {storeConfig} = props;
+    const { storeConfig } = props;
     const storeCode = storage.getItem('store_view_code') || null;
 
-    const faviconUrl = storeConfig ? storeConfig['storeConfig']['head_shortcut_icon'] : null;
-    const baseUrl = storeConfig ? storeConfig['storeConfig']['base_media_url'] : null;
-    const url = faviconUrl && baseUrl ? (new URL('./favicon/' + faviconUrl, baseUrl)).href : null
+    const faviconUrl = storeConfig
+        ? storeConfig['storeConfig']['head_shortcut_icon']
+        : null;
+    const baseUrl = storeConfig
+        ? storeConfig['storeConfig']['base_media_url']
+        : null;
+    const url =
+        faviconUrl && baseUrl
+            ? new URL('./favicon/' + faviconUrl, baseUrl).href
+            : null;
 
     // useEffect(() => {
     //     const dbConfig = Identify.getAppDashboardConfigs();
@@ -37,22 +45,24 @@ const Main = props => {
     return (
         <React.Fragment>
             <Helmet>
-                {!!url && <link rel={'icon'} type="image/png" href={url}/>}
+                {!!url && <link rel={'icon'} type="image/png" href={url} />}
             </Helmet>
             {/* <StoreTitle /> comment out due to requesting extra query */}
             <main className={classes.root}>
                 <div
                     className="app-loading"
-                    style={{display: 'none'}}
+                    style={{ display: 'none' }}
                     id="app-loading"
                 >
-                    <LoadingComponent/>
+                    <LoadingComponent />
                 </div>
-                <Header storeConfig={storeConfig}/>
+                <Header storeConfig={storeConfig} />
 
-                <div id="data-breadcrumb" className={classes.breadcrumb}/>
+                <div id="data-breadcrumb" className={classes.breadcrumb} />
                 <div id="siminia-main-page">{props.children}</div>
-                <Footer/>
+                <LzL>
+                    <Footer />
+                </LzL>
             </main>
         </React.Fragment>
     );
