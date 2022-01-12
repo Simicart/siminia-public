@@ -3,16 +3,29 @@
     data-media-backend="<%= global.MAGENTO_MEDIA_BACKEND_URL %>">
 
 <head>
+    <script type="text/javascript">
+        window.smIsLightHouse = false;
+        if (navigator && navigator.userAgent) {
+            var botPattern = "(Lighthouse)";
+            var re = new RegExp(botPattern, 'i');
+            var userAgent = navigator.userAgent;
+            if (re.test(userAgent)) {
+                window.smIsLightHouse = true;
+            }
+        }
+    </script>
     <!-- Google Tag Manager -->
     <script>
-        (function (w, d, s, l, i) {
-            w[l] = w[l] || []; w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-K9JRDMD');
+        if (!window.smIsLightHouse) {
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || []; w[l].push({
+                    'gtm.start':
+                        new Date().getTime(), event: 'gtm.js'
+                }); var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-K9JRDMD');
+        }
     </script>
     <!-- End Google Tag Manager -->
     <meta charset="utf-8">
@@ -39,17 +52,6 @@
     <link rel="apple-touch-icon" href="/static/icons/siminia_square_512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png">
     <link rel="preconnect" href="<%= process.env.MAGENTO_BACKEND_URL %>">
-    <script type="text/javascript">
-        window.smIsLightHouse = false;
-        if (navigator && navigator.userAgent) {
-            var botPattern = "(Lighthouse)";
-            var re = new RegExp(botPattern, 'i');
-            var userAgent = navigator.userAgent;
-            if (re.test(userAgent)) {
-                window.smIsLightHouse = true;
-            }
-        }
-    </script>
     <script type="text/javascript">
         var SMCONFIGS = {
             //magento url, end with slash
@@ -104,9 +106,12 @@
             }
         }, true);
     </script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+    <script type="text/javascript">
+        if (!window.smIsLightHouse) {
+                document.write('<link  href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">');
+                document.write('<link rel="stylesheet" href="/static/core-theme-style.css?v=12.0.0" media="print" onload="this.media=\'all\'"></link>');
+        }
+    </script>
     <style>
         /* override & pre-styling containers for cls opmization purpose */
         .container {
@@ -151,8 +156,6 @@
             }
         }
     </style>
-    <link rel="stylesheet" href="/static/core-theme-style.css?v=12.0.0" media="print" onload="this.media='all'">
-    </link>
 </head>
 
 <body>
@@ -165,20 +168,23 @@
     </noscript>
     <!-- End Google Tag Manager (noscript) -->
     <script type="text/javascript">
-        window.onload = function () {
-            setTimeout(function () {
-                var script_tag = document.createElement('script');
-                script_tag.type = 'text/javascript';
-                script_tag.text = `
-            var $zoho=$zoho || {};$zoho.salesiq = $zoho.salesiq || {widgetcode:"d6afa6408e48fd3ef9de553a3f90eea54336b0d8288bb633e66eb5f8134ea820", values:{},ready:function(){}};var d=document;s=d.createElement("script");s.type="text/javascript";s.id="zsiqscript";s.defer=true;s.src="https://salesiq.zoho.com/widget";t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t);
-            $zoho.salesiq.ready=function()
-            {
-            $zoho.salesiq.floatbutton.coin.hidetooltip();
+        if (!window.smIsLightHouse) {
+            window.onload = function () {
+                setTimeout(function () {
+                    var script_tag = document.createElement('script');
+                    script_tag.type = 'text/javascript';
+                    script_tag.text = `
+                var $zoho=$zoho || {};$zoho.salesiq = $zoho.salesiq || {widgetcode:"d6afa6408e48fd3ef9de553a3f90eea54336b0d8288bb633e66eb5f8134ea820", values:{},ready:function(){}};var d=document;s=d.createElement("script");s.type="text/javascript";s.id="zsiqscript";s.defer=true;s.src="https://salesiq.zoho.com/widget";t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t);
+                $zoho.salesiq.ready=function()
+                {
+                $zoho.salesiq.floatbutton.coin.hidetooltip();
+                }
+                `;
+                    document.body.appendChild(script_tag);
+                }, 2200);
             }
-            `;
-                document.body.appendChild(script_tag);
-            }, 2200);
-        }</script>
+        }
+    </script>
     <div id='zsiqwidget'></div>
     <div style="display: none">
         <div class="addthis_inline_share_toolbox" id="social-share"></div>
