@@ -12,7 +12,7 @@ export const useProductsContent = props => {
         data,
         queries: { getProductFiltersByBrand }
     } = props;
-    console.log("dataaaa", data);
+    
 
     const [loadFilters, setLoadFilters] = useState(false);
     const [, { toggleDrawer }] = useAppContext();
