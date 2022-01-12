@@ -27,9 +27,10 @@ import ShippingMethod from '@magento/venia-ui/lib/components/CheckoutPage/Shippi
 import ShippingInformation from '@magento/venia-ui/lib/components/CheckoutPage/ShippingInformation';
 import OrderConfirmationPage from '@magento/venia-ui/lib/components/CheckoutPage/OrderConfirmationPage';
 import ItemsReview from '@magento/venia-ui/lib/components/CheckoutPage/ItemsReview';
-
+import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import defaultClasses from './checkoutPage.module.css';
 import ScrollAnchor from '@magento/venia-ui/lib/components/ScrollAnchor/scrollAnchor';
+import DeliveryDateTime from './DeliveryDateTime';
 
 const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
 
@@ -39,6 +40,9 @@ const CheckoutPage = props => {
     const { classes: propClasses, history } = props;
     const { formatMessage } = useIntl();
     const talonProps = useCheckoutPage();
+
+    const [{ cartId }] = useCartContext();
+    console.log('cartIdd', cartId);
 
     const {
         /**
@@ -174,12 +178,16 @@ const CheckoutPage = props => {
 
         const shippingMethodSection =
             checkoutStep >= CHECKOUT_STEP.SHIPPING_METHOD ? (
-                <ShippingMethod
-                    pageIsUpdating={isUpdating}
-                    onSave={setShippingMethodDone}
-                    onSuccess={scrollShippingMethodIntoView}
-                    setPageIsUpdating={setIsUpdating}
-                />
+                <>
+                    <ShippingMethod
+                        pageIsUpdating={isUpdating}
+                        onSave={setShippingMethodDone}
+                        onSuccess={scrollShippingMethodIntoView}
+                        setPageIsUpdating={setIsUpdating}
+                    />
+             <DeliveryDateTime />
+                   
+                </>
             ) : (
                 <h3 className={classes.shipping_method_heading}>
                     <FormattedMessage
