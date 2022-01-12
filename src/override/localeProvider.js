@@ -11,6 +11,8 @@ import { setStoreConfig } from 'src/simi/Redux/actions/simiactions';
 import { connect } from 'src/drivers';
 import Identify from 'src/simi/Helper/Identify';
 import { saveCategoriesToDict } from 'src/simi/Helper/Url';
+import { BrowserPersistence } from '@magento/peregrine/lib/util';
+const storage = new BrowserPersistence();
 
 // const GET_LOCALE = gql`
 //     query getLocaleNew {
@@ -24,10 +26,20 @@ import { saveCategoriesToDict } from 'src/simi/Helper/Url';
 
 const LocaleProvider = props => {
     const [messages, setMessages] = useState(null);
-    const { data } = useQuery(GET_LOCALE, {
-        fetchPolicy: 'no-cache'
-    });
+    const preloadedData = window.smPreloadedStoreConfig;
+    const storeCode = storage.getItem('store_view_code') || null;
+    const storeCurrency = storage.getItem('store_view_currency') || null;
 
+    const { data: apiData } = useQuery(GET_LOCALE, {
+        fetchPolicy: 'no-cache',
+        skip:
+            preloadedData && preloadedData.data && !storeCode && !storeCurrency
+    });
+    const data = apiData
+        ? apiData
+        : preloadedData && preloadedData.data && !storeCode && !storeCurrency
+        ? preloadedData.data
+        : null;
     const language = useMemo(() => {
         return data && data.storeConfig.locale
             ? toReactIntl(data.storeConfig.locale)
