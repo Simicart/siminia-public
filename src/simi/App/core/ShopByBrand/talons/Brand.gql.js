@@ -21,7 +21,18 @@ export const BrandFragment = gql`
         product_quantity
     }
 `
-
+export const GET_BRAND_INFO = gql`
+    query getBrandProductDetailForProductPage($urlKey: String!) {
+        products(filter: { url_key: { eq: $urlKey } }) {
+            items {
+                mpbrand{
+                    ...BrandFragment
+                }
+            }
+            ${BrandFragment}
+        }
+    }
+`;
 export const CategoryFragment = gql`
     fragment CategoryFragment on MageplazaBrandsCategories {
         cat_id
