@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Loading from 'src/simi/BaseComponents/Loading';
 import { useQuery } from '@apollo/client';
 import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
+import LzL from 'src/simi/BaseComponents/LazyLoad';
 //import Page404 from './Page404';
 const Page404 = props => {
     return (
@@ -104,6 +105,17 @@ const NoMatch = props => {
                     pageData={
                         pageData && pageData.publish_items ? pageData : false
                     }
+                    overRender={(item, itemProps, innerContent) => {
+                        if (!item || !itemProps) return false;
+                        const { type } = item;
+                        if (type === 'container') {
+                            return (
+                                <LzL>
+                                    <div {...itemProps}>{innerContent}</div>
+                                </LzL>
+                            );
+                        }
+                    }}
                 />
             </div>
         );
