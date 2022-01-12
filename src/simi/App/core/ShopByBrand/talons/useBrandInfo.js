@@ -11,7 +11,6 @@ export const useBrandInfo = props => {
         variables: {
             urlKey: url_key
         },
-        fetchPolicy:"cache-first"
     });
     let derivedErrorMessage;
     if (brandInfoError) {

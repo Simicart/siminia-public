@@ -18,13 +18,14 @@ const Pdetailsbrand = props => {
     if(!brandInfo){
         return ''
     }
+  
     const {items} = brandInfo.products
     if (brandInfoLoading)
         return fullPageLoadingIndicator;
     if (derivedErrorMessage)
         return <div className={classes.brandError}>{derivedErrorMessage}</div>;
     
-    if (!items || !items[0].mpbrand || !items[0].mpbrand.url_key )
+    if (!items || !items[0].mpbrand)
         return ''
     
     const brandConfiguration = storage.getItem('simiBrandConfiguration');
