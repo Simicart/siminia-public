@@ -28,7 +28,7 @@ import ItemsReview from '@magento/venia-ui/lib/components/CheckoutPage/ItemsRevi
 
 import defaultClasses from './checkoutPage.module.css';
 import ScrollAnchor from '@magento/venia-ui/lib/components/ScrollAnchor/scrollAnchor';
-
+import { useCartContext } from '@magento/peregrine/lib/context/cart';
 const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
 import OrderSummary from './OrderSummary/orderSummary';
 import PriceAdjustments from '../Cart/PriceAdjustments/priceAdjustments';
@@ -39,6 +39,9 @@ const CheckoutPage = props => {
     const { classes: propClasses, history } = props;
     const { formatMessage } = useIntl();
     const talonProps = useCheckoutPage();
+
+    const [{ cartId }] = useCartContext();
+    console.log("cartIdd", cartId);
 
     const {
         /**
@@ -120,7 +123,11 @@ const CheckoutPage = props => {
           });
 
     if (orderNumber && orderDetailsData) {
-        Identify.storeDataToStoreage(Identify.SESSION_STOREAGE, 'simi_last_success_order_data', orderDetailsData);
+        Identify.storeDataToStoreage(
+            Identify.SESSION_STOREAGE,
+            'simi_last_success_order_data',
+            orderDetailsData
+        );
         return <Redirect to={`/checkout-success?orderNumber=${orderNumber}`} />;
         /*
         return (

@@ -54,6 +54,7 @@ const Griditem = props => {
     } = item;
 
     const product_url = `/${url_key}${productUrlSuffix()}`;
+    // const imageWidth = document.querySelector("#product-image-label").offsetWidth
 
     //if uncomment this - should comment out useDelayedTransition() at src/simi/app.js
     //saveDataToUrl(product_url, item);
@@ -75,6 +76,10 @@ const Griditem = props => {
     //comment out this line when server got issue decoding images
     imageUrl = resourceUrl(imageUrl, { type: 'image-product', width: 260 });
 
+
+  
+
+
     const image = (
         <div
             className={itemClasses['siminia-product-image']}
@@ -91,19 +96,23 @@ const Griditem = props => {
                     width: '100%',
                     padding: 1
                 }}
+                
             >
                 <Link to={location}>
                     <Image
                         src={imageUrl}
                         alt={name}
                         fallBackUrl={small_image}
+                        className="product-image-label"
                     />
-                    <ProductLabel productLabel = {mp_label_data ? mp_label_data : null} label_tyle="gallery"/>
+                    <ProductLabel  productLabel = {mp_label_data ? mp_label_data : null} label_tyle="gallery"/>
                 </Link>
             </div>
         </div>
     );
     const productOutStock = item.stock_status === 'OUT_OF_STOCK';
+    
+    
     return (
         <div
             className={` ${
