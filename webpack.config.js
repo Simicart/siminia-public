@@ -3,7 +3,8 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const fs = require('fs');
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+    .BundleAnalyzerPlugin;
 const {
     getMediaURL,
     getStoreConfigData,
@@ -40,7 +41,6 @@ module.exports = async env => {
         vendor: [
             '@apollo/client',
             'apollo-cache-persist',
-            'informed',
             'react',
             'react-feather',
             'react-redux',
@@ -49,16 +49,14 @@ module.exports = async env => {
             'redux-actions',
             //simicart libs to move to vendors instead of client chunk
             'react-responsive-carousel',
-            'react-share',
-            'rendertron-middleware',
-            'react-responsive-modal',
-            'simi-pagebuilder-react',
-            'react-image-lightbox',
             'graphql',
-            '@formatjs',
-            '@apollo/client',
-            '@magento/venia-ui',
-            '@magento/peregrine',
+            '@react-aria',
+            'react-helmet',
+            'informed',
+            'react-helmet-async',
+            'react-lazyload',
+            'react-easy-swipe',
+            'events',
             //end simicart libs to move to vendors instead of client chunk
             'redux-thunk'
         ],
@@ -79,18 +77,16 @@ module.exports = async env => {
      * in the .env file, because should set the store name from the
      * given store code instead of the default one.
      */
-    config.module.rules.push(
-        {
-            test: /\.s[ac]ss$/i,
-            use: [
-                // Creates `style` nodes from JS strings
-                "style-loader",
-                // Translates CSS into CommonJS
-                "css-loader",
-                "sass-loader",
-            ],
-        }, 
-    )
+    config.module.rules.push({
+        test: /\.s[ac]ss$/i,
+        use: [
+            // Creates `style` nodes from JS strings
+            'style-loader',
+            // Translates CSS into CommonJS
+            'css-loader',
+            'sass-loader'
+        ]
+    });
     const availableStore = availableStores.find(
         ({ code }) => code === process.env.STORE_VIEW_CODE
     );
@@ -106,7 +102,7 @@ module.exports = async env => {
         minify: {
             collapseWhitespace: true,
             removeComments: true
-        } 
+        }
     };
 
     // Strip UPWARD mustache from template file during watch
@@ -202,9 +198,13 @@ module.exports = async env => {
     );
 
     //simicart chunk split (change runtime to a bigger chunk)
-    if (config.optimization && config.optimization.splitChunks && config.optimization.splitChunks.cacheGroups)
+    if (
+        config.optimization &&
+        config.optimization.splitChunks &&
+        config.optimization.splitChunks.cacheGroups
+    )
         config.optimization.splitChunks.cacheGroups.runtime = {
-            test: /([\\/]node_modules[\\/]\@magento[\\/]venia\-ui[\\/])/,
+            test: /([\\/](simi-pagebuilder-react|react-dom|@formatjs|react-router|history|node-libs-browser|zen-observable|generator-runtime|GridItem|LazyComponent|PageBuilderComponent)[\\/])/,
             //test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
             name: 'runtime',
             chunks: 'all'

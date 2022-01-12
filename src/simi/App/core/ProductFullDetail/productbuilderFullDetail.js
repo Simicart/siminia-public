@@ -15,6 +15,7 @@ import RichContent from '@magento/venia-ui/lib/components/RichContent/richConten
 import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductOptions';
 import ProductGrid from '../TapitaPageBuilder/Products/grid';
 import defaultClasses from './productFullDetail.module.css';
+import { endPoint } from '../NoMatch';
 import ReactDOM from 'react-dom';
 
 const WishlistButton = React.lazy(() =>
@@ -22,7 +23,7 @@ const WishlistButton = React.lazy(() =>
 );
 const Options = React.lazy(() => import('../ProductOptions'));
 const SimiProductOptions = React.lazy(() => import('../SimiProductOptions'));
-import { PageBuilderComponent } from 'src/simi/App/core/NoMatch';
+import PageBuilderComponent from 'src/simi/App/core/TapitaPageBuilder/PageBuilderComponent';
 
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import ProductReview from './ProductReview';
@@ -443,6 +444,7 @@ const ProductBuilderFullDetail = props => {
                                 pageData={pageData}
                                 overRender={overRender}
                                 toPreview={maskedId ? true : false}
+                                endPoint={endPoint}
                             />
                         ),
                         [product.id, maskedId, pageData]

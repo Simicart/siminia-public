@@ -1,21 +1,22 @@
 import React, { Suspense } from 'react';
 import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Switch, useLocation, useParams } from 'react-router-dom';
 //import MagentoRoute from '@magento/venia-ui/lib/components/MagentoRoute';
 import { useScrollTopOnChange } from '@magento/peregrine/lib/hooks/useScrollTopOnChange';
-import NoMatch from '../simi/App/core/NoMatch';
+import NoMatch, { endPoint } from '../simi/App/core/NoMatch';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
-import Login from 'src/simi/App/core/Customer/Login';
-// const Login = props => {
-//     return (
-//         <LazyComponent
-//             component={() =>
-//                 import(/* webpackChunkName: "Login"*/ 'src/simi/App/core/Customer/Login')
-//             }
-//             {...props}
-//         />
-//     );
-// };
+import PageBuilderComponent from '../simi/App/core/TapitaPageBuilder/PageBuilderComponent';
+//import Login from 'src/simi/App/core/Customer/Login';
+const Login = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "Login"*/ 'src/simi/App/core/Customer/Login')
+            }
+            {...props}
+        />
+    );
+};
 //import CreateAccountPage from '@magento/venia-ui/lib/components/CreateAccountPage';
 const CreateAccountPage = props => {
     return (
@@ -51,11 +52,13 @@ const OrderHistoryPage = props => {
 };
 
 const OrderDetailPage = props => {
-    return <LazyComponent 
-        component={() => import('src/simi/App/core/OrderDetailPage')}
-        {...props}    
-    />
-}
+    return (
+        <LazyComponent
+            component={() => import('src/simi/App/core/OrderDetailPage')}
+            {...props}
+        />
+    );
+};
 
 //import AccountInformationPage from '@magento/venia-ui/lib/components/AccountInformationPage';
 const AccountInformationPage = props => {
@@ -193,6 +196,24 @@ const Routes = props => {
                  */}
                 <Route
                     exact
+                    path="/pbpreview/:pbMaskedId"
+                    render={props => (
+                        <div className="pagebuilder-component-ctn">
+                            <PageBuilderComponent
+                                key="pb-preview"
+                                endPoint={endPoint}
+                                maskedId={
+                                    props.match && props.match.params.pbMaskedId
+                                        ? props.match.params.pbMaskedId
+                                        : ''
+                                }
+                                toPreview={true}
+                            />
+                        </div>
+                    )}
+                />
+                <Route
+                    exact
                     path="/search.html"
                     render={props => <Search key="search_page" {...props} />}
                 />
@@ -255,7 +276,7 @@ const Routes = props => {
                     path="/order-history"
                     render={props => <OrderHistoryPage {...props} />}
                 />
-                <Route 
+                <Route
                     exact
                     path="/order-history/:orderId"
                     render={props => <OrderDetailPage {...props} />}
@@ -340,9 +361,9 @@ const Routes = props => {
                  */}
                 <Route
                     render={props => (
-                        <NoMatch
-                            {...props}
-                        />
+                        <div style={{ minHeight: '100vh' }}>
+                            <NoMatch {...props} />
+                        </div>
                     )}
                 />
             </Switch>
