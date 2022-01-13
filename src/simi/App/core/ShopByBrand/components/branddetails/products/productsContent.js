@@ -31,6 +31,7 @@ const ProductsContent = props => {
         items,
         totalPagesFromData
     } = talonProps;
+    
     const classes = mergeClasses(defaultClasses, props.classes);
 
     // const maybeFilterButtons = filters ? (
