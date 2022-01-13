@@ -108,7 +108,11 @@ const NoMatch = props => {
                     overRender={(item, itemProps, innerContent) => {
                         if (!item || !itemProps) return false;
                         const { type } = item;
-                        if (type === 'container') {
+                        if (
+                            type === 'container' &&
+                            item.stylesParsed &&
+                            item.stylesParsed.backgroundImage
+                        ) {
                             return (
                                 <LzL>
                                     <div {...itemProps}>{innerContent}</div>
