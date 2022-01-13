@@ -168,6 +168,7 @@ const Griditem = props => {
                                 ? itemClasses['prices-layout-rtl']
                                 : ''
                         }`}
+                        style={{flexWrap: type_id === 'configurable' ? 'wrap' : 'nowrap'}}
                         id={`price-${id}`}
                     >
                         {type_id === 'configurable' && (
