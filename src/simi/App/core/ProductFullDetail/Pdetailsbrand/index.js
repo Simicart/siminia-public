@@ -25,7 +25,7 @@ const Pdetailsbrand = props => {
     if (derivedErrorMessage)
         return <div className={classes.brandError}>{derivedErrorMessage}</div>;
     
-    if (!items || !items[0].mpbrand )
+    if (!items || !items[0].mpbrand || !items[0].mpbrand.url_key )
         return ''
 
     const { mpbrand } = items[0]
