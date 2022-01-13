@@ -1,4 +1,6 @@
 import { gql } from '@apollo/client';
+import {SimiPriceFragment} from "src/simi/queries/catalog_gql/catalogFragment.gql";
+
 const sizeChartEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&
