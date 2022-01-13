@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { func } from 'prop-types';
 
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
@@ -42,13 +42,16 @@ const PriceAdjustments = props => {
     const [rewardPoint, setRewardPoint] = useState(0);
     const { spendRewardPointHandle, flatData } = usePriceSummary();
     const { priceData } = flatData;
-    const mpRewardSpent = priceData && priceData.filter(function(rewardData) {
-        return rewardData.code == 'mp_reward_spent';
-    })
+    const mpRewardSpent =
+        priceData &&
+        priceData.filter(function(rewardData) {
+            return rewardData.code == 'mp_reward_spent';
+        });
     const { customerRewardPoint } = useGetRewardPointData();
     const balance = customerRewardPoint.point_balance;
-    let rewardPointSelected;
-    if(mpRewardSpent) rewardPointSelected = mpRewardSpent[0].value;
+    let rewardPointSelected = 0;
+    if (mpRewardSpent && mpRewardSpent.length > 0)
+        rewardPointSelected = mpRewardSpent[0].value;
 
     const { setIsCartUpdating } = props;
     const { formatMessage } = useIntl();
@@ -117,32 +120,66 @@ const PriceAdjustments = props => {
                     >
                         <Suspense fallback={<LoadingIndicator />}>
                             <div className={classes.userBalance}>
-                                You have {balance} points
-                            </div>
-                            <input
-                                type="range"
-                                className={classes.slider}
-                                min={0}
-                                max={balance}
-                                step={1}
-                                value={rewardPoint || rewardPointSelected}
-                                onChange={e => {
-                                    setRewardPoint(e.target.value);
-                                }}
-                            />
-                            <div className={classes.pointSpend}>
-                                <span>You will spend</span>
-                                <input
-                                    value={rewardPoint || rewardPointSelected}
-                                    onChange={e => {
-                                        setRewardPoint(e.target.value);
-                                    }}
-                                    className={classes.pointInput}
+                                <FormattedMessage
+                                    id={'rewardPoint.userBalance'}
+                                    defaultMessage={`You have ${balance} points`}
                                 />
                             </div>
-                            <Button priority="high" onClick={applyHandle}>
-                                Apply
-                            </Button>
+                            {balance > 0 ? (
+                                <div>
+                                    <input
+                                        type="range"
+                                        className={classes.slider}
+                                        min={0}
+                                        max={balance}
+                                        step={1}
+                                        value={
+                                            rewardPoint || rewardPointSelected
+                                        }
+                                        onChange={e => {
+                                            setRewardPoint(e.target.value);
+                                        }}
+                                    />
+                                    <div className={classes.pointSpend}>
+                                        <span className={classes.message}>
+                                            <FormattedMessage
+                                                id={'rewardPoint.textSpend'}
+                                                defaultMessage={
+                                                    'You will spend'
+                                                }
+                                            />
+                                        </span>
+                                        <input
+                                            value={
+                                                rewardPoint ||
+                                                rewardPointSelected
+                                            }
+                                            onChange={e => {
+                                                setRewardPoint(e.target.value);
+                                            }}
+                                            className={classes.pointInput}
+                                        />
+                                    </div>
+                                    <Button
+                                        priority="high"
+                                        onClick={applyHandle}
+                                    >
+                                        <FormattedMessage
+                                            id={'rewardPoint.applyButton'}
+                                            defaultMessage={'Apply'}
+                                        />
+                                    </Button>
+                                </div>
+                            ) : (
+                                <div className={classes.message}>
+                                    <FormattedMessage
+                                        id={'rewardPoint.message'}
+                                        defaultMessage={
+                                            'Please earn Reward Point to spend your points'
+                                        }
+                                    />
+                                </div>
+                            )}
                         </Suspense>
                     </Section>
                 ) : null}

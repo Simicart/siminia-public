@@ -29,8 +29,14 @@
 .slider {
     width: 100%;
 }
+.message {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+}
 .userBalance {
-    margin: 1rem 0;
+    margin: 0 1rem 1rem 0;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
 }
 .pointSpend {
     margin: 1rem 0;
