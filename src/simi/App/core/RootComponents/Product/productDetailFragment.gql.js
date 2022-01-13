@@ -79,12 +79,7 @@ export const ProductDetailsFragment = gql`
         }
         name
         price {
-            regularPrice {
-                amount {
-                    currency
-                    value
-                }
-            }
+            ...SimiPriceFragment    
         }
         sku
         small_image {
@@ -134,12 +129,7 @@ export const ProductDetailsFragment = gql`
                     sku
                     stock_status
                     price {
-                        regularPrice {
-                            amount {
-                                currency
-                                value
-                            }
-                        }
+                        ...SimiPriceFragment
                     }
                 }
             }
@@ -339,6 +329,7 @@ export const ProductDetailsFragment = gql`
             sku
         }
     }
+    ${SimiPriceFragment}
 `;
 
 // might detach upsell_products and cross-sell for performance
