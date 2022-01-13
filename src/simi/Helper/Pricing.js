@@ -94,7 +94,7 @@ export const taxConfig = () => {
             storeConfig.simiStoreConfig.config.tax
         );
     return {
-        tax_display_type: '3',
+        tax_display_type: '2', // 1 - exclude , 2 - include, 3 - both
         tax_display_shipping: '3',
         tax_cart_display_price: '3',
         tax_cart_display_subtotal: '3',
