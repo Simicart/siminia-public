@@ -29,7 +29,8 @@ const Filter = props => {
         total_count,
         maxPrice,
         minPrice,
-        priceSeparator
+        priceSeparator,
+        productsData
     } = props;
     const history = useHistory();
     const location = useLocation();
@@ -47,10 +48,21 @@ const Filter = props => {
             if (item.filter_items !== null) {
                 options = item.filter_items.map(
                     function(optionItem) {
+                        //exclude current category from options
+                        if (
+                            item.request_var === 'category_id' &&
+                            optionItem.value_string &&
+                            productsData &&
+                            productsData.category &&
+                            productsData.category.id &&
+                            parseInt(optionItem.value_string) ===
+                                productsData.category.id
+                        )
+                            return '';
                         const name = (
                             <span className="filter-item-text">
                                 <span
-                                    className="filter-item-text"
+                                    className="filter-item-text-dh"
                                     dangerouslySetInnerHTML={{
                                         __html: optionItem.label
                                     }}
@@ -93,7 +105,9 @@ const Filter = props => {
                                 <span className="filter-item-unchecked">
                                     {uncheckedIcon}
                                 </span>
-                                <span className="filter-item-text">{name}</span>
+                                <span className="filter-item-text-ctn">
+                                    {name}
+                                </span>
                             </label>
                         );
                     },
