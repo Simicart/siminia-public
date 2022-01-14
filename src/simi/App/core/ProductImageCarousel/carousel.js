@@ -49,7 +49,7 @@ const ProductImageCarousel = props => {
         }
     });
    
-    
+   
 
     useEffect(() => {
         if (lightbox && lightbox.current && autoToggleLightBox !== false) {

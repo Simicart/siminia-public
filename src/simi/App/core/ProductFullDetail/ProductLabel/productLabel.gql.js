@@ -13,17 +13,27 @@ const GET_PRODUCT_LABEL = gql`
                     productLabelEnabled
                         ? `
                 mp_label_data {
-                    list_position
-                    list_position_grid
-                    label_image
                     rule_id
+                    priority
+                    label_template
+                    label_image
+                    label
                     label_font
                     label_font_size
                     label_color
-                    label_template
-                    label
-                  	list_css
-                  	priority
+                    label_css
+                    label_position
+                    label_position_grid
+                    same
+                    list_template
+                    list_image
+                    list_label
+                    list_font
+                    list_font_size
+                    list_css
+                    list_position
+                    list_position_grid
+                    name
                 }
                 
                 `
