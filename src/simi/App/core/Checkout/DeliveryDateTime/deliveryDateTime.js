@@ -1,35 +1,162 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import DEFAULT_OPERATIONS from './deliveryDateTime.gql'
+import React, { Fragment, useEffect, useState,useImperativeHandle, forwardRef } from 'react';
+import DEFAULT_OPERATIONS from './deliveryDateTime.gql';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { DateTimeInput } from '../../SimiProductOptions/CustomOption/components/OptionContent/DateTimeInput/DateTimeInput';
-import DatePicker from "react-datepicker";
-import 'react-datepicker/dist/react-datepicker.css'
-require('./style.scss')
-const DeliveryDateTime = props => {
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { useCartContext } from '@magento/peregrine/lib/context/cart';
+
+require('./style.scss');
+const DeliveryDateTime = forwardRef((props, ref) => {
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
-    const { getDeliveryTime } = operations;
+    const { getDeliveryTime, deliveryTimeMutation } = operations;
     const { data, error, loading } = useQuery(getDeliveryTime, {
-      
+        fetchPolicy: 'cache-and-network'
     });
-    const [date, setDate] = useState(new Date()); 
+    const [startDate, setDate] = useState(new Date());
+    const [deliTime, setDeliTime] = useState('');
+    const [houseSecurityCode, setHouseSecurityCode] = useState('');
+    const [deliveryComment, setDeliveryComment] = useState('');
 
-    if (loading) {
-        return <h1>Loading...</h1>
+    const handleSubmit = () => {
+        
+        deliveryMutation({
+            variables: { cart_id : cartId, mp_delivery_time : {
+                mp_delivery_date:startDate,
+                mp_delivery_time:deliTime ,
+                mp_house_security_code:houseSecurityCode ,
+                mp_delivery_comment:deliveryComment,
+            }  }
+        })
     }
-    console.log("dataa", data);
-    const dateFormat = data.deliveryTime.deliveryDateFormat
-    const daysOff = data.deliveryTime.deliveryDaysOff
-    const dateOff = data.deliveryTime.deliveryDateOff
+    useImperativeHandle(ref, () => {
+        return {
+            handleSubmit: handleSubmit
+        };
+    });
 
-    return <DatePicker 
-    selected={date}
-    onChange={ date => setDate(date)}
-    minDate={ new Date()}
-    filterDate = {date => date.getDay() != '6' && date.getDay() != '0' && date.getDate() != '17/01/2022'}
-    />
+    console.log(startDate, deliTime, houseSecurityCode, deliveryComment);
 
-}
+    const [{ cartId }] = useCartContext();
+    const [
+        deliveryMutation,
+        { data: mutationData, loading: mutationLoading, error: mutationError }
+    ] = useMutation(deliveryTimeMutation);
+    if (loading) {
+        return null;
+    }
+    
 
+    console.log('dataa', data);
+    const dateFormat = data.deliveryTime.deliveryDateFormat;
+    const daysOff = data.deliveryTime.deliveryDaysOff;
+    const dateOff = data.deliveryTime.deliveryDateOff;
+    const deliveryTime = data.deliveryTime.deliveryTime;
+    const isHouseSecurityCode = data.deliveryTime.isEnabledHouseSecurityCode;
+    const isDeliveryComment = data.deliveryTime.isEnabledDeliveryComment;
 
-export default DeliveryDateTime
+   
+
+    const handleChange = e => {
+        let name = e.target.name;
+        if (name == 'deliveryTime') {
+            setDeliTime(e.target.value);
+        }
+        if (name == 'House Security') {
+            setHouseSecurityCode(e.target.value);
+        }
+        if (name == 'Delivery Comment') {
+            setDeliveryComment(e.target.value);
+        }
+    };
+
+    const HouseSecurityCode =
+        isHouseSecurityCode == 'true' ? (
+            <label className="text-area">
+                House Security Code:
+                <textarea
+                    value={houseSecurityCode}
+                    onChange={handleChange}
+                    name="House Security"
+                />
+            </label>
+        ) : null;
+
+    const DeliveryComment =
+        isDeliveryComment == 'true' ? (
+            <label className="text-area">
+                Delivery Comment:
+                <textarea
+                    value={deliveryComment}
+                    onChange={handleChange}
+                    name="Delivery Comment"
+                />
+            </label>
+        ) : null;
+
+    const OptionDeliveryTime = deliveryTime.map((time, index) => {
+        return (
+            <option value={time} key={index}>
+                {time}
+            </option>
+        );
+    });
+
+    const filterDate = (date, dateOff) => {
+        let d = date.getDate() < '10' ? '0' + date.getDate() : date.getDate();
+        let m = '' + parseInt(date.getMonth() + 1);
+        let y = date.getFullYear();
+        let thisDay = d + '/' + m + '/' + y;
+
+        if (dateOff.includes(thisDay)) {
+            return false;
+        }
+        return true;
+    };
+
+    const filterDaysOff = (date, daysOff) => {
+        if (daysOff.includes(date)) {
+            return false;
+        }
+        return true;
+    };
+
+    return (
+        <div className="deliveryTime-main">
+            <DatePicker
+                selected={startDate}
+                onChange={date => setDate(date)}
+                minDate={new Date()}
+                filterDate={date =>
+                    filterDaysOff(date.getDay().toString(), daysOff) &&
+                    filterDate(date, dateOff)
+                }
+            />
+            <select
+                onChange={handleChange}
+                value={deliTime}
+                name="deliveryTime"
+                id="deliveryTime"
+            >
+                {OptionDeliveryTime}
+            </select>
+            {HouseSecurityCode}
+            {DeliveryComment}
+            {/* <button
+                onClick={() =>
+                    deliveryMutation({
+                        variables: { cart_id : cartId, mp_delivery_time : {
+                            mp_delivery_date:startDate,
+                            mp_delivery_time:deliTime ,
+                            mp_house_security_code:houseSecurityCode ,
+                            mp_delivery_comment:deliveryComment,
+                        }  }
+                    })
+                }
+            >yessss</button> */}
+        </div>
+    );
+});
+
+export default DeliveryDateTime;

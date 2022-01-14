@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { shape, string } from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AlertCircle as AlertCircleIcon } from 'react-feather';
@@ -80,6 +80,9 @@ const CheckoutPage = props => {
         toggleAddressBookContent,
         toggleSignInContent
     } = talonProps;
+
+    const deliveryDateTime = useRef(null);
+    console.log("reff", deliveryDateTime);
 
     const [, { addToast }] = useToasts();
     useEffect(() => {
@@ -185,7 +188,7 @@ const CheckoutPage = props => {
                         onSuccess={scrollShippingMethodIntoView}
                         setPageIsUpdating={setIsUpdating}
                     />
-             <DeliveryDateTime />
+             <DeliveryDateTime ref={deliveryDateTime} />
                    
                 </>
             ) : (
@@ -276,6 +279,7 @@ const CheckoutPage = props => {
                             Identify.LOCAL_STOREAGE,
                             'simi_selected_payment_code'
                         );
+                        deliveryDateTime.current.handleSubmit()
                         if (selectedPaymentMethod === 'paypal_express') {
                             history.push('/paypal_express.html');
                             return;
@@ -384,6 +388,7 @@ const CheckoutPage = props => {
                 {itemsReview}
                 {orderSummary}
                 {placeOrderButton}
+                {/* <button onClick={()=>deliveryDateTime.current.handleSubmit()}>tesst</button> */}
             </div>
         );
     }

@@ -75,7 +75,7 @@ const ProductFullDetail = props => {
     const scrollToReview = () => {
         smoothScrollToView(document.querySelector('.reviewsContainer'));
     };
-
+    
     const classes = useStyle(defaultClasses, props.classes);
 
     const options = isProductConfigurable(product) ? (
