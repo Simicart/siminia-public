@@ -135,36 +135,6 @@ export const ProductDetailsFragment = gql`
                 type
                 position
                 sku
-                options {
-                    id
-                    quantity
-                    position
-                    is_default
-                    price
-                    price_type
-                    can_change_quantity
-                    label
-                    product {
-                        id
-                        name
-                        sku
-                        tier_price
-                        price_range {
-                            maximum_price {
-                                final_price {
-                                    value
-                                    currency
-                                }
-                            }
-                            minimum_price {
-                                final_price {
-                                    value
-                                    currency
-                                }
-                            }
-                        }
-                    }
-                }
             }
         }
         ... on CustomizableProductInterface {
@@ -174,79 +144,6 @@ export const ProductDetailsFragment = gql`
                 sort_order
                 option_id
                 uid
-                ... on CustomizableAreaOption {
-                    area_value: value {
-                        max_characters
-                        price_type
-                        price
-                        sku
-                    }
-                }
-                ... on CustomizableCheckboxOption {
-                    checkbox_value: value {
-                        option_type_id
-                        price_type
-                        price
-                        sku
-                        sort_order
-                        title
-                    }
-                }
-                ... on CustomizableDateOption {
-                    date_value: value {
-                        price_type
-                        price
-                        sku
-                    }
-                }
-                ... on CustomizableDropDownOption {
-                    dropdown_value: value {
-                        option_type_id
-                        price_type
-                        price
-                        sku
-                        sort_order
-                        title
-                    }
-                }
-                ... on CustomizableFieldOption {
-                    field_value: value {
-                        max_characters
-                        price_type
-                        price
-                        sku
-                    }
-                }
-                ... on CustomizableFileOption {
-                    file_value: value {
-                        file_extension
-                        image_size_x
-                        image_size_y
-                        price_type
-                        price
-                        sku
-                    }
-                }
-                ... on CustomizableMultipleOption {
-                    multiple_value: value {
-                        option_type_id
-                        price_type
-                        price
-                        sku
-                        sort_order
-                        title
-                    }
-                }
-                ... on CustomizableRadioOption {
-                    radio_value: value {
-                        option_type_id
-                        price_type
-                        price
-                        sku
-                        sort_order
-                        title
-                    }
-                }
             }
         }
         rating_summary
