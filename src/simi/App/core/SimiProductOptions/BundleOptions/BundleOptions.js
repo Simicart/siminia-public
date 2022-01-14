@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { gql, useQuery } from '@apollo/client';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Qty} from 'src/simi/BaseComponents/Input';
 import {BundleContent} from './components/BundleContent/BundleContent';
@@ -7,13 +8,80 @@ import {useStyle} from 'src/classify';
 import Optionlabel from '../CustomOption/components/OptionLabel/OptionLabel';
 import {OptionSummary} from "../SharedOptionComponent/OptionSummary/OptionSummary";
 
+const PRODUCT_BUNDLE_OPTION_QUERY = gql`
+    query getBundleOptionForProductDetails($sku: String!) {
+        products(filter: { sku: { eq: $sku } }) {
+            items {
+                id
+                sku
+                ... on BundleProduct {
+                    items {
+                        option_id
+                        title
+                        required
+                        type
+                        position
+                        sku
+                        options {
+                            id
+                            quantity
+                            position
+                            is_default
+                            price
+                            price_type
+                            can_change_quantity
+                            label
+                            product {
+                                id
+                                name
+                                sku
+                                tier_price
+                                price_range {
+                                    maximum_price {
+                                        final_price {
+                                            value
+                                            currency
+                                        }
+                                    }
+                                    minimum_price {
+                                        final_price {
+                                            value
+                                            currency
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;
+
 export const BundleOptions = props => {
     const product = props.product;
     const useProductFullDetailProps = props.useProductFullDetailProps;
     const {handleBundleChangeQty, extraPrice, resetBundleOption} = useProductFullDetailProps;
     const {bundleOptions} = useProductFullDetailProps;
-    const items = product.items;
     const classes = useStyle(defaultClasses, props.classes);
+
+    const { data: optionData } = useQuery(PRODUCT_BUNDLE_OPTION_QUERY, {
+        variables: {
+            sku: product.sku
+        },
+        skip: !product || !product.sku
+    });
+    
+
+    const items =
+        optionData &&
+        optionData.products &&
+        optionData.products.items &&
+        optionData.products.items[0] &&
+        optionData.products.items[0].items
+            ? optionData.products.items[0].items
+            : false;
 
     useEffect(() => {
         return () => {

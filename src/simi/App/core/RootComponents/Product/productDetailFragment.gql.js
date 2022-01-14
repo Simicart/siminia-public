@@ -135,36 +135,6 @@ export const ProductDetailsFragment = gql`
                 type
                 position
                 sku
-                options {
-                    id
-                    quantity
-                    position
-                    is_default
-                    price
-                    price_type
-                    can_change_quantity
-                    label
-                    product {
-                        id
-                        name
-                        sku
-                        tier_price
-                        price_range {
-                            maximum_price {
-                                final_price {
-                                    value
-                                    currency
-                                }
-                            }
-                            minimum_price {
-                                final_price {
-                                    value
-                                    currency
-                                }
-                            }
-                        }
-                    }
-                }
             }
         }
         ... on CustomizableProductInterface {
