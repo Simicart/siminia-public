@@ -1,0 +1,42 @@
+# command for self-assign
+on:
+    issue_comment:
+        types: [ created, edited ]
+
+jobs:
+    issue-commented:
+        name: Self assign issue
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/github-script@v3
+                with:
+                    github-token: ${{secrets.GITHUB_TOKEN}}
+                    script: |
+                        const comment_content = context.payload.comment.body
+                        const helping_call = [
+                        `@I'm working on it`,
+                        `@I am working on it`,
+                        `@I'm on it`,
+                        `@I am on it`,
+                        `@I'll do it`,
+                        `@I shall do it`,
+                        `@I will do it`,
+                        '@I summon myself to handle this issue',
+                        '@Sign me up'
+                        ]
+
+                        if ( helping_call.some( x => comment_content.includes(x))){
+                          github.issues.addAssignees({
+                                        issue_number: context.payload.issue.number,
+                                        owner: context.repo.owner,
+                                        repo: context.repo.repo,
+                                        assignees: context.payload.comment.user.login
+                                      })
+
+                          github.reactions.createForIssueComment({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            comment_id: context.payload.comment.id,
+                            content: 'rocket',
+                          });
+                        }
