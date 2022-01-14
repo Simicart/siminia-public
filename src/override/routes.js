@@ -123,6 +123,17 @@ const WishlistPage = props => {
         />
     );
 };
+const CommunicationsPage = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "CommunicationsPage"*/ '/src/simi/App/core/CommunicationsPage')
+            }
+            {...props}
+        />
+    );
+};
+
 //import Checkout from 'src/simi/App/core/Checkout';
 const Checkout = props => {
     return (
@@ -369,14 +380,7 @@ const Routes = props => {
                 <Route
                     exact
                     path="/communications"
-                    render={props => (
-                        <LazyComponent
-                            component={() =>
-                                import(/* webpackChunkName: "CommunicationsPage"*/ '@magento/venia-ui/lib/components/CommunicationsPage')
-                            }
-                            {...props}
-                        />
-                    )}
+                    render={props => <CommunicationsPage {...props} />}
                 />
                 <Route
                     exact
