@@ -223,6 +223,17 @@ const BrandCategory = props => {
     );
 };
 
+const ContactPage = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "ContactPage"*/ 'src/simi/App/core/ContactPage')
+            }
+            {...props}
+        />
+    );
+};
+
 const Routes = props => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
@@ -281,6 +292,11 @@ const Routes = props => {
                     exact
                     path="/brands.html"
                     render={props => <Brands {...props} />}
+                />
+                 <Route
+                    exact
+                    path="/contact.html"
+                    render={props => <ContactPage {...props} />}
                 />
                <Route
                     exact

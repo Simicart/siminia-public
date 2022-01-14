@@ -237,7 +237,7 @@
     white-space: nowrap;
     overflow: hidden;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
 }
 .searchItem:hover {
     background-color: #f0f0f0;
