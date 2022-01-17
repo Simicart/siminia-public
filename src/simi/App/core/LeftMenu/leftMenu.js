@@ -6,11 +6,15 @@ import {
     Trash2,
     User,
     Trello,
+    Star,
     Heart,
     Tag,
     Check,
     Users,
-    Info
+    Info,
+    CheckCircle,
+    DollarSign,
+    Gift
 } from 'react-feather';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import { Link } from 'react-router-dom';
@@ -41,14 +45,14 @@ const LeftMenu = props => {
         <Icon className={classes.icon} size={22} src={Heart} />,
         <Icon className={classes.icon} size={22} src={Tag} />,
         <Icon className={classes.icon} size={22} src={Check} />,
-        <Icon className={classes.icon} size={22} src={Check} />,
+        <Icon className={classes.icon} size={22} src={Star} />,
         <Icon className={classes.icon} size={22} src={Users} />,
         <Icon className={classes.icon} size={22} src={Info} />,
-        <Icon className={classes.icon} size={22} src={Check} />,
+        <Icon className={classes.icon} size={22} src={CheckCircle} />,
     ];
     const rewardIconList = [
-        <Icon className={classes.icon} size={22} src={Users} />,
-        <Icon className={classes.icon} size={22} src={Users} />
+        <Icon className={classes.icon} size={22} src={DollarSign} />,
+        <Icon className={classes.icon} size={22} src={Gift} />
     ];
     if(rewardPointEnabled){
         listMenuContent = listMenuContent.concat(rewardMenuContent);
