@@ -16,7 +16,6 @@ const mapGalleryItem = item => {
 
 const Gallery = props => {
     const {items, history, overRideClasses = {}, styles} = props;
-    console.log("itemm", items);
 
     const handleLink = useCallback(link => {
         history.push(link);

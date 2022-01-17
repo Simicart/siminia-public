@@ -1,5 +1,5 @@
-import React, { Suspense } from 'react';
-import { useIntl } from 'react-intl';
+import React, { Suspense, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { func } from 'prop-types';
 
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
@@ -8,6 +8,11 @@ import { Accordion, Section } from '@magento/venia-ui/lib/components/Accordion';
 import GiftCardSection from '@magento/venia-ui/lib/components/CartPage/PriceAdjustments/giftCardSection';
 
 import defaultClasses from './priceAdjustments.module.css';
+import Button from '@magento/venia-ui/lib/components/Button';
+import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
+import { useGetRewardPointData } from '../../../../talons/RewardPoint/useGetRewardPointData';
+import { useCartContext } from '@magento/peregrine/lib/context/cart';
+import app from '@magento/peregrine/lib/context/app';
 
 const CouponCode = React.lazy(() => import('./CouponCode'));
 // const GiftOptions = React.lazy(() =>
@@ -33,9 +38,38 @@ const ShippingMethods = React.lazy(() => import('./ShippingMethods'));
  */
 const PriceAdjustments = props => {
     const classes = useStyle(defaultClasses, props.classes);
+    const [{ cartId }] = useCartContext();
+    const [rewardPoint, setRewardPoint] = useState(0);
+    const { spendRewardPointHandle, flatData } = usePriceSummary();
+    const { priceData } = flatData;
+    const mpRewardSpent =
+        priceData &&
+        priceData.filter(function(rewardData) {
+            return rewardData.code == 'mp_reward_spent';
+        });
+    const { customerRewardPoint } = useGetRewardPointData();
+    const balance = customerRewardPoint.point_balance;
+    let rewardPointSelected = 0;
+    if (mpRewardSpent && mpRewardSpent.length > 0)
+        rewardPointSelected = mpRewardSpent[0].value;
 
     const { setIsCartUpdating } = props;
     const { formatMessage } = useIntl();
+    const applyHandle = () => {
+        spendRewardPointHandle({
+            variables: {
+                cart_id: cartId,
+                points: rewardPoint,
+                rule_id: 'rate',
+                address_information: {}
+            }
+        });
+    };
+    const rewardPointEnabled =
+        window.SMCONFIGS &&
+        window.SMCONFIGS.plugins &&
+        window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
+        parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
     return (
         <div className={classes.root}>
@@ -72,6 +106,83 @@ const PriceAdjustments = props => {
                         <CouponCode setIsCartUpdating={setIsCartUpdating} />
                     </Suspense>
                 </Section>
+                {rewardPointEnabled ? (
+                    <Section
+                        id={'reward_points'}
+                        title={formatMessage({
+                            id: 'priceAdjustments.rewardPoint',
+                            defaultMessage: 'Reward Points'
+                        })}
+                        classes={{
+                            root: classes.sectionRoot,
+                            title: classes.sectionTitle
+                        }}
+                    >
+                        <Suspense fallback={<LoadingIndicator />}>
+                            <div className={classes.userBalance}>
+                                <FormattedMessage
+                                    id={'rewardPoint.userBalance'}
+                                    defaultMessage={`You have ${balance} points`}
+                                />
+                            </div>
+                            {balance > 0 ? (
+                                <div>
+                                    <input
+                                        type="range"
+                                        className={classes.slider}
+                                        min={0}
+                                        max={balance}
+                                        step={1}
+                                        value={
+                                            rewardPoint || rewardPointSelected
+                                        }
+                                        onChange={e => {
+                                            setRewardPoint(e.target.value);
+                                        }}
+                                    />
+                                    <div className={classes.pointSpend}>
+                                        <span className={classes.message}>
+                                            <FormattedMessage
+                                                id={'rewardPoint.textSpend'}
+                                                defaultMessage={
+                                                    'You will spend'
+                                                }
+                                            />
+                                        </span>
+                                        <input
+                                            value={
+                                                rewardPoint ||
+                                                rewardPointSelected
+                                            }
+                                            onChange={e => {
+                                                setRewardPoint(e.target.value);
+                                            }}
+                                            className={classes.pointInput}
+                                        />
+                                    </div>
+                                    <Button
+                                        priority="high"
+                                        onClick={applyHandle}
+                                    >
+                                        <FormattedMessage
+                                            id={'rewardPoint.applyButton'}
+                                            defaultMessage={'Apply'}
+                                        />
+                                    </Button>
+                                </div>
+                            ) : (
+                                <div className={classes.message}>
+                                    <FormattedMessage
+                                        id={'rewardPoint.message'}
+                                        defaultMessage={
+                                            'Please earn Reward Point to spend your points'
+                                        }
+                                    />
+                                </div>
+                            )}
+                        </Suspense>
+                    </Section>
+                ) : null}
                 <GiftCardSection setIsCartUpdating={setIsCartUpdating} />
                 {/* <Section
                     id={'gift_options'}

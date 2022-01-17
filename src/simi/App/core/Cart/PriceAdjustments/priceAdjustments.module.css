@@ -26,3 +26,25 @@
         font-size: 14px;
     }
 }
+.slider {
+    width: 100%;
+}
+.message {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+}
+.userBalance {
+    margin: 0 1rem 1rem 0;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+}
+.pointSpend {
+    margin: 1rem 0;
+    display: flex;
+}
+.pointInput {
+    text-align: center;
+    margin-left: 15px;
+    max-width: 70px;
+    max-height: 30px;
+}

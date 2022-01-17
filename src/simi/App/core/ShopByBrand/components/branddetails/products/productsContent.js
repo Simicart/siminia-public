@@ -10,7 +10,7 @@ import Pagination from '@magento/venia-ui/lib/components/Pagination';
 import defaultClasses from './productsContent.module.css';
 import GET_PRODUCT_FILTERS_BY_BRAND from '../../../queries/getProductFiltersByBrand.graphql';
 import Button from '@magento/venia-ui/lib/components/Button';
-import Gallery from '../Gallery';
+import Gallery from 'src/simi/BaseComponents/Products/Gallery';
 const FilterModal = React.lazy(() => import('@magento/venia-ui/lib/components/FilterModal'));
 
 const ProductsContent = props => {
@@ -31,6 +31,7 @@ const ProductsContent = props => {
         items,
         totalPagesFromData
     } = talonProps;
+    
     const classes = mergeClasses(defaultClasses, props.classes);
 
     // const maybeFilterButtons = filters ? (
@@ -80,9 +81,9 @@ const ProductsContent = props => {
                 <div className={classes.headerBtn}>
                     {maybeSortButton}
                 </div>
-                <div className={classes.sortedBy}>
+                {/* <div className={classes.sortedBy}>
                     {maybeSortContainer}
-                </div>
+                </div> */}
                 {content}
                 {/* <Suspense fallback={null}>{modal}</Suspense> */}
             </article>

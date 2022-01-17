@@ -1,4 +1,10 @@
-import React, { Fragment, useEffect, useState,useImperativeHandle, forwardRef } from 'react';
+import React, {
+    Fragment,
+    useEffect,
+    useState,
+    useImperativeHandle,
+    forwardRef
+} from 'react';
 import DEFAULT_OPERATIONS from './deliveryDateTime.gql';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import { useQuery, useMutation } from '@apollo/client';
@@ -20,16 +26,18 @@ const DeliveryDateTime = forwardRef((props, ref) => {
     const [deliveryComment, setDeliveryComment] = useState('');
 
     const handleSubmit = () => {
-        
         deliveryMutation({
-            variables: { cart_id : cartId, mp_delivery_time : {
-                mp_delivery_date:startDate,
-                mp_delivery_time:deliTime ,
-                mp_house_security_code:houseSecurityCode ,
-                mp_delivery_comment:deliveryComment,
-            }  }
-        })
-    }
+            variables: {
+                cart_id: cartId,
+                mp_delivery_time: {
+                    mp_delivery_date: startDate,
+                    mp_delivery_time: deliTime,
+                    mp_house_security_code: houseSecurityCode,
+                    mp_delivery_comment: deliveryComment
+                }
+            }
+        });
+    };
     useImperativeHandle(ref, () => {
         return {
             handleSubmit: handleSubmit
@@ -46,7 +54,6 @@ const DeliveryDateTime = forwardRef((props, ref) => {
     if (loading) {
         return null;
     }
-    
 
     console.log('dataa', data);
     const dateFormat = data.deliveryTime.deliveryDateFormat;
@@ -55,8 +62,7 @@ const DeliveryDateTime = forwardRef((props, ref) => {
     const deliveryTime = data.deliveryTime.deliveryTime;
     const isHouseSecurityCode = data.deliveryTime.isEnabledHouseSecurityCode;
     const isDeliveryComment = data.deliveryTime.isEnabledDeliveryComment;
-
-   
+    const isEnabledDeliveryTime = data.deliveryTime.isEnabledDeliveryTime;
 
     const handleChange = e => {
         let name = e.target.name;
@@ -95,13 +101,15 @@ const DeliveryDateTime = forwardRef((props, ref) => {
             </label>
         ) : null;
 
-    const OptionDeliveryTime = deliveryTime.map((time, index) => {
-        return (
-            <option value={time} key={index}>
-                {time}
-            </option>
-        );
-    });
+    const OptionDeliveryTime = isEnabledDeliveryTime
+        ? deliveryTime.map((time, index) => {
+              return (
+                  <option value={time} key={index}>
+                      {time}
+                  </option>
+              );
+          })
+        : null;
 
     const filterDate = (date, dateOff) => {
         let d = date.getDate() < '10' ? '0' + date.getDate() : date.getDate();
@@ -122,41 +130,32 @@ const DeliveryDateTime = forwardRef((props, ref) => {
         return true;
     };
 
-    return (
-        <div className="deliveryTime-main">
-            <DatePicker
-                selected={startDate}
-                onChange={date => setDate(date)}
-                minDate={new Date()}
-                filterDate={date =>
-                    filterDaysOff(date.getDay().toString(), daysOff) &&
-                    filterDate(date, dateOff)
-                }
-            />
-            <select
-                onChange={handleChange}
-                value={deliTime}
-                name="deliveryTime"
-                id="deliveryTime"
-            >
-                {OptionDeliveryTime}
-            </select>
-            {HouseSecurityCode}
-            {DeliveryComment}
-            {/* <button
-                onClick={() =>
-                    deliveryMutation({
-                        variables: { cart_id : cartId, mp_delivery_time : {
-                            mp_delivery_date:startDate,
-                            mp_delivery_time:deliTime ,
-                            mp_house_security_code:houseSecurityCode ,
-                            mp_delivery_comment:deliveryComment,
-                        }  }
-                    })
-                }
-            >yessss</button> */}
-        </div>
-    );
+    if (isEnabledDeliveryTime) {
+        return (
+            <div className="deliveryTime-main">
+                <div className="header">Delivery Time</div>
+                <DatePicker
+                    selected={startDate}
+                    onChange={date => setDate(date)}
+                    minDate={new Date()}
+                    filterDate={date =>
+                        filterDaysOff(date.getDay().toString(), daysOff) &&
+                        filterDate(date, dateOff)
+                    }
+                />
+                <select
+                    onChange={handleChange}
+                    value={deliTime}
+                    name="deliveryTime"
+                    id="deliveryTime"
+                >
+                    {OptionDeliveryTime}
+                </select>
+                {HouseSecurityCode}
+                {DeliveryComment}
+            </div>
+        );
+    } return null
 });
 
 export default DeliveryDateTime;

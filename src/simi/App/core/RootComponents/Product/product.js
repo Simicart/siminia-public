@@ -8,6 +8,7 @@ import { StoreTitle, Meta } from '@magento/venia-ui/lib/components/Head';
 import ProductFullDetail, {
     ProductBuilderFullDetail
 } from '../../ProductFullDetail';
+import { prepareProduct } from 'src/simi/Helper/Product';
 import mapProduct from '@magento/venia-ui/lib/util/mapProduct';
 import ProductShimmer from './product.shimmer';
 import DEFAULT_OPERATIONS from './product.gql';
@@ -32,9 +33,9 @@ const Product = props => {
         mapProduct
     });
 
-    const { error, loading, product } = talonProps;
+    const { error, loading, product: originalProduct } = talonProps;
     const { loading: pbLoading, findPage, allPages } = pbFinderProps;
-
+    const product = originalProduct ? prepareProduct(originalProduct) : false;
     useEffect(() => {
         if (!pbLoading && !allPages && !requestedPbPages) {
             requestedPbPages = true;

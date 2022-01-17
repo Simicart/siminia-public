@@ -6,9 +6,9 @@ const productLabelEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL) === 1;
 
-export const hieuFragment = productLabelEnabled
+export const ProductLabelFragment = productLabelEnabled
     ? gql`
-          fragment hieuFragment on ProductInterface {
+          fragment ProductLabelFragment on ProductInterface {
               mp_label_data {
                   list_position
                   list_position_grid
@@ -45,7 +45,7 @@ export const getCateNoFilter = gql`
         ) {
             items {
                 ...ProductOfListFragment
-                ...hieuFragment
+                ...ProductLabelFragment
             }
             page_info {
                 total_pages
@@ -53,7 +53,7 @@ export const getCateNoFilter = gql`
             total_count
         }
     }
-    ${hieuFragment}
+    ${ProductLabelFragment}
     ${CategoryFragment}
     ${ProductOfListFragment}
 `;
