@@ -10,7 +10,9 @@ import {
     Tag,
     Check,
     Users,
-    Info
+    Info,
+    Star,
+    CheckCircle
 } from 'react-feather';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import { Link } from 'react-router-dom';
@@ -35,10 +37,10 @@ const LeftMenu = props => {
         <Icon className={classes.icon} size={22} src={Heart} />,
         <Icon className={classes.icon} size={22} src={Tag} />,
         <Icon className={classes.icon} size={22} src={Check} />,
-        <Icon className={classes.icon} size={22} src={Check} />,
+        <Icon className={classes.icon} size={22} src={Star} />,
         <Icon className={classes.icon} size={22} src={Users} />,
         <Icon className={classes.icon} size={22} src={Info} />,
-        <Icon className={classes.icon} size={22} src={Check} />
+        <Icon className={classes.icon} size={22} src={CheckCircle} />
     ];
     const MenuItems = listMenuContent.map((item, index) => {
         const reformat = item.replace(/\s/g, '-');
