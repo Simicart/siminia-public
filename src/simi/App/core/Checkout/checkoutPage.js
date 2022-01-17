@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { shape, string } from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AlertCircle as AlertCircleIcon } from 'react-feather';
@@ -28,6 +28,7 @@ import ItemsReview from '@magento/venia-ui/lib/components/CheckoutPage/ItemsRevi
 
 import defaultClasses from './checkoutPage.module.css';
 import ScrollAnchor from '@magento/venia-ui/lib/components/ScrollAnchor/scrollAnchor';
+import DeliveryDateTime from './DeliveryDateTime';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
 import OrderSummary from './OrderSummary/orderSummary';
@@ -41,7 +42,6 @@ const CheckoutPage = props => {
     const talonProps = useCheckoutPage();
 
     const [{ cartId }] = useCartContext();
-    console.log("cartIdd", cartId);
 
     const {
         /**
@@ -79,6 +79,9 @@ const CheckoutPage = props => {
         toggleAddressBookContent,
         toggleSignInContent
     } = talonProps;
+
+    const deliveryDateTime = useRef(null);
+    console.log("reff", deliveryDateTime);
 
     const [, { addToast }] = useToasts();
     useEffect(() => {
@@ -177,12 +180,16 @@ const CheckoutPage = props => {
 
         const shippingMethodSection =
             checkoutStep >= CHECKOUT_STEP.SHIPPING_METHOD ? (
-                <ShippingMethod
-                    pageIsUpdating={isUpdating}
-                    onSave={setShippingMethodDone}
-                    onSuccess={scrollShippingMethodIntoView}
-                    setPageIsUpdating={setIsUpdating}
-                />
+                <>
+                    <ShippingMethod
+                        pageIsUpdating={isUpdating}
+                        onSave={setShippingMethodDone}
+                        onSuccess={scrollShippingMethodIntoView}
+                        setPageIsUpdating={setIsUpdating}
+                    />
+             <DeliveryDateTime ref={deliveryDateTime} />
+                   
+                </>
             ) : (
                 <h3 className={classes.shipping_method_heading}>
                     <FormattedMessage
@@ -271,6 +278,7 @@ const CheckoutPage = props => {
                             Identify.LOCAL_STOREAGE,
                             'simi_selected_payment_code'
                         );
+                        deliveryDateTime.current.handleSubmit()
                         if (selectedPaymentMethod === 'paypal_express') {
                             history.push('/paypal_express.html');
                             return;
@@ -379,6 +387,7 @@ const CheckoutPage = props => {
                 {itemsReview}
                 {orderSummary}
                 {placeOrderButton}
+                {/* <button onClick={()=>deliveryDateTime.current.handleSubmit()}>tesst</button> */}
             </div>
         );
     }

@@ -1,0 +1,36 @@
+.react-datepicker-popper {
+    z-index: 4;
+}
+
+.deliveryTime-main {
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: 1rem;
+    column-gap: 3rem;
+    margin-top: 1rem;
+    border: 1px solid rgb(181, 184, 186);
+    padding: 2rem;
+    grid-template-areas:
+    'header header'
+    'main main'
+    'main main';
+    .text-area {
+        display: flex;
+        flex-direction: column;
+
+
+    }
+    .header {
+        font-size: 18px;
+        font-weight: 600;
+        text-transform: uppercase;
+        grid-area: header;
+    }
+    .react-datepicker__tab-loop {
+        position: absolute;
+        top: 0;
+    }
+    .react-datepicker__input-container > input {
+        width: 100%;
+    }
+}
