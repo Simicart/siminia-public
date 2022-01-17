@@ -190,7 +190,16 @@ const ContactPage = props => {
         />
     );
 };
-
+const CommunicationsPage = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "CommunicationsPage"*/ '/src/simi/App/core/CommunicationsPage')
+            }
+            {...props}
+        />
+    );
+};
 const Routes = props => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
@@ -317,14 +326,7 @@ const Routes = props => {
                 <Route
                     exact
                     path="/communications"
-                    render={props => (
-                        <LazyComponent
-                            component={() =>
-                                import(/* webpackChunkName: "CommunicationsPage"*/ '@magento/venia-ui/lib/components/CommunicationsPage')
-                            }
-                            {...props}
-                        />
-                    )}
+                    render={props => <CommunicationsPage {...props} />}
                 />
                 <Route
                     exact
