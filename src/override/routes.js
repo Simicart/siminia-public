@@ -180,6 +180,17 @@ const CheckoutSuccess = props => {
     );
 };
 
+const ContactPage = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "ContactPage"*/ 'src/simi/App/core/ContactPage')
+            }
+            {...props}
+        />
+    );
+};
+
 const Routes = props => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
@@ -216,6 +227,11 @@ const Routes = props => {
                     exact
                     path="/search.html"
                     render={props => <Search key="search_page" {...props} />}
+                />
+                <Route
+                    exact
+                    path="/contact.html"
+                    render={props => <ContactPage {...props} />}
                 />
                 <Route
                     exact
