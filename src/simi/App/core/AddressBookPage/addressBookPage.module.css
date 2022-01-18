@@ -1,5 +1,4 @@
-    .root {
-    padding: 2.5rem 3rem;
+.root {
     padding-top: 0;
     /* max-width: var(--venia-global-maxWidth); */
     margin: 0 auto;
@@ -18,32 +17,31 @@
     /* text-align: center; */
     text-transform: capitalize;
     font-size: 24px;
-  font-weight: 500;
-  letter-spacing: 0;
-  line-height: 14px;
-  padding-top: 20px;
-  /* margin-left: 20%; */
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 14px;
+    padding-top: 20px;
+    /* margin-left: 20%; */
 }
 
 .addAddress {
     display: flex;
     justify-content: right;
-
 }
 .addAddressBtn {
     margin-bottom: 24px;
     /* margin-left: 20%; */
     height: 50px;
-  display: inline-block;
-  padding: 0 20px;
-  border-radius: 4px;
-  background-color: #0058AC;
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 50px;
-  color: #fff;
-  cursor: pointer;
+    display: inline-block;
+    padding: 0 20px;
+    border-radius: 4px;
+    background-color: #0058ac;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 50px;
+    color: #fff;
+    cursor: pointer;
 }
 
 .wrapper {
@@ -51,15 +49,15 @@
     grid-template-columns: 20% auto;
     padding: 2rem 3rem;
     /* margin-top: 30px; */
-} 
+}
 
-@media (max-width:777px) {
+@media (max-width: 777px) {
     .wrapper {
         display: grid;
-        grid-template-columns:auto;
+        grid-template-columns: auto;
         padding: 0px;
         margin-top: 30px;
-    } 
+    }
 }
 .content {
     display: grid;
