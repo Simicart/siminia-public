@@ -16,6 +16,10 @@ import StockStatusMessage from '@magento/venia-ui/lib/components/StockStatusMess
 import ProductList from './ProductList';
 import defaultClasses from './miniCart.module.css';
 import operations from './miniCart.gql';
+import DiscountSummary from '../Cart/PriceSummary/discountSummary';
+import TaxSummary from '../Cart/PriceSummary/taxSummary';
+import ShippingSummary from '../Cart/PriceSummary/shippingSummary';
+import GiftCardSummary from '@magento/venia-ui/lib/components/CartPage/PriceSummary/giftCardSummary';
 
 const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
 
@@ -36,7 +40,7 @@ const MiniCart = React.forwardRef((props, ref) => {
         setIsOpen,
         operations
     });
-    
+
     const {
         closeMiniCart,
         errorMessage,
@@ -45,11 +49,21 @@ const MiniCart = React.forwardRef((props, ref) => {
         handleRemoveItem,
         loading,
         productList,
-        subTotal,
-        totalQuantity,
         configurableThumbnailSource,
-        storeUrlSuffix
+        storeUrlSuffix,
+        flatData,
+        isCheckout
     } = talonProps;
+
+    const {
+        subtotal,
+        total,
+        discounts,
+        giftCards,
+        taxes,
+        shipping,
+        priceData
+    } = flatData;
 
     const classes = useStyle(defaultClasses, props.classes);
     const rootClass = isOpen ? classes.root_open : classes.root;
@@ -60,9 +74,16 @@ const MiniCart = React.forwardRef((props, ref) => {
     const priceClassName = loading ? classes.price_loading : classes.price;
 
     const isCartEmpty = !(productList && productList.length);
-
+    let mpRewardEarn, mpRewardDiscount, mpRewardSpent;
+    if (priceData && priceData.length > 1) {
+        mpRewardDiscount = priceData[0];
+        mpRewardSpent = priceData[1];
+        mpRewardEarn = priceData[2];
+    } else if (priceData && priceData.length == 1) {
+        mpRewardEarn = priceData[0];
+    }
     const [, { addToast }] = useToasts();
-   
+
     useEffect(() => {
         if (errorMessage) {
             addToast({
@@ -75,7 +96,7 @@ const MiniCart = React.forwardRef((props, ref) => {
         }
     }, [addToast, errorMessage]);
 
-    const header = subTotal ? (
+    const header = subtotal ? (
         <Fragment>
             <div className={classes.stockStatusMessageContainer}>
                 <StockStatusMessage cartItems={productList} />
@@ -88,6 +109,38 @@ const MiniCart = React.forwardRef((props, ref) => {
                 />
             </span> */}
             <span className={priceClassName}>
+                {mpRewardEarn ? (
+                    <span className={classes.labelSubtotal}>
+                        <FormattedMessage
+                            id={'priceSummary.rewardEarnTitle'}
+                            defaultMessage={`${mpRewardEarn.title}`}
+                        />
+                    </span>
+                ) : null}
+                {mpRewardEarn ? (
+                    <span className={classes.priceSubtotal}>
+                        <FormattedMessage
+                            id={'priceSummary.rewardEarnValue'}
+                            defaultMessage={`${mpRewardEarn.value} points`}
+                        />
+                    </span>
+                ) : null}
+                {mpRewardSpent ? (
+                    <span className={classes.labelSubtotal}>
+                        <FormattedMessage
+                            id={'priceSummary.rewardSpentTitle'}
+                            defaultMessage={`${mpRewardSpent.title}`}
+                        />
+                    </span>
+                ) : null}
+                {mpRewardSpent ? (
+                    <span className={classes.priceSubtotal}>
+                        <FormattedMessage
+                            id={'priceSummary.rewardSpentValue'}
+                            defaultMessage={`${mpRewardSpent.value} points`}
+                        />
+                    </span>
+                ) : null}
                 <span className={classes.labelSubtotal}>
                     <FormattedMessage
                         id={'miniCart.subtotal'}
@@ -96,10 +149,56 @@ const MiniCart = React.forwardRef((props, ref) => {
                 </span>
                 <span className={classes.priceSubtotal}>
                     <Price
-                        currencyCode={subTotal.currency}
-                        value={subTotal.value}
+                        currencyCode={subtotal.currency}
+                        value={subtotal.value}
                     />
                 </span>
+                {mpRewardDiscount ? (
+                    <span className={classes.labelSubtotal}>
+                        <FormattedMessage
+                            id={'priceSummary.rewardDiscountTitle'}
+                            defaultMessage={`${mpRewardDiscount.title}`}
+                        />
+                    </span>
+                ) : null}
+                {mpRewardDiscount ? (
+                    <span className={classes.priceSubtotal}>
+                        <Price
+                            currencyCode={subtotal.currency}
+                            value={mpRewardDiscount.value}
+                        />
+                    </span>
+                ) : null}
+                <DiscountSummary
+                    classes={{
+                        lineItemLabel: classes.labelSubtotal,
+                        price: classes.priceSubtotal
+                    }}
+                    data={discounts}
+                />
+                <GiftCardSummary
+                    classes={{
+                        lineItemLabel: classes.labelSubtotal,
+                        price: classes.priceSubtotal
+                    }}
+                    data={giftCards}
+                />
+                <TaxSummary
+                    classes={{
+                        lineItemLabel: classes.labelSubtotal,
+                        price: classes.priceSubtotal
+                    }}
+                    data={taxes}
+                    isCheckout={isCheckout}
+                />
+                <ShippingSummary
+                    classes={{
+                        lineItemLabel: classes.labelSubtotal,
+                        price: classes.priceSubtotal
+                    }}
+                    data={shipping}
+                    isCheckout={isCheckout}
+                />
                 <span className={classes.labelGrandTotal}>
                     <FormattedMessage
                         id={'miniCart.grandTotal'}
@@ -107,10 +206,7 @@ const MiniCart = React.forwardRef((props, ref) => {
                     />
                 </span>
                 <span className={classes.priceGrandTotal}>
-                    <Price
-                        currencyCode={subTotal.currency}
-                        value={subTotal.value}
-                    />
+                    <Price currencyCode={total.currency} value={total.value} />
                 </span>
             </span>
         </Fragment>
@@ -129,7 +225,6 @@ const MiniCart = React.forwardRef((props, ref) => {
                         defaultMessage={'Continue Shopping'}
                     />
                 </button>
-                
             </div>
         </div>
     ) : (

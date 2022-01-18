@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { func } from 'prop-types';
 
@@ -13,6 +13,7 @@ import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
 import { useGetRewardPointData } from '../../../../talons/RewardPoint/useGetRewardPointData';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import app from '@magento/peregrine/lib/context/app';
+import { showFogLoading } from '../../../../BaseComponents/Loading/GlobalLoading';
 
 const CouponCode = React.lazy(() => import('./CouponCode'));
 // const GiftOptions = React.lazy(() =>
@@ -40,6 +41,7 @@ const PriceAdjustments = props => {
     const classes = useStyle(defaultClasses, props.classes);
     const [{ cartId }] = useCartContext();
     const [rewardPoint, setRewardPoint] = useState(0);
+    const [enableWarningPoint, setEnalbleWarningPoint] = useState(false);
     const { spendRewardPointHandle, flatData } = usePriceSummary();
     const { priceData } = flatData;
     const mpRewardSpent =
@@ -56,14 +58,22 @@ const PriceAdjustments = props => {
     const { setIsCartUpdating } = props;
     const { formatMessage } = useIntl();
     const applyHandle = () => {
-        spendRewardPointHandle({
-            variables: {
-                cart_id: cartId,
-                points: rewardPoint,
-                rule_id: 'rate',
-                address_information: {}
-            }
-        });
+        if (rewardPoint > balance) {
+            setEnalbleWarningPoint(true);
+            setTimeout(function() {
+                setEnalbleWarningPoint(false);
+            }, 2000);
+        } else {
+            showFogLoading();
+            spendRewardPointHandle({
+                variables: {
+                    cart_id: cartId,
+                    points: rewardPoint,
+                    rule_id: 'rate',
+                    address_information: {}
+                }
+            });
+        }
     };
     const rewardPointEnabled =
         window.SMCONFIGS &&
@@ -71,6 +81,16 @@ const PriceAdjustments = props => {
         window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
         parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
+    // useEffect(()=> {
+    //     if(rewardPoint != rewardPointSelected){
+    //         setRewardPoint(rewardPointSelected)
+    //     }
+    // }, [rewardPointSelected])
+    useEffect(() => {
+        if (rewardPoint != rewardPointSelected) {
+            setRewardPoint(rewardPointSelected);
+        }
+    }, [rewardPointSelected ]);
     return (
         <div className={classes.root}>
             <Accordion canOpenMultiple={true}>
@@ -169,6 +189,16 @@ const PriceAdjustments = props => {
                                             defaultMessage={'Apply'}
                                         />
                                     </Button>
+                                    {enableWarningPoint ? (
+                                        <div className={classes.message}>
+                                            <FormattedMessage
+                                                id={'rewardPoint.warningPoint'}
+                                                defaultMessage={
+                                                    'The points are more than your balance'
+                                                }
+                                            />
+                                        </div>
+                                    ) : null}
                                 </div>
                             ) : (
                                 <div className={classes.message}>

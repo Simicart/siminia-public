@@ -81,6 +81,7 @@ const PriceSummary = props => {
         ? classes.priceUpdating
         : classes.totalPrice;
 
+
     const totalPriceLabel = isCheckout
         ? formatMessage({
               id: 'priceSummary.total',

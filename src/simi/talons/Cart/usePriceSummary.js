@@ -4,6 +4,7 @@ import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import DEFAULT_OPERATIONS from './priceSummary.gql';
+import { hideFogLoading } from '../../BaseComponents/Loading/GlobalLoading';
 
 /**
  * @ignore
@@ -71,14 +72,12 @@ export const usePriceSummary = (props = {}) => {
             cartId
         }
     });
-    const [ spendRewardPointHandle ] = useMutation(
-        spendRewardPoint,
-        {
-            onCompleted() {
-                loadingPriceData();
-            }
+    const [spendRewardPointHandle] = useMutation(spendRewardPoint, {
+        onCompleted() {
+            loadingPriceData();
+            hideFogLoading();
         }
-    );
+    });
     const applyRuleData = useQuery(getRuleApply, {
         fetchPolicy: 'cache-and-network',
         nextFetchPolicy: 'cache-first',
@@ -94,7 +93,7 @@ export const usePriceSummary = (props = {}) => {
 
     return {
         handleProceedToCheckout,
-        spendRewardPointHandle, 
+        spendRewardPointHandle,
         applyRuleData,
         hasError: !!error,
         hasItems: data && !!data.cart.items.length,
