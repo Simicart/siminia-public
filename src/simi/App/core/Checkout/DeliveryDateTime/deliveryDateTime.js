@@ -81,7 +81,8 @@ const DeliveryDateTime = forwardRef((props, ref) => {
         isHouseSecurityCode == 'true' ? (
             <label className="text-area">
                 House Security Code:
-                <textarea
+                <input
+                    type="text"
                     value={houseSecurityCode}
                     onChange={handleChange}
                     name="House Security"
@@ -93,7 +94,8 @@ const DeliveryDateTime = forwardRef((props, ref) => {
         isDeliveryComment == 'true' ? (
             <label className="text-area">
                 Delivery Comment:
-                <textarea
+                <input
+                    type="text"
                     value={deliveryComment}
                     onChange={handleChange}
                     name="Delivery Comment"
@@ -153,6 +155,7 @@ const DeliveryDateTime = forwardRef((props, ref) => {
                 </select>
                 {HouseSecurityCode}
                 {DeliveryComment}
+                <button className="btn-updateTime" onClick={handleSubmit}>Update Delivery Time</button>
             </div>
         );
     } return null
