@@ -1,6 +1,7 @@
 query storeConfigData {
     storeConfig {
         id
+        mageworx_seo
         head_shortcut_icon
         header_logo_src
         copyright
