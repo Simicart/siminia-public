@@ -15,6 +15,7 @@ const ProductLabel = props => {
     const listlabel = [...productLabel].sort((a, b) =>
         a.priority > b.priority ? -1 : 1
     );
+    console.log('haha', listlabel);
 
     return <>
     {listlabel.map((item, index) => {
@@ -51,7 +52,7 @@ const ProductLabel = props => {
     //     ? parseFloat(item.list_css.split('rotate(')[1].split('de'))
     //     : null;
 
-    console.log('haha', item);
+    
 
     const width = styles.label.width;
     const height = styles.label.height;
@@ -81,7 +82,7 @@ const ProductLabel = props => {
                     position = {
                         top: 0,
                         left: 0,
-                        zIndex: 2,
+                        zIndex: index+2,
                         width: width,
                         height: height,
                         position: 'absolute'
@@ -89,7 +90,7 @@ const ProductLabel = props => {
                     positionText = {
                         top: 0,
                         left: 0,
-                        zIndex: 3,
+                        zIndex: index +3,
                         color: labelColor,
                         fontSize: fontSize,
                         transform: `rotate(${styleLabel}deg)  translate(50%, 0%)`,
@@ -105,14 +106,14 @@ const ProductLabel = props => {
                     position = {
                         top: '0%',
                         left: left,
-                        zIndex: 2,
+                        zIndex: index+2,
                         height: height,
                         width: width
                     };
                     positionText = {
                         top: '0%',
                         left: left,
-                        zIndex: 3,
+                        zIndex: index +3,
                         height: height,
                         width: width,
                         color: labelColor,
@@ -144,7 +145,7 @@ const ProductLabel = props => {
                     position = {
                         top: '70%',
                         left: 0,
-                        zIndex: 2,
+                        zIndex: index+2,
                         height: height,
                         width: width,
                         position: 'absolute'
@@ -152,7 +153,7 @@ const ProductLabel = props => {
                     positionText = {
                         top: '70%',
                         left: 0,
-                        zIndex: 3,
+                        zIndex: index +3,
                         height: height,
                         width: width,
                         color: labelColor,
@@ -170,7 +171,7 @@ const ProductLabel = props => {
                     position = {
                         top: '70%',
                         left: left,
-                        zIndex: 2,
+                        zIndex: index+2,
                         height: height,
                         width: width,
                         position: 'absolute'
@@ -178,7 +179,7 @@ const ProductLabel = props => {
                     positionText = {
                         top: '70%',
                         left: left,
-                        zIndex: 3,
+                        zIndex: index +3,
                         height: height,
                         width: width,
                         color: labelColor,
@@ -196,14 +197,14 @@ const ProductLabel = props => {
                     position = {
                         top: '0%',
                         left: 0,
-                        zIndex: 2,
+                        zIndex: index+2,
                         width: widthMb
                         // height: height
                     };
                     positionText = {
                         top: topTextMb,
                         left: 0,
-                        zIndex: 3,
+                        zIndex: index +3,
                         color: labelColor,
                         fontSize: fontSize,
                         transform: `rotate(${styleLabel}deg)  translate(30%, 0%)`,
@@ -217,14 +218,14 @@ const ProductLabel = props => {
                     position = {
                         top: '0%',
                         left: left,
-                        zIndex: 2,
+                        zIndex: index+2,
                         height: height,
                         width: width
                     };
                     positionText = {
                         top: '0%',
                         left: left,
-                        zIndex: 3,
+                        zIndex: index +3,
                         height: height,
                         width: width,
                         color: labelColor,
@@ -256,7 +257,7 @@ const ProductLabel = props => {
                     position = {
                         top: '90%',
                         left: 0,
-                        zIndex: 2,
+                        zIndex: index+2,
                         width: widthMb
                         // height: height
                     };
@@ -268,7 +269,7 @@ const ProductLabel = props => {
                     position = {
                         top: '75%',
                         left: '70%',
-                        zIndex: 2,
+                        zIndex: index+2,
                         width: '30%'
                         // height: height
                     };
@@ -281,7 +282,7 @@ const ProductLabel = props => {
                 position = {
                     top: 0,
                     left: 0,
-                    zIndex: 2,
+                    zIndex: index+2,
                     height: height * 0.6,
                     width: width * 0.6,
                     position: 'absolute'
@@ -290,7 +291,7 @@ const ProductLabel = props => {
                 positionText = {
                     top: 0,
                     left: 10,
-                    zIndex: 3,
+                    zIndex: index +3,
                     height: 'auto',
                     width: 'auto',
                     color: labelColor,
@@ -307,14 +308,14 @@ const ProductLabel = props => {
                 position = {
                     top: '0%',
                     left: leftMb,
-                    zIndex: 2,
+                    zIndex: index+2,
                     height: height * 0.6,
                     width: width * 0.6
                 };
                 positionText = {
                     top: '0%',
                     left: leftMb,
-                    zIndex: 3,
+                    zIndex: index +3,
                     height: height * 0.6,
                     width: width * 0.6,
                     color: labelColor,
@@ -345,7 +346,7 @@ const ProductLabel = props => {
                 position = {
                     top: '70%',
                     left: 0,
-                    zIndex: 2,
+                    zIndex: index+2,
                     height: height * 0.6,
                     width: width * 0.6,
                     position: 'absolute'
@@ -353,7 +354,7 @@ const ProductLabel = props => {
                 positionText = {
                     top: '70%',
                     left: 0,
-                    zIndex: 3,
+                    zIndex: index +3,
                     height: height * 0.6,
                     width: width * 0.6,
                     color: labelColor,
@@ -370,7 +371,7 @@ const ProductLabel = props => {
                 position = {
                     top: '70%',
                     left: leftMb,
-                    zIndex: 2,
+                    zIndex: index+2,
                     height: height * 0.6,
                     width: width * 0.6,
                     position: 'absolute'
@@ -378,7 +379,7 @@ const ProductLabel = props => {
                 positionText = {
                     top: '70%',
                     left: leftMb,
-                    zIndex: 3,
+                    zIndex: index +3,
                     height: height * 0.6,
                     width: width * 0.6,
                     color: labelColor,

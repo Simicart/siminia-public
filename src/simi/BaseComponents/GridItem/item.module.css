@@ -185,7 +185,7 @@ Rate
     .siminia-product-grid-item:hover {
         background-color: white;
         box-shadow: 0px 0px 12px -2px rgb(0 0 0 / 30%);
-        z-index: 4;
+        z-index: 50;
     }
     .siminia-product-grid-item:hover .product-grid-actions {
         display: flex;
