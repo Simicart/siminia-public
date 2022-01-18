@@ -48,17 +48,6 @@ const Filter = props => {
             if (item.filter_items !== null) {
                 options = item.filter_items.map(
                     function(optionItem) {
-                        //exclude current category from options
-                        if (
-                            item.request_var === 'category_id' &&
-                            optionItem.value_string &&
-                            productsData &&
-                            productsData.category &&
-                            productsData.category.id &&
-                            parseInt(optionItem.value_string) ===
-                                productsData.category.id
-                        )
-                            return '';
                         const name = (
                             <span className="filter-item-text">
                                 <span
@@ -175,7 +164,26 @@ const Filter = props => {
 
         if (data && data.length !== 0) {
             data.map((item, index) => {
-                const filterOptions = renderFilterItemsOptions(item);
+                const filterItem = Object.assign(item, {});
+                //exclude current category from options
+                if (
+                    filterItem.request_var === 'category_id' &&
+                    productsData &&
+                    productsData.category &&
+                    productsData.category.children
+                ) {
+                    const childCates = productsData.category.children.map(
+                        childCate => childCate.id
+                    );
+                    filterItem.filter_items = filterItem.filter_items.filter(
+                        filter_item =>
+                            childCates.includes(
+                                parseInt(filter_item.value_string)
+                            )
+                    );
+                    if (!filterItem.filter_items.length) return null;
+                }
+                const filterOptions = renderFilterItemsOptions(filterItem);
                 if (filterOptions.length > 0) {
                     rowFilterAttributes.push(
                         <Dropdownplus
