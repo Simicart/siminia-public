@@ -15,7 +15,6 @@ const ProductLabel = props => {
     const listlabel = [...productLabel].sort((a, b) =>
         a.priority > b.priority ? -1 : 1
     );
-    console.log('haha', listlabel);
 
     return <>
     {listlabel.map((item, index) => {
