@@ -180,6 +180,26 @@ const CheckoutSuccess = props => {
     );
 };
 
+const ContactPage = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "ContactPage"*/ 'src/simi/App/core/ContactPage')
+            }
+            {...props}
+        />
+    );
+};
+const CommunicationsPage = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "CommunicationsPage"*/ '/src/simi/App/core/CommunicationsPage')
+            }
+            {...props}
+        />
+    );
+};
 const Routes = props => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
@@ -216,6 +236,11 @@ const Routes = props => {
                     exact
                     path="/search.html"
                     render={props => <Search key="search_page" {...props} />}
+                />
+                <Route
+                    exact
+                    path="/contact.html"
+                    render={props => <ContactPage {...props} />}
                 />
                 <Route
                     exact
@@ -301,14 +326,7 @@ const Routes = props => {
                 <Route
                     exact
                     path="/communications"
-                    render={props => (
-                        <LazyComponent
-                            component={() =>
-                                import(/* webpackChunkName: "CommunicationsPage"*/ '@magento/venia-ui/lib/components/CommunicationsPage')
-                            }
-                            {...props}
-                        />
-                    )}
+                    render={props => <CommunicationsPage {...props} />}
                 />
                 <Route
                     exact

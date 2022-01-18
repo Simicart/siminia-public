@@ -76,7 +76,7 @@
             input[type='checkbox']:checked ~ .filter-item-checked {
                 display: block;
             }
-            .filter-item-text {
+            .filter-item-text-ctn {
                 font-size: 14px;
                 margin-inline-start: 2px;
                 line-height: 19px;
@@ -88,7 +88,7 @@
                     font-size: 13px;
                 }
             }
-            &:hover .filter-item-text {
+            &:hover .filter-item-text-ctn {
                 color: #0058ac;
             }
         }

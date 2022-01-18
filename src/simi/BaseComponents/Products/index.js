@@ -79,6 +79,7 @@ const Products = props => {
                         minPrice={minPrice}
                         total_count={total_count ? total_count : 0}
                         priceSeparator={priceSeparator}
+                        productsData={data}
                     />
                 </div>
             );
