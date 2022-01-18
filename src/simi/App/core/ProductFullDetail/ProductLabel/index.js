@@ -13,37 +13,45 @@ const ProductLabel = props => {
     }
 
     const listlabel = [...productLabel].sort((a, b) =>
-        a.priority > b.priority ? 1 : -1
+        a.priority > b.priority ? -1 : 1
     );
 
-    // const styles = JSON.parse(listlabel[0].list_position);
+    return <>
+    {listlabel.map((item, index) => {
+    
+        
+
+    
+
+
+    // const styles = JSON.parse(item.list_position);
 
     let src;
     let styles
     let styleLabel
     let positionGrid
     let labelText
-    if (listlabel[0].same != 0) {
-        src = listlabel[0].label_template;
-        styles = JSON.parse(listlabel[0].list_position);
-        styleLabel = parseFloat(listlabel[0].list_css.split('rotate(')[1].split('de'))
-        positionGrid = listlabel[0].list_position_grid
-        labelText = listlabel[0].label
+    if (item.same != 0) {
+        src = item.label_template;
+        styles = JSON.parse(item.list_position);
+        styleLabel = parseFloat(item.list_css.split('rotate(')[1].split('de'))
+        positionGrid = item.list_position_grid
+        labelText = item.label
     } else {
-        src = label_tyle ?  listlabel[0].list_template : listlabel[0].label_template;
-        styles = label_tyle ? JSON.parse(listlabel[0].list_position) : JSON.parse(listlabel[0].label_position);
-        styleLabel = label_tyle  ? parseFloat(listlabel[0].list_css.split('rotate(')[1].split('de')) : parseFloat(listlabel[0].label_css.split('rotate(')[1].split('de'))
-        positionGrid = label_tyle ? listlabel[0].list_position_grid : listlabel[0].label_position_grid
-        labelText = label_tyle ? listlabel[0].list_label : listlabel[0].label
+        src = label_tyle ?  item.list_template : item.label_template;
+        styles = label_tyle ? JSON.parse(item.list_position) : JSON.parse(item.label_position);
+        styleLabel = label_tyle  ? parseFloat(item.list_css.split('rotate(')[1].split('de')) : parseFloat(item.label_css.split('rotate(')[1].split('de'))
+        positionGrid = label_tyle ? item.list_position_grid : item.label_position_grid
+        labelText = label_tyle ? item.list_label : item.label
 
     }
    
 
-    // const styleLabel = listlabel[0].list_css
-    //     ? parseFloat(listlabel[0].list_css.split('rotate(')[1].split('de'))
+    // const styleLabel = item.list_css
+    //     ? parseFloat(item.list_css.split('rotate(')[1].split('de'))
     //     : null;
 
-    console.log('haha', listlabel[0]);
+    console.log('haha', item);
 
     const width = styles.label.width;
     const height = styles.label.height;
@@ -56,8 +64,8 @@ const ProductLabel = props => {
 
     const topText = -6 + height / 2 - 14;
     const topTextMb = -6 + widthMb / 2 - 29;
-    const labelColor = listlabel[0].label_color;
-    const fontSize = parseInt(listlabel[0].label_font_size);
+    const labelColor = item.label_color;
+    const fontSize = parseInt(item.label_font_size);
     const left = imageWidth - width;
     const leftMb =
         window.innerWidth > 423 ? 240 - width * 0.6 : (240 - width * 0.6) / 2;
@@ -79,14 +87,14 @@ const ProductLabel = props => {
                         position: 'absolute'
                     };
                     positionText = {
-                        top: topText,
+                        top: 0,
                         left: 0,
                         zIndex: 3,
                         color: labelColor,
                         fontSize: fontSize,
                         transform: `rotate(${styleLabel}deg)  translate(50%, 0%)`,
                         position: 'absolute',
-                        lineHeight: `${40}px`
+                        lineHeight: `${height-8}px`
                     };
                     break;
                 }
@@ -280,8 +288,8 @@ const ProductLabel = props => {
                     // height: height
                 };
                 positionText = {
-                    top: topTextMb,
-                    left: 0,
+                    top: 0,
+                    left: 10,
                     zIndex: 3,
                     height: 'auto',
                     width: 'auto',
@@ -289,7 +297,7 @@ const ProductLabel = props => {
                     fontSize: 14,
                     transform: `rotate(${styleLabel}deg)`,
                     position: 'absolute',
-                    lineHeight: '25px'
+                    lineHeight: `${height * 0.6}px`
                 };
                 break;
             case 'tc':
@@ -383,7 +391,7 @@ const ProductLabel = props => {
         }
     }
 
-    if (!listlabel[0].label) {
+    if (!item.label) {
             return (
                 <React.Fragment>
                     <img
@@ -410,6 +418,9 @@ const ProductLabel = props => {
             />
         </React.Fragment>
     );
-};
+    
+})}
+</>
+}
 
 export default ProductLabel;
