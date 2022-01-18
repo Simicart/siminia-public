@@ -13,6 +13,10 @@ export const getCateNoFilter = gql`
     ) {
         category(id: $id) {
             ...CategoryFragment
+            children {
+                id
+                name
+            }
         }
         simiproducts(
             pageSize: $pageSize

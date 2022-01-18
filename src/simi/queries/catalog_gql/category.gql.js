@@ -46,6 +46,10 @@ export const getCateNoFilter = gql`
     ) {
         category(id: $id) {
             ...CategoryFragment
+            children {
+                id
+                name
+            }
         }
         products(
             pageSize: $pageSize

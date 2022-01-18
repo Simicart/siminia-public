@@ -1,25 +1,25 @@
-import React, { useMemo, useEffect } from 'react';
-import { useIntl, FormattedMessage } from 'react-intl';
-import defaultClasses from './leftMenu.module.css';
-import { useStyle } from '@magento/venia-ui/lib/classify.js';
+import React, { useMemo, useEffect } from "react";
+import { useIntl, FormattedMessage } from "react-intl";
+import defaultClasses from "./leftMenu.module.css";
+import { useStyle } from "@magento/venia-ui/lib/classify.js";
 import {
     Trash2,
     User,
     Trello,
-    Star,
     Heart,
     Tag,
     Check,
     Users,
     Info,
+    Star,
     CheckCircle,
     DollarSign,
     Gift
-} from 'react-feather';
-import Icon from '@magento/venia-ui/lib/components/Icon';
-import { Link } from 'react-router-dom';
+} from "react-feather";
+import Icon from "@magento/venia-ui/lib/components/Icon";
+import { Link } from "react-router-dom";
 
-const LeftMenu = props => {
+const LeftMenu = (props) => {
     const { label } = props;
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
@@ -29,38 +29,38 @@ const LeftMenu = props => {
         window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
         parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
-    let listMenuContent = [
-        'Order History',
-        'WishList',
-        'Address Book',
-        'Saved Payments',
-        'Product Review',
-        'Communications',
-        'Account Information',
-        'Account Subcriptions',
+    const listMenuContent = [
+        "Order History",
+        "WishList",
+        "Address Book",
+        "Saved Payments",
+        "Product Review",
+        "Communications",
+        "Account Information",
+        "Account Subcriptions",
     ];
-    const rewardMenuContent = ['Reward Points', 'Reward Transactions'];
-    let iconList = [
+    const rewardMenuContent = ["Reward Points", "Reward Transactions"];
+    const iconList = [
         <Icon className={classes.icon} size={22} src={Trello} />,
         <Icon className={classes.icon} size={22} src={Heart} />,
         <Icon className={classes.icon} size={22} src={Tag} />,
         <Icon className={classes.icon} size={22} src={Check} />,
         <Icon className={classes.icon} size={22} src={Star} />,
         <Icon className={classes.icon} size={22} src={Users} />,
-        <Icon className={classes.icon} size={22} src={Info} />,
+        <Icon className={classes.icon} size={22} src={Info} />,        
         <Icon className={classes.icon} size={22} src={CheckCircle} />,
     ];
-    const rewardIconList = [
+    const rewardIconList = [        
         <Icon className={classes.icon} size={22} src={DollarSign} />,
         <Icon className={classes.icon} size={22} src={Gift} />
     ];
-    if(rewardPointEnabled){
+    if (rewardPointEnabled) {
         listMenuContent = listMenuContent.concat(rewardMenuContent);
-        iconList = iconList.concat(rewardIconList)
-        }
+        iconList = iconList.concat(rewardIconList);
+    }
 
     const MenuItems = listMenuContent.map((item, index) => {
-        const reformat = item.replace(/\s/g, '-');
+        const reformat = item.replace(/\s/g, "-");
         const urlText = reformat.toLowerCase();
 
         return (
@@ -80,8 +80,8 @@ const LeftMenu = props => {
             <div className={classes.logout}>
                 <Link to="/logout.html">
                     {formatMessage({
-                        id: 'Log out',
-                        defaultMessage: 'Log out'
+                        id: "Log out",
+                        defaultMessage: "Log out",
                     })}
                 </Link>
             </div>
