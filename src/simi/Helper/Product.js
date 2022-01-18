@@ -110,9 +110,7 @@ export const convertSimiFilterInputToMagentoFilterInput = (
     });
     if (categoryId) {
         if (filterInputs['category_id'] && filterInputs['category_id']['in']) {
-            const cateIds = filterInputs['category_id']['in'];
-            cateIds.push(String(categoryId));
-            filterInputs['category_id'] = { in: cateIds };
+            //do nothing
         } else {
             filterInputs['category_id'] = { eq: String(categoryId) };
         }
