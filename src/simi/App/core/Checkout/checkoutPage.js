@@ -278,7 +278,7 @@ const CheckoutPage = props => {
                             Identify.LOCAL_STOREAGE,
                             'simi_selected_payment_code'
                         );
-                        deliveryDateTime.current.handleSubmit()
+                        
                         if (selectedPaymentMethod === 'paypal_express') {
                             history.push('/paypal_express.html');
                             return;
