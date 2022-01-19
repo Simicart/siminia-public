@@ -31,7 +31,7 @@
     visibility: visible;
 }
 .miniCartBody {
-    max-height: 23rem;
+    max-height: 16rem;
     min-height: 10rem;
     overflow-y: auto;
     padding: 1.5rem;
