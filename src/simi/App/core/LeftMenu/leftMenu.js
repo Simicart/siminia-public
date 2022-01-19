@@ -29,7 +29,7 @@ const LeftMenu = (props) => {
         window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
         parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
-    const listMenuContent = [
+    let listMenuContent = [
         "Order History",
         "WishList",
         "Address Book",
@@ -40,7 +40,7 @@ const LeftMenu = (props) => {
         "Account Subcriptions",
     ];
     const rewardMenuContent = ["Reward Points", "Reward Transactions"];
-    const iconList = [
+    let iconList = [
         <Icon className={classes.icon} size={22} src={Trello} />,
         <Icon className={classes.icon} size={22} src={Heart} />,
         <Icon className={classes.icon} size={22} src={Tag} />,
