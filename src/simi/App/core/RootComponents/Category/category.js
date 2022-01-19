@@ -11,6 +11,10 @@ import CategoryHeader from './categoryHeader';
 import NoProductsFound from 'src/simi/BaseComponents/Products/NoProductsFound';
 import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent';
 import { useIntl } from 'react-intl';
+import Seo from '../../Seo';
+import Canonical from '../../Seo/Canonical';
+import MarkupCategory from '../../Seo/Markup/Category';
+
 
 //call chunked package along with API (for opimizing the package purpose)
 const Products = props => {
@@ -46,7 +50,8 @@ const Category = props => {
         appliedFilter,
         pageControl
     } = talonProps;
-
+    // console.log("products",products)
+    
     if (error) return <div>{formatMessage({ id: 'Data Fetch Error' })}</div>;
 
     if (!products || !products.category) {
@@ -57,7 +62,7 @@ const Category = props => {
         );
     }
 
-    const { category } = products;
+    const { category,mageworx_canonical_url } = products;
 
     const isApplyingFilter = window.location.search ? true : false;
 
@@ -81,6 +86,9 @@ const Category = props => {
 
     return (
         <div className="container">
+            <Seo pageType="CATEGORY"/>
+            <Canonical url={mageworx_canonical_url}  type="CATEGORY" />
+            <MarkupCategory category={category}/>
             {breadcrumb && breadcrumb.length ? (
                 <div style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
                     <Breadcrumbs breadcrumb={breadcrumb} />

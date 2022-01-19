@@ -17,6 +17,7 @@ let requestedPbPages = false;
 import { BrowserPersistence } from '@magento/peregrine/lib/util';
 const storage = new BrowserPersistence();
 const storeCode = storage.getItem('store_view_code') || STORE_VIEW_CODE;
+import Seo from '../../Seo';
 
 /*
  * As of this writing, there is no single Product query type in the M2.3 schema.
@@ -160,6 +161,7 @@ const Product = props => {
     
     return (
         <Fragment>
+            <Seo pageType="PRODUCT"/>
             <StoreTitle>{product.name}</StoreTitle>
             <Meta name="description" content={product.meta_description} />
             {foudThepage || pageMaskedId ? (
