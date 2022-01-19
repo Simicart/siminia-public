@@ -14,6 +14,7 @@ export const GrandTotalFragment = gql`
     }
 `;
 
+
 export const PriceSummaryFragment = gql`
     fragment PriceSummaryFragment on Cart {
         id
