@@ -30,7 +30,7 @@ const Robots = (props) => {
         'wishlist': ['wishlist'],
     }
     const {storeConfigData} = useStoreConfigData();
-    
+
     const {storeConfig} = storeConfigData;
 
     const {mageworx_seo} = storeConfig || {}
@@ -39,7 +39,7 @@ const Robots = (props) => {
 
     const robotsConfig = mageworx_seo && seo.base && seo.base.robots || {}
     let content = '';
- 
+
     const {
         default_category_ln_pages,
         noindex_additional_pages,
@@ -51,6 +51,7 @@ const Robots = (props) => {
     const actions = ["catalog_category_view", "catalog_product_view"];
 
     if (['CATEGORY', 'PRODUCT'].includes(props.pageType) && robotsConfig) {
+        
         const metaRobots = document.querySelectorAll('meta[name=robots]');
         if (metaRobots.length && !props.isLogic) {
             metaRobots.forEach((meta) => meta.remove());
@@ -59,7 +60,7 @@ const Robots = (props) => {
         if (props.pageType === 'CATEGORY'){
             content = ''; // Default content
         }
-
+        
         // Get search filter values in url params
         let filterVals = '';
         if (props.location.search) {
@@ -80,7 +81,7 @@ const Robots = (props) => {
                 }
             }
         }
-        
+
         // Add count of filters for set NOINDEX, FOLLOW for LN
         if (props.pageType === 'CATEGORY' && filterVals) {
             content = default_category_ln_pages; // Default for Category Layer Navigation
@@ -135,9 +136,8 @@ const Robots = (props) => {
                 })
             );
         }
-
+       
         if (props.isLogic) return content;
-
         if (!content) return null;
 
         return <meta name="robots" content={content.toLowerCase()} />

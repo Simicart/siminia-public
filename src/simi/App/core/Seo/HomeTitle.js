@@ -10,8 +10,8 @@ props: {
 // Website
 const HomeTitle = (props) => {
     const {storeConfigData} = useStoreConfigData();
-
-    const {default_title, default_description, default_keywords} = storeConfigData.storeConfig || {}
+    const {storeConfig} = storeConfigData;
+    const {default_title, default_description, default_keywords} = storeConfig || {}
 
     return (
         <>

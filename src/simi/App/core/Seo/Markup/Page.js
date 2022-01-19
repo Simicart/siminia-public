@@ -23,6 +23,7 @@ const Page = (props) => {
 
     const {markup, xtemplates} = seo || {};
     const pageConfig = markup && markup.page || {}
+
     const {
         crop_meta_title,
         max_title_length,

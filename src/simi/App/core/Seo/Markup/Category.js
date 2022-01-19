@@ -13,13 +13,12 @@ props: {
 */
 const Category = (props) => {
     const {storeConfigData} = useStoreConfigData();
-    
+
     const {storeConfig} = storeConfigData;
 
     const {mageworx_seo} = storeConfig || {}
 
     let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
-
 
     const {markup, xtemplates} = seo || {};
     const categoryConfig = markup && markup.category || {}
@@ -29,7 +28,7 @@ const Category = (props) => {
         crop_meta_description,
         max_description_length
     } = xtemplates || {}
-   
+    
     const {
         rs_enabled, // Ignore
         og_enabled,

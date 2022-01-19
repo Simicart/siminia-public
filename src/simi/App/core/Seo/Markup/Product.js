@@ -74,7 +74,7 @@ const Product = (props) => {
         condition_value_refurbished,
         condition_value_default
     } = productConfig || {}
-
+   
     const { product, reviews, price: replacePrice } = props;
 
     let dataStructure = window.productDataStructure; // Init data
