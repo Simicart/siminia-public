@@ -169,13 +169,18 @@ const MiniCart = React.forwardRef((props, ref) => {
                         />
                     </span>
                 ) : null}
-                <DiscountSummary
-                    classes={{
-                        lineItemLabel: classes.labelSubtotal,
-                        price: classes.priceSubtotal
-                    }}
-                    data={discounts}
-                />
+                <span className={classes.labelSubtotal}>
+                    <FormattedMessage
+                        id={'miniCart.discountApplied'}
+                        defaultMessage={'Discounts applied'}
+                    />
+                </span>
+                <span className={classes.priceSubtotal}>
+                    <Price
+                        currencyCode={discounts.amount.currency}
+                        value={discounts.amount.value}
+                    />
+                </span>
                 <GiftCardSummary
                     classes={{
                         lineItemLabel: classes.labelSubtotal,

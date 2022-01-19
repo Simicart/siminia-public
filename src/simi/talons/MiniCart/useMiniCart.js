@@ -27,19 +27,18 @@ import Identify from 'src/simi/Helper/Identify';
  *      configurableThumbnailSource: String
  *  }
  */
- const flattenData = data => {
+const flattenData = data => {
     if (!data) return {};
     return {
         subtotal: data.cart.prices.subtotal_excluding_tax,
         total: data.cart.prices.grand_total,
-        discounts: data.cart.prices.discounts,
+        discounts: data.cart.prices.discount,
         giftCards: data.cart.applied_gift_cards,
         taxes: data.cart.prices.applied_taxes,
         shipping: data.cart.shipping_addresses,
         priceData: data.cart.prices.mp_reward_segments
     };
 };
-
 
 export const useMiniCart = props => {
     const { setIsOpen } = props;

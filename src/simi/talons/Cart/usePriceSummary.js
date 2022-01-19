@@ -20,7 +20,7 @@ const flattenData = data => {
     return {
         subtotal: data.cart.prices.subtotal_excluding_tax,
         total: data.cart.prices.grand_total,
-        discounts: data.cart.prices.discounts,
+        discounts: data.cart.prices.discount,
         giftCards: data.cart.applied_gift_cards,
         taxes: data.cart.prices.applied_taxes,
         shipping: data.cart.shipping_addresses,

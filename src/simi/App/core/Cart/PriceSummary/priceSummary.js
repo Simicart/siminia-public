@@ -81,7 +81,6 @@ const PriceSummary = props => {
         ? classes.priceUpdating
         : classes.totalPrice;
 
-
     const totalPriceLabel = isCheckout
         ? formatMessage({
               id: 'priceSummary.total',
@@ -176,13 +175,18 @@ const PriceSummary = props => {
                         />
                     </span>
                 ) : null}
-                <DiscountSummary
-                    classes={{
-                        lineItemLabel: classes.lineItemLabel,
-                        price: priceClass
-                    }}
-                    data={discounts}
-                />
+                <span className={classes.lineItemLabel}>
+                    <FormattedMessage
+                        id={'discountSummary.lineItemLabel'}
+                        defaultMessage={'Discounts applied'}
+                    />
+                </span>
+                <span className={priceClass}>
+                    <Price
+                        value={discounts.amount.value}
+                        currencyCode={discounts.amount.currency}
+                    />
+                </span>
                 <GiftCardSummary
                     classes={{
                         lineItemLabel: classes.lineItemLabel,

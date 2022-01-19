@@ -40,7 +40,6 @@ const getDiscount = (discounts = []) => {
 const DiscountSummary = props => {
     const classes = useStyle({}, props.classes);
     const discount = getDiscount(props.data);
-
     return discount.value ? (
         <Fragment>
             <span className={classes.lineItemLabel}>
