@@ -14,7 +14,6 @@ export const GrandTotalFragment = gql`
     }
 `;
 
-
 export const PriceSummaryFragment = gql`
     fragment PriceSummaryFragment on Cart {
         id
@@ -31,7 +30,7 @@ export const PriceSummaryFragment = gql`
                 currency
                 value
             }
-            mp_reward_segments{
+            mp_reward_segments {
                 code
                 title
                 value
