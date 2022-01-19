@@ -12,7 +12,7 @@ props: {
 }
 */
 const Product = (props) => {
-  
+
     const {storeConfig,simiRootCate, currency} = Identify.getStoreConfig() || {}
 
     const {default_display_currency_code} = currency
@@ -21,14 +21,14 @@ const Product = (props) => {
     let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
     const {markup, xtemplates} = seo || {};
     const productConfig = markup && markup.product || {}
-    
+
     const {
         crop_meta_title,
         max_title_length,
         crop_meta_description,
         max_description_length
     } = xtemplates || {}
-  
+
     const {
         name: seller_name
     } = seo && seo.markup && seo.markup.seller || {}
@@ -67,7 +67,7 @@ const Product = (props) => {
         condition_value_refurbished,
         condition_value_default
     } = productConfig || {}
-    
+
     const { product, reviews, price: replacePrice } = props;
     console.log("props",props);
     let dataStructure = window.productDataStructure; // Init data
@@ -113,7 +113,7 @@ const Product = (props) => {
         } = product || {}
 
         const price = replacePrice || originPrice; // allow price from props
-        
+
         const images = media_gallery && media_gallery.map((img) => {
             if (img.url) {
                 return img.url;
@@ -397,7 +397,7 @@ const Product = (props) => {
     }
 
     if (product && product instanceof Object) {
-        
+
         // Crop by config
         let description_crop = productDesc || '';
         if (crop_meta_description && max_description_length) {
@@ -437,4 +437,4 @@ const Product = (props) => {
     return null;
 }
 
-export default compose(withRouter)(Product);
+export default compose(withRouter)(Product); 

@@ -12,16 +12,16 @@ props: {
 // Rich Snippets Home
 const RsHome = (props) => {
     const {storeConfig} = Identify.getStoreConfig() || {}
-   
+
     const {mageworx_seo, pwa_studio_url} = storeConfig || {}
     let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
-    
+
     const websiteConfig = seo && seo.markup && seo.markup.website || {}
-    
+
     const {
         rs_enabled
     } = websiteConfig || {}
-   
+
     const urlBase = window.location.origin;
     const url = pwa_studio_url || urlBase;
     let dataStructure = window.homeDataStructure; // Init data
@@ -60,8 +60,8 @@ const RsHome = (props) => {
         script.innerHTML = JSON.stringify(dataStructure);
         document.head.appendChild(script);
     }
-    
+
     return null;
 }
 
-export default compose(withRouter)(RsHome);
+export default compose(withRouter)(RsHome); 
