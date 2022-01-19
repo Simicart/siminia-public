@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState, useCallback } from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
 import {
     Search as SearchIcon,
@@ -10,7 +10,7 @@ import { Form } from 'informed';
 
 import { useToasts } from '@magento/peregrine/lib/Toasts';
 import OrderHistoryContextProvider from '@magento/peregrine/lib/talons/OrderHistoryPage/orderHistoryContext';
-import { useOrderHistoryPage } from '@magento/peregrine/lib/talons/OrderHistoryPage/useOrderHistoryPage';
+import { useOrderHistoryPage } from './useOrderHistoryPage';
 import LeftMenu from '../LeftMenu';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Button from '@magento/venia-ui/lib/components/Button';
@@ -24,6 +24,7 @@ import OrderRow from './orderRow';
 import OrderRowCustom from './orderRowCustom';
 import ResetButton from '@magento/venia-ui/lib/components/OrderHistoryPage/resetButton';
 import OrderHistoryPageMb from './orderHistoryPageMb';
+const PAGE_SIZE = 10;
 const errorIcon = (
     <Icon
         src={AlertCircleIcon}
@@ -35,7 +36,8 @@ const errorIcon = (
 const searchIcon = <Icon src={SearchIcon} size={24} />;
 
 const OrderHistoryPage = props => {
-    const talonProps = useOrderHistoryPage();
+    const [currentPage, setCurrentPage] = useState(1);
+    const talonProps = useOrderHistoryPage(currentPage);
     const {
         errorMessage,
         loadMoreOrders,
@@ -45,11 +47,11 @@ const OrderHistoryPage = props => {
         isLoadingWithoutData,
         orders,
         pageInfo,
-        searchText
+        searchText,
     } = talonProps;
-   
-    const [width, setWidth] = useState(window.innerWidth);
 
+    const [width, setWidth] = useState(window.innerWidth);
+    // const initOrderList = orders.slice(0, PAGE_SIZE)
     useEffect(() => {
         const handleSize = () => {
             setWidth(window.innerWidth);
@@ -59,8 +61,10 @@ const OrderHistoryPage = props => {
         return () => {
             window.removeEventListener('resize', handleSize);
         };
-    }, []);
-    
+    }, [width]);
+
+   
+
     const [, { addToast }] = useToasts();
     const { formatMessage } = useIntl();
     const PAGE_TITLE = formatMessage({
@@ -71,7 +75,36 @@ const OrderHistoryPage = props => {
         id: 'orderHistoryPage.search',
         defaultMessage: 'Search by Order Number'
     });
+
+    
     const classes = useStyle(defaultClasses, props.classes);
+   
+
+   console.log("pageinfo", pageInfo && pageInfo.total ? pageInfo.total : "hieu");
+
+   const total = pageInfo && pageInfo.total ? pageInfo.total : "hieu"
+   const numberOfPages = total % PAGE_SIZE === 0 ? total / PAGE_SIZE : parseInt(total /PAGE_SIZE) + 1
+
+   console.log("numberofpage", numberOfPages);
+    const listNumberOfPages = Array.from({length: numberOfPages}, (_, i) => i + 1)
+
+    
+
+    const Pagination = listNumberOfPages.map((item, index) => {
+        return (
+            <button
+                key={index}
+                onClick={() => setCurrentPage(item)}
+                className={
+                    index == currentPage-1
+                        ? classes.pageNumberBtnActive
+                        : classes.pageNumberBtn
+                }
+            >
+                {item}
+            </button>
+        );
+    });
 
     const orderRows = useMemo(() => {
         return orders.map(order => {
@@ -79,6 +112,9 @@ const OrderHistoryPage = props => {
             // return <OrderRowCustom key ={order.id} order={order}/>
         });
     }, [orders]);
+
+   
+
 
     const pageContents = useMemo(() => {
         if (isLoadingWithoutData) {
@@ -105,11 +141,13 @@ const OrderHistoryPage = props => {
                 </h3>
             );
         } else {
-            return <ul className={classes.orderHistoryTable}>
-                <div className={classes.heading}>{PAGE_TITLE}</div>
-                
-                {orderRows}
-                </ul>;
+            return (
+                <ul className={classes.orderHistoryTable}>
+                    <div className={classes.heading}>{PAGE_TITLE}</div>
+
+                    {orderRows}
+                </ul>
+            );
         }
     }, [
         classes.emptyHistoryMessage,
@@ -118,7 +156,9 @@ const OrderHistoryPage = props => {
         isLoadingWithoutData,
         orderRows,
         orders.length,
-        searchText
+        searchText,
+        PAGE_TITLE,
+        classes.heading
     ]);
 
     const resetButtonElement = searchText ? (
@@ -143,19 +183,19 @@ const OrderHistoryPage = props => {
         />
     ) : null;
 
-    const loadMoreButton = loadMoreOrders ? (
-        <Button
-            classes={{ root_lowPriority: classes.loadMoreButton }}
-            disabled={isBackgroundLoading || isLoadingWithoutData}
-            onClick={loadMoreOrders}
-            priority="low"
-        >
-            <FormattedMessage
-                id={'orderHistoryPage.loadMore'}
-                defaultMessage={'Load More'}
-            />
-        </Button>
-    ) : null;
+    // const loadMoreButton = loadMoreOrders ? (
+    //     <Button
+    //         classes={{ root_lowPriority: classes.loadMoreButton }}
+    //         disabled={isBackgroundLoading || isLoadingWithoutData}
+    //         onClick={loadMoreOrders}
+    //         priority="low"
+    //     >
+    //         <FormattedMessage
+    //             id={'orderHistoryPage.loadMore'}
+    //             defaultMessage={'Load More'}
+    //         />
+    //     </Button>
+    // ) : null;
 
     useEffect(() => {
         if (errorMessage) {
@@ -169,9 +209,8 @@ const OrderHistoryPage = props => {
         }
     }, [addToast, errorMessage]);
 
-
     if (width < 767) {
-        return <OrderHistoryPageMb orders={orders} />
+        return <OrderHistoryPageMb orders={orders}/>;
     }
     return (
         <OrderHistoryContextProvider>
@@ -203,12 +242,12 @@ const OrderHistoryPage = props => {
                 {/* {pageContents} */}
                 <div className={classes.wrapper}>
                     <LeftMenu label="Order History" />
-                    <div className={classes.container}>
-
-                    {pageContents}
-                    </div>
+                    <div className={classes.container}>{pageContents}</div>
                 </div>
-                {loadMoreButton}
+                <div className={classes.loadmoreBtn}>
+                    
+                    {Pagination}
+                </div>
             </div>
         </OrderHistoryContextProvider>
     );

@@ -1,14 +1,41 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
 import OrderHistoryPage from './orderHistoryPage';
 import defaultClasses from './orderHistoryPageMb.module.scss';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import { Link } from 'react-router-dom';
+import Button from '@magento/venia-ui/lib/components/Button';
+import { useOrderHistoryPage } from './useOrderHistoryPage';
 
 const OrderHistoryPageMb = props => {
     const { orders } = props;
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
+    const talonProps = useOrderHistoryPage();
+
+    const {
+        errorMessage,
+        loadMoreOrders,
+        handleReset,
+        handleSubmit,
+        isBackgroundLoading,
+        isLoadingWithoutData,
+        
+    } = talonProps;
+
+    const loadMoreButton = loadMoreOrders ? (
+        <Button
+            classes={{ root_lowPriority: classes.loadMoreButton }}
+            disabled={isBackgroundLoading || isLoadingWithoutData}
+            onClick={loadMoreOrders}
+            priority="low"
+        >
+            <FormattedMessage
+                id={'orderHistoryPage.loadMore'}
+                defaultMessage={'Load More'}
+            />
+        </Button>
+    ) : null;
 
     const forMatCurrentValue = value => {
         if (value == 'USD') {
@@ -32,11 +59,10 @@ const OrderHistoryPageMb = props => {
                         </div>
                         <div className={classes.shipTo}>
                             <span>
-
-                            {formatMessage({
-                                id: 'Ship to',
-                                defaultMessage: 'Ship to'
-                            })}
+                                {formatMessage({
+                                    id: 'Ship to',
+                                    defaultMessage: 'Ship to'
+                                })}
                             </span>
                             <span>
                                 : {item.billing_address.firstname}
@@ -45,11 +71,10 @@ const OrderHistoryPageMb = props => {
                         </div>
                         <div className={classes.date}>
                             <span>
-
-                            {formatMessage({
-                                id: 'Data',
-                                defaultMessage: 'Date'
-                            })}
+                                {formatMessage({
+                                    id: 'Data',
+                                    defaultMessage: 'Date'
+                                })}
                             </span>
                             <span>: {item.order_date}</span>
                         </div>
@@ -58,9 +83,7 @@ const OrderHistoryPageMb = props => {
                                 <button>View order</button>
                             </Link>
                         </div>
-                        <div className={classes.status}>
-                            {item.status}
-                        </div>
+                        <div className={classes.status}>{item.status}</div>
                     </div>
                 );
             });
@@ -70,14 +93,19 @@ const OrderHistoryPageMb = props => {
     };
 
     console.log('orderrr', orders);
-    return <>
-    <div className={classes.mbHeading}>
+    return (
+        <>
+            <div className={classes.mbHeading}>
                 {formatMessage({
                     id: 'My orders',
                     defaultMessage: 'My orders'
                 })}
             </div>
-    <div className={classes.mobileRoot}>{renderOrderList(orders)}</div>
-    </>
+            <div className={classes.mobileRoot}>
+                {renderOrderList(orders)}
+                {loadMoreButton}
+            </div>
+        </>
+    );
 };
 export default OrderHistoryPageMb;

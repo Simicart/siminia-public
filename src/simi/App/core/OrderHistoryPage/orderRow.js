@@ -32,7 +32,7 @@ const OrderRow = props => {
     } = order;
     const { grand_total: grandTotal } = total;
     const { currency, value: orderTotal } = grandTotal;
-    console.log('order', order);
+    
     const orderId = order.number;
     // Convert date to ISO-8601 format so Safari can also parse it
     const isoFormattedDate = orderDate.replace(' ', 'T');
