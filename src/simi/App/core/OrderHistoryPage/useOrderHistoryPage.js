@@ -43,6 +43,25 @@ export const useOrderHistoryPage = (props = {}) => {
         }
     });
 
+    const {
+        data,
+        error,
+        loading
+    } = useQuery(getCustomerOrdersQuery, {
+        fetchPolicy: 'cache-and-network',
+        variables: {
+            filter: {
+                number: {
+                    match: ""
+                }
+            },
+            pageSize : 15,
+            currentPage : 1
+        }
+    })
+
+ 
+    const ordersMb = data ? data.customer.orders.items : [];
     const orders = orderData  ? orderData.customer.orders.items : [];
     
 
@@ -76,6 +95,7 @@ export const useOrderHistoryPage = (props = {}) => {
     }, []);
 
     const loadMoreOrders = useMemo(() => {
+      
         if (orderData) {
             const { page_info } = orderData.customer.orders;
             const { current_page, total_pages } = page_info;
@@ -103,6 +123,7 @@ export const useOrderHistoryPage = (props = {}) => {
         orders,
         pageInfo,
         searchText,
-        
+        ordersMb,
+        loading
     };
 };

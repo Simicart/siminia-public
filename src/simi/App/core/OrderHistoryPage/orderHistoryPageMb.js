@@ -1,41 +1,61 @@
 import React, { useMemo, useEffect, useState } from 'react';
-import { useIntl, FormattedMessage } from 'react-intl';
-import OrderHistoryPage from './orderHistoryPage';
+import { useIntl } from 'react-intl';
 import defaultClasses from './orderHistoryPageMb.module.scss';
 import { useStyle } from '@magento/venia-ui/lib/classify';
-import { Link } from 'react-router-dom';
-import Button from '@magento/venia-ui/lib/components/Button';
 import { useOrderHistoryPage } from './useOrderHistoryPage';
+import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
+
+import { Link } from 'react-router-dom';
+
+
+const PAGE_SIZE = 10;
 
 const OrderHistoryPageMb = props => {
-    const { orders } = props;
+    // const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
+   
     const talonProps = useOrderHistoryPage();
-
     const {
-        errorMessage,
-        loadMoreOrders,
-        handleReset,
-        handleSubmit,
-        isBackgroundLoading,
-        isLoadingWithoutData,
-        
+        ordersMb,
+        loading
     } = talonProps;
+ 
 
-    const loadMoreButton = loadMoreOrders ? (
-        <Button
-            classes={{ root_lowPriority: classes.loadMoreButton }}
-            disabled={isBackgroundLoading || isLoadingWithoutData}
-            onClick={loadMoreOrders}
-            priority="low"
-        >
-            <FormattedMessage
-                id={'orderHistoryPage.loadMore'}
-                defaultMessage={'Load More'}
-            />
-        </Button>
-    ) : null;
+    const [showMore, setShowMore] = useState(1)
+    const [isShowMore, setIsShowMore] = useState(true)
+    const [currentOrder, setCurrentOrder] = useState(ordersMb.length > PAGE_SIZE ? ordersMb.slice(0,PAGE_SIZE) : ordersMb)
+    
+    
+
+   
+   
+  
+   
+//    const currentOrder = orders.length > 5 ? orders.slice(0,5) : orders
+
+
+//    const handleShowMore = () => {
+//        if (5*showMore <= ordersMb.length) {
+//            setCurrentOrder(ordersMb.slice(0,5*showMore));
+//        }
+//        else setIsShowMore(false)
+//    }
+
+   useEffect(() => {
+    
+        if (PAGE_SIZE*showMore <= ordersMb.length) {
+            setCurrentOrder(ordersMb.slice(0,PAGE_SIZE*showMore));
+        }
+        else {
+            setCurrentOrder(ordersMb);
+            setIsShowMore(false);
+        }
+    
+   }, [showMore, ordersMb])
+
+    console.log("showmore", showMore);
+
 
     const forMatCurrentValue = value => {
         if (value == 'USD') {
@@ -92,7 +112,10 @@ const OrderHistoryPageMb = props => {
         return null;
     };
 
-    console.log('orderrr', orders);
+
+    if(loading) {
+        return <LoadingIndicator />
+    }
     return (
         <>
             <div className={classes.mbHeading}>
@@ -102,8 +125,13 @@ const OrderHistoryPageMb = props => {
                 })}
             </div>
             <div className={classes.mobileRoot}>
-                {renderOrderList(orders)}
-                {loadMoreButton}
+                {renderOrderList(currentOrder)}
+                {isShowMore ? 
+               <button className={classes.showBtn} onClick={() => setShowMore(showMore+1)}>{formatMessage({
+                id: 'Show More',
+                defaultMessage: 'Show More'
+            })}</button>
+            : null}
             </div>
         </>
     );

@@ -80,12 +80,12 @@ const OrderHistoryPage = props => {
     const classes = useStyle(defaultClasses, props.classes);
    
 
-   console.log("pageinfo", pageInfo && pageInfo.total ? pageInfo.total : "hieu");
+   
 
    const total = pageInfo && pageInfo.total ? pageInfo.total : "hieu"
    const numberOfPages = total % PAGE_SIZE === 0 ? total / PAGE_SIZE : parseInt(total /PAGE_SIZE) + 1
 
-   console.log("numberofpage", numberOfPages);
+  
     const listNumberOfPages = Array.from({length: numberOfPages}, (_, i) => i + 1)
 
     
