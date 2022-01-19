@@ -48,7 +48,7 @@ const Main = props => {
         <React.Fragment>
             {/* <Seo /> */}
             <RsHome type="home" /> 
-            <RsSeller type="all" />
+            <RsSeller type="home" />
             <Helmet>
                 {!!url && <link rel={'icon'} type="image/png" href={url} />}
             </Helmet>

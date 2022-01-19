@@ -1,5 +1,6 @@
 import React from 'react';
 import Identify from 'src/simi/Helper/Identify';
+import { useStoreConfigData } from './talons/useStoreConfigData';
 
 /* 
 props = {
@@ -28,15 +29,17 @@ const Robots = (props) => {
         'product_send': ['product_send'],
         'wishlist': ['wishlist'],
     }
-    const {storeConfig} = Identify.getStoreConfig() || {}
+    const {storeConfigData} = useStoreConfigData();
     
+    const {storeConfig} = storeConfigData;
+
     const {mageworx_seo} = storeConfig || {}
-   
+
     let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
 
     const robotsConfig = mageworx_seo && seo.base && seo.base.robots || {}
     let content = '';
-
+ 
     const {
         default_category_ln_pages,
         noindex_additional_pages,

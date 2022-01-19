@@ -1,6 +1,7 @@
 import React from 'react';
 import Identify from 'src/simi/Helper/Identify';
 import {Helmet} from "react-helmet";
+import { useStoreConfigData } from './talons/useStoreConfigData';
 
 /* 
 props: {
@@ -8,9 +9,9 @@ props: {
 */
 // Website
 const HomeTitle = (props) => {
-    const {storeConfig} = Identify.getStoreConfig() || {}
+    const {storeConfigData} = useStoreConfigData();
 
-    const {default_title, default_description, default_keywords} = storeConfig || {}
+    const {default_title, default_description, default_keywords} = storeConfigData.storeConfig || {}
 
     return (
         <>

@@ -3,6 +3,7 @@ import Identify from 'src/simi/Helper/Identify';
 import {Helmet} from "react-helmet";
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { useStoreConfigData } from '../talons/useStoreConfigData';
 
 /* 
 props: {
@@ -11,10 +12,14 @@ props: {
 */
 // Rich Snippets Home
 const RsHome = (props) => {
-    const {storeConfig} = Identify.getStoreConfig() || {}
+    const {storeConfigData} = useStoreConfigData();
+    
+    const {storeConfig} = storeConfigData;
 
-    const {mageworx_seo, pwa_studio_url} = storeConfig || {}
+    const {mageworx_seo} = storeConfig || {}
+
     let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
+
 
     const websiteConfig = seo && seo.markup && seo.markup.website || {}
 
@@ -23,7 +28,7 @@ const RsHome = (props) => {
     } = websiteConfig || {}
 
     const urlBase = window.location.origin;
-    const url = pwa_studio_url || urlBase;
+    const url =  urlBase;
     let dataStructure = window.homeDataStructure; // Init data
 
     // Remove old structure

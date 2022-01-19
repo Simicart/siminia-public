@@ -1,19 +1,22 @@
 import React from 'react';
-import Identify from 'src/simi/Helper/Identify';
 import {Helmet} from "react-helmet";
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import Robots from './Robots';
+import { useStoreConfigData } from './talons/useStoreConfigData';
 
 const Canonical = (props) => {
-    const {storeConfig} = Identify.getStoreConfig() || {}
-   
+    const {storeConfigData} = useStoreConfigData();
+    
+    const {storeConfig} = storeConfigData;
+
     const {mageworx_seo} = storeConfig || {}
-   
-   
+
     let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
+
+
     const canonicalConfig = seo && seo.base && seo.base.canonical || {}
- 
+
     let link = '';
     const {
         canonical_base,

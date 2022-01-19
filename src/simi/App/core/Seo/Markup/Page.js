@@ -3,6 +3,7 @@ import Identify from 'src/simi/Helper/Identify';
 import {Helmet} from "react-helmet";
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { useStoreConfigData } from '../talons/useStoreConfigData';
 
 /* 
 props: {
@@ -11,9 +12,15 @@ props: {
 */
 // CMS Page
 const Page = (props) => {
-    const {storeConfig} = Identify.getStoreConfig() || {}
+    const {storeConfigData} = useStoreConfigData();
+    
+    const {storeConfig} = storeConfigData;
+
     const {mageworx_seo} = storeConfig || {}
+
     let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
+
+
     const {markup, xtemplates} = seo || {};
     const pageConfig = markup && markup.page || {}
     const {

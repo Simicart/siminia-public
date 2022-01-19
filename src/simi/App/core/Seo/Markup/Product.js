@@ -4,6 +4,7 @@ import {Helmet} from "react-helmet";
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { resourceUrl, productUrlSuffix } from 'src/simi/Helper/Url';
+import { useStoreConfigData } from '../talons/useStoreConfigData';
 
 /* 
 props: {
@@ -13,15 +14,21 @@ props: {
 */
 const Product = (props) => {
 
-    const {storeConfig,simiRootCate, currency} = Identify.getStoreConfig() || {}
+    const {storeConfigData} = useStoreConfigData();
+
+    const {storeConfig, simiRootCate, currency} = storeConfigData;
+
+    const {mageworx_seo} = storeConfig || {}
+
+    let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
+
 
     const {default_display_currency_code} = currency
 
-    const {mageworx_seo} = storeConfig || {}
-    let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
+   
     const {markup, xtemplates} = seo || {};
     const productConfig = markup && markup.product || {}
-
+    
     const {
         crop_meta_title,
         max_title_length,
@@ -69,7 +76,7 @@ const Product = (props) => {
     } = productConfig || {}
 
     const { product, reviews, price: replacePrice } = props;
-    console.log("props",props);
+
     let dataStructure = window.productDataStructure; // Init data
 
     // Remove old structure

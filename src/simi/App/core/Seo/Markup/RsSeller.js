@@ -3,6 +3,7 @@ import Identify from 'src/simi/Helper/Identify';
 // import {Helmet} from "react-helmet";
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { useStoreConfigData } from '../talons/useStoreConfigData';
 
 /* 
 props: {
@@ -11,13 +12,16 @@ props: {
 */
 // Rich Snippets Home
 const RsSeller = (props) => {
-    const {storeConfig} = Identify.getStoreConfig() || {}
-    const {mageworx_seo, pwa_studio_url} = storeConfig || {}
- 
+    const {storeConfigData} = useStoreConfigData();
+    
+    const {storeConfig} = storeConfigData;
+
+    const {mageworx_seo} = storeConfig || {}
+
     let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
  
     const sellerConfig = seo && seo.markup && seo.markup.seller || {}
-    
+  
     const {
         seller_type,
         show_on_pages,
@@ -41,7 +45,7 @@ const RsSeller = (props) => {
             existedTag.parentNode.removeChild(existedTag);
         }
         const urlBase = window.location.origin;
-        const url = pwa_studio_url || urlBase;
+        const url =  urlBase;
         let dataStructure = window.sellerDataStructure; // Init data
         
         // Create script element

@@ -4,6 +4,7 @@ import {Helmet} from "react-helmet";
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { cateUrlSuffix } from 'src/simi/Helper/Url';
+import { useStoreConfigData } from '../talons/useStoreConfigData';
 
 /* 
 props: {
@@ -11,10 +12,15 @@ props: {
 }
 */
 const Category = (props) => {
-    const {simiStoreConfig} = Identify.getStoreConfig() || {}
-    const {config} = simiStoreConfig || {}
-    const {mageworx_seo} = config || {}
+    const {storeConfigData} = useStoreConfigData();
+    
+    const {storeConfig} = storeConfigData;
+
+    const {mageworx_seo} = storeConfig || {}
+
     let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
+
+
     const {markup, xtemplates} = seo || {};
     const categoryConfig = markup && markup.category || {}
     const {
@@ -23,7 +29,7 @@ const Category = (props) => {
         crop_meta_description,
         max_description_length
     } = xtemplates || {}
-    
+   
     const {
         rs_enabled, // Ignore
         og_enabled,
