@@ -22,7 +22,7 @@ header {
     position: sticky;
     top: 0;
     width: 100%;
-    z-index: 5;
+    z-index: 100;
     box-shadow: 0 0 15px rgb(0 0 0 / 10%);
 }
 
