@@ -81,6 +81,25 @@
     height: 2rem;
     min-width: 5rem;
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding-left: 20%;
+}
+.pageNumberBtn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #000000;
+    margin-right: .75rem;
+
+}
+.pageNumberBtnActive {
+    width: 40px;
+    height: 40px;
+    background-color: #0058ac;
+    color:#fff;
+    margin-right: .75rem;
+}
 
 .submitIcon {
     color: white;
