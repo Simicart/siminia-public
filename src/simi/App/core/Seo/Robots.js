@@ -1,3 +1,4 @@
+import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import React from 'react';
 import Identify from 'src/simi/Helper/Identify';
 import { useStoreConfigData } from './talons/useStoreConfigData';
@@ -29,7 +30,9 @@ const Robots = (props) => {
         'product_send': ['product_send'],
         'wishlist': ['wishlist'],
     }
-    const {storeConfigData} = useStoreConfigData();
+    const {storeConfigData, storeConfigLoading, derivedErrorMessage} = useStoreConfigData();
+    if (storeConfigLoading) return fullPageLoadingIndicator
+    if (derivedErrorMessage) return <div>{derivedErrorMessage}</div>;
 
     const {storeConfig} = storeConfigData;
 
