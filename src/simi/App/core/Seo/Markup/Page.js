@@ -4,6 +4,7 @@ import {Helmet} from "react-helmet";
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { useStoreConfigData } from '../talons/useStoreConfigData';
+import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 
 /* 
 props: {
@@ -12,7 +13,9 @@ props: {
 */
 // CMS Page
 const Page = (props) => {
-    const {storeConfigData} = useStoreConfigData();
+    const {storeConfigData, storeConfigLoading, derivedErrorMessage} = useStoreConfigData();
+    if (storeConfigLoading) return fullPageLoadingIndicator
+    if (derivedErrorMessage) return <div>{derivedErrorMessage}</div>;
     
     const {storeConfig} = storeConfigData;
 

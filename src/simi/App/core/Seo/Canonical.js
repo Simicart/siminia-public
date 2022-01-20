@@ -4,9 +4,12 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import Robots from './Robots';
 import { useStoreConfigData } from './talons/useStoreConfigData';
+import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 
 const Canonical = (props) => {
-    const {storeConfigData} = useStoreConfigData();
+    const {storeConfigData, storeConfigLoading, derivedErrorMessage} = useStoreConfigData();
+    if (storeConfigLoading) return fullPageLoadingIndicator
+    if (derivedErrorMessage) return <div>{derivedErrorMessage}</div>;
     
     const {storeConfig} = storeConfigData;
 
@@ -16,7 +19,7 @@ const Canonical = (props) => {
 
 
     const canonicalConfig = seo && seo.base && seo.base.canonical || {}
-
+   
     let link = '';
     const {
         canonical_base,
@@ -30,6 +33,7 @@ const Canonical = (props) => {
     } = canonicalConfig || {}
    
     const { url } = props || {}
+  
     let canonicalUrl = url || '';
     if (url instanceof Object) {
         canonicalUrl = url && url.url || '';
@@ -78,7 +82,7 @@ const Canonical = (props) => {
                     }
                 }
             } else if (parseInt(canonical_for_ln) === 2 && props.location && props.location.pathname) {
-                link += props.location.pathname; 
+                link += props.location.pathname;              
             }
             break;
         case 'PRODUCT':
@@ -93,7 +97,7 @@ const Canonical = (props) => {
     if (link && parseInt(trailing_slash) && !isTrailingAdded) {
         link += '/';
     }
-
+    
     if (!link) return null;
 
     return (

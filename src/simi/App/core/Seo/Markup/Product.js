@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { resourceUrl, productUrlSuffix } from 'src/simi/Helper/Url';
 import { useStoreConfigData } from '../talons/useStoreConfigData';
+import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 
 /* 
 props: {
@@ -14,7 +15,9 @@ props: {
 */
 const Product = (props) => {
 
-    const {storeConfigData} = useStoreConfigData();
+    const {storeConfigData, storeConfigLoading, derivedErrorMessage} = useStoreConfigData();
+    if (storeConfigLoading) return fullPageLoadingIndicator
+    if (derivedErrorMessage) return <div>{derivedErrorMessage}</div>;
 
     const {storeConfig, simiRootCate, currency} = storeConfigData;
 

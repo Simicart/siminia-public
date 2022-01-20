@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { cateUrlSuffix } from 'src/simi/Helper/Url';
 import { useStoreConfigData } from '../talons/useStoreConfigData';
+import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 
 /* 
 props: {
@@ -12,8 +13,9 @@ props: {
 }
 */
 const Category = (props) => {
-    const {storeConfigData} = useStoreConfigData();
-
+    const {storeConfigData, storeConfigLoading, derivedErrorMessage} = useStoreConfigData();
+    if (storeConfigLoading) return fullPageLoadingIndicator
+    if (derivedErrorMessage) return <div>{derivedErrorMessage}</div>;
     const {storeConfig} = storeConfigData;
 
     const {mageworx_seo} = storeConfig || {}
