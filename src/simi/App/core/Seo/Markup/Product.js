@@ -286,11 +286,11 @@ const Product = (props) => {
             if (category_deepest || true) {
                 categoryId = category_ids.pop();
             }
-            if (simiRootCate.id === parseInt(categoryId)) {
-                category = simiRootCate;
-            } else {
-                category = getCategory(simiRootCate.children, parseInt(categoryId));
-            }
+            // if (simiRootCate.id === parseInt(categoryId)) {
+            //     category = simiRootCate;
+            // } else {
+            //     category = getCategory(simiRootCate.children, parseInt(categoryId));
+            // }
             dataStructure = {
                 ...dataStructure,
                 "category": category.name || '',
@@ -298,21 +298,21 @@ const Product = (props) => {
         }
 
         if (color_enabled) {
-            if (simiExtraField[color_code]) {
-                dataStructure = {
-                    ...dataStructure,
-                    "color": simiExtraField[color_code]
-                }
-            }
+            // if (simiExtraField[color_code]) {
+            //     dataStructure = {
+            //         ...dataStructure,
+            //         "color": simiExtraField[color_code]
+            //     }
+            // }
         }
 
         if (manufacturer_enabled) {
-            if (simiExtraField[manufacturer_code]) {
-                dataStructure = {
-                    ...dataStructure,
-                    "manufacturer": simiExtraField[manufacturer_code]
-                }
-            }
+            // if (simiExtraField[manufacturer_code]) {
+            //     dataStructure = {
+            //         ...dataStructure,
+            //         "manufacturer": simiExtraField[manufacturer_code]
+            //     }
+            // }
         }
 
         if (weight_enabled) {
@@ -323,33 +323,33 @@ const Product = (props) => {
         }
 
         if (gtin_enabled) {
-            if (simiExtraField[gtin_code]) {
-                dataStructure = {
-                    ...dataStructure,
-                    "gtin14": simiExtraField[gtin_code]
-                }
-            }
+            // if (simiExtraField[gtin_code]) {
+            //     dataStructure = {
+            //         ...dataStructure,
+            //         "gtin14": simiExtraField[gtin_code]
+            //     }
+            // }
         }
 
         if (brand_enabled) {
-            if (simiExtraField[brand_code] || mpbrand && mpbrand.value) {
-                dataStructure = {
-                    ...dataStructure,
-                    "brand": {
-                        "@type": "Brand",
-                        "name": mpbrand && mpbrand.value || simiExtraField[brand_code]
-                    }
-                }
-            }
+            // if (simiExtraField[brand_code] || mpbrand && mpbrand.value) {
+            //     dataStructure = {
+            //         ...dataStructure,
+            //         "brand": {
+            //             "@type": "Brand",
+            //             "name": mpbrand && mpbrand.value || simiExtraField[brand_code]
+            //         }
+            //     }
+            // }
         }
 
         if (model_enabled) {
-            if (simiExtraField[model_code]) {
-                dataStructure = {
-                    ...dataStructure,
-                    "model": simiExtraField[model_code]
-                }
-            }
+            // if (simiExtraField[model_code]) {
+            //     dataStructure = {
+            //         ...dataStructure,
+            //         "model": simiExtraField[model_code]
+            //     }
+            // }
         }
 
         if (rating_summary && rating_summary !== undefined && parseInt(rating_summary) > 0) {
