@@ -22,16 +22,14 @@ const Product = (props) => {
     const {storeConfig, simiRootCate, currency} = storeConfigData;
 
     const {mageworx_seo} = storeConfig || {}
-
+   
     let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
-
-
+  
     const {default_display_currency_code} = currency
 
-   
     const {markup, xtemplates} = seo || {};
     const productConfig = markup && markup.product || {}
-    
+   
     const {
         crop_meta_title,
         max_title_length,
@@ -77,8 +75,14 @@ const Product = (props) => {
         condition_value_refurbished,
         condition_value_default
     } = productConfig || {}
-   
+
     const { product, reviews, price: replacePrice } = props;
+
+    const {mageworx_canonical_url} = product || {}
+  
+    const {extraData} = mageworx_canonical_url || {}
+
+    let extData; try { extData = JSON.parse(extraData); }catch{}
 
     let dataStructure = window.productDataStructure; // Init data
 
@@ -135,7 +139,7 @@ const Product = (props) => {
 
         const {
             pre_order, is_salable,
-        } = simiExtraField || {};
+        } = extData || {};
 
         // check without rating
         if (!is_specific_product && ((
@@ -145,7 +149,7 @@ const Product = (props) => {
             return;
         }
 
-        const category_ids = categories && categories.map(({id}) => id) || [];
+        // const category_ids = categories && categories.map(({id}) => id) || [];
 
         const { minimalPrice, regularPrice } = price || {};
         const productPrice = minimalPrice || regularPrice || {};
@@ -280,39 +284,40 @@ const Product = (props) => {
             return cateFound;
         }
 
-        if (category_enabled) {
-            let categoryId = category_ids[0];
-            let category = {};
-            if (category_deepest || true) {
-                categoryId = category_ids.pop();
-            }
-            // if (simiRootCate.id === parseInt(categoryId)) {
-            //     category = simiRootCate;
-            // } else {
-            //     category = getCategory(simiRootCate.children, parseInt(categoryId));
-            // }
-            dataStructure = {
-                ...dataStructure,
-                "category": category.name || '',
-            }
-        }
+        // if (category_enabled) {
+        //     let categoryId = category_ids[0];
+        //     let category = {};
+        //     if (category_deepest || true) {
+        //         categoryId = category_ids.pop();
+        //     }
+        //     if (simiRootCate.id === parseInt(categoryId)) {
+        //         category = simiRootCate;
+        //     } else {
+        //         category = getCategory(simiRootCate.children, parseInt(categoryId));
+        //     }
+        //     dataStructure = {
+        //         ...dataStructure,
+        //         "category": category.name || '',
+        //     }
+        // }
 
         if (color_enabled) {
-            // if (simiExtraField[color_code]) {
-            //     dataStructure = {
-            //         ...dataStructure,
-            //         "color": simiExtraField[color_code]
-            //     }
-            // }
+            if (extData[color_code]) {
+                dataStructure = {
+                    ...dataStructure,
+                    "color": "extData[color_code]"
+                }
+            }
+            
         }
 
         if (manufacturer_enabled) {
-            // if (simiExtraField[manufacturer_code]) {
-            //     dataStructure = {
-            //         ...dataStructure,
-            //         "manufacturer": simiExtraField[manufacturer_code]
-            //     }
-            // }
+            if (extData[manufacturer_code]) {
+                dataStructure = {
+                    ...dataStructure,
+                    "manufacturer": extData[manufacturer_code]
+                }
+            }
         }
 
         if (weight_enabled) {
@@ -323,33 +328,33 @@ const Product = (props) => {
         }
 
         if (gtin_enabled) {
-            // if (simiExtraField[gtin_code]) {
-            //     dataStructure = {
-            //         ...dataStructure,
-            //         "gtin14": simiExtraField[gtin_code]
-            //     }
-            // }
+            if (extData[gtin_code]) {
+                dataStructure = {
+                    ...dataStructure,
+                    "gtin14": extData[gtin_code]
+                }
+            }
         }
 
         if (brand_enabled) {
-            // if (simiExtraField[brand_code] || mpbrand && mpbrand.value) {
-            //     dataStructure = {
-            //         ...dataStructure,
-            //         "brand": {
-            //             "@type": "Brand",
-            //             "name": mpbrand && mpbrand.value || simiExtraField[brand_code]
-            //         }
-            //     }
-            // }
+            if (extData[brand_code] || mpbrand && mpbrand.value) {
+                dataStructure = {
+                    ...dataStructure,
+                    "brand": {
+                        "@type": "Brand",
+                        "name": mpbrand && mpbrand.value || extData[brand_code]
+                    }
+                }
+            }
         }
 
         if (model_enabled) {
-            // if (simiExtraField[model_code]) {
-            //     dataStructure = {
-            //         ...dataStructure,
-            //         "model": simiExtraField[model_code]
-            //     }
-            // }
+            if (extData[model_code]) {
+                dataStructure = {
+                    ...dataStructure,
+                    "model": extData[model_code]
+                }
+            }
         }
 
         if (rating_summary && rating_summary !== undefined && parseInt(rating_summary) > 0) {
@@ -368,7 +373,7 @@ const Product = (props) => {
         // script.innerHTML = JSON.stringify(dataStructure);
         // document.head.appendChild(script);
     }
-
+ 
     // Reviews data
     if(rs_enabled && window.disabledProductDataStructure !== true 
         && add_reviews && reviews && reviews instanceof Array){

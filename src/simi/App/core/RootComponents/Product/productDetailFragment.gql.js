@@ -43,6 +43,7 @@ export const ProductDetailsFragment = gql`
             mageworx_canonical_url{
                 url
                 __typename
+                extraData
             }` 
             : ``
         }
