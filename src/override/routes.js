@@ -317,7 +317,7 @@ const Routes = props => {
                     render={props => (
                         <LazyComponent
                             component={() =>
-                                import(/* webpackChunkName: "SavedPaymentsPage"*/ '@magento/venia-ui/lib/components/SavedPaymentsPage')
+                                import(/* webpackChunkName: "SavedPaymentsPage"*/ 'src/simi/App/core/SavedPaymentsPage/index.js')
                             }
                             {...props}
                         />
