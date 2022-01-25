@@ -1,21 +1,18 @@
 import React, { useMemo } from 'react';
 import { arrayOf, number, shape, string } from 'prop-types';
-import { ChevronDown, ChevronUp } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import Price from '@magento/venia-ui/lib/components/Price';
-import { useOrderRow } from './useOrderRow';
 
 import { useStyle } from '@magento/venia-ui/lib/classify';
-import Icon from '@magento/venia-ui/lib/components/Icon';
-import CollapsedImageGallery from '@magento/venia-ui/lib/components/OrderHistoryPage/collapsedImageGallery';
-import OrderProgressBar from '@magento/venia-ui/lib/components/OrderHistoryPage/orderProgressBar';
-import OrderDetails from '@magento/venia-ui/lib/components/OrderHistoryPage/OrderDetails';
 import defaultClasses from './orderRow.module.css';
-import { useOrderDetailPage } from '../OrderDetailPage/useOrderDetailPage';
+
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
+import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
+
+import DEFAULT_OPERATIONS from '../OrderDetailPage/orderDetailPage.gql';
 
 const OrderRow = props => {
     const { order } = props;
@@ -45,15 +42,10 @@ const OrderRow = props => {
         }
     );
     const name = billing_address.firstname + billing_address.lastname;
+    const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
+    const { reorderItemMutation } = operations;
 
-    const talonPropsReorder = useOrderDetailPage({ orderId });
-    const {
-        dataDetail,
-        loadingDetail,
-        errorDetail,
-        reorderItemMutation
-    } = talonPropsReorder;
-    const [reorderItem, { data,loading, error }] = useMutation(
+    const [reorderItem, { data, loading, error }] = useMutation(
         reorderItemMutation
     );
 
@@ -82,39 +74,7 @@ const OrderRow = props => {
         });
     }
 
-    const talonProps = useOrderRow({ items });
-    const { loadingOrderRow, isOpen, handleContentToggle } = talonProps;
-
-    const imagesData = useMemo(() => {
-        const imgData = {};
-        if (talonProps.imagesData)
-            Object.keys(talonProps.imagesData).map(key => {
-                if (
-                    talonProps.imagesData[key] &&
-                    talonProps.imagesData[key].thumbnail
-                ) {
-                    imgData[key] = talonProps.imagesData[key];
-                }
-            });
-        return imgData;
-    }, [talonProps.imagesData]);
-
     const classes = useStyle(defaultClasses, props.classes);
-
-    const contentClass = isOpen ? classes.content : classes.content_collapsed;
-
-    const contentToggleIconSrc = isOpen ? ChevronUp : ChevronDown;
-
-    const contentToggleIcon = <Icon src={contentToggleIconSrc} size={24} />;
-
-    // const collapsedImageGalleryElement = isOpen ? null : (
-    //     <CollapsedImageGallery items={imagesData} />
-    // );
-
-    // const orderDetails = loadingOrderRow ? null : (
-    //     <OrderDetails orderData={order} imagesData={imagesData} />
-    // );
-    // console.log("hahaha", order);
 
     const orderTotalPrice =
         currency && orderTotal !== null ? (
@@ -138,47 +98,28 @@ const OrderRow = props => {
                 <span className={classes.orderNumber}>{orderNumber}</span>
             </div>
             <div className={classes.rootItem}>
-                <span className={classes.orderDateLabel}>
-                    {/* <FormattedMessage
-                        id={'orderRow.orderDateText'}
-                        defaultMessage={'Order Date'}
-                    /> */}
-                </span>
+                <span className={classes.orderDateLabel} />
                 <span className={classes.orderDate}>{formattedDate}</span>
             </div>
+            <div className={classes.rootItem}>{name}</div>
             <div className={classes.rootItem}>
-                {/* {collapsedImageGalleryElement}
-                 */}
-                {name}
-            </div>
-            <div className={classes.rootItem}>
-                <span className={classes.orderStatusBadge}>
-                    {status}
-                </span>
-                {/* <OrderProgressBar status={derivedStatus} /> */}
+                <span className={classes.orderStatusBadge}>{status}</span>
             </div>
             <div className={classes.rootItem}>
                 <span className={classes.orderTotalLabel} />
                 <div className={classes.orderTotal}>{orderTotalPrice}</div>
             </div>
 
-            {/* <button
-                className={classes.contentToggleContainer}
-                onClick={handleContentToggle}
-                type="button"
-            >
-                view
-                {contentToggleIcon}
-                
-            </button> */}
             <Link
                 className={classes.viewOrder}
                 to={`/order-history/${order.number}`}
             >
-                <button className={classes.btnViewOrd}>{formatMessage({
-                    id: 'View order',
-                    defaultMessage: 'View order'
-                })}</button>
+                <button className={classes.btnViewOrd}>
+                    {formatMessage({
+                        id: 'View order',
+                        defaultMessage: 'View order'
+                    })}
+                </button>
             </Link>
             <button
                 disabled={loading ? true : false}
@@ -190,8 +131,6 @@ const OrderRow = props => {
                     defaultMessage: 'Reorder'
                 })}
             </button>
-
-            {/* <div className={contentClass}>{orderDetails}</div> */}
         </li>
     );
 };
