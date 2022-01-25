@@ -86,6 +86,7 @@ const AddressBookPage = props => {
         handleEditAddress,
         isDeletingCustomerAddress
     ]);
+    console.log("hieubach", customerAddresses);
 
     if (isLoading) {
         return fullPageLoadingIndicator;
@@ -97,21 +98,20 @@ const AddressBookPage = props => {
                 <LeftMenu label="Address Book" />
                 <StoreTitle>{PAGE_TITLE}</StoreTitle>
                 <div className={classes.addressbookContent}>
-
-                <div className={classes.content}>
-                    <h1 className={classes.heading}>{PAGE_TITLE}</h1>
-                    <div
-                        onClick={handleAddAddress}
-                        className={classes.addAddress}
-                    >
-                        <div className={classes.addAddressBtn}>
-                            {formatMessage({
-                                id: "Add new address",
-                                defaultMessage: "Add new address"
-                            }).toUpperCase()}
+                    <div className={classes.content}>
+                        <h1 className={classes.heading}>{PAGE_TITLE}</h1>
+                        <div
+                            onClick={handleAddAddress}
+                            className={classes.addAddress}
+                        >
+                            <div className={classes.addAddressBtn}>
+                                {formatMessage({
+                                    id: 'Add new address',
+                                    defaultMessage: 'Add new address'
+                                }).toUpperCase()}
+                            </div>
                         </div>
-                    </div>
-                    {/* <LinkButton
+                        {/* <LinkButton
                     className={classes.addButton}
                     key="addAddressButton"
                     onClick={handleAddAddress}
@@ -130,9 +130,21 @@ const AddressBookPage = props => {
                         />
                     </span>
                 </LinkButton> */}
+                        {customerAddresses.length > 0 ? 
+                        addressBookElements : formatMessage(
+                            {
+                                id: 'wishlist.itemCountClosed',
+                                defaultMessage: `You have {count} {count, plural,
+                                  one {item}
+                                  other {items}
+                                } in this list`
+                            },
+                            { count: customerAddresses.length }
+                        )
+                        }
 
-                    {addressBookElements}
-                </div>
+                        
+                    </div>
                 </div>
 
                 <AddEditDialog
