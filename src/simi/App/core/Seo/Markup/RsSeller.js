@@ -12,19 +12,26 @@ props: {
 }
 */
 // Rich Snippets Home
-const RsSeller = (props) => {
-    const {storeConfigData, storeConfigLoading, derivedErrorMessage} = useStoreConfigData();
-    if (storeConfigLoading) return fullPageLoadingIndicator
+const RsSeller = props => {
+    const {
+        storeConfigData,
+        storeConfigLoading,
+        derivedErrorMessage
+    } = useStoreConfigData();
+    if (storeConfigLoading) return fullPageLoadingIndicator;
     if (derivedErrorMessage) return <div>{derivedErrorMessage}</div>;
-    
-    const {storeConfig} = storeConfigData;
 
-    const {mageworx_seo} = storeConfig || {}
+    const mageworx_seo =
+        storeConfigData && storeConfigData.storeConfig
+            ? storeConfigData.storeConfig.mageworx_seo
+            : '';
+    let seo;
+    try {
+        seo = JSON.parse(mageworx_seo);
+    } catch {}
 
-    let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
- 
-    const sellerConfig = seo && seo.markup && seo.markup.seller || {}
-  
+    const sellerConfig = (seo && seo.markup && seo.markup.seller) || {};
+
     const {
         seller_type,
         show_on_pages,
@@ -39,44 +46,47 @@ const RsSeller = (props) => {
         street,
         post_code,
         price_range
-    } = sellerConfig || {}
+    } = sellerConfig || {};
 
-    if (sellerConfig && props.type && props.type.toLowerCase() === show_on_pages) {
+    if (
+        sellerConfig &&
+        props.type &&
+        props.type.toLowerCase() === show_on_pages
+    ) {
         // Remove old structure
         const existedTag = document.getElementById('simi-seller-rsdata');
         if (existedTag) {
             existedTag.parentNode.removeChild(existedTag);
         }
         const urlBase = window.location.origin;
-        const url =  urlBase;
+        const url = urlBase;
         let dataStructure = window.sellerDataStructure; // Init data
-        
+
         // Create script element
-        var script = document.createElement("script");
-        script.type = "application/ld+json";
-        script.setAttribute("id", "simi-seller-rsdata");
+        var script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.setAttribute('id', 'simi-seller-rsdata');
 
         dataStructure = {
             ...(dataStructure || {}),
-            "@context": "https://schema.org/",
-            "@type": seller_type,
-            "url": url,
-            "name": name,
-            "image": image,
-            "description": description,
-            "telephone": phone,
-            "faxNumber" : fax,
-            "email": email,
-            "location": location,
-            "address":
-            {
-                "@type": "PostalAddress",
-                "streetAddress": street,
-                "addressLocality": post_code,
-                "addressRegion": region
+            '@context': 'https://schema.org/',
+            '@type': seller_type,
+            url: url,
+            name: name,
+            image: image,
+            description: description,
+            telephone: phone,
+            faxNumber: fax,
+            email: email,
+            location: location,
+            address: {
+                '@type': 'PostalAddress',
+                streetAddress: street,
+                addressLocality: post_code,
+                addressRegion: region
             },
-            "priceRange": price_range
-        }
+            priceRange: price_range
+        };
 
         window.sellerDataStructure = dataStructure; // save data to env
         script.innerHTML = JSON.stringify(dataStructure);
@@ -84,6 +94,6 @@ const RsSeller = (props) => {
     }
 
     return null;
-}
+};
 
 export default compose(withRouter)(RsSeller);

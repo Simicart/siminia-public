@@ -1,25 +1,29 @@
 import React from 'react';
-import {Helmet} from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import Robots from './Robots';
 import { useStoreConfigData } from './talons/useStoreConfigData';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 
-const Canonical = (props) => {
-    const {storeConfigData, storeConfigLoading, derivedErrorMessage} = useStoreConfigData();
-    if (storeConfigLoading) return fullPageLoadingIndicator
-    if (derivedErrorMessage) return <div>{derivedErrorMessage}</div>;
-    
-    const {storeConfig} = storeConfigData;
+const Canonical = props => {
+    const {
+        storeConfigData,
+        storeConfigLoading,
+        derivedErrorMessage
+    } = useStoreConfigData();
 
-    const {mageworx_seo} = storeConfig || {}
+    const mageworx_seo =
+        storeConfigData && storeConfigData.storeConfig
+            ? storeConfigData.storeConfig.mageworx_seo
+            : '';
+    let seo;
+    try {
+        seo = JSON.parse(mageworx_seo);
+    } catch {}
 
-    let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
+    const canonicalConfig = (seo && seo.base && seo.base.canonical) || {};
 
-
-    const canonicalConfig = seo && seo.base && seo.base.canonical || {}
-   
     let link = '';
     const {
         canonical_base,
@@ -30,39 +34,45 @@ const Canonical = (props) => {
         product_url_type, // server processed
         slash_home_page,
         trailing_slash
-    } = canonicalConfig || {}
-   
-    const { url } = props || {}
-  
+    } = canonicalConfig || {};
+
+    const { url } = props || {};
+
     let canonicalUrl = url || '';
     if (url instanceof Object) {
-        canonicalUrl = url && url.url || '';
+        canonicalUrl = (url && url.url) || '';
     }
-   
-    const { type } = props || {type: 'HOME'}
+
+    const { type } = props || { type: 'HOME' };
 
     link = canonicalUrl.replace(/\/$/, ''); // remove trailing slash
-   
+
     let isTrailingAdded = false;
 
     // Canonical URL won't be added for these pages
     if (ignore_pages && ignore_pages.length) {
-        if(!ignore_pages.every((page) => !link.includes(page))){
+        if (!ignore_pages.every(page => !link.includes(page))) {
             link = ''; // not allowed canonical for this url
         }
     }
 
     // Disable Canonical URL for Pages with NOINDEX robots
     if (is_disable_by_robots) {
-        const robotContent = Robots({isLogic: true, location: props.location, pageType: type}); // String
+        const robotContent = Robots({
+            isLogic: true,
+            location: props.location,
+            pageType: type
+        }); // String
         if (robotContent) {
-            if(robotContent.includes('noindex')){
-                link = ''; // not allowed canonical for robots
-            }
+            try {
+                if (robotContent.includes('noindex')) {
+                    link = ''; // not allowed canonical for robots
+                }
+            } catch (err) {}
         }
     }
 
-    switch(type){
+    switch (type) {
         case 'HOME':
             if (canonical_base) {
                 link = canonical_base.replace(/\/$/, '');
@@ -74,15 +84,19 @@ const Canonical = (props) => {
             break;
         case 'CATEGORY':
             if (parseInt(canonical_for_ln) === 1) {
-                if(props.location) {
-                    if(props.location.search) {
+                if (props.location) {
+                    if (props.location.search) {
                         link += props.location.search;
-                    } else if(props.location.pathname) {
+                    } else if (props.location.pathname) {
                         link += props.location.pathname;
                     }
                 }
-            } else if (parseInt(canonical_for_ln) === 2 && props.location && props.location.pathname) {
-                link += props.location.pathname;              
+            } else if (
+                parseInt(canonical_for_ln) === 2 &&
+                props.location &&
+                props.location.pathname
+            ) {
+                link += props.location.pathname;
             }
             break;
         case 'PRODUCT':
@@ -97,14 +111,17 @@ const Canonical = (props) => {
     if (link && parseInt(trailing_slash) && !isTrailingAdded) {
         link += '/';
     }
-    
+
+    if (storeConfigLoading) return fullPageLoadingIndicator;
+    if (derivedErrorMessage) return <div>{derivedErrorMessage}</div>;
+
     if (!link) return null;
 
     return (
         <Helmet>
             <link rel="canonical" href={link} />
         </Helmet>
-    )
-}
+    );
+};
 
 export default compose(withRouter)(Canonical);
