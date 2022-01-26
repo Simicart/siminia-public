@@ -1,6 +1,6 @@
 import React from 'react';
 import Identify from 'src/simi/Helper/Identify';
-import {Helmet} from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { resourceUrl, productUrlSuffix } from 'src/simi/Helper/Url';
@@ -13,33 +13,41 @@ props: {
     reviews: [{}]
 }
 */
-const Product = (props) => {
-
-    const {storeConfigData, storeConfigLoading, derivedErrorMessage} = useStoreConfigData();
-    if (storeConfigLoading) return fullPageLoadingIndicator
+const Product = props => {
+    const {
+        storeConfigData,
+        storeConfigLoading,
+        derivedErrorMessage
+    } = useStoreConfigData();
+    if (storeConfigLoading) return fullPageLoadingIndicator;
     if (derivedErrorMessage) return <div>{derivedErrorMessage}</div>;
 
-    const {storeConfig, simiRootCate, currency} = storeConfigData;
+    const { currency } = storeConfigData;
 
-    const {mageworx_seo} = storeConfig || {}
-   
-    let seo; try { seo = JSON.parse(mageworx_seo); }catch{}
-  
-    const {default_display_currency_code} = currency
+    const mageworx_seo =
+        storeConfigData && storeConfigData.storeConfig
+            ? storeConfigData.storeConfig.mageworx_seo
+            : '';
 
-    const {markup, xtemplates} = seo || {};
-    const productConfig = markup && markup.product || {}
-   
+    let seo;
+    try {
+        seo = JSON.parse(mageworx_seo);
+    } catch {}
+
+    const { default_display_currency_code } = currency;
+
+    const { markup, xtemplates } = seo || {};
+    const productConfig = (markup && markup.product) || {};
+
     const {
         crop_meta_title,
         max_title_length,
         crop_meta_description,
         max_description_length
-    } = xtemplates || {}
+    } = xtemplates || {};
 
-    const {
-        name: seller_name
-    } = seo && seo.markup && seo.markup.seller || {}
+    const { name: seller_name } =
+        (seo && seo.markup && seo.markup.seller) || {};
     const {
         is_specific_product, //without offers and rating
         rs_enabled,
@@ -74,27 +82,30 @@ const Product = (props) => {
         condition_value_damaged,
         condition_value_refurbished,
         condition_value_default
-    } = productConfig || {}
+    } = productConfig || {};
 
     const { product, reviews, price: replacePrice } = props;
 
-    const {mageworx_canonical_url} = product || {}
-  
-    const {extraData} = mageworx_canonical_url || {}
+    const { mageworx_canonical_url } = product || {};
 
-    let extData; try { extData = JSON.parse(extraData); }catch{}
+    const { extraData } = mageworx_canonical_url || {};
+
+    let extData;
+    try {
+        extData = JSON.parse(extraData);
+    } catch {}
 
     let dataStructure = window.productDataStructure; // Init data
 
     // Remove old structure
-    const existedTag = document.getElementById('simi-product-details-stdata')
+    const existedTag = document.getElementById('simi-product-details-stdata');
     if (existedTag) {
         existedTag.parentNode.removeChild(existedTag);
     }
     // Create script element
-    var script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.setAttribute("id", "simi-product-details-stdata")
+    var script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.setAttribute('id', 'simi-product-details-stdata');
 
     const urlSuffix = productUrlSuffix();
     const urlBase = window.location.origin;
@@ -106,7 +117,7 @@ const Product = (props) => {
     let productPriceAmount = '';
 
     // Product data
-    if(rs_enabled && product && product instanceof Object){
+    if (rs_enabled && product && product instanceof Object) {
         const {
             sku,
             name,
@@ -124,27 +135,31 @@ const Product = (props) => {
             categories,
             type_id,
             mpbrand
-        } = product || {}
+        } = product || {};
 
         const price = replacePrice || originPrice; // allow price from props
 
-        const images = media_gallery && media_gallery.map((img) => {
-            if (img.url) {
-                return img.url;
-            }
-            return '';
-        });
+        const images =
+            media_gallery &&
+            media_gallery.map(img => {
+                if (img.url) {
+                    return img.url;
+                }
+                return '';
+            });
 
-        productImage = images && images[0] || small_image || '';
+        productImage = (images && images[0]) || small_image || '';
 
-        const {
-            pre_order, is_salable,
-        } = extData || {};
+        const { pre_order, is_salable } = extData || {};
 
         // check without rating
-        if (!is_specific_product && ((
-            rating_summary && rating_summary !== undefined && parseInt(rating_summary) <= 0
-        ) || price === 0)) {
+        if (
+            !is_specific_product &&
+            ((rating_summary &&
+                rating_summary !== undefined &&
+                parseInt(rating_summary) <= 0) ||
+                price === 0)
+        ) {
             window.disabledProductDataStructure = true;
             return;
         }
@@ -153,58 +168,72 @@ const Product = (props) => {
 
         const { minimalPrice, regularPrice } = price || {};
         const productPrice = minimalPrice || regularPrice || {};
-        productDesc = short_description || description || {html: ''};
-        productDesc = crop_html_in_description ? productDesc.html.replace(/(<([^>]+)>)/ig,"") : productDesc.html;
+        productDesc = short_description || description || { html: '' };
+        productDesc = crop_html_in_description
+            ? productDesc.html.replace(/(<([^>]+)>)/gi, '')
+            : productDesc.html;
 
-        productUrl = url_key && urlBase+'/'+url_key+urlSuffix || '';
+        productUrl = (url_key && urlBase + '/' + url_key + urlSuffix) || '';
         productName = name;
 
         productPriceAmount = productPrice.amount && productPrice.amount.value;
 
         dataStructure = {
             ...dataStructure,
-            "@context": "https://schema.org/",
-            "@type": "Product",
-            "name": name,
-            "image": images,
-            "description": productDesc,
-            "sku": sku,
-            "offers": {
-                "@type": "Offer",
-                "url": productUrl,
-                "priceCurrency": productPrice.amount && productPrice.amount.currency || 'USD',
-                "price": productPriceAmount || '',
-                "availability": parseInt(pre_order) === 1 && !is_salable ? 'PreOrder': !is_salable?'OutOfStock':'InStock',
-                "seller": {
-                    "@type": "Organization",
-                    "name": seller_name || ''
+            '@context': 'https://schema.org/',
+            '@type': 'Product',
+            name: name,
+            image: images,
+            description: productDesc,
+            sku: sku,
+            offers: {
+                '@type': 'Offer',
+                url: productUrl,
+                priceCurrency:
+                    (productPrice.amount && productPrice.amount.currency) ||
+                    'USD',
+                price: productPriceAmount || '',
+                availability:
+                    parseInt(pre_order) === 1 && !is_salable
+                        ? 'PreOrder'
+                        : !is_salable
+                        ? 'OutOfStock'
+                        : 'InStock',
+                seller: {
+                    '@type': 'Organization',
+                    name: seller_name || ''
                 }
             }
-        }
+        };
 
         let itemCondition = '';
         if (condition_enabled) {
             const conditionMarkupMatch = {
-                'condition_value_new': 'https://schema.org/NewCondition',
-                "condition_value_used": 'https://schema.org/UsedCondition',
-                "condition_value_damaged": 'https://schema.org/DamagedCondition',
-                "condition_value_refurbished": 'https://schema.org/RefurbishedCondition',
-            }
-            switch(condition_code){
+                condition_value_new: 'https://schema.org/NewCondition',
+                condition_value_used: 'https://schema.org/UsedCondition',
+                condition_value_damaged: 'https://schema.org/DamagedCondition',
+                condition_value_refurbished:
+                    'https://schema.org/RefurbishedCondition'
+            };
+            switch (condition_code) {
                 case condition_value_new:
                     itemCondition = conditionMarkupMatch['condition_value_new'];
                     break;
                 case condition_value_used:
-                    itemCondition = conditionMarkupMatch['condition_value_used'];
+                    itemCondition =
+                        conditionMarkupMatch['condition_value_used'];
                     break;
                 case condition_value_damaged:
-                    itemCondition = conditionMarkupMatch['condition_value_damaged'];
+                    itemCondition =
+                        conditionMarkupMatch['condition_value_damaged'];
                     break;
                 case condition_value_refurbished:
-                    itemCondition = conditionMarkupMatch['condition_value_refurbished'];
+                    itemCondition =
+                        conditionMarkupMatch['condition_value_refurbished'];
                     break;
                 default:
-                    itemCondition = 'https://schema.org/' + condition_value_default;
+                    itemCondition =
+                        'https://schema.org/' + condition_value_default;
             }
             /* dataStructure = {
                 ...dataStructure,
@@ -216,25 +245,36 @@ const Product = (props) => {
         }
 
         if (use_multiple_offer && type_id === 'configurable') {
-            let offers = dataStructure.offers && [dataStructure.offers] || [];
+            let offers = (dataStructure.offers && [dataStructure.offers]) || [];
             if (variants && variants.length) {
-                variants.map((variant)=>{
-                    const { stock_status, simple_warehouses, 
+                variants.map(variant => {
+                    const {
+                        stock_status,
+                        simple_warehouses,
                         url_key: offerUrlKey,
                         price: offerPrice
                     } = variant.product || {};
-                    const isOfferInstock = simple_warehouses && !simple_warehouses.every(({stock_quantity}) => stock_quantity < 0);
+                    const isOfferInstock =
+                        simple_warehouses &&
+                        !simple_warehouses.every(
+                            ({ stock_quantity }) => stock_quantity < 0
+                        );
                     let _offer = {
-                        "@type": "Offer",
-                        "url": offerUrlKey && urlBase+'/'+offerUrlKey+urlSuffix || productUrl,
-                        "priceCurrency": offerPrice.regularPrice.amount.currency || 'USD',
-                        "price": offerPrice.regularPrice.amount.value || '',
-                        "availability": isOfferInstock || stock_status || 'OutOfStock',
-                        "seller": {
-                            "@type": "Organization",
-                            "name": seller_name || ''
+                        '@type': 'Offer',
+                        url:
+                            (offerUrlKey &&
+                                urlBase + '/' + offerUrlKey + urlSuffix) ||
+                            productUrl,
+                        priceCurrency:
+                            offerPrice.regularPrice.amount.currency || 'USD',
+                        price: offerPrice.regularPrice.amount.value || '',
+                        availability:
+                            isOfferInstock || stock_status || 'OutOfStock',
+                        seller: {
+                            '@type': 'Organization',
+                            name: seller_name || ''
                         }
-                    }
+                    };
                     if (itemCondition) {
                         _offer.itemCondition = itemCondition;
                     }
@@ -246,32 +286,32 @@ const Product = (props) => {
             }
             dataStructure = {
                 ...dataStructure,
-                "offers": offers
-            }
+                offers: offers
+            };
         } else {
             if (itemCondition) {
                 dataStructure = {
                     ...dataStructure,
-                    "offers": {
+                    offers: {
                         ...(dataStructure.offers || {}),
-                        "itemCondition": itemCondition
+                        itemCondition: itemCondition
                     }
-                }
+                };
             }
             if (special_price_functionality) {
                 dataStructure = {
                     ...dataStructure,
-                    "offers": {
+                    offers: {
                         ...(dataStructure.offers || {}),
-                        "priceValidUntil": price_valid_until_default_value,
+                        priceValidUntil: price_valid_until_default_value
                     }
-                }
+                };
             }
         }
 
         const getCategory = (categores, id) => {
-            let cateFound = {}
-            categores.every((cate) => {
+            let cateFound = {};
+            categores.every(cate => {
                 if (cate.id === id) {
                     cateFound = cate;
                     return false;
@@ -282,7 +322,7 @@ const Product = (props) => {
                 return true;
             });
             return cateFound;
-        }
+        };
 
         // if (category_enabled) {
         //     let categoryId = category_ids[0];
@@ -305,46 +345,45 @@ const Product = (props) => {
             if (extData[color_code]) {
                 dataStructure = {
                     ...dataStructure,
-                    "color": "extData[color_code]"
-                }
+                    color: 'extData[color_code]'
+                };
             }
-            
         }
 
         if (manufacturer_enabled) {
             if (extData[manufacturer_code]) {
                 dataStructure = {
                     ...dataStructure,
-                    "manufacturer": extData[manufacturer_code]
-                }
+                    manufacturer: extData[manufacturer_code]
+                };
             }
         }
 
         if (weight_enabled) {
             dataStructure = {
                 ...dataStructure,
-                "weight": weight
-            }
+                weight: weight
+            };
         }
 
         if (gtin_enabled) {
             if (extData[gtin_code]) {
                 dataStructure = {
                     ...dataStructure,
-                    "gtin14": extData[gtin_code]
-                }
+                    gtin14: extData[gtin_code]
+                };
             }
         }
 
         if (brand_enabled) {
-            if (extData[brand_code] || mpbrand && mpbrand.value) {
+            if (extData[brand_code] || (mpbrand && mpbrand.value)) {
                 dataStructure = {
                     ...dataStructure,
-                    "brand": {
-                        "@type": "Brand",
-                        "name": mpbrand && mpbrand.value || extData[brand_code]
+                    brand: {
+                        '@type': 'Brand',
+                        name: (mpbrand && mpbrand.value) || extData[brand_code]
                     }
-                }
+                };
             }
         }
 
@@ -352,50 +391,59 @@ const Product = (props) => {
             if (extData[model_code]) {
                 dataStructure = {
                     ...dataStructure,
-                    "model": extData[model_code]
-                }
+                    model: extData[model_code]
+                };
             }
         }
 
-        if (rating_summary && rating_summary !== undefined && parseInt(rating_summary) > 0) {
+        if (
+            rating_summary &&
+            rating_summary !== undefined &&
+            parseInt(rating_summary) > 0
+        ) {
             dataStructure = {
                 ...dataStructure,
-                "aggregateRating": {
-                    "@type": "AggregateRating",
-                    "ratingValue": rating_summary,
-                    "bestRating": best_rating || 100,
-                    "ratingCount": review_count
+                aggregateRating: {
+                    '@type': 'AggregateRating',
+                    ratingValue: rating_summary,
+                    bestRating: best_rating || 100,
+                    ratingCount: review_count
                 }
-            }
+            };
         }
 
         // window.productDataStructure = dataStructure; // save data to env
         // script.innerHTML = JSON.stringify(dataStructure);
         // document.head.appendChild(script);
     }
- 
+
     // Reviews data
-    if(rs_enabled && window.disabledProductDataStructure !== true 
-        && add_reviews && reviews && reviews instanceof Array){
-        let _reviews = reviews.map((item)=>{
+    if (
+        rs_enabled &&
+        window.disabledProductDataStructure !== true &&
+        add_reviews &&
+        reviews &&
+        reviews instanceof Array
+    ) {
+        let _reviews = reviews.map(item => {
             return {
-                "@type": "Review",
-                "reviewRating": {
-                    "@type": "Rating",
-                    "ratingValue": parseInt(item.avg_value)
+                '@type': 'Review',
+                reviewRating: {
+                    '@type': 'Rating',
+                    ratingValue: parseInt(item.avg_value)
                 },
-                "author": {
-                    "@type": "Person",
-                    "name": item.nickname
+                author: {
+                    '@type': 'Person',
+                    name: item.nickname
                 },
-                "reviewBody": item.detail
-            }
+                reviewBody: item.detail
+            };
         });
         if (_reviews.length) {
             dataStructure = {
                 ...dataStructure,
-                "review": _reviews
-            }
+                review: _reviews
+            };
         }
     }
 
@@ -408,48 +456,68 @@ const Product = (props) => {
     // Add <html prefix= "og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# product: http://ogp.me/ns/product#">
     if (og_enabled) {
         var htmlTag = document.querySelectorAll('html')[0];
-        htmlTag.setAttribute('prefix', 'og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# product: http://ogp.me/ns/product#')
+        htmlTag.setAttribute(
+            'prefix',
+            'og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# product: http://ogp.me/ns/product#'
+        );
     }
 
     if (product && product instanceof Object) {
-
         // Crop by config
         let description_crop = productDesc || '';
         if (crop_meta_description && max_description_length) {
-            description_crop = description_crop.substr(0, parseInt(max_description_length));
+            description_crop = description_crop.substr(
+                0,
+                parseInt(max_description_length)
+            );
         }
         let meta_title_crop = productName || '';
         if (crop_meta_title && max_title_length) {
-            meta_title_crop = meta_title_crop.substr(0, parseInt(max_title_length));
+            meta_title_crop = meta_title_crop.substr(
+                0,
+                parseInt(max_title_length)
+            );
         }
 
         return (
             <>
-            {og_enabled &&
-                <Helmet>
-                    <meta property="og:type" content="og:product" />
-                    <meta property="og:title" content={meta_title_crop} />
-                    <meta property="og:image" content={productImage} />
-                    <meta property="og:description" content={description_crop} />
-                    <meta property="og:url" content={productUrl} />
-                    <meta property="product:price:amount" content={productPriceAmount}/>
-                    <meta property="product:price:currency" content={default_display_currency_code || "USD"}/>
-                </Helmet>
-            }
-            {tw_enabled &&
-                <Helmet>
-                    <meta name="twitter:card" content="summary" />
-                    <meta name="twitter:site" content={`@${tw_username}`} />
-                    <meta property="og:url" content={productUrl} />
-                    <meta property="og:title" content={meta_title_crop} />
-                    <meta property="og:description" content={description_crop} />
-                    <meta property="og:image" content={productImage} />
-                </Helmet>
-            }
+                {og_enabled && (
+                    <Helmet>
+                        <meta property="og:type" content="og:product" />
+                        <meta property="og:title" content={meta_title_crop} />
+                        <meta property="og:image" content={productImage} />
+                        <meta
+                            property="og:description"
+                            content={description_crop}
+                        />
+                        <meta property="og:url" content={productUrl} />
+                        <meta
+                            property="product:price:amount"
+                            content={productPriceAmount}
+                        />
+                        <meta
+                            property="product:price:currency"
+                            content={default_display_currency_code || 'USD'}
+                        />
+                    </Helmet>
+                )}
+                {tw_enabled && (
+                    <Helmet>
+                        <meta name="twitter:card" content="summary" />
+                        <meta name="twitter:site" content={`@${tw_username}`} />
+                        <meta property="og:url" content={productUrl} />
+                        <meta property="og:title" content={meta_title_crop} />
+                        <meta
+                            property="og:description"
+                            content={description_crop}
+                        />
+                        <meta property="og:image" content={productImage} />
+                    </Helmet>
+                )}
             </>
-        )
+        );
     }
     return null;
-}
+};
 
-export default compose(withRouter)(Product); 
+export default compose(withRouter)(Product);
