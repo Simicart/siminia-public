@@ -100,6 +100,12 @@ export const ProductDetailsFragment = gql`
             disabled
             file
         }
+        media_gallery{
+            disabled
+            url
+            label
+            position
+        }
         meta_description
         name
         price {

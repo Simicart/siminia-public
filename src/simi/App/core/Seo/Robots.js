@@ -201,7 +201,7 @@ const Robots = props => {
         });
 
     // Add meta header NOINDEX, FOLLOW for selected pages
-    if (config && config.mageworx_seo) {
+    if (storeConfigData.storeConfig && mageworx_seo) {
         const { noindex_pages } = robotsConfig || {};
         if (noindex_pages) {
             noindex_pages.every(page => {
