@@ -6,7 +6,7 @@ export const useStoreConfigData = props => {
         data: storeConfigData,
         loading: storeConfigLoading,
         error: storeConfigError
-    } = useQuery(GET_STORE_CONFIG_DATA, {fetchPolicy:"cache-and-network"});
+    } = useQuery(GET_STORE_CONFIG_DATA, { fetchPolicy: 'cache-first' });
     let derivedErrorMessage;
     if (storeConfigError) {
         const errorTarget = storeConfigError;
@@ -27,5 +27,5 @@ export const useStoreConfigData = props => {
         storeConfigData,
         storeConfigLoading,
         storeConfigError
-    }
-}
+    };
+};

@@ -30,6 +30,7 @@ import { ProductDetailExtraProducts } from './productDetailExtraProducts';
 import ProductReview from './ProductReview';
 import ProductLabel from './ProductLabel';
 import Pdetailsbrand from './Pdetailsbrand';
+import DataStructure from '../Seo/Markup/Product';
 
 require('./productFullDetail.scss');
 
@@ -193,9 +194,10 @@ const ProductFullDetail = props => {
             toValue={productDetails.price.toValue}
         />
     );
-
+    const { price } = product;
     return (
         <div className="p-fulldetails-ctn container">
+            <DataStructure product ={product} price={price} />
             {breadcrumbs}
             <div className="wrapperForm">
                 <Form className={classes.root} onSubmit={handleAddToCart}>

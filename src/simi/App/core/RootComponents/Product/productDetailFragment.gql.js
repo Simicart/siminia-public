@@ -12,7 +12,17 @@ const productLabelEnabled =
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL) === 1;
+const shopByBrandEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_SHOP_BY_BRAND &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_SHOP_BY_BRAND) === 1;
 
+const mageworxSeoEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
 export const ProductDetailsFragment = gql`
     fragment ProductDetailsFragment on ProductInterface {
         __typename
@@ -28,6 +38,15 @@ export const ProductDetailsFragment = gql`
         }
         id
         uid
+        ${
+            mageworxSeoEnabled ? `
+            mageworx_canonical_url{
+                url
+                __typename
+                extraData
+            }` 
+            : ``
+        }
         ${
             sizeChartEnabled
                 ? `
@@ -65,6 +84,12 @@ export const ProductDetailsFragment = gql`
         `
                 : ``
         }
+        ${shopByBrandEnabled ? 
+            `mpbrand{
+                image
+            }` 
+            : ``
+        }
         media_gallery_entries {
             # id is deprecated and unused in our code, but lint rules require we
             # request it if available
@@ -76,9 +101,6 @@ export const ProductDetailsFragment = gql`
             file
         }
         meta_description
-        mpbrand{
-            image
-        }
         name
         price {
             ...SimiPriceFragment    
