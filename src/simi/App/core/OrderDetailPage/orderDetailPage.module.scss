@@ -172,6 +172,10 @@
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
 }
+.infoItem {
+    margin-bottom:1rem;
+    padding: 0 35px 0 0;
+}
 .infoItemTitle {
     color: #111111;
     font-family: poppins;

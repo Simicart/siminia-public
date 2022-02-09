@@ -49,7 +49,7 @@ const OrderDetailPage = props => {
     }
 
     if (!dataDetail) {
-        console.warn(errorDetail)
+        console.warn(errorDetail);
 
         return (
             <span className={classes.dataError}>
@@ -60,14 +60,17 @@ const OrderDetailPage = props => {
                     }
                 />
             </span>
-        )
+        );
     }
 
-    if (!dataDetail.customer.orders.items[0] ) {
-        return <div className={classes.noItem}>
-            <h1>You have no item here. </h1>
-        </div>
+    if (!dataDetail.customer.orders.items[0]) {
+        return (
+            <div className={classes.noItem}>
+                <h1>You have no item here. </h1>
+            </div>
+        );
     }
+    console.log('testtt', dataDetail);
 
     const { customer } = dataDetail;
     const listItem = customer.orders.items[0].items;
@@ -315,6 +318,7 @@ const OrderDetailPage = props => {
                             </span>
                         </div>
                     </div>
+                   
                     <div className={classes.infoItem}>
                         <div className={classes.infoItemTitle}>
                             {formatMessage({
@@ -326,6 +330,24 @@ const OrderDetailPage = props => {
                             <span>
                                 {customer.orders.items[0].shipping_method}
                             </span>
+                            {customer.orders.items[0].mp_delivery_information
+                        .mp_delivery_time ? (
+                        <div className={classes.infoItemContent}>
+                            <span>
+                                {customer.orders.items[0].mp_delivery_information.mp_delivery_date.slice(
+                                    0,
+                                    10
+                                )}
+                            </span>
+                            <span>
+                                {
+                                    customer.orders.items[0]
+                                        .mp_delivery_information
+                                        .mp_delivery_time
+                                }
+                            </span>
+                        </div>
+                    ) : null}
                         </div>
                     </div>
                     <div className={classes.infoItem}>
