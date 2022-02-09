@@ -11,6 +11,9 @@ import CategoryHeader from './categoryHeader';
 import NoProductsFound from 'src/simi/BaseComponents/Products/NoProductsFound';
 import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent';
 import { useIntl } from 'react-intl';
+import Seo from '../../SeoBasic'
+import Canonical from '../../SeoBasic/Canonical';
+import MarkupCategory from '../../SeoBasic/Markup/Category';
 
 //call chunked package along with API (for opimizing the package purpose)
 const Products = props => {
@@ -81,6 +84,9 @@ const Category = props => {
 
     return (
         <div className="container">
+            <Seo pageType="CATEGORY"/>
+            <Canonical type="CATEGORY" />
+            <MarkupCategory category={category}/>
             {breadcrumb && breadcrumb.length ? (
                 <div style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
                     <Breadcrumbs breadcrumb={breadcrumb} />
