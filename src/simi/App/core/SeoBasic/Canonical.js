@@ -3,8 +3,6 @@ import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import Robots from './Robots';
-// import { useStoreConfigData } from './talons/useStoreConfigData';
-import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 
 const Canonical = props => {
     let link = '';

@@ -1,4 +1,3 @@
-import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import React from 'react';
 
 /* 
