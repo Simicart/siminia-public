@@ -9,7 +9,7 @@ import { configColor } from 'src/simi/Config';
 
 import { useProductFullDetail } from 'src/simi/talons/ProductFullDetail/useProductFullDetail';
 import { isProductConfigurable } from '@magento/peregrine/lib/util/isProductConfigurable';
-import { smoothScrollToView } from 'src/simi/Helper/Behavior';
+import { smoothScrollToView } from 'src/simi/Helper/Behavior'
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
 import Button from '@magento/venia-ui/lib/components/Button';
@@ -75,8 +75,8 @@ const ProductFullDetail = props => {
     const productReview = useRef(null);
     const scrollToReview = () => {
         smoothScrollToView(document.querySelector('.reviewsContainer'));
-    };
-    
+    }
+
     const classes = useStyle(defaultClasses, props.classes);
 
     const options = isProductConfigurable(product) ? (
@@ -194,7 +194,7 @@ const ProductFullDetail = props => {
             toValue={productDetails.price.toValue}
         />
     );
-    const { price } = product;
+    const { price } = product || {};
     return (
         <div className="p-fulldetails-ctn container">
             <DataStructure product ={product} price={price} />

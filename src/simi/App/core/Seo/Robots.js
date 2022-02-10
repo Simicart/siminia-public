@@ -34,12 +34,11 @@ const Robots = props => {
         storeConfigLoading,
         derivedErrorMessage
     } = useStoreConfigData();
-
     const mageworx_seo =
         storeConfigData && storeConfigData.storeConfig
             ? storeConfigData.storeConfig.mageworx_seo
             : '';
-
+    
     let seo;
     try {
         seo = JSON.parse(mageworx_seo);
@@ -184,7 +183,7 @@ const Robots = props => {
             }
             return true;
         });
-
+    
     // Add meta header NOINDEX, FOLLOW for additional pages
     noindex_additional_pages &&
         noindex_additional_pages.every(page => {
@@ -201,7 +200,7 @@ const Robots = props => {
         });
 
     // Add meta header NOINDEX, FOLLOW for selected pages
-    if (config && config.mageworx_seo) {
+    if (storeConfigData.storeConfig && mageworx_seo) {
         const { noindex_pages } = robotsConfig || {};
         if (noindex_pages) {
             noindex_pages.every(page => {
@@ -229,11 +228,9 @@ const Robots = props => {
             });
         }
     }
-
-    if (props.isLogic) return content;
-
+    if (props.isLogic) return content;  
     if (!content) return null;
-
+   
     return <meta name="robots" content={content} />;
 };
 

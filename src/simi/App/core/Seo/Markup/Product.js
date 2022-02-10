@@ -168,11 +168,19 @@ const Product = props => {
 
         const { minimalPrice, regularPrice } = price || {};
         const productPrice = minimalPrice || regularPrice || {};
-        productDesc = short_description || description || { html: '' };
-        productDesc = crop_html_in_description
+
+        if(short_description.html.length > 0 ){
+            productDesc = short_description || { html: '' };
+            productDesc = crop_html_in_description
             ? productDesc.html.replace(/(<([^>]+)>)/gi, '')
             : productDesc.html;
-
+        } else {
+            productDesc = description
+            productDesc = crop_html_in_description
+            ? productDesc.replace(/(<([^>]+)>)/gi, '')
+            : productDesc;
+        }
+        
         productUrl = (url_key && urlBase + '/' + url_key + urlSuffix) || '';
         productName = name;
 
