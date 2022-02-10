@@ -50,8 +50,7 @@ const Category = props => {
         appliedFilter,
         pageControl
     } = talonProps;
-    // console.log("products",products)
-    
+
     if (error) return <div>{formatMessage({ id: 'Data Fetch Error' })}</div>;
 
     if (!products || !products.category) {
