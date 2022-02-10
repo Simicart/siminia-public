@@ -29,6 +29,7 @@ import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import ProductReview from './ProductReview';
 
 import { useWindowSize } from '@magento/peregrine';
+import DataStructure from '../SeoBasic/Markup/Product';
 
 require('./productbuilderFullDetail.scss');
 
@@ -415,7 +416,7 @@ const ProductBuilderFullDetail = props => {
             toValue={productDetails.price.toValue}
         />
     );
-
+    const { price } = product || {};
     return (
         <div
             className={`${classes.smProductBuilderRoot} ${
@@ -424,6 +425,7 @@ const ProductBuilderFullDetail = props => {
                     : ''
             } smProductBuilderRoot`}
         >
+            <DataStructure product ={product} price={price} />
             <Form
                 className={classes.root}
                 onSubmit={handleAddToCart}

@@ -28,6 +28,7 @@ const SimiProductOptions = React.lazy(() => import('../SimiProductOptions'));
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import { ProductDetailExtraProducts } from './productDetailExtraProducts';
 import ProductReview from './ProductReview';
+import DataStructure from '../SeoBasic/Markup/Product';
 
 require('./productFullDetail.scss');
 
@@ -191,9 +192,10 @@ const ProductFullDetail = props => {
             toValue={productDetails.price.toValue}
         />
     );
-
+    const { price } = product || {};
     return (
         <div className="p-fulldetails-ctn container">
+            <DataStructure product ={product} price={price} />
             {breadcrumbs}
             <div className="wrapperForm">
                 <Form className={classes.root} onSubmit={handleAddToCart}>
