@@ -9,7 +9,7 @@ import { configColor } from 'src/simi/Config';
 
 import { useProductFullDetail } from 'src/simi/talons/ProductFullDetail/useProductFullDetail';
 import { isProductConfigurable } from '@magento/peregrine/lib/util/isProductConfigurable';
-import { smoothScrollToView } from 'src/simi/Helper/Behavior'
+import { smoothScrollToView } from 'src/simi/Helper/Behavior';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
 import Button from '@magento/venia-ui/lib/components/Button';
@@ -31,8 +31,15 @@ import ProductReview from './ProductReview';
 import ProductLabel from './ProductLabel';
 import Pdetailsbrand from './Pdetailsbrand';
 import DataStructure from '../Seo/Markup/Product';
+import DataStructureBasic from '../SeoBasic/Markup/Product';
 
 require('./productFullDetail.scss');
+
+const mageworxSeoEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
 
 // Correlate a GQL error message to a field. GQL could return a longer error
 // string but it may contain contextual info such as product id. We can use
@@ -75,7 +82,7 @@ const ProductFullDetail = props => {
     const productReview = useRef(null);
     const scrollToReview = () => {
         smoothScrollToView(document.querySelector('.reviewsContainer'));
-    }
+    };
 
     const classes = useStyle(defaultClasses, props.classes);
 
@@ -197,7 +204,11 @@ const ProductFullDetail = props => {
     const { price } = product || {};
     return (
         <div className="p-fulldetails-ctn container">
-            <DataStructure product ={product} price={price} />
+            {mageworxSeoEnabled ? (
+                <DataStructure product={product} price={price} />
+            ) : (
+                <DataStructureBasic product={product} price={price} />
+            )}
             {breadcrumbs}
             <div className="wrapperForm">
                 <Form className={classes.root} onSubmit={handleAddToCart}>

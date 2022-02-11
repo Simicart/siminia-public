@@ -169,18 +169,18 @@ const Product = props => {
         const { minimalPrice, regularPrice } = price || {};
         const productPrice = minimalPrice || regularPrice || {};
 
-        if(short_description.html.length > 0 ){
+        if (short_description.html.length > 0) {
             productDesc = short_description || { html: '' };
             productDesc = crop_html_in_description
-            ? productDesc.html.replace(/(<([^>]+)>)/gi, '')
-            : productDesc.html;
+                ? productDesc.html.replace(/(<([^>]+)>)/gi, '')
+                : productDesc.html;
         } else {
-            productDesc = description
+            productDesc = description;
             productDesc = crop_html_in_description
-            ? productDesc.replace(/(<([^>]+)>)/gi, '')
-            : productDesc;
+                ? productDesc.replace(/(<([^>]+)>)/gi, '')
+                : productDesc;
         }
-        
+
         productUrl = (url_key && urlBase + '/' + url_key + urlSuffix) || '';
         productName = name;
 
@@ -413,7 +413,7 @@ const Product = props => {
                 ...dataStructure,
                 aggregateRating: {
                     '@type': 'AggregateRating',
-                    ratingValue: rating_summary,
+                    ratingValue: review_count,
                     bestRating: best_rating || 100,
                     ratingCount: review_count
                 }

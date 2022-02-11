@@ -30,7 +30,7 @@ import ProductReview from './ProductReview';
 
 import { useWindowSize } from '@magento/peregrine';
 import DataStructure from '../Seo/Markup/Product';
-
+import DataStructureBasic from '../SeoBasic/Markup/Product';
 require('./productbuilderFullDetail.scss');
 
 // Correlate a GQL error message to a field. GQL could return a longer error
@@ -46,7 +46,11 @@ const ERROR_MESSAGE_TO_FIELD_MAPPING = {
 const ERROR_FIELD_TO_MESSAGE_MAPPING = {
     quantity: 'The requested quantity is not available.'
 };
-
+const mageworxSeoEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
 const ProductBuilderFullDetail = props => {
     const { product, pageData, maskedId } = props;
 
@@ -188,7 +192,7 @@ const ProductBuilderFullDetail = props => {
     }
 
     const pDetails = JSON.parse(JSON.stringify(product));
-    // console.log('pdetail', pDetails);
+    
     const overRender = (item, itemProps, innerContent) => {
         if (!item || !itemProps || !productDetails) return false;
         const { type } = item;
@@ -425,7 +429,11 @@ const ProductBuilderFullDetail = props => {
                     : ''
             } smProductBuilderRoot`}
         >
-            <DataStructure product ={product} price={price} />
+            {mageworxSeoEnabled ? (
+                <DataStructure product={product} price={price} />
+            ) : (
+                <DataStructureBasic product={product} price={price} />
+            )}
             <Form
                 className={classes.root}
                 onSubmit={handleAddToCart}

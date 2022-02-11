@@ -122,8 +122,8 @@ const Product = props => {
                 ...dataStructure,
                 aggregateRating: {
                     '@type': 'AggregateRating',
-                    ratingValue: rating_summary,
-                    bestRating:  100,
+                    ratingValue: review_count,
+                    bestRating: 100,
                     ratingCount: review_count
                 }
             };

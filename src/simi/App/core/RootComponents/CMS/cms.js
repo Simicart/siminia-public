@@ -9,7 +9,13 @@ import { useStyle } from '@magento/venia-ui/lib/classify';
 import { useIntl } from 'react-intl';
 
 import defaultClasses from './cms.module.css';
-import Seo from '../../Seo'
+import Seo from '../../Seo';
+import SeoBasic from '../../SeoBasic';
+const mageworxSeoEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
 const CMSPage = props => {
     const { identifier } = props;
 
@@ -48,7 +54,7 @@ const CMSPage = props => {
                 <StoreTitle>{pageTitle}</StoreTitle>
                 <Meta name="title" content={pageTitle} />
                 <Meta name="description" content={meta_description} />
-                <Seo/>
+                {mageworxSeoEnabled ? <Seo /> : <SeoBasic />}
                 {headingElement}
                 <RichContent html={content} />
             </Fragment>
