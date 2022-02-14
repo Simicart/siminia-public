@@ -15,6 +15,13 @@ import { configColor } from 'src/simi/Config';
 import Identify from 'src/simi/Helper/Identify';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import DataStructure from '../../Seo/Markup/Product';
+import DataStructureBasic from '../../SeoBasic/Markup/Product';
+
+const mageworxSeoEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
 
 require('./productReview.scss');
 const ProductReview = forwardRef((props, ref) => {
@@ -358,7 +365,11 @@ const ProductReview = forwardRef((props, ref) => {
     const classes = mergeClasses(props.classes, defaultClasses);
     return reviews && reviews.items && reviews.items.length != 0 ? (
         <div className="reviewsContainer">
-            {items && <DataStructure reviews={items} />}
+            {mageworxSeoEnabled ? (
+                <DataStructure reviews={items} />
+            ) : (
+                <DataStructureBasic reviews={items} />
+            )}
             <div className="reviewBtn">
                 <span className="QtyReivew">
                     {reviews.items.length}{' '}

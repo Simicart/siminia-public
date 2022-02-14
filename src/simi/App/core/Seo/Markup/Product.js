@@ -1,5 +1,4 @@
 import React from 'react';
-import Identify from 'src/simi/Helper/Identify';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
@@ -84,10 +83,7 @@ const Product = props => {
         condition_value_default
     } = productConfig || {};
 
-    const { product, reviews, price: replacePrice } = props;
-
-    const avg_rating =
-        (reviews && reviews[0] && reviews[0].average_rating) || '';
+    const { product, reviews, price: replacePrice, avg_rating } = props;
 
     const { mageworx_canonical_url } = product || {};
 
