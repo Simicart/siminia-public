@@ -31,6 +31,11 @@ const GET_ORDER_DETAIL = gql`
           mp_house_security_code
           mp_delivery_comment
        }
+       mp_reward_points {
+        earn
+        spent
+        discount
+      }
         items {
           product_name
           product_sku

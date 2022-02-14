@@ -46,12 +46,12 @@
             border: 1px solid #f2f2f2;
         }
         tbody > tr > td {
-            padding: 15px;
+            padding: 10px;
             color: #333333;
             font-size: 14px;
         }
         tfoot > tr > td {
-            padding: 20px;
+            padding: 5px 20px;
             text-align: right;
         }
         tfoot tr {
@@ -59,6 +59,9 @@
         }
         tfoot tr:nth-child(1) {
             border-bottom: none;
+            td {
+                padding-top: 20px;
+            }
         }
         tfoot tr:nth-child(2) {
             border-top: none;
@@ -69,25 +72,46 @@
         }
         tfoot tr:nth-child(3) {
             border-top: none;
+            border-bottom: none;
+            td {
+                padding-bottom: 0;
+            }
+        }
+        tfoot tr:nth-child(4) {
+            border-top: none;
+            border-bottom: none;
+            td {
+                padding-bottom: 0;
+            }
+        }
+        tfoot tr:nth-child(5) {
+            border-top: none;
+            border-bottom: none;
+            td {
+                padding-bottom: 0;
+            }
+        }
+        tfoot tr:nth-child(6) {
+            border-top: none;
             td {
 
                 padding-top: 0;
                 padding-bottom: 20px;
             }
         }
-        tfoot > tr:nth-child(1) td {
-            border-bottom: none;
-            padding-bottom: 0;
-            color: #111111;
-            font-family: poppins;
-            font-size: 14px;
-            letter-spacing: 0;
-            line-height: 14px;
-        }
-        tfoot > tr:nth-child(2) td {
-            border-top: none;
-            padding-top: 5px;
-        }
+        // tfoot > tr:nth-child(1) td {
+        //     border-bottom: none;
+        //     padding-bottom: 0;
+        //     color: #111111;
+        //     font-family: poppins;
+        //     font-size: 14px;
+        //     letter-spacing: 0;
+        //     line-height: 14px;
+        // }
+        // tfoot > tr:nth-child(6) td {
+        //     border-top: none;
+        //     padding-top: 5px;
+        // }
     }
 }
 
