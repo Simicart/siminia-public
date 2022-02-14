@@ -14,6 +14,7 @@ import { isRequired } from '@magento/venia-ui/lib/util/formValidators';
 import { configColor } from 'src/simi/Config';
 import Identify from 'src/simi/Helper/Identify';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
+import DataStructure from '../../Seo/Markup/Product';
 
 require('./productReview.scss');
 const ProductReview = forwardRef((props, ref) => {
@@ -353,10 +354,11 @@ const ProductReview = forwardRef((props, ref) => {
             return html;
         } else return null;
     };
-
+    const items = (reviews && reviews.items) || [];
     const classes = mergeClasses(props.classes, defaultClasses);
     return reviews && reviews.items && reviews.items.length != 0 ? (
         <div className="reviewsContainer">
+            {items && <DataStructure reviews={items} />}
             <div className="reviewBtn">
                 <span className="QtyReivew">
                     {reviews.items.length}{' '}

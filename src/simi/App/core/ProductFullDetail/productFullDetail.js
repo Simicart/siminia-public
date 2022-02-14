@@ -80,6 +80,7 @@ const ProductFullDetail = props => {
 
     const { formatMessage } = useIntl();
     const productReview = useRef(null);
+
     const scrollToReview = () => {
         smoothScrollToView(document.querySelector('.reviewsContainer'));
     };

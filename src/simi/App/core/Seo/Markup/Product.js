@@ -86,6 +86,9 @@ const Product = props => {
 
     const { product, reviews, price: replacePrice } = props;
 
+    const avg_rating =
+        (reviews && reviews[0] && reviews[0].average_rating) || '';
+
     const { mageworx_canonical_url } = product || {};
 
     const { extraData } = mageworx_canonical_url || {};
@@ -413,7 +416,7 @@ const Product = props => {
                 ...dataStructure,
                 aggregateRating: {
                     '@type': 'AggregateRating',
-                    ratingValue: review_count,
+                    ratingValue: avg_rating,
                     bestRating: best_rating || 100,
                     ratingCount: review_count
                 }
@@ -438,13 +441,13 @@ const Product = props => {
                 '@type': 'Review',
                 reviewRating: {
                     '@type': 'Rating',
-                    ratingValue: parseInt(item.avg_value)
+                    ratingValue: parseInt(item.average_rating)
                 },
                 author: {
                     '@type': 'Person',
                     name: item.nickname
                 },
-                reviewBody: item.detail
+                reviewBody: item.text
             };
         });
         if (_reviews.length) {
