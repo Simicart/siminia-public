@@ -98,8 +98,15 @@ const ProductFullDetail = props => {
     });
     const reviews =
         data && data.products.items[0] ? data.products.items[0].reviews : false;
+
     const items = (reviews && reviews.items) || [];
-    const avg_rating = items && items[0] ? items[0].average_rating : '';
+
+    let avg_rating =
+        items.reduce((sum, item, index) => {
+            let val =
+                item.ratings_breakdown[0] && item.ratings_breakdown[0].value;
+            return (sum = sum + parseInt(val));
+        }, 0) / items.length;
 
     const { formatMessage } = useIntl();
     const productReview = useRef(null);
