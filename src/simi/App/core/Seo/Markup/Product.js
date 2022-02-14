@@ -443,7 +443,8 @@ const Product = props => {
                     '@type': 'Person',
                     name: item.nickname
                 },
-                reviewBody: item.text
+                reviewBody: item.text,
+                bestRating: best_rating || 100
             };
         });
         if (_reviews.length) {
