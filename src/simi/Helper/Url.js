@@ -87,7 +87,7 @@ export const cateUrlSuffix = () => {
             'CATEGORY_URL_SUFFIX',
             suffix
         );
-        return suffix;
+        return suffix ? suffix : '';
     } catch (err) {
         console.log(err);
     }
@@ -108,7 +108,7 @@ export const productUrlSuffix = () => {
             'PRODUCT_URL_SUFFIX',
             suffix
         );
-        return suffix;
+        return suffix ? suffix : '';
     } catch (err) {
         console.log(err);
     }
