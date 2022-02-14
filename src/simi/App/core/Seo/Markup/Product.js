@@ -1,5 +1,4 @@
 import React from 'react';
-import Identify from 'src/simi/Helper/Identify';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
@@ -84,7 +83,7 @@ const Product = props => {
         condition_value_default
     } = productConfig || {};
 
-    const { product, reviews, price: replacePrice } = props;
+    const { product, reviews, price: replacePrice, avg_rating } = props;
 
     const { mageworx_canonical_url } = product || {};
 
@@ -169,18 +168,18 @@ const Product = props => {
         const { minimalPrice, regularPrice } = price || {};
         const productPrice = minimalPrice || regularPrice || {};
 
-        if(short_description.html.length > 0 ){
+        if (short_description.html.length > 0) {
             productDesc = short_description || { html: '' };
             productDesc = crop_html_in_description
-            ? productDesc.html.replace(/(<([^>]+)>)/gi, '')
-            : productDesc.html;
+                ? productDesc.html.replace(/(<([^>]+)>)/gi, '')
+                : productDesc.html;
         } else {
-            productDesc = description
+            productDesc = description;
             productDesc = crop_html_in_description
-            ? productDesc.replace(/(<([^>]+)>)/gi, '')
-            : productDesc;
+                ? productDesc.replace(/(<([^>]+)>)/gi, '')
+                : productDesc;
         }
-        
+
         productUrl = (url_key && urlBase + '/' + url_key + urlSuffix) || '';
         productName = name;
 
@@ -413,7 +412,7 @@ const Product = props => {
                 ...dataStructure,
                 aggregateRating: {
                     '@type': 'AggregateRating',
-                    ratingValue: rating_summary,
+                    ratingValue: avg_rating,
                     bestRating: best_rating || 100,
                     ratingCount: review_count
                 }
@@ -438,13 +437,13 @@ const Product = props => {
                 '@type': 'Review',
                 reviewRating: {
                     '@type': 'Rating',
-                    ratingValue: parseInt(item.avg_value)
+                    ratingValue: parseInt(item.average_rating)
                 },
                 author: {
                     '@type': 'Person',
                     name: item.nickname
                 },
-                reviewBody: item.detail
+                reviewBody: item.text
             };
         });
         if (_reviews.length) {

@@ -8,7 +8,7 @@ props = {
 } 
 */
 
-const Robots = props => {
+const RobotsBasic = props => {
     let content = '';
 
     if (['CATEGORY', 'PRODUCT'].includes(props.pageType)) {
@@ -58,4 +58,4 @@ const Robots = props => {
     return <meta name="robots" content={content} />;
 };
 
-export default Robots;
+export default RobotsBasic;

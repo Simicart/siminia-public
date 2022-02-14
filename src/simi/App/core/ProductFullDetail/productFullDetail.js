@@ -1,15 +1,15 @@
-import React, { Fragment, Suspense, useRef } from 'react';
+import React, { Fragment, Suspense, useRef, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { arrayOf, bool, number, shape, string } from 'prop-types';
 import { Form } from 'informed';
 import { Info } from 'react-feather';
-
+import Identify from 'src/simi/Helper/Identify';
 import Price from '../PriceWrapper/Price';
 import { configColor } from 'src/simi/Config';
 
 import { useProductFullDetail } from 'src/simi/talons/ProductFullDetail/useProductFullDetail';
 import { isProductConfigurable } from '@magento/peregrine/lib/util/isProductConfigurable';
-import { smoothScrollToView } from 'src/simi/Helper/Behavior'
+import { smoothScrollToView } from 'src/simi/Helper/Behavior';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
 import Button from '@magento/venia-ui/lib/components/Button';
@@ -31,8 +31,16 @@ import ProductReview from './ProductReview';
 import ProductLabel from './ProductLabel';
 import Pdetailsbrand from './Pdetailsbrand';
 import DataStructure from '../Seo/Markup/Product';
+import DataStructureBasic from '../SeoBasic/Markup/Product';
+import useProductReview from '../../../talons/ProductFullDetail/useProductReview';
 
 require('./productFullDetail.scss');
+
+const mageworxSeoEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
 
 // Correlate a GQL error message to a field. GQL could return a longer error
 // string but it may contain contextual info such as product id. We can use
@@ -71,11 +79,34 @@ const ProductFullDetail = props => {
         relatedProducts
     } = talonProps;
 
+    const storeConfig = Identify.getStoreConfig();
+    const enabledReview =
+        storeConfig &&
+        storeConfig.storeConfig &&
+        parseInt(storeConfig.storeConfig.product_reviews_enabled);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const {
+        data,
+        loading,
+        submitReviewLoading,
+        submitReview
+    } = useProductReview({
+        product,
+        setIsOpen,
+        enabledReview
+    });
+    const reviews =
+        data && data.products.items[0] ? data.products.items[0].reviews : false;
+    const items = (reviews && reviews.items) || [];
+    const avg_rating = items && items[0] ? items[0].average_rating : '';
+
     const { formatMessage } = useIntl();
     const productReview = useRef(null);
+
     const scrollToReview = () => {
         smoothScrollToView(document.querySelector('.reviewsContainer'));
-    }
+    };
 
     const classes = useStyle(defaultClasses, props.classes);
 
@@ -197,7 +228,19 @@ const ProductFullDetail = props => {
     const { price } = product || {};
     return (
         <div className="p-fulldetails-ctn container">
-            <DataStructure product ={product} price={price} />
+            {mageworxSeoEnabled ? (
+                <DataStructure
+                    avg_rating={avg_rating}
+                    product={product}
+                    price={price}
+                />
+            ) : (
+                <DataStructureBasic
+                    avg_rating={avg_rating}
+                    product={product}
+                    price={price}
+                />
+            )}
             {breadcrumbs}
             <div className="wrapperForm">
                 <Form className={classes.root} onSubmit={handleAddToCart}>

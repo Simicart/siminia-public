@@ -11,7 +11,7 @@ props: {
 }
 */
 const Product = props => {
-    const { product, reviews, price: replacePrice } = props;
+    const { product, reviews, price: replacePrice, avg_rating } = props;
 
     let dataStructure = window.productDataStructure; // Init data
 
@@ -122,8 +122,8 @@ const Product = props => {
                 ...dataStructure,
                 aggregateRating: {
                     '@type': 'AggregateRating',
-                    ratingValue: rating_summary,
-                    bestRating:  100,
+                    ratingValue: avg_rating,
+                    bestRating: 100,
                     ratingCount: review_count
                 }
             };
@@ -145,13 +145,13 @@ const Product = props => {
                 '@type': 'Review',
                 reviewRating: {
                     '@type': 'Rating',
-                    ratingValue: parseInt(item.avg_value)
+                    ratingValue: parseInt(item.average_rating)
                 },
                 author: {
                     '@type': 'Person',
                     name: item.nickname
                 },
-                reviewBody: item.detail
+                reviewBody: item.text
             };
         });
         if (_reviews.length) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import Robots from './Robots';
+import RobotsBasic from './RobotsBasic';
 
 const Canonical = props => {
     let link = '';
@@ -18,7 +18,7 @@ const Canonical = props => {
 
     link = canonicalUrl.replace(/\/$/, ''); // remove trailing slash
     
-    const robotContent = Robots({
+    const robotContent = RobotsBasic({
         isLogic: true,
         location: props.location,
         pageType: type
