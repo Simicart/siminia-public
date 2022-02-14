@@ -3,7 +3,7 @@
  * example: [`@magento/venia-ui/lib/components/Main/main.js`]: './lib/components/Main/main.js'
  */
 module.exports = componentOverride = {
-    [`@magento/venia-ui/lib/components/Routes/routes.js`]: '@simicart/siminia/src/override/routes.js',
+    [`@magento/venia-ui/lib/components/Routes/routes.js`]: '@simicart/siminia/src/override/routesNative.js',
     [`@magento/venia-ui/lib/components/App/localeProvider.js`]: '@simicart/siminia/src/override/localeProvider.js',
     [`@magento/peregrine/lib/talons/CategoryTree/useCategoryTree.js`]: '@simicart/siminia/src/override/useCategoryTree.js',
     [`@magento/peregrine/lib/talons/Header/useStoreSwitcher.js`]: '@simicart/siminia/src/simi/talons/Header/useStoreSwitcher.js',

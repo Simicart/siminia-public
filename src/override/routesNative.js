@@ -11,7 +11,7 @@ const Login = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "Login"*/ 'src/simi/App/core/Customer/Login')
+                import(/* webpackChunkName: "Login"*/ 'src/simi/App/nativeInner/Customer/Login')
             }
             {...props}
         />
