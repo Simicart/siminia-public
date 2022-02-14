@@ -76,6 +76,8 @@ const OrderDetailPage = props => {
     const listItem = customer.orders.items[0].items;
     const subTotal = customer.orders.items[0].total.subtotal.value;
     const grandTotal = customer.orders.items[0].total.base_grand_total.value;
+    const mpRewardPoints = customer.orders.items[0].mp_reward_points;
+    console.log(mpRewardPoints);
     const status = customer.orders.items[0].status;
     console.log('dataDetailaa', customer);
 
@@ -210,6 +212,36 @@ const OrderDetailPage = props => {
                 </thead>
                 <tbody>{renderTRTable(listItem)}</tbody>
                 <tfoot>
+                    {mpRewardPoints.earn ? (
+                        <tr>
+                            <td colSpan={5}>
+                                {formatMessage({
+                                    id: 'You earned',
+                                    defaultMessage: 'You earned'
+                                })}
+                                : {mpRewardPoints.earn}{' '}
+                                {formatMessage({
+                                    id: 'points',
+                                    defaultMessage: 'points'
+                                })}
+                            </td>
+                        </tr>
+                    ) : null}
+                    {mpRewardPoints.spent ? (
+                        <tr>
+                            <td colSpan={5}>
+                                {formatMessage({
+                                    id: 'You spent',
+                                    defaultMessage: 'You spent'
+                                })}
+                                : {mpRewardPoints.spent}{' '}
+                                {formatMessage({
+                                    id: 'points',
+                                    defaultMessage: 'points'
+                                })}
+                            </td>
+                        </tr>
+                    ) : null}
                     <tr>
                         <td colSpan={5}>
                             {formatMessage({
@@ -224,6 +256,22 @@ const OrderDetailPage = props => {
                         </td>
                         {/* <td colSpan={5}>GRANDTOTAL: {subTotal}</td> */}
                     </tr>
+                    {mpRewardPoints.discount ? (
+                        <tr>
+                            <td colSpan={5}>
+                                {formatMessage({
+                                    id: 'Discount',
+                                    defaultMessage: 'Discount'
+                                })}
+                                :{' '}
+                                {forMatCurrentValue(
+                                    customer.orders.items[0].total.subtotal
+                                        .currency
+                                )}
+                                {mpRewardPoints.discount}
+                            </td>
+                        </tr>
+                    ) : null}
                     <tr>
                         <td colSpan={5}>
                             {formatMessage({
@@ -318,7 +366,7 @@ const OrderDetailPage = props => {
                             </span>
                         </div>
                     </div>
-                   
+
                     <div className={classes.infoItem}>
                         <div className={classes.infoItemTitle}>
                             {formatMessage({
@@ -331,23 +379,23 @@ const OrderDetailPage = props => {
                                 {customer.orders.items[0].shipping_method}
                             </span>
                             {customer.orders.items[0].mp_delivery_information
-                        .mp_delivery_time ? (
-                        <div className={classes.infoItemContent}>
-                            <span>
-                                {customer.orders.items[0].mp_delivery_information.mp_delivery_date.slice(
-                                    0,
-                                    10
-                                )}
-                            </span>
-                            <span>
-                                {
-                                    customer.orders.items[0]
-                                        .mp_delivery_information
-                                        .mp_delivery_time
-                                }
-                            </span>
-                        </div>
-                    ) : null}
+                                .mp_delivery_time ? (
+                                <div className={classes.infoItemContent}>
+                                    <span>
+                                        {customer.orders.items[0].mp_delivery_information.mp_delivery_date.slice(
+                                            0,
+                                            10
+                                        )}
+                                    </span>
+                                    <span>
+                                        {
+                                            customer.orders.items[0]
+                                                .mp_delivery_information
+                                                .mp_delivery_time
+                                        }
+                                    </span>
+                                </div>
+                            ) : null}
                         </div>
                     </div>
                     <div className={classes.infoItem}>
