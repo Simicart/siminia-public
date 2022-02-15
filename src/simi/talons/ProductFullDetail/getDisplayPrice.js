@@ -90,6 +90,10 @@ export const getCustomPrice = settings => {
     const regularPrice = product.price.regularPrice;
     const regularAmount = regularPrice.amount.value;
 
+    // this will be different from regularPrice on product with discount
+    const minimumPrice = product.price.minimalPrice;
+    const minimumAmount = minimumPrice.amount.value;
+
     const customOptions = product.options || [];
     const chosenCustomOptionUidArray = Object.keys(chosenCustomOptions).filter(
         key => !!chosenCustomOptions[key]
@@ -135,7 +139,7 @@ export const getCustomPrice = settings => {
         }
     }, 0);
 
-    return { ...originalPriceObject, value: regularAmount + additionalPrice };
+    return { ...originalPriceObject, value: minimumAmount + additionalPrice};
 };
 
 export const getBundlePrice = settings => {
