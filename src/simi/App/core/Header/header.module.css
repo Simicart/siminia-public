@@ -55,7 +55,6 @@ header {
     backdrop-filter: blur(6px);
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
 }
 /* megaMenuItem */
 .megaMenu > div {
