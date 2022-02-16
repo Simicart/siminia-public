@@ -1,0 +1,32 @@
+.griditem-price-ctn {
+    .price {
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: 600;
+        color: #e02020;
+    }
+    .regular-price .price {
+        font-weight: 400;
+        color: #4f4f4f;
+    }
+    .sale_off {
+        display: none;
+    }
+    .regular-price-label {
+        display: none;
+    }
+}
+@media (max-width: 480px) {
+    .griditem-price-ctn {
+        .small > div > span > span, .product-prices > div>span>span{
+            height: 19px;
+            width: 61px;
+            color: #150826;
+            font-family: Roboto;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 0;
+            line-height: 19px;
+        }
+    }
+}

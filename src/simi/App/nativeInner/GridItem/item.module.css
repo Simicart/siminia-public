@@ -1,0 +1,247 @@
+.siminia-product-grid-item {
+    position: relative;
+    height: 100%;
+    margin: 0;
+    position: relative;
+    background-color: white;
+}
+
+.siminia-product-des {
+    text-align: left;
+    margin: 8px auto 8px auto;
+    overflow: hidden;
+    padding: 0 10px 10px;
+}
+.siminia-product-des .product-name {
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-bottom: 8px;
+    text-align: start;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 22px;
+    max-height: 44px;
+    cursor: pointer;
+}
+
+.siminia-product-des .price {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+
+.siminia-product-des .old {
+    font-weight: 500;
+    font-size: 14px;
+    display: inline-block;
+    text-decoration: line-through;
+}
+@media (min-width: 1024px) {
+    .siminia-product-des {
+        background-color: white;
+    }
+}
+@media (max-width: 1024px) {
+    .siminia-product-des {
+        padding: 0;
+    }
+}
+
+.discountBadge {
+    position: absolute;
+    top: 8px;
+    width: 48px;
+    height: 48px;
+    padding: 15px 2px;
+    text-align: center;
+    border-radius: 24px;
+    color: white;
+    background-color: #e02020;
+    font-size: 14px;
+    line-height: 19px;
+}
+/*
+Image
+*/
+.siminia-product-image {
+    border: 1px solid #eee;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin: 10px 10px 0;
+    width: calc(100% - 20px);
+    padding: 1px;
+    padding-top: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.siminia-product-image img {
+    height: 100%;
+    width: 100%;
+    -o-object-fit: contain;
+    vertical-align: top;
+    object-fit: contain;
+}
+
+@media (max-width: 1024px) {
+    .siminia-product-image {
+        margin: 0;
+        width: 100%;
+    }
+}
+@media (min-width: 1024px) {
+    .siminia-product-image {
+        border-width: 0;
+    }
+}
+/*
+Rate
+*/
+.item-review-rate {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+.item-review-rate > div:first-of-type {
+    margin-bottom: 5px;
+    margin-inline-end: 5px;
+}
+.item-review-count {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 15px;
+}
+
+.special-price .sale_off {
+    display: none;
+}
+.special-price-label {
+    margin-left: 8px !important;
+}
+.prices-layout {
+    font-size: 14px;
+    line-height: 24px;
+    display: flex;
+}
+.configurable-aslowas {
+    margin-inline-end: 5px;
+}
+.incl-tax-label {
+    margin-left: 8px;
+}
+
+.product-grid-actions {
+    position: absolute;
+    top: calc(100% - 10px);
+    width: 100%;
+    padding: 10px;
+    min-height: 60px;
+    left: 0;
+    background-color: white;
+    display: none;
+    z-index: -1;
+    justify-content: space-between;
+}
+.product-grid-addcartbtn {
+    composes: root from '../../../../override/button.module.css';
+    min-width: unset !important;
+    display: block;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: calc(100% - 40px);
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+.action-loading .product-grid-addcartbtn,
+.action-loading .product-grid-addcartbtn:hover {
+    opacity: 0.8;
+}
+.item-outstock .product-grid-addcartbtn {
+    background: #969696;
+    cursor: initial;
+    opacity: 0.8;
+}
+.product-grid-wishlistbtn {
+    width: 40px;
+    padding-top: 13px;
+    text-align: center;
+    max-height: 40px;
+    min-width: 40px;
+}
+.product-grid-wishlistbtn button:disabled,
+.product-grid-wishlistbtn button[disabled] {
+    --selectedColor: rgb(var(--venia-global-color-red-400));
+    --fill: var(--selectedColor);
+    --stroke: var(--selectedColor);
+    text-decoration: none;
+}
+
+@media (min-width: 1024px) {
+    .siminia-product-grid-item:hover {
+        background-color: white;
+        box-shadow: 0px 0px 12px -2px rgb(0 0 0 / 30%);
+        z-index: 50;
+    }
+    .siminia-product-grid-item:hover .product-grid-actions {
+        display: flex;
+        justify-content: space-between;
+        box-shadow: 0px 10px 12px -2px rgb(0 0 0 / 30%);
+        
+        
+    }
+}
+@media (max-width: 1024px) {
+    .product-grid-actions {
+        display: flex;
+        position: initial;
+        padding: 5px 0;
+    }
+}
+/* rtl */
+.prices-layout-rtl {
+    text-align: right;
+}
+@media (max-width: 480px) {
+    .siminia-product-grid-item {
+        height: 281px;
+        border-radius: 8px;
+        background-color: #FFFFFF;
+    }
+    .product-grid-actions {
+        display: none;
+    }
+    .item-review-rate {
+        display: none;
+    }
+    .siminia-product-image img {
+        height: 186px;
+        width: 186px;
+        border-radius: 6px
+    }
+    .siminia-product-des .product-name {
+        height: 33px;
+        width: 176px;
+        color: #4F4F4F;
+        font-size: 13px;
+        letter-spacing: 0;
+        line-height: 15px;
+        margin-bottom: 0px;
+    }
+    .configurable-aslowas {
+        display: none;
+    }
+    .prices-layout > div:nth-child(2) > div > div > span > span{
+        height: 19px;
+        width: 61px;
+        color: #150826;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 19px;
+    }
+}
