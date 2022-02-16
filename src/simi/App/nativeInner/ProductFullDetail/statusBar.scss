@@ -1,0 +1,30 @@
+.main-status-bar {
+    position: absolute;
+    z-index: 1;
+    top: 75%;
+    border-radius: 16px 16px 0 0;
+    background-color: #ffdbdc;
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .first-item {
+        border-radius: 16px 0 0 0;
+        background-color: #ff5f59;
+        height: 40px;
+        line-height: 40px;
+        color: #ffffff;
+        font-size: 14px;
+        letter-spacing: 0;
+        padding: 0 10px;
+    }
+    .nth-item {
+        color: #ff5f59;
+        font-size: 14px;
+        letter-spacing: 0;
+    }
+    .nth-item:last-child {
+        padding: 0 20px;
+    }
+}
