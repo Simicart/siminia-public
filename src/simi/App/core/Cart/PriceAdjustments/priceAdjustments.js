@@ -43,13 +43,21 @@ const PriceAdjustments = props => {
     const [rewardPoint, setRewardPoint] = useState(0);
     const [enableWarningPoint, setEnalbleWarningPoint] = useState(false);
     const { spendRewardPointHandle, flatData } = usePriceSummary();
-    const { priceData } = flatData;
+    const { priceData, subtotal } = flatData;
     const mpRewardSpent =
         priceData &&
         priceData.filter(function(rewardData) {
             return rewardData.code == 'mp_reward_spent';
         });
     const { customerRewardPoint } = useGetRewardPointData();
+    const exchange_rate = customerRewardPoint.current_exchange_rates;
+    const spending_rate = exchange_rate? exchange_rate.spending_rate : "";
+    const words = spending_rate.split(' points');
+    const money = spending_rate.split('for $');
+    const spending_point = words[0].split(' ')
+    const pointSpending = spending_point[1];
+    const moneySpending = money[1].split('.');
+    const maxPoint = Math.floor((pointSpending * subtotal.value)/moneySpending[0]);
     const balance = customerRewardPoint.point_balance;
     let rewardPointSelected = 0;
     if (mpRewardSpent && mpRewardSpent.length > 0)
@@ -65,6 +73,9 @@ const PriceAdjustments = props => {
             }, 2000);
         } else {
             showFogLoading();
+            if(rewardPoint > maxPoint){
+                setRewardPoint(maxPoint)
+            }
             spendRewardPointHandle({
                 variables: {
                     cart_id: cartId,
@@ -81,16 +92,6 @@ const PriceAdjustments = props => {
         window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
         parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
-    // useEffect(()=> {
-    //     if(rewardPoint != rewardPointSelected){
-    //         setRewardPoint(rewardPointSelected)
-    //     }
-    // }, [rewardPointSelected])
-    useEffect(() => {
-        if (rewardPoint != rewardPointSelected) {
-            setRewardPoint(rewardPointSelected);
-        }
-    }, [rewardPointSelected ]);
     return (
         <div className={classes.root}>
             <Accordion canOpenMultiple={true}>
