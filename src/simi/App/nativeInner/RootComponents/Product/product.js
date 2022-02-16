@@ -1,13 +1,14 @@
 import React, { Fragment, useEffect, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { string } from 'prop-types';
-import { useProduct } from '../../../../talons/ProductFullDetail/useProduct';
+import { useProduct } from '@simicart/siminia/src/simi/talons/ProductFullDetail/useProduct.js';
 
 import ErrorView from '@magento/venia-ui/lib/components/ErrorView';
 import { StoreTitle, Meta } from '@magento/venia-ui/lib/components/Head';
-import ProductFullDetail, {
+import  {
     ProductBuilderFullDetail
-} from '../../ProductFullDetail';
+} from '@simicart/siminia/src/simi/App/core/ProductFullDetail';
+import ProductFullDetail from '../../ProductFullDetail'
 import { prepareProduct } from 'src/simi/Helper/Product';
 import mapProduct from '@magento/venia-ui/lib/util/mapProduct';
 import ProductShimmer from './product.shimmer';
@@ -17,7 +18,7 @@ let requestedPbPages = false;
 import { BrowserPersistence } from '@magento/peregrine/lib/util';
 const storage = new BrowserPersistence();
 const storeCode = storage.getItem('store_view_code') || STORE_VIEW_CODE;
-import Seo from '../../Seo';
+import Seo from '@simicart/siminia/src/simi/App/core/Seo';
 
 /*
  * As of this writing, there is no single Product query type in the M2.3 schema.
@@ -173,7 +174,7 @@ const Product = props => {
             ) : (
                 <ProductFullDetail product={product} />
             )}
-            
+           
         </Fragment>
     );
 };

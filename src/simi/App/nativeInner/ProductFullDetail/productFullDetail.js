@@ -1,0 +1,610 @@
+import React, { Fragment, Suspense, useRef, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { arrayOf, bool, number, shape, string } from 'prop-types';
+import { Form } from 'informed';
+import { Info } from 'react-feather';
+import Identify from 'src/simi/Helper/Identify';
+import Price from '@simicart/siminia/src/simi/App/core/PriceWrapper/Price.js';
+import { configColor } from 'src/simi/Config';
+
+import { useProductFullDetail } from 'src/simi/talons/ProductFullDetail/useProductFullDetail';
+import { isProductConfigurable } from '@magento/peregrine/lib/util/isProductConfigurable';
+import { smoothScrollToView } from 'src/simi/Helper/Behavior';
+import { useStyle } from '@magento/venia-ui/lib/classify';
+import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
+import Button from '@magento/venia-ui/lib/components/Button';
+import Carousel from '@simicart/siminia/src/simi/App/core/ProductImageCarousel';
+import FormError from '@magento/venia-ui/lib/components/FormError';
+import { QuantityFields } from '@simicart/siminia/src/simi/App/core/Cart/ProductListing/quantity.js';
+import RichContent from '@magento/venia-ui/lib/components/RichContent/richContent';
+import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductOptions';
+import defaultClasses from './productFullDetail.module.css';
+import SizeChart from '@simicart/siminia/src/simi/App/core/ProductFullDetail/SizeChart';
+const WishlistButton = React.lazy(() =>
+    import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
+);
+const Options = React.lazy(() =>
+    import('@simicart/siminia/src/simi/App/core/ProductOptions')
+);
+const SimiProductOptions = React.lazy(() =>
+    import('@simicart/siminia/src/simi/App/core/SimiProductOptions')
+);
+import { StaticRate } from 'src/simi/BaseComponents/Rate';
+import { ProductDetailExtraProducts } from '@simicart/siminia/src/simi/App/core/ProductFullDetail/productDetailExtraProducts.js';
+import ProductReview from '@simicart/siminia/src/simi/App/core/ProductFullDetail/ProductReview';
+import ProductLabel from '@simicart/siminia/src/simi/App/core/ProductFullDetail/ProductLabel';
+import Pdetailsbrand from '@simicart/siminia/src/simi/App/core/ProductFullDetail/Pdetailsbrand';
+import DataStructure from '@simicart/siminia/src/simi/App/core/Seo/Markup/Product.js';
+import DataStructureBasic from '@simicart/siminia/src/simi/App/core/SeoBasic/Markup/Product.js';
+import useProductReview from '../../../talons/ProductFullDetail/useProductReview';
+import { useHistory, Link } from 'react-router-dom';
+import {
+    ArrowLeft,
+    ShoppingCart,
+    MoreVertical,
+    HomeAlt,
+    HelpCircle
+} from 'react-feather';
+import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
+import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
+import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
+import StatusBar from './statusBar';
+
+require('./productFullDetail.scss');
+
+const mageworxSeoEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
+
+// Correlate a GQL error message to a field. GQL could return a longer error
+// string but it may contain contextual info such as product id. We can use
+// parts of the string to check for which field to apply the error.
+const ERROR_MESSAGE_TO_FIELD_MAPPING = {
+    'The requested qty is not available': 'quantity',
+    'Product that you are trying to add is not available.': 'quantity',
+    "The product that was requested doesn't exist.": 'quantity'
+};
+
+// Field level error messages for rendering.
+const ERROR_FIELD_TO_MESSAGE_MAPPING = {
+    quantity: 'The requested quantity is not available.'
+};
+
+const ProductFullDetail = props => {
+    const { product, history } = props;
+    console.log('product', product);
+    const talonProps = useProductFullDetail({ product });
+    const {
+        breadcrumbCategoryId,
+        errorMessage,
+        handleAddToCart,
+        handleSelectionChange,
+        isOutOfStock,
+        isAddToCartDisabled,
+        isSupportedProductType,
+        mediaGalleryEntries,
+        productDetails,
+        wishlistButtonProps,
+        optionSelections,
+        optionCodes,
+        extraPrice,
+        switchExtraPriceForNormalPrice,
+        upsellProducts,
+        crosssellProducts,
+        relatedProducts
+    } = talonProps;
+    let History = useHistory();
+    const [moreBtn, setMoreBtn] = useState(false);
+    const storeConfig = Identify.getStoreConfig();
+    const enabledReview =
+        storeConfig &&
+        storeConfig.storeConfig &&
+        parseInt(storeConfig.storeConfig.product_reviews_enabled);
+    const [isOpen, setIsOpen] = useState(false);
+    const isMobileSite = window.innerWidth <= 400;
+
+    const { itemCount: itemsQty } = useCartTrigger({
+        mutations: {
+            createCartMutation: CREATE_CART_MUTATION
+        },
+        queries: {
+            getItemCountQuery: GET_ITEM_COUNT_QUERY
+        },
+        storeConfig
+    });
+
+    const {
+        data,
+        loading,
+        submitReviewLoading,
+        submitReview
+    } = useProductReview({
+        product,
+        setIsOpen,
+        enabledReview
+    });
+    const reviews =
+        data && data.products.items[0] ? data.products.items[0].reviews : false;
+    const items = (reviews && reviews.items) || [];
+    const avg_rating = items && items[0] ? items[0].average_rating : '';
+
+    const { formatMessage } = useIntl();
+    const productReview = useRef(null);
+
+    const scrollToReview = () => {
+        smoothScrollToView(document.querySelector('.reviewsContainer'));
+    };
+
+    const classes = useStyle(defaultClasses, props.classes);
+
+    const options = isProductConfigurable(product) ? (
+        <Suspense fallback={<ProductOptionsShimmer />}>
+            <Options
+                onSelectionChange={handleSelectionChange}
+                options={product.configurable_options}
+            />
+        </Suspense>
+    ) : (
+        <SimiProductOptions
+            product={product}
+            useProductFullDetailProps={talonProps}
+        />
+    );
+
+    const breadcrumbs = breadcrumbCategoryId ? (
+        <Breadcrumbs
+            categoryId={breadcrumbCategoryId}
+            currentProduct={productDetails.name}
+        />
+    ) : null;
+
+    // Fill a map with field/section -> error.
+    const errors = new Map();
+    if (errorMessage) {
+        Object.keys(ERROR_MESSAGE_TO_FIELD_MAPPING).forEach(key => {
+            if (errorMessage.includes(key)) {
+                const target = ERROR_MESSAGE_TO_FIELD_MAPPING[key];
+                const message = ERROR_FIELD_TO_MESSAGE_MAPPING[target];
+                errors.set(target, message);
+            }
+        });
+
+        // Handle cases where a user token is invalid or expired. Preferably
+        // this would be handled elsewhere with an error code and not a string.
+        if (errorMessage.includes('The current user cannot')) {
+            errors.set('form', [
+                new Error(
+                    formatMessage({
+                        id: 'productFullDetail.errorToken',
+                        defaultMessage:
+                            'There was a problem with your cart. Please sign in again and try adding the item once more.'
+                    })
+                )
+            ]);
+        }
+
+        // Handle cases where a cart wasn't created properly.
+        if (
+            errorMessage.includes('Variable "$cartId" got invalid value null')
+        ) {
+            errors.set('form', [
+                new Error(
+                    formatMessage({
+                        id: 'productFullDetail.errorCart',
+                        defaultMessage:
+                            'There was a problem with your cart. Please refresh the page and try adding the item once more.'
+                    })
+                )
+            ]);
+        }
+
+        // An unknown error should still present a readable message.
+        if (!errors.size) {
+            errors.set('form', [
+                new Error(
+                    formatMessage({
+                        id: 'productFullDetail.errorUnknown',
+                        defaultMessage:
+                            'Could not add item to cart. Please check required options and try again.'
+                    })
+                )
+            ]);
+        }
+    }
+
+    const cartCallToActionText = !isOutOfStock ? (
+        <FormattedMessage
+            id="productFullDetail.addItemToCart"
+            defaultMessage="Add to Cart"
+        />
+    ) : (
+        <FormattedMessage
+            id="productFullDetail.itemOutOfStock"
+            defaultMessage="Out of Stock"
+        />
+    );
+
+    const cartActionContent = isSupportedProductType ? (
+        <Button disabled={isAddToCartDisabled} priority="high" type="submit">
+            {cartCallToActionText}
+        </Button>
+    ) : (
+        <div className={classes.unavailableContainer}>
+            <Info />
+            <p>
+                <FormattedMessage
+                    id={'productFullDetail.unavailableProduct'}
+                    defaultMessage={
+                        'This product is currently unavailable for purchase.'
+                    }
+                />
+            </p>
+        </div>
+    );
+
+    const pricePiece = switchExtraPriceForNormalPrice ? (
+        <Price currencyCode={extraPrice.currency} value={extraPrice.value} />
+    ) : (
+        <Price
+            currencyCode={productDetails.price.currency}
+            value={productDetails.price.value}
+            fromValue={productDetails.price.fromValue}
+            toValue={productDetails.price.toValue}
+        />
+    );
+    const { price } = product || {};
+
+    const review =
+        product && product.review_count && product.rating_summary ? (
+            <div className="wrapperReviewSum">
+                <section
+                    onClick={() => scrollToReview()}
+                    className={classes.reviewSum}
+                >
+                    <StaticRate
+                        backgroundColor={
+                            !isMobileSite
+                                ? configColor.content_color
+                                : '#FFC500'
+                        }
+                        rate={product.rating_summary}
+                        classes={{
+                            'static-rate': classes['static-rate']
+                        }}
+                    />
+                    <span className={classes.reviewSumCount}>
+                        ({product.review_count}{' '}
+                        {product.review_count > 1
+                            ? formatMessage({ id: 'Reviews' })
+                            : formatMessage({ id: 'Review' })}
+                        )
+                    </span>
+                </section>
+            </div>
+        ) : (
+            <div
+                onClick={() => productReview.current.togglePopup()}
+                className={classes.noReview}
+            >
+                <FormattedMessage
+                    id="productFullDetail.noReview"
+                    defaultMessage="Be the first to review this product"
+                />
+            </div>
+        );
+
+    const wrapperPrice = (
+        <div className="wrapperPrice">
+            <span className="labelPrice">
+                {!isMobileSite ? (
+                    <FormattedMessage
+                        id="productFullDetail.labelPrice"
+                        defaultMessage="Per pack: "
+                    />
+                ) : null}
+            </span>
+            <span className={classes.productPrice}>{pricePiece}</span>
+            {isOutOfStock ? (
+                <span className="outOfStock">
+                    <FormattedMessage
+                        id="productFullDetail.outOfStoc"
+                        defaultMessage="Out of stock"
+                    />
+                </span>
+            ) : (
+                ''
+            )}
+        </div>
+    );
+
+    return (
+        <div className="p-fulldetails-ctn container">
+            {mageworxSeoEnabled ? (
+                <DataStructure
+                    avg_rating={avg_rating}
+                    product={product}
+                    price={price}
+                />
+            ) : (
+                <DataStructureBasic
+                    avg_rating={avg_rating}
+                    product={product}
+                    price={price}
+                />
+            )}
+            {isMobileSite ? null : breadcrumbs}
+            <div className="wrapperForm">
+                <Form className={classes.root} onSubmit={handleAddToCart}>
+                    {!isMobileSite ? (
+                        <div className="wrapperTitle">
+                            <section className={classes.title}>
+                                <h1 className={classes.productName}>
+                                    {productDetails.name}
+                                    <Pdetailsbrand product={product} />
+                                </h1>
+                            </section>
+                        </div>
+                    ) : null}
+                    {!isMobileSite ? (
+                        <div className="wrapperSku">
+                            <section className={classes.details}>
+                                <span className={classes.detailsTitle}>
+                                    <FormattedMessage
+                                        id={'global.labelSku'}
+                                        defaultMessage={'SKU: '}
+                                    />
+                                    {productDetails.sku}
+                                </span>
+                            </section>
+                        </div>
+                    ) : null}
+
+                    {!isMobileSite ? review : null}
+                    <section className={classes.imageCarousel}>
+                        {isMobileSite ? (
+                            <div className={classes.headerBtn}>
+                                <button
+                                    className={classes.backBtn}
+                                    onClick={() => History.goBack()}
+                                >
+                                    <ArrowLeft />
+                                </button>
+
+                                <div className={classes.headerBtnRight}>
+                                    <span className="cart-qty">{itemsQty}</span>
+                                    <Link className="header-icon" to="/cart">
+                                        <ShoppingCart />
+                                    </Link>
+                                    <Suspense fallback={null}>
+                                        <WishlistButton
+                                            {...wishlistButtonProps}
+                                        />
+                                    </Suspense>{' '}
+                                    <div
+                                        onClick={() => setMoreBtn(!moreBtn)}
+                                        className="header-icon"
+                                    >
+                                        <MoreVertical />
+                                    </div>
+                                    {moreBtn ? (
+                                        <ul className="header-more">
+                                            <li>
+                                                <Link to="/">Home</Link>
+                                            </li>
+                                            <li>Help Center</li>
+                                        </ul>
+                                    ) : null}
+                                </div>
+                            </div>
+                        ) : null}
+                        {isMobileSite ?
+                        <StatusBar status={product.stock_status} />
+                    : null}
+                        <Carousel
+                            product={product}
+                            optionSelections={optionSelections}
+                            optionCodes={optionCodes}
+                            labelData={
+                                product.mp_label_data.length > 0
+                                    ? product.mp_label_data
+                                    : null
+                            }
+                        />
+                        {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
+                    </section>
+
+                    <FormError
+                        classes={{
+                            root: classes.formErrors
+                        }}
+                        errors={errors.get('form') || []}
+                    />
+
+                    {isMobileSite ? (
+                        <div className="wrapperTitle">
+                            <section className={classes.title}>
+                                <h1 className={classes.productName}>
+                                    {productDetails.name}
+                                    <Pdetailsbrand product={product} />
+                                </h1>
+                            </section>
+                        </div>
+                    ) : null}
+                    {isMobileSite ? wrapperPrice : null}
+                    {isMobileSite ? review : null}
+                    <div className="wrapperOptions">
+                        <section className={classes.options}>
+                            {options}
+                            {product.mp_sizeChart &&
+                            product.mp_sizeChart.display_type == 'popup' ? (
+                                <SizeChart
+                                    sizeChart={
+                                        product.mp_sizeChart
+                                            ? product.mp_sizeChart
+                                            : null
+                                    }
+                                />
+                            ) : null}
+
+                           {!isMobileSite ? wrapperPrice : null}
+                        </section>
+                    </div>
+
+                    {product.items ? (
+                        ''
+                    ) : (
+                        <div className="wrapperQuantity">
+                            <section className={classes.quantity}>
+                                <span className={classes.quantityTitle}>
+                                    <FormattedMessage
+                                        id={'productFullDetail.quantity'}
+                                        defaultMessage={'Quantity: '}
+                                    />
+                                </span>
+                                <QuantityFields
+                                    classes={{ root: classes.quantityRoot }}
+                                    min={1}
+                                    message={errors.get('quantity')}
+                                />
+                            </section>
+                        </div>
+                    )}
+
+                    <div
+                        className={
+                            isAddToCartDisabled
+                                ? 'addCartDisabled'
+                                : 'wrapperActions'
+                        }
+                    >
+                        <section className={classes.actions}>
+                            {cartActionContent}
+                            {isMobileSite ? null : (
+                                <Suspense fallback={null}>
+                                    <WishlistButton {...wishlistButtonProps} />
+                                </Suspense>
+                            )}
+                        </section>
+                        {product.mp_sizeChart &&
+                        product.mp_sizeChart.display_type == 'inline' ? (
+                            <SizeChart
+                                sizeChart={
+                                    product.mp_sizeChart
+                                        ? product.mp_sizeChart
+                                        : null
+                                }
+                            />
+                        ) : null}
+                    </div>
+                    <section className={classes.description}>
+                        <span className={classes.descriptionTitle}>
+                            <FormattedMessage
+                                id={'productFullDetail.productDescription'}
+                                defaultMessage={'Product Description'}
+                            />
+                        </span>
+                        <RichContent html={productDetails.description} />
+                    </section>
+
+                    <section className={classes.details}>
+                        <span className={classes.detailsTitle}>
+                            <FormattedMessage
+                                id={'global.sku'}
+                                defaultMessage={'SKU'}
+                            />
+                        </span>
+                        <strong>{productDetails.sku}</strong>
+                    </section>
+                </Form>
+            </div>
+            {product.mp_sizeChart &&
+            product.mp_sizeChart.display_type == 'tab' ? (
+                <SizeChart
+                    sizeChart={
+                        product.mp_sizeChart ? product.mp_sizeChart : null
+                    }
+                />
+            ) : null}
+            <ProductReview product={product} ref={productReview} />
+            <ProductDetailExtraProducts
+                classes={classes}
+                products={relatedProducts}
+                history={history}
+            >
+                <FormattedMessage
+                    id="productFullDetail.relatedProducts"
+                    defaultMessage="Related Product"
+                />
+            </ProductDetailExtraProducts>
+
+            <ProductDetailExtraProducts
+                classes={classes}
+                products={upsellProducts}
+                history={history}
+            >
+                <FormattedMessage
+                    id="productFullDetail.upsellProduct"
+                    defaultMessage="Upsell Product"
+                />
+            </ProductDetailExtraProducts>
+
+            <ProductDetailExtraProducts
+                classes={classes}
+                products={crosssellProducts}
+                history={history}
+            >
+                <FormattedMessage
+                    id="productFullDetail.crosssellProduct"
+                    defaultMessage="Crosssell Product"
+                />
+            </ProductDetailExtraProducts>
+        </div>
+    );
+};
+
+ProductFullDetail.propTypes = {
+    classes: shape({
+        cartActions: string,
+        description: string,
+        descriptionTitle: string,
+        details: string,
+        detailsTitle: string,
+        imageCarousel: string,
+        options: string,
+        productName: string,
+        productPrice: string,
+        quantity: string,
+        quantityTitle: string,
+        root: string,
+        title: string,
+        unavailableContainer: string
+    }),
+    product: shape({
+        __typename: string,
+        id: number,
+        stock_status: string,
+        sku: string.isRequired,
+        price: shape({
+            regularPrice: shape({
+                amount: shape({
+                    currency: string.isRequired,
+                    value: number.isRequired
+                })
+            }).isRequired
+        }).isRequired,
+        media_gallery_entries: arrayOf(
+            shape({
+                uid: string,
+                label: string,
+                position: number,
+                disabled: bool,
+                file: string.isRequired
+            })
+        ),
+        description: string
+    }).isRequired
+};
+
+export default ProductFullDetail;
