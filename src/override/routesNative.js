@@ -3,7 +3,7 @@ import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent';
 import { Route, Switch, useLocation, useParams } from 'react-router-dom';
 //import MagentoRoute from '@magento/venia-ui/lib/components/MagentoRoute';
 import { useScrollTopOnChange } from '@magento/peregrine/lib/hooks/useScrollTopOnChange';
-import NoMatch, { endPoint } from '../simi/App/core/NoMatch';
+import NoMatch, { endPoint } from '../simi/App/nativeInner/NoMatch';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import PageBuilderComponent from '../simi/App/core/TapitaPageBuilder/PageBuilderComponent';
 //import Login from 'src/simi/App/core/Customer/Login';
