@@ -1,0 +1,281 @@
+.switchersContainer {
+    display: block;
+    width: 100%;
+    background-color: #0058ac;
+    direction: ltr;
+}
+.switchersContainer button[class*='trigger'] {
+    color: white;
+}
+.switchers {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    justify-content: flex-end;
+    max-width: 1440px;
+    width: 100%;
+    position: relative;
+    z-index: 11;
+    margin: 0 auto;
+}
+header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    box-shadow: 0 0 15px rgb(0 0 0 / 10%);
+}
+
+.header-app-bar {
+    min-height: 88px;
+    height: 88px;
+    max-width: 1920px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 3;
+}
+.header-app-bar button {
+    width: unset;
+}
+
+.header-app-bar aside > div {
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+.megaMenu {
+    composes: lg_flex from global;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-top: solid 1px #f7f7f7;
+    border-bottom: none;
+    backdrop-filter: blur(6px);
+    display: flex;
+    flex-wrap: wrap;
+}
+/* megaMenuItem */
+.megaMenu > div {
+    padding: 0 40px;
+}
+/* submenu */
+.megaMenu > div > div {
+    z-index: 2;
+    top: 100%;
+}
+/* submenuItems */
+.megaMenu > div > div > div {
+    min-width: unset !important;
+}
+.megaMenu > div > a {
+    min-height: 43px;
+    color: #333132;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+}
+
+.megaMenu > div > a polyline {
+    stroke: #333132;
+}
+.header-megamenu-ctn {
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+.header-logo .siminia-logo {
+    cursor: pointer;
+    display: flex;
+}
+.header-search {
+    width: 100%;
+    max-width: 748px;
+}
+.header-search-form {
+    position: relative;
+    margin-inline-start: 25px;
+}
+.header-search-form input {
+    width: 100%;
+    padding-inline-start: 20px;
+    padding-inline-end: 16px;
+    border: transparent;
+    background-color: #f4f4f4;
+    height: 45px;
+    border-radius: 23px !important;
+}
+.header-search-form .search-icon {
+    display: inline-block;
+    position: absolute;
+    right: 14px;
+    top: 5px;
+    cursor: pointer;
+}
+.search-icon a {
+    display: block;
+}
+
+.search-icon img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+.right-bar {
+    display: flex;
+    align-items: center;
+    z-index: 0;
+}
+.right-bar-item {
+    text-align: start;
+    font-size: 12px;
+    cursor: pointer;
+    z-index: 50;
+    margin-inline-start: 35px;
+}
+.right-bar-item > div,
+.right-bar-item > a {
+    display: flex;
+    justify-content: flex-start;
+}
+.item-icon {
+    margin-inline-end: 9px;
+    position: relative;
+}
+.right-bar-item a:hover {
+    text-decoration: none !important;
+}
+.right-bar-item:hover .item-icon,
+.right-bar-item:hover .item-text {
+    opacity: 0.6;
+}
+.right-bar-item .item-text {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 400;
+    color: #111111 !important;
+    white-space: nowrap;
+    padding-top: 7px;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+.right-bar-item aside a,
+.right-bar-item aside button {
+    font-size: 14px;
+    font-weight: 400;
+}
+.mini-cart {
+    position: relative;
+}
+.basket-badge {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    border-radius: 100%;
+    z-index: 5;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    top: -3px;
+    left: -3px;
+}
+body.fixed-scroll {
+    position: fixed;
+    left: 0;
+    right: 0;
+    overflow: scroll;
+}
+.main-nav .right-nav-item {
+    margin-left: auto;
+}
+.menu-my-account {
+    position: absolute;
+    background: #fff;
+    z-index: 2;
+    border: 1px solid #f3f3f3;
+    box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.14);
+    margin-top: 8px;
+    min-width: 150px;
+}
+.pageLoadingIndRoot {
+    overflow: hidden;
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.indicator_off {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    background: #0058ac;
+    transform: translateX(-100%);
+    transform-origin: left;
+    transition: transform 0.25s linear;
+}
+
+.indicator_loading {
+    composes: indicator_off;
+    opacity: 1;
+    transform: translateX(-25%);
+    z-index: 3;
+}
+
+.indicator_done {
+    composes: indicator_off;
+    opacity: 1;
+    transform: translateX(0%);
+    z-index: 3;
+}
+@media (max-width: 1023px) {
+    .header-app-bar {
+        min-height: 80px;
+        height: 80px;
+    }
+    .right-bar-item {
+        margin-inline-start: 0;
+        margin: 0;
+    }
+    .header-search {
+        margin: 0;
+        max-width: unset;
+        padding: 16px;
+        background: #0058ac;
+    }
+    .header-search-form {
+        margin-inline-start: 0;
+    }
+    .header-search-form input {
+        padding: 10px 16px;
+        height: 45px;
+        border-radius: 4px;
+        background-color: white;
+        border-radius: 4px !important;
+    }
+    .header-search-form .search-icon {
+        right: 16px;
+        top: 4px;
+    }
+    .header-search-form input::placeholder {
+        font-size: 16px;
+    }
+
+    header.sticky .header-search {
+        display: none;
+    }
+}
+.header-app-bar-rtl aside > div {
+    left: 0;
+    right: unset;
+}

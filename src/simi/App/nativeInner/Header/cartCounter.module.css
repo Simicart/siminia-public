@@ -1,0 +1,21 @@
+.root {
+    position: absolute;
+    min-width: 20px;
+    height: 20px;
+    background: #0058ac;
+    color: #fff;
+    border-radius: 10px;
+    padding-left: 6px;
+    padding-right: 6px;
+    z-index: 5;
+    font-size: 12px;
+    line-height: 15px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    justify-content: center;
+    top: -3px;
+    text-align: center;
+}
