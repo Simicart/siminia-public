@@ -302,7 +302,7 @@ const Routes = props => {
                     render={props => (
                         <LazyComponent
                             component={() =>
-                                import(/* webpackChunkName: "Cart"*/ 'src/simi/App/core/Cart')
+                                import(/* webpackChunkName: "Cart"*/ 'src/simi/App/nativeInner/Cart')
                             }
                             {...props}
                         />
