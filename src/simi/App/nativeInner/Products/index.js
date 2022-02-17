@@ -2,6 +2,7 @@ import React from 'react';
 import Gallery from './Gallery';
 import Identify from 'src/simi/Helper/Identify';
 import Sortby from './Sortby';
+import SortbyPrice from './SortbyPrice';
 import Filter from './Filter';
 import SimiPagination from 'src/simi/BaseComponents/SimiPagination';
 // import SimiPagination from '@magento/venia-ui/lib/components/Pagination';
@@ -29,7 +30,6 @@ const Products = props => {
         pageSize,
         pageControl
     } = props;
-
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
     const { products } = data;
@@ -89,13 +89,35 @@ const Products = props => {
     const renderLeftNavigation = () => {
         const shopby = [];
         const filter = renderFilter();
+        const sortby = <Sortby data={data} sortByData={sortByData} />;
+        const sortbyprice = <SortbyPrice data={data} sortByData={sortByData} />;
         if (filter) {
             shopby.push(
                 <div
                     key="siminia-left-navigation-filter"
-                    className="left-navigation"
+                    className="left-navigation filter"
                 >
                     {filter}
+                </div>
+            );
+        }
+        if (sortby) {
+            shopby.push(
+                <div
+                    key="siminia-left-navigation-sortby"
+                    className="left-navigation sortby"
+                >
+                    {sortby}
+                </div>
+            );
+        }
+        if (sortbyprice) {
+            shopby.push(
+                <div
+                    key="siminia-left-navigation-sortbyprice"
+                    className="left-navigation sortbyprice"
+                >
+                    {sortbyprice}
                 </div>
             );
         }
@@ -139,7 +161,7 @@ const Products = props => {
                     ) : (
                         <div className="items-count-ctn">{itemCount}</div>
                     )}
-                    <Sortby data={data} sortByData={sortByData} />
+                    {/* <Sortby data={data} sortByData={sortByData} /> */}
                 </div>
                 <section className="gallery">
                     {!data.products || !data.products.total_count ? (
@@ -185,7 +207,10 @@ const Products = props => {
             </h1>
             {isPhone ? itemCount : ''}
             <div className="product-list-container-siminia">
-                {renderLeftNavigation()}
+                <div className="product-list-filter-sortby">
+                    {renderLeftNavigation()}
+                </div>
+
                 <div
                     className="listing-product"
                     style={{ display: 'inline-block', width: '100%' }}

@@ -191,4 +191,75 @@
             padding-left: 10px;
         }
     }
+    @media (max-width: 480px) {
+        .product-list-filter-sortby{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-areas:
+                'sortby sortbyprice filter';
+            .sortbyprice{
+                grid-area: sortbyprice;
+                > div > div > div{
+                    border: none;
+                    padding: 11px 0px;   
+                    div{
+                        color: #4F4F4F;
+                        font-family: Roboto;
+                        font-size: 14px;
+                        letter-spacing: 0;
+                        line-height: 16px;
+                        justify-content: center;
+                        svg{
+                            height: 15px;
+                            width: 25px;
+                        }
+                    } 
+                }
+            }
+            .filter {
+                grid-area: filter;
+                > div > div {
+                    border :none;
+                    padding: 11px 0px; 
+                    margin-top: 0px;
+                    div{
+                        color: #4F4F4F;
+                        font-family: Roboto;
+                        font-size: 14px;
+                        letter-spacing: 0;
+                        line-height: 16px;
+                        justify-content: flex-end;
+                        svg{
+                            height: 15px;
+                            width: 25px;
+                            // display: none;
+                        }
+                    } 
+                }
+            }
+            .sortby {
+                grid-area: sortby;
+                > div > div > div{
+                    border: none;
+                    padding: 11px 0px;   
+                    div{
+                        color: #4F4F4F;
+                        font-family: Roboto;
+                        font-size: 14px;
+                        letter-spacing: 0;
+                        line-height: 16px;
+                        justify-content: flex-start;
+                        svg{
+                            height: 15px;
+                            width: 25px;
+                        }
+                    } 
+                }
+            }
+        }
+        
+        .items-count{
+            display: none;
+        }
+    }
 }

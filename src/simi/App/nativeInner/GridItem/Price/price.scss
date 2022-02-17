@@ -28,5 +28,18 @@
             letter-spacing: 0;
             line-height: 19px;
         }
+        .product-prices{
+            display: inline-flex;
+            column-gap: 6px;
+            .regular-price-value{
+                > span > span {
+                    color: #4F4F4F;
+                    font-family: Roboto;
+                    font-size: 14px;
+                    letter-spacing: 0;
+                    line-height: 16px;
+                }
+            }
+        }
     }
 }
