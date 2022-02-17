@@ -52,6 +52,7 @@ export const ProductListingWithBrandSeparation = (props) => {
         );
     }
 
+    //TODO: wire this to actual data
     const segeratedItems = [
         {items: [...items], name: 'A brand name', id: 1},
     ]
