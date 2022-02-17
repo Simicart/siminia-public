@@ -1,0 +1,39 @@
+.emptyBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.noProductText {
+    margin-top: 2rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.9rem;
+    line-height: 1rem;
+    letter-spacing: 0;
+    padding: 0;
+}
+
+.body {
+    gap: 1rem;
+}
+
+.heading_container {
+    margin-bottom: 0;
+}
+
+.summary_contents {
+    background: none;
+}
+
+.root {
+    padding: 1rem 0 0;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+@media (max-width: 960px) {
+    .root {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}

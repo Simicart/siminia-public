@@ -1,20 +1,23 @@
-import React, { useEffect } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { Check } from 'react-feather';
-import { useCartPage } from '@magento/peregrine/lib/talons/CartPage/useCartPage';
-import { useStyle } from '@magento/venia-ui/lib/classify';
-import { useToasts } from '@magento/peregrine';
-
+import React, {Fragment, useEffect} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
+import {Check} from 'react-feather';
+import {useCartPage} from '@magento/peregrine/lib/talons/CartPage/useCartPage';
+import {useStyle} from '@magento/venia-ui/lib/classify';
+import {useToasts} from '@magento/peregrine';
+// //
 import Icon from '@magento/venia-ui/lib/components/Icon';
-import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
-import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
-import StockStatusMessage from '@magento/venia-ui/lib/components/StockStatusMessage';
-import PriceAdjustments from '../../core/Cart/PriceAdjustments';
-import PriceSummary from '../../core/Cart/PriceSummary';
-import ProductListing from '../../core/Cart/ProductListing';
+import {StoreTitle} from '@magento/venia-ui/lib/components/Head';
+import {fullPageLoadingIndicator} from '@magento/venia-ui/lib/components/LoadingIndicator';
+import {PriceAdjustments} from './PriceAdjustments';
+import {PriceSummary} from './PriceSummary';
 import defaultClasses from '../../core/Cart/cartPage.module.css';
+import defaultClasses_1 from './cartPage.module.css';
+import Image from "@magento/venia-ui/lib/components/Image";
+import {RedButton} from "./RedButton";
+import {ProductListingWithBrandSeparation} from "./ProductListingWithBrandSeparation";
+import {ConfirmPopup} from "./ConfirmPopup";
 
-const CheckIcon = <Icon size={20} src={Check} />;
+const CheckIcon = <Icon size={20} src={Check}/>;
 
 /**
  * Structural page component for the shopping cart.
@@ -34,8 +37,9 @@ const CheckIcon = <Icon size={20} src={Check} />;
  * import CartPage from "@magento/venia-ui/lib/components/CartPage";
  */
 const CartPage = props => {
+
     const talonProps = useCartPage();
-    const { history } = props;
+    const {history} = props;
     const {
         cartItems,
         hasItems,
@@ -47,13 +51,13 @@ const CartPage = props => {
         wishlistSuccessProps,
     } = talonProps;
 
-    const classes = useStyle(defaultClasses, props.classes);
-    const { formatMessage } = useIntl();
-    const [, { addToast }] = useToasts();
+    const classes = useStyle(defaultClasses, defaultClasses_1, props.classes);
+    const {formatMessage} = useIntl();
+    const [, {addToast}] = useToasts();
 
     useEffect(() => {
         if (wishlistSuccessProps) {
-            addToast({ ...wishlistSuccessProps, icon: CheckIcon });
+            addToast({...wishlistSuccessProps, icon: CheckIcon});
         }
     }, [addToast, wishlistSuccessProps]);
 
@@ -62,7 +66,7 @@ const CartPage = props => {
     }
 
     const productListing = hasItems ? (
-        <ProductListing
+        <ProductListingWithBrandSeparation
             onAddToWishlistSuccess={onAddToWishlistSuccess}
             setIsCartUpdating={setIsCartUpdating}
             fetchCartDetails={fetchCartDetails}
@@ -78,21 +82,73 @@ const CartPage = props => {
     );
 
     const priceAdjustments = hasItems ? (
-        <PriceAdjustments setIsCartUpdating={setIsCartUpdating} />
+        <PriceAdjustments setIsCartUpdating={setIsCartUpdating}/>
     ) : null;
 
     const priceSummary = hasItems ? (
-        <PriceSummary isUpdating={isCartUpdating} />
+        <PriceSummary isUpdating={isCartUpdating}/>
     ) : null;
 
     const totalQuantity = cartItems.length ? (
-        <span> {cartItems.reduce((total,item) => { return total += item.quantity},0)}
+        <span> {cartItems.reduce((total, item) => {
+            return total += item.quantity
+        }, 0)}
             <FormattedMessage
-            id={'cartPage.itemsCount'}
-            defaultMessage={' Item(s)'}
+                id={'cartPage.itemsCount'}
+                defaultMessage={' Item(s)'}
             />
         </span>
     ) : null;
+
+    const cartBody = hasItems ? (
+        <Fragment>
+            <div className={classes.heading_container}>
+                {/*<h1 className={classes.heading}>*/}
+                {/*    <FormattedMessage*/}
+                {/*        id={'cartPage.headingCart'}*/}
+                {/*        defaultMessage={'Shopping Cart'}*/}
+                {/*    />*/}
+                {/*</h1>*/}
+                {/*<h1 className={classes.items_count}>*/}
+                {/*    {totalQuantity}*/}
+                {/*</h1>*/}
+                {/*<div className={classes.stockStatusMessageContainer}>*/}
+                {/*    <StockStatusMessage cartItems={cartItems}/>*/}
+                {/*</div>*/}
+            </div>
+            <div className={classes.body}>
+                <div className={classes.items_container}>{productListing}</div>
+                <div className={classes.price_adjustments_container}>
+                    {priceAdjustments}
+                </div>
+                <div className={classes.summary_container}>
+                    <div className={classes.summary_contents}>
+                        {priceSummary}
+                    </div>
+                </div>
+            </div>
+        </Fragment>
+    ) : (
+        <div className={classes.emptyBody}>
+            <Image src={'https://upload.wikimedia.org/wikipedia/vi/b/b7/Nyan_Cat_250px.png'}
+                   alt={'no-cart'}
+                   className={classes.emptyImage}
+            />
+            <h3 className={classes.noProductText}>
+                <FormattedMessage
+                    id={'cartNoProductText'}
+                    defaultMessage={'There are no products matching'}
+                />
+            </h3>
+
+            <RedButton onClick={() => history.push('/')}>
+                <FormattedMessage
+                    id={'Continue Shopping'}
+                    defaultMessage={'Continue Shopping'}
+                />
+            </RedButton>
+        </div>
+    )
 
     return (
         <div className={classes.root}>
@@ -102,33 +158,10 @@ const CartPage = props => {
                     defaultMessage: 'Cart'
                 })}
             </StoreTitle>
-            <div className={classes.heading_container}>
-                <h1 className={classes.heading}>
-                    <FormattedMessage
-                        id={'cartPage.headingCart'}
-                        defaultMessage={'Shopping Cart'}
-                    />
-                </h1>
-                <h1 className={classes.items_count}>
-                    {totalQuantity}
-                </h1>
-                <div className={classes.stockStatusMessageContainer}>
-                    <StockStatusMessage cartItems={cartItems} />
-                </div>
-            </div>
-            <div className={classes.body}>
-                <div className={classes.items_container}>{productListing}</div>
-            {/*    <div className={classes.price_adjustments_container}>*/}
-            {/*        {priceAdjustments}*/}
-            {/*    </div>*/}
-            {/*    <div className={classes.summary_container}>*/}
-            {/*        <div className={classes.summary_contents}>*/}
-            {/*            {priceSummary}*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            </div>
+            {cartBody}
         </div>
     );
 };
 
 export default CartPage;
+

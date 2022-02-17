@@ -1,0 +1,72 @@
+.overlayActive {
+    position: fixed;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.overlayNone {
+    position: fixed;
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 7;
+    cursor: pointer;
+}
+
+.modal {
+    background: white;
+    margin: -25rem auto;
+    max-width: 324px;
+    border-radius: 0.5rem;
+    padding: 5px 10px;
+}
+
+.closeContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close {
+    color: #4F4F4F;
+    font-size: 1.3rem;
+}
+
+.content {
+    color: #150826;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 184px;
+    width: 100%;
+}
+
+.actions > * {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.actionWrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
