@@ -111,6 +111,7 @@
     }
     .imageCarousel > div > div > div:nth-child(2) > div {
         margin-inline-start: 0px;
+        
     }
 }
 
@@ -330,7 +331,7 @@
         padding-inline-start: 0px;
     }
 }
-@media (max-width:400px) {   
+@media (max-width:450px) {   
     .backBtn {
         padding: 6px;
         border-radius:50%;
@@ -343,6 +344,10 @@
         align-items: center;
         line-height:3rem;
         margin-top: 10px;
+        position: fixed;
+        z-index: 3;
+        width: 100%;
+        padding-right: 15px;
     }
     .headerBtnRight {
         display: flex;
@@ -352,8 +357,17 @@
     .productName {
         color: #4F4F4F;
     }
+    .imageCarousel > div > div > div:nth-child(2) > div {
+        display: none;
+    }
+    .description {
+        display: flex;
+        justify-content:space-between;
+        align-items: baseline;
+        margin: 0;
+    }
 }
-@media (min-width: 401px) {
+@media (min-width: 450px) {
     .backBtn {
         display:none;
     }

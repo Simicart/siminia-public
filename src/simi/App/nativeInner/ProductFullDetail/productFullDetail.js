@@ -7,7 +7,7 @@ import Identify from 'src/simi/Helper/Identify';
 import Price from '@simicart/siminia/src/simi/App/core/PriceWrapper/Price.js';
 import { configColor } from 'src/simi/Config';
 
-import { useProductFullDetail } from 'src/simi/talons/ProductFullDetail/useProductFullDetail';
+import { useProductFullDetail } from '../talons/useProductFullDetail';
 import { isProductConfigurable } from '@magento/peregrine/lib/util/isProductConfigurable';
 import { smoothScrollToView } from 'src/simi/Helper/Behavior';
 import { useStyle } from '@magento/venia-ui/lib/classify';
@@ -31,7 +31,7 @@ const SimiProductOptions = React.lazy(() =>
 );
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import { ProductDetailExtraProducts } from '@simicart/siminia/src/simi/App/core/ProductFullDetail/productDetailExtraProducts.js';
-import ProductReview from '@simicart/siminia/src/simi/App/core/ProductFullDetail/ProductReview';
+import ProductReview from '@simicart/siminia/src/simi/App/nativeInner/ProductFullDetail/ProductReview';
 import ProductLabel from '@simicart/siminia/src/simi/App/core/ProductFullDetail/ProductLabel';
 import Pdetailsbrand from '@simicart/siminia/src/simi/App/core/ProductFullDetail/Pdetailsbrand';
 import DataStructure from '@simicart/siminia/src/simi/App/core/Seo/Markup/Product.js';
@@ -42,14 +42,16 @@ import {
     ArrowLeft,
     ShoppingCart,
     MoreVertical,
-    HomeAlt,
-    HelpCircle
+    ArrowRight
 } from 'react-feather';
+import { FaChevronRight } from 'react-icons/Fa';
+
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 import StatusBar from './statusBar';
-
+import FooterFixedBtn from './footerFixedBtn';
+import AddToCartPopup from './addToCartPopup';
 require('./productFullDetail.scss');
 
 const mageworxSeoEnabled =
@@ -74,12 +76,13 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product, history } = props;
-    console.log('product', product);
+    // console.log('product', product);
     const talonProps = useProductFullDetail({ product });
     const {
         breadcrumbCategoryId,
         errorMessage,
         handleAddToCart,
+        handleBuyNow,
         handleSelectionChange,
         isOutOfStock,
         isAddToCartDisabled,
@@ -103,8 +106,10 @@ const ProductFullDetail = props => {
         storeConfig.storeConfig &&
         parseInt(storeConfig.storeConfig.product_reviews_enabled);
     const [isOpen, setIsOpen] = useState(false);
-    const isMobileSite = window.innerWidth <= 400;
-
+    const [addToCartPopup, setAddToCartPopup] = useState(false);
+    const [descripttion, setDescripttion] = useState(-1);
+    const isMobileSite = window.innerWidth <= 450;
+    const [typeBtn, setTypeBtn] = useState("")
     const { itemCount: itemsQty } = useCartTrigger({
         mutations: {
             createCartMutation: CREATE_CART_MUTATION
@@ -136,6 +141,13 @@ const ProductFullDetail = props => {
     const scrollToReview = () => {
         smoothScrollToView(document.querySelector('.reviewsContainer'));
     };
+    const desStatus = (status) => {
+        if (status === -1) {
+            return "description"
+        } else if (status === false) {
+            return "description-close"
+        } else return "description-open"
+    }
 
     const classes = useStyle(defaultClasses, props.classes);
 
@@ -214,21 +226,48 @@ const ProductFullDetail = props => {
         }
     }
 
-    const cartCallToActionText = !isOutOfStock ? (
-        <FormattedMessage
-            id="productFullDetail.addItemToCart"
-            defaultMessage="Add to Cart"
-        />
-    ) : (
-        <FormattedMessage
-            id="productFullDetail.itemOutOfStock"
-            defaultMessage="Out of Stock"
-        />
-    );
+    // const cartCallToActionText = !isOutOfStock ? (
+    //     <FormattedMessage
+    //         id="productFullDetail.addItemToCart"
+    //         defaultMessage="Add to Cart"
+    //     />
+    // ) : (
+    //     <FormattedMessage
+    //         id="productFullDetail.itemOutOfStock"
+    //         defaultMessage="Out of Stock"
+    //     />
+    // );
+
+    const cartCallToActionText = () => {
+        if (typeBtn === "add to cart") {
+            return !isOutOfStock ? (
+                <FormattedMessage
+                    id="productFullDetail.addItemToCart"
+                    defaultMessage="Add to Cart"
+                />
+            ) : (
+                <FormattedMessage
+                    id="productFullDetail.itemOutOfStock"
+                    defaultMessage="Out of Stock"
+                />
+            );
+        } else return !isOutOfStock ? (
+            <FormattedMessage
+                id="productFullDetail.buyNow"
+                defaultMessage="Buy Now"
+            />
+        ) : (
+            <FormattedMessage
+                id="productFullDetail.itemOutOfStock"
+                defaultMessage="Out of Stock"
+            />
+        );
+    }
+
 
     const cartActionContent = isSupportedProductType ? (
         <Button disabled={isAddToCartDisabled} priority="high" type="submit">
-            {cartCallToActionText}
+            {cartCallToActionText()}
         </Button>
     ) : (
         <div className={classes.unavailableContainer}>
@@ -318,161 +357,234 @@ const ProductFullDetail = props => {
             )}
         </div>
     );
+    const wrapperQuantity = (
+        <div className="wrapperQuantity">
+            <section className={classes.quantity}>
+                <span className={classes.quantityTitle}>
+                    <FormattedMessage
+                        id={'productFullDetail.quantity'}
+                        defaultMessage={'Quantity: '}
+                    />
+                </span>
+                <QuantityFields
+                    classes={{ root: classes.quantityRoot }}
+                    min={1}
+                    message={errors.get('quantity')}
+                />
+            </section>
+        </div>
+    );
+    const cartAction = (
+        <div
+            className={
+                isAddToCartDisabled ? 'addCartDisabled' : 'wrapperActions'
+            }
+        >
+            <section className={classes.actions}>
+                {cartActionContent}
+                {isMobileSite ? null : (
+                    <Suspense fallback={null}>
+                        <WishlistButton {...wishlistButtonProps} />
+                    </Suspense>
+                )}
+            </section>
+            {product.mp_sizeChart &&
+            product.mp_sizeChart.display_type == 'inline' ? (
+                <SizeChart
+                    sizeChart={
+                        product.mp_sizeChart ? product.mp_sizeChart : null
+                    }
+                />
+            ) : null}
+        </div>
+    );
 
     return (
-        <div className="p-fulldetails-ctn container">
-            {mageworxSeoEnabled ? (
-                <DataStructure
-                    avg_rating={avg_rating}
-                    product={product}
-                    price={price}
+        <>
+            {isMobileSite ? (
+                <FooterFixedBtn
+                    addToCartPopup={addToCartPopup}
+                    setAddToCartPopup={setAddToCartPopup}
+                    typeBtn={typeBtn}
+                    setTypeBtn={setTypeBtn}
                 />
-            ) : (
-                <DataStructureBasic
-                    avg_rating={avg_rating}
-                    product={product}
-                    price={price}
+            ) : null}
+            {addToCartPopup ? (
+                <AddToCartPopup
+                    options={options}
+                    wrapperQuantity={wrapperQuantity}
+                    cartAction={cartAction}
+                    handleAddToCart={handleAddToCart}
+                    handleBuyNow={handleBuyNow}
+                    setAddToCartPopup={setAddToCartPopup}
+                    typeBtn={typeBtn}
                 />
-            )}
-            {isMobileSite ? null : breadcrumbs}
-            <div className="wrapperForm">
-                <Form className={classes.root} onSubmit={handleAddToCart}>
-                    {!isMobileSite ? (
-                        <div className="wrapperTitle">
-                            <section className={classes.title}>
-                                <h1 className={classes.productName}>
-                                    {productDetails.name}
-                                    <Pdetailsbrand product={product} />
-                                </h1>
-                            </section>
-                        </div>
-                    ) : null}
-                    {!isMobileSite ? (
-                        <div className="wrapperSku">
-                            <section className={classes.details}>
-                                <span className={classes.detailsTitle}>
-                                    <FormattedMessage
-                                        id={'global.labelSku'}
-                                        defaultMessage={'SKU: '}
-                                    />
-                                    {productDetails.sku}
-                                </span>
-                            </section>
-                        </div>
-                    ) : null}
+            ) : null}
 
-                    {!isMobileSite ? review : null}
-                    <section className={classes.imageCarousel}>
-                        {isMobileSite ? (
-                            <div className={classes.headerBtn}>
-                                <button
-                                    className={classes.backBtn}
-                                    onClick={() => History.goBack()}
-                                >
-                                    <ArrowLeft />
-                                </button>
+            <div className={'p-fulldetails-ctn container'}>
+                {mageworxSeoEnabled ? (
+                    <DataStructure
+                        avg_rating={avg_rating}
+                        product={product}
+                        price={price}
+                    />
+                ) : (
+                    <DataStructureBasic
+                        avg_rating={avg_rating}
+                        product={product}
+                        price={price}
+                    />
+                )}
 
-                                <div className={classes.headerBtnRight}>
-                                    <span className="cart-qty">{itemsQty}</span>
-                                    <Link className="header-icon" to="/cart">
-                                        <ShoppingCart />
-                                    </Link>
-                                    <Suspense fallback={null}>
-                                        <WishlistButton
-                                            {...wishlistButtonProps}
-                                        />
-                                    </Suspense>{' '}
-                                    <div
-                                        onClick={() => setMoreBtn(!moreBtn)}
-                                        className="header-icon"
-                                    >
-                                        <MoreVertical />
-                                    </div>
-                                    {moreBtn ? (
-                                        <ul className="header-more">
-                                            <li>
-                                                <Link to="/">Home</Link>
-                                            </li>
-                                            <li>Help Center</li>
-                                        </ul>
-                                    ) : null}
-                                </div>
+                {isMobileSite ? null : breadcrumbs}
+                <div className="wrapperForm ">
+                    <Form className={classes.root} onSubmit={handleAddToCart}>
+                        {!isMobileSite ? (
+                            <div className="wrapperTitle">
+                                <section className={classes.title}>
+                                    <h1 className={classes.productName}>
+                                        {productDetails.name}
+                                        <Pdetailsbrand product={product} />
+                                    </h1>
+                                </section>
                             </div>
                         ) : null}
-                        {isMobileSite ?
-                        <StatusBar status={product.stock_status} />
-                    : null}
-                        <Carousel
-                            product={product}
-                            optionSelections={optionSelections}
-                            optionCodes={optionCodes}
-                            labelData={
-                                product.mp_label_data.length > 0
-                                    ? product.mp_label_data
-                                    : null
-                            }
-                        />
-                        {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
-                    </section>
+                        {!isMobileSite ? (
+                            <div className="wrapperSku">
+                                <section className={classes.details}>
+                                    <span className={classes.detailsTitle}>
+                                        <FormattedMessage
+                                            id={'global.labelSku'}
+                                            defaultMessage={'SKU: '}
+                                        />
+                                        {productDetails.sku}
+                                    </span>
+                                </section>
+                            </div>
+                        ) : null}
 
-                    <FormError
-                        classes={{
-                            root: classes.formErrors
-                        }}
-                        errors={errors.get('form') || []}
-                    />
+                        {!isMobileSite ? review : null}
+                        <section className={classes.imageCarousel}>
+                            {isMobileSite ? (
+                                <div className={classes.headerBtn}>
+                                    <button
+                                        className={classes.backBtn}
+                                        onClick={() => History.goBack()}
+                                    >
+                                        <ArrowLeft />
+                                    </button>
 
-                    {isMobileSite ? (
-                        <div className="wrapperTitle">
-                            <section className={classes.title}>
-                                <h1 className={classes.productName}>
-                                    {productDetails.name}
-                                    <Pdetailsbrand product={product} />
-                                </h1>
-                            </section>
-                        </div>
-                    ) : null}
-                    {isMobileSite ? wrapperPrice : null}
-                    {isMobileSite ? review : null}
-                    <div className="wrapperOptions">
-                        <section className={classes.options}>
-                            {options}
-                            {product.mp_sizeChart &&
-                            product.mp_sizeChart.display_type == 'popup' ? (
-                                <SizeChart
-                                    sizeChart={
-                                        product.mp_sizeChart
-                                            ? product.mp_sizeChart
-                                            : null
-                                    }
-                                />
+                                    <div className={classes.headerBtnRight}>
+                                        <span className="cart-qty">
+                                            {itemsQty}
+                                        </span>
+                                        <Link
+                                            className="header-icon"
+                                            to="/cart"
+                                        >
+                                            <ShoppingCart />
+                                        </Link>
+                                        <Suspense fallback={null}>
+                                            <WishlistButton
+                                                {...wishlistButtonProps}
+                                            />
+                                        </Suspense>{' '}
+                                        <div
+                                            onClick={() => setMoreBtn(!moreBtn)}
+                                            className="header-icon"
+                                        >
+                                            <MoreVertical />
+                                        </div>
+                                        {moreBtn ? (
+                                            <ul className="header-more">
+                                                <li>
+                                                    <Link to="/">Home</Link>
+                                                </li>
+                                                <li>Help Center</li>
+                                            </ul>
+                                        ) : null}
+                                    </div>
+                                </div>
                             ) : null}
-
-                           {!isMobileSite ? wrapperPrice : null}
+                            {isMobileSite ? (
+                                <StatusBar status={product.stock_status} />
+                            ) : null}
+                            <Carousel
+                                product={product}
+                                optionSelections={optionSelections}
+                                optionCodes={optionCodes}
+                                labelData={
+                                    product.mp_label_data.length > 0
+                                        ? product.mp_label_data
+                                        : null
+                                }
+                            />
+                            {/* {isMobileSite ? <FooterFixedBtn /> : null} */}
+                            {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
                         </section>
-                    </div>
 
-                    {product.items ? (
-                        ''
-                    ) : (
-                        <div className="wrapperQuantity">
-                            <section className={classes.quantity}>
-                                <span className={classes.quantityTitle}>
-                                    <FormattedMessage
-                                        id={'productFullDetail.quantity'}
-                                        defaultMessage={'Quantity: '}
-                                    />
-                                </span>
-                                <QuantityFields
-                                    classes={{ root: classes.quantityRoot }}
-                                    min={1}
-                                    message={errors.get('quantity')}
-                                />
-                            </section>
-                        </div>
-                    )}
+                        <FormError
+                            classes={{
+                                root: classes.formErrors
+                            }}
+                            errors={errors.get('form') || []}
+                        />
 
-                    <div
+                        {isMobileSite ? (
+                            <div className="wrapperTitle">
+                                <section className={classes.title}>
+                                    <h1 className={classes.productName}>
+                                        {productDetails.name}
+                                        <Pdetailsbrand product={product} />
+                                    </h1>
+                                </section>
+                            </div>
+                        ) : null}
+                        {isMobileSite ? wrapperPrice : null}
+                        {isMobileSite ? review : null}
+                        {!isMobileSite ? (
+                            <div className="wrapperOptions">
+                                <section className={classes.options}>
+                                    {options}
+                                    {product.mp_sizeChart &&
+                                    product.mp_sizeChart.display_type ==
+                                        'popup' ? (
+                                        <SizeChart
+                                            sizeChart={
+                                                product.mp_sizeChart
+                                                    ? product.mp_sizeChart
+                                                    : null
+                                            }
+                                        />
+                                    ) : null}
+
+                                    {!isMobileSite ? wrapperPrice : null}
+                                </section>
+                            </div>
+                        ) : null}
+
+                        {product.items
+                            ? ''
+                            : // <div className="wrapperQuantity">
+                            //     <section className={classes.quantity}>
+                            //         <span className={classes.quantityTitle}>
+                            //             <FormattedMessage
+                            //                 id={'productFullDetail.quantity'}
+                            //                 defaultMessage={'Quantity: '}
+                            //             />
+                            //         </span>
+                            //         <QuantityFields
+                            //             classes={{ root: classes.quantityRoot }}
+                            //             min={1}
+                            //             message={errors.get('quantity')}
+                            //         />
+                            //     </section>
+                            // </div>
+                            !isMobileSite
+                            ? wrapperQuantity
+                            : null}
+                        {!isMobileSite ? cartAction : null}
+                        {/* {!isMobileSite ? <div
                         className={
                             isAddToCartDisabled
                                 ? 'addCartDisabled'
@@ -497,70 +609,102 @@ const ProductFullDetail = props => {
                                 }
                             />
                         ) : null}
-                    </div>
-                    <section className={classes.description}>
-                        <span className={classes.descriptionTitle}>
-                            <FormattedMessage
-                                id={'productFullDetail.productDescription'}
-                                defaultMessage={'Product Description'}
-                            />
-                        </span>
-                        <RichContent html={productDetails.description} />
-                    </section>
+                    </div> : null} */}
+                        <section className={classes.description}>
+                            <span className={classes.descriptionTitle}>
+                                <FormattedMessage
+                                    id={'productFullDetail.productDescription'}
+                                    defaultMessage={'Product Description'}
+                                />
+                            </span>
+                            {!isMobileSite ? (
+                                <RichContent
+                                    html={productDetails.description}
+                                />
+                            ) : (
+                                <>
+                                    <span onClick={() => setDescripttion(true)}>
+                                        <FaChevronRight />
+                                    </span>
+                                    <div
+                                        className={
+                                            // descripttion
+                                            //     ? 'descripttion-open'
+                                            //     : 'Description-close'
+                                            desStatus(descripttion)
+                                        }
+                                    >
+                                        <div
+                                        className="des-title"
+                                            onClick={() =>
+                                                setDescripttion(false)
+                                            }
+                                        >
+                                            <ArrowLeft />
+                                            <p >Description</p>
+                                        </div>
+                                        <RichContent
+                                            html={productDetails.description}
+                                        />
+                                    </div>
+                                </>
+                            )}
+                        </section>
 
-                    <section className={classes.details}>
-                        <span className={classes.detailsTitle}>
-                            <FormattedMessage
-                                id={'global.sku'}
-                                defaultMessage={'SKU'}
-                            />
-                        </span>
-                        <strong>{productDetails.sku}</strong>
-                    </section>
-                </Form>
+                        <section className={classes.details}>
+                            <span className={classes.detailsTitle}>
+                                <FormattedMessage
+                                    id={'global.sku'}
+                                    defaultMessage={'SKU'}
+                                />
+                            </span>
+                            <strong>{productDetails.sku}</strong>
+                        </section>
+                    </Form>
+                </div>
+                {product.mp_sizeChart &&
+                product.mp_sizeChart.display_type == 'tab' ? (
+                    <SizeChart
+                        sizeChart={
+                            product.mp_sizeChart ? product.mp_sizeChart : null
+                        }
+                    />
+                ) : null}
+                <ProductReview product={product} ref={productReview} />
+                <ProductDetailExtraProducts
+                    classes={classes}
+                    products={relatedProducts}
+                    history={history}
+                >
+                    <FormattedMessage
+                        id="productFullDetail.relatedProducts"
+                        defaultMessage="Related Product"
+                    />
+                </ProductDetailExtraProducts>
+
+                <ProductDetailExtraProducts
+                    classes={classes}
+                    products={upsellProducts}
+                    history={history}
+                >
+                    <FormattedMessage
+                        id="productFullDetail.upsellProduct"
+                        defaultMessage="Upsell Product"
+                    />
+                </ProductDetailExtraProducts>
+
+                <ProductDetailExtraProducts
+                    classes={classes}
+                    products={crosssellProducts}
+                    history={history}
+                >
+                    <FormattedMessage
+                        id="productFullDetail.crosssellProduct"
+                        defaultMessage="Crosssell Product"
+                    />
+                </ProductDetailExtraProducts>
             </div>
-            {product.mp_sizeChart &&
-            product.mp_sizeChart.display_type == 'tab' ? (
-                <SizeChart
-                    sizeChart={
-                        product.mp_sizeChart ? product.mp_sizeChart : null
-                    }
-                />
-            ) : null}
-            <ProductReview product={product} ref={productReview} />
-            <ProductDetailExtraProducts
-                classes={classes}
-                products={relatedProducts}
-                history={history}
-            >
-                <FormattedMessage
-                    id="productFullDetail.relatedProducts"
-                    defaultMessage="Related Product"
-                />
-            </ProductDetailExtraProducts>
-
-            <ProductDetailExtraProducts
-                classes={classes}
-                products={upsellProducts}
-                history={history}
-            >
-                <FormattedMessage
-                    id="productFullDetail.upsellProduct"
-                    defaultMessage="Upsell Product"
-                />
-            </ProductDetailExtraProducts>
-
-            <ProductDetailExtraProducts
-                classes={classes}
-                products={crosssellProducts}
-                history={history}
-            >
-                <FormattedMessage
-                    id="productFullDetail.crosssellProduct"
-                    defaultMessage="Crosssell Product"
-                />
-            </ProductDetailExtraProducts>
-        </div>
+        </>
     );
 };
 

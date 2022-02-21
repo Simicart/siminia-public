@@ -263,7 +263,7 @@ const OrderDetailPage = props => {
                                     id: 'Discount',
                                     defaultMessage: 'Discount'
                                 })}
-                                :{' '}
+                                :{' -'}
                                 {forMatCurrentValue(
                                     customer.orders.items[0].total.subtotal
                                         .currency
