@@ -191,7 +191,74 @@
             padding-left: 10px;
         }
     }
+    @media (min-width: 481px) {
+        .carousel-child-cate {
+            display: none;
+        }
+    }
     @media (max-width: 480px) {
+        .carousel-child-cate {
+            padding: 10px 16px 10px 14px;
+            overflow: auto;
+            display: flex;
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+            &::-webkit-scrollbar {
+                display: none;
+            }
+            li {
+                display: inline-block;
+                list-style: none;
+                height: 36px;
+                line-height: 36px;
+                &:not(:first-child) {
+                    margin-left: 10px;
+                    margin-left: 10px;
+                    border-radius: 3px;
+                    background-color: #C3BEBE;
+                }
+                &.active-item {
+                    display: block;
+                    position: relative;
+                    box-sizing: border-box;
+                    border: 1px solid #FF5F59;
+                    border-radius: 3px;
+                    background-color: #FFFFFF;
+                    &::after{
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        height: 16.89px;
+                        width: 16px;
+                        border-left: 10px solid #FF5F59;
+                        border-right: 10px solid transparent;
+                        border-bottom: 10px solid transparent;
+                        border-top: 10px solid #FF5F59;
+                    }
+                    &::before{
+                        content: url("./Icon/icon-done.svg");
+                        position: absolute;
+                        bottom: 10px;
+                        left: 0;
+                        z-index: 2;
+                    }
+                    a {
+                        white-space: nowrap;
+                    }
+                }
+                a {
+                    color: #150826;
+                    font-family: Roboto;
+                    font-size: 13px;
+                    letter-spacing: 0;
+                    line-height: 15px;
+                    text-align: center;
+                    padding: 10px;
+                    white-space: nowrap;
+                }
+            }
+        }
         .product-list-filter-sortby{
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;

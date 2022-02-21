@@ -11,6 +11,8 @@ import LoadMore from './loadMore';
 import NoProductsFound from './NoProductsFound';
 import { useIntl } from 'react-intl';
 import { useWindowSize } from '@magento/peregrine';
+import { cateUrlSuffix } from 'src/simi/Helper/Url';
+import { Link } from 'react-router-dom';
 
 require('./products.scss');
 
@@ -199,12 +201,62 @@ const Products = props => {
             </React.Fragment>
         );
     };
+    const renderCarouselChildCate = () => {
+        let html = null;
+        const { category } = data;
+        if (
+            category &&
+            category.children &&
+            category.children instanceof Array &&
+            category.children.length
+        ) {
+            const mainCate = (
+                <li key={category.id} className="active-item">                    
+                    <Link
+                        to={{
+                            pathname: '/' + category.url_path + cateUrlSuffix(),
+                            cateId: category.id
+                        }}
+                    >
+                        {formatMessage({
+                            id: `All ${category.name}`,
+                            defaultMessage: `All ${category.name}`
+                        })}
+                    </Link>
+                </li>
+            );
 
+            const listCates = category.children.map((cate, idx) => {
+                const location = {
+                    pathname: '/' + cate.url_path + cateUrlSuffix(),
+                    cateId: cate.id
+                };
+                return (
+                    <li key={cate.id}>
+                        <Link to={location}>
+                            {formatMessage({
+                                id: `cateName`,
+                                defaultMessage: cate.name
+                            })}
+                        </Link>
+                    </li>
+                );
+            });
+            html = (
+                <ul className="carousel-child-cate">
+                    {mainCate}
+                    {listCates}
+                </ul>
+            );
+        }
+        return html;
+    };
     return (
         <article className="products-root" id="root-product-list">
             <h1 className="title">
                 <div className="categoryTitle">{title}</div>
             </h1>
+            {renderCarouselChildCate()}
             {isPhone ? itemCount : ''}
             <div className="product-list-container-siminia">
                 <div className="product-list-filter-sortby">
