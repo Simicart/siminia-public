@@ -16,6 +16,8 @@ import Image from "@magento/venia-ui/lib/components/Image";
 import {RedButton} from "./RedButton";
 import {ProductListingWithBrandSeparation} from "./ProductListingWithBrandSeparation";
 import {ConfirmPopup} from "./ConfirmPopup";
+import {BottomNotification} from "./BottomNotification";
+import {bottomNotificationType, useBottomNotification} from "./bottomNotificationHook/useBottomNotification";
 
 const CheckIcon = <Icon size={20} src={Check}/>;
 
@@ -54,6 +56,12 @@ const CartPage = props => {
     const classes = useStyle(defaultClasses, defaultClasses_1, props.classes);
     const {formatMessage} = useIntl();
     const [, {addToast}] = useToasts();
+
+    const {
+        component: notiComponent,
+        setCurrentText,
+        makeNotification
+    } = useBottomNotification()
 
     useEffect(() => {
         if (wishlistSuccessProps) {
@@ -158,7 +166,24 @@ const CartPage = props => {
                     defaultMessage: 'Cart'
                 })}
             </StoreTitle>
+            <button onClick={() => {
+                makeNotification(
+                    {
+                        text: Math.random().toString(),
+                        type: bottomNotificationType.SUCCESS
+                    })
+            }}> Good
+            </button>
+            <button onClick={() => {
+                makeNotification(
+                    {
+                        text: Math.random().toString(),
+                        type: bottomNotificationType.FAIL
+                    })
+            }}> Bad
+            </button>
             {cartBody}
+            {notiComponent}
         </div>
     );
 };

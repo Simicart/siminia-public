@@ -17,7 +17,7 @@ import {XCircle} from 'react-feather'
 import defaultClasses from './couponCode.module.css';
 import {RectButton} from "../RectButton";
 import {useResetForm} from "@magento/peregrine/lib/hooks/useResetForm";
-import {InspectFormOnly} from "../ResetOnlyComponent";
+import {InspectFormOnly} from "../InspectFormOnly";
 import {RemovableTextInput} from "../RemovableTextInput";
 
 const errorIcon = (
