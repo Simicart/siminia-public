@@ -4,7 +4,7 @@ import defaultClasses from './priceAdjustments.module.css'
 import LoadingIndicator from "@magento/venia-ui/lib/components/LoadingIndicator";
 import {Accordion, Section} from "@magento/venia-ui/lib/components/Accordion";
 import {useIntl} from "react-intl";
-import CouponCode from "../../../core/Cart/PriceAdjustments/CouponCode";
+import CouponCode from "../CouponCode";
 
 export const PriceAdjustments = (props) => {
     const {classes: _classess, ...rest} = props
@@ -20,12 +20,13 @@ export const PriceAdjustments = (props) => {
                 id={'coupon_code'}
                 title={formatMessage({
                     id: 'priceAdjustments.couponCode',
-                    defaultMessage: 'Enter Coupon Code'
+                    defaultMessage: 'Coupon Code'
                 })}
                 classes={{
                     root: classes.sectionRoot,
                     title: classes.sectionTitle,
-                    title_wrapper: classes.title_wrapper
+                    title_wrapper: classes.title_wrapper,
+                    contents_container: classes.contents_container
                 }}
             >
                 <Suspense fallback={<LoadingIndicator/>}>

@@ -16,3 +16,13 @@
     height: 4.5rem;
     justify-items: start;
 }
+
+
+.contents_container {
+    padding: 0;
+}
+
+.contents_container:empty {
+    display: none;
+}
+
