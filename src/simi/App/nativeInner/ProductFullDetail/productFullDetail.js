@@ -19,7 +19,7 @@ import { QuantityFields } from '@simicart/siminia/src/simi/App/core/Cart/Product
 import RichContent from '@magento/venia-ui/lib/components/RichContent/richContent';
 import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductOptions';
 import defaultClasses from './productFullDetail.module.css';
-import SizeChart from '@simicart/siminia/src/simi/App/core/ProductFullDetail/SizeChart';
+import SizeChart from './SizeChart';
 const WishlistButton = React.lazy(() =>
     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
 );
@@ -109,7 +109,7 @@ const ProductFullDetail = props => {
     const [addToCartPopup, setAddToCartPopup] = useState(false);
     const [descripttion, setDescripttion] = useState(-1);
     const isMobileSite = window.innerWidth <= 450;
-    const [typeBtn, setTypeBtn] = useState("")
+    const [typeBtn, setTypeBtn] = useState('');
     const { itemCount: itemsQty } = useCartTrigger({
         mutations: {
             createCartMutation: CREATE_CART_MUTATION
@@ -141,13 +141,13 @@ const ProductFullDetail = props => {
     const scrollToReview = () => {
         smoothScrollToView(document.querySelector('.reviewsContainer'));
     };
-    const desStatus = (status) => {
+    const desStatus = status => {
         if (status === -1) {
-            return "description"
+            return 'description';
         } else if (status === false) {
-            return "description-close"
-        } else return "description-open"
-    }
+            return 'description-close';
+        } else return 'description-open';
+    };
 
     const classes = useStyle(defaultClasses, props.classes);
 
@@ -239,7 +239,7 @@ const ProductFullDetail = props => {
     // );
 
     const cartCallToActionText = () => {
-        if (typeBtn === "add to cart") {
+        if (typeBtn === 'add to cart') {
             return !isOutOfStock ? (
                 <FormattedMessage
                     id="productFullDetail.addItemToCart"
@@ -251,19 +251,19 @@ const ProductFullDetail = props => {
                     defaultMessage="Out of Stock"
                 />
             );
-        } else return !isOutOfStock ? (
-            <FormattedMessage
-                id="productFullDetail.buyNow"
-                defaultMessage="Buy Now"
-            />
-        ) : (
-            <FormattedMessage
-                id="productFullDetail.itemOutOfStock"
-                defaultMessage="Out of Stock"
-            />
-        );
-    }
-
+        } else
+            return !isOutOfStock ? (
+                <FormattedMessage
+                    id="productFullDetail.buyNow"
+                    defaultMessage="Buy Now"
+                />
+            ) : (
+                <FormattedMessage
+                    id="productFullDetail.itemOutOfStock"
+                    defaultMessage="Out of Stock"
+                />
+            );
+    };
 
     const cartActionContent = isSupportedProductType ? (
         <Button disabled={isAddToCartDisabled} priority="high" type="submit">
@@ -374,6 +374,13 @@ const ProductFullDetail = props => {
             </section>
         </div>
     );
+    const renderSizeChart =
+        product.mp_sizeChart  ? (
+            <SizeChart
+                sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null}
+                isMobileSite={isMobileSite}
+            />
+        ) : null;
     const cartAction = (
         <div
             className={
@@ -546,17 +553,7 @@ const ProductFullDetail = props => {
                             <div className="wrapperOptions">
                                 <section className={classes.options}>
                                     {options}
-                                    {product.mp_sizeChart &&
-                                    product.mp_sizeChart.display_type ==
-                                        'popup' ? (
-                                        <SizeChart
-                                            sizeChart={
-                                                product.mp_sizeChart
-                                                    ? product.mp_sizeChart
-                                                    : null
-                                            }
-                                        />
-                                    ) : null}
+                                    {renderSizeChart}
 
                                     {!isMobileSite ? wrapperPrice : null}
                                 </section>
@@ -617,6 +614,7 @@ const ProductFullDetail = props => {
                                     defaultMessage={'Product Description'}
                                 />
                             </span>
+
                             {!isMobileSite ? (
                                 <RichContent
                                     html={productDetails.description}
@@ -626,6 +624,7 @@ const ProductFullDetail = props => {
                                     <span onClick={() => setDescripttion(true)}>
                                         <FaChevronRight />
                                     </span>
+
                                     <div
                                         className={
                                             // descripttion
@@ -635,17 +634,19 @@ const ProductFullDetail = props => {
                                         }
                                     >
                                         <div
-                                        className="des-title"
+                                            className="des-title"
                                             onClick={() =>
                                                 setDescripttion(false)
                                             }
                                         >
                                             <ArrowLeft />
-                                            <p >Description</p>
+                                            <p>Description</p>
                                         </div>
                                         <RichContent
                                             html={productDetails.description}
                                         />
+                                       
+                                        
                                     </div>
                                 </>
                             )}
@@ -662,6 +663,7 @@ const ProductFullDetail = props => {
                         </section>
                     </Form>
                 </div>
+                {renderSizeChart}
                 {product.mp_sizeChart &&
                 product.mp_sizeChart.display_type == 'tab' ? (
                     <SizeChart

@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { array, func, shape, string } from 'prop-types';
-import Main from './App/core/Main';
-import Navigation from './App/core/Navigation';
+import Main from './App/nativeInner/Main';
+import Navigation from './App/nativeInner/Navigation';
 import Routes from '@magento/venia-ui/lib/components/Routes';
 import Mask from 'src/simi/BaseComponents/Mask';
 import { useApp } from '@magento/peregrine/lib/talons/App/useApp';

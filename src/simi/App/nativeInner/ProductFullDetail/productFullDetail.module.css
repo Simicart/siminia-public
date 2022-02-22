@@ -366,6 +366,15 @@
         align-items: baseline;
         margin: 0;
     }
+    .actions {
+        composes: section;
+        align-items: center;
+        display: grid;
+        grid-area: cart;
+        row-gap: 1.5rem;
+        justify-items: left;
+    }
+    
 }
 @media (min-width: 450px) {
     .backBtn {

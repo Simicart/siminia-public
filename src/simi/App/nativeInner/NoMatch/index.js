@@ -39,7 +39,7 @@ const Category = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "SimiCategory"*/ 'src/simi/App/core/RootComponents/Category')
+                import(/* webpackChunkName: "SimiCategory"*/ 'src/simi/App/nativeInner/RootComponents/Category')
             }
             {...props}
         />
