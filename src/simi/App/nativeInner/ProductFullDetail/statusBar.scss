@@ -3,7 +3,7 @@
     z-index: 1;
     top: 92.5%;
     border-radius: 16px 16px 0 0;
-    background-color: #ffdbdc;
+    background-color: #ededed;
     height: 40px;
     width: 100%;
     display: flex;
@@ -11,7 +11,7 @@
     align-items: center;
     .first-item {
         border-radius: 16px 0 0 0;
-        background-color: #ff5f59;
+        background-color: #0058ac;
         height: 40px;
         line-height: 40px;
         color: #ffffff;
@@ -20,7 +20,7 @@
         padding: 0 10px;
     }
     .nth-item {
-        color: #ff5f59;
+        color: #000;
         font-size: 14px;
         letter-spacing: 0;
     }
@@ -55,19 +55,19 @@
             justify-content: center;
         }
         li:nth-child(2) {
-            background-color: #ffe8ea;
-            color: #ff5f59;
+            background-color: #ededed;
+            color: #000;
         }
         li:nth-child(3) {
-            background-color: #ff5f59;
-            color: #ffe8ea;
+            background-color: #0058ac;
+            color: #ededed;
         }
     }
 }
 .main-AddToCartPopup {
     .form {
         position: fixed;
-        top: 46%;
+        bottom: 0;
         width: 100%;
         z-index: 5;
         background-color: #fff;
