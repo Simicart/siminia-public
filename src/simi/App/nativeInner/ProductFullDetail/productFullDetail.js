@@ -45,6 +45,7 @@ import {
     ArrowRight
 } from 'react-feather';
 import { FaChevronRight } from 'react-icons/Fa';
+import { BiHelpCircle,BiHome } from "react-icons/bi";
 
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
@@ -505,9 +506,13 @@ const ProductFullDetail = props => {
                                         {moreBtn ? (
                                             <ul className="header-more">
                                                 <li>
+                                                    <BiHome />
                                                     <Link to="/">Home</Link>
                                                 </li>
-                                                <li>Help Center</li>
+                                                <li>
+                                                    <BiHelpCircle />
+                                                    Help Center
+                                                    </li>
                                             </ul>
                                         ) : null}
                                     </div>
