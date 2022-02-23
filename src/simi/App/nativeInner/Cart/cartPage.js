@@ -166,22 +166,22 @@ const CartPage = props => {
                     defaultMessage: 'Cart'
                 })}
             </StoreTitle>
-            <button onClick={() => {
-                makeNotification(
-                    {
-                        text: Math.random().toString(),
-                        type: bottomNotificationType.SUCCESS
-                    })
-            }}> Good
-            </button>
-            <button onClick={() => {
-                makeNotification(
-                    {
-                        text: Math.random().toString(),
-                        type: bottomNotificationType.FAIL
-                    })
-            }}> Bad
-            </button>
+            {/*<button onClick={() => {*/}
+            {/*    makeNotification(*/}
+            {/*        {*/}
+            {/*            text: Math.random().toString(),*/}
+            {/*            type: bottomNotificationType.SUCCESS*/}
+            {/*        })*/}
+            {/*}}> Good*/}
+            {/*</button>*/}
+            {/*<button onClick={() => {*/}
+            {/*    makeNotification(*/}
+            {/*        {*/}
+            {/*            text: Math.random().toString(),*/}
+            {/*            type: bottomNotificationType.FAIL*/}
+            {/*        })*/}
+            {/*}}> Bad*/}
+            {/*</button>*/}
             {cartBody}
             {notiComponent}
         </div>

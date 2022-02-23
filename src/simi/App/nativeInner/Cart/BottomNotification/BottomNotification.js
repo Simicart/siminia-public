@@ -4,13 +4,13 @@ import defaultClass from './BottomNotification.module.css'
 import {bottomNotificationType} from "../bottomNotificationHook/useBottomNotification";
 
 export const BottomNotification = (props) => {
-    const {text = '', icon, type} = props
+    const {text = '', icon, type, forwardRef} = props
     const classes = useStyle(defaultClass, props.classes)
 
     const isSuccess = type === bottomNotificationType.SUCCESS
 
     return (
-        <div className={classes.notificationContainer}>
+        <div className={classes.notificationContainer} ref={forwardRef}>
             <div className={isSuccess ? classes.successContainer : classes.failContainer}>
                 <div className={classes.innerContainer}>
                     <div className={classes.iconContainer}>
