@@ -172,8 +172,7 @@ const CartProduct = props => {
                         resource={image}
                     />
                     <span className={classes.stockStatusMessage}>
-                        Sold out
-                        {/*{stockStatusMessage}*/}
+                        {stockStatusMessage}
                     </span>
                 </Link>
                 <div className={classes.details}>
