@@ -14,8 +14,8 @@ import { isRequired } from '@magento/venia-ui/lib/util/formValidators';
 import { configColor } from 'src/simi/Config';
 import Identify from 'src/simi/Helper/Identify';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
-import DataStructure from '../../Seo/Markup/Product';
-import DataStructureBasic from '../../SeoBasic/Markup/Product';
+import DataStructure from '@simicart/siminia/src/simi/App/core/Seo/Markup/Product.js';
+import DataStructureBasic from '@simicart/siminia/src/simi/App/core/SeoBasic/Markup/Product.js';
 
 const mageworxSeoEnabled =
     window.SMCONFIGS &&
@@ -23,7 +23,7 @@ const mageworxSeoEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
 
-// require('./productReview.scss');
+require('./productReview.scss');
 const ProductReview = forwardRef((props, ref) => {
     const { product } = props;
     const history = useHistory();
@@ -42,7 +42,7 @@ const ProductReview = forwardRef((props, ref) => {
     const [isOpen, setIsOpen] = useState(false);
     const [ratingVal, setRatingVal] = useState({});
     const [showItem, setShowItem] = useState(1);
-
+    const isMobileSite = window.innerWidth <= 450;
     const {
         data,
         loading,
@@ -323,12 +323,20 @@ const ProductReview = forwardRef((props, ref) => {
                 return (
                     <div key={index} className="review-item">
                         <div className="review-item-head">
+                            <div className="summary">
+                                {item.summary}
+                            </div>
                             <div>
                                 <span>{dateFormat(item.created_at)}</span>
                                 <span>.</span>
                                 <span>{item.nickname}</span>
                             </div>
-                            {item &&
+                            
+                        </div>
+                        {/* <div className="summary">
+                            {item.summary.toUpperCase()}
+                        </div> */}
+                        {item &&
                             item.ratings_breakdown &&
                             item.ratings_breakdown[0] ? (
                                 <div className="rating-star">
@@ -342,18 +350,14 @@ const ProductReview = forwardRef((props, ref) => {
                                             'static-rate':
                                                 classes['static-rate']
                                         }}
-                                        backgroundColor={
-                                            configColor.content_color
+                                        backgroundColor={ !isMobileSite ? 
+                                            configColor.content_color : '#ffc500'
                                         }
                                     />
                                 </div>
                             ) : (
                                 ''
                             )}
-                        </div>
-                        <div className="summary">
-                            {item.summary.toUpperCase()}
-                        </div>
                         <div className="review-text">{item.text}</div>
                     </div>
                 );

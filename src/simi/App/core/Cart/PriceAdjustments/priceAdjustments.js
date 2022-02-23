@@ -56,7 +56,7 @@ const PriceAdjustments = props => {
     const money = spending_rate.split('for $');
     const spending_point = words[0].split(' ')
     const pointSpending = spending_point[1];
-    const moneySpending = money[1].split('.');
+    const moneySpending = money[1].split('.') ;
     const maxPoint = Math.floor((pointSpending * subtotal.value)/moneySpending[0]);
     const balance = customerRewardPoint.point_balance;
     let rewardPointSelected = 0;
