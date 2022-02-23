@@ -49,6 +49,7 @@ export const getCateNoFilter = gql`
             children {
                 id
                 name
+                url_path
             }
         }
         products(
