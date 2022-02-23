@@ -91,35 +91,13 @@ const Products = props => {
     const renderLeftNavigation = () => {
         const shopby = [];
         const filter = renderFilter();
-        const sortby = <Sortby data={data} sortByData={sortByData} />;
-        const sortbyprice = <SortbyPrice data={data} sortByData={sortByData} />;
         if (filter) {
             shopby.push(
                 <div
                     key="siminia-left-navigation-filter"
-                    className="left-navigation filter"
+                    className="left-navigation"
                 >
                     {filter}
-                </div>
-            );
-        }
-        if (sortby) {
-            shopby.push(
-                <div
-                    key="siminia-left-navigation-sortby"
-                    className="left-navigation sortby"
-                >
-                    {sortby}
-                </div>
-            );
-        }
-        if (sortbyprice) {
-            shopby.push(
-                <div
-                    key="siminia-left-navigation-sortbyprice"
-                    className="left-navigation sortbyprice"
-                >
-                    {sortbyprice}
                 </div>
             );
         }
@@ -211,7 +189,7 @@ const Products = props => {
             category.children.length
         ) {
             const mainCate = (
-                <li key={category.id} className="active-item">                    
+                <li key={category.id} className="active-item">
                     <Link
                         to={{
                             pathname: '/' + category.url_path + cateUrlSuffix(),
@@ -256,13 +234,11 @@ const Products = props => {
             <h1 className="title">
                 <div className="categoryTitle">{title}</div>
             </h1>
-            {renderCarouselChildCate()}
             {isPhone ? itemCount : ''}
             <div className="product-list-container-siminia">
-                <div className="product-list-filter-sortby">
-                    {renderLeftNavigation()}
-                </div>
-
+                {renderLeftNavigation()}
+                <Sortby data={data} sortByData={sortByData} />
+                {renderCarouselChildCate()}
                 <div
                     className="listing-product"
                     style={{ display: 'inline-block', width: '100%' }}

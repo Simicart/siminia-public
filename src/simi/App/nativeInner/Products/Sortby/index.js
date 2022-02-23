@@ -5,6 +5,7 @@ import Dropdownoption from 'src/simi/BaseComponents/Dropdownoption/';
 import { withRouter } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { capitalizeEachWords, randomString } from 'src/simi/Helper/String';
+require('./sortby.scss');
 
 const Sortby = props => {
     const { history, location, sortByData, data } = props;
@@ -61,8 +62,8 @@ const Sortby = props => {
             },
             { value: 'name', key: 'name', direction: 'asc', showDir: true },
             { value: 'name', key: 'name', direction: 'desc', showDir: true },
-            { value: 'price', key: 'price', direction: 'asc', showDir: true },
-            { value: 'price', key: 'price', direction: 'desc', showDir: true }
+            // { value: 'price', key: 'price', direction: 'asc', showDir: true },
+            // { value: 'price', key: 'price', direction: 'desc', showDir: true }
         ];
     }
 

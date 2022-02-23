@@ -57,55 +57,7 @@
             width: 100%;
             display: inline-block;
             // Sort by
-            .top-sort-by {
-                position: relative;
-                min-width: 217px;
-                margin-bottom: 15px;
-                .sort-by-select {
-                    display: flex;
-                    margin-top: 14px;
-                    min-height: 30px;
-                    @media (max-width: 1023px) {
-                        min-height: 45px;
-                        top: 8px;
-                    }
-                    @media (min-width: 1024px) {
-                        margin-top: 0;
-                    }
-                    .dropdownoption {
-                        font-size: 14px;
-                        padding: 7px 16px;
-                        background-color: #e0e0e0;
-                        font-weight: 400;
-                        border-color: transparent;
-                        &.showing {
-                            -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-                                0 1px 2px rgba(0, 0, 0, 0.24);
-                            box-shadow: 0 2px 15px 0 rgba(130, 130, 130, 0.74);
-                            border: none;
-                            background-color: white;
-                        }
-                    }
-                    &:hover .dropdownoption {
-                        border-color: #0058ac;
-                        cursor: pointer;
-                    }
-                }
-                .dir-item {
-                    display: flex;
-                    width: auto;
-                    justify-content: space-between;
-                    min-height: 30px;
-                    padding: 6px 0px;
-                    font-size: 14px;
-                    @media (max-width: 1023px) {
-                        padding: 10px 0px;
-                    }
-                    &:hover {
-                        color: #0058ac;
-                    }
-                }
-            }
+           
         }
         .no-product {
             width: 100%;
@@ -249,7 +201,6 @@
                 }
                 a {
                     color: #150826;
-                    font-family: Roboto;
                     font-size: 13px;
                     letter-spacing: 0;
                     line-height: 15px;
@@ -259,74 +210,20 @@
                 }
             }
         }
-        .product-list-filter-sortby{
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-areas:
-                'sortby sortbyprice filter';
-            .sortbyprice{
-                grid-area: sortbyprice;
-                > div > div > div{
-                    border: none;
-                    padding: 11px 0px;   
-                    div{
-                        color: #4F4F4F;
-                        font-family: Roboto;
-                        font-size: 14px;
-                        letter-spacing: 0;
-                        line-height: 16px;
-                        justify-content: center;
-                        svg{
-                            height: 15px;
-                            width: 25px;
-                        }
-                    } 
-                }
-            }
-            .filter {
-                grid-area: filter;
-                > div > div {
-                    border :none;
-                    padding: 11px 0px; 
-                    margin-top: 0px;
-                    div{
-                        color: #4F4F4F;
-                        font-family: Roboto;
-                        font-size: 14px;
-                        letter-spacing: 0;
-                        line-height: 16px;
-                        justify-content: flex-end;
-                        svg{
-                            height: 15px;
-                            width: 25px;
-                            // display: none;
-                        }
-                    } 
-                }
-            }
-            .sortby {
-                grid-area: sortby;
-                > div > div > div{
-                    border: none;
-                    padding: 11px 0px;   
-                    div{
-                        color: #4F4F4F;
-                        font-family: Roboto;
-                        font-size: 14px;
-                        letter-spacing: 0;
-                        line-height: 16px;
-                        justify-content: flex-start;
-                        svg{
-                            height: 15px;
-                            width: 25px;
-                        }
-                    } 
-                }
-            }
-        }
         
         .items-count{
             display: none;
         }
+        h1.title{
+            display: none;
+        }
+        .listing-product{
+            .product-list-top{
+                padding-bottom: 0px;
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+        }
+        
     }
 }
