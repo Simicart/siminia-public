@@ -20,7 +20,8 @@ export const ProductListingWithBrandSeparation = (props) => {
         onAddToWishlistSuccess,
         setIsCartUpdating,
         fetchCartDetails,
-        history
+        history,
+        setDisplayOutOfStockLabel
     } = props;
 
     const talonProps = useProductListing({operations: DEFAULT_OPERATIONS});

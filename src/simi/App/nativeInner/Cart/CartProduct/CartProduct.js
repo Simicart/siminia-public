@@ -66,7 +66,7 @@ const CartProduct = props => {
 
     const itemLink = useMemo(() => resourceUrl(`/${urlKey}${urlSuffix || ''}`), [urlKey, urlSuffix]);
 
-    const stockStatusMessage = stockStatus === 'OUT_OF_STOCK' || true ? formatMessage({
+    const stockStatusMessage = stockStatus === 'OUT_OF_STOCK' ? formatMessage({
         id: 'product.outOfStock', defaultMessage: 'Sold out'
     }) : '';
 

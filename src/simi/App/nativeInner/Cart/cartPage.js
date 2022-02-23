@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Check} from 'react-feather';
 import {useCartPage} from '@magento/peregrine/lib/talons/CartPage/useCartPage';
@@ -63,6 +63,8 @@ const CartPage = props => {
         makeNotification
     } = useBottomNotification()
 
+    const [displayOutOfStockLabel, setDisplayOutOfStockLabel] = useState(true)
+
     useEffect(() => {
         if (wishlistSuccessProps) {
             addToast({...wishlistSuccessProps, icon: CheckIcon});
@@ -79,6 +81,7 @@ const CartPage = props => {
             setIsCartUpdating={setIsCartUpdating}
             fetchCartDetails={fetchCartDetails}
             history={history}
+            setDisplayOutOfStockLabel={setDisplayOutOfStockLabel}
         />
     ) : (
         <h3>
@@ -108,6 +111,25 @@ const CartPage = props => {
             />
         </span>
     ) : null;
+
+    const outOfStockLabel = displayOutOfStockLabel ? (
+        <div className={classes.topOutOfStockContainer}>
+            <span className={classes.stockText}>
+                <span className={classes.stockTextNote}>
+                    <FormattedMessage
+                        id={'cartPage.stockTextNote'}
+                        defaultMessage={'Note'}
+                    />
+                </span>
+                <span className={classes.stockTextContent}>
+                    <FormattedMessage
+                        id={'cartPage.stockTextContent'}
+                        defaultMessage={'The product is out of stock in the cart'}
+                    />
+                </span>
+            </span>
+        </div>
+    ) : null
 
     const cartBody = hasItems ? (
         <Fragment>
@@ -167,22 +189,7 @@ const CartPage = props => {
                     defaultMessage: 'Cart'
                 })}
             </StoreTitle>
-            {/*<button onClick={() => {*/}
-            {/*    makeNotification(*/}
-            {/*        {*/}
-            {/*            text: Math.random().toString(),*/}
-            {/*            type: bottomNotificationType.SUCCESS*/}
-            {/*        })*/}
-            {/*}}> Good*/}
-            {/*</button>*/}
-            {/*<button onClick={() => {*/}
-            {/*    makeNotification(*/}
-            {/*        {*/}
-            {/*            text: Math.random().toString(),*/}
-            {/*            type: bottomNotificationType.FAIL*/}
-            {/*        })*/}
-            {/*}}> Bad*/}
-            {/*</button>*/}
+            {/*{outOfStockLabel}*/}
             {cartBody}
             {notiComponent}
         </div>
