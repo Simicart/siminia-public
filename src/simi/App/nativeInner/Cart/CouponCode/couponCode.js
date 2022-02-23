@@ -1,9 +1,9 @@
 import React, {Fragment, useEffect} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
-import {AlertCircle as AlertCircleIcon} from 'react-feather';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {AlertCircle as AlertCircleIcon, Trash} from 'react-feather';
 import {useToasts} from '@magento/peregrine';
 import {deriveErrorMessage} from '@magento/peregrine/lib/util/deriveErrorMessage';
-import {useCouponCode} from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/CouponCode/useCouponCode';
+import {useCouponCode} from '../couponCodeHook';
 import {useStyle} from '@magento/venia-ui/lib/classify';
 import {Form, useFormState} from 'informed';
 import Icon from '@magento/venia-ui/lib/components/Icon';
@@ -11,7 +11,8 @@ import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
 import defaultClasses from './couponCode.module.css';
 import {RectButton} from "../RectButton";
 import {RemovableTextInput} from "../RemovableTextInput";
-import {bottomNotificationType} from "../bottomNotificationHook/useBottomNotification";
+import {bottomNotificationType} from "../bottomNotificationHook";
+import {ConfirmPopup} from "../ConfirmPopup";
 
 const errorIcon = (
     <Icon
@@ -37,12 +38,40 @@ const errorIcon = (
  * @example <caption>Importing into your project</caption>
  * import CouponCode from "@magento/venia-ui/lib/components/CartPage/PriceAdjustments/CouponCode";
  */
+
+const messages = defineMessages({
+    successApplyCoupon: {
+        id: 'couponCode.successCouponApply',
+        defaultMessage: `You have successfully applied coupon code "{code}"`,
+        description: 'Successfully apply a coupon to cart',
+    },
+    successRemoveCoupon: {
+        id: 'couponCode.successCouponRemove',
+        defaultMessage: `You have successfully removed coupon code "{code}"`,
+        description: 'Successfully remove a coupon to cart',
+    },
+})
+
 const CouponCode = props => {
     const {makeNotification} = props
     const classes = useStyle(defaultClasses, props.classes);
 
+    const {formatMessage} = useIntl();
+
     const talonProps = useCouponCode({
-        setIsCartUpdating: props.setIsCartUpdating
+        setIsCartUpdating: props.setIsCartUpdating,
+        applyCouponCallback: (code) => makeNotification({
+            text: formatMessage(messages.successApplyCoupon, {
+                code: code
+            }),
+            type: bottomNotificationType.SUCCESS
+        }),
+        removeCouponCallback: (code) => makeNotification({
+            text: formatMessage(messages.successRemoveCoupon, {
+                code: code
+            }),
+            type: bottomNotificationType.SUCCESS
+        })
     });
     const [, {addToast}] = useToasts();
     const {
@@ -54,9 +83,6 @@ const CouponCode = props => {
         removingCoupon
     } = talonProps;
 
-    console.log(errors)
-
-    const {formatMessage} = useIntl();
 
     const error = [...errors.values()].find(x => !!x)
 
@@ -91,18 +117,29 @@ const CouponCode = props => {
             return (
                 <Fragment key={code}>
                     <span>{code}</span>
-                    <LinkButton
-                        className={classes.removeButton}
+                    <ConfirmPopup
                         disabled={removingCoupon}
-                        onClick={() => {
+                        trigger={<LinkButton
+                            className={classes.removeButton}
+                            disabled={removingCoupon}
+                        >
+                            <FormattedMessage
+                                id={'couponCode.removeButton'}
+                                defaultMessage={'Remove'}
+                            />
+                        </LinkButton>
+                        }
+                        content={<FormattedMessage
+                            id={'Delete Warning'}
+                            defaultMessage={'Are you sure about remove\n' +
+                                ' this coupon from the shopping cart?'}
+                        />
+                        }
+                        confirmCallback={() => {
                             handleRemoveCoupon(code);
                         }}
-                    >
-                        <FormattedMessage
-                            id={'couponCode.removeButton'}
-                            defaultMessage={'Remove'}
-                        />
-                    </LinkButton>
+                    />
+
                 </Fragment>
             );
         });

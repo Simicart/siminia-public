@@ -99,3 +99,8 @@
     margin-right: 0.6rem;
     width: 100%;
 }
+
+.appliedCoupon {
+    display: flex;
+    justify-content: space-between;
+}

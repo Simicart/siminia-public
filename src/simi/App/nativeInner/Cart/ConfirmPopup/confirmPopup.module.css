@@ -28,7 +28,7 @@
 
 .modal {
     background: white;
-    margin: -25rem auto;
+    /*margin: -25rem auto;*/
     max-width: 324px;
     border-radius: 0.5rem;
     padding: 5px 10px;

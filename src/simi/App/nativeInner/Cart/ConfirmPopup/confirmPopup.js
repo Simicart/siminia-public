@@ -8,12 +8,12 @@ import {RectOutlineButton} from "../RectButton/RectOutlineButton";
 
 export const ConfirmPopup = (props) => {
     const {
-        isOpen = true,
         children,
         trigger,
         content,
         confirmCallback,
-        cancelCallback
+        cancelCallback,
+        disabled = false
     } = props
 
     const classes = useStyle(defaultClasses, props.classes)
@@ -26,6 +26,7 @@ export const ConfirmPopup = (props) => {
                    cursor: 'pointer'
                }}
                position="top center"
+               disabled={disabled}
         >
             {close => (
                 <div className={classes.modal}>
