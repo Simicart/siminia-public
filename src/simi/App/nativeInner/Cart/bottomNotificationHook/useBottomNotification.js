@@ -9,7 +9,12 @@ export const bottomNotificationType = {
 
 const SuccessIcon = () => {
     return (
-        <AlertCircle fill={'#5FAF4B'}/>
+        <span>
+            <img src={require('../../../../../../static/icons/checkmark-circle.svg')}
+                 alt={'ok'}
+                 width={25}
+            />
+        </span>
     )
 }
 
