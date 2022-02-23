@@ -66,9 +66,10 @@ const CartProduct = props => {
 
     const itemLink = useMemo(() => resourceUrl(`/${urlKey}${urlSuffix || ''}`), [urlKey, urlSuffix]);
 
-    const stockStatusMessage = stockStatus === 'OUT_OF_STOCK' ? formatMessage({
-        id: 'product.outOfStock', defaultMessage: 'Out-of-stock'
+    const stockStatusMessage = stockStatus === 'OUT_OF_STOCK' || true ? formatMessage({
+        id: 'product.outOfStock', defaultMessage: 'Sold out'
     }) : '';
+
     const optionText = [];
     if (item.configurable_options && item.configurable_options.length) {
         item.configurable_options.map((configurable_option, cfo_idx) => {
@@ -170,6 +171,10 @@ const CartProduct = props => {
                         width={IMAGE_SIZE}
                         resource={image}
                     />
+                    <span className={classes.stockStatusMessage}>
+                        Sold out
+                        {/*{stockStatusMessage}*/}
+                    </span>
                 </Link>
                 <div className={classes.details}>
                     <div className={classes.name}>
@@ -177,9 +182,9 @@ const CartProduct = props => {
                     </div>
                     {itemOption}
 
-                    <span className={classes.stockStatusMessage}>
-                        {stockStatusMessage}
-                    </span>
+                    {/*<span className={classes.stockStatusMessage}>*/}
+                    {/*    {stockStatusMessage}*/}
+                    {/*</span>*/}
                     <div className={classes.quantity}>
                     </div>
                 </div>
