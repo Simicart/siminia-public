@@ -37,3 +37,21 @@
         padding-right: 15px;
     }
 }
+
+
+.topOutOfStockContainer {
+    background: #FFE8EA;
+    padding: 10px 12px;
+    margin-bottom: 30px;
+}
+
+.stockText {
+    font-size: 13px;
+    line-height: 15px;
+}
+
+.stockTextNote {
+    color: #FF5F59;
+    font-weight: 600;
+    margin-right: 5px;
+}

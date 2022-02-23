@@ -59,7 +59,6 @@ const CartPage = props => {
 
     const {
         component: notiComponent,
-        setCurrentText,
         makeNotification
     } = useBottomNotification()
 
@@ -115,12 +114,12 @@ const CartPage = props => {
     const outOfStockLabel = displayOutOfStockLabel ? (
         <div className={classes.topOutOfStockContainer}>
             <span className={classes.stockText}>
-                <span className={classes.stockTextNote}>
-                    <FormattedMessage
-                        id={'cartPage.stockTextNote'}
-                        defaultMessage={'Note'}
-                    />
-                </span>
+                    <span className={classes.stockTextNote}>
+                        <FormattedMessage
+                            id={'cartPage.stockTextNote'}
+                            defaultMessage={'Note'}
+                        />:
+                    </span>
                 <span className={classes.stockTextContent}>
                     <FormattedMessage
                         id={'cartPage.stockTextContent'}
