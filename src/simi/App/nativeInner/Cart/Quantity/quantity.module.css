@@ -1,0 +1,113 @@
+.root {
+    --stroke: var(--venia-global-color-gray-600);
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 4rem 1fr;
+    grid-column-gap: 0rem;
+    align-items: center;
+    justify-items: center;
+    /* border: .1rem solid rgba(18,18,18,.08); */
+    border: none;
+}
+
+.root button {
+    height: 30px;
+    width: 30px;
+    background-color: #f4f4f4;
+}
+
+.root input {
+    transition: all 0.2s ease-out;
+}
+
+.root input:focus {
+    outline: none;
+    border-color: #1878b9;
+    box-shadow: 0 0 0 1px #1878b9;
+}
+
+.wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.label:not(:focus):not(:active) {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    clip: rect(0 0 0 0);
+    clip-path: inset(100%);
+    white-space: nowrap;
+}
+
+.button {
+    align-items: center;
+    background-color: rgb(var(--venia-global-color-gray-50));
+    border: 2px solid rgb(var(--venia-global-color-gray-600));
+    border-radius: 0;
+    display: inline-flex;
+    height: 2rem;
+    justify-content: center;
+    stroke: #F2F2F3;
+    width: 2rem;
+}
+
+.button:hover {
+    opacity: 0.8;
+    border-color: rgb(var(--stroke));
+}
+
+.button:disabled,
+.button:disabled:hover {
+    opacity: 0.8;
+    border-color: rgb(var(--venia-global-color-gray-400));
+}
+
+.button:disabled {
+    cursor: not-allowed;
+}
+
+.button:focus {
+    outline: none;
+}
+
+
+.icon {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    touch-action: manipulation;
+}
+
+.inputQty {
+    composes: input from '@magento/venia-ui/lib/components/TextInput/textInput.module.css';
+    text-align: center;
+    border-color: #F2F2F3;
+    height: 30px;
+}
+
+.input:focus {
+    box-shadow: none;
+    outline: 0.2rem solid rgba(18, 18, 18, 0.5);
+}
+
+.button_increment, .button_decrement {
+    composes: button;
+    border: 1px solid #F2F2F3;
+    border-radius: 4px;
+    background-color: #FFFFFF !important;
+    stroke: #4F4F4F !important;
+}
+
+.quantity-button:disabled, .quantity-button:disabled:hover {
+    border: 1px solid #F2F2F3;
+    cursor: not-allowed;
+}
+
+.icon {
+    color: #4F4F4F;
+    font-size: 0.8rem;
+    letter-spacing: 0;
+}

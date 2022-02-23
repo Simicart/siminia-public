@@ -1,0 +1,28 @@
+.accordRoot {
+    border: none;
+}
+
+.sectionTitle {
+    color: #150826;
+    font-weight: 500;
+}
+
+.title_wrapper {
+    align-items: center;
+    display: grid;
+    gap: 1.5rem;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr;
+    height: 4.5rem;
+    justify-items: start;
+}
+
+
+.contents_container {
+    padding: 0;
+}
+
+.contents_container:empty {
+    display: none;
+}
+
