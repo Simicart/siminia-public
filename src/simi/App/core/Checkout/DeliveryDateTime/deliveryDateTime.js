@@ -44,8 +44,6 @@ const DeliveryDateTime = forwardRef((props, ref) => {
         };
     });
 
-    console.log(startDate, deliTime, houseSecurityCode, deliveryComment);
-
     const [{ cartId }] = useCartContext();
     const [
         deliveryMutation,
@@ -55,7 +53,7 @@ const DeliveryDateTime = forwardRef((props, ref) => {
         return null;
     }
 
-    console.log('dataa', data);
+    console.log('dataa', startDate, deliTime);
     const dateFormat = data.deliveryTime.deliveryDateFormat;
     const daysOff = data.deliveryTime.deliveryDaysOff;
     const dateOff = data.deliveryTime.deliveryDateOff;
@@ -102,6 +100,7 @@ const DeliveryDateTime = forwardRef((props, ref) => {
                 />
             </label>
         ) : null;
+    console.log('test', deliveryTime);
 
     const OptionDeliveryTime = isEnabledDeliveryTime
         ? deliveryTime.map((time, index) => {
@@ -150,15 +149,22 @@ const DeliveryDateTime = forwardRef((props, ref) => {
                     value={deliTime}
                     name="deliveryTime"
                     id="deliveryTime"
+                    placeholder="Please"
                 >
+                    <option >
+                    Select time
+                    </option>
                     {OptionDeliveryTime}
                 </select>
                 {HouseSecurityCode}
                 {DeliveryComment}
-                <button className="btn-updateTime" onClick={handleSubmit}>Update Delivery Time</button>
+                <button className="btn-updateTime" onClick={handleSubmit}>
+                    Update Delivery Time
+                </button>
             </div>
         );
-    } return null
+    }
+    return null;
 });
 
 export default DeliveryDateTime;

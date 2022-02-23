@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { shape, string } from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AlertCircle as AlertCircleIcon } from 'react-feather';
@@ -35,11 +35,12 @@ import OrderSummary from './OrderSummary/orderSummary';
 import PriceAdjustments from '../Cart/PriceAdjustments/priceAdjustments';
 
 import Identify from 'src/simi/Helper/Identify';
-
+require('./checkoutPage.scss')
 const CheckoutPage = props => {
     const { classes: propClasses, history } = props;
     const { formatMessage } = useIntl();
     const talonProps = useCheckoutPage();
+    const [openDeli, setOpenDeli] = useState(false);
 
     const [{ cartId }] = useCartContext();
 
@@ -81,7 +82,7 @@ const CheckoutPage = props => {
     } = talonProps;
 
     const deliveryDateTime = useRef(null);
-    console.log("reff", deliveryDateTime);
+    console.log('reff', deliveryDateTime);
 
     const [, { addToast }] = useToasts();
     useEffect(() => {
@@ -177,6 +178,7 @@ const CheckoutPage = props => {
                 </Button>
             </div>
         ) : null;
+        console.log(openDeli);
 
         const shippingMethodSection =
             checkoutStep >= CHECKOUT_STEP.SHIPPING_METHOD ? (
@@ -187,8 +189,16 @@ const CheckoutPage = props => {
                         onSuccess={scrollShippingMethodIntoView}
                         setPageIsUpdating={setIsUpdating}
                     />
-             <DeliveryDateTime ref={deliveryDateTime} />
-                   
+                    <div className="main-delivery">
+                        <label  className="check-container">
+                            Delivery Time
+                            <input onClick={() => setOpenDeli(!openDeli)}  type="checkbox" />
+                            <span className="checkmark" />
+                        </label>
+                    </div>
+                    {openDeli ? (
+                        <DeliveryDateTime ref={deliveryDateTime} />
+                    ) : null}
                 </>
             ) : (
                 <h3 className={classes.shipping_method_heading}>
@@ -278,7 +288,7 @@ const CheckoutPage = props => {
                             Identify.LOCAL_STOREAGE,
                             'simi_selected_payment_code'
                         );
-                        
+
                         if (selectedPaymentMethod === 'paypal_express') {
                             history.push('/paypal_express.html');
                             return;
