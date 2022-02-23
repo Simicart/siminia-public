@@ -41,7 +41,7 @@ const animationPromise = (el, animations, args) => {
 
 const BASE_HEIGHT_DEFAULT = 0
 const TIME_IN_DEFAULT = 200
-const TIME_PERSIST_DEFAULT = 200
+const TIME_PERSIST_DEFAULT = 2000
 const TIME_OUT_DEFAULT = 200
 
 

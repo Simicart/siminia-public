@@ -4,21 +4,14 @@ import {AlertCircle as AlertCircleIcon} from 'react-feather';
 import {useToasts} from '@magento/peregrine';
 import {deriveErrorMessage} from '@magento/peregrine/lib/util/deriveErrorMessage';
 import {useCouponCode} from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/CouponCode/useCouponCode';
-
 import {useStyle} from '@magento/venia-ui/lib/classify';
-
-import Button from '@magento/venia-ui/lib/components/Button';
-import {Form, useFormApi, useFormState} from 'informed';
-import Field from '@magento/venia-ui/lib/components/Field';
+import {Form, useFormState} from 'informed';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
-import TextInput from '@magento/venia-ui/lib/components/TextInput';
-import {XCircle} from 'react-feather'
 import defaultClasses from './couponCode.module.css';
 import {RectButton} from "../RectButton";
-import {useResetForm} from "@magento/peregrine/lib/hooks/useResetForm";
-import {InspectFormOnly} from "../InspectFormOnly";
 import {RemovableTextInput} from "../RemovableTextInput";
+import {bottomNotificationType} from "../bottomNotificationHook/useBottomNotification";
 
 const errorIcon = (
     <Icon
@@ -45,14 +38,8 @@ const errorIcon = (
  * import CouponCode from "@magento/venia-ui/lib/components/CartPage/PriceAdjustments/CouponCode";
  */
 const CouponCode = props => {
+    const {makeNotification} = props
     const classes = useStyle(defaultClasses, props.classes);
-
-    const formApi = useFormState();
-
-    const handleClick = () => {
-        console.log(Object.keys(formApi))
-        console.log(formApi.values)
-    }
 
     const talonProps = useCouponCode({
         setIsCartUpdating: props.setIsCartUpdating
@@ -66,23 +53,21 @@ const CouponCode = props => {
         handleRemoveCoupon,
         removingCoupon
     } = talonProps;
+
+    console.log(errors)
+
     const {formatMessage} = useIntl();
 
-    const removeCouponError = deriveErrorMessage([
-        errors.get('removeCouponMutation')
-    ]);
+    const error = [...errors.values()].find(x => !!x)
 
     useEffect(() => {
-        if (removeCouponError) {
-            addToast({
-                type: 'error',
-                icon: errorIcon,
-                message: removeCouponError,
-                dismissable: true,
-                timeout: 10000
-            });
+        if (error) {
+            makeNotification({
+                type: bottomNotificationType.FAIL,
+                text: error.message
+            })
         }
-    }, [addToast, removeCouponError]);
+    }, [addToast, error]);
 
     if (!data) {
         return null;

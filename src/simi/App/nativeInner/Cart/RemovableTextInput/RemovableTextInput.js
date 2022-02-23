@@ -7,7 +7,9 @@ export const RemovableTextInput = (props) => {
     const {classes} = props
     const {formatMessage} = useIntl();
     const formAPI = useFormApi()
+    const formState = useFormState()
 
+    const shouldShowClearTextButton = !!formState.values.couponCode
 
     const removeCurrentTextIcon = (
         <span>
@@ -39,7 +41,7 @@ export const RemovableTextInput = (props) => {
                     input_error: classes.couponCodeInputError
                 }}
             />
-                {removeCurrentTextIcon}
+                {shouldShowClearTextButton && removeCurrentTextIcon}
             </span>
         </Fragment>
     );

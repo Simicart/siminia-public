@@ -7,7 +7,7 @@ import {useIntl} from "react-intl";
 import CouponCode from "../CouponCode";
 
 export const PriceAdjustments = (props) => {
-    const {classes: _classess, ...rest} = props
+    const {classes: _classess, makeNotification, ...rest} = props
 
     const classes = useStyle(_classess, defaultClasses)
     const {formatMessage} = useIntl();
@@ -30,7 +30,8 @@ export const PriceAdjustments = (props) => {
                 }}
             >
                 <Suspense fallback={<LoadingIndicator/>}>
-                    <CouponCode setIsCartUpdating={props.setIsCartUpdating}/>
+                    <CouponCode setIsCartUpdating={props.setIsCartUpdating}
+                                makeNotification={makeNotification}/>
                 </Suspense>
             </Section>
         </Accordion>
