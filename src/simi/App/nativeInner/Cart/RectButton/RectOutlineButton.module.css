@@ -1,0 +1,12 @@
+.root_normalPriority {
+    border-radius: 4px;
+    background-color: #fff;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    width: 100%;
+    color: #FF5F59;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 1rem;
+    border: 1px solid #FF5F59;
+}

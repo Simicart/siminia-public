@@ -1,0 +1,27 @@
+.brandNameContainer {
+    border-bottom: 1px solid #C3BEBE;
+    padding-bottom: 10px;
+}
+
+.mallIcon {
+    border-radius: 3px;
+    background-color: #FF5F59;
+    padding: 0.2rem 0.5rem;
+    margin-right: 0.2rem;
+}
+
+.brandName {
+    font-size: 0.9rem;
+    letter-spacing: 0;
+    line-height: 1.4rem;
+    color: #150826;
+    margin-right: 0.5rem;
+}
+
+.forwardIcon {
+    display: inline;
+}
+
+.brandZoneContainer {
+    padding-bottom: 0.8rem;
+}

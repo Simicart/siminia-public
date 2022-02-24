@@ -57,55 +57,7 @@
             width: 100%;
             display: inline-block;
             // Sort by
-            .top-sort-by {
-                position: relative;
-                min-width: 217px;
-                margin-bottom: 15px;
-                .sort-by-select {
-                    display: flex;
-                    margin-top: 14px;
-                    min-height: 30px;
-                    @media (max-width: 1023px) {
-                        min-height: 45px;
-                        top: 8px;
-                    }
-                    @media (min-width: 1024px) {
-                        margin-top: 0;
-                    }
-                    .dropdownoption {
-                        font-size: 14px;
-                        padding: 7px 16px;
-                        background-color: #e0e0e0;
-                        font-weight: 400;
-                        border-color: transparent;
-                        &.showing {
-                            -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-                                0 1px 2px rgba(0, 0, 0, 0.24);
-                            box-shadow: 0 2px 15px 0 rgba(130, 130, 130, 0.74);
-                            border: none;
-                            background-color: white;
-                        }
-                    }
-                    &:hover .dropdownoption {
-                        border-color: #0058ac;
-                        cursor: pointer;
-                    }
-                }
-                .dir-item {
-                    display: flex;
-                    width: auto;
-                    justify-content: space-between;
-                    min-height: 30px;
-                    padding: 6px 0px;
-                    font-size: 14px;
-                    @media (max-width: 1023px) {
-                        padding: 10px 0px;
-                    }
-                    &:hover {
-                        color: #0058ac;
-                    }
-                }
-            }
+           
         }
         .no-product {
             width: 100%;
@@ -191,69 +143,70 @@
             padding-left: 10px;
         }
     }
+    @media (min-width: 481px) {
+        .carousel-child-cate {
+            display: none;
+        }
+    }
     @media (max-width: 480px) {
-        .product-list-filter-sortby{
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-areas:
-                'sortby sortbyprice filter';
-            .sortbyprice{
-                grid-area: sortbyprice;
-                > div > div > div{
-                    border: none;
-                    padding: 11px 0px;   
-                    div{
-                        color: #4F4F4F;
-                        font-family: Roboto;
-                        font-size: 14px;
-                        letter-spacing: 0;
-                        line-height: 16px;
-                        justify-content: center;
-                        svg{
-                            height: 15px;
-                            width: 25px;
-                        }
-                    } 
-                }
+        .carousel-child-cate {
+            padding: 10px 16px 10px 14px;
+            overflow: auto;
+            display: flex;
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+            &::-webkit-scrollbar {
+                display: none;
             }
-            .filter {
-                grid-area: filter;
-                > div > div {
-                    border :none;
-                    padding: 11px 0px; 
-                    margin-top: 0px;
-                    div{
-                        color: #4F4F4F;
-                        font-family: Roboto;
-                        font-size: 14px;
-                        letter-spacing: 0;
-                        line-height: 16px;
-                        justify-content: flex-end;
-                        svg{
-                            height: 15px;
-                            width: 25px;
-                            // display: none;
-                        }
-                    } 
+            li {
+                display: inline-block;
+                list-style: none;
+                height: 36px;
+                line-height: 36px;
+                &:not(:first-child) {
+                    margin-left: 10px;
+                    margin-left: 10px;
+                    border-radius: 3px;
+                    background-color: #C3BEBE;
                 }
-            }
-            .sortby {
-                grid-area: sortby;
-                > div > div > div{
-                    border: none;
-                    padding: 11px 0px;   
-                    div{
-                        color: #4F4F4F;
-                        font-family: Roboto;
-                        font-size: 14px;
-                        letter-spacing: 0;
-                        line-height: 16px;
-                        justify-content: flex-start;
-                        svg{
-                            height: 15px;
-                            width: 25px;
-                        }
-                    } 
+                &.active-item {
+                    display: block;
+                    position: relative;
+                    box-sizing: border-box;
+                    border: 1px solid #FF5F59;
+                    border-radius: 3px;
+                    background-color: #FFFFFF;
+                    &::after{
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        height: 16.89px;
+                        width: 16px;
+                        border-left: 10px solid #FF5F59;
+                        border-right: 10px solid transparent;
+                        border-bottom: 10px solid transparent;
+                        border-top: 10px solid #FF5F59;
+                    }
+                    &::before{
+                        content: url("./Icon/icon-done.svg");
+                        position: absolute;
+                        bottom: 10px;
+                        left: 0;
+                        z-index: 2;
+                    }
+                    a {
+                        white-space: nowrap;
+                    }
+                }
+                a {
+                    color: #150826;
+                    font-size: 13px;
+                    letter-spacing: 0;
+                    line-height: 15px;
+                    text-align: center;
+                    padding: 10px;
+                    white-space: nowrap;
                 }
             }
         }
@@ -261,5 +214,16 @@
         .items-count{
             display: none;
         }
+        h1.title{
+            display: none;
+        }
+        .listing-product{
+            .product-list-top{
+                padding-bottom: 0px;
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+        }
+        
     }
 }

@@ -13,15 +13,25 @@ const AddToCartPopup = props => {
         cartAction,
         setAddToCartPopup,
         handleBuyNow,
-        typeBtn
+        typeBtn,
+        loading,
     } = props;
 
   
 
+    // if(loading) {
+    //     return <div >
+    //         <div className="loader"></div>
+    //         <div className="modal" />
+    //     </div>
+    // }
     return (
         <div className="main-AddToCartPopup">
-            <div  className="modal" />
-            
+            {loading ? <div >
+            <div className="loader"></div>
+            <div className="modal-loader" />
+        </div> : null}
+            <div className="modal" />
                 <Form
                     className="form"
                     onSubmit={
@@ -38,7 +48,7 @@ const AddToCartPopup = props => {
                     {wrapperQuantity}
                     {cartAction}
                 </Form>
-            
+                
         </div>
     );
 };

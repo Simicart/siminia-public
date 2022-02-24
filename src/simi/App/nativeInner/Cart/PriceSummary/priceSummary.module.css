@@ -1,0 +1,62 @@
+.totalLabel {
+    margin-top: 0;
+    color: #150826;
+    letter-spacing: 0;
+    line-height: 21px;
+    font-size: 1.1rem;
+}
+
+.totalPrice {
+    letter-spacing: 0;
+    margin-top: 0;
+    line-height: 21px;
+    font-size: 1.1rem;
+    color: #150826;
+}
+
+.checkoutButton_container > button {
+    border-radius: 20px;
+    background-color: #FF5F59;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    width: 100%;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 1rem;
+    max-width: 7.5rem;
+}
+
+.checkoutButton_container > button * {
+    font-size: 0.8rem;
+    text-transform: none;
+    display: inline;
+}
+
+.checkoutIcon {
+    margin-bottom: -2px;
+    color: white;
+}
+
+.checkoutButton_container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    margin-top: 2rem;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+}
+
+.totalPricePiece {
+    margin-right: 1.3rem;
+    color: #150826;
+    font-weight: 600;
+}
+
+.checkoutLockIcon {
+    margin-right: 2px;
+}
+
+.root {
+    padding: 15px 15px 0 15px;
+}

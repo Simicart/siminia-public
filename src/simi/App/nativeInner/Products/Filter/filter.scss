@@ -129,7 +129,7 @@
 .siminia-phone-filter {
     margin-top: 5px;
     min-height: 45px;
-    z-index: 2;
+    z-index: 4;
     font-size: 14px;
     padding: 8px 16px 6px;
     &.showing {
@@ -142,5 +142,16 @@
         border: none;
         background-color: white;
         padding: 10px 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .siminia-phone-filter{
+        border: none;
+        margin-top: 0px;
+        padding: 0px;
+        > div{
+            justify-content: flex-end;
+        }
     }
 }

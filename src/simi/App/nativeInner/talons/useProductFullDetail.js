@@ -842,6 +842,7 @@ export const useProductFullDetail = props => {
         handleBuyNow,
         handleSelectionChange,
         isOutOfStock,
+        isAddProductLoading,
         isAddToCartDisabled:
             isOutOfStock ||
             isMissingOptions ||

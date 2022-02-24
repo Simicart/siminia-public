@@ -1,0 +1,106 @@
+/*!* Styles for "add" view. *!*/
+/*.entryForm,*/
+/*.entryFormError {*/
+/*    display: grid;*/
+/*    grid-template-columns: 1fr auto;*/
+/*    grid-column-gap: 0rem;*/
+/*}*/
+
+/*.entryForm button {*/
+/*    background-color: #0058AC;*/
+/*    color: #fff;*/
+/*    border-radius: 0px !important;*/
+/*    color: #FFFFFF;*/
+/*    font-size: 16px;*/
+/*    font-weight: 600;*/
+/*    letter-spacing: 0;*/
+/*    line-height: 22px;*/
+/*}*/
+
+/*.entryForm > div > span > span {*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+/*.entryForm > div > span > span > input {*/
+/*    min-height: 50px;*/
+/*}*/
+
+/*.entryFormError input {*/
+/*    border-color: rgb(var(--venia-global-color-red-400));*/
+/*}*/
+
+/*.entryFormError input:focus {*/
+/*    border-color: rgb(var(--venia-global-color-gray-600));*/
+/*}*/
+
+/*.entryFormError p {*/
+/*    color: rgb(var(--venia-global-color-error));*/
+/*    font-weight: var(--venia-global-fontWeight-semibold);*/
+/*}*/
+
+/*.errorContainer {*/
+/*    !* Duplicate the left/right/bottom padding on the accordion section *!*/
+/*    padding-top: 1.5rem;*/
+/*    color: rgb(var(--venia-global-color-error));*/
+/*    line-height: var(--venia-global-lineHeight-300);*/
+/*}*/
+
+/*!* on mobile... *!*/
+/*@media (max-width: 960px) {*/
+/*    .entryForm,*/
+/*    .entryFormError {*/
+/*        !* switch to rows. *!*/
+/*        grid-template-columns: unset;*/
+/*        grid-template-rows: 1fr 1fr;*/
+/*    }*/
+/*}*/
+
+/*!* Styles for "removal" view. *!*/
+/*.removeButton {*/
+/*    composes: root from '@magento/venia-ui/lib/components/LinkButton/linkButton.module.css';*/
+/*    margin-left: 1rem;*/
+/*}*/
+
+.entryForm, .entryFormError {
+    display: flex;
+}
+
+.applyButtonContainer {
+    flex: 1;
+    min-width: 5rem;
+}
+
+.applyButtonContainer > button {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+}
+
+.couponCodeInput {
+    border: none;
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+}
+
+.couponCodeInput::placeholder, .couponCodeInput:-ms-input-placeholder, .couponCodeInput::-ms-input-placeholder {
+    color: #C3BEBE;
+}
+
+.removeCurrentTextIcon {
+    width: 19px;
+    cursor: pointer;
+}
+
+.internalTextContainer {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #150826;
+    font-size: 0.9rem;
+    margin-right: 0.6rem;
+    width: 100%;
+}
+
+.appliedCoupon {
+    display: flex;
+    justify-content: space-between;
+}
