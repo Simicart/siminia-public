@@ -1,4 +1,4 @@
-import React, {Fragment, useCallback, Suspense} from 'react';
+import React, {Fragment, useCallback, Suspense, useMemo} from 'react';
 import {useProductListing} from "@magento/peregrine/lib/talons/CartPage/ProductListing/useProductListing";
 import DEFAULT_OPERATIONS from "../../../core/Cart/ProductListing/productListing.gql";
 import {useStyle} from "@magento/venia-ui/lib/classify";
@@ -14,6 +14,27 @@ import EditModal from "../../../core/Cart/ProductListing/EditModal";
 import Icon from "@magento/venia-ui/lib/components/Icon";
 import {hasVendor} from "./ProductListingWithBrandSeparation.config";
 
+
+const VendorIntro = ({zone, classes}) => {
+    return (
+        <Fragment>
+            <div className={classes.brandNameContainer}>
+                        <span className={classes.mallIcon}>
+                            <span className={classes.mallIconText}>Mall</span>
+                        </span>
+                <span className={classes.brandName}>
+                            <span className={classes.brandText}>{zone.name}</span>
+                        </span>
+                <ChevronRight className={classes.forwardIcon}
+                              onClick={() => {
+                              }}
+                              size={16}
+                />
+            </div>
+            <div className={classes.fullLine}/>
+        </Fragment>
+    )
+}
 
 export const ProductListingWithBrandSeparation = (props) => {
     const {
@@ -54,28 +75,11 @@ export const ProductListingWithBrandSeparation = (props) => {
     }
 
     //TODO: wire this to actual data
-    const segeratedItems = [
-        {items: [...items], name: 'A brand name', id: 1},
-    ]
-
-    const vendorIntro = hasVendor ? (
-        <Fragment>
-            <div className={classes.brandNameContainer}>
-                        <span className={classes.mallIcon}>
-                            <span className={classes.mallIconText}>Mall</span>
-                        </span>
-                <span className={classes.brandName}>
-                            <span className={classes.brandText}>{zone.name}</span>
-                        </span>
-                <ChevronRight className={classes.forwardIcon}
-                              onClick={() => {
-                              }}
-                              size={16}
-                />
-            </div>
-            <div className={classes.fullLine}/>
-        </Fragment>
-    ) : null
+    const segeratedItems = useMemo(() => ([
+            {items: [...items], name: 'A brand name', id: 1},
+        ]),
+        [items]
+    )
 
     if (items.length) {
         console.log(items)
@@ -87,7 +91,7 @@ export const ProductListingWithBrandSeparation = (props) => {
                 <div key={zone.id}
                      className={classes.brandZoneContainer}
                 >
-                    {vendorIntro}
+                    {hasVendor ? (<VendorIntro classes={classes} zone={zone}/>) : null}
                     {zone.items.map(product => {
                         return (
                             <CartProduct

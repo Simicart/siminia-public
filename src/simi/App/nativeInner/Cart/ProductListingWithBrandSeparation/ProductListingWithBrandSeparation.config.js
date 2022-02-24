@@ -1,1 +1,1 @@
-export const hasVendor = false
+export const hasVendor = true
