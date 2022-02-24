@@ -76,9 +76,7 @@ const Griditem = props => {
     //comment out this line when server got issue decoding images
     imageUrl = resourceUrl(imageUrl, { type: 'image-product', width: 260 });
 
-
-  
-
+    const productOutStock = item.stock_status === 'OUT_OF_STOCK';
 
     const image = (
         <div
@@ -107,11 +105,29 @@ const Griditem = props => {
                     />
                     <ProductLabel  productLabel = {mp_label_data ? mp_label_data : null} label_tyle="gallery"/>
                 </Link>
+                {productOutStock ? (
+                <div
+                    className={itemClasses.soldOut}>
+                    {formatMessage({ id: 'soldOut',defaultMessage:'Sold Out' })}
+                </div>
+            ) : (
+                ''
+            )}
+
+                {item.price && item.price.has_special_price ? (
+                <div
+                    className={itemClasses.discountBadge}
+                    style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
+                >
+                    {`-${item.price.discount_percent}%`}
+                </div>
+            ) : (
+                ''
+            )}
             </div>
         </div>
     );
-    const productOutStock = item.stock_status === 'OUT_OF_STOCK';
-    
+   
     
     return (
         <div
@@ -135,16 +151,6 @@ const Griditem = props => {
                 </LazyLoad>
             ) : (
                 image
-            )}
-            {item.price && item.price.has_special_price ? (
-                <div
-                    className={itemClasses.discountBadge}
-                    style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
-                >
-                    {`-${item.price.discount_percent}%`}
-                </div>
-            ) : (
-                ''
             )}
             <div className={itemClasses['siminia-product-des']}>
                 {review_count ? (
@@ -196,6 +202,9 @@ const Griditem = props => {
                             classes={itemClasses}
                         />
                     </div>
+                </div>
+                <div className={itemClasses['sold']}>
+                        {formatMessage({ id: 'sold',defaultMessage:'123 sold' })}
                 </div>
             </div>
             <div

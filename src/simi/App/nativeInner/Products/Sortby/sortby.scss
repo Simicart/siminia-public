@@ -2,14 +2,14 @@
     .top-sort-by {
         position: relative;
         min-width: 217px;
-        margin-bottom: 15px;
+        // margin-bottom: 15px;
         z-index: 3;
         .sort-by-select {
             > div > div:nth-child(1){
                 justify-content: flex-start;
             }
             display: flex;
-            margin-top: 14px;
+            // margin-top: 14px;
             min-height: 30px;
             @media (max-width: 1023px) {
                 min-height: 45px;
@@ -20,7 +20,7 @@
             }
             .dropdownoption {
                 font-size: 14px;
-                padding: 7px 16px;
+                padding: 0;
                 // background-color: #e0e0e0;
                 font-weight: 400;
                 border-color: transparent;
@@ -30,6 +30,7 @@
                     box-shadow: 0 2px 15px 0 rgba(130, 130, 130, 0.74);
                     border: none;
                     background-color: white;
+                    box-shadow: none;
                 }
             }
             &:hover .dropdownoption {

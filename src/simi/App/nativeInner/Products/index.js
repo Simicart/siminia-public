@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Gallery from './Gallery';
 import Identify from 'src/simi/Helper/Identify';
 import Sortby from './Sortby';
@@ -13,7 +13,7 @@ import { useIntl } from 'react-intl';
 import { useWindowSize } from '@magento/peregrine';
 import { cateUrlSuffix } from 'src/simi/Helper/Url';
 import { Link } from 'react-router-dom';
-
+import { BiFilterAlt } from 'react-icons/bi';
 require('./products.scss');
 
 const Products = props => {
@@ -73,7 +73,7 @@ const Products = props => {
                 });
             }
             return (
-                <div>
+                <>
                     <Filter
                         data={availableFilters}
                         filterData={filterData}
@@ -83,7 +83,7 @@ const Products = props => {
                         priceSeparator={priceSeparator}
                         productsData={data}
                     />
-                </div>
+                </>
             );
         }
     };
@@ -141,7 +141,7 @@ const Products = props => {
                     ) : (
                         <div className="items-count-ctn">{itemCount}</div>
                     )}
-                    {/* <Sortby data={data} sortByData={sortByData} /> */}
+                    {windowSize.innerWidth > 480 ? <Sortby data={data} sortByData={sortByData} /> : ""}
                 </div>
                 <section className="gallery">
                     {!data.products || !data.products.total_count ? (
@@ -229,6 +229,20 @@ const Products = props => {
         }
         return html;
     };
+    const [isActive, setIsActive] = useState(0);
+    // const handleClick = id => {
+    //     setIsActive(id);
+    // };
+    const clickSortByPrice = id => {
+        setIsActive(id);
+    };
+    const clickSortBy = id => {
+        setIsActive(id);
+    };
+    const clickFilter = id => {
+        setIsActive(id);
+    };
+
     return (
         <article className="products-root" id="root-product-list">
             <h1 className="title">
@@ -236,9 +250,69 @@ const Products = props => {
             </h1>
             {isPhone ? itemCount : ''}
             <div className="product-list-container-siminia">
-                {renderLeftNavigation()}
-                <Sortby data={data} sortByData={sortByData} />
-                {renderCarouselChildCate()}
+                <div>
+                    {windowSize.innerWidth > 480 ? "" : 
+                    <div className="sortby-filter">
+                        <div className="product-list-filter">
+                            <div onClick={() => clickFilter(1)}>
+                                <span className="label">
+                                    <span
+                                        className={`${
+                                            isActive === 1
+                                                ? 'activeIconFilter'
+                                                : ''
+                                        } icon-filter`}
+                                    >
+                                        <BiFilterAlt />
+                                    </span>
+                                    {formatMessage({
+                                        id: 'filter',
+                                        defaultMessage: 'Filter'
+                                    })}
+                                </span>
+                                <div
+                                    className={`${
+                                        isActive === 1 ? 'activeSort' : ''
+                                    }`}
+                                />
+                            </div>
+                        </div>
+                        <div className="product-list-sortby-price">
+                            <div onClick={() => clickSortByPrice(2)}>
+                                <span className="label">
+                                    {formatMessage({
+                                        id: 'sortByPrice',
+                                        defaultMessage: 'Price'
+                                    })}
+                                </span>
+
+                                <div
+                                    className={`${
+                                        isActive === 2 ? 'activeSort' : ''
+                                    }`}
+                                />
+                            </div>
+                        </div>
+                        <div className="product-list-sortby">
+                            <div onClick={() => clickSortBy(3)}>
+                                <span className="label">
+                                    {formatMessage({
+                                        id: 'sortBy',
+                                        defaultMessage: 'Sort by'
+                                    })}
+                                </span>
+                                <div
+                                    className={`${
+                                        isActive === 3 ? 'activeSort' : ''
+                                    }`}
+                                />
+                            </div>
+                        </div>
+                    </div>}
+                    {renderCarouselChildCate()}
+                </div>
+                {windowSize.innerWidth > 480 ? renderLeftNavigation() : ""}
+                {isActive === 1 ? renderFilter() : ''}
                 <div
                     className="listing-product"
                     style={{ display: 'inline-block', width: '100%' }}
