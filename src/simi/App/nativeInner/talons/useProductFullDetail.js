@@ -18,7 +18,10 @@ import { useSubOptions } from '../../../talons/ProductFullDetail/useSubOptions';
 import { isDownloadableLinkRequired } from '../../core/SimiProductOptions/DownloadOption/utils/isDownloadableLinkRequired';
 
 import { GET_PRODUCT_UPSELL_CROSSSELL_QUERY } from '../../../talons/ProductFullDetail/upsellAndCrossell.gql';
-import { getDisplayPrice, getFromToBundlePrice } from '../../../talons/ProductFullDetail/getDisplayPrice';
+import {
+    getDisplayPrice,
+    getFromToBundlePrice
+} from '../../../talons/ProductFullDetail/getDisplayPrice';
 import { GET_RELATED_PRODUCT_QUERY } from '../../../talons/ProductFullDetail/relatedProduct.gql';
 
 const INITIAL_OPTION_CODES = new Map();
@@ -443,7 +446,7 @@ export const useProductFullDetail = props => {
     const handleAddToCart = useCallback(
         async formValues => {
             const { quantity } = formValues;
-            
+
             /*
                 @deprecated in favor of general addProductsToCart mutation. Will support until the next MAJOR.
              */
@@ -492,7 +495,6 @@ export const useProductFullDetail = props => {
                         await addDownloadableProductToCart({
                             variables: downloadableVariable
                         });
-                        
                     } catch (e) {
                         console.warn(e);
                     }
@@ -543,7 +545,6 @@ export const useProductFullDetail = props => {
                     await addBundleProductToCart({
                         variables: variableParams
                     });
-                    
                 } else if (product.items && productType === 'GroupedProduct') {
                     const { items } = product;
                     variables.product = [];
@@ -558,13 +559,12 @@ export const useProductFullDetail = props => {
                         });
                     }
                     await addProductToCart({ variables });
-                    
+
                     return;
                 } else {
                     variables.product = [variables.product];
                     try {
                         await addProductToCart({ variables });
-                        
                     } catch {
                         return;
                     }
@@ -589,13 +589,13 @@ export const useProductFullDetail = props => {
         ]
     );
     const goToCartPage = () => {
-        window.location.pathname = ('/cart')
-    }
+        window.location.pathname = '/cart';
+    };
 
     const handleBuyNow = useCallback(
         async formValues => {
             const { quantity } = formValues;
-            
+
             /*
                 @deprecated in favor of general addProductsToCart mutation. Will support until the next MAJOR.
              */
@@ -644,7 +644,7 @@ export const useProductFullDetail = props => {
                         await addDownloadableProductToCart({
                             variables: downloadableVariable
                         });
-                        goToCartPage()
+                        goToCartPage();
                     } catch (e) {
                         console.warn(e);
                     }
@@ -695,7 +695,7 @@ export const useProductFullDetail = props => {
                     await addBundleProductToCart({
                         variables: variableParams
                     });
-                    goToCartPage()
+                    goToCartPage();
                 } else if (product.items && productType === 'GroupedProduct') {
                     const { items } = product;
                     variables.product = [];
@@ -710,13 +710,13 @@ export const useProductFullDetail = props => {
                         });
                     }
                     await addProductToCart({ variables });
-                    goToCartPage()
+                    goToCartPage();
                     return;
                 } else {
                     variables.product = [variables.product];
                     try {
                         await addProductToCart({ variables });
-                        goToCartPage()
+                        goToCartPage();
                     } catch {
                         return;
                     }
@@ -740,7 +740,6 @@ export const useProductFullDetail = props => {
             bundleOptions
         ]
     );
-
 
     const handleSelectionChange = useCallback(
         (optionId, selection) => {
@@ -842,6 +841,7 @@ export const useProductFullDetail = props => {
         handleBuyNow,
         handleSelectionChange,
         isOutOfStock,
+        isAddProductLoading,
         isAddToCartDisabled:
             isOutOfStock ||
             isMissingOptions ||

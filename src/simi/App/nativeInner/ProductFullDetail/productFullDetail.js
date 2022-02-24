@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense, useRef, useState } from 'react';
+import React, { Fragment, Suspense, useRef, useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { arrayOf, bool, number, shape, string } from 'prop-types';
 import { Form } from 'informed';
@@ -97,8 +97,10 @@ const ProductFullDetail = props => {
         switchExtraPriceForNormalPrice,
         upsellProducts,
         crosssellProducts,
-        relatedProducts
+        relatedProducts,
+        isAddProductLoading
     } = talonProps;
+
     let History = useHistory();
     const [moreBtn, setMoreBtn] = useState(false);
     const storeConfig = Identify.getStoreConfig();
@@ -111,6 +113,7 @@ const ProductFullDetail = props => {
     const [descripttion, setDescripttion] = useState(-1);
     const isMobileSite = window.innerWidth <= 450;
     const [typeBtn, setTypeBtn] = useState('');
+
     const { itemCount: itemsQty } = useCartTrigger({
         mutations: {
             createCartMutation: CREATE_CART_MUTATION
@@ -375,13 +378,12 @@ const ProductFullDetail = props => {
             </section>
         </div>
     );
-    const renderSizeChart =
-        product.mp_sizeChart  ? (
-            <SizeChart
-                sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null}
-                isMobileSite={isMobileSite}
-            />
-        ) : null;
+    const renderSizeChart = product.mp_sizeChart ? (
+        <SizeChart
+            sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null}
+            isMobileSite={isMobileSite}
+        />
+    ) : null;
     const cartAction = (
         <div
             className={
@@ -407,6 +409,7 @@ const ProductFullDetail = props => {
             ) : null}
         </div>
     );
+    // console.log("tesst", isAddProductLoading);
 
     return (
         <>
@@ -427,6 +430,7 @@ const ProductFullDetail = props => {
                     handleBuyNow={handleBuyNow}
                     setAddToCartPopup={setAddToCartPopup}
                     typeBtn={typeBtn}
+                    loading={isAddProductLoading}
                 />
             ) : null}
 
@@ -580,53 +584,16 @@ const ProductFullDetail = props => {
 
                         {product.items
                             ? ''
-                            : // <div className="wrapperQuantity">
-                            //     <section className={classes.quantity}>
-                            //         <span className={classes.quantityTitle}>
-                            //             <FormattedMessage
-                            //                 id={'productFullDetail.quantity'}
-                            //                 defaultMessage={'Quantity: '}
-                            //             />
-                            //         </span>
-                            //         <QuantityFields
-                            //             classes={{ root: classes.quantityRoot }}
-                            //             min={1}
-                            //             message={errors.get('quantity')}
-                            //         />
-                            //     </section>
-                            // </div>
-                            !isMobileSite
+                            : !isMobileSite
                             ? wrapperQuantity
                             : null}
                         {!isMobileSite ? cartAction : null}
-                        {/* {!isMobileSite ? <div
-                        className={
-                            isAddToCartDisabled
-                                ? 'addCartDisabled'
-                                : 'wrapperActions'
-                        }
-                    >
-                        <section className={classes.actions}>
-                            {cartActionContent}
-                            {isMobileSite ? null : (
-                                <Suspense fallback={null}>
-                                    <WishlistButton {...wishlistButtonProps} />
-                                </Suspense>
-                            )}
-                        </section>
-                        {product.mp_sizeChart &&
-                        product.mp_sizeChart.display_type == 'inline' ? (
-                            <SizeChart
-                                sizeChart={
-                                    product.mp_sizeChart
-                                        ? product.mp_sizeChart
-                                        : null
-                                }
-                            />
-                        ) : null}
-                    </div> : null} */}
+
                         <section className={classes.description}>
-                            <span onClick={() => setDescripttion(true)} className={classes.descriptionTitle}>
+                            <span
+                                onClick={() => setDescripttion(true)}
+                                className={classes.descriptionTitle}
+                            >
                                 <FormattedMessage
                                     id={'productFullDetail.productDescription'}
                                     defaultMessage={'Product Description'}
@@ -643,14 +610,7 @@ const ProductFullDetail = props => {
                                         <FaChevronRight />
                                     </span>
 
-                                    <div
-                                        className={
-                                            // descripttion
-                                            //     ? 'descripttion-open'
-                                            //     : 'Description-close'
-                                            desStatus(descripttion)
-                                        }
-                                    >
+                                    <div className={desStatus(descripttion)}>
                                         <div
                                             className="des-title"
                                             onClick={() =>
