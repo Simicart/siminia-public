@@ -14,41 +14,32 @@ const AddToCartPopup = props => {
         setAddToCartPopup,
         handleBuyNow,
         typeBtn,
-        loading,
+        loading
     } = props;
 
-  
-
-    // if(loading) {
-    //     return <div >
-    //         <div className="loader"></div>
-    //         <div className="modal" />
-    //     </div>
-    // }
     return (
         <div className="main-AddToCartPopup">
-            {loading ? <div >
-            <div className="loader"></div>
-            <div className="modal-loader" />
-        </div> : null}
+            {loading ? (
+                <div>
+                    <div className="loader" />
+                    <div className="modal-loader" />
+                </div>
+            ) : null}
             <div className="modal" />
-                <Form
-                    className="form"
-                    onSubmit={
-                        typeBtn === 'add to cart'
-                            ? handleAddToCart
-                            : handleBuyNow
-                    }
-                >
-                    <GrClose
-                        className="close-icon"
-                        onClick={() => setAddToCartPopup(false)}
-                    />
-                    {options}
-                    {wrapperQuantity}
-                    {cartAction}
-                </Form>
-                
+            <Form
+                className="form"
+                onSubmit={
+                    typeBtn === 'add to cart' ? handleAddToCart : handleBuyNow
+                }
+            >
+                <GrClose
+                    className="close-icon"
+                    onClick={() => setAddToCartPopup(false)}
+                />
+                {options}
+                {wrapperQuantity}
+                {cartAction}
+            </Form>
         </div>
     );
 };

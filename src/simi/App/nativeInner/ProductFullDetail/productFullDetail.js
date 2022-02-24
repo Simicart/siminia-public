@@ -410,11 +410,9 @@ const ProductFullDetail = props => {
         </div>
     );
     // console.log("tesst", isAddProductLoading);
-   
 
     return (
         <>
-            
             {isMobileSite ? (
                 <FooterFixedBtn
                     addToCartPopup={addToCartPopup}
@@ -586,51 +584,11 @@ const ProductFullDetail = props => {
 
                         {product.items
                             ? ''
-                            : // <div className="wrapperQuantity">
-                            //     <section className={classes.quantity}>
-                            //         <span className={classes.quantityTitle}>
-                            //             <FormattedMessage
-                            //                 id={'productFullDetail.quantity'}
-                            //                 defaultMessage={'Quantity: '}
-                            //             />
-                            //         </span>
-                            //         <QuantityFields
-                            //             classes={{ root: classes.quantityRoot }}
-                            //             min={1}
-                            //             message={errors.get('quantity')}
-                            //         />
-                            //     </section>
-                            // </div>
-                            !isMobileSite
+                            : !isMobileSite
                             ? wrapperQuantity
                             : null}
                         {!isMobileSite ? cartAction : null}
-                        {/* {!isMobileSite ? <div
-                        className={
-                            isAddToCartDisabled
-                                ? 'addCartDisabled'
-                                : 'wrapperActions'
-                        }
-                    >
-                        <section className={classes.actions}>
-                            {cartActionContent}
-                            {isMobileSite ? null : (
-                                <Suspense fallback={null}>
-                                    <WishlistButton {...wishlistButtonProps} />
-                                </Suspense>
-                            )}
-                        </section>
-                        {product.mp_sizeChart &&
-                        product.mp_sizeChart.display_type == 'inline' ? (
-                            <SizeChart
-                                sizeChart={
-                                    product.mp_sizeChart
-                                        ? product.mp_sizeChart
-                                        : null
-                                }
-                            />
-                        ) : null}
-                    </div> : null} */}
+
                         <section className={classes.description}>
                             <span
                                 onClick={() => setDescripttion(true)}
@@ -652,14 +610,7 @@ const ProductFullDetail = props => {
                                         <FaChevronRight />
                                     </span>
 
-                                    <div
-                                        className={
-                                            // descripttion
-                                            //     ? 'descripttion-open'
-                                            //     : 'Description-close'
-                                            desStatus(descripttion)
-                                        }
-                                    >
+                                    <div className={desStatus(descripttion)}>
                                         <div
                                             className="des-title"
                                             onClick={() =>
