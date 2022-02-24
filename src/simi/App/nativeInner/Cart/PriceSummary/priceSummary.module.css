@@ -59,3 +59,8 @@
 .root {
     padding: 15px 15px 0 15px;
 }
+
+.pricePlaceholder {
+    width: 1rem;
+    display: inline-block;
+}

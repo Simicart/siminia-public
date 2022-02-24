@@ -104,7 +104,11 @@ export const PriceSummary = props => {
                     defaultMessage={'Total'}
                 />
                 <span>: </span>
-                <Price value={total.value} currencyCode={total.currency}/>
+                {!isPriceUpdating ? (
+                        <Price value={total.value} currencyCode={total.currency}/>
+                    ) :
+                    <span className={classes.pricePlaceholder}/>
+                }
             </span>
             <RedButton
                 disabled={isPriceUpdating}

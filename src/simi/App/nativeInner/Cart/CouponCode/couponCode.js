@@ -13,6 +13,7 @@ import {RectButton} from "../RectButton";
 import {RemovableTextInput} from "../RemovableTextInput";
 import {bottomNotificationType} from "../bottomNotificationHook";
 import {ConfirmPopup} from "../ConfirmPopup";
+import LoadingIndicator from "@magento/venia-ui/lib/components/LoadingIndicator";
 
 const errorIcon = (
     <Icon
@@ -95,8 +96,22 @@ const CouponCode = props => {
         }
     }, [addToast, error]);
 
+
     if (!data) {
         return null;
+    }
+
+    if (applyingCoupon || removingCoupon) {
+        return (
+            <LoadingIndicator classes={{
+                root: classes.loadingRoot
+            }}>
+                <FormattedMessage
+                    id={'coupon.loading'}
+                    defaultMessage={'Loading coupon...'}
+                />
+            </LoadingIndicator>
+        )
     }
 
     if (errors.get('getAppliedCouponsQuery')) {
