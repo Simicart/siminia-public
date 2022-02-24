@@ -45,7 +45,7 @@ import {
     ArrowRight
 } from 'react-feather';
 import { FaChevronRight } from 'react-icons/Fa';
-import { BiHelpCircle,BiHome } from "react-icons/bi";
+import { BiHelpCircle, BiHome } from 'react-icons/bi';
 
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
@@ -396,7 +396,8 @@ const ProductFullDetail = props => {
                     </Suspense>
                 )}
             </section>
-            {product.mp_sizeChart &&
+            {!isMobileSite &&
+            product.mp_sizeChart &&
             product.mp_sizeChart.display_type == 'inline' ? (
                 <SizeChart
                     sizeChart={
@@ -512,7 +513,7 @@ const ProductFullDetail = props => {
                                                 <li>
                                                     <BiHelpCircle />
                                                     Help Center
-                                                    </li>
+                                                </li>
                                             </ul>
                                         ) : null}
                                     </div>
@@ -558,7 +559,19 @@ const ProductFullDetail = props => {
                             <div className="wrapperOptions">
                                 <section className={classes.options}>
                                     {options}
-                                    {renderSizeChart}
+                                    {product.mp_sizeChart &&
+                                    product.mp_sizeChart &&
+                                    product.mp_sizeChart.display_type ==
+                                        'popup' ? (
+                                        <SizeChart
+                                            sizeChart={
+                                                product.mp_sizeChart
+                                                    ? product.mp_sizeChart
+                                                    : null
+                                            }
+                                            isMobileSite={isMobileSite}
+                                        />
+                                    ) : null}
 
                                     {!isMobileSite ? wrapperPrice : null}
                                 </section>
@@ -613,7 +626,7 @@ const ProductFullDetail = props => {
                         ) : null}
                     </div> : null} */}
                         <section className={classes.description}>
-                            <span className={classes.descriptionTitle}>
+                            <span onClick={() => setDescripttion(true)} className={classes.descriptionTitle}>
                                 <FormattedMessage
                                     id={'productFullDetail.productDescription'}
                                     defaultMessage={'Product Description'}
@@ -650,8 +663,6 @@ const ProductFullDetail = props => {
                                         <RichContent
                                             html={productDetails.description}
                                         />
-                                       
-                                        
                                     </div>
                                 </>
                             )}
@@ -668,7 +679,7 @@ const ProductFullDetail = props => {
                         </section>
                     </Form>
                 </div>
-                {renderSizeChart}
+                {isMobileSite ? renderSizeChart : null}
                 {product.mp_sizeChart &&
                 product.mp_sizeChart.display_type == 'tab' ? (
                     <SizeChart

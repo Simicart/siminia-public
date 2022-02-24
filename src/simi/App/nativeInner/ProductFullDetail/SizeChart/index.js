@@ -24,17 +24,46 @@ const SizeChart = props => {
 
     const renderSizeChart = type => {
         let html = null;
-        if (type === 'popup') {
-            html = (
-                <div className="main-sizechart">
-                    {open ? (
-                        <div className="product-sizechart">
-                            <div
-                                className="close-icon"
-                                onClick={() => setOpen(false)}
-                            >
-                                <X />
+        if (!isMobileSite) {
+            if (type === 'popup') {
+                html = (
+                    <div className="main-sizechart">
+                        {open ? (
+                            <div className="product-sizechart">
+                                <div
+                                    className="close-icon"
+                                    onClick={() => setOpen(false)}
+                                >
+                                    <X />
+                                </div>
+                                <div
+                                    className="product-sizechart-table"
+                                    dangerouslySetInnerHTML={{
+                                        __html: item.rule_content
+                                    }}
+                                />
                             </div>
+                        ) : null}
+                        {open ? (
+                            <div className="overlay-active" />
+                        ) : (
+                            <div className="overlay" />
+                        )}
+                        <button onClick={() => setOpen(true)}>
+                            {formatMessage({
+                                id: 'Size Chart',
+                                defaultMessage: 'Size Chart'
+                            })}
+                        </button>
+                        {isMobileSite ? <FaChevronRight onClick={() => setOpen(true)} /> : null}
+                    </div>
+                );
+                return html
+            }
+            if (type === 'inline') {
+                html = (
+                    <div className="inline-sizechart">
+                        <div className="product-sizechart">
                             <div
                                 className="product-sizechart-table"
                                 dangerouslySetInnerHTML={{
@@ -42,27 +71,33 @@ const SizeChart = props => {
                                 }}
                             />
                         </div>
-                    ) : null}
-                    {open ? (
-                        <div className="overlay-active" />
-                    ) : (
-                        <div className="overlay" />
-                    )}
-                    <button onClick={() => setOpen(true)}>
-                        {formatMessage({
-                            id: 'Size Chart',
-                            defaultMessage: 'Size Chart'
-                        })}
-                    </button>
-                    {isMobileSite ? <FaChevronRight onClick={() => setOpen(true)} /> : null}
+                    </div>
+                );
+                return html
+            }
+            if (type ==="tab") {
+                html = <div className="tab-sizechart">
+                <div className="product-sizechart">
+                    <div
+                        className="product-sizechart-table"
+                        dangerouslySetInnerHTML={{
+                            __html: item.rule_content
+                        }}
+                    />
                 </div>
-            );
+            </div>
             return html
-        }
-        if (type === 'inline') {
-            html = (
-                <div className="inline-sizechart">
+            }
+        } else html = (
+            <div className="main-sizechart">
+                {open ? (
                     <div className="product-sizechart">
+                        <div
+                            className="close-icon"
+                            onClick={() => setOpen(false)}
+                        >
+                            <X />
+                        </div>
                         <div
                             className="product-sizechart-table"
                             dangerouslySetInnerHTML={{
@@ -70,23 +105,23 @@ const SizeChart = props => {
                             }}
                         />
                     </div>
-                </div>
-            );
-            return html
-        }
-        if (type ==="tab") {
-            html = <div className="tab-sizechart">
-            <div className="product-sizechart">
-                <div
-                    className="product-sizechart-table"
-                    dangerouslySetInnerHTML={{
-                        __html: item.rule_content
-                    }}
-                />
+                ) : null}
+                {open ? (
+                    <div className="overlay-active" />
+                ) : (
+                    <div className="overlay" />
+                )}
+                <button onClick={() => setOpen(true)}>
+                    {formatMessage({
+                        id: 'Size Chart',
+                        defaultMessage: 'Size Chart'
+                    })}
+                </button>
+                {isMobileSite ? <FaChevronRight onClick={() => setOpen(true)} /> : null}
             </div>
-        </div>
+        );
         return html
-        }
+       
         
     };
 
