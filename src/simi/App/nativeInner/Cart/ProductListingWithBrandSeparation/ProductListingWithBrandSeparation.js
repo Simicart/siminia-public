@@ -63,6 +63,13 @@ export const ProductListingWithBrandSeparation = (props) => {
     );
     const classes = useStyle(defaultClasses, defaultClasses_1, props.classes);
 
+    //TODO: wire this to actual data
+    const segeratedItems = useMemo(() => ([
+            {items: [...items], name: 'A brand name', id: 1},
+        ]),
+        [items]
+    )
+
     if (isLoading) {
         return (
             <LoadingIndicator>
@@ -73,13 +80,6 @@ export const ProductListingWithBrandSeparation = (props) => {
             </LoadingIndicator>
         );
     }
-
-    //TODO: wire this to actual data
-    const segeratedItems = useMemo(() => ([
-            {items: [...items], name: 'A brand name', id: 1},
-        ]),
-        [items]
-    )
 
     if (items.length) {
         console.log(items)
