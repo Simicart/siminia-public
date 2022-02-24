@@ -24,6 +24,8 @@ import {
 } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/ShippingMethods/shippingMethodsFragments.gql.js';
 import {func} from 'prop-types';
 import {ConfirmPopup} from "../ConfirmPopup";
+import {PriceWithColor} from "../PriceWithColor";
+import {configColor} from "../../../../Config";
 
 const IMAGE_SIZE = 100;
 
@@ -150,7 +152,7 @@ const CartProduct = props => {
         <div>
             <span className={classes.price}>
                 <span className={classes.labelPrice}/>
-                <Price currencyCode={currency} value={unitPrice}/>
+                <PriceWithColor currencyCode={currency} value={unitPrice}/>
                 <FormattedMessage
                     id={'product.price'}
                     defaultMessage={' ea.'}
@@ -183,7 +185,8 @@ const CartProduct = props => {
                             <Link to={itemLink}>{name}</Link>
                         </div>
                         <ConfirmPopup
-                            trigger={<Trash2 size={13} className={classes.deleteIcon}/>
+                            trigger={
+                                <Trash2 size={13} className={classes.deleteIcon} color={configColor.icon_color}/>
                             }
                             content={<FormattedMessage
                                 id={'Delete Warning'}

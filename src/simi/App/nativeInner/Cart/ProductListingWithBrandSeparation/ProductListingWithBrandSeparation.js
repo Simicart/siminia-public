@@ -13,13 +13,16 @@ import CartProduct from "../CartProduct/CartProduct";
 import EditModal from "../../../core/Cart/ProductListing/EditModal";
 import Icon from "@magento/venia-ui/lib/components/Icon";
 import {hasVendor} from "./ProductListingWithBrandSeparation.config";
+import {configColor} from "../../../../Config";
 
 
 const VendorIntro = ({zone, classes}) => {
     return (
         <Fragment>
             <div className={classes.brandNameContainer}>
-                        <span className={classes.mallIcon}>
+                        <span className={classes.mallIcon} style={{
+                            backgroundColor: configColor.button_background
+                        }}>
                             <span className={classes.mallIconText}>Mall</span>
                         </span>
                 <span className={classes.brandName}>
@@ -31,7 +34,10 @@ const VendorIntro = ({zone, classes}) => {
                               size={16}
                 />
             </div>
-            <div className={classes.fullLine}/>
+            <div className={classes.fullLine}
+                 style={{
+                     borderColor: configColor.line_color
+                 }}/>
         </Fragment>
     )
 }
