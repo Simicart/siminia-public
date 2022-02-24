@@ -69,14 +69,19 @@ export const ProductListingWithBrandSeparation = (props) => {
                      className={classes.brandZoneContainer}
                 >
                     <div className={classes.brandNameContainer}>
-                        <span className={classes.mallIcon}>Mall</span>
-                        <span className={classes.brandName}>{zone.name}</span>
+                        <span className={classes.mallIcon}>
+                            <span className={classes.mallIconText}>Mall</span>
+                        </span>
+                        <span className={classes.brandName}>
+                            <span className={classes.brandText}>{zone.name}</span>
+                        </span>
                         <ChevronRight className={classes.forwardIcon}
                                       onClick={() => {
                                       }}
                                       size={16}
                         />
                     </div>
+                    <div className={classes.fullLine}/>
                     {zone.items.map(product => {
                         return (
                             <CartProduct

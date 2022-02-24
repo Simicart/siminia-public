@@ -1,8 +1,8 @@
 .root {
     display: grid;
     row-gap: 0.5rem;
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding-top: 19px;
+    padding-bottom: 21px;
     border-bottom: solid 1px #0058ac;
     border-bottom: #F2F2F3;
 }
@@ -12,6 +12,8 @@
     font-size: 0.8rem;
     letter-spacing: 0;
     line-height: 0.9rem;
+    flex: 1;
+    padding-right: 5px;
 }
 
 .price {
@@ -56,6 +58,10 @@
     position: relative;
 }
 
+.image {
+    border-radius: 8px;
+}
+
 .stockStatusMessage {
     position: absolute;
     top: 50%;
@@ -70,4 +76,34 @@
     font-weight: 600;
     line-height: 14px;
     text-transform: uppercase;
+}
+
+.upperTools {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+
+.item {
+    align-items: start;
+    display: grid;
+    grid-template-areas: 'image details remove';
+    grid-template-columns: 100px 1fr min-content;
+}
+
+.item > li > button > span > svg {
+    stroke: rgba(18, 18, 18);
+    width: 24px;
+    height: 24px;
+}
+
+.item {
+    grid-template-columns: 96px 1fr min-content;
+}
+
+.secondaryContainer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
 }

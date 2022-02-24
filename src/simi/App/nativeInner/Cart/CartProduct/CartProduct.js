@@ -1,6 +1,6 @@
 import React, {Fragment, useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Heart, Trash} from 'react-feather';
+import {Heart, Trash2} from 'react-feather';
 import {gql} from '@apollo/client';
 import {Link} from 'react-router-dom';
 import {useProduct} from '@magento/peregrine/lib/talons/CartPage/ProductListing/useProduct';
@@ -176,21 +176,12 @@ const CartProduct = props => {
                     </span>
                 </Link>
                 <div className={classes.details}>
-                    <div className={classes.name}>
-                        <Link to={itemLink}>{name}</Link>
-                    </div>
-                    {itemOption}
-
-                    {/*<span className={classes.stockStatusMessage}>*/}
-                    {/*    {stockStatusMessage}*/}
-                    {/*</span>*/}
-                    <div className={classes.quantity}>
-                    </div>
-                </div>
-                <div className={classes.sideTools}>
                     <div className={classes.upperTools}>
+                        <div className={classes.name}>
+                            <Link to={itemLink}>{name}</Link>
+                        </div>
                         <ConfirmPopup
-                            trigger={<Trash size={13} className={classes.deleteIcon}/>
+                            trigger={<Trash2 size={13} className={classes.deleteIcon}/>
                             }
                             content={<FormattedMessage
                                 id={'Delete Warning'}
@@ -201,8 +192,16 @@ const CartProduct = props => {
                             confirmCallback={handleRemoveFromCart}
                         />
                     </div>
-                    <div className={classes.lowerTools}>
-                        {pricePiece}
+                    <div className={classes.secondaryContainer}>
+                        <div className={classes.optionContainer}>
+                            {itemOption}
+                        </div>
+                        <div className={classes.lowerTools}>
+                            {pricePiece}
+                        </div>
+                    </div>
+
+                    <div className={classes.quantityContainer}>
                         <Quantity
                             itemId={item.id}
                             initialValue={quantity}
