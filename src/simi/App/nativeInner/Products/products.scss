@@ -290,11 +290,21 @@
                 grid-area: sortby;
                 display: flex;
                 justify-content: flex-start;
+                > div{
+                    display: inline-flex;
+                }
+            }
+            .wrap-top{
+                position: relative;
             }
             .activeSort{
+                position: absolute;
                 height: 4px;
                 border-radius: 2px;
                 background-color: #FFC700;
+                width: 50%;
+                bottom: 0;
+                left: 30%;
             }
         }
         .label{

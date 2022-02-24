@@ -5,6 +5,7 @@ import Dropdownoption from 'src/simi/BaseComponents/Dropdownoption/';
 import { withRouter } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { capitalizeEachWords, randomString } from 'src/simi/Helper/String';
+require('./sortbyPrice.scss');
 
 const SortbyPrice = props => {
     const { history, location, sortByData, data } = props;

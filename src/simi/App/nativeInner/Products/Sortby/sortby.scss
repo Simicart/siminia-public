@@ -45,6 +45,12 @@
             min-height: 30px;
             padding: 6px 0px;
             font-size: 14px;
+            .dir-title-active, .is-selected{
+                color: #FF4C52;
+                font-size: 14px;
+                letter-spacing: 0;
+                line-height: 16px;
+            }
             @media (max-width: 1023px) {
                 padding: 10px 0px;
             }

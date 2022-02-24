@@ -14,6 +14,8 @@ import { useWindowSize } from '@magento/peregrine';
 import { cateUrlSuffix } from 'src/simi/Helper/Url';
 import { Link } from 'react-router-dom';
 import { BiFilterAlt } from 'react-icons/bi';
+import {RiArrowDropDownLine,RiArrowDropUpLine} from 'react-icons/ri'
+import { ChevronDown, ChevronUp } from 'react-feather';
 require('./products.scss');
 
 const Products = props => {
@@ -229,18 +231,19 @@ const Products = props => {
         }
         return html;
     };
+  
     const [isActive, setIsActive] = useState(0);
-    // const handleClick = id => {
-    //     setIsActive(id);
-    // };
+    const [showingDropdown, setShowDropdown] = useState(false)
     const clickSortByPrice = id => {
         setIsActive(id);
     };
     const clickSortBy = id => {
         setIsActive(id);
+        setShowDropdown(!showingDropdown);
     };
     const clickFilter = id => {
         setIsActive(id);
+        
     };
 
     return (
@@ -254,7 +257,7 @@ const Products = props => {
                     {windowSize.innerWidth > 480 ? "" : 
                     <div className="sortby-filter">
                         <div className="product-list-filter">
-                            <div onClick={() => clickFilter(1)}>
+                            <div className="wrap-top" onClick={() => clickFilter(1)}>
                                 <span className="label">
                                     <span
                                         className={`${
@@ -278,7 +281,7 @@ const Products = props => {
                             </div>
                         </div>
                         <div className="product-list-sortby-price">
-                            <div onClick={() => clickSortByPrice(2)}>
+                            <div className="wrap-top" onClick={() => clickSortByPrice(2)}>
                                 <span className="label">
                                     {formatMessage({
                                         id: 'sortByPrice',
@@ -294,25 +297,30 @@ const Products = props => {
                             </div>
                         </div>
                         <div className="product-list-sortby">
-                            <div onClick={() => clickSortBy(3)}>
+                            <div className="wrap-top" onClick={() => clickSortBy(3)}>
                                 <span className="label">
                                     {formatMessage({
                                         id: 'sortBy',
                                         defaultMessage: 'Sort by'
                                     })}
                                 </span>
+                                <span className="icon-dropdown">
+                                    {showingDropdown ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+                                </span>
                                 <div
                                     className={`${
-                                        isActive === 3 ? 'activeSort' : ''
+                                        showingDropdown === true ? 'activeSort' : ''
                                     }`}
                                 />
                             </div>
                         </div>
                     </div>}
+                    {showingDropdown === true ?  <Sortby showingDropdown = {showingDropdown} data={data} sortByData={sortByData} /> : ''}
                     {renderCarouselChildCate()}
                 </div>
                 {windowSize.innerWidth > 480 ? renderLeftNavigation() : ""}
                 {isActive === 1 ? renderFilter() : ''}
+                
                 <div
                     className="listing-product"
                     style={{ display: 'inline-block', width: '100%' }}
