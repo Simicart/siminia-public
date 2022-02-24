@@ -1,4 +1,4 @@
-import React, {Fragment, useCallback, Suspense, useMemo} from 'react';
+import React, {Fragment, useCallback, Suspense, useMemo, useEffect} from 'react';
 import {useProductListing} from "@magento/peregrine/lib/talons/CartPage/ProductListing/useProductListing";
 import DEFAULT_OPERATIONS from "../../../core/Cart/ProductListing/productListing.gql";
 import {useStyle} from "@magento/venia-ui/lib/classify";
@@ -76,6 +76,14 @@ export const ProductListingWithBrandSeparation = (props) => {
         [items]
     )
 
+    const hasOutOfStockProduct = items.some((product) => {
+        return product.stockStatus === 'OUT_OF_STOCK'
+    })
+
+    useEffect(() => {
+        setDisplayOutOfStockLabel(hasOutOfStockProduct)
+    }, [hasOutOfStockProduct])
+
     if (isLoading) {
         return (
             <LoadingIndicator>
@@ -86,6 +94,7 @@ export const ProductListingWithBrandSeparation = (props) => {
             </LoadingIndicator>
         );
     }
+
 
     if (items.length) {
         console.log(items)

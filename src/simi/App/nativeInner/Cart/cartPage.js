@@ -62,7 +62,13 @@ const CartPage = props => {
         makeNotification
     } = useBottomNotification()
 
-    const [displayOutOfStockLabel, setDisplayOutOfStockLabel] = useState(true)
+    const [displayOutOfStockLabel, _setDisplayOutOfStockLabel] = useState(false)
+
+    const setDisplayOutOfStockLabel = (v) => {
+        if (v !== displayOutOfStockLabel) {
+            _setDisplayOutOfStockLabel(v)
+        }
+    }
 
     useEffect(() => {
         if (wishlistSuccessProps) {
@@ -123,7 +129,7 @@ const CartPage = props => {
                 <span className={classes.stockTextContent}>
                     <FormattedMessage
                         id={'cartPage.stockTextContent'}
-                        defaultMessage={'The product is out of stock in the cart'}
+                        defaultMessage={'A product is out of stock in the cart'}
                     />
                 </span>
             </span>
@@ -181,17 +187,20 @@ const CartPage = props => {
     )
 
     return (
-        <div className={classes.root}>
-            <StoreTitle>
-                {formatMessage({
-                    id: 'cartPage.title',
-                    defaultMessage: 'Cart'
-                })}
-            </StoreTitle>
-            {/*{outOfStockLabel}*/}
-            {cartBody}
-            {notiComponent}
-        </div>
+        <Fragment>
+            {outOfStockLabel}
+            <div className={classes.root}>
+                <StoreTitle>
+                    {formatMessage({
+                        id: 'cartPage.title',
+                        defaultMessage: 'Cart'
+                    })}
+                </StoreTitle>
+                {cartBody}
+                {notiComponent}
+            </div>
+        </Fragment>
+
     );
 };
 
