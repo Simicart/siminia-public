@@ -12,6 +12,7 @@ import defaultClasses_1 from './ProductListingWithBrandSeparation.module.css'
 import CartProduct from "../CartProduct/CartProduct";
 import EditModal from "../../../core/Cart/ProductListing/EditModal";
 import Icon from "@magento/venia-ui/lib/components/Icon";
+import {hasVendor} from "./ProductListingWithBrandSeparation.config";
 
 
 export const ProductListingWithBrandSeparation = (props) => {
@@ -57,6 +58,25 @@ export const ProductListingWithBrandSeparation = (props) => {
         {items: [...items], name: 'A brand name', id: 1},
     ]
 
+    const vendorIntro = hasVendor ? (
+        <Fragment>
+            <div className={classes.brandNameContainer}>
+                        <span className={classes.mallIcon}>
+                            <span className={classes.mallIconText}>Mall</span>
+                        </span>
+                <span className={classes.brandName}>
+                            <span className={classes.brandText}>{zone.name}</span>
+                        </span>
+                <ChevronRight className={classes.forwardIcon}
+                              onClick={() => {
+                              }}
+                              size={16}
+                />
+            </div>
+            <div className={classes.fullLine}/>
+        </Fragment>
+    ) : null
+
     if (items.length) {
         console.log(items)
         const segregatedItemLists = segeratedItems.map(zone => {
@@ -67,20 +87,7 @@ export const ProductListingWithBrandSeparation = (props) => {
                 <div key={zone.id}
                      className={classes.brandZoneContainer}
                 >
-                    <div className={classes.brandNameContainer}>
-                        <span className={classes.mallIcon}>
-                            <span className={classes.mallIconText}>Mall</span>
-                        </span>
-                        <span className={classes.brandName}>
-                            <span className={classes.brandText}>{zone.name}</span>
-                        </span>
-                        <ChevronRight className={classes.forwardIcon}
-                                      onClick={() => {
-                                      }}
-                                      size={16}
-                        />
-                    </div>
-                    <div className={classes.fullLine}/>
+                    {vendorIntro}
                     {zone.items.map(product => {
                         return (
                             <CartProduct
