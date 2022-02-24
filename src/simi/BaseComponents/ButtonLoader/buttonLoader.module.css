@@ -1,0 +1,33 @@
+.loader_button {
+    composes: root_highPriority from '../../../override/button.module.css';
+    position: relative;
+    max-height: 50px;
+    width: 100%;
+    opacity: 0.5;
+}
+
+.loader {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: 4px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: button-loading-spinner 1s ease infinite;
+}
+
+/* Safari */
+@keyframes button-loading-spinner {
+    from {
+      transform: rotate(0turn);
+    }
+  
+    to {
+      transform: rotate(1turn);
+    }
+  }

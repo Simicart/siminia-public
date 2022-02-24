@@ -35,7 +35,8 @@ import OrderSummary from './OrderSummary/orderSummary';
 import PriceAdjustments from '../Cart/PriceAdjustments/priceAdjustments';
 
 import Identify from 'src/simi/Helper/Identify';
-require('./checkoutPage.scss')
+import ButtonLoader from '../../../BaseComponents/ButtonLoader';
+require('./checkoutPage.scss');
 const CheckoutPage = props => {
     const { classes: propClasses, history } = props;
     const { formatMessage } = useIntl();
@@ -190,9 +191,12 @@ const CheckoutPage = props => {
                         setPageIsUpdating={setIsUpdating}
                     />
                     <div className="main-delivery">
-                        <label  className="check-container">
+                        <label className="check-container">
                             Delivery Time
-                            <input onClick={() => setOpenDeli(!openDeli)}  type="checkbox" />
+                            <input
+                                onClick={() => setOpenDeli(!openDeli)}
+                                type="checkbox"
+                            />
                             <span className="checkmark" />
                         </label>
                     </div>
@@ -254,8 +258,10 @@ const CheckoutPage = props => {
                 </div>
             ) : null;
 
-        const reviewOrderButton =
-            checkoutStep === CHECKOUT_STEP.PAYMENT ? (
+        const reviewOrderButtonType =
+            (reviewOrderButtonClicked || isUpdating || !isPaymentAvailable) ? (
+                <ButtonLoader classes={classes.loader_button} />
+            ) : (
                 <Button
                     onClick={handleReviewOrder}
                     priority="high"
@@ -271,7 +277,12 @@ const CheckoutPage = props => {
                         defaultMessage={'Review Order'}
                     />
                 </Button>
-            ) : null;
+            );
+
+        const reviewOrderButton =
+            checkoutStep === CHECKOUT_STEP.PAYMENT
+                ? reviewOrderButtonType
+                : null;
 
         const itemsReview =
             checkoutStep === CHECKOUT_STEP.REVIEW ? (
