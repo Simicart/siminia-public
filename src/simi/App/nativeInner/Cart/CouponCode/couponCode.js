@@ -1,12 +1,10 @@
 import React, {Fragment, useEffect} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {AlertCircle as AlertCircleIcon, Trash} from 'react-feather';
 import {useToasts} from '@magento/peregrine';
 import {deriveErrorMessage} from '@magento/peregrine/lib/util/deriveErrorMessage';
 import {useCouponCode} from '../couponCodeHook';
 import {useStyle} from '@magento/venia-ui/lib/classify';
-import {Form, useFormState} from 'informed';
-import Icon from '@magento/venia-ui/lib/components/Icon';
+import {Form} from 'informed';
 import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
 import defaultClasses from './couponCode.module.css';
 import {RectButton} from "../RectButton";
@@ -15,14 +13,6 @@ import {bottomNotificationType} from "../bottomNotificationHook";
 import {ConfirmPopup} from "../ConfirmPopup";
 import LoadingIndicator from "@magento/venia-ui/lib/components/LoadingIndicator";
 
-const errorIcon = (
-    <Icon
-        src={AlertCircleIcon}
-        attrs={{
-            width: 18
-        }}
-    />
-);
 
 /**
  * A child component of the PriceAdjustments component.

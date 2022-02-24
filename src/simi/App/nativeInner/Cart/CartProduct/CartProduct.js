@@ -1,19 +1,13 @@
-import React, {Fragment, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Heart, Trash2} from 'react-feather';
+import {Trash2} from 'react-feather';
 import {gql} from '@apollo/client';
 import {Link} from 'react-router-dom';
 import {useProduct} from '@magento/peregrine/lib/talons/CartPage/ProductListing/useProduct';
 import resourceUrl from '@magento/peregrine/lib/util/makeUrl';
-import Price from '@magento/venia-ui/lib/components/Price';
-
 import {useStyle} from '@magento/venia-ui/lib/classify';
-import Icon from '@magento/venia-ui/lib/components/Icon';
 import Image from '@magento/venia-ui/lib/components/Image';
-import Kebab from '@magento/venia-ui/lib/components/LegacyMiniCart/kebab';
-import ProductOptions from '@magento/venia-ui/lib/components/LegacyMiniCart/productOptions';
 import Section from '@magento/venia-ui/lib/components/LegacyMiniCart/section';
-import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToListButton';
 import {Quantity} from '../Quantity';
 
 import defaultClasses from '../../../core/Cart/ProductListing/product.module.css';
@@ -22,14 +16,12 @@ import {CartPageFragment} from '@magento/peregrine/lib/talons/CartPage/cartPageF
 import {
     AvailableShippingMethodsCartFragment
 } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/ShippingMethods/shippingMethodsFragments.gql.js';
-import {func} from 'prop-types';
 import {ConfirmPopup} from "../ConfirmPopup";
 import {PriceWithColor} from "../PriceWithColor";
 import {configColor} from "../../../../Config";
 
 const IMAGE_SIZE = 100;
 
-const HeartIcon = <Icon size={16} src={Heart}/>;
 
 const CartProduct = props => {
     const {item} = props;

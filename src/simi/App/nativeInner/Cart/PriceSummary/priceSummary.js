@@ -1,8 +1,6 @@
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import Price from '@magento/venia-ui/lib/components/Price';
 // import { usePriceSummary } from '@magento/peregrine/lib/talons/CartPage/PriceSummary/usePriceSummary';
-import Button from '@magento/venia-ui/lib/components/Button';
 import {useStyle} from '@magento/venia-ui/lib/classify';
 import defaultClasses from '../../../core/Cart/PriceSummary/priceSummary.module.css';
 import defaultClasses_1 from './priceSummary.module.css';
@@ -12,8 +10,6 @@ import ShippingSummary from '../../../core/Cart/PriceSummary/shippingSummary';
 import TaxSummary from '../../../core/Cart/PriceSummary/taxSummary';
 import {usePriceSummary} from '../../../../talons/Cart/usePriceSummary';
 import {RedButton} from "../RedButton";
-import {Lock} from 'react-feather'
-import Icon from "@magento/venia-ui/lib/components/Icon";
 import {PriceWithColor} from "../PriceWithColor";
 /**
  * A child component of the CartPage component.

@@ -1,17 +1,13 @@
-import React, {Fragment, useCallback, Suspense, useMemo, useEffect} from 'react';
+import React, {Fragment, useMemo, useEffect} from 'react';
 import {useProductListing} from "@magento/peregrine/lib/talons/CartPage/ProductListing/useProductListing";
 import DEFAULT_OPERATIONS from "../../../core/Cart/ProductListing/productListing.gql";
 import {useStyle} from "@magento/venia-ui/lib/classify";
 import LoadingIndicator from "@magento/venia-ui/lib/components/LoadingIndicator";
 import {FormattedMessage} from "react-intl";
-import Product from "../../../core/Cart/ProductListing/product";
-import ProductListingTableActions from "../../../core/Cart/ProductListing/productListingTableActions";
 import {ChevronRight} from 'react-feather'
 import defaultClasses from "../../../core/Cart/ProductListing/productListing.module.css";
 import defaultClasses_1 from './ProductListingWithBrandSeparation.module.css'
 import CartProduct from "../CartProduct/CartProduct";
-import EditModal from "../../../core/Cart/ProductListing/EditModal";
-import Icon from "@magento/venia-ui/lib/components/Icon";
 import {hasVendor} from "./ProductListingWithBrandSeparation.config";
 import {configColor} from "../../../../Config";
 
@@ -61,12 +57,6 @@ export const ProductListingWithBrandSeparation = (props) => {
         wishlistConfig
     } = talonProps;
 
-    const handleLink = useCallback(
-        link => {
-            history.push(link);
-        },
-        [history]
-    );
     const classes = useStyle(defaultClasses, defaultClasses_1, props.classes);
 
     //TODO: wire this to actual data
@@ -76,9 +66,12 @@ export const ProductListingWithBrandSeparation = (props) => {
         [items]
     )
 
-    const hasOutOfStockProduct = items.some((product) => {
-        return product.stockStatus === 'OUT_OF_STOCK'
-    })
+    const hasOutOfStockProduct = useMemo(
+        () => items.some((product) => {
+            return product.stockStatus === 'OUT_OF_STOCK'
+        }),
+        [items]
+    )
 
     useEffect(() => {
         setDisplayOutOfStockLabel(hasOutOfStockProduct)
@@ -123,40 +116,12 @@ export const ProductListingWithBrandSeparation = (props) => {
                 </div>
             )
         })
-        const productComponents = items.map(product => (
-            <Product
-                item={product}
-                key={product.id}
-                setActiveEditItem={setActiveEditItem}
-                setIsCartUpdating={setIsCartUpdating}
-                onAddToWishlistSuccess={onAddToWishlistSuccess}
-                fetchCartDetails={fetchCartDetails}
-                wishlistConfig={wishlistConfig}
-            />
-        ));
+
         return (
             <Fragment>
                 {segregatedItemLists}
             </Fragment>
         )
-
-        return (
-            <Fragment>
-                <ul className={classes.root}>{productComponents}</ul>
-                <ProductListingTableActions
-                    handleLink={handleLink}
-                    setIsCartUpdating={setIsCartUpdating}
-                    items={items}
-                />
-                <Suspense fallback={null}>
-                    <EditModal
-                        item={activeEditItem}
-                        setIsCartUpdating={setIsCartUpdating}
-                        setActiveEditItem={setActiveEditItem}
-                    />
-                </Suspense>
-            </Fragment>
-        );
     }
 
     return null;

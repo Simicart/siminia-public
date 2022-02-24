@@ -4,7 +4,6 @@ import {Check} from 'react-feather';
 import {useCartPage} from '@magento/peregrine/lib/talons/CartPage/useCartPage';
 import {useStyle} from '@magento/venia-ui/lib/classify';
 import {useToasts} from '@magento/peregrine';
-// //
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import {StoreTitle} from '@magento/venia-ui/lib/components/Head';
 import {fullPageLoadingIndicator} from '@magento/venia-ui/lib/components/LoadingIndicator';
@@ -15,9 +14,7 @@ import defaultClasses_1 from './cartPage.module.css';
 import Image from "@magento/venia-ui/lib/components/Image";
 import {RedButton} from "./RedButton";
 import {ProductListingWithBrandSeparation} from "./ProductListingWithBrandSeparation";
-import {ConfirmPopup} from "./ConfirmPopup";
-import {BottomNotification} from "./BottomNotification";
-import {bottomNotificationType, useBottomNotification} from "./bottomNotificationHook/useBottomNotification";
+import {useBottomNotification} from "./bottomNotificationHook";
 
 const CheckIcon = <Icon size={20} src={Check}/>;
 
@@ -106,6 +103,7 @@ const CartPage = props => {
         <PriceSummary isUpdating={isCartUpdating}/>
     ) : null;
 
+    // will use this in header
     const totalQuantity = cartItems.length ? (
         <span> {cartItems.reduce((total, item) => {
             return total += item.quantity
