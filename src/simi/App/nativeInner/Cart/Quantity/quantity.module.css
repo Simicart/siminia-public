@@ -18,6 +18,8 @@
 
 .root input {
     transition: all 0.2s ease-out;
+    height: 30px;
+    border: none;
 }
 
 .root input:focus {
@@ -62,7 +64,7 @@
 .button:disabled,
 .button:disabled:hover {
     opacity: 0.8;
-    border-color: rgb(var(--venia-global-color-gray-400));
+    /*border-color: rgb(var(--venia-global-color-gray-400));*/
 }
 
 .button:disabled {
