@@ -12,9 +12,8 @@ import defaultClasses_1 from './ProductListingWithBrandSeparation.module.css'
 import CartProduct from "../CartProduct/CartProduct";
 import EditModal from "../../../core/Cart/ProductListing/EditModal";
 import Icon from "@magento/venia-ui/lib/components/Icon";
-// items: [
-// []
-// ]
+
+
 export const ProductListingWithBrandSeparation = (props) => {
     const {
         onAddToWishlistSuccess,

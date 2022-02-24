@@ -261,8 +261,3 @@
         padding-inline-start: 0;
     }
 }
-
-.quantityContainer {
-    display: flex;
-    justify-content: flex-end;
-}

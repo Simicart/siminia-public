@@ -171,9 +171,11 @@ const CartProduct = props => {
                         width={IMAGE_SIZE}
                         resource={image}
                     />
-                    <span className={classes.stockStatusMessage}>
-                        {stockStatusMessage}
-                    </span>
+                    {!!stockStatusMessage && (
+                        <span className={classes.stockStatusMessage}>
+                            {stockStatusMessage}
+                        </span>
+                    )}
                 </Link>
                 <div className={classes.details}>
                     <div className={classes.upperTools}>

@@ -13,16 +13,20 @@
     gap: 1.5rem;
     grid-auto-flow: column;
     grid-template-columns: 1fr;
-    height: 4.5rem;
+    /*height: 4.5rem;*/
     justify-items: start;
 }
 
 
 .contents_container {
     padding: 0;
+    margin-top: 13px;
 }
 
 .contents_container:empty {
     display: none;
 }
 
+.sectionRoot {
+    margin-top: 30px;
+}
