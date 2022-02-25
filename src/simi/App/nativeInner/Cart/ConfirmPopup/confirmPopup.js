@@ -1,10 +1,11 @@
 import React from 'react';
 import Popup from 'reactjs-popup';
 import defaultClasses from './confirmPopup.module.css'
-    ;
 import {useStyle} from "@magento/venia-ui/lib/classify";
 import {RectButton} from "../RectButton";
 import {RectOutlineButton} from "../RectButton/RectOutlineButton";
+import {FormattedMessage} from "react-intl";
+import {configColor} from "../../../../Config";
 
 export const ConfirmPopup = (props) => {
     const {
@@ -36,6 +37,12 @@ export const ConfirmPopup = (props) => {
                     <div className={classes.content}>
                         {content}
                     </div>
+                    <div className={classes.lineContainer}>
+                        <div className={classes.lineUp}
+                             style={{
+                                 borderColor: configColor.line_color
+                             }}/>
+                    </div>
                     <div className={classes.actionWrapper}>
                         <div className={classes.actions}>
                             <RectOutlineButton
@@ -43,14 +50,18 @@ export const ConfirmPopup = (props) => {
                                 onClick={() => {
                                     cancelCallback ? cancelCallback() : null
                                     close();
-                                }}>Cancel</RectOutlineButton>
+                                }}>
+                                <FormattedMessage id={'popup.cancel'} defaultMessage={'Cancel'}/>
+                            </RectOutlineButton>
 
                             <RectButton
                                 classes={classes.confirmButton}
                                 onClick={() => {
                                     confirmCallback ? confirmCallback() : null
                                     close();
-                                }}>OK</RectButton>
+                                }}>
+                                <FormattedMessage id={'popup.ok'} defaultMessage={'OK'}/>
+                            </RectButton>
                         </div>
                     </div>
                 </div>

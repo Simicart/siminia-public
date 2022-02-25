@@ -1,7 +1,7 @@
 import React from 'react';
 import {useStyle} from '@magento/venia-ui/lib/classify';
 import defaultClass from './BottomNotification.module.css'
-import {bottomNotificationType} from "../bottomNotificationHook/useBottomNotification";
+import {bottomNotificationType} from "../bottomNotificationHook";
 
 export const BottomNotification = (props) => {
     const {text = '', icon, type, forwardRef} = props
