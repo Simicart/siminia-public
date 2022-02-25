@@ -187,6 +187,7 @@ export const useProductFullDetail = props => {
     );
 
     const operations = mergeOperations(defaultOperations, props.operations);
+    const [alertMsg, setAlertMsg] = useState(-1)
 
     const productType = product.__typename;
 
@@ -443,6 +444,8 @@ export const useProductFullDetail = props => {
         return selectedOptions;
     }, [attributeIdToValuesMap, optionSelections]);
 
+
+
     const handleAddToCart = useCallback(
         async formValues => {
             const { quantity } = formValues;
@@ -495,6 +498,7 @@ export const useProductFullDetail = props => {
                         await addDownloadableProductToCart({
                             variables: downloadableVariable
                         });
+                        setAlertMsg(true)
                     } catch (e) {
                         console.warn(e);
                     }
@@ -545,6 +549,7 @@ export const useProductFullDetail = props => {
                     await addBundleProductToCart({
                         variables: variableParams
                     });
+                    setAlertMsg(true)
                 } else if (product.items && productType === 'GroupedProduct') {
                     const { items } = product;
                     variables.product = [];
@@ -559,12 +564,13 @@ export const useProductFullDetail = props => {
                         });
                     }
                     await addProductToCart({ variables });
-
+                    setAlertMsg(true)
                     return;
                 } else {
                     variables.product = [variables.product];
                     try {
                         await addProductToCart({ variables });
+                        setAlertMsg(true)
                     } catch {
                         return;
                     }
@@ -879,6 +885,8 @@ export const useProductFullDetail = props => {
         switchExtraPriceForNormalPrice,
         upsellProducts,
         crosssellProducts,
-        relatedProducts
+        relatedProducts,
+        setAlertMsg,
+        alertMsg
     };
 };

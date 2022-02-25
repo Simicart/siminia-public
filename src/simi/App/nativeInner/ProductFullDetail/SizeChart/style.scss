@@ -74,6 +74,9 @@
             padding: 15px;
             animation: Open .6s;
         }
+        .sizeChart-btn {
+            width: 100%;
+        }
         @keyframes Open {
             from {left: 100%;}
             to {left: 0%;}

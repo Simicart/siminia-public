@@ -91,9 +91,7 @@
                 letter-spacing: 0;
                 line-height: 32px;
             }
-           
-              
-            
+
             > span:nth-child(2) {
                 color: #e02020;
                 font-size: 24px;
@@ -216,12 +214,12 @@
     }
 }
 @media (max-width: 450px) {
-    // #siminia-main-header {
-    //     display: none;
-    // }
-    // .header-header-search-2hi  {
-    //     display: none;
-    // }
+    #siminia-main-header {
+        display: none;
+    }
+    .header-header-search-2hi {
+        display: none;
+    }
     // .wrapperTitle ,
     // .wrapperSku,
     // .wrapperReviewSum {
@@ -247,13 +245,17 @@
             padding: 0 10px;
             height: 40px;
             line-height: 40px;
-            display:flex;
+            display: flex;
             align-items: center;
             svg {
                 margin-right: 5px;
             }
-
         }
+    }
+    .descriptionTitle {
+        font-size: 1rem;
+        font-weight: 600;
+        width: 100%;
     }
     .header-icon > svg {
         width: 20px;
@@ -285,7 +287,7 @@
     .reviewRatingBlock {
         display: none;
     }
-    .wrapperPrice > span  {
+    .wrapperPrice > span {
         color: #150826;
         font-family: Poppins;
         font-size: 24px;
@@ -309,7 +311,7 @@
         overflow: auto;
         background-color: #fff;
         padding: 15px;
-        animation: desOpen .5s;
+        animation: desOpen 0.5s;
         .des-title {
             display: flex;
             align-items: center;
@@ -337,7 +339,7 @@
         overflow: auto;
         background-color: #fff;
         padding: 15px;
-        animation: desClose .5s;
+        animation: desClose 0.5s;
         .des-title {
             display: flex;
             align-items: center;
@@ -351,12 +353,33 @@
             }
         }
     }
+    .mbQuantity {
+        padding: 1.5rem;
+    }
+    .sku-details {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid rgb(223, 225, 226);
+        padding: 1rem 0;
+        span {
+            margin-right: 1rem;
+        }
+    }
+  
     @keyframes desOpen {
-        from {left: 100%;}
-        to {left: 0%;}
+        from {
+            left: 100%;
+        }
+        to {
+            left: 0%;
+        }
     }
     @keyframes desClose {
-        from {left: 0%;}
-        to {left: 100%;}
+        from {
+            left: 0%;
+        }
+        to {
+            left: 100%;
+        }
     }
 }
