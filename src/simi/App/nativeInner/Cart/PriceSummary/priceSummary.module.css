@@ -44,7 +44,6 @@
     align-items: baseline;
     margin-top: 2rem;
     padding-top: 0.8rem;
-    padding-bottom: 0.8rem;
 }
 
 .totalPricePiece {
@@ -59,4 +58,9 @@
 
 .root {
     padding: 15px 15px 0 15px;
+}
+
+.pricePlaceholder {
+    width: 1rem;
+    display: inline-block;
 }

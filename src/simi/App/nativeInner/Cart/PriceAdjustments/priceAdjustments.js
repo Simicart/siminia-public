@@ -7,7 +7,7 @@ import {useIntl} from "react-intl";
 import CouponCode from "../CouponCode";
 
 export const PriceAdjustments = (props) => {
-    const {classes: _classess, makeNotification, ...rest} = props
+    const {classes: _classess, makeNotification} = props
 
     const classes = useStyle(_classess, defaultClasses)
     const {formatMessage} = useIntl();

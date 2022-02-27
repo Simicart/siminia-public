@@ -104,3 +104,12 @@
     display: flex;
     justify-content: space-between;
 }
+
+.loadingRoot {
+    align-content: center;
+    align-items: center;
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    width: 100%;
+}

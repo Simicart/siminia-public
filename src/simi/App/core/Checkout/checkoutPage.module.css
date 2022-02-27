@@ -217,6 +217,10 @@
     composes: root_highPriority from '../../../../override/button.module.css';
     grid-column: 1 / span 1;
 }
+.loader_button {
+    grid-column: 1 / span 1;
+    width: 100%;
+}
 
 .place_order_button {
     composes: root_highPriority from '../../../../override/button.module.css';

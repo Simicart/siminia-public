@@ -14,7 +14,7 @@ const Canonical = props => {
     } = useStoreConfigData();
 
     const mageworx_seo =
-        storeConfigData && storeConfigData.storeConfig
+        storeConfigData && storeConfigData.storeConfig && storeConfigData.storeConfig.mageworx_seo
             ? storeConfigData.storeConfig.mageworx_seo
             : '';
     let seo;

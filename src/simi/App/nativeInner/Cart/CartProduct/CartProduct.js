@@ -1,19 +1,13 @@
-import React, {Fragment, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Heart, Trash} from 'react-feather';
+import {Trash2} from 'react-feather';
 import {gql} from '@apollo/client';
 import {Link} from 'react-router-dom';
 import {useProduct} from '@magento/peregrine/lib/talons/CartPage/ProductListing/useProduct';
 import resourceUrl from '@magento/peregrine/lib/util/makeUrl';
-import Price from '@magento/venia-ui/lib/components/Price';
-
 import {useStyle} from '@magento/venia-ui/lib/classify';
-import Icon from '@magento/venia-ui/lib/components/Icon';
 import Image from '@magento/venia-ui/lib/components/Image';
-import Kebab from '@magento/venia-ui/lib/components/LegacyMiniCart/kebab';
-import ProductOptions from '@magento/venia-ui/lib/components/LegacyMiniCart/productOptions';
 import Section from '@magento/venia-ui/lib/components/LegacyMiniCart/section';
-import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToListButton';
 import {Quantity} from '../Quantity';
 
 import defaultClasses from '../../../core/Cart/ProductListing/product.module.css';
@@ -22,12 +16,12 @@ import {CartPageFragment} from '@magento/peregrine/lib/talons/CartPage/cartPageF
 import {
     AvailableShippingMethodsCartFragment
 } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/ShippingMethods/shippingMethodsFragments.gql.js';
-import {func} from 'prop-types';
 import {ConfirmPopup} from "../ConfirmPopup";
+import {PriceWithColor} from "../PriceWithColor";
+import {configColor} from "../../../../Config";
 
 const IMAGE_SIZE = 100;
 
-const HeartIcon = <Icon size={16} src={Heart}/>;
 
 const CartProduct = props => {
     const {item} = props;
@@ -66,7 +60,7 @@ const CartProduct = props => {
 
     const itemLink = useMemo(() => resourceUrl(`/${urlKey}${urlSuffix || ''}`), [urlKey, urlSuffix]);
 
-    const stockStatusMessage = stockStatus === 'OUT_OF_STOCK' || true ? formatMessage({
+    const stockStatusMessage = stockStatus === 'OUT_OF_STOCK' ? formatMessage({
         id: 'product.outOfStock', defaultMessage: 'Sold out'
     }) : '';
 
@@ -150,7 +144,7 @@ const CartProduct = props => {
         <div>
             <span className={classes.price}>
                 <span className={classes.labelPrice}/>
-                <Price currencyCode={currency} value={unitPrice}/>
+                <PriceWithColor currencyCode={currency} value={unitPrice}/>
                 <FormattedMessage
                     id={'product.price'}
                     defaultMessage={' ea.'}
@@ -171,26 +165,20 @@ const CartProduct = props => {
                         width={IMAGE_SIZE}
                         resource={image}
                     />
-                    <span className={classes.stockStatusMessage}>
-                        {stockStatusMessage}
-                    </span>
+                    {!!stockStatusMessage && (
+                        <span className={classes.stockStatusMessage}>
+                            {stockStatusMessage}
+                        </span>
+                    )}
                 </Link>
                 <div className={classes.details}>
-                    <div className={classes.name}>
-                        <Link to={itemLink}>{name}</Link>
-                    </div>
-                    {itemOption}
-
-                    {/*<span className={classes.stockStatusMessage}>*/}
-                    {/*    {stockStatusMessage}*/}
-                    {/*</span>*/}
-                    <div className={classes.quantity}>
-                    </div>
-                </div>
-                <div className={classes.sideTools}>
                     <div className={classes.upperTools}>
+                        <div className={classes.name}>
+                            <Link to={itemLink}>{name}</Link>
+                        </div>
                         <ConfirmPopup
-                            trigger={<Trash size={13} className={classes.deleteIcon}/>
+                            trigger={
+                                <Trash2 size={13} className={classes.deleteIcon} color={configColor.icon_color}/>
                             }
                             content={<FormattedMessage
                                 id={'Delete Warning'}
@@ -201,8 +189,16 @@ const CartProduct = props => {
                             confirmCallback={handleRemoveFromCart}
                         />
                     </div>
-                    <div className={classes.lowerTools}>
-                        {pricePiece}
+                    <div className={classes.secondaryContainer}>
+                        <div className={classes.optionContainer}>
+                            {itemOption}
+                        </div>
+                        <div className={classes.lowerTools}>
+                            {pricePiece}
+                        </div>
+                    </div>
+
+                    <div className={classes.quantityContainer}>
                         <Quantity
                             itemId={item.id}
                             initialValue={quantity}

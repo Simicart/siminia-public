@@ -1,18 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Check } from 'react-feather';
 import { configColor } from 'src/simi/Config';
-import Dropdownoption from 'src/simi/BaseComponents/Dropdownoption/';
+import Dropdownoption from '../../BaseComponents/Dropdownoption';
 import { withRouter } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { capitalizeEachWords, randomString } from 'src/simi/Helper/String';
 require('./sortby.scss');
 
 const Sortby = props => {
-    const { history, location, sortByData, data } = props;
+    const { history, location, sortByData, data, showingDropdown } = props;
     const { search } = location;
     const { formatMessage } = useIntl();
-
-    const changedSortBy = item => {
+    const changedSortBy = (item)=> {
         if (item) {
             const queryParams = new URLSearchParams(search);
             queryParams.set('product_list_order', item.key);
@@ -49,27 +48,27 @@ const Sortby = props => {
     } else {
         orders = [
             {
+                id :1,
                 value: 'position',
                 key: 'position',
                 direction: 'asc',
                 showDir: false
             },
             {
+                id :2,
                 value: 'relevance',
                 key: 'relevance',
                 direction: 'asc',
                 showDir: false
             },
-            { value: 'name', key: 'name', direction: 'asc', showDir: true },
-            { value: 'name', key: 'name', direction: 'desc', showDir: true },
+            { id :3, value: 'name', key: 'name', direction: 'asc', showDir: true },
+            { id :4, value: 'name', key: 'name', direction: 'desc', showDir: true },
             // { value: 'price', key: 'price', direction: 'asc', showDir: true },
             // { value: 'price', key: 'price', direction: 'desc', showDir: true }
         ];
     }
-
-    let sortByTitle = formatMessage({ id: 'Sort by' });
-
-    selections = orders.map(item => {
+    
+    selections = orders.map((item) => {
         let itemCheck = '';
         let itemTitle = item.value;
         itemTitle = capitalizeEachWords(formatMessage({ id: itemTitle }));
@@ -85,7 +84,7 @@ const Sortby = props => {
             sortByData &&
             sortByData[`${item.key}`] === item.direction.toUpperCase()
         ) {
-            sortByTitle = itemTitle;
+            itemTitle = (<span className="dir-title-active">{itemTitle}</span>)
             itemCheck = (
                 <span className="is-selected">
                     <Check size={20} />
@@ -112,7 +111,7 @@ const Sortby = props => {
                 <span />
             ) : (
                 <div className="sort-by-select">
-                    <Dropdownoption title={sortByTitle}>
+                    <Dropdownoption showingDropdown = {showingDropdown} >
                         {selections}
                     </Dropdownoption>
                 </div>

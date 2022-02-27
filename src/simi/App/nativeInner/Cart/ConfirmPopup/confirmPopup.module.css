@@ -48,7 +48,7 @@
     color: #150826;
     text-align: center;
     margin-top: 2rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .actions {
@@ -69,4 +69,14 @@
     display: flex;
     justify-content: center;
     margin-bottom: 2rem;
+}
+
+.lineContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.lineUp {
+    border-bottom: 1px solid #E4E4E4;
+    width: 120px;
 }

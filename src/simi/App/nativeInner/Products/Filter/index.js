@@ -288,12 +288,12 @@ const Filter = props => {
         );
 
     return isPhone ? (
-        <Dropdownoption
+        <div
             className="siminia-phone-filter"
             title={formatMessage({ id: 'Filter' })}
         >
             {filterProducts}
-        </Dropdownoption>
+        </div>
     ) : (
         filterProducts
     );

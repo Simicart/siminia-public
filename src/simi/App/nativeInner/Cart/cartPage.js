@@ -1,10 +1,9 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Check} from 'react-feather';
 import {useCartPage} from '@magento/peregrine/lib/talons/CartPage/useCartPage';
 import {useStyle} from '@magento/venia-ui/lib/classify';
 import {useToasts} from '@magento/peregrine';
-// //
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import {StoreTitle} from '@magento/venia-ui/lib/components/Head';
 import {fullPageLoadingIndicator} from '@magento/venia-ui/lib/components/LoadingIndicator';
@@ -15,9 +14,7 @@ import defaultClasses_1 from './cartPage.module.css';
 import Image from "@magento/venia-ui/lib/components/Image";
 import {RedButton} from "./RedButton";
 import {ProductListingWithBrandSeparation} from "./ProductListingWithBrandSeparation";
-import {ConfirmPopup} from "./ConfirmPopup";
-import {BottomNotification} from "./BottomNotification";
-import {bottomNotificationType, useBottomNotification} from "./bottomNotificationHook/useBottomNotification";
+import {useBottomNotification} from "./bottomNotificationHook";
 
 const CheckIcon = <Icon size={20} src={Check}/>;
 
@@ -59,9 +56,16 @@ const CartPage = props => {
 
     const {
         component: notiComponent,
-        setCurrentText,
         makeNotification
     } = useBottomNotification()
+
+    const [displayOutOfStockLabel, _setDisplayOutOfStockLabel] = useState(false)
+
+    const setDisplayOutOfStockLabel = (v) => {
+        if (v !== displayOutOfStockLabel) {
+            _setDisplayOutOfStockLabel(v)
+        }
+    }
 
     useEffect(() => {
         if (wishlistSuccessProps) {
@@ -79,6 +83,7 @@ const CartPage = props => {
             setIsCartUpdating={setIsCartUpdating}
             fetchCartDetails={fetchCartDetails}
             history={history}
+            setDisplayOutOfStockLabel={setDisplayOutOfStockLabel}
         />
     ) : (
         <h3>
@@ -98,6 +103,7 @@ const CartPage = props => {
         <PriceSummary isUpdating={isCartUpdating}/>
     ) : null;
 
+    // will use this in header
     const totalQuantity = cartItems.length ? (
         <span> {cartItems.reduce((total, item) => {
             return total += item.quantity
@@ -108,6 +114,25 @@ const CartPage = props => {
             />
         </span>
     ) : null;
+
+    const outOfStockLabel = displayOutOfStockLabel ? (
+        <div className={classes.topOutOfStockContainer}>
+            <span className={classes.stockText}>
+                    <span className={classes.stockTextNote}>
+                        <FormattedMessage
+                            id={'cartPage.stockTextNote'}
+                            defaultMessage={'Note'}
+                        />:
+                    </span>
+                <span className={classes.stockTextContent}>
+                    <FormattedMessage
+                        id={'cartPage.stockTextContent'}
+                        defaultMessage={'A product is out of stock in the cart'}
+                    />
+                </span>
+            </span>
+        </div>
+    ) : null
 
     const cartBody = hasItems ? (
         <Fragment>
@@ -160,32 +185,20 @@ const CartPage = props => {
     )
 
     return (
-        <div className={classes.root}>
-            <StoreTitle>
-                {formatMessage({
-                    id: 'cartPage.title',
-                    defaultMessage: 'Cart'
-                })}
-            </StoreTitle>
-            {/*<button onClick={() => {*/}
-            {/*    makeNotification(*/}
-            {/*        {*/}
-            {/*            text: Math.random().toString(),*/}
-            {/*            type: bottomNotificationType.SUCCESS*/}
-            {/*        })*/}
-            {/*}}> Good*/}
-            {/*</button>*/}
-            {/*<button onClick={() => {*/}
-            {/*    makeNotification(*/}
-            {/*        {*/}
-            {/*            text: Math.random().toString(),*/}
-            {/*            type: bottomNotificationType.FAIL*/}
-            {/*        })*/}
-            {/*}}> Bad*/}
-            {/*</button>*/}
-            {cartBody}
-            {notiComponent}
-        </div>
+        <Fragment>
+            {outOfStockLabel}
+            <div className={classes.root}>
+                <StoreTitle>
+                    {formatMessage({
+                        id: 'cartPage.title',
+                        defaultMessage: 'Cart'
+                    })}
+                </StoreTitle>
+                {cartBody}
+                {notiComponent}
+            </div>
+        </Fragment>
+
     );
 };
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo, useCallback, useRef} from 'react';
+import React, {useState, useMemo, useCallback, useRef} from 'react';
 import {BottomNotification} from "../BottomNotification";
 import {AlertCircle} from 'react-feather'
 
@@ -113,7 +113,7 @@ export const useBottomNotification = (props) => {
                             duration: timeOut,
                         })
                     })
-                    .catch(e => {
+                    .catch(_ => {
                         console.warn('No element')
                     })
             }
