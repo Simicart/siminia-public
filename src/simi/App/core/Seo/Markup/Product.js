@@ -413,7 +413,7 @@ const Product = props => {
                 aggregateRating: {
                     '@type': 'AggregateRating',
                     ratingValue: avg_rating,
-                    bestRating: best_rating || 100,
+                    bestRating: best_rating || 5,
                     ratingCount: review_count
                 }
             };
@@ -423,7 +423,6 @@ const Product = props => {
         // script.innerHTML = JSON.stringify(dataStructure);
         // document.head.appendChild(script);
     }
-
     // Reviews data
     if (
         rs_enabled &&
@@ -437,14 +436,14 @@ const Product = props => {
                 '@type': 'Review',
                 reviewRating: {
                     '@type': 'Rating',
-                    ratingValue: parseInt(item.average_rating)
+                    ratingValue: parseInt(item.ratings_breakdown[0].value)
                 },
                 author: {
                     '@type': 'Person',
                     name: item.nickname
                 },
                 reviewBody: item.text,
-                bestRating: best_rating || 100
+                bestRating: best_rating || 5
             };
         });
         if (_reviews.length) {
