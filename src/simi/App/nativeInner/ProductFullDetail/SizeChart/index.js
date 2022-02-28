@@ -2,7 +2,7 @@ import React, { Fragment, Suspense, useEffect, useState } from 'react';
 import { XSquare, X } from 'react-feather';
 import { useIntl } from 'react-intl';
 import { Helmet } from 'react-helmet';
-import { FaChevronRight } from 'react-icons/Fa';
+import { FaChevronRight } from 'react-icons/fa';
 
 require('./style.scss');
 
