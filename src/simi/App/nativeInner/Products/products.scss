@@ -191,7 +191,7 @@
             padding-left: 10px;
         }
     }
-    @media (min-width: 481px) {
+    @media (min-width: 769px) {
         .carousel-child-cate {
             display: none;
         }
@@ -202,7 +202,7 @@
             display: none;
         } 
     }
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
         .carousel-child-cate {
             padding: 10px 16px 10px 14px;
             overflow: auto;

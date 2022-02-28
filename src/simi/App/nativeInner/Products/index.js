@@ -10,11 +10,11 @@ import Loading from 'src/simi/BaseComponents/Loading';
 import LoadMore from './loadMore';
 import NoProductsFound from './NoProductsFound';
 import { useIntl } from 'react-intl';
-import {  useEventListener, useWindowSize } from '@magento/peregrine';
+import { useEventListener, useWindowSize } from '@magento/peregrine';
 import { cateUrlSuffix } from 'src/simi/Helper/Url';
 import { Link } from 'react-router-dom';
 import { BiFilterAlt } from 'react-icons/bi';
-import {RiArrowDropDownLine,RiArrowDropUpLine} from 'react-icons/ri'
+import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 import { ChevronDown, ChevronUp } from 'react-feather';
 require('./products.scss');
 
@@ -34,6 +34,7 @@ const Products = props => {
         pageSize,
         pageControl
     } = props;
+ 
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
     const { products } = data;
@@ -143,7 +144,11 @@ const Products = props => {
                     ) : (
                         <div className="items-count-ctn">{itemCount}</div>
                     )}
-                    {windowSize.innerWidth > 480 ? <Sortby data={data} sortByData={sortByData} /> : ""}
+                    {windowSize.innerWidth > 768 ? (
+                        <Sortby showingDropdown={showingDropdown} data={data} sortByData={sortByData} />
+                    ) : (
+                        ''
+                    )}
                 </div>
                 <section className="gallery">
                     {!data.products || !data.products.total_count ? (
@@ -231,37 +236,28 @@ const Products = props => {
         }
         return html;
     };
-  
-    // const [isActive, setIsActive] = useState(0);
-    const [showingDropdown, setShowDropdown] = useState(false)
-    const [showSortByPrice,setShowSortByPrice] = useState(false)
-    const [showFilter,setShowFilter] = useState(false);
-    const clickSortByPrice = () => {
-        setShowSortByPrice(!showSortByPrice);
-        setShowDropdown(false)
-        setShowFilter(false)
-    };
+
+    const [showingDropdown, setShowDropdown] = useState(false);
+
+    const [showFilter, setShowFilter] = useState(false);
+
     const clickSortBy = () => {
         setShowDropdown(!showingDropdown);
-        setShowSortByPrice(false)
-        setShowFilter(false)
+        setShowFilter(false);
     };
+
     const clickFilter = () => {
-        setShowFilter(!showFilter)
-        setShowSortByPrice(false)
-        setShowDropdown(false)
-        
+        setShowFilter(!showFilter);
+        setShowDropdown(false);
     };
-   
+
     const handleClickOutside = e => {
-        if (
-            showFilter  
-        ) {
+        if (showFilter) {
             setShowFilter(false);
         }
     };
     useEventListener(globalThis, 'keydown', handleClickOutside);
-   
+
     return (
         <article className="products-root" id="root-product-list">
             <h1 className="title">
@@ -270,31 +266,38 @@ const Products = props => {
             {isPhone ? itemCount : ''}
             <div className="product-list-container-siminia">
                 <div>
-                    {windowSize.innerWidth > 480 ? "" : 
-                    <div className="sortby-filter">
-                        <div className="product-list-filter">
-                            <div className="wrap-top" onClick={() => clickFilter()}>
-                                <span className="label">
-                                    <span
-                                        className={`${
-                                            showFilter
-                                                ? 'activeIconFilter'
-                                                : ''
-                                        } icon-filter`}
-                                    >
-                                        <BiFilterAlt />
+                    {windowSize.innerWidth > 768 ? (
+                        ''
+                    ) : (
+                        <div className="sortby-filter">
+                            <div className="product-list-filter">
+                                <div
+                                    className="wrap-top"
+                                    onClick={() => clickFilter()}
+                                >
+                                    <span className="label">
+                                        <span
+                                            className={`${
+                                                showFilter
+                                                    ? 'activeIconFilter'
+                                                    : ''
+                                            } icon-filter`}
+                                        >
+                                            <BiFilterAlt />
+                                        </span>
+                                        {formatMessage({
+                                            id: 'filter',
+                                            defaultMessage: 'Filter'
+                                        })}
                                     </span>
-                                    {formatMessage({
-                                        id: 'filter',
-                                        defaultMessage: 'Filter'
-                                    })}
-                                </span>
-                                
+                                </div>
                             </div>
-                        </div>
-                        <div className="product-list-sortby-price">
-                         <SortbyPrice showSortByPrice = {showSortByPrice} data={data} sortByData={sortByData} />
-                            {/* <div className="wrap-top" onClick={() => clickSortByPrice()}>
+                            <div className="product-list-sortby-price">
+                                <SortbyPrice
+                                    data={data}
+                                    sortByData={sortByData}
+                                />
+                                {/* <div className="wrap-top" onClick={() => clickSortByPrice()}>
                                 <span className="label">
                                     {formatMessage({
                                         id: 'sortByPrice',
@@ -310,32 +313,51 @@ const Products = props => {
                                     }`}
                                 />
                             </div> */}
-                        </div>
-                        <div className="product-list-sortby">
-                            <div className="wrap-top" onClick={() => clickSortBy()}>
-                                <span className="label">
-                                    {formatMessage({
-                                        id: 'sortBy',
-                                        defaultMessage: 'Sort by'
-                                    })}
-                                </span>
-                                <span className="icon-dropdown">
-                                    {showingDropdown ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
-                                </span>
+                            </div>
+                            <div className="product-list-sortby">
                                 <div
-                                    className={`${
-                                        showingDropdown ? 'activeSort' : ''
-                                    }`}
-                                />
+                                    className="wrap-top"
+                                    onClick={() => clickSortBy()}
+                                >
+                                    <span className="label">
+                                        {formatMessage({
+                                            id: 'sortBy',
+                                            defaultMessage: 'Sort by'
+                                        })}
+                                    </span>
+                                    <span className="icon-dropdown">
+                                        {showingDropdown ? (
+                                            <ChevronUp size={15} />
+                                        ) : (
+                                            <ChevronDown size={15} />
+                                        )}
+                                    </span>
+                                    <div
+                                        className={`${
+                                            showingDropdown ? 'activeSort' : ''
+                                        }`}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>}
-                    {showingDropdown ?  <Sortby showingDropdown = {showingDropdown} data={data} sortByData={sortByData} /> : ''}
-                    {showSortByPrice ?  <SortbyPrice showSortByPrice = {showSortByPrice} data={data} sortByData={sortByData} /> : ''}
+                    )}
+                    {showingDropdown ? (
+                        <Sortby
+                            showingDropdown={showingDropdown}
+                            data={data}
+                            sortByData={sortByData}
+                        />
+                    ) : (
+                        ''
+                    )}
                     {renderCarouselChildCate()}
                 </div>
-                {windowSize.innerWidth > 480 ? renderLeftNavigation() : ""}
-                <div className={`${showFilter ? 'activeFilter' : 'unActiveFilter'}`}>
+                {windowSize.innerWidth > 768 ? renderLeftNavigation() : ''}
+                <div
+                    className={`${
+                        showFilter ? 'activeFilter' : 'unActiveFilter'
+                    }`}
+                >
                     {renderLeftNavigation()}
                 </div>
                 <div

@@ -42,3 +42,8 @@
     margin-top: 8px;
     margin-bottom: 2px;
 }
+@media (max-width: 768px) {
+    .dropdownoption-title{
+        display: none;
+    }
+}

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { ChevronDown, ChevronUp } from 'react-feather';
 import { useEventListener } from '@magento/peregrine/lib/hooks/useEventListener';
+import { useIntl } from 'react-intl';
 require('./index.scss');
 
 const Dropdownoption = props => {
@@ -9,6 +10,7 @@ const Dropdownoption = props => {
     const handleToggle = () => {
         setShowing(!showing);
     };
+    const { formatMessage } = useIntl();
     const handleClickOutside = e => {
         if (
             showing &&
@@ -35,7 +37,13 @@ const Dropdownoption = props => {
                 className="dropdownoption-title"
                 onClick={() => handleToggle()}
             >
-               
+                <div className="dropdown-title">
+                    {formatMessage({
+                        id: 'sortBy',
+                        defaultMessage: 'Sort by'
+                    })}
+                </div>
+                {showing ? <ChevronUp size={22} /> : <ChevronDown size={22} />}
             </div>
             <div
                 className="dropdownoption-inner"
