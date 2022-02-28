@@ -58,7 +58,7 @@ const Canonical = props => {
 
     // Disable Canonical URL for Pages with NOINDEX robots
     if (is_disable_by_robots) {
-        link ='';
+        link = '';
     }
 
     switch (type) {
