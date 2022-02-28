@@ -1,7 +1,6 @@
-import React, { Fragment, Suspense, useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Form } from 'informed';
 import { GrClose } from 'react-icons/gr';
-import { Link } from 'react-router-dom';
 
 require('./statusBar.scss');
 
@@ -14,8 +13,18 @@ const AddToCartPopup = props => {
         setAddToCartPopup,
         handleBuyNow,
         typeBtn,
-        loading
+        loading,
+        addToCartPopup = { addToCartPopup }
     } = props;
+
+    const [height, setHeight] = useState();
+    const ref = useRef();
+
+    useEffect(() => {
+        if (ref && ref.current && ref.current.clientHeight) {
+            setHeight(ref.current.clientHeight);
+        } else setHeight(398);
+    }, [ref, height]);
 
     return (
         <div className="main-AddToCartPopup">
@@ -26,20 +35,27 @@ const AddToCartPopup = props => {
                 </div>
             ) : null}
             <div className="modal" />
-            <Form
+            <div
+                ref={ref}
                 className="form"
-                onSubmit={
-                    typeBtn === 'add to cart' ? handleAddToCart : handleBuyNow
-                }
+                style={{ top: `calc(100% - ${height}px)` }}
             >
-                <GrClose
-                    className="close-icon"
-                    onClick={() => setAddToCartPopup(false)}
-                />
-                {options}
-                {wrapperQuantity}
-                {cartAction}
-            </Form>
+                <Form
+                    onSubmit={
+                        typeBtn === 'add to cart'
+                            ? handleAddToCart
+                            : handleBuyNow
+                    }
+                >
+                    <GrClose
+                        className="close-icon"
+                        onClick={() => setAddToCartPopup(false)}
+                    />
+                    {options}
+                    {wrapperQuantity}
+                    {cartAction}
+                </Form>
+            </div>
         </div>
     );
 };

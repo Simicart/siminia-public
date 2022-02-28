@@ -6,6 +6,7 @@ import { Info } from 'react-feather';
 import Identify from 'src/simi/Helper/Identify';
 import Price from '@simicart/siminia/src/simi/App/core/PriceWrapper/Price.js';
 import { configColor } from 'src/simi/Config';
+import AlertMessages from './AlertMessages';
 
 import { useProductFullDetail } from '../talons/useProductFullDetail';
 import { isProductConfigurable } from '@magento/peregrine/lib/util/isProductConfigurable';
@@ -77,7 +78,7 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product, history } = props;
-    // console.log('product', product);
+
     const talonProps = useProductFullDetail({ product });
     const {
         breadcrumbCategoryId,
@@ -98,8 +99,11 @@ const ProductFullDetail = props => {
         upsellProducts,
         crosssellProducts,
         relatedProducts,
-        isAddProductLoading
+        isAddProductLoading,
+        setAlertMsg,
+        alertMsg
     } = talonProps;
+    const successMsg = `${productDetails.name} was added to shopping cart`;
 
     let History = useHistory();
     const [moreBtn, setMoreBtn] = useState(false);
@@ -230,18 +234,6 @@ const ProductFullDetail = props => {
         }
     }
 
-    // const cartCallToActionText = !isOutOfStock ? (
-    //     <FormattedMessage
-    //         id="productFullDetail.addItemToCart"
-    //         defaultMessage="Add to Cart"
-    //     />
-    // ) : (
-    //     <FormattedMessage
-    //         id="productFullDetail.itemOutOfStock"
-    //         defaultMessage="Out of Stock"
-    //     />
-    // );
-
     const cartCallToActionText = () => {
         if (typeBtn === 'add to cart') {
             return !isOutOfStock ? (
@@ -361,9 +353,10 @@ const ProductFullDetail = props => {
             )}
         </div>
     );
+
     const wrapperQuantity = (
         <div className="wrapperQuantity">
-            <section className={classes.quantity}>
+            <section className={!isMobileSite ? classes.quantity : "mbQuantity"}>
                 <span className={classes.quantityTitle}>
                     <FormattedMessage
                         id={'productFullDetail.quantity'}
@@ -409,10 +402,15 @@ const ProductFullDetail = props => {
             ) : null}
         </div>
     );
-    // console.log("tesst", isAddProductLoading);
 
     return (
         <>
+            <AlertMessages
+                message={successMsg}
+                setAlertMsg={setAlertMsg}
+                alertMsg={alertMsg}
+                status="success"
+            />
             {isMobileSite ? (
                 <FooterFixedBtn
                     addToCartPopup={addToCartPopup}
@@ -431,6 +429,10 @@ const ProductFullDetail = props => {
                     setAddToCartPopup={setAddToCartPopup}
                     typeBtn={typeBtn}
                     loading={isAddProductLoading}
+                    setAlertMsg={setAlertMsg}
+                    alertMsg={alertMsg}
+                    productName={productDetails.name}
+                    addToCartPopup={addToCartPopup}
                 />
             ) : null}
 
@@ -592,7 +594,7 @@ const ProductFullDetail = props => {
                         <section className={classes.description}>
                             <span
                                 onClick={() => setDescripttion(true)}
-                                className={classes.descriptionTitle}
+                                className="descriptionTitle"
                             >
                                 <FormattedMessage
                                     id={'productFullDetail.productDescription'}
@@ -606,7 +608,7 @@ const ProductFullDetail = props => {
                                 />
                             ) : (
                                 <>
-                                    <span onClick={() => setDescripttion(true)}>
+                                    <span>
                                         <FaChevronRight />
                                     </span>
 
@@ -628,15 +630,27 @@ const ProductFullDetail = props => {
                             )}
                         </section>
 
-                        <section className={classes.details}>
-                            <span className={classes.detailsTitle}>
-                                <FormattedMessage
-                                    id={'global.sku'}
-                                    defaultMessage={'SKU'}
-                                />
-                            </span>
-                            <strong>{productDetails.sku}</strong>
-                        </section>
+                        {!isMobileSite ? (
+                            <section className={classes.details}>
+                                <span className={classes.detailsTitle}>
+                                    <FormattedMessage
+                                        id={'global.sku'}
+                                        defaultMessage={'SKU'}
+                                    />
+                                </span>
+                                <strong>{productDetails.sku}</strong>
+                            </section>
+                        ) : (
+                            <div className="sku-details">
+                                <span className={classes.detailsTitle}>
+                                    <FormattedMessage
+                                        id={'global.sku'}
+                                        defaultMessage={'SKU'}
+                                    />
+                                </span>
+                                <strong>{productDetails.sku}</strong>
+                            </div>
+                        )}
                     </Form>
                 </div>
                 {isMobileSite ? renderSizeChart : null}

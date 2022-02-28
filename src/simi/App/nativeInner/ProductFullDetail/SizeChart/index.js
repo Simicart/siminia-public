@@ -111,12 +111,12 @@ const SizeChart = props => {
                 ) : (
                     <div className="overlay" />
                 )}
-                <button onClick={() => setOpen(true)}>
+                <div className='sizeChart-btn' onClick={() => setOpen(true)}>
                     {formatMessage({
                         id: 'Size Chart',
                         defaultMessage: 'Size Chart'
                     })}
-                </button>
+                </div >
                 {isMobileSite ? <FaChevronRight onClick={() => setOpen(true)} /> : null}
             </div>
         );

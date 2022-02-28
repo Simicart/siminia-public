@@ -1,0 +1,75 @@
+@media (max-width: 450px) {
+    .main-alert {
+        padding: 10px;
+        position: fixed;
+        z-index: 5;
+    }
+
+    .main-alert.null {
+        top: -8%;
+        color: #fff;
+        display: flex;
+        font-size: 15px;
+        svg {
+            font-size: 23px;
+            margin-right: 5px;
+        }
+    }
+
+    .main-alert.close {
+        animation: msgOut 0.4s;
+        top: -8%;
+        color: #fff;
+        display: flex;
+        font-size: 15px;
+        svg {
+            font-size: 23px;
+            margin-right: 5px;
+        }
+    }
+    .main-alert.open {
+        animation: msgIn 0.4s;
+        top: 0;
+        color: #fff;
+        display: flex;
+        font-size: 15px;
+        svg {
+            font-size: 23px;
+            margin-right: 5px;
+        }
+    }
+    .main-alert.open.success,
+    .main-alert.close.success {
+        background-color: #047e49;
+    }
+    .main-alert.open.error,
+    .main-alert.close.error {
+        background-color: #e51c24;
+    }
+    .main-alert.open.warning,
+    .main-alert.close.warning {
+        background-color: #df954c;
+    }
+
+    @keyframes msgIn {
+        from {
+            top: -8%;
+        }
+        to {
+            top: 0%;
+        }
+    }
+    @keyframes msgOut {
+        from {
+            top: 0%;
+        }
+        to {
+            top: -8%;
+        }
+    }
+}
+@media (min-width: 451px) {
+    .main-alert {
+        display: none;
+    }
+}
