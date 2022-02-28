@@ -45,7 +45,7 @@ import {
     MoreVertical,
     ArrowRight
 } from 'react-feather';
-import { FaChevronRight } from 'react-icons/Fa';
+import { FaChevronRight } from 'react-icons/fa';
 import { BiHelpCircle, BiHome } from 'react-icons/bi';
 
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
