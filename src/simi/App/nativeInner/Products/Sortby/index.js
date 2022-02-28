@@ -48,23 +48,19 @@ const Sortby = props => {
     } else {
         orders = [
             {
-                id :1,
                 value: 'position',
                 key: 'position',
                 direction: 'asc',
                 showDir: false
             },
             {
-                id :2,
                 value: 'relevance',
                 key: 'relevance',
                 direction: 'asc',
                 showDir: false
             },
-            { id :3, value: 'name', key: 'name', direction: 'asc', showDir: true },
-            { id :4, value: 'name', key: 'name', direction: 'desc', showDir: true },
-            // { value: 'price', key: 'price', direction: 'asc', showDir: true },
-            // { value: 'price', key: 'price', direction: 'desc', showDir: true }
+            { value: 'name', key: 'name', direction: 'asc', showDir: true },
+            { value: 'name', key: 'name', direction: 'desc', showDir: true },
         ];
     }
     

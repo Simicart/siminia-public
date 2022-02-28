@@ -232,7 +232,7 @@ const Products = props => {
         return html;
     };
   
-    const [isActive, setIsActive] = useState(0);
+    // const [isActive, setIsActive] = useState(0);
     const [showingDropdown, setShowDropdown] = useState(false)
     const [showSortByPrice,setShowSortByPrice] = useState(false)
     const [showFilter,setShowFilter] = useState(false);
@@ -293,7 +293,7 @@ const Products = props => {
                             </div>
                         </div>
                         <div className="product-list-sortby-price">
-                         <SortbyPrice showSortByPrice = {showSortByPrice} />
+                         <SortbyPrice showSortByPrice = {showSortByPrice} data={data} sortByData={sortByData} />
                             {/* <div className="wrap-top" onClick={() => clickSortByPrice()}>
                                 <span className="label">
                                     {formatMessage({
