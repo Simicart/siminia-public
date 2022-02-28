@@ -1,108 +1,69 @@
-import React from 'react';
-import { Check } from 'react-feather';
+import React, { useState } from 'react';
+import { Check, ChevronDown, ChevronUp } from 'react-feather';
 import { configColor } from 'src/simi/Config';
-import Dropdownoption from 'src/simi/BaseComponents/Dropdownoption/';
+import Dropdownoption from '../../BaseComponents/Dropdownoption';
 import { withRouter } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { capitalizeEachWords, randomString } from 'src/simi/Helper/String';
 require('./sortbyPrice.scss');
 
 const SortbyPrice = props => {
-    const { history, location, sortByData, data } = props;
+    const { history, location } = props;
+
+    const [showSortByPrice, setShowSortByPrice] = useState(false);
     const { search } = location;
     const { formatMessage } = useIntl();
 
-    const changedSortBy = item => {
-        if (item) {
-            const queryParams = new URLSearchParams(search);
-            queryParams.set('product_list_order', item.key);
-            queryParams.set('product_list_dir', item.direction);
-            history.push({ search: queryParams.toString() });
-        }
+    let asc = {
+        value: 'price',
+        key: 'price',
+        direction: 'asc',
+        showDir: true
+    };
+    let desc = {
+        value: 'price',
+        key: 'price',
+        direction: 'desc',
+        showDir: true
     };
 
-    parent = props.parent;
-    let selections = [];
-    let orders = [];
-    if (
-        data &&
-        data.products &&
-        data.products.sort_fields &&
-        data.products.sort_fields.options
-    ) {
-        data.products.sort_fields.options.map(sort_field_opt => {
-            if (sort_field_opt.value === 'position') {
-                // do nothing
-            } else {
-                orders.push({
-                    key: sort_field_opt.value,
-                    value: sort_field_opt.label,
-                    direction: 'asc'
-                });
-                orders.push({
-                    key: sort_field_opt.value,
-                    value: sort_field_opt.label,
-                    direction: 'desc'
-                });
+    const clickSortByPrice = () => { 
+        if(showSortByPrice){
+            if (asc) {
+                const queryParams = new URLSearchParams(search);
+                queryParams.set('product_list_order', asc.key);
+                queryParams.set('product_list_dir', asc.direction);
+                history.push({ search: queryParams.toString() });
+                return;
             }
-        });
-    } else {
-        orders = [
-            { value: 'price', key: 'price', direction: 'asc', showDir: true },
-            { value: 'price', key: 'price', direction: 'desc', showDir: true }
-        ];
-    }
-
-    let sortByTitle = formatMessage({ id: 'Price' });
-
-    selections = orders.map(item => {
-        let itemCheck = '';
-        let itemTitle = item.value;
-        itemTitle = capitalizeEachWords(formatMessage({ id: itemTitle }));
-        if (item.showDir) {
-            itemTitle += formatMessage({ id: ': ' });
-            itemTitle +=
-                item.direction === 'asc'
-                    ? formatMessage({ id: 'Low to High' })
-                    : formatMessage({ id: 'High to Low' });
+        } else{
+            if (desc) {
+                const queryParams = new URLSearchParams(search);
+                queryParams.set('product_list_order', desc.key);
+                queryParams.set('product_list_dir', desc.direction);
+                history.push({ search: queryParams.toString() });
+                return;
+            }
         }
-
-        if (
-            sortByData &&
-            sortByData[`${item.key}`] === item.direction.toUpperCase()
-        ) {
-            sortByTitle = itemTitle;
-            itemCheck = (
-                <span className="is-selected">
-                    <Check size={20} />
-                </span>
-            );
-        }
-
-        return (
-            <div
-                role="presentation"
-                key={randomString(5)}
-                className="dir-item"
-                onClick={() => changedSortBy(item)}
-            >
-                <div className="dir-title">{itemTitle}</div>
-                <div className="dir-check">{itemCheck}</div>
-            </div>
-        );
-    });
+        setShowSortByPrice(!showSortByPrice);
+    };
 
     return (
-        <div className="top-sort-by">
-            {selections.length === 0 ? (
-                <span />
-            ) : (
-                <div className="sort-by-select">
-                    <Dropdownoption title={sortByTitle}>
-                        {selections}
-                    </Dropdownoption>
-                </div>
-            )}
+        <div className="wrap-top" onClick={() => clickSortByPrice()}>
+            <span className="label">
+                {formatMessage({
+                    id: 'sortByPrice',
+                    defaultMessage: 'Price'
+                })}
+            </span>
+            <span className="icon-dropdown">
+                {showSortByPrice ? (
+                    <ChevronUp size={15} />
+                ) : (
+                    <ChevronDown size={15} />
+                )}
+            </span>
+            <div className={`${showSortByPrice ? 'activeSort' : ''}`} />
         </div>
     );
 };

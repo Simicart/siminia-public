@@ -1,6 +1,5 @@
 import React from 'react';
-import Dropdownplus from 'src/simi/BaseComponents/Dropdownplus';
-import Dropdownoption from 'src/simi/BaseComponents/Dropdownoption';
+import Dropdownplus from '../../BaseComponents/Dropdownplus';
 import { useHistory, useLocation } from 'react-router-dom';
 import RangeSlider from './RangeSlider';
 import memoize from 'memoize-one';
@@ -210,19 +209,17 @@ const Filter = props => {
     };
 
     const renderClearButton = () => {
-        return props.filterData ? (
-            <div className="clear-filter">
+        return (
+            <Button className="clear-filter btnReset">
                 <div
                     role="presentation"
                     onClick={() => clearFilter()}
                     className="action-clear"
                 >
-                    {formatMessage({ id: 'Clear all' })}
+                    {formatMessage({ id: 'Reset' })}
                 </div>
-            </div>
-        ) : (
-            <div className="clear-filter" />
-        );
+            </Button>
+        )
     };
 
     const clearFilter = () => {
@@ -277,11 +274,14 @@ const Filter = props => {
     const filterProducts =
         data && data.length ? (
             <div className="filter-products">
-                {renderClearButton()}
                 {renderFilterItems()}
-                <Button onClick={() => applyFilter()} priority="high">
-                    {formatMessage({ id: 'Apply' })}
-                </Button>
+                <div className="reset-done-filter">
+                    <Button className="btnDone" onClick={() => applyFilter()} priority="high">
+                        {formatMessage({ id: 'Done' })}
+                    </Button>
+                    {renderClearButton()}
+                </div>
+                
             </div>
         ) : (
             ''

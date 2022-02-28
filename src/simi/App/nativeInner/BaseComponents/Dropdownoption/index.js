@@ -6,8 +6,6 @@ require('./index.scss');
 const Dropdownoption = props => {
     const [showing, setShowing] = useState(!!props.showingDropdown);
     const dropdownRef = useRef(null);
-    console.log("propss",props);
-    console.log("showing",showing);
     const handleToggle = () => {
         setShowing(!showing);
     };

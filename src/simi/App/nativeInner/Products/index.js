@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Gallery from './Gallery';
 import Identify from 'src/simi/Helper/Identify';
 import Sortby from './Sortby';
@@ -10,7 +10,7 @@ import Loading from 'src/simi/BaseComponents/Loading';
 import LoadMore from './loadMore';
 import NoProductsFound from './NoProductsFound';
 import { useIntl } from 'react-intl';
-import { useWindowSize } from '@magento/peregrine';
+import {  useEventListener, useWindowSize } from '@magento/peregrine';
 import { cateUrlSuffix } from 'src/simi/Helper/Url';
 import { Link } from 'react-router-dom';
 import { BiFilterAlt } from 'react-icons/bi';
@@ -234,18 +234,34 @@ const Products = props => {
   
     const [isActive, setIsActive] = useState(0);
     const [showingDropdown, setShowDropdown] = useState(false)
-    const clickSortByPrice = id => {
-        setIsActive(id);
+    const [showSortByPrice,setShowSortByPrice] = useState(false)
+    const [showFilter,setShowFilter] = useState(false);
+    const clickSortByPrice = () => {
+        setShowSortByPrice(!showSortByPrice);
+        setShowDropdown(false)
+        setShowFilter(false)
     };
-    const clickSortBy = id => {
-        setIsActive(id);
+    const clickSortBy = () => {
         setShowDropdown(!showingDropdown);
+        setShowSortByPrice(false)
+        setShowFilter(false)
     };
-    const clickFilter = id => {
-        setIsActive(id);
+    const clickFilter = () => {
+        setShowFilter(!showFilter)
+        setShowSortByPrice(false)
+        setShowDropdown(false)
         
     };
-
+   
+    const handleClickOutside = e => {
+        if (
+            showFilter  
+        ) {
+            setShowFilter(false);
+        }
+    };
+    useEventListener(globalThis, 'keydown', handleClickOutside);
+   
     return (
         <article className="products-root" id="root-product-list">
             <h1 className="title">
@@ -257,11 +273,11 @@ const Products = props => {
                     {windowSize.innerWidth > 480 ? "" : 
                     <div className="sortby-filter">
                         <div className="product-list-filter">
-                            <div className="wrap-top" onClick={() => clickFilter(1)}>
+                            <div className="wrap-top" onClick={() => clickFilter()}>
                                 <span className="label">
                                     <span
                                         className={`${
-                                            isActive === 1
+                                            showFilter
                                                 ? 'activeIconFilter'
                                                 : ''
                                         } icon-filter`}
@@ -273,31 +289,30 @@ const Products = props => {
                                         defaultMessage: 'Filter'
                                     })}
                                 </span>
-                                <div
-                                    className={`${
-                                        isActive === 1 ? 'activeSort' : ''
-                                    }`}
-                                />
+                                
                             </div>
                         </div>
                         <div className="product-list-sortby-price">
-                            <div className="wrap-top" onClick={() => clickSortByPrice(2)}>
+                         <SortbyPrice showSortByPrice = {showSortByPrice} />
+                            {/* <div className="wrap-top" onClick={() => clickSortByPrice()}>
                                 <span className="label">
                                     {formatMessage({
                                         id: 'sortByPrice',
                                         defaultMessage: 'Price'
                                     })}
                                 </span>
-
+                                <span className="icon-dropdown">
+                                    {showSortByPrice ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+                                </span>
                                 <div
                                     className={`${
-                                        isActive === 2 ? 'activeSort' : ''
+                                        showSortByPrice ? 'activeSort' : ''
                                     }`}
                                 />
-                            </div>
+                            </div> */}
                         </div>
                         <div className="product-list-sortby">
-                            <div className="wrap-top" onClick={() => clickSortBy(3)}>
+                            <div className="wrap-top" onClick={() => clickSortBy()}>
                                 <span className="label">
                                     {formatMessage({
                                         id: 'sortBy',
@@ -309,18 +324,20 @@ const Products = props => {
                                 </span>
                                 <div
                                     className={`${
-                                        showingDropdown === true ? 'activeSort' : ''
+                                        showingDropdown ? 'activeSort' : ''
                                     }`}
                                 />
                             </div>
                         </div>
                     </div>}
-                    {showingDropdown === true ?  <Sortby showingDropdown = {showingDropdown} data={data} sortByData={sortByData} /> : ''}
+                    {showingDropdown ?  <Sortby showingDropdown = {showingDropdown} data={data} sortByData={sortByData} /> : ''}
+                    {showSortByPrice ?  <SortbyPrice showSortByPrice = {showSortByPrice} data={data} sortByData={sortByData} /> : ''}
                     {renderCarouselChildCate()}
                 </div>
                 {windowSize.innerWidth > 480 ? renderLeftNavigation() : ""}
-                {isActive === 1 ? renderFilter() : ''}
-                
+                <div className={`${showFilter ? 'activeFilter' : 'unActiveFilter'}`}>
+                    {renderLeftNavigation()}
+                </div>
                 <div
                     className="listing-product"
                     style={{ display: 'inline-block', width: '100%' }}

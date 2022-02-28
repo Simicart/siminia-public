@@ -146,12 +146,91 @@
 }
 
 @media (max-width: 480px) {
-    .siminia-phone-filter{
-        border: none;
-        margin-top: 0px;
-        padding: 0px;
-        > div{
-            justify-content: flex-end;
-        }
+    .left-navigation {
+        .siminia-phone-filter{
+            border: none;
+            margin-top: 0px;
+            padding: 0px;
+            min-height: 100%;
+            position: relative;
+            > div{
+                justify-content: flex-end;
+            }
+            .filter-products{
+                >div {
+                    padding: 40px 10px;
+                }
+                padding: 0;
+                .filter-item {
+                    .filter-item-text-ctn{
+                        color: #150826;
+                        font-size: 14px;
+                        letter-spacing: 0;
+                        line-height: 16px;
+                    }
+                    &:hover .filter-item-text-ctn {
+                        color: unset;
+                    }
+                }
+                .dropdownplus {
+                    border-bottom: 1px solid #F2F2F3;
+                    padding:5px;
+                    margin-bottom: 20px;
+                    .dropdownplus-title {
+                        color: #150826;
+                        font-size: 16px;
+                        font-weight: 500;
+                        letter-spacing: 0;
+                        line-height: 19px;
+                    }
+                }
+                .reset-done-filter{
+                    position: sticky;
+                    bottom: 0px;
+                    left: 0;
+                    z-index: 1;
+                    margin-top: 100%;
+                    display: grid;
+                    grid-template-columns: auto auto;
+                    grid-template-areas: "reset done";
+                    justify-content: center;
+                    background: white;
+                    padding-bottom: 35px;
+                    .btnDone {
+                        grid-area: done;
+                        height: 45px;
+                        width: 141px;
+                        border-radius: 0 100px 100px 0;
+                        background-color: #FF5F59;
+                        >span{
+                            color: #FFFFFF;
+                            font-size: 16px;
+                            font-weight: 500;
+                            letter-spacing: 0;
+                            line-height: 19px;
+                        }
+                    }
+                    .btnReset {
+                        grid-area: reset;
+                        box-sizing: border-box;
+                        height: 45px;
+                        width: 141px;
+                        border: 1px solid #FF5F59;
+                        border-radius: 100px 0 0 100px;
+                        background-color: #FFFFFF;
+                        .action-clear{
+                            color: #FF5F59;
+                            font-size: 16px;
+                            font-weight: 500;
+                            letter-spacing: 0;
+                            line-height: 19px;
+                            margin: 0;
+                            padding: 0;
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+        }   
     }
 }

@@ -18,6 +18,7 @@ import { useIntl } from 'react-intl';
 import Canonical from '../../../core/Seo/Canonical';
 import MarkupCategory from '../../../core/Seo/Markup/Category';
 import Seo from '../../../core/Seo';
+require('./category.scss');
 
 const mageworxSeoEnabled =
     window.SMCONFIGS &&

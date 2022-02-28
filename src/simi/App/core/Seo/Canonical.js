@@ -58,18 +58,7 @@ const Canonical = props => {
 
     // Disable Canonical URL for Pages with NOINDEX robots
     if (is_disable_by_robots) {
-        const robotContent = Robots({
-            isLogic: true,
-            location: props.location,
-            pageType: type
-        }); // String
-        if (robotContent) {
-            try {
-                if (robotContent.includes('noindex')) {
-                    link = ''; // not allowed canonical for robots
-                }
-            } catch (err) {}
-        }
+        link ='';
     }
 
     switch (type) {
