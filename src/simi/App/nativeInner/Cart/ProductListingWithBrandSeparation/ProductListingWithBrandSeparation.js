@@ -44,7 +44,8 @@ export const ProductListingWithBrandSeparation = (props) => {
         setIsCartUpdating,
         fetchCartDetails,
         history,
-        setDisplayOutOfStockLabel
+        setDisplayOutOfStockLabel,
+        setLoading
     } = props;
 
     const talonProps = useProductListing({operations: DEFAULT_OPERATIONS});
