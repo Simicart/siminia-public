@@ -1,3 +1,7 @@
+:root {
+    --depth: 6000;
+}
+
 .loader {
     border: 8px solid #f3f3f3;
     border-radius: 50%;
@@ -9,13 +13,13 @@
     position: fixed;
     top: 33%;
     left: 44%;
-    z-index: 6;
+    z-index: calc(var(--depth) + 1);
 
 }
 
 .modal-loader {
     position: fixed;
-    z-index: 6000;
+    z-index: var(--depth);
     padding-top: 100px;
     left: 0;
     top: 0;

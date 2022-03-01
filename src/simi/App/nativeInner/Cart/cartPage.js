@@ -210,7 +210,6 @@ const CartPage = props => {
                         defaultMessage: 'Cart'
                     })}
                 </StoreTitle>
-                <LoadingBridge loading={true}/>
                 {cartBody}
                 {loadingComponent}
                 {notiComponent}
