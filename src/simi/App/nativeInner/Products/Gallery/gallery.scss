@@ -37,9 +37,10 @@
             grid-template-columns: repeat(4, minmax(0, 1fr));
         }
     }
-    @media (min-width: 768px) {
+    @media (max-width: 768px) {
         .gallery-items {
-            grid-gap: 10px;
+            grid-gap: 15px 0px;
+            justify-items: center;
         }
     }
 }

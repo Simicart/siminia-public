@@ -265,7 +265,7 @@ const Products = props => {
             </h1>
             {isPhone ? itemCount : ''}
             <div className="product-list-container-siminia">
-                <div>
+                <div className="wrapper">
                     {windowSize.innerWidth > 768 ? (
                         ''
                     ) : (
