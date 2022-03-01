@@ -125,3 +125,21 @@
     justify-content: flex-end;
     margin-top: 10px;
 }
+
+
+@media (min-width: 759px) {
+    .root {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+
+    .image {
+        max-width: 202px;
+        max-height: 202px;
+    }
+
+    .details {
+        margin-left: 3rem;
+    }
+
+}
