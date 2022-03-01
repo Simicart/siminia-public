@@ -9,3 +9,13 @@
     font-weight: bold;
     line-height: 1rem;
 }
+
+.root_normalPriority:active {
+    filter: brightness(130%);
+    opacity: 0.8;
+    outline: none;
+}
+
+.root_normalPriority:focus-visible {
+    outline: none;
+}
