@@ -24,7 +24,7 @@
     text-transform: uppercase;
     font-weight: bold;
     line-height: 1rem;
-    max-width: 7.5rem;
+    max-width: 7rem;
 }
 
 .checkoutButton_container > button * {
@@ -69,6 +69,11 @@
 @media (min-width: 961px) {
     .root {
         padding: 0;
+    }
+
+
+    .checkoutButton_container > button {
+        max-width: 7.5rem;
     }
 
 }

@@ -15,6 +15,7 @@
 
 .body {
     gap: 1rem;
+    background: #F2F2F3;
 }
 
 .heading_container {
@@ -26,9 +27,19 @@
 }
 
 .root {
-    padding: 30px 10px 10px 10px;
+    padding: 30px 0 10px 0;
     max-width: 1080px;
     margin: 0 auto;
+}
+
+.items_container {
+    background: #fff;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.summary_container {
+    background: #F2F2F3;
 }
 
 @media (max-width: 960px) {
@@ -43,9 +54,6 @@
     .summary_container {
         margin-left: 0;
         margin-right: 0;
-        width: 100%;
-        left: 0;
-        position: absolute;
     }
 }
 
