@@ -43,7 +43,9 @@
     justify-content: flex-end;
     align-items: baseline;
     margin-top: 2rem;
-    padding-top: 0.8rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    background: white;
 }
 
 .totalPricePiece {
