@@ -178,7 +178,7 @@ const CartPage = props => {
         </Fragment>
     ) : (
         <div className={classes.emptyBody}>
-            <Image src={'https://upload.wikimedia.org/wikipedia/vi/b/b7/Nyan_Cat_250px.png'}
+            <Image src={require('../../../../../static/images/empty-cart.png')}
                    alt={'no-cart'}
                    className={classes.emptyImage}
             />
