@@ -2,7 +2,7 @@
     --stroke: var(--venia-global-color-gray-600);
     text-align: center;
     display: grid;
-    grid-template-columns: 1fr 4rem 1fr;
+    grid-template-columns: 1fr 2rem 1fr;
     grid-column-gap: 0rem;
     align-items: center;
     justify-items: center;
