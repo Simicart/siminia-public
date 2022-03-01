@@ -189,7 +189,9 @@ const CartPage = props => {
                 />
             </h3>
 
-            <RedButton onClick={() => history.push('/')}>
+            <RedButton onClick={() => history.push('/')}
+                       style={{maxWidth: '16rem'}}
+            >
                 <FormattedMessage
                     id={'Continue Shopping'}
                     defaultMessage={'Continue Shopping'}
