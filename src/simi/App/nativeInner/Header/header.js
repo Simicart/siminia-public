@@ -39,6 +39,30 @@ const Header = props => {
         location.pathname &&
         (location.pathname === '/checkout' || location.pathname === '/cart');
 
+    const pathName =
+        location && location.pathname
+            ? location.pathname.split('/').length
+            : null;
+    const isHtml =
+        location && location.pathname ? location.pathname.split('.')[1] : null;
+    const isDetailPage =
+        location && location.pathname
+            ? location.pathname.split('-').length
+            : null;
+
+    const isBrand =
+        location && location.pathname ? location.pathname.split('.')[0] : null;
+    const isHiddenHeader =
+        location &&
+        location.pathname &&
+        ((location.pathname === '/sign-in' && isPhone && isHtml === 'html') ||
+            (isPhone &&
+                pathName === 2 &&
+                isHtml === 'html' &&
+                isBrand !== '/brands' &&
+                isDetailPage > 1));
+    console.log('test', isHtml);
+
     const storeConfig = Identify.getStoreConfig();
     const [userData] = useUserContext();
 
@@ -143,48 +167,53 @@ const Header = props => {
     if (isPhone) {
         return (
             <React.Fragment>
-                <header id="siminia-main-header">
-                    <div
-                        style={{
-                            backgroundColor: 'rgba(255,255,255,0.92)',
-                            backdropFilter: 'blur(10px)'
-                        }}
-                    >
-                        <div className="container">
-                            <div
-                                className={`${
-                                    classes['header-app-bar']
-                                } ${Identify.isRtl() &&
-                                    classes['header-app-bar-rtl']}`}
-                            >
-                                <NavTrigger>
-                                    {!isSimpleHeader && (
-                                        <MenuIcon
-                                            color="#333132"
-                                            style={{ width: 35, height: 35 }}
-                                        />
-                                    )}
-                                </NavTrigger>
-                                {renderLogo()}
-                                <div className={classes['right-bar']}>
-                                    {!isSimpleHeader && !isBotOrHeadless && (
-                                        <div
-                                            className={
-                                                classes['right-bar-item']
-                                            }
-                                        >
-                                            <CartTrigger />
-                                        </div>
-                                    )}
+                {!isHiddenHeader ? (
+                    <header id="siminia-main-header">
+                        <div
+                            style={{
+                                backgroundColor: 'rgba(255,255,255,0.92)',
+                                backdropFilter: 'blur(10px)'
+                            }}
+                        >
+                            <div className="container">
+                                <div
+                                    className={`${
+                                        classes['header-app-bar']
+                                    } ${Identify.isRtl() &&
+                                        classes['header-app-bar-rtl']}`}
+                                >
+                                    <NavTrigger>
+                                        {!isSimpleHeader && (
+                                            <MenuIcon
+                                                color="#333132"
+                                                style={{
+                                                    width: 35,
+                                                    height: 35
+                                                }}
+                                            />
+                                        )}
+                                    </NavTrigger>
+                                    {renderLogo()}
+                                    <div className={classes['right-bar']}>
+                                        {!isSimpleHeader && !isBotOrHeadless && (
+                                            <div
+                                                className={
+                                                    classes['right-bar-item']
+                                                }
+                                            >
+                                                <CartTrigger />
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="id-message">
-                        <ToastMessage />
-                    </div>
-                </header>
-                {!isSimpleHeader && renderSearchForm()}
+                        <div id="id-message">
+                            <ToastMessage />
+                        </div>
+                    </header>
+                ) : null}
+                {!isSimpleHeader && !isHiddenHeader && renderSearchForm()}
             </React.Fragment>
         );
     }

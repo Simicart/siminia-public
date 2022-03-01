@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import Header from '../Header';
+import Footer from '../FooterNative'
 import LoadingComponent from 'src/simi/BaseComponents/Loading';
 import classes from './main.module.css';
 import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
@@ -41,6 +42,7 @@ const Main = props => {
 
     //wont render if chose storeview before to avoid rtl issue
     if (!storeConfig && storeCode) return '';
+   
 
     try {
         const splashScreen = document.getElementById('splash-screen');
@@ -69,9 +71,10 @@ const Main = props => {
                     <LoadingComponent />
                 </div>
                 <Header storeConfig={storeConfig} />
-
+                
                 <div id="data-breadcrumb" className={classes.breadcrumb} />
                 <div id="siminia-main-page">{props.children}</div>
+                <Footer />
             </main>
         </React.Fragment>
     );
