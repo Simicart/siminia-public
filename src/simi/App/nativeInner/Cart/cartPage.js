@@ -97,6 +97,7 @@ const CartPage = props => {
             history={history}
             setDisplayOutOfStockLabel={setDisplayOutOfStockLabel}
             setLoading={setLoading}
+            makeNotification={makeNotification}
         />
     ) : (
         <h3>

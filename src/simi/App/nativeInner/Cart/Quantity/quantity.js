@@ -11,7 +11,6 @@ import TextInput from '@magento/venia-ui/lib/components/TextInput';
 import {Message} from '@magento/venia-ui/lib/components/Field';
 // import defaultClasses from '../../../core/Cart/ProductListing/quantity.module.css';
 import defaultClasses_1 from './quantity.module.css';
-import {configColor} from "../../../../Config";
 import IconWithColor from "../IconWithColor/IconWithColor";
 
 export const QuantityFields = props => {
