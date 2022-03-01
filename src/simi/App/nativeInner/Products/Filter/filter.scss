@@ -1,5 +1,45 @@
 .left-navigation {
     .filter-products {
+        .reset-done-filter{
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-template-areas: "reset done";
+            justify-content: center;
+            background: unset;
+            .btnDone {
+                grid-area: done;
+                height: 45px;
+                width: 80px;
+                border-radius: 0 100px 100px 0;
+                background-color: #FF5F59;
+                >span{
+                    color: #FFFFFF;
+                    font-size: 16px;
+                    font-weight: 500;
+                    letter-spacing: 0;
+                    line-height: 19px;
+                }
+            }
+            .btnReset {
+                grid-area: reset;
+                box-sizing: border-box;
+                height: 45px;
+                width: 80px;
+                border: 1px solid #FF5F59;
+                border-radius: 100px 0 0 100px;
+                background-color: #FFFFFF;
+                .action-clear{
+                    color: #FF5F59;
+                    font-size: 16px;
+                    font-weight: 500;
+                    letter-spacing: 0;
+                    line-height: 19px;
+                    margin: 0;
+                    padding: 0;
+                    text-decoration: none;
+                }
+            }
+        }
         padding: 20px 18px;
         background-color: #f4f4f4;
         .title {
