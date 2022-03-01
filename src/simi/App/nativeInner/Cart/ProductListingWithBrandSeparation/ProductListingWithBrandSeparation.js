@@ -91,7 +91,6 @@ export const ProductListingWithBrandSeparation = (props) => {
     }
 
     if (items.length) {
-        console.log(items)
         const segregatedItemLists = segeratedItems.map(zone => {
             if (!zone.items) {
                 return null

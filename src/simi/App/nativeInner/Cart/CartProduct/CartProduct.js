@@ -3,7 +3,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {Trash2} from 'react-feather';
 import {gql} from '@apollo/client';
 import {Link} from 'react-router-dom';
-import {useProduct} from '@magento/peregrine/lib/talons/CartPage/ProductListing/useProduct';
+import {useProduct} from '../productHook';
 import resourceUrl from '@magento/peregrine/lib/util/makeUrl';
 import {useStyle} from '@magento/venia-ui/lib/classify';
 import Image from '@magento/venia-ui/lib/components/Image';
@@ -37,24 +37,62 @@ const CartProduct = props => {
         addToWishlistProps,
         errorMessage,
         handleEditItem,
-        handleRemoveFromCart,
+        handleRemoveFromCart: _handleRemoveFromCart,
         handleUpdateItemQuantity: _handleUpdateItemQuantity,
         isEditable,
         product,
         isProductUpdating,
     } = talonProps;
 
-    const handleUpdateItemQuantity = useCallback((quantity) => {
-        _handleUpdateItemQuantity(quantity)
-        //     .then(() => {
-        //     if (!errorMessage) {
-        //         makeNotification({
-        //             text: 'OK',
-        //             type: bottomNotificationType.SUCCESS
-        //         })
-        //     }
-        // })
-    }, [_handleUpdateItemQuantity])
+    const handleUpdateItemQuantity = useCallback(async (quantity) => {
+        return (
+            _handleUpdateItemQuantity(quantity)
+                .then(_ => {
+                    makeNotification({
+                        text: formatMessage({
+                            id: 'cart.successUpdateQuantity',
+                            defaultMessage: 'Successfully updated quantity'
+                        }),
+                        type: bottomNotificationType.SUCCESS
+                    })
+                })
+                // this will override error display from network
+                .catch(_ => {
+                    makeNotification({
+                        text: formatMessage({
+                            id: 'cart.failureUpdateQuantity',
+                            defaultMessage: 'Failed to update quantity'
+                        }),
+                        type: bottomNotificationType.FAIL
+                    })
+                })
+        )
+    }, [_handleUpdateItemQuantity, makeNotification, formatMessage])
+
+    const handleRemoveFromCart = useCallback(async () => {
+        return (
+            _handleRemoveFromCart()
+                .then(_ => {
+                    makeNotification({
+                        text: formatMessage({
+                            id: 'cart.successRemoveProduct',
+                            defaultMessage: 'Successfully removed product'
+                        }),
+                        type: bottomNotificationType.SUCCESS
+                    })
+                })
+                // this will override error display from network
+                .catch(_ => {
+                    makeNotification({
+                        text: formatMessage({
+                            id: 'cart.failureRemoveProduct',
+                            defaultMessage: 'Failed to remove product'
+                        }),
+                        type: bottomNotificationType.FAIL
+                    })
+                })
+        )
+    }, [_handleRemoveFromCart, makeNotification, formatMessage])
 
     const {
         currency, image, name, options, quantity, stockStatus, unitPrice, urlKey, urlSuffix
