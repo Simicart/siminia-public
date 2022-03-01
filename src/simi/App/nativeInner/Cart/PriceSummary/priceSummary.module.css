@@ -64,3 +64,12 @@
     width: 1rem;
     display: inline-block;
 }
+
+
+@media (min-width: 961px) {
+    .root {
+        padding: 0;
+    }
+
+}
+

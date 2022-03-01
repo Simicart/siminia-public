@@ -143,3 +143,24 @@
     }
 
 }
+
+
+@media (min-width: 1023px) {
+    .root {
+        padding-top: 35px;
+        padding-bottom: 35px;
+    }
+
+    .image {
+        max-width: 303px;
+        max-height: 303px;
+    }
+
+    .details {
+        margin-left: 4rem;
+    }
+
+    .name {
+        font-size: 0.9rem;
+    }
+}
