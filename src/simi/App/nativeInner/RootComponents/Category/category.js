@@ -47,7 +47,7 @@ const Category = props => {
         parameter1: 'page',
         parameter2: 'product_list_limit',
         initialTotalPages: 1,
-        defaultInitialPageSize: 12,
+        defaultInitialPageSize: 299,
         defaultInitialPage: 1
     });
 
@@ -96,7 +96,7 @@ const Category = props => {
     }
 
     return (
-        <div className={`${!isMobileSite ? 'container' : ''}`}>
+        <div className={`${!isMobileSite ? 'container' : 'bg-color'} `}>
             {mageworxSeoEnabled ? (
                 <>
                     <Seo pageType="CATEGORY" />

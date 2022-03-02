@@ -224,15 +224,13 @@ Rate
 .prices-layout-rtl {
     text-align: right;
 }
+
 @media (min-width: 769px) {
     .sold{
         display: none;
     }
 }
 @media (max-width: 768px) {
-    .soldOut{
-
-    }
     .discountBadge{
         height: 20px;
         width: 49px;
@@ -257,7 +255,8 @@ Rate
     }
     .siminia-product-grid-item {
         /* height: 303px; */
-        width: 192px;
+        /* width: 100%; */
+        max-width: -webkit-fill-available;
         border-radius: 8px;
         background-color: #FFFFFF;
     }
@@ -265,9 +264,15 @@ Rate
         height: 186px;
         width: 100%;
         border: none;
-        padding: 3px;
+        padding: 0px;
         margin: 0;
-        margin-top: 3px;
+    }
+    .siminia-product-image img {
+        /* max-width: 186px;
+        max-height: 186px; */
+        width: 100%;
+        height: auto;
+        padding: 3px;
     }
     .product-grid-actions {
         display: none;
@@ -275,11 +280,7 @@ Rate
     .item-review-rate {
         display: none;
     }
-    .siminia-product-image img {
-        height: 186px;
-        width: 186px;
-        border-radius: 6px
-    }
+    
     .siminia-product-des .product-name {
         margin-bottom: 0px;
         /* height: 33px; */
@@ -307,3 +308,10 @@ Rate
         padding: 8px;
     }
 }
+
+/* @media (max-width : 375px) {
+    .siminia-product-image img {
+        max-width: 167px;
+        max-height: 167px;
+    }
+} */

@@ -1,5 +1,5 @@
 .root {
-    background-color: #F2F2F3;
+    background-color: white;
     color: rgb(var(--venia-global-color-text));
     position: relative;
     z-index: 1;
