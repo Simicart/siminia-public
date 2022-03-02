@@ -218,7 +218,7 @@
             }
         }
         .marginTop{
-            margin-top: 10%
+            margin-top: 30%
         }
         .sortby-filter{
             display: grid;
@@ -226,7 +226,7 @@
             grid-template-areas: "sortby price filter";
             margin-top: 19px;
             background-color: #FFFFFF;
-            box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+            // box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
             padding-bottom: 14px;
             .product-list-filter{
                 grid-area: filter;
@@ -296,8 +296,8 @@
             position: fixed;
             top: 0;
             transition-property: opacity, transform, visibility;
-            width: 75%;
-            z-index: 5;
+            width: 60%;
+            z-index: 8;
             transform: translateX(0);
             transition: all 0.4s;
             
@@ -311,7 +311,7 @@
                 width: -webkit-fill-available;
                 z-index: 1;
                 background: white;
-                top: 0;
+                top: 54px;
                 left: 0;
                 .carousel-child-cate {
                     padding: 14px 0px 3px 10px;
@@ -392,8 +392,7 @@
             top: 0;
             transform: translate3d(-100%, 0, 0);
             transition-property: opacity, transform, visibility;
-            width: 75%;
-            z-index: 5;
+            width: 60%;
             transform: translateX(115%);
             
         } 
