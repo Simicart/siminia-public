@@ -4,6 +4,58 @@
         min-width: 217px;
         // margin-bottom: 15px;
         z-index: 3;
+        .unActive{
+            position: absolute;
+            height: 4px;
+            width: 34px;
+            border-radius: 2px;
+            background-color: #FFC700;
+            left: 20%;
+            top: 0px;
+            left: 0;
+            z-index: 2;
+            transition: 0.4s all;
+        }
+        .active{
+            position: absolute;
+            height: 4px;
+            width: 34px;
+            border-radius: 2px;
+            background-color: #FFC700;
+            left: 20%;
+            top: 0px;
+            left: 7%;
+            z-index: 2;
+            animation: ani 0.4s;
+            -moz-animation: ani 0.4s ;
+            -webkit-animation: ani 0.4s ;
+            -o-animation: ani 0.4s ;
+        }
+
+
+
+        @keyframes ani {
+            0% { left: 0px; }
+            100% { left: 7%; }
+        }
+        
+        @-moz-keyframes ani {
+            0% { left: 0px; }
+            
+            100% { left: 7%; }
+        }
+        
+        @-webkit-keyframes ani {
+            0% { left: 0px; }
+            
+            100% { left: 7%; }
+        }
+        
+        @-o-keyframes ani {
+            0% { left: 0px; }
+           
+            100% { left: 7%; }
+        }
         .sort-by-select {
             > div > div:nth-child(1){
                 justify-content: flex-start;

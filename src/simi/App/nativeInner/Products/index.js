@@ -333,11 +333,11 @@ const Products = props => {
                                             <ChevronDown size={15} />
                                         )}
                                     </span>
-                                    <div
+                                    {/* <div
                                         className={`${
                                             showingDropdown ? 'activeSort' : ''
                                         }`}
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                         </div>
