@@ -1,9 +1,9 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Trash2} from 'react-feather';
 import {gql} from '@apollo/client';
 import {Link} from 'react-router-dom';
-import {useProduct} from '@magento/peregrine/lib/talons/CartPage/ProductListing/useProduct';
+import {useProduct} from '../productHook';
 import resourceUrl from '@magento/peregrine/lib/util/makeUrl';
 import {useStyle} from '@magento/venia-ui/lib/classify';
 import Image from '@magento/venia-ui/lib/components/Image';
@@ -19,12 +19,13 @@ import {
 import {ConfirmPopup} from "../ConfirmPopup";
 import {PriceWithColor} from "../PriceWithColor";
 import {configColor} from "../../../../Config";
+import {bottomNotificationType} from "../bottomNotificationHook";
 
 const IMAGE_SIZE = 100;
 
 
 const CartProduct = props => {
-    const {item} = props;
+    const {item, makeNotification} = props;
 
     const {formatMessage} = useIntl();
     const talonProps = useProduct({
@@ -36,12 +37,62 @@ const CartProduct = props => {
         addToWishlistProps,
         errorMessage,
         handleEditItem,
-        handleRemoveFromCart,
-        handleUpdateItemQuantity,
+        handleRemoveFromCart: _handleRemoveFromCart,
+        handleUpdateItemQuantity: _handleUpdateItemQuantity,
         isEditable,
         product,
-        isProductUpdating
+        isProductUpdating,
     } = talonProps;
+
+    const handleUpdateItemQuantity = useCallback(async (quantity) => {
+        return (
+            _handleUpdateItemQuantity(quantity)
+                .then(_ => {
+                    makeNotification({
+                        text: formatMessage({
+                            id: 'cart.successUpdateQuantity',
+                            defaultMessage: 'Successfully updated quantity'
+                        }),
+                        type: bottomNotificationType.SUCCESS
+                    })
+                })
+                // this will override error display from network
+                .catch(_ => {
+                    makeNotification({
+                        text: formatMessage({
+                            id: 'cart.failureUpdateQuantity',
+                            defaultMessage: 'Failed to update quantity'
+                        }),
+                        type: bottomNotificationType.FAIL
+                    })
+                })
+        )
+    }, [_handleUpdateItemQuantity, makeNotification, formatMessage])
+
+    const handleRemoveFromCart = useCallback(async () => {
+        return (
+            _handleRemoveFromCart()
+                .then(_ => {
+                    makeNotification({
+                        text: formatMessage({
+                            id: 'cart.successRemoveProduct',
+                            defaultMessage: 'Successfully removed product'
+                        }),
+                        type: bottomNotificationType.SUCCESS
+                    })
+                })
+                // this will override error display from network
+                .catch(_ => {
+                    makeNotification({
+                        text: formatMessage({
+                            id: 'cart.failureRemoveProduct',
+                            defaultMessage: 'Failed to remove product'
+                        }),
+                        type: bottomNotificationType.FAIL
+                    })
+                })
+        )
+    }, [_handleRemoveFromCart, makeNotification, formatMessage])
 
     const {
         currency, image, name, options, quantity, stockStatus, unitPrice, urlKey, urlSuffix
@@ -126,6 +177,7 @@ const CartProduct = props => {
             </div>);
         });
     }
+
     if (item.links && item.links.length) {
         item.links.map((link, cfo_idx) => {
             optionText.push(<div key={cfo_idx} className={classes.optionLabel}>
@@ -152,9 +204,19 @@ const CartProduct = props => {
             </span>
         </div>
     )
+
+    useEffect(() => {
+        if (errorMessage) {
+            makeNotification({
+                text: errorMessage,
+                type: bottomNotificationType.FAIL
+            })
+        }
+    }, [errorMessage, makeNotification])
+
     return (
         <div className={classes.root}>
-            <span className={classes.errorText}>{errorMessage}</span>
+            {/*<span className={classes.errorText}>{errorMessage}</span>*/}
             <div className={itemClassName}>
                 <Link to={itemLink} className={classes.imageContainer}>
                     <Image

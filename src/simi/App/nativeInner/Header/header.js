@@ -20,6 +20,7 @@ import { useWindowSize } from '@magento/peregrine';
 import { useIntl } from 'react-intl';
 import { isBot, isHeadlessChrome } from '../../../Helper/BotDetect';
 
+
 import defaultClasses from './header.module.css';
 
 // check if bot or headless chrome / wont get cart to avoid perf accection
@@ -161,13 +162,14 @@ const Header = props => {
                 }`}
             >
                 <SearchForm history={history} />
+                
             </div>
         );
     };
     if (isPhone) {
         return (
             <React.Fragment>
-                {!isHiddenHeader ? (
+                {/* {!isHiddenHeader ? (
                     <header id="siminia-main-header">
                         <div
                             style={{
@@ -212,7 +214,11 @@ const Header = props => {
                             <ToastMessage />
                         </div>
                     </header>
-                ) : null}
+                ) : null} */}
+                {!isHiddenHeader ? <div className={classes.virtualHeader}>
+
+                </div> : null}
+                
                 {!isSimpleHeader && !isHiddenHeader && renderSearchForm()}
             </React.Fragment>
         );

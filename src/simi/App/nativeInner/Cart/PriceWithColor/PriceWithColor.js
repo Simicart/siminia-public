@@ -25,10 +25,15 @@ export const PriceWithColor = (props) => {
 
     const classes = useStyle(props.classes, derivedClasses)
 
+    const styleStr = useMemo(
+        () => `.${uniqueId}{color: ${color}}`,
+        [uniqueId, color]
+    )
+
     return (
         <Fragment>
             <Helmet>
-                <style className={'hello'}>{`.${uniqueId}{color: ${color}}`}</style>
+                <style>{styleStr}</style>
             </Helmet>
             <Price {...rest} classes={classes}/>
         </Fragment>

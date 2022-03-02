@@ -10,6 +10,7 @@ import defaultClasses_1 from './ProductListingWithBrandSeparation.module.css'
 import CartProduct from "../CartProduct/CartProduct";
 import {hasVendor} from "./ProductListingWithBrandSeparation.config";
 import {configColor} from "../../../../Config";
+import LoadingBridge from "../LoadingBridge/LoadingBridge";
 
 
 const VendorIntro = ({zone, classes}) => {
@@ -44,7 +45,9 @@ export const ProductListingWithBrandSeparation = (props) => {
         setIsCartUpdating,
         fetchCartDetails,
         history,
-        setDisplayOutOfStockLabel
+        setDisplayOutOfStockLabel,
+        setLoading,
+        makeNotification
     } = props;
 
     const talonProps = useProductListing({operations: DEFAULT_OPERATIONS});
@@ -77,20 +80,17 @@ export const ProductListingWithBrandSeparation = (props) => {
         setDisplayOutOfStockLabel(hasOutOfStockProduct)
     }, [hasOutOfStockProduct])
 
+    useEffect(() => {
+        setLoading(isLoading)
+
+        return () => setLoading(false)
+    }, [setLoading, isLoading])
+
     if (isLoading) {
-        return (
-            <LoadingIndicator>
-                <FormattedMessage
-                    id={'productListing.loading'}
-                    defaultMessage={'Fetching Cart...'}
-                />
-            </LoadingIndicator>
-        );
+        return null
     }
 
-
     if (items.length) {
-        console.log(items)
         const segregatedItemLists = segeratedItems.map(zone => {
             if (!zone.items) {
                 return null
@@ -110,6 +110,7 @@ export const ProductListingWithBrandSeparation = (props) => {
                                 onAddToWishlistSuccess={onAddToWishlistSuccess}
                                 fetchCartDetails={fetchCartDetails}
                                 wishlistConfig={wishlistConfig}
+                                makeNotification={makeNotification}
                             />
                         )
                     })}

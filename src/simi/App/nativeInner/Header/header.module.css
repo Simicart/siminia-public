@@ -275,6 +275,44 @@ body.fixed-scroll {
         display: none;
     }
 }
+@media (max-width:450px) {
+    .header-search {
+        margin: 0;
+        max-width: unset;
+        padding: 16px;
+        background: #fff;
+        height: 55px;
+        position: fixed;
+        z-index: 8;
+        top: 0;
+        box-shadow: 0 0 4px 0 rgb(0 0 0 / 30%);
+        display: flex;
+        justify-content:flex-end;
+    }
+    .virtualHeader {
+        height: 55px
+    }
+    .header-search-form input {
+        border: 1px solid #000;
+        border-left: none;
+        left:-1%;
+        top: 5px;
+        animation: inputIn 0.4s;
+        width: 70%;
+    }
+    .header-search-form .search-icon {
+        right: 16px;
+        top: -5px;
+    }
+    @keyframes inputIn {
+        from {
+            left: -81%;
+        }
+        to {
+            left: -1%;
+        }
+    }
+}
 .header-app-bar-rtl aside > div {
     left: 0;
     right: unset;
