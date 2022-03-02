@@ -317,3 +317,8 @@ body.fixed-scroll {
     left: 0;
     right: unset;
 }
+@media (max-width: 768px) {
+    header{
+        display: none;
+    }
+}

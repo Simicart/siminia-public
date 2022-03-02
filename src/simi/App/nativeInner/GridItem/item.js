@@ -83,7 +83,7 @@ const Griditem = props => {
             className={itemClasses['siminia-product-image']}
             style={{
                 borderColor: configColor.image_border_color,
-                backgroundColor: 'white'
+                // backgroundColor: 'white'
             }}
         >
             <div
@@ -92,7 +92,7 @@ const Griditem = props => {
                     top: 0,
                     bottom: 0,
                     width: '100%',
-                    padding: 1
+                    // padding: 1   
                 }}
                 
             >

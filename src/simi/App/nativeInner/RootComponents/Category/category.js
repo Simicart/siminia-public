@@ -71,6 +71,8 @@ const Category = props => {
         );
     }
 
+    const isMobileSite = window.innerWidth <= 768;
+
     const { category, mageworx_canonical_url } = products;
 
     const isApplyingFilter = window.location.search ? true : false;
@@ -92,9 +94,9 @@ const Category = props => {
         }
         breadcrumb.push({ name: category.name });
     }
-  
+
     return (
-        <div className="container">
+        <div className={`${!isMobileSite ? 'container' : ''}`}>
             {mageworxSeoEnabled ? (
                 <>
                     <Seo pageType="CATEGORY" />
@@ -111,7 +113,8 @@ const Category = props => {
                     <MarkupCategoryBasic category={category} />
                 </>
             )}
-            {breadcrumb && breadcrumb.length ? (
+
+            {!isMobileSite && breadcrumb && breadcrumb.length ? (
                 <div style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
                     <Breadcrumbs breadcrumb={breadcrumb} />
                 </div>

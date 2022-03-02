@@ -7,9 +7,9 @@ import { useIntl } from 'react-intl';
 import { capitalizeEachWords, randomString } from 'src/simi/Helper/String';
 require('./sortbyPrice.scss');
 
+let count = 0
 const SortbyPrice = props => {
-    const { history, location } = props;
-
+    const { history, location, sortByData, data } = props;
     const [showSortByPrice, setShowSortByPrice] = useState(false);
     const { search } = location;
     const { formatMessage } = useIntl();
@@ -28,13 +28,12 @@ const SortbyPrice = props => {
     };
 
     const clickSortByPrice = () => { 
-        if(showSortByPrice){
+        if(count % 2 !== 0){
             if (asc) {
                 const queryParams = new URLSearchParams(search);
                 queryParams.set('product_list_order', asc.key);
                 queryParams.set('product_list_dir', asc.direction);
                 history.push({ search: queryParams.toString() });
-                return;
             }
         } else{
             if (desc) {
@@ -42,28 +41,27 @@ const SortbyPrice = props => {
                 queryParams.set('product_list_order', desc.key);
                 queryParams.set('product_list_dir', desc.direction);
                 history.push({ search: queryParams.toString() });
-                return;
             }
         }
+        count++;
         setShowSortByPrice(!showSortByPrice);
     };
-
     return (
-        <div className="wrap-top" onClick={() => clickSortByPrice()}>
-            <span className="label">
+        <div className="wrap-top">
+            <span className="label"  onClick={() => clickSortByPrice()}>
                 {formatMessage({
                     id: 'sortByPrice',
                     defaultMessage: 'Price'
                 })}
             </span>
             <span className="icon-dropdown">
-                {showSortByPrice ? (
-                    <ChevronUp size={15} />
-                ) : (
+                {count % 2 === 0 ? (
                     <ChevronDown size={15} />
+                ) : (
+                    <ChevronUp size={15} />
                 )}
             </span>
-            <div className={`${showSortByPrice ? 'activeSort' : ''}`} />
+            {/* <div className={`${count % 2 === 0 ? 'activeSort' : ''}`} /> */}
         </div>
     );
 };
