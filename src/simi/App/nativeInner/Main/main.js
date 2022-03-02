@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 
 import Header from '../Header';
-import Footer from '../FooterNative'
+import FooterNative from '../FooterNative'
+import Footer from "@simicart/siminia/src/simi/App/core/Footer"
 import LoadingComponent from 'src/simi/BaseComponents/Loading';
 import classes from './main.module.css';
 import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
@@ -11,6 +12,7 @@ import RsHomeBasic from '../../core/SeoBasic/Markup/RsHome';
 const storage = new BrowserPersistence();
 import { Helmet } from 'react-helmet';
 import RsSeller from '../../core/Seo/Markup/RsSeller';
+import { useWindowSize } from '@magento/peregrine';
 
 const mageworxSeoEnabled =
     window.SMCONFIGS &&
@@ -21,7 +23,9 @@ const mageworxSeoEnabled =
 const Main = props => {
     const { storeConfig } = props;
     const storeCode = storage.getItem('store_view_code') || null;
+    const windowSize = useWindowSize();
 
+    const isPhone = windowSize.innerWidth <= 450;
     const faviconUrl = storeConfig
         ? storeConfig['storeConfig']['head_shortcut_icon']
         : null;
@@ -74,7 +78,8 @@ const Main = props => {
                 
                 <div id="data-breadcrumb" className={classes.breadcrumb} />
                 <div id="siminia-main-page">{props.children}</div>
-                <Footer />
+                <FooterNative />
+                {!isPhone && <Footer />}
             </main>
         </React.Fragment>
     );
