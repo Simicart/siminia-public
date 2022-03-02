@@ -10,3 +10,13 @@
     line-height: 1rem;
     border: 1px solid #FF5F59;
 }
+
+.root_normalPriority:active {
+    filter: brightness(130%);
+    opacity: 0.8;
+    outline: none;
+}
+
+.root_normalPriority:focus-visible {
+    outline: none;
+}

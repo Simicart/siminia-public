@@ -11,7 +11,7 @@ import TextInput from '@magento/venia-ui/lib/components/TextInput';
 import {Message} from '@magento/venia-ui/lib/components/Field';
 // import defaultClasses from '../../../core/Cart/ProductListing/quantity.module.css';
 import defaultClasses_1 from './quantity.module.css';
-import {configColor} from "../../../../Config";
+import IconWithColor from "../IconWithColor/IconWithColor";
 
 export const QuantityFields = props => {
     const {initialValue, itemId, label, min, onChange, message} = props;
@@ -52,7 +52,7 @@ export const QuantityFields = props => {
                     onClick={handleIncrement}
                     type="button"
                 >
-                    <Icon src={PlusIcon} size={20} color={configColor.icon_color}/>
+                    <IconWithColor src={PlusIcon} size={20}/>
                 </button>
                 <TextInput
                     aria-label={formatMessage({
@@ -78,7 +78,7 @@ export const QuantityFields = props => {
                     onClick={handleDecrement}
                     type="button"
                 >
-                    <Icon classes={iconClasses} src={MinusIcon} size={22} color={configColor.icon_color}/>
+                    <IconWithColor classes={iconClasses} src={MinusIcon} size={22}/>
                 </button>
             </div>
             {errorMessage}

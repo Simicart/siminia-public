@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Check} from 'react-feather';
 import {useCartPage} from '@magento/peregrine/lib/talons/CartPage/useCartPage';
@@ -15,6 +15,8 @@ import Image from "@magento/venia-ui/lib/components/Image";
 import {RedButton} from "./RedButton";
 import {ProductListingWithBrandSeparation} from "./ProductListingWithBrandSeparation";
 import {useBottomNotification} from "./bottomNotificationHook";
+import LoadingBridge from "./LoadingBridge/LoadingBridge";
+import {useLoading} from "./loadingHook/useLoading";
 
 const CheckIcon = <Icon size={20} src={Check}/>;
 
@@ -45,7 +47,7 @@ const CartPage = props => {
         isCartUpdating,
         fetchCartDetails,
         onAddToWishlistSuccess,
-        setIsCartUpdating,
+        setIsCartUpdating: _setIsCartUpdating,
         shouldShowLoadingIndicator,
         wishlistSuccessProps,
     } = talonProps;
@@ -58,6 +60,16 @@ const CartPage = props => {
         component: notiComponent,
         makeNotification
     } = useBottomNotification()
+
+    const {
+        component: loadingComponent,
+        setLoading
+    } = useLoading()
+
+    const setIsCartUpdating = useCallback((v) => {
+        setLoading(v)
+        _setIsCartUpdating(v)
+    }, [setLoading, _setIsCartUpdating])
 
     const [displayOutOfStockLabel, _setDisplayOutOfStockLabel] = useState(false)
 
@@ -84,6 +96,8 @@ const CartPage = props => {
             fetchCartDetails={fetchCartDetails}
             history={history}
             setDisplayOutOfStockLabel={setDisplayOutOfStockLabel}
+            setLoading={setLoading}
+            makeNotification={makeNotification}
         />
     ) : (
         <h3>
@@ -164,7 +178,7 @@ const CartPage = props => {
         </Fragment>
     ) : (
         <div className={classes.emptyBody}>
-            <Image src={'https://upload.wikimedia.org/wikipedia/vi/b/b7/Nyan_Cat_250px.png'}
+            <Image src={require('../../../../../static/images/empty-cart.png')}
                    alt={'no-cart'}
                    className={classes.emptyImage}
             />
@@ -175,7 +189,9 @@ const CartPage = props => {
                 />
             </h3>
 
-            <RedButton onClick={() => history.push('/')}>
+            <RedButton onClick={() => history.push('/')}
+                       style={{maxWidth: '16rem'}}
+            >
                 <FormattedMessage
                     id={'Continue Shopping'}
                     defaultMessage={'Continue Shopping'}
@@ -195,6 +211,7 @@ const CartPage = props => {
                     })}
                 </StoreTitle>
                 {cartBody}
+                {loadingComponent}
                 {notiComponent}
             </div>
         </Fragment>
