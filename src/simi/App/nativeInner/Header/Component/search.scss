@@ -2,3 +2,44 @@
     right: unset !important;
     left: 14px;
 }
+@media (max-width: 450px) {
+
+    .siminia-search-field {
+        position:fixed;
+        width: 100%;
+        z-index: 10;
+        left: 0;
+        
+    }
+    .main-header-icon {
+        max-width: 15%;
+        position: fixed;
+        /* left: 21px; */
+        z-index: 2;
+        left: 1%;
+        top: 11px;
+    }
+    .header-title {
+        position: fixed;
+        left: 71px;
+        top: 14px;
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .shopping-cart-icon {
+        font-size:20px;
+        margin-right: 10px;
+    }
+    .header-cartQty {
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        border: 1px solid #fff;
+        border-radius: 50%;
+        font-size: 12px;
+        background: #0058ac;
+        line-height: normal;
+        padding: 1px 7px;
+        color: #fff;
+    }
+}
