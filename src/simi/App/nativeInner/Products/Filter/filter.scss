@@ -4,16 +4,15 @@
             display: grid;
             grid-template-columns: auto auto;
             grid-template-areas: "reset done";
-            justify-content: center;
+            justify-content: space-evenly;
             background: unset;
             .btnDone {
                 grid-area: done;
-                height: 45px;
-                width: 80px;
-                border-radius: 0 100px 100px 0;
-                background-color: #FF5F59;
+                height: auto;
+                padding: 10px 20px;
+                background-color: #0058ac;
                 >span{
-                    color: #FFFFFF;
+                    color: #ededed;
                     font-size: 16px;
                     font-weight: 500;
                     letter-spacing: 0;
@@ -23,13 +22,11 @@
             .btnReset {
                 grid-area: reset;
                 box-sizing: border-box;
-                height: 45px;
-                width: 80px;
-                border: 1px solid #FF5F59;
-                border-radius: 100px 0 0 100px;
-                background-color: #FFFFFF;
+                height: auto;
+                padding: 10px 20px;
+                background-color: #ededed;   
                 .action-clear{
-                    color: #FF5F59;
+                    color: #000;
                     font-size: 16px;
                     font-weight: 500;
                     letter-spacing: 0;
@@ -233,17 +230,16 @@
                     display: grid;
                     grid-template-columns: auto auto;
                     grid-template-areas: "reset done";
-                    justify-content: center;
+                    justify-content: space-evenly;
                     background: white;
                     padding-bottom: 35px;
                     .btnDone {
                         grid-area: done;
-                        height: 45px;
-                        width: 141px;
-                        border-radius: 0 100px 100px 0;
-                        background-color: #FF5F59;
+                        height: auto;
+                        padding: 10px 20px;
+                        background-color: #0058ac;
                         >span{
-                            color: #FFFFFF;
+                            color: #ededed;
                             font-size: 16px;
                             font-weight: 500;
                             letter-spacing: 0;
@@ -253,13 +249,11 @@
                     .btnReset {
                         grid-area: reset;
                         box-sizing: border-box;
-                        height: 45px;
-                        width: 141px;
-                        border: 1px solid #FF5F59;
-                        border-radius: 100px 0 0 100px;
-                        background-color: #FFFFFF;
+                        height: auto;
+                        padding: 10px 20px;
+                        background-color: #ededed;   
                         .action-clear{
-                            color: #FF5F59;
+                            color: #000;
                             font-size: 16px;
                             font-weight: 500;
                             letter-spacing: 0;
