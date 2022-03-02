@@ -96,7 +96,7 @@ const Category = props => {
     }
 
     return (
-        <div className={`${!isMobileSite ? 'container' : ''}`}>
+        <div className={`${!isMobileSite ? 'container' : 'bg-color'} `}>
             {mageworxSeoEnabled ? (
                 <>
                     <Seo pageType="CATEGORY" />
