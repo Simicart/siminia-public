@@ -8,9 +8,10 @@ import {ChevronRight} from 'react-feather'
 import defaultClasses from "../../../core/Cart/ProductListing/productListing.module.css";
 import defaultClasses_1 from './ProductListingWithBrandSeparation.module.css'
 import CartProduct from "../CartProduct/CartProduct";
-import {hasVendor} from "./ProductListingWithBrandSeparation.config";
+import {FOOTER_HEIGHT, FOOTER_HEIGHT_PAD, hasVendor, HEADER_HEIGHT} from "./ProductListingWithBrandSeparation.config";
 import {configColor} from "../../../../Config";
 import LoadingBridge from "../LoadingBridge/LoadingBridge";
+import HeightPad from "../HeightPad/heightPad";
 
 
 const VendorIntro = ({zone, classes}) => {
@@ -47,7 +48,9 @@ export const ProductListingWithBrandSeparation = (props) => {
         history,
         setDisplayOutOfStockLabel,
         setLoading,
-        makeNotification
+        makeNotification,
+        summaryRef,
+        setFirstProductLoad
     } = props;
 
     const talonProps = useProductListing({operations: DEFAULT_OPERATIONS});
@@ -86,8 +89,24 @@ export const ProductListingWithBrandSeparation = (props) => {
         return () => setLoading(false)
     }, [setLoading, isLoading])
 
+    const minComponentHeight = summaryRef.current ? (
+        window.innerHeight - summaryRef.current.offsetHeight
+        - FOOTER_HEIGHT - HEADER_HEIGHT - FOOTER_HEIGHT_PAD
+    ) : 100
+
+    useEffect(() => {
+        if (!isLoading && items.length) {
+            setFirstProductLoad(false)
+        }
+    }, [isLoading, items, setFirstProductLoad])
+
+
     if (isLoading) {
-        return null
+        return (
+            <Fragment>
+                <HeightPad height={minComponentHeight}/>
+            </Fragment>
+        )
     }
 
     if (items.length) {
@@ -98,6 +117,9 @@ export const ProductListingWithBrandSeparation = (props) => {
             return (
                 <div key={zone.id}
                      className={classes.brandZoneContainer}
+                     style={{
+                         minHeight: minComponentHeight
+                     }}
                 >
                     {hasVendor ? (<VendorIntro classes={classes} zone={zone}/>) : null}
                     {zone.items.map(product => {
