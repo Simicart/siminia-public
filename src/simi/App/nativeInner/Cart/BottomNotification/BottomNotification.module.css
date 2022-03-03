@@ -8,8 +8,8 @@
     margin: 0;
     z-index: 1000;
     left: 0;
-    bottom: 0;
-    transform: translateY(100%);
+    top: 0;
+    transform: translateY(-100%);
 }
 
 .innerContainer {

@@ -41,7 +41,7 @@ const animationPromise = (el, animations, args) => {
 
 const BASE_HEIGHT_DEFAULT = 0
 const TIME_IN_DEFAULT = 200
-const TIME_PERSIST_DEFAULT = 1500
+const TIME_PERSIST_DEFAULT = 1200
 const TIME_OUT_DEFAULT = 200
 
 
@@ -92,7 +92,7 @@ export const useBottomNotification = (props) => {
                 const rectHeight = notificationRef.current.offsetHeight
 
                 animationPromise(notificationRef.current, [
-                    {transform: `translateY(${rectHeight - baseHeight}px)`},
+                    {transform: `translateY(${-rectHeight - baseHeight}px)`},
                     {transform: `translateY(${-baseHeight}px)`},
                 ], {
                     duration: timeIn,
@@ -108,7 +108,7 @@ export const useBottomNotification = (props) => {
                     .then(() => {
                         return animationPromise(notificationRef.current, [
                             {transform: `translateY(${-baseHeight}px)`},
-                            {transform: `translateY(${rectHeight - baseHeight}px)`},
+                            {transform: `translateY(${-rectHeight - baseHeight}px)`},
                         ], {
                             duration: timeOut,
                         })
