@@ -5,15 +5,15 @@ import Dropdownoption from '../../BaseComponents/Dropdownoption';
 import { withRouter } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { capitalizeEachWords, randomString } from 'src/simi/Helper/String';
+import { useEventListener } from '@magento/peregrine';
 require('./sortbyPrice.scss');
 
 let count = 0
 const SortbyPrice = props => {
     const { history, location, sortByData, data } = props;
-    const [showSortByPrice, setShowSortByPrice] = useState(false);
     const { search } = location;
     const { formatMessage } = useIntl();
-
+    
     let asc = {
         value: 'price',
         key: 'price',
@@ -44,25 +44,26 @@ const SortbyPrice = props => {
             }
         }
         count++;
-        setShowSortByPrice(!showSortByPrice);
     };
     return (
-        <div className="wrap-top">
-            <span className="label"  onClick={() => clickSortByPrice()}>
-                {formatMessage({
-                    id: 'sortByPrice',
-                    defaultMessage: 'Price'
-                })}
-            </span>
-            <span className="icon-dropdown">
-                {count % 2 === 0 ? (
-                    <ChevronDown size={15} />
-                ) : (
-                    <ChevronUp size={15} />
-                )}
-            </span>
-            {/* <div className={`${count % 2 === 0 ? 'activeSort' : ''}`} /> */}
-        </div>
+        <>
+            <div className="wrap-top">
+                <span className="label"  onClick={() => clickSortByPrice()}>
+                    {formatMessage({
+                        id: 'sortByPrice',
+                        defaultMessage: 'Price'
+                    })}
+                </span>
+                <span className="icon-dropdown">
+                    {count % 2 === 0 ? (
+                        <ChevronDown size={15} />
+                    ) : (
+                        <ChevronUp size={15} />
+                    )}
+                </span>
+            </div>
+            {count > 0  ? <div className="activeSortbyPrice"></div> : ''}
+        </>
     );
 };
 
