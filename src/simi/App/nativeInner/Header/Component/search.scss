@@ -4,8 +4,30 @@
 }
 @media (max-width: 450px) {
 
+    .siminia-search-field-wrapper {
+        width: 100vw;
+        height: 93.6vh;
+        background-color: #fff;
+        position: absolute;
+        right: -46px;
+        top: -15px;
+        z-index: 2;
+        animation: inputIn .4s;
+        padding: 10px;
+        display: flex;
+       .header-search-icon {
+        margin-top: 5px;
+        margin-left: 10px;
+       }
+       .header-close-icon {
+        font-size: 23px;
+        margin-top: 10px;
+        margin-right: 9px;
+       }
+
+    }
     .siminia-search-field {
-        position:fixed;
+        // position:fixed;
         width: 100%;
         z-index: 10;
         left: 0;
@@ -41,5 +63,13 @@
         line-height: normal;
         padding: 1px 7px;
         color: #fff;
+    }
+    @keyframes inputIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
     }
 }
