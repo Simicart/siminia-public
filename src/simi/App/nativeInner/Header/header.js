@@ -162,7 +162,7 @@ const Header = props => {
                 }`}
             >
                 <SearchForm history={history} />
-                
+
             </div>
         );
     };
@@ -218,7 +218,7 @@ const Header = props => {
                 {!isHiddenHeader ? <div className={classes.virtualHeader}>
 
                 </div> : null}
-                
+
                 {!isSimpleHeader && !isHiddenHeader && renderSearchForm()}
             </React.Fragment>
         );

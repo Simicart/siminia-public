@@ -167,14 +167,16 @@ const CartPage = props => {
             </div>
             <div className={classes.body}>
                 <div className={classes.items_container}>{productListing}</div>
-                <div className={classes.price_adjustments_container}>
-                    {priceAdjustments}
-                </div>
-                <div className={classes.summary_container}>
-                    <div className={classes.summary_contents}>
-                        {priceSummary}
+                {!isCartUpdating && (<Fragment>
+                    <div className={classes.price_adjustments_container}>
+                        {priceAdjustments}
                     </div>
-                </div>
+                    <div className={classes.summary_container}>
+                        <div className={classes.summary_contents}>
+                            {priceSummary}
+                        </div>
+                    </div>
+                </Fragment>)}
             </div>
         </Fragment>
     ) : (
