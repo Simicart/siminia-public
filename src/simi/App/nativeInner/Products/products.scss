@@ -228,14 +228,14 @@
             background-color: #FFFFFF;
             // box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
             padding-bottom: 14px;
-            position: relative;
+            // position: relative;
             .product-list-filter{
                 grid-area: filter;
                 display: flex;
                 justify-content: flex-end;
                 .wrap-top{
                     .label{
-                        padding-right: 10px;
+                        padding-right: 5px;
                     }
                 }
             }
@@ -243,20 +243,30 @@
                 grid-area: price;
                 display: flex;
                 justify-content: center;
-                .activeSortbyPrice{
-                    position: absolute;
-                    bottom: -4px;
-                    height: 4px;
-                    width: 34px;
-                    border-radius: 2px;
-                    background-color: #FFC700;
+                .wrapActiveSortbyPrice{
+                    position: relative;
+                    .activeSortbyPrice{
+                        position: absolute;
+                        bottom: -18px;
+                        left: 9px;
+                        height: 4px;
+                        width: 34px;
+                        border-radius: 2px;
+                        background-color: #FFC700;
+                    }
                 }
+                
             }
             
             .product-list-sortby{
                 grid-area: sortby;
                 display: flex;
                 justify-content: flex-start;
+                .wrap-top{
+                    .label{
+                        padding-left: 5px;
+                    }
+                }
                 > div{
                     display: inline-flex;
                 }
@@ -280,7 +290,6 @@
             font-size: 14px;
             letter-spacing: 0;
             line-height: 16px;
-            padding-left: 10px;
             .icon-filter{
                 svg{
                     display: inline-block;
