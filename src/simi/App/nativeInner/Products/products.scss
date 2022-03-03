@@ -218,16 +218,17 @@
             }
         }
         .marginTop{
-            margin-top: 30%
+            margin-top: 35%
         }
         .sortby-filter{
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            grid-template-areas: "sortby price filter";
+            grid-template-areas: 'sortby price filter';
             margin-top: 19px;
             background-color: #FFFFFF;
             // box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
             padding-bottom: 14px;
+            position: relative;
             .product-list-filter{
                 grid-area: filter;
                 display: flex;
@@ -242,7 +243,16 @@
                 grid-area: price;
                 display: flex;
                 justify-content: center;
+                .activeSortbyPrice{
+                    position: absolute;
+                    bottom: -4px;
+                    height: 4px;
+                    width: 34px;
+                    border-radius: 2px;
+                    background-color: #FFC700;
+                }
             }
+            
             .product-list-sortby{
                 grid-area: sortby;
                 display: flex;
