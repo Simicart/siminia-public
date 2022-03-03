@@ -204,7 +204,11 @@ const CartPage = props => {
         </div>
     )
 
-    const headerText = !isCartUpdating && totalQuantity > 0 && hasItems ? formatMessage({
+    const doneFlickering = (
+        !isCartUpdating && totalQuantity > 0 && hasItems && !firstProductsLoad
+    )
+
+    const headerText = doneFlickering ? formatMessage({
             id: 'cart.headTitle',
             defaultMessage: 'Shopping Cart ({total})',
         }, {

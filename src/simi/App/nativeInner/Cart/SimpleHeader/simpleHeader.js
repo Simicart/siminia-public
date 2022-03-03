@@ -45,9 +45,11 @@ const SimpleHeader = props => {
     const baseHeader = (
         <Fragment>
             <div className={classes['header-search-form']}>
-                <div>
-                    {leftIcon}
-                    {titleObj}
+                <div className={defaultClasses1.virtualHeader}>
+                    <div>
+                        {leftIcon}
+                        {titleObj}
+                    </div>
                 </div>
             </div>
         </Fragment>

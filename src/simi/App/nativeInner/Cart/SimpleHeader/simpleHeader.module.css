@@ -35,6 +35,16 @@
     top: -5px;
 }
 
+.virtualHeader {
+    height: 55px;
+    width: 100%;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: white;
+}
+
 .main-header-icon {
 
 }
