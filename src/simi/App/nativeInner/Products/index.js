@@ -298,6 +298,7 @@ const Products = props => {
                                     data={data}
                                     sortByData={sortByData}
                                 />
+                                
                                 {/* <div className="wrap-top" onClick={() => clickSortByPrice()}>
                                 <span className="label">
                                     {formatMessage({
@@ -315,6 +316,7 @@ const Products = props => {
                                 />
                             </div> */}
                             </div>
+                            
                             <div className="product-list-sortby">
                                 <div
                                     className="wrap-top"
@@ -333,11 +335,11 @@ const Products = props => {
                                             <ChevronDown size={15} />
                                         )}
                                     </span>
-                                    <div
+                                    {/* <div
                                         className={`${
                                             showingDropdown ? 'activeSort' : ''
                                         }`}
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                         </div>

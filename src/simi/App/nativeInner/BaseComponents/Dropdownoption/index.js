@@ -23,7 +23,7 @@ const Dropdownoption = props => {
     };
 
     useEventListener(globalThis, 'mousedown', handleClickOutside);
-    useEventListener(globalThis, 'keydown', handleClickOutside);
+    // useEventListener(globalThis, 'keydown', handleClickOutside);
 
     return (
         <div
