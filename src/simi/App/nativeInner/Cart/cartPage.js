@@ -17,6 +17,7 @@ import {ProductListingWithBrandSeparation} from "./ProductListingWithBrandSepara
 import {useBottomNotification} from "./bottomNotificationHook";
 import LoadingBridge from "./LoadingBridge/LoadingBridge";
 import {useLoading} from "./loadingHook/useLoading";
+import HeightPad from "./HeightPad/heightPad";
 
 const CheckIcon = <Icon size={20} src={Check}/>;
 
@@ -211,6 +212,7 @@ const CartPage = props => {
                     })}
                 </StoreTitle>
                 {cartBody}
+                <HeightPad/>
                 {loadingComponent}
                 {notiComponent}
             </div>
