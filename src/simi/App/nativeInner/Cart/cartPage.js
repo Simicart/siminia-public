@@ -15,7 +15,6 @@ import Image from "@magento/venia-ui/lib/components/Image";
 import {RedButton} from "./RedButton";
 import {ProductListingWithBrandSeparation} from "./ProductListingWithBrandSeparation";
 import {useBottomNotification} from "./bottomNotificationHook";
-import LoadingBridge from "./LoadingBridge/LoadingBridge";
 import {useLoading} from "./loadingHook/useLoading";
 import HeightPad from "./HeightPad/heightPad";
 import SimpleHeader from "./SimpleHeader/simpleHeader";
@@ -199,15 +198,21 @@ const CartPage = props => {
         </div>
     )
 
+    const headerText = !isCartUpdating ? formatMessage({
+            id: 'cart.headTitle',
+            defaultMessage: 'Shopping Cart ({total})',
+        }, {
+            total: totalQuantity
+        }
+    ) : formatMessage({
+            id: 'cart.headTitleNoQuantity',
+            defaultMessage: 'Shopping Cart',
+        }
+    )
+
     const cartHeader = (
         <SimpleHeader
-            titleText={formatMessage({
-                    id: 'cart.headTitle',
-                    defaultMessage: 'Shopping Cart ({total})',
-                }, {
-                    total: totalQuantity
-                }
-            )}
+            titleText={headerText}
         />
     )
 
