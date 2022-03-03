@@ -18,6 +18,7 @@ import {useBottomNotification} from "./bottomNotificationHook";
 import LoadingBridge from "./LoadingBridge/LoadingBridge";
 import {useLoading} from "./loadingHook/useLoading";
 import HeightPad from "./HeightPad/heightPad";
+import SimpleHeader from "./SimpleHeader/simpleHeader";
 
 const CheckIcon = <Icon size={20} src={Check}/>;
 
@@ -120,15 +121,9 @@ const CartPage = props => {
 
     // will use this in header
     const totalQuantity = cartItems.length ? (
-        <span> {cartItems.reduce((total, item) => {
-            return total += item.quantity
-        }, 0)}
-            <FormattedMessage
-                id={'cartPage.itemsCount'}
-                defaultMessage={' Item(s)'}
-            />
-        </span>
-    ) : null;
+        cartItems.reduce((total, item) => {
+            return total + item.quantity
+        }, 0)) : 0
 
     const outOfStockLabel = displayOutOfStockLabel ? (
         <div className={classes.topOutOfStockContainer}>
@@ -152,6 +147,7 @@ const CartPage = props => {
     const cartBody = hasItems ? (
         <Fragment>
             <div className={classes.heading_container}>
+
                 {/*<h1 className={classes.heading}>*/}
                 {/*    <FormattedMessage*/}
                 {/*        id={'cartPage.headingCart'}*/}
@@ -203,6 +199,18 @@ const CartPage = props => {
         </div>
     )
 
+    const cartHeader = (
+        <SimpleHeader
+            titleText={formatMessage({
+                    id: 'cart.headTitle',
+                    defaultMessage: 'Shopping Cart ({total})',
+                }, {
+                    total: totalQuantity
+                }
+            )}
+        />
+    )
+
     return (
         <Fragment>
             {outOfStockLabel}
@@ -213,6 +221,7 @@ const CartPage = props => {
                         defaultMessage: 'Cart'
                     })}
                 </StoreTitle>
+                {cartHeader}
                 {cartBody}
                 <HeightPad/>
                 {loadingComponent}
