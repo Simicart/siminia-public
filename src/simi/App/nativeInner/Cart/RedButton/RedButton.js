@@ -4,7 +4,7 @@ import Button from "@magento/venia-ui/lib/components/Button/button";
 import {configColor} from "../../../../Config";
 
 export const RedButton = (props) => {
-    const {children, classes, ...restProps} = props || {}
+    const {children, classes, style, ...restProps} = props || {}
 
     return (
         <Button {...restProps}
@@ -12,7 +12,8 @@ export const RedButton = (props) => {
                 type={'submit'}
                 style={{
                     backgroundColor: configColor.button_background,
-                    color: configColor.button_text_color
+                    color: configColor.button_text_color,
+                    ...style
                 }}
         >
             {children}

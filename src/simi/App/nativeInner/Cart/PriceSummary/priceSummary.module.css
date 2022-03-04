@@ -24,7 +24,7 @@
     text-transform: uppercase;
     font-weight: bold;
     line-height: 1rem;
-    max-width: 7.5rem;
+    max-width: 7rem;
 }
 
 .checkoutButton_container > button * {
@@ -43,7 +43,9 @@
     justify-content: flex-end;
     align-items: baseline;
     margin-top: 2rem;
-    padding-top: 0.8rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    background: white;
 }
 
 .totalPricePiece {
@@ -63,4 +65,17 @@
 .pricePlaceholder {
     width: 1rem;
     display: inline-block;
+}
+
+
+@media (min-width: 961px) {
+    .root {
+        padding: 0;
+    }
+
+
+    .checkoutButton_container > button {
+        max-width: 7.5rem;
+    }
+
 }

@@ -34,9 +34,10 @@ const Products = props => {
         pageSize,
         pageControl
     } = props;
- 
+
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
+    const isMobileSite = windowSize.innerWidth <= 768;
     const { products } = data;
     const { total_count } = products;
     const { formatMessage } = useIntl();
@@ -114,7 +115,7 @@ const Products = props => {
                 newPage !== currentPage &&
                 (newPage - 1) * pageSize < total_count
             )
-                setPage(newPage);
+            setPage(newPage);
         }
     };
 
@@ -171,7 +172,7 @@ const Products = props => {
                             pageSize={pageSize}
                             showPageNumber={true}
                             showInfoItem={true}
-                            itemsPerPageOptions={[12, 24, 36, 48, 60]}
+                            itemsPerPageOptions={false}
                         />
                     ) : (
                         <LoadMore
@@ -297,6 +298,7 @@ const Products = props => {
                                     data={data}
                                     sortByData={sortByData}
                                 />
+                                
                                 {/* <div className="wrap-top" onClick={() => clickSortByPrice()}>
                                 <span className="label">
                                     {formatMessage({
@@ -314,6 +316,7 @@ const Products = props => {
                                 />
                             </div> */}
                             </div>
+                            
                             <div className="product-list-sortby">
                                 <div
                                     className="wrap-top"
@@ -332,11 +335,11 @@ const Products = props => {
                                             <ChevronDown size={15} />
                                         )}
                                     </span>
-                                    <div
+                                    {/* <div
                                         className={`${
                                             showingDropdown ? 'activeSort' : ''
                                         }`}
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                         </div>
@@ -361,8 +364,8 @@ const Products = props => {
                     {renderLeftNavigation()}
                 </div>
                 <div
-                    className="listing-product"
-                    style={{ display: 'inline-block', width: '100%' }}
+                    className={`${renderCarouselChildCate() ? "marginTop" : ""} listing-product`}
+                    style={{ display: 'inline-block', width: '100%'}}
                 >
                     {renderList()}
                 </div>

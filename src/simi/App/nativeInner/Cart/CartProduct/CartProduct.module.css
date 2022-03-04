@@ -116,6 +116,7 @@
 
 .details {
     height: 100%;
+    margin-left: 8px;
 }
 
 
@@ -123,4 +124,43 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 10px;
+}
+
+
+@media (min-width: 759px) {
+    .root {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+
+    .image {
+        max-width: 202px;
+        max-height: 202px;
+    }
+
+    .details {
+        margin-left: 3rem;
+    }
+
+}
+
+
+@media (min-width: 1023px) {
+    .root {
+        padding-top: 35px;
+        padding-bottom: 35px;
+    }
+
+    .image {
+        max-width: 303px;
+        max-height: 303px;
+    }
+
+    .details {
+        margin-left: 4rem;
+    }
+
+    .name {
+        font-size: 0.9rem;
+    }
 }

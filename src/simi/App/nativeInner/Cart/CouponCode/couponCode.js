@@ -90,19 +90,19 @@ const CouponCode = props => {
     if (!data) {
         return null;
     }
-
-    if (applyingCoupon || removingCoupon) {
-        return (
-            <LoadingIndicator classes={{
-                root: classes.loadingRoot
-            }}>
-                <FormattedMessage
-                    id={'coupon.loading'}
-                    defaultMessage={'Loading coupon...'}
-                />
-            </LoadingIndicator>
-        )
-    }
+    //
+    // if (applyingCoupon || removingCoupon) {
+    //     return (
+    //         <LoadingIndicator classes={{
+    //             root: classes.loadingRoot
+    //         }}>
+    //             <FormattedMessage
+    //                 id={'coupon.loading'}
+    //                 defaultMessage={'Loading coupon...'}
+    //             />
+    //         </LoadingIndicator>
+    //     )
+    // }
 
     if (errors.get('getAppliedCouponsQuery')) {
         return (
