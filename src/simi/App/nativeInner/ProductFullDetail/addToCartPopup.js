@@ -38,7 +38,7 @@ const AddToCartPopup = props => {
             <div
                 ref={ref}
                 className="form"
-                style={{ top: `calc(100% - ${height}px)` }}
+                // style={{ top: `calc(100% - ${height}px)` }}
             >
                 <Form
                     onSubmit={
