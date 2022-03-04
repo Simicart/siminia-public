@@ -36,5 +36,5 @@ export default {
     checkmo: CheckMo,
     banktransfer: BankTransfer,
     cashondelivery: COD,
-    paypal_express: PaypalExpress //PaypalButtons
+    paypal_express: PaypalButtons
 };
