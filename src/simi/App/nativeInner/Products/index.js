@@ -272,7 +272,7 @@ const Products = props => {
         }
     };
     // useEventListener(globalThis, 'keydown', handleClickOutside);
-    useEventListener(globalThis,'click', handleClickOutside);
+    useEventListener(globalThis, 'click', handleClickOutside);
 
     return (
         <article className="products-root" id="root-product-list">
@@ -361,7 +361,8 @@ const Products = props => {
                     {renderCarouselChildCate()}
                 </div>
                 {windowSize.innerWidth > 768 ? renderLeftNavigation() : ''}
-                <div ref={dropdownRef}
+                <div
+                    ref={dropdownRef}
                     className={`${
                         showFilter ? 'activeFilter' : 'unActiveFilter'
                     }`}

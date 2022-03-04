@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { string, number, shape } from 'prop-types';
 import { useCategoryList } from '@magento/peregrine/lib/talons/CategoryList/useCategoryList';
@@ -8,7 +8,15 @@ import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/Loadi
 import ErrorView from '@magento/venia-ui/lib/components/ErrorView';
 import defaultClasses from './categoryList.module.css';
 import CategoryTile from './categoryTile';
+import { GrUserFemale } from 'react-icons/gr';
+import { GiNurseFemale, GiJerusalemCross } from 'react-icons/gi';
+import { FiWatch } from 'react-icons/fi';
+import { MdModelTraining } from 'react-icons/md';
+import { FcNews } from 'react-icons/fc';
 
+MdModelTraining;
+
+FiWatch;
 // map Magento 2.3.1 schema changes to Venia 2.0.0 proptype shape to maintain backwards compatibility
 const mapCategory = categoryItem => {
     const { items } = categoryItem.productImagePreview;
@@ -35,6 +43,15 @@ const CategoryList = props => {
     const { childCategories, storeConfig, error, loading } = talonProps;
     const { formatMessage } = useIntl();
     const classes = useStyle(defaultClasses, props.classes);
+    const [active, setActive] = useState(0);
+    const listIcon = [
+        <FcNews size={50} />,
+        <GrUserFemale size={50} />,
+        <GiNurseFemale size={50} />,
+        <FiWatch size={50} />,
+        <MdModelTraining size={50} />,
+        <GiJerusalemCross size={50} />
+    ];
 
     const header = title ? (
         <div className={classes.header}>
@@ -60,12 +77,18 @@ const CategoryList = props => {
         if (childCategories.length) {
             child = (
                 <div className={classes.content}>
-                    {childCategories.map(item => (
-                        <CategoryTile
-                            item={mapCategory(item)}
-                            key={item.url_key}
-                            storeConfig={storeConfig}
-                        />
+                    {childCategories.map((item, index) => (
+                        <div
+                            className={active === index ? classes.active : ''}
+                            onClick={() => setActive(index)}
+                        >
+                            <CategoryTile
+                                icon={listIcon[index]}
+                                item={mapCategory(item)}
+                                key={item.url_key}
+                                storeConfig={storeConfig}
+                            />
+                        </div>
                     ))}
                 </div>
             );
