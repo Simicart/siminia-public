@@ -17,3 +17,29 @@
     grid-template-columns: repeat(auto-fit, 6rem);
     justify-content: center;
 }
+@media (max-width: 768px) {
+    .root {
+        position: fixed;
+        top: 55px;
+        left: 0;
+        bottom: 0;
+        width: 113px;
+        transition: all 0.5s;
+        padding: 0px;
+        background: #F2F2F3;
+        overflow-y: auto;
+        padding-bottom: 70px;
+    }
+    .header{
+        display: none;
+    }
+    .content {
+        grid-gap: 0;
+        justify-content: unset;
+        grid-template-columns: unset;
+    }
+    .active{
+        transition: 0.4s all;
+        background-color: #fff;
+    }
+}

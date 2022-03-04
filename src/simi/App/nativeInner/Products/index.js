@@ -253,7 +253,6 @@ const Products = props => {
     };
     const clickSortByPrice = () => {
         count++;
-        console.log('count', count);
     };
     const clickFilter = () => {
         count = 0;
@@ -261,12 +260,19 @@ const Products = props => {
         setShowDropdown(false);
     };
 
+    const dropdownRef = useRef(null);
     const handleClickOutside = e => {
-        if (showFilter) {
+        if (
+            showFilter &&
+            dropdownRef &&
+            dropdownRef.current &&
+            !dropdownRef.current.contains(e.target)
+        ) {
             setShowFilter(false);
         }
     };
-    useEventListener(globalThis, 'keydown', handleClickOutside);
+    // useEventListener(globalThis, 'keydown', handleClickOutside);
+    useEventListener(globalThis, 'click', handleClickOutside);
 
     return (
         <article className="products-root" id="root-product-list">
@@ -356,6 +362,7 @@ const Products = props => {
                 </div>
                 {windowSize.innerWidth > 768 ? renderLeftNavigation() : ''}
                 <div
+                    ref={dropdownRef}
                     className={`${
                         showFilter ? 'activeFilter' : 'unActiveFilter'
                     }`}

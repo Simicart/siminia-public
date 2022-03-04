@@ -7,31 +7,39 @@ import { useCategoryTile } from '@magento/peregrine/lib/talons/CategoryList/useC
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Image from '@magento/venia-ui/lib/components/Image';
 import defaultClasses from './categoryTile.module.css';
-
+import {
+    BiHomeAlt,
+    BiCategoryAlt,
+    BiCart,
+    BiWallet,
+    BiUser,
+    BiAbacus
+} from 'react-icons/bi';
 const IMAGE_WIDTH = 80;
 
 const CategoryTile = props => {
+    const icon = props.icon || {};
     const talonProps = useCategoryTile({
         item: props.item,
         storeConfig: props.storeConfig
     });
-
     const { image, item, handleClick } = talonProps;
 
     const classes = useStyle(defaultClasses, props.classes);
 
     const imagePreview = useMemo(() => {
-        return image.url ? (
-            <Image
-                alt={item.name}
-                classes={{ image: classes.image, root: classes.imageContainer }}
-                resource={image.url}
-                type={image.type}
-                width={IMAGE_WIDTH}
-            />
-        ) : (
-            <span className={classes.image_empty} />
-        );
+        // return image.url ? (
+        //     <Image
+        //         alt={item.name}
+        //         classes={{ image: classes.image, root: classes.imageContainer }}
+        //         resource={image.url}
+        //         type={image.type}
+        //         width={IMAGE_WIDTH}
+        //     />
+        // ) : (
+        //     <span className={classes.image_empty} />
+        // );
+        return <span className={classes.icon}>{icon}</span>;
     }, [
         classes.image,
         classes.image_empty,
