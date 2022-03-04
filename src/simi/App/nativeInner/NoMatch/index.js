@@ -29,7 +29,7 @@ const CMS = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "CMS"*/ 'src/simi/App/core/RootComponents/CMS')
+                import(/* webpackChunkName: "CMS"*/ 'src/simi/App/nativeInner/RootComponents/CMS')
             }
             {...props}
         />

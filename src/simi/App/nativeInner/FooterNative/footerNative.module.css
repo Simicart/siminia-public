@@ -39,7 +39,7 @@
     padding-right: 6px;
     z-index: 5;
     font-size: 12px;
-    line-height: 15px;
+    /* line-height: 15px; */
     display: flex;
     flex-direction: column;
     justify-content: center;

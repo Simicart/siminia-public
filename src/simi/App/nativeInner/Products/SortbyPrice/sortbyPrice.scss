@@ -1,8 +1,18 @@
-// @media (max-width: 480px) {
-//     .active{
-//         height: 4px;
-//         width: 34px;
-//         border-radius: 2px;
-//         background-color: #FFC700;
-//     }
-// }
+@media (max-width: 768px) {
+    .wrapActiveSortbyPrice{
+        .double-icon, .icon{
+            position: absolute;
+            left:100%;
+            top: -3px;
+            > svg:nth-child(2){
+                transform: translateY(-7px);
+            }
+        }
+        .icon{
+            svg{
+                transform: translateY(3px);
+            }
+        }
+    }
+    
+}

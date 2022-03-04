@@ -17,9 +17,8 @@ import CurrencySwitcher from '@magento/venia-ui/lib/components/Header/currencySw
 import PageLoadingIndicator from '@magento/venia-ui/lib/components/PageLoadingIndicator';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useWindowSize } from '@magento/peregrine';
-import { useIntl } from 'react-intl';
+import { useIntl } from 'react-intl'; 
 import { isBot, isHeadlessChrome } from '../../../Helper/BotDetect';
-
 
 import defaultClasses from './header.module.css';
 
@@ -62,7 +61,6 @@ const Header = props => {
                 isHtml === 'html' &&
                 isBrand !== '/brands' &&
                 isDetailPage > 1));
-    console.log('test', isHtml);
 
     const storeConfig = Identify.getStoreConfig();
     const [userData] = useUserContext();
@@ -162,7 +160,6 @@ const Header = props => {
                 }`}
             >
                 <SearchForm history={history} />
-                
             </div>
         );
     };
@@ -215,10 +212,10 @@ const Header = props => {
                         </div>
                     </header>
                 ) : null} */}
-                {!isHiddenHeader ? <div className={classes.virtualHeader}>
+                {!isHiddenHeader ? (
+                    <div className={classes.virtualHeader} />
+                ) : null}
 
-                </div> : null}
-                
                 {!isSimpleHeader && !isHiddenHeader && renderSearchForm()}
             </React.Fragment>
         );

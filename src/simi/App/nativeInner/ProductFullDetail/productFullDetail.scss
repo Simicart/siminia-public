@@ -225,7 +225,8 @@
     // .wrapperReviewSum {
     //     display: none;
     // }
-    .header-icon {
+    .main-product-detail-native{
+        .header-icon {
         padding: 8px;
         border-radius: 50%;
         background-color: #808080;
@@ -272,8 +273,10 @@
         border-radius: 50%;
         font-size: 15px;
         background: #0058ac;
-        line-height: normal;
-        padding: 0 7px;
+        line-height: 22px;
+        height: 22px;
+        width: 22px;
+        text-align: center;
         color: #fff;
     }
     .icon-root-3Vw {
@@ -381,5 +384,5 @@
         to {
             left: 100%;
         }
-    }
+    }}
 }
