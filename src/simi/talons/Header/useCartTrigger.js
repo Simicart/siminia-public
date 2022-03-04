@@ -14,10 +14,9 @@ import { useDropdown } from '@magento/peregrine/lib/hooks/useDropdown';
 const DENIED_MINI_CART_ROUTES = ['/checkout'];
 
 const CHECK_USER_IS_AUTHED = gql`
-    query simiCheckUserIsAuthed($cartId: String) {
-        simiCheckUserIsAuthed(cart_id: $cartId) {
-            token_valid
-            cart_editable
+    query simiCheckUserIsAuthed($cartId: String!) {
+        cart(cart_id: $cartId) {
+            id
         }
     }
 `;
