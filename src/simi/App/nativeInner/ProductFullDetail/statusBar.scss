@@ -67,18 +67,18 @@
 .main-AddToCartPopup {
     .form {
         position: fixed;
-        // bottom: 0;
+        bottom: 0;
         width: 100%;
         z-index: 5;
         background-color: #fff;
         border-radius: 20px 20px 0 0;
         animation: mymove .3s ;
-        height: 450px;
+        // height: height;
         
     }
     @keyframes mymove {
-        from {top: 100%;}
-        to {top: calc(100% - height);}
+        from {bottom: -52%;}
+        to {bottom: 0;}
       }
     @keyframes myModal {
         from {background-color: rgba(0, 0, 0, 0);}

@@ -14,7 +14,7 @@ import { smoothScrollToView } from 'src/simi/Helper/Behavior';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
 import Button from '@magento/venia-ui/lib/components/Button';
-import Carousel from '@simicart/siminia/src/simi/App/core/ProductImageCarousel';
+import Carousel from '../ProductImageCarousel';
 import FormError from '@magento/venia-ui/lib/components/FormError';
 import { QuantityFields } from '@simicart/siminia/src/simi/App/core/Cart/ProductListing/quantity.js';
 import RichContent from '@magento/venia-ui/lib/components/RichContent/richContent';
@@ -404,7 +404,7 @@ const ProductFullDetail = props => {
     );
 
     return (
-        <>
+        <div className={isMobileSite ? "main-product-detail-native" : null}>
             <AlertMessages
                 message={successMsg}
                 setAlertMsg={setAlertMsg}
@@ -697,7 +697,7 @@ const ProductFullDetail = props => {
                     />
                 </ProductDetailExtraProducts>
             </div>
-        </>
+        </div>
     );
 };
 

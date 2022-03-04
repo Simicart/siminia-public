@@ -3,10 +3,11 @@
         padding: 10px;
         position: fixed;
         z-index: 5;
+        width: 100%;
     }
 
     .main-alert.null {
-        top: -8%;
+        top: -9%;
         color: #fff;
         display: flex;
         font-size: 15px;
@@ -18,7 +19,7 @@
 
     .main-alert.close {
         animation: msgOut 0.4s;
-        top: -8%;
+        top: -9%;
         color: #fff;
         display: flex;
         font-size: 15px;
@@ -53,7 +54,7 @@
 
     @keyframes msgIn {
         from {
-            top: -8%;
+            top: -9%;
         }
         to {
             top: 0%;
@@ -64,7 +65,7 @@
             top: 0%;
         }
         to {
-            top: -8%;
+            top: -9%;
         }
     }
 }
