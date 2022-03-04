@@ -232,6 +232,9 @@
         background-color: #808080;
         color: #fff;
         margin-right: 15px;
+        .padding-15 {
+            padding: 0 15px;
+        }
     }
     .header-more {
         position: absolute;
@@ -273,10 +276,12 @@
         border-radius: 50%;
         font-size: 15px;
         background: #0058ac;
-        line-height: 22px;
-        height: 22px;
-        width: 22px;
+        line-height: 26px;
+        // padding: 0 7px;
+        width: 26px;
+        height: 26px;
         text-align: center;
+
         color: #fff;
     }
     .icon-root-3Vw {

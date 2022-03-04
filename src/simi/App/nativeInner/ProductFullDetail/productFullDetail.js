@@ -437,7 +437,7 @@ const ProductFullDetail = props => {
             ) : null}
 
             {/* <div className={'p-fulldetails-ctn container'}> */}
-            <div className={'p-fulldetails-ctn container'}>
+            <div className={'p-fulldetails-ctn container '}>
                 {mageworxSeoEnabled ? (
                     <DataStructure
                         avg_rating={avg_rating}
