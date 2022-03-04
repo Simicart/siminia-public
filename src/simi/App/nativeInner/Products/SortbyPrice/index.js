@@ -8,12 +8,13 @@ import { capitalizeEachWords, randomString } from 'src/simi/Helper/String';
 import { useEventListener } from '@magento/peregrine';
 require('./sortbyPrice.scss');
 
-let count = 0
+let count = 0;
 const SortbyPrice = props => {
-    const { history, location, sortByData, data } = props;
+    const { history, location, sortByData, data, activeSortByPrice } = props;
+    const [active, setActive] = useState(activeSortByPrice);
     const { search } = location;
     const { formatMessage } = useIntl();
-    
+
     let asc = {
         value: 'price',
         key: 'price',
@@ -27,15 +28,15 @@ const SortbyPrice = props => {
         showDir: true
     };
 
-    const clickSortByPrice = () => { 
-        if(count % 2 !== 0){
+    const clickSortByPrice = () => {
+        if (count % 2 !== 0) {
             if (asc) {
                 const queryParams = new URLSearchParams(search);
                 queryParams.set('product_list_order', asc.key);
                 queryParams.set('product_list_dir', asc.direction);
                 history.push({ search: queryParams.toString() });
             }
-        } else{
+        } else {
             if (desc) {
                 const queryParams = new URLSearchParams(search);
                 queryParams.set('product_list_order', desc.key);
@@ -45,24 +46,32 @@ const SortbyPrice = props => {
         }
         count++;
     };
+
     return (
         <>
             <div className="wrap-top">
-                <span className="label"  onClick={() => clickSortByPrice()}>
+                <span className="label" onClick={() => clickSortByPrice()}>
                     {formatMessage({
                         id: 'sortByPrice',
                         defaultMessage: 'Price'
                     })}
                 </span>
-                <span className="icon-dropdown">
-                    {count % 2 === 0 ? (
-                        <ChevronDown size={15} />
-                    ) : (
+                {count === 0 ? (
+                    <div className="double-icon">
                         <ChevronUp size={15} />
-                    )}
-                </span>
+                        <ChevronDown size={15} />
+                    </div>
+                ) : (
+                    <span className="icon">
+                        {count % 2 === 0 ? (
+                            <span className="dropup"><ChevronUp size={15} /></span>
+                        ) : (
+                            <span className="dropdown"><ChevronDown size={15} /></span>
+                        )}
+                    </span>
+                )}
             </div>
-            {count > 0  ? <div className="activeSortbyPrice"></div> : ''}
+            {/* {count > 0 && !active  ? <div className="activeSortbyPrice"></div> : ''} */}
         </>
     );
 };
