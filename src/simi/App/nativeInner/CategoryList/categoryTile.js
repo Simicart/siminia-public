@@ -7,6 +7,7 @@ import { useCategoryTile } from '@magento/peregrine/lib/talons/CategoryList/useC
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Image from '@magento/venia-ui/lib/components/Image';
 import defaultClasses from './categoryTile.module.css';
+import { BsBag } from 'react-icons/bs';
 
 const IMAGE_WIDTH = 80;
 
@@ -15,7 +16,6 @@ const CategoryTile = props => {
         item: props.item,
         storeConfig: props.storeConfig
     });
-
     const { image, item, handleClick } = talonProps;
 
     const classes = useStyle(defaultClasses, props.classes);
@@ -32,6 +32,7 @@ const CategoryTile = props => {
         ) : (
             <span className={classes.image_empty} />
         );
+        // return <BsBag size={50}/>
     }, [
         classes.image,
         classes.image_empty,
