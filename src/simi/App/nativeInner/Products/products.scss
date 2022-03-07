@@ -204,21 +204,37 @@
     }
     @media (max-width: 768px) {
         .items-count{
-            display: none;
+            // display: none;
         }
         h1.title{
             display: none;
         }
         .listing-product{
-            margin-top: 20%;
+            margin-top: 10%;
             .product-list-top{
                 padding-bottom: 0px;
                 border-bottom: none;
                 margin-bottom: 0;
+                display: grid;
+                grid-template-areas: "title itemCount";
+                grid-template-columns: 1fr min-content;
+                .category-title{
+                    grid-area: title;
+                    font-weight: 600;
+                    font-size: 14px;
+                    line-height: 19px;
+                    white-space: nowrap;
+                    margin-top: 11px;
+                    height: 22px;
+                }
+                .items-count-ctn{
+                    grid-area: itemCount;
+                }
             }
+            
         }
         .marginTop{
-            margin-top: 35%
+            margin-top: 25%
         }
         .sortby-filter{
             display: grid;

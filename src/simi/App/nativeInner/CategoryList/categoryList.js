@@ -1,41 +1,19 @@
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { string, number, shape } from 'prop-types';
-import { useCategoryList } from '@magento/peregrine/lib/talons/CategoryList/useCategoryList';
+import { useCategoryList } from '../talons/CategoryList/useCategoryList';
 
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import ErrorView from '@magento/venia-ui/lib/components/ErrorView';
 import defaultClasses from './categoryList.module.css';
-import CategoryTile from './categoryTile';
+import ProductsList from './productsList';
 import { GrUserFemale } from 'react-icons/gr';
 import { GiNurseFemale, GiJerusalemCross } from 'react-icons/gi';
 import { FiWatch } from 'react-icons/fi';
 import { MdModelTraining } from 'react-icons/md';
 import { FcNews } from 'react-icons/fc';
 
-MdModelTraining;
-
-FiWatch;
-// map Magento 2.3.1 schema changes to Venia 2.0.0 proptype shape to maintain backwards compatibility
-const mapCategory = categoryItem => {
-    const { items } = categoryItem.productImagePreview;
-    return {
-        ...categoryItem,
-        productImagePreview: {
-            items: items.map(item => {
-                const { small_image } = item;
-                return {
-                    ...item,
-                    small_image:
-                        typeof small_image === 'object'
-                            ? small_image.url
-                            : small_image
-                };
-            })
-        }
-    };
-};
 
 const CategoryList = props => {
     const { id, title } = props;
@@ -45,12 +23,12 @@ const CategoryList = props => {
     const classes = useStyle(defaultClasses, props.classes);
     const [active, setActive] = useState(0);
     const listIcon = [
-        <FcNews size={50} />,
-        <GrUserFemale size={50} />,
-        <GiNurseFemale size={50} />,
-        <FiWatch size={50} />,
-        <MdModelTraining size={50} />,
-        <GiJerusalemCross size={50} />
+        <FcNews size={30} />,
+        <GrUserFemale size={30} />,
+        <GiNurseFemale size={30} />,
+        <FiWatch size={30} />,
+        <MdModelTraining size={30} />,
+        <GiJerusalemCross size={30} />
     ];
 
     const header = title ? (
@@ -61,53 +39,99 @@ const CategoryList = props => {
         </div>
     ) : null;
 
-    let child;
-
-    if (!childCategories) {
-        if (error) {
-            if (process.env.NODE_ENV !== 'production') {
-                console.error(error);
+    const renderLeftContent = () => {
+        if(!childCategories){
+            if (error) {
+                if (process.env.NODE_ENV !== 'production') {
+                    console.error(error);
+                }
+    
+                return <ErrorView />;
+            } else if (loading) {
+                return fullPageLoadingIndicator;
             }
-
-            return <ErrorView />;
-        } else if (loading) {
-            child = fullPageLoadingIndicator;
         }
-    } else {
-        if (childCategories.length) {
-            child = (
-                <div className={classes.content}>
-                    {childCategories.map((item, index) => (
+        else {
+            if(childCategories.length){
+                return childCategories.map((item, index) => {
+                    return (
                         <div
-                            className={active === index ? classes.active : ''}
+                            className={
+                                active === index ? classes.active : classes.unActive
+                            }
                             onClick={() => setActive(index)}
                         >
-                            <CategoryTile
-                                icon={listIcon[index]}
-                                item={mapCategory(item)}
-                                key={item.url_key}
-                                storeConfig={storeConfig}
-                            />
+                            <span className={classes.icon}>{listIcon[index]}</span>
+                            <span className={classes.name}>{item.name}</span>
                         </div>
-                    ))}
-                </div>
-            );
-        } else {
-            return (
-                <ErrorView
-                    message={formatMessage({
-                        id: 'categoryList.noResults',
-                        defaultMessage: 'No child categories found.'
-                    })}
-                />
-            );
+                    );
+                });
+            }else {
+                return (
+                    <ErrorView
+                        message={formatMessage({
+                            id: 'categoryList.noResults',
+                            defaultMessage: 'No child categories found.'
+                        })}
+                    />
+                );
+            }
         }
-    }
-
+        
+    };
+    const renderRightContent = () => {
+        if(!childCategories){
+            if (error) {
+                if (process.env.NODE_ENV !== 'production') {
+                    console.error(error);
+                }
+    
+                return <ErrorView />;
+            } else if (loading) {
+                return fullPageLoadingIndicator;
+            }
+        }
+        else {
+            if(childCategories.length){
+                return (
+                    <div className={classes.wrapProductsList}>
+                        {childCategories
+                            .filter((i, key) => key === active)
+                            .map((childCate, index) => (
+                                <div>
+                                    <ProductsList
+                                        icon={listIcon[index]}
+                                        childCate={childCate}
+                                        key={childCate.url_key}
+                                        storeConfig={storeConfig}
+                                    />
+                                </div>
+                            ))}
+                    </div>
+                );
+            }
+            else {
+                return (
+                    <ErrorView
+                        message={formatMessage({
+                            id: 'categoryList.noResults',
+                            defaultMessage: 'No child categories found.'
+                        })}
+                    />
+                );
+            }
+        }
+       
+    };
     return (
         <div className={classes.root}>
             {header}
-            {child}
+            <div className={classes.mainContent}>
+                <div className={classes.leftContent}>{renderLeftContent()}</div>
+                <div className={classes.rightContent}>
+                    {renderRightContent()}
+                </div>
+            </div>
         </div>
     );
 };
