@@ -236,7 +236,6 @@ const CartPage = props => {
                         defaultMessage: 'Cart'
                     })}
                 </StoreTitle>
-                {cartHeader}
                 {cartBody}
                 <HeightPad height={50}/>
                 {loadingComponent}

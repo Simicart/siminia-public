@@ -11,19 +11,6 @@ const Dropdownoption = props => {
         setShowing(!showing);
     };
     const { formatMessage } = useIntl();
-    const handleClickOutside = e => {
-        if (
-            showing &&
-            dropdownRef &&
-            dropdownRef.current &&
-            !dropdownRef.current.contains(e.target)
-        ) {
-            setShowing(false);
-        }
-    };
-
-    useEventListener(globalThis, 'mousedown', handleClickOutside);
-    // useEventListener(globalThis, 'keydown', handleClickOutside);
 
     return (
         <div

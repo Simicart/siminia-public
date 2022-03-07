@@ -39,11 +39,14 @@
     padding-right: 6px;
     z-index: 5;
     font-size: 12px;
-    line-height: 15px;
+    /* line-height: 15px; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     top: 4px;
     right: 42%;
     text-align: center;
+}
+.virtualFooter {
+    height:55px;
 }

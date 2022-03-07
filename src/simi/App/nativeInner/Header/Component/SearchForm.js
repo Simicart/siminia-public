@@ -1,16 +1,16 @@
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import Identify from 'src/simi/Helper/Identify';
 import Search from 'src/simi/BaseComponents/Icon/Search';
 import defaultClasses from '../header.module.css';
 import { mergeClasses } from 'src/classify';
 import { useIntl } from 'react-intl';
-import { useUserContext } from '@magento/peregrine/lib/context/user.js';
 import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
-import { BiShoppingBag } from 'react-icons/bi';
+import { BiShoppingBag, BiX, BiArrowBack } from 'react-icons/bi';
+import { ArrowLeft } from 'react-feather';
 import { useWindowSize } from '@magento/peregrine';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 require('./search.scss');
 
@@ -20,6 +20,23 @@ const SearchAutoComplete = React.lazy(() =>
 
 const SearchForm = props => {
     const storeConfig = Identify.getStoreConfig();
+    const history = useHistory();
+    const location = useLocation();
+
+    const displayBackBtn =
+        location.pathname !== '/' &&
+        location.pathname !== '/home' &&
+        location.pathname !== '/cart' &&
+        location.pathname !== '/brands.html' &&
+        location.pathname !== '/account-information';
+
+    console.log('tessthieu', location.pathname);
+
+    useEffect(() => {
+        setOpenSearchField(false);
+        setSearchVal('');
+    }, [history.location.search]);
+
     const { itemCount: itemsQty } = useCartTrigger({
         mutations: {
             createCartMutation: CREATE_CART_MUTATION
@@ -44,8 +61,9 @@ const SearchForm = props => {
         if (searchVal.length > 1) {
             props.history.push(`/search.html?q=${searchVal}`);
             setSearchVal('');
+            setOpenSearchField(false);
         } else {
-            setOpenSearchField(!openSearchField);
+            setOpenSearchField(true);
         }
     };
     const handleSearchField = () => {
@@ -64,30 +82,53 @@ const SearchForm = props => {
             setOpenSearchField(false);
         }
     };
-    console.log('test', searchVal);
+    const handleCloseSearch = () => {
+        setOpenSearchField(false);
+        setSearchVal('');
+    };
 
     const classes = mergeClasses(defaultClasses, props.classes);
     const renderInputField = isPhone => {
         if (isPhone) {
             if (openSearchField) {
                 return (
-                    <input
-                        // autoFocus
-                        className="siminia-search-field"
-                        type="text"
-                        id="siminia-search-field"
-                        ref={e => {
-                            searchField = e;
-                        }}
-                        onBlur={() => handleBlur()}
-                        placeholder={formatMessage({
-                            id: 'search your product'
-                        })}
-                        onChange={() => handleSearchField()}
-                        onKeyPress={e => {
-                            if (e.key === 'Enter') startSearch();
-                        }}
-                    />
+                    <div className="siminia-search-field-wrapper">
+                        <div>
+                            <BiArrowBack
+                                className="header-close-icon"
+                                onClick={() => handleCloseSearch()}
+                            />
+                        </div>
+                        <input
+                            autoFocus
+                            className="siminia-search-field"
+                            type="text"
+                            id="siminia-search-field"
+                            ref={e => {
+                                searchField = e;
+                            }}
+                            onBlur={() => handleBlur()}
+                            placeholder={formatMessage({
+                                id: 'search your product'
+                            })}
+                            onChange={() => handleSearchField()}
+                            onKeyPress={e => {
+                                if (e.key === 'Enter') startSearch();
+                            }}
+                        />
+                        <div
+                            onClick={() => startSearch()}
+                            className="header-search-icon"
+                        >
+                            <Search
+                                style={{
+                                    width: 35,
+                                    height: 35,
+                                    display: 'block'
+                                }}
+                            />
+                        </div>
+                    </div>
                 );
             } else return null;
         }
@@ -109,43 +150,49 @@ const SearchForm = props => {
             />
         );
     };
+    const renderHeaderIcon = displayBackBtn => {
+        if (!displayBackBtn) {
+            return (
+                <Link to="/">
+                    <img
+                        className="main-header-icon"
+                        src="https://magento24.pwa-commerce.com/media/logo/stores/1/Lays-Logo.png"
+                        alt="logo"
+                    />
+                    <span className="header-title">SimiCart</span>
+                </Link>
+            );
+        } else
+            return (
+                <div className="main-header-backIcon">
+                    <ArrowLeft onClick={() => history.goBack()} />
+                    <Link to="/" className="header-title">
+                        SimiCart
+                    </Link>
+                </div>
+            );
+    };
 
     return (
         <>
             <div className={classes['header-search-form']}>
-                {isPhone ? (
-                    <Link to="/">
-                        <img
-                            className="main-header-icon"
-                            src="https://magento24.pwa-commerce.com/media/logo/stores/1/Lays-Logo.png"
-                            alt="logo"
-                        />
-                        <span className="header-title">SimiCart</span>
-                    </Link>
-                ) : null}
+                {isPhone
+                    ? // <Link to="/">
+                      //     <img
+                      //         className="main-header-icon"
+                      //         src="https://magento24.pwa-commerce.com/media/logo/stores/1/Lays-Logo.png"
+                      //         alt="logo"
+                      //     />
+                      //     <span className="header-title">SimiCart</span>
+                      // </Link>
+                      renderHeaderIcon(displayBackBtn)
+                    : null}
                 <label htmlFor="siminia-search-field" className="hidden">
                     {formatMessage({ id: 'Search' })}
                 </label>
-                {/* {openSearchField && isPhone ? (
-                    <input
-                        className="siminia-search-field"
-                        type="text"
-                        id="siminia-search-field"
-                        ref={e => {
-                            searchField = e;
-                        }}
-                        onBlur={() => setOpenSearchField(false)}
-                        placeholder={formatMessage({
-                            id: 'search your product'
-                        })}
-                        onChange={() => handleSearchField()}
-                        onKeyPress={e => {
-                            if (e.key === 'Enter') startSearch();
-                        }}
-                    />
-                 ) : null}  */}
+
                 {renderInputField(isPhone)}
-                 <div
+                <div
                     role="button"
                     tabIndex="0"
                     className={`${classes['search-icon']} ${
@@ -157,9 +204,9 @@ const SearchForm = props => {
                     <Search
                         style={{ width: 35, height: 35, display: 'block' }}
                     />
-                </div> 
+                </div>
 
-                {!isPhone && searchVal && searchVal.length > 2 && (
+                {searchVal && searchVal.length > 2 && (
                     <Suspense fallback={null}>
                         <SearchAutoComplete
                             visible={showAC}
@@ -169,10 +216,12 @@ const SearchForm = props => {
                     </Suspense>
                 )}
             </div>
-            {isPhone ? <Link to="/cart" className="shopping-cart-icon">
-                <BiShoppingBag />
-                <span className="header-cartQty">{itemsQty}</span>
-            </Link> : null}
+            {isPhone ? (
+                <Link to="/cart" className="shopping-cart-icon">
+                    <BiShoppingBag />
+                    <span className="header-cartQty">{itemsQty}</span>
+                </Link>
+            ) : null}
         </>
     );
 };

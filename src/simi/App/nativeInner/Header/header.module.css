@@ -294,24 +294,24 @@ body.fixed-scroll {
     }
     .header-search-form input {
         border: 1px solid #000;
-        border-left: none;
-        left:-1%;
-        top: 5px;
-        animation: inputIn 0.4s;
-        width: 70%;
+       
+        left:10%;
+        top: 13px;
+        /* animation: inputIn 0.4s; */
+        width: 89%;
     }
     .header-search-form .search-icon {
         right: 16px;
         top: -5px;
     }
-    @keyframes inputIn {
+    /* @keyframes inputIn {
         from {
             left: -81%;
         }
         to {
             left: -1%;
         }
-    }
+    } */
 }
 .header-app-bar-rtl aside > div {
     left: 0;

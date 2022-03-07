@@ -20,7 +20,6 @@ import { useWindowSize } from '@magento/peregrine';
 import { useIntl } from 'react-intl';
 import { isBot, isHeadlessChrome } from '../../../Helper/BotDetect';
 
-
 import defaultClasses from './header.module.css';
 
 // check if bot or headless chrome / wont get cart to avoid perf accection
@@ -38,7 +37,7 @@ const Header = props => {
     const isSimpleHeader =
         location &&
         location.pathname &&
-        (location.pathname === '/checkout' || location.pathname === '/cart');
+        (location.pathname === '/checkout');
 
     const pathName =
         location && location.pathname
@@ -62,7 +61,6 @@ const Header = props => {
                 isHtml === 'html' &&
                 isBrand !== '/brands' &&
                 isDetailPage > 1));
-    console.log('test', isHtml);
 
     const storeConfig = Identify.getStoreConfig();
     const [userData] = useUserContext();
@@ -162,7 +160,6 @@ const Header = props => {
                 }`}
             >
                 <SearchForm history={history} />
-
             </div>
         );
     };
@@ -215,9 +212,10 @@ const Header = props => {
                         </div>
                     </header>
                 ) : null} */}
-                {!isHiddenHeader ? <div className={classes.virtualHeader}>
 
-                </div> : null}
+                {!isHiddenHeader && !isSimpleHeader ? (
+                    <div className={classes.virtualHeader} />
+                ) : null}
 
                 {!isSimpleHeader && !isHiddenHeader && renderSearchForm()}
             </React.Fragment>

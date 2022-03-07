@@ -18,6 +18,7 @@ import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 import { ChevronDown, ChevronUp } from 'react-feather';
 require('./products.scss');
 
+let count = 0;
 const Products = props => {
     const {
         data,
@@ -34,7 +35,6 @@ const Products = props => {
         pageSize,
         pageControl
     } = props;
-
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
     const isMobileSite = windowSize.innerWidth <= 768;
@@ -115,7 +115,7 @@ const Products = props => {
                 newPage !== currentPage &&
                 (newPage - 1) * pageSize < total_count
             )
-            setPage(newPage);
+                setPage(newPage);
         }
     };
 
@@ -140,13 +140,14 @@ const Products = props => {
         return (
             <React.Fragment>
                 <div className="product-list-top">
-                    {isPhone ? (
-                        ''
-                    ) : (
-                        <div className="items-count-ctn">{itemCount}</div>
-                    )}
+                    <div className="category-title">{title}</div>
+                    <div className="items-count-ctn">{itemCount}</div>
                     {windowSize.innerWidth > 768 ? (
-                        <Sortby showingDropdown={showingDropdown} data={data} sortByData={sortByData} />
+                        <Sortby
+                            showingDropdown={showingDropdown}
+                            data={data}
+                            sortByData={sortByData}
+                        />
                     ) : (
                         ''
                     )}
@@ -239,25 +240,35 @@ const Products = props => {
     };
 
     const [showingDropdown, setShowDropdown] = useState(false);
-
     const [showFilter, setShowFilter] = useState(false);
 
     const clickSortBy = () => {
+        count = 0;
         setShowDropdown(!showingDropdown);
         setShowFilter(false);
     };
-
+    const clickSortByPrice = () => {
+        count++;
+    };
     const clickFilter = () => {
+        count = 0;
         setShowFilter(!showFilter);
         setShowDropdown(false);
     };
 
+    const dropdownRef = useRef(null);
     const handleClickOutside = e => {
-        if (showFilter) {
+        if (
+            showFilter &&
+            dropdownRef &&
+            dropdownRef.current &&
+            !dropdownRef.current.contains(e.target)
+        ) {
             setShowFilter(false);
         }
     };
-    useEventListener(globalThis, 'keydown', handleClickOutside);
+    // useEventListener(globalThis, 'keydown', handleClickOutside);
+    useEventListener(globalThis, 'click', handleClickOutside);
 
     return (
         <article className="products-root" id="root-product-list">
@@ -294,29 +305,24 @@ const Products = props => {
                                 </div>
                             </div>
                             <div className="product-list-sortby-price">
-                                <SortbyPrice
-                                    data={data}
-                                    sortByData={sortByData}
-                                />
-                                
-                                {/* <div className="wrap-top" onClick={() => clickSortByPrice()}>
-                                <span className="label">
-                                    {formatMessage({
-                                        id: 'sortByPrice',
-                                        defaultMessage: 'Price'
-                                    })}
-                                </span>
-                                <span className="icon-dropdown">
-                                    {showSortByPrice ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
-                                </span>
                                 <div
-                                    className={`${
-                                        showSortByPrice ? 'activeSort' : ''
-                                    }`}
-                                />
-                            </div> */}
+                                    className="wrapActiveSortbyPrice"
+                                    onClick={() => {
+                                        clickSortByPrice();
+                                    }}
+                                >
+                                    <SortbyPrice
+                                        data={data}
+                                        sortByData={sortByData}
+                                    />
+                                    {count > 0 ? (
+                                        <div className="activeSortbyPrice" />
+                                    ) : (
+                                        ''
+                                    )}
+                                </div>
                             </div>
-                            
+
                             <div className="product-list-sortby">
                                 <div
                                     className="wrap-top"
@@ -335,11 +341,6 @@ const Products = props => {
                                             <ChevronDown size={15} />
                                         )}
                                     </span>
-                                    {/* <div
-                                        className={`${
-                                            showingDropdown ? 'activeSort' : ''
-                                        }`}
-                                    /> */}
                                 </div>
                             </div>
                         </div>
@@ -357,6 +358,7 @@ const Products = props => {
                 </div>
                 {windowSize.innerWidth > 768 ? renderLeftNavigation() : ''}
                 <div
+                    ref={dropdownRef}
                     className={`${
                         showFilter ? 'activeFilter' : 'unActiveFilter'
                     }`}
@@ -364,8 +366,10 @@ const Products = props => {
                     {renderLeftNavigation()}
                 </div>
                 <div
-                    className={`${renderCarouselChildCate() ? "marginTop" : ""} listing-product`}
-                    style={{ display: 'inline-block', width: '100%'}}
+                    className={`${
+                        renderCarouselChildCate() ? 'marginTop' : ''
+                    } listing-product`}
+                    style={{ display: 'inline-block', width: '100%' }}
                 >
                     {renderList()}
                 </div>
