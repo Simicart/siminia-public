@@ -15,76 +15,46 @@ export const GET_CATEGORY_LIST = gql`
             id
             children {
                 id
-                name
-                url_key
-                url_path
-                children_count
-                path
-                image
-                children{
-                    name
-                    products{
-                      items{
+                products{
+                  total_count
+                  items{
                         name
                         image{
                           url
                           label
                           
                         }
+                        special_price
                         url_key
-                        price_range{
-                          maximum_price{
-                            discount{
-                              amount_off
-                              percent_off
-                            }
-                            final_price{
-                              currency
-                              value
-                            }
-                            regular_price{
-                              currency
-                              value
-                            }
-                          }
-                          minimum_price{
-                            discount{
-                                amount_off
-                                percent_off
-                              }
-                              final_price{
-                                currency
-                                value
-                              }
-                              regular_price{
-                                currency
-                                value
-                              }
-                          }
+                        url_suffix
+                  }}
+                name
+                url_key
+                url_path
+                url_suffix
+                children_count
+                path
+                image
+                children{
+                    name
+                    url_suffix
+                  	url_key
+                  	url_path
+                    image
+                    products{
+                      items{
+                        name
+                        image{
+                          url
+                          label
                         }
+                        url_key
+                        url_suffix
                       }
                     }
                   }
                 productImagePreview: products(pageSize: 1) {
                     items {
-                        price_range{
-                        minimum_price{
-                          final_price{
-                            value
-                            currency
-                          }
-                          discount{
-                            percent_off
-                            amount_off
-                          }
-                        }
-                        maximum_price{
-                          final_price{
-                            currency
-                            value
-                          }
-                        }
-                      }
                       id
                       small_image {
                           url
