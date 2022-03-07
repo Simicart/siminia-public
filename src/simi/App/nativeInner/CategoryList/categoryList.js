@@ -19,7 +19,6 @@ const CategoryList = props => {
     const { id, title } = props;
     const talonProps = useCategoryList({ id });
     const { childCategories, storeConfig, error, loading } = talonProps;
-    console.log("childCategories",childCategories);
     const { formatMessage } = useIntl();
     const classes = useStyle(defaultClasses, props.classes);
     const [active, setActive] = useState(0);
