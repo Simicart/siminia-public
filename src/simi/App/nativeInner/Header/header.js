@@ -37,7 +37,7 @@ const Header = props => {
     const isSimpleHeader =
         location &&
         location.pathname &&
-        (location.pathname === '/checkout' || location.pathname === '/cart');
+        (location.pathname === '/checkout');
 
     const pathName =
         location && location.pathname
@@ -212,7 +212,9 @@ const Header = props => {
                         </div>
                     </header>
                 ) : null} */}
-                {!isHiddenHeader ? (
+
+
+                {!isHiddenHeader && !isSimpleHeader ? (
                     <div className={classes.virtualHeader} />
                 ) : null}
 

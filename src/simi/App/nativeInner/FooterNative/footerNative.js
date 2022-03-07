@@ -122,7 +122,12 @@ const FooterNative = props => {
         );
     });
 
-    return <div className={classes.mainFooter}>{MenuItems}</div>;
+    return (
+        <>
+            <div className={classes.virtualFooter} />
+            <div className={classes.mainFooter}>{MenuItems}</div>
+        </>
+    );
 };
 
 export default FooterNative;
