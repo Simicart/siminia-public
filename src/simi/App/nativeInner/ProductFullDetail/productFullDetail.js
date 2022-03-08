@@ -105,6 +105,8 @@ const ProductFullDetail = props => {
     } = talonProps;
     const successMsg = `${productDetails.name} was added to shopping cart`;
 
+    console.log("description", product.short_description);
+
     let History = useHistory();
     const [moreBtn, setMoreBtn] = useState(false);
     const storeConfig = Identify.getStoreConfig();
@@ -602,6 +604,7 @@ const ProductFullDetail = props => {
                                     defaultMessage={'Product Description'}
                                 />
                             </span>
+                            
 
                             {!isMobileSite ? (
                                 <RichContent
@@ -630,7 +633,9 @@ const ProductFullDetail = props => {
                                 </>
                             )}
                         </section>
-
+                        {product.short_description !== "" && isMobileSite ? <span>
+                                <RichContent html={product.short_description.html} />
+                            </span> : null}
                         {!isMobileSite ? (
                             <section className={classes.details}>
                                 <span className={classes.detailsTitle}>
