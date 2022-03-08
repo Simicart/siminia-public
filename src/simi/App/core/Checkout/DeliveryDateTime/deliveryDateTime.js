@@ -14,11 +14,18 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import ButtonLoader from '../../../../BaseComponents/ButtonLoader';
 
+const deliveryTimeEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME) === 1;
+
 require('./style.scss');
 const DeliveryDateTime = forwardRef((props, ref) => {
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const { getDeliveryTime, deliveryTimeMutation } = operations;
     const { data, error, loading } = useQuery(getDeliveryTime, {
+        skip: !deliveryTimeEnabled,
         fetchPolicy: 'cache-and-network'
     });
     const [startDate, setDate] = useState(new Date());
@@ -54,7 +61,6 @@ const DeliveryDateTime = forwardRef((props, ref) => {
         return null;
     }
 
-    console.log('dataa', startDate, deliTime);
     const dateFormat = data.deliveryTime.deliveryDateFormat;
     const daysOff = data.deliveryTime.deliveryDaysOff;
     const dateOff = data.deliveryTime.deliveryDateOff;
@@ -158,7 +164,7 @@ const DeliveryDateTime = forwardRef((props, ref) => {
                 {HouseSecurityCode}
                 {DeliveryComment}
                 {mutationLoading ? (
-                    <ButtonLoader classes={"btn-updateTime"}/>
+                    <ButtonLoader classes={'btn-updateTime'} />
                 ) : (
                     <button className="btn-updateTime" onClick={handleSubmit}>
                         Update Delivery Time

@@ -15,7 +15,7 @@
     max-width: 1440px;
     width: 100%;
     position: relative;
-    z-index: 11;
+    z-index: 101;
     margin: 0 auto;
 }
 header {
