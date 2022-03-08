@@ -13,6 +13,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import ButtonLoader from '../../../../BaseComponents/ButtonLoader';
+import { useIntl } from 'react-intl';
 
 const deliveryTimeEnabled =
     window.SMCONFIGS &&
@@ -22,6 +23,7 @@ const deliveryTimeEnabled =
 
 require('./style.scss');
 const DeliveryDateTime = forwardRef((props, ref) => {
+    const { formatMessage } = useIntl();
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const { getDeliveryTime, deliveryTimeMutation } = operations;
     const { data, error, loading } = useQuery(getDeliveryTime, {
@@ -85,7 +87,7 @@ const DeliveryDateTime = forwardRef((props, ref) => {
     const HouseSecurityCode =
         isHouseSecurityCode == 'true' ? (
             <label className="text-area">
-                House Security Code:
+                {formatMessage({ id: 'House Security Code:' })}
                 <input
                     type="text"
                     value={houseSecurityCode}
@@ -98,7 +100,7 @@ const DeliveryDateTime = forwardRef((props, ref) => {
     const DeliveryComment =
         isDeliveryComment == 'true' ? (
             <label className="text-area">
-                Delivery Comment:
+                {formatMessage({ id: 'Delivery Comment:' })}
                 <input
                     type="text"
                     value={deliveryComment}
@@ -138,10 +140,12 @@ const DeliveryDateTime = forwardRef((props, ref) => {
         return true;
     };
 
-    if (isEnabledDeliveryTime) {
+    if (isEnabledDeliveryTime && OptionDeliveryTime) {
         return (
             <div className="deliveryTime-main">
-                <div className="header">Delivery Time</div>
+                <div className="header">
+                    {formatMessage({ id: 'Delivery Time' })}
+                </div>
                 <DatePicker
                     selected={startDate}
                     onChange={date => setDate(date)}
@@ -167,13 +171,13 @@ const DeliveryDateTime = forwardRef((props, ref) => {
                     <ButtonLoader classes={'btn-updateTime'} />
                 ) : (
                     <button className="btn-updateTime" onClick={handleSubmit}>
-                        Update Delivery Time
+                        {formatMessage({ id: 'Update Delivery Time' })}
                     </button>
                 )}
             </div>
         );
     }
-    return null;
+    return '';
 });
 
 export default DeliveryDateTime;
