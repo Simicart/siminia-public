@@ -39,9 +39,16 @@ const animationPromise = (el, animations, args) => {
     })
 }
 
+const timePromise = async (duration) => {
+    return new Promise((resolve) => {
+            return setTimeout(() => resolve(duration), duration)
+        }
+    )
+}
+
 const BASE_HEIGHT_DEFAULT = 0
 const TIME_IN_DEFAULT = 200
-const TIME_PERSIST_DEFAULT = 1500
+const TIME_PERSIST_DEFAULT = 1200
 const TIME_OUT_DEFAULT = 200
 
 
@@ -91,12 +98,17 @@ export const useBottomNotification = (props) => {
             if (notificationRef.current) {
                 const rectHeight = notificationRef.current.offsetHeight
 
-                animationPromise(notificationRef.current, [
-                    {transform: `translateY(${rectHeight - baseHeight}px)`},
-                    {transform: `translateY(${-baseHeight}px)`},
-                ], {
-                    duration: timeIn,
-                })
+                // set to different frame
+                // to avoid re-rendering of state during animation
+                timePromise(50)
+                    .then(() => {
+                        return animationPromise(notificationRef.current, [
+                            {transform: `translateY(${-rectHeight - baseHeight}px)`},
+                            {transform: `translateY(${-baseHeight}px)`},
+                        ], {
+                            duration: timeIn,
+                        })
+                    })
                     .then(() => {
                         return animationPromise(notificationRef.current, [
                             {transform: `translateY(${-baseHeight}px)`},
@@ -108,7 +120,7 @@ export const useBottomNotification = (props) => {
                     .then(() => {
                         return animationPromise(notificationRef.current, [
                             {transform: `translateY(${-baseHeight}px)`},
-                            {transform: `translateY(${rectHeight - baseHeight}px)`},
+                            {transform: `translateY(${-rectHeight - baseHeight}px)`},
                         ], {
                             duration: timeOut,
                         })

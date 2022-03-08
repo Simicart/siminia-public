@@ -47,3 +47,6 @@
     right: 42%;
     text-align: center;
 }
+.virtualFooter {
+    height:55px;
+}

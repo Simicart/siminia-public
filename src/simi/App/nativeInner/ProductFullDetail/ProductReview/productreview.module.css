@@ -10,7 +10,7 @@
 
 .footerBtn {
     color: #444444;
-    font-family: poppins;
+    font-family: Roboto;
     font-size: 16px;
     font-weight: 500;
     letter-spacing: 0;
@@ -20,7 +20,7 @@
 
 .footerBtnActive {
     color: #000;
-    font-family: poppins;
+    font-family: Roboto;
     font-size: 16px;
     font-weight: 550;
     letter-spacing: 0;
@@ -78,7 +78,7 @@
 }
 .reviewProductName {
     color: #ffffff;
-    font-family: poppins;
+    font-family: Roboto;
     font-size: 21px;
     font-weight: 500;
     letter-spacing: 0;
@@ -92,7 +92,7 @@
     border: 1px solid #0058b2;
     background-color: #ffffff;
     color: #0058b2;
-    font-family: poppins;
+    font-family: Roboto;
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0;
@@ -106,7 +106,7 @@
     border-radius: 22.5px !important;
     background-color: #0058b2;
     color: #ffffff;
-    font-family: poppins;
+    font-family: Roboto;
     font-size: 16px;
     font-weight: 500;
     letter-spacing: 0;
@@ -120,12 +120,18 @@
         border-radius: 22.5px !important;
         background-color: #0058b2;
         color: #ffffff;
-        font-family: poppins;
+        font-family: Roboto;
         font-size: 16px;
         font-weight: 500;
         letter-spacing: 0;
         line-height: 45px;
         margin-top: 20px;
+    }
+    .writeRWBtn {
+        font-family: Roboto;
+    }
+    .reviewProductName {
+        font-family: Roboto;
     }
 }
 .submitBtnContainer {
@@ -197,7 +203,7 @@
 .ratingName {
     margin-right: 10px;
     color: #111111;
-    font-family: poppins;
+    font-family: Roboto;
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0;
@@ -205,14 +211,14 @@
 }
 .content {
     color: #111111;
-    font-family: poppins;
+    font-family: Roboto;
     font-size: 16px;
     letter-spacing: 0;
     line-height: 22px;
 }
 .noReivew {
     color: #111111;
-  font-family: poppins;
+  font-family: Roboto;
   font-size: 16px;
   letter-spacing: 0;
   line-height: 22px;

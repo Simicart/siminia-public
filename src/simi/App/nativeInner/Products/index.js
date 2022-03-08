@@ -35,7 +35,6 @@ const Products = props => {
         pageSize,
         pageControl
     } = props;
-
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
     const isMobileSite = windowSize.innerWidth <= 768;
@@ -141,11 +140,8 @@ const Products = props => {
         return (
             <React.Fragment>
                 <div className="product-list-top">
-                    {isPhone ? (
-                        ''
-                    ) : (
-                        <div className="items-count-ctn">{itemCount}</div>
-                    )}
+                    <div className="category-title">{title}</div>
+                    <div className="items-count-ctn">{itemCount}</div>
                     {windowSize.innerWidth > 768 ? (
                         <Sortby
                             showingDropdown={showingDropdown}
