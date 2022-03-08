@@ -200,6 +200,17 @@ const CheckoutSuccess = props => {
     );
 };
 
+const CheckoutFailure = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "CheckoutFailure"*/ 'src/simi/App/core/CheckoutFailure')
+            }
+            {...props}
+        />
+    );
+};
+
 const ContactPage = props => {
     return (
         <LazyComponent
@@ -426,6 +437,16 @@ const Routes = props => {
                     exact
                     path="/checkout-success"
                     render={props => <CheckoutSuccess {...props} />}
+                />
+                <Route
+                    exact
+                    path="/checkout/onepage/success"
+                    render={props => <CheckoutSuccess {...props} />}
+                />
+                <Route
+                    exact
+                    path="/checkout/onepage/error"
+                    render={props => <CheckoutFailure {...props} />}
                 />
                 <Route
                     exact
