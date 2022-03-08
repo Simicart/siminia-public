@@ -190,6 +190,7 @@ const ProductFullDetail = props => {
             value={productDetails.price.value}
             fromValue={productDetails.price.fromValue}
             toValue={productDetails.price.toValue}
+            baseValue={productDetails.price.baseValue}
         />
     );
     const { price } = product || {};
