@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correct page 1`] = `
+<div>
+  Title
+  <h1>
+    My Social Accounts
+  </h1>
+  <div>
+    <LinkedAccounts />
+    <div>
+      <div>
+        <div
+          componentName="Formatted Message Component"
+          defaultMessage="Link new accounts"
+          id="amSocialLogin.linkNewAccounts"
+        />
+      </div>
+      <SocialButtons
+        buttons={
+          Array [
+            Object {
+              "label": "Facebook",
+              "type": "facebook",
+            },
+            Object {
+              "label": "Instagram",
+              "type": "instagram",
+            },
+          ]
+        }
+        mode="account"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`render errorView 1`] = `
+<ErrorView
+  message="Looks like the page you were hoping to find doesn't exist. Sorry about that."
+/>
+`;
+
+exports[`render loading 1`] = `"LoadingIndicator"`;
+
+exports[`render page without linked accounts 1`] = `
+<div>
+  Title
+  <h1>
+    My Social Accounts
+  </h1>
+  <div>
+    <LinkedAccounts />
+    <div>
+      <div>
+        <div
+          componentName="Formatted Message Component"
+          defaultMessage="Link new accounts"
+          id="amSocialLogin.linkNewAccounts"
+        />
+      </div>
+      <SocialButtons
+        buttons={
+          Array [
+            Object {
+              "label": "Facebook",
+              "type": "facebook",
+            },
+            Object {
+              "label": "Instagram",
+              "type": "instagram",
+            },
+          ]
+        }
+        mode="account"
+      />
+    </div>
+  </div>
+</div>
+`;
