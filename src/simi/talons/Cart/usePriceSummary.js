@@ -81,7 +81,11 @@ export const usePriceSummary = (props = {}) => {
     const applyRuleData = useQuery(getRuleApply, {
         fetchPolicy: 'cache-and-network',
         nextFetchPolicy: 'cache-first',
-        skip: !cartId,
+        skip:
+            !cartId ||
+            !window.SMCONFIGS ||
+            !window.SMCONFIGS.plugins ||
+            !window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS,
         variables: {
             cartId
         }
