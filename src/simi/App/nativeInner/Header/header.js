@@ -17,7 +17,7 @@ import CurrencySwitcher from '@magento/venia-ui/lib/components/Header/currencySw
 import PageLoadingIndicator from '@magento/venia-ui/lib/components/PageLoadingIndicator';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useWindowSize } from '@magento/peregrine';
-import { useIntl } from 'react-intl'; 
+import { useIntl } from 'react-intl';
 import { isBot, isHeadlessChrome } from '../../../Helper/BotDetect';
 
 import defaultClasses from './header.module.css';
@@ -212,7 +212,6 @@ const Header = props => {
                         </div>
                     </header>
                 ) : null} */}
-
 
                 {!isHiddenHeader && !isSimpleHeader ? (
                     <div className={classes.virtualHeader} />

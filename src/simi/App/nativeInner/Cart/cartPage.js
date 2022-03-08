@@ -1,4 +1,4 @@
-import React, {Fragment, useCallback, useEffect, useState} from 'react';
+import React, {Fragment, useCallback, useEffect, useRef, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Check} from 'react-feather';
 import {useCartPage} from '@magento/peregrine/lib/talons/CartPage/useCartPage';
@@ -15,8 +15,9 @@ import Image from "@magento/venia-ui/lib/components/Image";
 import {RedButton} from "./RedButton";
 import {ProductListingWithBrandSeparation} from "./ProductListingWithBrandSeparation";
 import {useBottomNotification} from "./bottomNotificationHook";
-import LoadingBridge from "./LoadingBridge/LoadingBridge";
 import {useLoading} from "./loadingHook/useLoading";
+import HeightPad from "./HeightPad/heightPad";
+import SimpleHeader from "./SimpleHeader/simpleHeader";
 
 const CheckIcon = <Icon size={20} src={Check}/>;
 
@@ -56,6 +57,8 @@ const CartPage = props => {
     const {formatMessage} = useIntl();
     const [, {addToast}] = useToasts();
 
+    const summaryRef = useRef(null)
+
     const {
         component: notiComponent,
         makeNotification
@@ -73,9 +76,19 @@ const CartPage = props => {
 
     const [displayOutOfStockLabel, _setDisplayOutOfStockLabel] = useState(false)
 
+    // to bring out loading status of productList,
+    // use that to hide summary until done first load
+    const [firstProductsLoad, _setFirstProductLoad] = useState(true)
+
     const setDisplayOutOfStockLabel = (v) => {
         if (v !== displayOutOfStockLabel) {
             _setDisplayOutOfStockLabel(v)
+        }
+    }
+
+    const setFirstProductLoad = (v) => {
+        if (v !== firstProductsLoad) {
+            _setFirstProductLoad(v)
         }
     }
 
@@ -98,6 +111,8 @@ const CartPage = props => {
             setDisplayOutOfStockLabel={setDisplayOutOfStockLabel}
             setLoading={setLoading}
             makeNotification={makeNotification}
+            summaryRef={summaryRef}
+            setFirstProductLoad={setFirstProductLoad}
         />
     ) : (
         <h3>
@@ -107,6 +122,7 @@ const CartPage = props => {
             />
         </h3>
     );
+
 
     const priceAdjustments = hasItems ? (
         <PriceAdjustments setIsCartUpdating={setIsCartUpdating}
@@ -119,15 +135,9 @@ const CartPage = props => {
 
     // will use this in header
     const totalQuantity = cartItems.length ? (
-        <span> {cartItems.reduce((total, item) => {
-            return total += item.quantity
-        }, 0)}
-            <FormattedMessage
-                id={'cartPage.itemsCount'}
-                defaultMessage={' Item(s)'}
-            />
-        </span>
-    ) : null;
+        cartItems.reduce((total, item) => {
+            return total + item.quantity
+        }, 0)) : 0
 
     const outOfStockLabel = displayOutOfStockLabel ? (
         <div className={classes.topOutOfStockContainer}>
@@ -151,29 +161,23 @@ const CartPage = props => {
     const cartBody = hasItems ? (
         <Fragment>
             <div className={classes.heading_container}>
-                {/*<h1 className={classes.heading}>*/}
-                {/*    <FormattedMessage*/}
-                {/*        id={'cartPage.headingCart'}*/}
-                {/*        defaultMessage={'Shopping Cart'}*/}
-                {/*    />*/}
-                {/*</h1>*/}
-                {/*<h1 className={classes.items_count}>*/}
-                {/*    {totalQuantity}*/}
-                {/*</h1>*/}
-                {/*<div className={classes.stockStatusMessageContainer}>*/}
-                {/*    <StockStatusMessage cartItems={cartItems}/>*/}
-                {/*</div>*/}
             </div>
             <div className={classes.body}>
                 <div className={classes.items_container}>{productListing}</div>
-                <div className={classes.price_adjustments_container}>
-                    {priceAdjustments}
-                </div>
-                <div className={classes.summary_container}>
-                    <div className={classes.summary_contents}>
-                        {priceSummary}
-                    </div>
-                </div>
+                {(!isCartUpdating && !firstProductsLoad) && (
+                    <Fragment>
+                        <div ref={summaryRef}>
+                            <div className={classes.price_adjustments_container}>
+                                {priceAdjustments}
+                            </div>
+                            <div className={classes.summary_container}>
+                                <div className={classes.summary_contents}>
+                                    {priceSummary}
+                                </div>
+                            </div>
+                        </div>
+                    </Fragment>
+                )}
             </div>
         </Fragment>
     ) : (
@@ -200,6 +204,28 @@ const CartPage = props => {
         </div>
     )
 
+    const doneFlickering = (
+        !isCartUpdating && totalQuantity > 0 && hasItems && !firstProductsLoad
+    )
+
+    const headerText = doneFlickering ? formatMessage({
+            id: 'cart.headTitle',
+            defaultMessage: 'Shopping Cart ({total})',
+        }, {
+            total: totalQuantity
+        }
+    ) : formatMessage({
+            id: 'cart.headTitleNoQuantity',
+            defaultMessage: 'Shopping Cart',
+        }
+    )
+
+    const cartHeader = (
+        <SimpleHeader
+            titleText={headerText}
+        />
+    )
+
     return (
         <Fragment>
             {outOfStockLabel}
@@ -211,6 +237,7 @@ const CartPage = props => {
                     })}
                 </StoreTitle>
                 {cartBody}
+                <HeightPad height={50}/>
                 {loadingComponent}
                 {notiComponent}
             </div>

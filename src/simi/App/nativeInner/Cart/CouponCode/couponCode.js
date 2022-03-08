@@ -11,7 +11,6 @@ import {RectButton} from "../RectButton";
 import {RemovableTextInput} from "../RemovableTextInput";
 import {bottomNotificationType} from "../bottomNotificationHook";
 import {ConfirmPopup} from "../ConfirmPopup";
-import LoadingIndicator from "@magento/venia-ui/lib/components/LoadingIndicator";
 
 
 /**
@@ -41,16 +40,30 @@ const messages = defineMessages({
         defaultMessage: `You have successfully removed coupon code "{code}"`,
         description: 'Successfully remove a coupon to cart',
     },
+    failureApplyCoupon: {
+        id: 'couponCode.failCouponApply',
+        defaultMessage: `Failed to apply coupon code "{code}"`,
+        description: 'Failed to apply a coupon to cart',
+    },
+    failureRemoveCoupon: {
+        id: 'couponCode.failCouponRemove',
+        defaultMessage: `Failed to remove coupon code "{code}"`,
+        description: 'Failed to remove a coupon to cart',
+    },
 })
 
 const CouponCode = props => {
-    const {makeNotification} = props
+    const {makeNotification, setIsCartUpdating} = props
     const classes = useStyle(defaultClasses, props.classes);
 
     const {formatMessage} = useIntl();
 
     const talonProps = useCouponCode({
-        setIsCartUpdating: props.setIsCartUpdating,
+        // setIsCartUpdating: props.setIsCartUpdating,
+        setIsCartUpdating: (x) => {
+            console.log(x)
+            props.setIsCartUpdating(x)
+        },
         applyCouponCallback: (code) => makeNotification({
             text: formatMessage(messages.successApplyCoupon, {
                 code: code
@@ -62,8 +75,27 @@ const CouponCode = props => {
                 code: code
             }),
             type: bottomNotificationType.SUCCESS
-        })
+        }),
+        applyCouponErrorCallback: (code) => {
+            setIsCartUpdating(false);
+            makeNotification({
+                text: formatMessage(messages.failureApplyCoupon, {
+                    code: code
+                }),
+                type: bottomNotificationType.FAIL
+            })
+        },
+        removeCouponErrorCallback: (code) => {
+            setIsCartUpdating(false);
+            makeNotification({
+                text: formatMessage(messages.failureRemoveCoupon, {
+                    code: code
+                }),
+                type: bottomNotificationType.FAIL
+            })
+        }
     });
+
     const [, {addToast}] = useToasts();
     const {
         applyingCoupon,
@@ -79,30 +111,18 @@ const CouponCode = props => {
 
     useEffect(() => {
         if (error) {
+            // setIsCartUpdating(false)
             makeNotification({
                 type: bottomNotificationType.FAIL,
                 text: error.message
             })
         }
-    }, [addToast, error]);
+    }, [addToast, error, setIsCartUpdating]);
 
 
     if (!data) {
         return null;
     }
-    //
-    // if (applyingCoupon || removingCoupon) {
-    //     return (
-    //         <LoadingIndicator classes={{
-    //             root: classes.loadingRoot
-    //         }}>
-    //             <FormattedMessage
-    //                 id={'coupon.loading'}
-    //                 defaultMessage={'Loading coupon...'}
-    //             />
-    //         </LoadingIndicator>
-    //     )
-    // }
 
     if (errors.get('getAppliedCouponsQuery')) {
         return (
