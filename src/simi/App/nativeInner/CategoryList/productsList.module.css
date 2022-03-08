@@ -35,7 +35,7 @@
         width: auto;
         text-align: left;
     }
-    .wrapProductsList{
+    .wrapProductsList,.wrapSubCate{
         display: flex;
         flex-wrap: wrap;
         margin: 0 -5px;
@@ -45,7 +45,7 @@
         max-width: 33.33%;
         margin-bottom: 20px;
         text-align: center;
-        padding: 0 10px;
+        padding: 0 5px;
         border-radius: 8px;
         background-color: #FFFFFF;
     }
@@ -74,11 +74,12 @@
     }
     .imageContainer{
         margin:0;
+        margin-bottom: 10px;
     }
     .imageContainer img{
         border-radius: 8px;
     }
-    .price{
+    .productName{
         color: #150826;
         font-family: Roboto;
         font-size: 12px;
@@ -90,5 +91,17 @@
         border-radius: 0;
         box-shadow: unset;
         height: auto;
+    }
+    .subCategory{
+
+    }
+    .titleSubCate{
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 19px;
+        white-space: nowrap;
+        margin-top: 11px;
+        height: 22px;
     }
 }

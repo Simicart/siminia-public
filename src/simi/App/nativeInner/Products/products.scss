@@ -203,9 +203,6 @@
         } 
     }
     @media (max-width: 768px) {
-        .items-count{
-            // display: none;
-        }
         h1.title{
             display: none;
         }
@@ -218,17 +215,21 @@
                 display: grid;
                 grid-template-areas: "title itemCount";
                 grid-template-columns: 1fr min-content;
+                margin-top: 18px;
                 .category-title{
                     grid-area: title;
                     font-weight: 600;
                     font-size: 14px;
                     line-height: 19px;
                     white-space: nowrap;
-                    margin-top: 11px;
+                    // margin-top: 11px;
                     height: 22px;
                 }
                 .items-count-ctn{
                     grid-area: itemCount;
+                    .items-count{
+                        margin-top: 0;
+                    }
                 }
             }
             
