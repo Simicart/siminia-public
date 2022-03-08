@@ -1,0 +1,37 @@
+.contents_open {
+  composes: contents_open from '~@magento/venia-ui/lib/components/AccountMenu/accountMenu.css';
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.right {
+  --content-width: max-content;
+  min-width: 27.5rem;
+  max-width: 50rem;
+  display: grid;
+  align-items: flex-start;
+  grid-template-columns: 23rem 23rem;
+  gap: 1rem;
+  grid-template-areas: 'signIn socialLogin';
+}
+
+.left {
+  composes: right;
+  grid-template-areas: 'socialLogin signIn';
+}
+
+.top {
+  display: grid;
+  grid-template-rows: auto;
+  gap: 2rem;
+  grid-template-areas:
+    'socialLogin'
+    'signIn';
+}
+
+.bottom {
+  composes: top;
+  grid-template-areas:
+    'signIn'
+    'socialLogin';
+}

@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render disabled mode 1`] = `null`;
+
+exports[`render empty 1`] = `null`;
+
+exports[`render in popup 1`] = `
+<div
+  className="undefined undefined"
+>
+  <div>
+    <span>
+      <div
+        componentName="Formatted Message Component"
+        defaultMessage="or"
+        id="amSocialLogin.separator"
+      />
+    </span>
+  </div>
+  <div>
+    <div
+      componentName="Formatted Message Component"
+      defaultMessage="Login with Your Social Profile"
+      id="amSocialLogin.titleText"
+    />
+  </div>
+  <div
+    className="undefined undefined undefined"
+  >
+    <div>
+      <button
+        className="undefined undefined"
+        onClick={[Function]}
+        style={
+          Object {
+            "--amslBtnBg": "var(--amsl-facebook-button__background)",
+          }
+        }
+        title="Sign in with Facebook"
+        type="button"
+      >
+        <span
+          className="undefined undefined undefined"
+          style={
+            Object {
+              "--amslBtnBg": "var(--amsl-facebook-button__background)",
+              "--amslBtnIcon": "var(--amsl-facebook-icon__background)",
+            }
+          }
+        >
+          <span />
+        </span>
+      </button>
+      <button
+        className="undefined undefined"
+        onClick={[Function]}
+        style={
+          Object {
+            "--amslBtnBg": "var(--amsl-instagram-button__background)",
+          }
+        }
+        title="Sign in with Instagram"
+        type="button"
+      >
+        <span
+          className="undefined undefined undefined"
+          style={
+            Object {
+              "--amslBtnBg": "var(--amsl-instagram-button__background)",
+              "--amslBtnIcon": "var(--amsl-instagram-icon__background)",
+            }
+          }
+        >
+          <span />
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;

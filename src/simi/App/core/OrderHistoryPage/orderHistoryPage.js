@@ -67,7 +67,7 @@ const OrderHistoryPage = props => {
         total % PAGE_SIZE === 0
             ? total / PAGE_SIZE
             : parseInt(total / PAGE_SIZE) + 1;
-    console.log('totall', total, numberOfPages);
+            
     const listNumberOfPages = Array.from(
         { length: numberOfPages },
         (_, i) => i + 1
