@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render empty 1`] = `null`;
+
+exports[`render with error 1`] = `
+<div
+  className="undefined undefined undefined"
+>
+  <div>
+    <Button
+      label="Facebook"
+      type="facebook"
+    />
+    <Button
+      label="Instagram"
+      type="instagram"
+    />
+    <Button
+      label="LinkedIn"
+      type="linkedin"
+    />
+    <Button
+      label="Google"
+      type="google"
+    />
+  </div>
+  <button>
+    <div
+      componentName="Formatted Message Component"
+      defaultMessage="Show More"
+      id="amSocialLogin.showMore"
+    />
+  </button>
+  <span>
+    Error message
+  </span>
+</div>
+`;
+
+exports[`render with show more btn 1`] = `
+<div
+  className="undefined undefined undefined"
+>
+  <div>
+    <Button
+      label="Facebook"
+      type="facebook"
+    />
+    <Button
+      label="Instagram"
+      type="instagram"
+    />
+    <Button
+      label="LinkedIn"
+      type="linkedin"
+    />
+    <Button
+      label="Google"
+      type="google"
+    />
+  </div>
+  <button>
+    <div
+      componentName="Formatted Message Component"
+      defaultMessage="Show More"
+      id="amSocialLogin.showMore"
+    />
+  </button>
+</div>
+`;
+
+exports[`render without show more btn 1`] = `
+<div
+  className="undefined undefined undefined"
+>
+  <div>
+    <Button
+      label="Facebook"
+      type="facebook"
+    />
+    <Button
+      label="Instagram"
+      type="instagram"
+    />
+  </div>
+</div>
+`;
