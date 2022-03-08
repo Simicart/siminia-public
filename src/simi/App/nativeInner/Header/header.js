@@ -55,12 +55,13 @@ const Header = props => {
     const isHiddenHeader =
         location &&
         location.pathname &&
-        ((location.pathname === '/sign-in' && isPhone && isHtml === 'html') ||
+        ((location.pathname === '/sign-in' && isPhone && isHtml === 'html' ) ||
             (isPhone &&
                 pathName === 2 &&
                 isHtml === 'html' &&
                 isBrand !== '/brands' &&
-                isDetailPage > 1));
+                isDetailPage > 1 && location.pathname !== "/what-is-new.html"));
+    
 
     const storeConfig = Identify.getStoreConfig();
     const [userData] = useUserContext();

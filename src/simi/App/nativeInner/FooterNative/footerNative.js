@@ -72,7 +72,7 @@ const FooterNative = props => {
                 pathNameLength === 2 &&
                 isHtml === 'html' &&
                 isBrand !== '/brands' &&
-                isDetailPage > 1));
+                isDetailPage > 1 && location.pathname !== "/what-is-new.html"));
     const pathName =
         location && location.pathname ? location.pathname.split('/')[1] : null;
 
