@@ -11,7 +11,7 @@
         @media (max-width: 450px) {
             h1 {
                 color: #4f4f4f;
-                font-family: poppins;
+                font-family: Roboto;
                 font-size: 20px;
                 letter-spacing: 0;
                 font-weight: 400;
@@ -226,6 +226,7 @@
     //     display: none;
     // }
     .main-product-detail-native{
+        font-family: Roboto !important;
         .header-icon {
         padding: 8px;
         border-radius: 50%;
