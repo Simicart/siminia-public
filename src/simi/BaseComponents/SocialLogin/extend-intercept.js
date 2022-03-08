@@ -17,7 +17,7 @@ module.exports = targets => {
     );
 
     // Add Social Login classes to Account menu
-        /*
+    /*
     const AccountMenuComponent = targetables.reactComponent(
         '@magento/venia-ui/lib/components/AccountMenu/accountMenu.js'
     );
@@ -55,8 +55,21 @@ module.exports = targets => {
     );
 
     // Add Social Login component to Create account
+    /*
     const CreateAccountComponent = targetables.reactComponent(
         '@magento/venia-ui/lib/components/CreateAccount/createAccount.js'
+    );
+
+    const SocialLoginReg = CreateAccountComponent.addImport(
+        "SocialLogin from '@simicart/siminia/src/simi/BaseComponents/SocialLogin/components/SocialAuthentication/socialAuthentication'"
+    );
+
+    CreateAccountComponent.surroundJSX('Form', 'React.Fragment').insertAfterJSX(
+        'Form',
+        `<${SocialLoginReg} mode="popup" />`
+    );*/
+    const CreateAccountComponent = targetables.reactComponent(
+        '@simicart/siminia/src/simi/App/core/Customer/CreateAccountPage/CreateAccount.js'
     );
 
     const SocialLoginReg = CreateAccountComponent.addImport(
@@ -69,6 +82,7 @@ module.exports = targets => {
     );
 
     // Add Social Login component to Cart page
+    /*
     const CartComponent = targetables.reactComponent(
         '@magento/venia-ui/lib/components/CartPage/cartPage.js'
     );
@@ -81,4 +95,5 @@ module.exports = targets => {
         'div className={classes.root}',
         `<${SocialLoginCart} mode="checkout_cart" />`
     );
+    */
 };
