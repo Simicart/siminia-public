@@ -27,6 +27,8 @@ import ProductLabel from '../../App/core/ProductFullDetail/ProductLabel';
 // const AddToListButton = React.lazy(() =>
 //     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
 // );
+import { useWindowSize } from '@magento/peregrine';
+
 const HeartIcon = <Icon size={20} src={Heart} />;
 
 const Griditem = props => {
@@ -40,6 +42,10 @@ const Griditem = props => {
     const handleLink = linkInput => {
         history.push(linkInput);
     };
+    const windowSize = useWindowSize();
+
+    const isPhoneSite = windowSize.innerWidth < 450;
+
     const itemClasses = mergeClasses(defaultClasses, classes);
     const {
         name,
@@ -75,6 +81,7 @@ const Griditem = props => {
     let imageUrl = small_image;
     //comment out this line when server got issue decoding images
     imageUrl = resourceUrl(imageUrl, { type: 'image-product', width: 260 });
+    
 
 
   
@@ -107,6 +114,16 @@ const Griditem = props => {
                     />
                     <ProductLabel  productLabel = {mp_label_data ? mp_label_data : null} label_tyle="gallery"/>
                 </Link>
+                {item.price && item.price.has_special_price ? (
+                <div
+                    className={itemClasses.discountBadge}
+                    style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
+                >
+                    {`-${item.price.discount_percent}%`}
+                </div>
+            ) : (
+                ''
+            )}
             </div>
         </div>
     );
@@ -136,16 +153,16 @@ const Griditem = props => {
             ) : (
                 image
             )}
-            {item.price && item.price.has_special_price ? (
+            {/* {item.price && item.price.has_special_price ? (
                 <div
                     className={itemClasses.discountBadge}
-                    style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
+                    style={Identify.isRtl() ? { right: positionDiscount } : { left: positionDiscount }}
                 >
                     {`-${item.price.discount_percent}%`}
                 </div>
             ) : (
                 ''
-            )}
+            )} */}
             <div className={itemClasses['siminia-product-des']}>
                 {review_count ? (
                     <div className={itemClasses['item-review-rate']}>

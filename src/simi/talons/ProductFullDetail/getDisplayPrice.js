@@ -1,12 +1,14 @@
-import { isProductConfigurable } from '@magento/peregrine/lib/util/isProductConfigurable';
-import { findMatchingVariant } from '@magento/peregrine/lib/util/findMatchingProductVariant';
-import { getInternalCustomOptionValueObject } from '../../App/core/SimiProductOptions/CustomOption/utils/getInternalCustomOptionValueObject';
+import {isProductConfigurable} from '@magento/peregrine/lib/util/isProductConfigurable';
+import {findMatchingVariant} from '@magento/peregrine/lib/util/findMatchingProductVariant';
+import {
+    getInternalCustomOptionValueObject
+} from '../../App/core/SimiProductOptions/CustomOption/utils/getInternalCustomOptionValueObject';
 
 export const getConfigurablePrice = settings => {
-    const { product, optionCodes, optionSelections } = settings;
+    const {product, optionCodes, optionSelections} = settings;
     let value;
 
-    const { variants } = product;
+    const {variants} = product;
     const isConfigurable = isProductConfigurable(product);
 
     const optionsSelected =
@@ -31,7 +33,7 @@ export const getConfigurablePrice = settings => {
 };
 
 export const getFromToBundlePrice = settings => {
-    const { product } = settings;
+    const {product} = settings;
     const originalPriceObject = product.price.regularPrice.amount;
 
     const items = product.items;
@@ -53,9 +55,9 @@ export const getFromToBundlePrice = settings => {
                         .sort(sortFunction);
                     const resultKeys = Object.keys(result);
                     return result &&
-                        resultKeys &&
-                        resultKeys.length &&
-                        result[resultKeys[0]]
+                    resultKeys &&
+                    resultKeys.length &&
+                    result[resultKeys[0]]
                         ? result[resultKeys[0]]
                         : 0;
                 } catch (err) {
@@ -69,11 +71,11 @@ export const getFromToBundlePrice = settings => {
     const fromPrice = getFirstOption(items, (a, b) => a - b); // smallest option
     const toPrice = getFirstOption(items, (a, b) => b - a); // biggest option
 
-    return { ...originalPriceObject, fromValue: fromPrice, toValue: toPrice };
+    return {...originalPriceObject, fromValue: fromPrice, toValue: toPrice};
 };
 
 export const getAdditionalPriceFromSubCustomOption = (option, basePrice) => {
-    const { price_type, price } = option;
+    const {price_type, price} = option;
     if (price_type === 'FIXED') {
         return price;
     } else {
@@ -83,7 +85,7 @@ export const getAdditionalPriceFromSubCustomOption = (option, basePrice) => {
 };
 
 export const getCustomPrice = settings => {
-    const { product, customOptions: chosenCustomOptions } = settings;
+    const {product, customOptions: chosenCustomOptions} = settings;
 
     const originalPriceObject = product.price.regularPrice.amount;
 
@@ -104,7 +106,7 @@ export const getCustomPrice = settings => {
         .map(option => getInternalCustomOptionValueObject(option));
 
     const additionalPrice = matchingSelectedOptions.reduce((acc, cur) => {
-        const { key, value: option } = cur;
+        const {key, value: option} = cur;
 
         if (option instanceof Array) {
             // multi value
@@ -139,14 +141,18 @@ export const getCustomPrice = settings => {
         }
     }, 0);
 
-    return { ...originalPriceObject, value: minimumAmount + additionalPrice};
+    return {
+        ...originalPriceObject,
+        value: minimumAmount + additionalPrice,
+        baseValue: regularAmount
+    };
 };
 
 export const getBundlePrice = settings => {
-    const { product, bundleOptions } = settings;
+    const {product, bundleOptions} = settings;
     const originalPriceObject = product.price.regularPrice.amount;
 
-    const { option_value, quantity } = bundleOptions;
+    const {option_value, quantity} = bundleOptions;
     const bundles = product.items;
 
     const currentPrice = Object.entries(option_value)
@@ -166,11 +172,11 @@ export const getBundlePrice = settings => {
         })
         .reduce((acc, cur) => acc + cur, 0);
 
-    return { ...originalPriceObject, value: currentPrice };
+    return {...originalPriceObject, value: currentPrice};
 };
 
 export const getDownloadablePrice = settings => {
-    const { product, downloadableOptions } = settings;
+    const {product, downloadableOptions} = settings;
     const originalPriceObject = product.price.regularPrice.amount;
 
     const downloadableLinks = product.downloadable_product_links;
@@ -190,11 +196,11 @@ export const getDownloadablePrice = settings => {
         0
     );
 
-    return { ...originalPriceObject, value: additionalDownloadablePrice };
+    return {...originalPriceObject, value: additionalDownloadablePrice};
 };
 
 export const getGroupedPrice = settings => {
-    const { product, groupedOptions } = settings;
+    const {product, groupedOptions} = settings;
     const originalPriceObject = product.price.regularPrice.amount;
 
     const groups = product.items;
@@ -224,11 +230,11 @@ export const getGroupedPrice = settings => {
             return acc + cur;
         }, 0);
 
-    return { ...originalPriceObject, value: additionalPrice };
+    return {...originalPriceObject, value: additionalPrice};
 };
 
 export const getDisplayPrice = settings => {
-    const { product } = settings;
+    const {product} = settings;
     const productType = product.__typename;
 
     switch (productType) {

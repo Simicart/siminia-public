@@ -1,12 +1,31 @@
 import React from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import Price from '@magento/venia-ui/lib/components/Price';
+import {CrossedOutPrice} from "./CrossedOutPrice";
 
 export const PriceWrapper = (props) => {
 
-    const {fromValue, toValue, currencyCode, value} = props
+    const {fromValue, toValue, currencyCode, value, baseValue} = props
 
     const isFromToPrice = !!fromValue && !!toValue
+
+    console.log(props)
+
+    if (!!baseValue && baseValue > value) {
+        return (
+            <>
+                <CrossedOutPrice
+                    currencyCode={currencyCode}
+                    value={baseValue}
+                />
+                <span>{' '}</span>
+                <Price
+                    currencyCode={currencyCode}
+                    value={value}
+                />
+            </>
+        )
+    }
 
     if (isFromToPrice) {
         if (fromValue !== toValue) {
