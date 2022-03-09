@@ -105,6 +105,8 @@ const ProductFullDetail = props => {
     } = talonProps;
     const successMsg = `${productDetails.name} was added to shopping cart`;
 
+    console.log('description', product.short_description);
+
     let History = useHistory();
     const [moreBtn, setMoreBtn] = useState(false);
     const storeConfig = Identify.getStoreConfig();
@@ -356,7 +358,9 @@ const ProductFullDetail = props => {
 
     const wrapperQuantity = (
         <div className="wrapperQuantity">
-            <section className={!isMobileSite ? classes.quantity : "mbQuantity"}>
+            <section
+                className={!isMobileSite ? classes.quantity : 'mbQuantity'}
+            >
                 <span className={classes.quantityTitle}>
                     <FormattedMessage
                         id={'productFullDetail.quantity'}
@@ -404,7 +408,7 @@ const ProductFullDetail = props => {
     );
 
     return (
-        <div className={isMobileSite ? "main-product-detail-native" : null}>
+        <div className={isMobileSite ? 'main-product-detail-native' : null}>
             <AlertMessages
                 message={successMsg}
                 setAlertMsg={setAlertMsg}
@@ -591,46 +595,60 @@ const ProductFullDetail = props => {
                             ? wrapperQuantity
                             : null}
                         {!isMobileSite ? cartAction : null}
+                        <div className={classes.wrapperDes}>
+                            <section className={classes.description}>
+                                <span
+                                    onClick={() => setDescripttion(true)}
+                                    className="descriptionTitle"
+                                >
+                                    <FormattedMessage
+                                        id={
+                                            'productFullDetail.productDescription'
+                                        }
+                                        defaultMessage={'Product Description'}
+                                    />
+                                </span>
 
-                        <section className={classes.description}>
-                            <span
-                                onClick={() => setDescripttion(true)}
-                                className="descriptionTitle"
-                            >
-                                <FormattedMessage
-                                    id={'productFullDetail.productDescription'}
-                                    defaultMessage={'Product Description'}
-                                />
-                            </span>
+                                {!isMobileSite ? (
+                                    <RichContent
+                                        html={productDetails.description}
+                                    />
+                                ) : (
+                                    <>
+                                        <span>
+                                            <FaChevronRight />
+                                        </span>
 
-                            {!isMobileSite ? (
-                                <RichContent
-                                    html={productDetails.description}
-                                />
-                            ) : (
-                                <>
-                                    <span>
-                                        <FaChevronRight />
-                                    </span>
-
-                                    <div className={desStatus(descripttion)}>
                                         <div
-                                            className="des-title"
-                                            onClick={() =>
-                                                setDescripttion(false)
-                                            }
+                                            className={desStatus(descripttion)}
                                         >
-                                            <ArrowLeft />
-                                            <p>Description</p>
+                                            <div
+                                                className="des-title"
+                                                onClick={() =>
+                                                    setDescripttion(false)
+                                                }
+                                            >
+                                                <ArrowLeft />
+                                                <p>Description</p>
+                                            </div>
+                                            <RichContent
+                                                html={
+                                                    productDetails.description
+                                                }
+                                            />
                                         </div>
-                                        <RichContent
-                                            html={productDetails.description}
-                                        />
-                                    </div>
-                                </>
-                            )}
-                        </section>
-
+                                    </>
+                                )}
+                            </section>
+                            {product.short_description !== '' &&
+                            isMobileSite ? (
+                                <div className="short-description">
+                                    <RichContent
+                                        html={product.short_description.html}
+                                    />
+                                </div>
+                            ) : null}
+                        </div>
                         {!isMobileSite ? (
                             <section className={classes.details}>
                                 <span className={classes.detailsTitle}>

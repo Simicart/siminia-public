@@ -36,7 +36,9 @@ export const useCouponCode = props => {
     const {
         setIsCartUpdating,
         applyCouponCallback,
-        removeCouponCallback
+        removeCouponCallback,
+        applyCouponErrorCallback,
+        removeCouponErrorCallback
     } = props;
 
     const [{cartId}] = useCartContext();
@@ -82,9 +84,12 @@ export const useCouponCode = props => {
                 }
             } catch (e) {
                 // Error is logged by apollo link - no need to double log.
+                if (applyCouponErrorCallback) {
+                    applyCouponErrorCallback(couponCode)
+                }
             }
         },
-        [applyCoupon, cartId]
+        [applyCoupon, cartId, setIsCartUpdating]
     );
 
     const handleRemoveCoupon = useCallback(
@@ -101,9 +106,12 @@ export const useCouponCode = props => {
                 }
             } catch (e) {
                 // Error is logged by apollo link - no need to double log.
+                if (removeCouponErrorCallback) {
+                    removeCouponErrorCallback(couponCode)
+                }
             }
         },
-        [cartId, removeCoupon]
+        [cartId, removeCoupon, setIsCartUpdating]
     );
 
     useEffect(() => {

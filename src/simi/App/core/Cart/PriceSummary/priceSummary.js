@@ -69,18 +69,17 @@ const PriceSummary = props => {
         priceData
     } = flatData;
 
-    if (priceData.length > 1) {
+    if (priceData && priceData.length > 1) {
         mpRewardDiscount = priceData[0];
         mpRewardSpent = priceData[1];
         mpRewardEarn = priceData[2];
-    } else mpRewardEarn = priceData[0];
+    } else mpRewardEarn = priceData ? priceData[0] : 0;
 
     const isPriceUpdating = isUpdating || isLoading;
     const priceClass = isPriceUpdating ? classes.priceUpdating : classes.price;
     const totalPriceClass = isPriceUpdating
         ? classes.priceUpdating
         : classes.totalPrice;
-
 
     const totalPriceLabel = isCheckout
         ? formatMessage({

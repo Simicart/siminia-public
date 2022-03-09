@@ -35,6 +35,7 @@ const Product = props => {
         mapProduct
     });
 
+
     const { error, loading, product: originalProduct } = talonProps;
     const { loading: pbLoading, findPage, allPages } = pbFinderProps;
     const product = originalProduct ? prepareProduct(originalProduct) : false;

@@ -5,6 +5,7 @@ import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import DEFAULT_OPERATIONS from './priceSummary.gql';
 import { hideFogLoading } from '../../BaseComponents/Loading/GlobalLoading';
+import { useUserContext } from '@magento/peregrine/lib/context/user';
 
 /**
  * @ignore
@@ -50,6 +51,7 @@ export const usePriceSummary = (props = {}) => {
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const { getPriceSummaryQuery, getRuleApply, spendRewardPoint } = operations;
 
+    const [{ isSignedIn }] = useUserContext();
     const [{ cartId }] = useCartContext();
     const history = useHistory();
     // We don't want to display "Estimated" or the "Proceed" button in checkout.
@@ -81,7 +83,12 @@ export const usePriceSummary = (props = {}) => {
     const applyRuleData = useQuery(getRuleApply, {
         fetchPolicy: 'cache-and-network',
         nextFetchPolicy: 'cache-first',
-        skip: !cartId,
+        skip:
+            !isSignedIn ||
+            !cartId ||
+            !window.SMCONFIGS ||
+            !window.SMCONFIGS.plugins ||
+            !window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS,
         variables: {
             cartId
         }

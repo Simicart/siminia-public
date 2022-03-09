@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render empty 1`] = `null`;
+
+exports[`render list 1`] = `
+<div>
+  <div>
+    <div
+      componentName="Formatted Message Component"
+      defaultMessage="Linked accounts"
+      id="amSocialLogin.linkedAccounts"
+    />
+  </div>
+  <ul>
+    <LinkedAccount
+      handleUnlink={[Function]}
+      isDisabled={false}
+      label="Facebook"
+      type="facebook"
+      url="https://ce241-pwa--atakarski.ap74.corp.amdev.by/amsociallogin/social/login/?type=facebook"
+    />
+    <LinkedAccount
+      handleUnlink={[Function]}
+      isDisabled={false}
+      label="Instagram"
+      type="instagram"
+      url="https://ce241-pwa--atakarski.ap74.corp.amdev.by/amsociallogin/social/login/?type=instagram"
+    />
+  </ul>
+</div>
+`;

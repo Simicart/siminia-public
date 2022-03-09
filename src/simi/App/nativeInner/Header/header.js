@@ -17,50 +17,47 @@ import CurrencySwitcher from '@magento/venia-ui/lib/components/Header/currencySw
 import PageLoadingIndicator from '@magento/venia-ui/lib/components/PageLoadingIndicator';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useWindowSize } from '@magento/peregrine';
-import { useIntl } from 'react-intl'; 
+import { useIntl } from 'react-intl';
 import { isBot, isHeadlessChrome } from '../../../Helper/BotDetect';
-
+import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
 import defaultClasses from './header.module.css';
+import { useQuery } from '@apollo/client';
+
 
 // check if bot or headless chrome / wont get cart to avoid perf accection
 // can modify deeper on  peregrine/lib/context/cart.js:83 to avoid creating cart - db wasting - https://prnt.sc/2628k9h
 const isBotOrHeadless = isBot() || isHeadlessChrome();
 
+const TYPE_PRODUCT = 'PRODUCT';
+
 const Header = props => {
     const history = useHistory();
     const location = useLocation();
+    const pathname = location.pathname
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth <= 1280;
+
+
+    const { data } = useQuery(RESOLVE_URL, {
+        variables: {
+            url: pathname
+        },
+        skip: !pathname || pathname === '/',
+        fetchPolicy: 'cache-first'
+    });
+    
+   
+
+    const isHiddenHeader = ((data && data.route && data.route.type === TYPE_PRODUCT) || (pathname === "/sign-in") ) ? true : false
 
     const isSimpleHeader =
         location &&
         location.pathname &&
         (location.pathname === '/checkout');
 
-    const pathName =
-        location && location.pathname
-            ? location.pathname.split('/').length
-            : null;
-    const isHtml =
-        location && location.pathname ? location.pathname.split('.')[1] : null;
-    const isDetailPage =
-        location && location.pathname
-            ? location.pathname.split('-').length
-            : null;
-
-    const isBrand =
-        location && location.pathname ? location.pathname.split('.')[0] : null;
-    const isHiddenHeader =
-        location &&
-        location.pathname &&
-        ((location.pathname === '/sign-in' && isPhone && isHtml === 'html') ||
-            (isPhone &&
-                pathName === 2 &&
-                isHtml === 'html' &&
-                isBrand !== '/brands' &&
-                isDetailPage > 1));
+ 
 
     const storeConfig = Identify.getStoreConfig();
     const [userData] = useUserContext();
@@ -212,7 +209,6 @@ const Header = props => {
                         </div>
                     </header>
                 ) : null} */}
-
 
                 {!isHiddenHeader && !isSimpleHeader ? (
                     <div className={classes.virtualHeader} />

@@ -51,13 +51,15 @@ const PriceAdjustments = props => {
         });
     const { customerRewardPoint } = useGetRewardPointData();
     const exchange_rate = customerRewardPoint.current_exchange_rates;
-    const spending_rate = exchange_rate? exchange_rate.spending_rate : "";
-    const words = spending_rate ? spending_rate.split(' points') : "";
-    const money = spending_rate ? spending_rate.split('for $') : "";
-    const spending_point = words[0] ? words[0].split(' ') : "";
+    const spending_rate = exchange_rate ? exchange_rate.spending_rate : '';
+    const words = spending_rate ? spending_rate.split(' points') : '';
+    const money = spending_rate ? spending_rate.split('for $') : '';
+    const spending_point = words[0] ? words[0].split(' ') : '';
     const pointSpending = spending_point[1];
-    const moneySpending = money[1] ? money[1].split('.') : "";
-    const maxPoint = Math.floor((pointSpending * subtotal.value)/moneySpending[0]);
+    const moneySpending = money[1] ? money[1].split('.') : '';
+    const maxPoint = Math.floor(
+        (pointSpending * subtotal.value) / moneySpending[0]
+    );
     const balance = customerRewardPoint.point_balance;
     let rewardPointSelected = 0;
     if (mpRewardSpent && mpRewardSpent.length > 0)
@@ -73,8 +75,8 @@ const PriceAdjustments = props => {
             }, 2000);
         } else {
             showFogLoading();
-            if(rewardPoint > maxPoint){
-                setRewardPoint(maxPoint)
+            if (rewardPoint > maxPoint) {
+                setRewardPoint(maxPoint);
             }
             spendRewardPointHandle({
                 variables: {
@@ -127,7 +129,7 @@ const PriceAdjustments = props => {
                         <CouponCode setIsCartUpdating={setIsCartUpdating} />
                     </Suspense>
                 </Section>
-                {rewardPointEnabled ? (
+                {rewardPointEnabled && balance ? (
                     <Section
                         id={'reward_points'}
                         title={formatMessage({

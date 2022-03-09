@@ -5,6 +5,7 @@ import { Form } from 'informed';
 import Price from '../PriceWrapper/Price';
 import { useProductFullDetail } from 'src/simi/talons/ProductFullDetail/useProductFullDetail';
 import { isProductConfigurable } from '@magento/peregrine/lib/util/isProductConfigurable';
+import Identify from 'src/simi/Helper/Identify';
 
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
@@ -31,6 +32,7 @@ import ProductReview from './ProductReview';
 import { useWindowSize } from '@magento/peregrine';
 import DataStructure from '../Seo/Markup/Product';
 import DataStructureBasic from '../SeoBasic/Markup/Product';
+import useProductReview from '../../../talons/ProductFullDetail/useProductReview';
 require('./productbuilderFullDetail.scss');
 
 // Correlate a GQL error message to a field. GQL could return a longer error
@@ -73,6 +75,36 @@ const ProductBuilderFullDetail = props => {
         extraPrice,
         switchExtraPriceForNormalPrice
     } = talonProps;
+
+    const storeConfig = Identify.getStoreConfig();
+    const enabledReview =
+        storeConfig &&
+        storeConfig.storeConfig &&
+        parseInt(storeConfig.storeConfig.product_reviews_enabled);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const {
+        data,
+        loading,
+        submitReviewLoading,
+        submitReview
+    } = useProductReview({
+        product,
+        setIsOpen,
+        enabledReview
+    });
+    const reviews =
+        data && data.products.items[0] ? data.products.items[0].reviews : false;
+
+    const items = (reviews && reviews.items) || [];
+
+    let avg_rating =
+        items.reduce((sum, item, index) => {
+            let val =
+                item.ratings_breakdown[0] && item.ratings_breakdown[0].value;
+            return (sum = sum + parseInt(val));
+        }, 0) / items.length;
+
     const { formatMessage } = useIntl();
     const [forceRerender, setForceRerender] = useState(0);
 
@@ -192,7 +224,7 @@ const ProductBuilderFullDetail = props => {
     }
 
     const pDetails = JSON.parse(JSON.stringify(product));
-    
+
     const overRender = (item, itemProps, innerContent) => {
         if (!item || !itemProps || !productDetails) return false;
         const { type } = item;
@@ -418,6 +450,7 @@ const ProductBuilderFullDetail = props => {
             value={productDetails.price.value}
             fromValue={productDetails.price.fromValue}
             toValue={productDetails.price.toValue}
+            baseValue={productDetails.price.baseValue}
         />
     );
     const { price } = product || {};
@@ -430,9 +463,17 @@ const ProductBuilderFullDetail = props => {
             } smProductBuilderRoot`}
         >
             {mageworxSeoEnabled ? (
-                <DataStructure product={product} price={price} />
+                <DataStructure
+                    avg_rating={avg_rating}
+                    product={product}
+                    price={price}
+                />
             ) : (
-                <DataStructureBasic product={product} price={price} />
+                <DataStructureBasic
+                    avg_rating={avg_rating}
+                    product={product}
+                    price={price}
+                />
             )}
             <Form
                 className={classes.root}
