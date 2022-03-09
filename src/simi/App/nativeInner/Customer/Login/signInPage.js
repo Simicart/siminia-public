@@ -5,7 +5,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useSignInPage } from '@magento/peregrine/lib/talons/SignInPage/useSignInPage';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
-import SignIn from '@magento/venia-ui/lib/components/SignIn';
+import SignIn from '../../SignIn';
 
 import defaultClasses from './signInPage.module.css';
 

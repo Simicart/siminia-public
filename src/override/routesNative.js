@@ -22,7 +22,7 @@ const CreateAccountPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "CreateAccountPage"*/ 'src/simi/App/core/Customer/CreateAccountPage')
+                import(/* webpackChunkName: "CreateAccountPage"*/ 'src/simi/App/nativeInner/Customer/CreateAccountPage')
             }
             {...props}
         />
