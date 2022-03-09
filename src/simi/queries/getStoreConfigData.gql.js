@@ -56,12 +56,11 @@ const GET_STORE_CONFIG = gql`
             default_keywords
             default_description
             root_category_id
-            configurable_thumbnail_source
-            ${mageworxSeoEnabled &&
+            ${!!mageworxSeoEnabled &&
                 `
                 mageworx_seo
             `}
-            ${socialLoginEnabled &&
+            ${!!socialLoginEnabled &&
                 `
                 amsociallogin_general_enabled
                 amsociallogin_general_login_position
@@ -118,7 +117,7 @@ const GET_STORE_CONFIG = gql`
                 }
             }
         }
-        ${socialLoginEnabled &&
+        ${!!socialLoginEnabled &&
             `
             amSocialLoginButtonConfig {
                 type
