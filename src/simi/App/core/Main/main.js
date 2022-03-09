@@ -9,13 +9,6 @@ import { BrowserPersistence } from '@magento/peregrine/lib/util';
 import LzL from 'src/simi/BaseComponents/LazyLoad';
 const storage = new BrowserPersistence();
 import { Helmet } from 'react-helmet';
-import RsSeller from '../Seo/Markup/RsSeller';
-
-const mageworxSeoEnabled =
-    window.SMCONFIGS &&
-    window.SMCONFIGS.plugins &&
-    window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
-    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
 
 const Main = props => {
     const { storeConfig } = props;

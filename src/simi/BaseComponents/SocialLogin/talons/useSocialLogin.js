@@ -15,12 +15,12 @@ export const useSocialLogin = (props = {}) => {
   const history = useHistory();
 
   const { data: storeConfigData } = useQuery(getStoreConfigQuery, {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'cache-first',
     nextFetchPolicy: 'cache-first'
   });
 
   const { data: buttonsConfigData } = useQuery(getSocButtonsConfigsQuery, {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'cache-first',
     nextFetchPolicy: 'cache-first'
   });
 

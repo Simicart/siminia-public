@@ -4,6 +4,13 @@ import { useQuery } from '@apollo/client';
 import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
 import RsHome from '../Seo/Markup/RsHome';
 import RsHomeBasic from '../SeoBasic/Markup/RsHome';
+import RsSeller from '../Seo/Markup/RsSeller';
+
+const mageworxSeoEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
 
 //import Page404 from './Page404';
 const Page404 = props => {
