@@ -61,7 +61,9 @@
     background-color: #e02020;
     font-size: 14px;
     line-height: 19px;
+    z-index: 4;
 }
+
 /*
 Image
 */
