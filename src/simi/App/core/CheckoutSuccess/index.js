@@ -10,10 +10,16 @@ import { useIntl } from 'react-intl';
 const CheckoutSuccess = props => {
     const { formatMessage } = useIntl();
     // for 2 ways to get here
-    const orderNumber = (
-        Identify.findGetParameter('lastOrderId')
-        ||Identify.findGetParameter('orderNumber')
+    let orderNumber =
+        Identify.findGetParameter('lastOrderId') ||
+        Identify.findGetParameter('orderNumber');
+    const lastOrderId = Identify.getDataFromStoreage(
+        Identify.LOCAL_STOREAGE,
+        'simi_last_success_order_data_id'
     );
+    if (!orderNumber && lastOrderId) {
+        orderNumber = lastOrderId;
+    }
     const classes = mergeClasses(defaultClasses, props.classes);
     const [{ isSignedIn }] = useUserContext();
 
@@ -27,7 +33,8 @@ const CheckoutSuccess = props => {
                     {formatMessage({ id: 'Thank you for your purchase' })}
                 </h2>
                 <div className={classes.orderNumber}>
-                    {formatMessage({id: 'Your order number is:'})}{' '}{orderNumber}
+                    {formatMessage({ id: 'Your order number is:' })}{' '}
+                    {orderNumber}
                 </div>
                 <div className={classes.additionalText}>
                     {formatMessage({

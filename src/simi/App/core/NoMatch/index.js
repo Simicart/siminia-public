@@ -13,8 +13,8 @@ const Page404 = props => {
         />
     );
 };
-import Product from '../RootComponents/Product';
-const Product1 = props => {
+//import Product from '../RootComponents/Product';
+const Product = props => {
     return (
         <LazyComponent
             component={() =>
@@ -24,8 +24,8 @@ const Product1 = props => {
         />
     );
 };
-import CMS from 'src/simi/App/core/RootComponents/CMS';
-const CMS2 = props => {
+//import CMS from 'src/simi/App/core/RootComponents/CMS';
+const CMS = props => {
     return (
         <LazyComponent
             component={() =>
@@ -35,8 +35,8 @@ const CMS2 = props => {
         />
     );
 };
-import Category from 'src/simi/App/core/RootComponents/Category';
-const Category1 = props => {
+//import Category from 'src/simi/App/core/RootComponents/Category';
+const Category = props => {
     return (
         <LazyComponent
             component={() =>
