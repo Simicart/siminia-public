@@ -56,12 +56,16 @@ const GET_STORE_CONFIG = gql`
             default_keywords
             default_description
             root_category_id
-            ${!!mageworxSeoEnabled &&
-                `
+            ${
+                mageworxSeoEnabled
+                    ? `
                 mageworx_seo
-            `}
-            ${!!socialLoginEnabled &&
-                `
+            `
+                    : ''
+            }
+            ${
+                socialLoginEnabled
+                    ? `
                 amsociallogin_general_enabled
                 amsociallogin_general_login_position
                 amsociallogin_general_button_shape
@@ -69,7 +73,9 @@ const GET_STORE_CONFIG = gql`
                 amsociallogin_general_button_position
                 amsociallogin_general_redirect_type
                 amsociallogin_general_custom_url
-            `}
+            `
+                    : ''
+            }
         }
         availableStores {
             category_url_suffix
@@ -117,14 +123,17 @@ const GET_STORE_CONFIG = gql`
                 }
             }
         }
-        ${!!socialLoginEnabled &&
-            `
+        ${
+            socialLoginEnabled
+                ? `
             amSocialLoginButtonConfig {
                 type
                 label
                 url
             }
-        `}
+        `
+                : ''
+        }
     }
 `;
 export default GET_STORE_CONFIG;
