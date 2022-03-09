@@ -34,6 +34,7 @@ const Product = props => {
         operations: DEFAULT_OPERATIONS,
         mapProduct
     });
+    console.log("hieutest", props);
 
     const { error, loading, product: originalProduct } = talonProps;
     const { loading: pbLoading, findPage, allPages } = pbFinderProps;

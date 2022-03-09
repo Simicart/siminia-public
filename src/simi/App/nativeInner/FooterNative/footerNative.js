@@ -7,6 +7,8 @@ import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 import Identify from 'src/simi/Helper/Identify';
+import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
+import { useQuery } from '@apollo/client';
 
 import {
     BiHomeAlt,
@@ -15,6 +17,8 @@ import {
     BiWallet,
     BiUser
 } from 'react-icons/bi';
+
+const TYPE_PRODUCT = 'PRODUCT';
 
 const FooterNative = props => {
     const [{ isSignedIn }] = useUserContext();
@@ -39,20 +43,19 @@ const FooterNative = props => {
     const location = useLocation();
     const windowSize = useWindowSize();
 
+    const { data } = useQuery(RESOLVE_URL, {
+        variables: {
+            url: location.pathname
+        },
+        skip: !location.pathname || location.pathname === '/',
+        fetchPolicy: 'cache-first'
+    });
+
     const isPhone = windowSize.innerWidth <= 450;
     const pathNameLength =
         location && location.pathname
             ? location.pathname.split('/').length
             : null;
-    const isHtml =
-        location && location.pathname ? location.pathname.split('.')[1] : null;
-    const isDetailPage =
-        location && location.pathname
-            ? location.pathname.split('-').length
-            : null;
-
-    const isBrand =
-        location && location.pathname ? location.pathname.split('.')[0] : null;
 
     const { itemCount: itemsQty } = useCartTrigger({
         mutations: {
@@ -65,14 +68,10 @@ const FooterNative = props => {
     });
 
     const isHiddenBottomMenu =
-        location &&
-        location.pathname &&
-        ((location.pathname === '/sign-in' && isPhone && isHtml === 'html') ||
-            (isPhone &&
-                pathNameLength === 2 &&
-                isHtml === 'html' &&
-                isBrand !== '/brands' &&
-                isDetailPage > 1 && location.pathname !== "/what-is-new.html"));
+        (data && data.route && data.route.type === TYPE_PRODUCT) ||
+        location.pathname === '/sign-in'
+            ? true
+            : false;
     const pathName =
         location && location.pathname ? location.pathname.split('/')[1] : null;
 

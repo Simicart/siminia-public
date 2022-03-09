@@ -109,13 +109,14 @@ const NoMatch = props => {
         );
     }
 
+    
     if (data) {
         if (data.route && data.route.type) {
             const { type } = data.route;
             if (type === TYPE_PRODUCT)
                 return (
                     <Product
-                        {...{ ...props, ...data.route, ...{ pbFinderProps } }}
+                        {...{ ...props, ...data.route, ...{ pbFinderProps }, type }}
                     />
                 );
             else if (type === TYPE_CATEGORY)
