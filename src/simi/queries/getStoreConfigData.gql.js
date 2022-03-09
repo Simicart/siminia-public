@@ -69,6 +69,7 @@ const GET_STORE_CONFIG = gql`
             id
             name
             image
+            children_count
             children {
                 id
                 include_in_menu
@@ -76,6 +77,7 @@ const GET_STORE_CONFIG = gql`
                 position
                 url_path
                 url_suffix
+                children_count
                 children {
                     id
                     include_in_menu
@@ -83,6 +85,7 @@ const GET_STORE_CONFIG = gql`
                     position
                     url_path
                     url_suffix
+                    children_count
                     children {
                         id
                         include_in_menu
@@ -90,6 +93,7 @@ const GET_STORE_CONFIG = gql`
                         position
                         url_path
                         url_suffix
+                        children_count
                     }
                 }
             }
