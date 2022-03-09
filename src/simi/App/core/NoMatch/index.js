@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import Loading from 'src/simi/BaseComponents/Loading';
 import { useQuery } from '@apollo/client';
 import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
+import RsHome from '../Seo/Markup/RsHome';
+import RsHomeBasic from '../SeoBasic/Markup/RsHome';
+
 //import Page404 from './Page404';
 const Page404 = props => {
     return (
@@ -95,9 +98,23 @@ const NoMatch = props => {
         }
     }, [pathname, pageMaskedId, pathToFind, findPage]);
 
+    const renderHomeSeo = () => {
+        return (
+            <React.Fragment>
+                {mageworxSeoEnabled ? (
+                    <RsHome type="home" />
+                ) : (
+                    <RsHomeBasic type="home" />
+                )}
+                {mageworxSeoEnabled ? <RsSeller type="home" /> : ''}
+            </React.Fragment>
+        );
+    };
+
     if (pageMaskedId && pageMaskedId !== 'notfound') {
         return (
             <div className="pagebuilder-component-ctn">
+                {renderHomeSeo()}
                 <PageBuilderComponent
                     key={pageMaskedId}
                     endPoint={endPoint}
@@ -122,7 +139,12 @@ const NoMatch = props => {
             else if (type === TYPE_CATEGORY)
                 return <Category {...{ ...props, ...data.route }} />;
             else if (type === TYPE_CMS_PAGE)
-                return <CMS {...{ ...props, ...data.route }} />;
+                return (
+                    <React.Fragment>
+                        {renderHomeSeo()}
+                        <CMS {...{ ...props, ...data.route }} />
+                    </React.Fragment>
+                );
         } else {
             if (pbLoading || pathname !== pathToFind) {
                 return '';

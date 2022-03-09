@@ -7,8 +7,6 @@ import classes from './main.module.css';
 import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
 import { BrowserPersistence } from '@magento/peregrine/lib/util';
 import LzL from 'src/simi/BaseComponents/LazyLoad';
-import RsHome from '../Seo/Markup/RsHome';
-import RsHomeBasic from '../SeoBasic/Markup/RsHome';
 const storage = new BrowserPersistence();
 import { Helmet } from 'react-helmet';
 import RsSeller from '../Seo/Markup/RsSeller';
@@ -52,12 +50,6 @@ const Main = props => {
     }
     return (
         <React.Fragment>
-            {mageworxSeoEnabled ? (
-                <RsHome type="home" />
-            ) : (
-                <RsHomeBasic type="home" />
-            )}
-            {mageworxSeoEnabled ? <RsSeller type="home" /> : ''}
             <Helmet>
                 {!!url && <link rel={'icon'} type="image/png" href={url} />}
             </Helmet>
