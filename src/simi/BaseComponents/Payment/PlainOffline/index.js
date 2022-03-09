@@ -16,3 +16,7 @@ export const BankTransfer = props => (
 export const PaypalExpress = props => (
     <PlainOffline paymentCode="paypal_express" {...props} />
 );
+
+export const MyFatoorah = props => (
+    <PlainOffline paymentCode="myfatoorah_gateway" {...props} />
+);

@@ -26,7 +26,8 @@ import {
     CheckMo,
     BankTransfer,
     COD,
-    PaypalExpress
+    PaypalExpress,
+    MyFatoorah
 } from 'src/simi/BaseComponents/Payment/PlainOffline';
 import { PaypalButtons } from 'src/simi/BaseComponents/Payment/PaypalButtons';
 import BrainTree from '@magento/venia-ui/lib/components/CheckoutPage/PaymentInformation/creditCard';
@@ -36,5 +37,6 @@ export default {
     checkmo: CheckMo,
     banktransfer: BankTransfer,
     cashondelivery: COD,
+    myfatoorah_gateway: MyFatoorah,
     paypal_express: PaypalButtons
 };

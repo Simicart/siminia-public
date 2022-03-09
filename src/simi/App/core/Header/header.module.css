@@ -15,14 +15,14 @@
     max-width: 1440px;
     width: 100%;
     position: relative;
-    z-index: 11;
+    z-index: 101;
     margin: 0 auto;
 }
 header {
     position: sticky;
     top: 0;
     width: 100%;
-    z-index: 5;
+    z-index: 100;
     box-shadow: 0 0 15px rgb(0 0 0 / 10%);
 }
 

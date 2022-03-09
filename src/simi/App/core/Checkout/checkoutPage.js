@@ -120,7 +120,34 @@ const CheckoutPage = props => {
           });
 
     if (orderNumber && orderDetailsData) {
-        Identify.storeDataToStoreage(Identify.SESSION_STOREAGE, 'simi_last_success_order_data', orderDetailsData);
+        const selectedPaymentMethod = Identify.getDataFromStoreage(
+            Identify.LOCAL_STOREAGE,
+            'simi_selected_payment_code'
+        );
+        Identify.storeDataToStoreage(
+            Identify.SESSION_STOREAGE,
+            'simi_last_success_order_data',
+            orderDetailsData
+        );
+        Identify.storeDataToStoreage(
+            Identify.LOCAL_STOREAGE,
+            'simi_last_success_order_data_id',
+            orderNumber
+        );
+        if (selectedPaymentMethod === 'myfatoorah_gateway') {
+            const storeConfig = Identify.getStoreConfig();
+            if (
+                storeConfig &&
+                storeConfig.storeConfig &&
+                storeConfig.storeConfig.base_url
+            )
+                window.location.replace(
+                    storeConfig.storeConfig.base_url +
+                        '/myfatoorah/checkout/index?gateway=myfatoorah&order_id=' +
+                        orderNumber
+                );
+            return '';
+        }
         return <Redirect to={`/checkout-success?orderNumber=${orderNumber}`} />;
         /*
         return (
