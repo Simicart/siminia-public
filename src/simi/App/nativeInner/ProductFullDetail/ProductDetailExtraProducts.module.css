@@ -1,0 +1,58 @@
+.container-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container-controller {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow-button {
+    border: 1px solid #333;
+    padding: 6px 6px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+}
+
+.arrow-button:hover {
+    background: #333132;
+}
+
+.backward-arrow-button {
+    margin-right: 1rem;
+}
+
+.intro-title {
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.gallery-root {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+.upsell-container {
+    margin-top: 1rem
+}
+
+@media (max-width: 768px) {
+    .intro-title {
+        color: #150826;
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 19px;
+    }
+    .arrow-button {
+        display: none;
+    }
+    
+}

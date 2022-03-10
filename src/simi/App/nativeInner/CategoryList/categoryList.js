@@ -13,6 +13,7 @@ import { GiNurseFemale, GiJerusalemCross } from 'react-icons/gi';
 import { FiWatch } from 'react-icons/fi';
 import { MdModelTraining } from 'react-icons/md';
 import { FcNews } from 'react-icons/fc';
+import {BsCartCheck} from 'react-icons/bs'
 
 
 const CategoryList = props => {
@@ -23,12 +24,12 @@ const CategoryList = props => {
     const classes = useStyle(defaultClasses, props.classes);
     const [active, setActive] = useState(0);
     const listIcon = [
-        <FcNews size={30} />,
-        <GrUserFemale size={30} />,
-        <GiNurseFemale size={30} />,
-        <FiWatch size={30} />,
-        <MdModelTraining size={30} />,
-        <GiJerusalemCross size={30} />
+        <BsCartCheck size={30} />,
+        <BsCartCheck size={30} />,
+        <BsCartCheck size={30} />,
+        <BsCartCheck size={30} />,
+        <BsCartCheck size={30} />,
+        <BsCartCheck size={30} />
     ];
 
     const header = title ? (
