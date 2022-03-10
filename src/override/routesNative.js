@@ -236,7 +236,7 @@ const Brands = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "Brands"*/ 'src/simi/App/core/ShopByBrand/components/brands')
+                import(/* webpackChunkName: "Brands"*/ 'src/simi/App/nativeInner/ShopByBrand/components/brands')
             }
             {...props}
         />
@@ -247,7 +247,7 @@ const BrandDetails = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "BrandDetails"*/ 'src/simi/App/core/ShopByBrand/components/branddetails/index.js')
+                import(/* webpackChunkName: "BrandDetails"*/ 'src/simi/App/nativeInner/ShopByBrand/components/branddetails/index.js')
             }
             {...props}
         />
@@ -258,7 +258,7 @@ const BrandCategory = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "BrandCategory"*/ 'src/simi/App/core/ShopByBrand/components/category/index.js')
+                import(/* webpackChunkName: "BrandCategory"*/ 'src/simi/App/nativeInner/ShopByBrand/components/category/index.js')
             }
             {...props}
         />
