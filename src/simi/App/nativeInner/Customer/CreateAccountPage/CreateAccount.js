@@ -87,10 +87,10 @@ const CreateAccount = props => {
             </h2> : null}
             <FormError errors={Array.from(errors.values())} />
             <Field
-                // label={formatMessage({
-                //     id: 'createAccount.firstNameText',
-                //     defaultMessage: 'First Name'
-                // })}
+                label={!isMobile ? formatMessage({
+                    id: 'createAccount.firstNameText',
+                    defaultMessage: 'First Name'
+                }): null}
             >
                 <TextInput
                     field="customer.firstname"
@@ -112,10 +112,10 @@ const CreateAccount = props => {
                 />
             </Field>
             <Field
-                // label={formatMessage({
-                //     id: 'createAccount.lastNameText',
-                //     defaultMessage: 'Last Name'
-                // })}
+                label={!isMobile ? formatMessage({
+                    id: 'createAccount.lastNameText',
+                    defaultMessage: 'Last Name'
+                }): null}
             >
                 <TextInput
                     field="customer.lastname"
@@ -137,10 +137,10 @@ const CreateAccount = props => {
                 />
             </Field>
             <Field
-                // label={formatMessage({
-                //     id: 'createAccount.emailText',
-                //     defaultMessage: 'Email'
-                // })}
+                label={!isMobile ? formatMessage({
+                    id: 'createAccount.emailText',
+                    defaultMessage: 'Email'
+                }): null}
             >
                 <TextInput
                     field="customer.email"
@@ -164,10 +164,10 @@ const CreateAccount = props => {
                 autoComplete="new-password"
                 fieldName="password"
                 isToggleButtonHidden={false}
-                // label={formatMessage({
-                //     id: 'createAccount.passwordText',
-                //     defaultMessage: 'Password'
-                // })}
+                label={!isMobile ? formatMessage({
+                    id: 'createAccount.passwordText',
+                    defaultMessage: 'Password'
+                }): null}
                 validate={combine([
                     isRequired,
                     [hasLengthAtLeast, 8],
