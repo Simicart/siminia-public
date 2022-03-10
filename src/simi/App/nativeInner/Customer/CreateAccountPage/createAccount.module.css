@@ -49,6 +49,9 @@
     }
 }
 @media (max-width: 450px) {
+    .root {
+        padding: 1rem 10px;
+    }
     .actions {
         display:flex;
         flex-direction: column;
@@ -56,5 +59,8 @@
     }
     .actions > button {
         border-radius: 20px;
+    }
+    .subscribe {
+        margin-left: 0 ;
     }
 }
