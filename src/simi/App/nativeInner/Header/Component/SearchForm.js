@@ -19,9 +19,10 @@ const SearchAutoComplete = React.lazy(() =>
 );
 
 const SearchForm = props => {
-    const storeConfig = Identify.getStoreConfig();
+    // const storeConfig = Identify.getStoreConfig();
     const history = useHistory();
     const location = useLocation();
+    const itemsQty = props.itemsQty
 
     const displayBackBtn =
         location.pathname !== '/' &&
@@ -37,15 +38,15 @@ const SearchForm = props => {
         setSearchVal('');
     }, [history.location.search]);
 
-    const { itemCount: itemsQty } = useCartTrigger({
-        mutations: {
-            createCartMutation: CREATE_CART_MUTATION
-        },
-        queries: {
-            getItemCountQuery: GET_ITEM_COUNT_QUERY
-        },
-        storeConfig
-    });
+    // const { itemCount: itemsQty } = useCartTrigger({
+    //     mutations: {
+    //         createCartMutation: CREATE_CART_MUTATION
+    //     },
+    //     queries: {
+    //         getItemCountQuery: GET_ITEM_COUNT_QUERY
+    //     },
+    //     storeConfig
+    // });
     const windowSize = useWindowSize();
 
     const isPhone = windowSize.innerWidth <= 450;

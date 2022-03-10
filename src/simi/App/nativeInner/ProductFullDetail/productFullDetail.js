@@ -31,7 +31,7 @@ const SimiProductOptions = React.lazy(() =>
     import('@simicart/siminia/src/simi/App/core/SimiProductOptions')
 );
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
-import { ProductDetailExtraProducts } from '@simicart/siminia/src/simi/App/core/ProductFullDetail/productDetailExtraProducts.js';
+import { ProductDetailExtraProducts } from './productDetailExtraProducts.js';
 import ProductReview from '@simicart/siminia/src/simi/App/nativeInner/ProductFullDetail/ProductReview';
 import ProductLabel from '@simicart/siminia/src/simi/App/core/ProductFullDetail/ProductLabel';
 import Pdetailsbrand from '@simicart/siminia/src/simi/App/core/ProductFullDetail/Pdetailsbrand';

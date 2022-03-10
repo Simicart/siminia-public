@@ -8,11 +8,11 @@ import Image from '@magento/venia-ui/lib/components/Image';
 import defaultClasses from './productsList.module.css';
 import { useIntl } from 'react-intl';
 import { RiArrowRightSLine } from 'react-icons/ri';
-
+import { BsCartCheck } from 'react-icons/bs';
+const IMAGE_DEFAULT = 'https://magento24.pwa-commerce.com/media/logo/stores/1/Lays-Logo.png'
 const IMAGE_WIDTH = 80;
 const ProductsList = props => {
     const { childCate } = props;
-   
     const items = childCate && childCate.products ? childCate.products.items : []
     const { formatMessage } = useIntl();
     const child = childCate && childCate.children ? childCate.children : [];
@@ -41,14 +41,14 @@ const ProductsList = props => {
                             resource={item.image.url}
                             type={item.image.__typename}
                             width={IMAGE_WIDTH}
-                        />
+                        />               
                         <span className={classes.productName}>{item.name}</span>
                     </Link>
                 );
             });
     };
     const renderSubCate = () => {
-        if (child.lenght === 0) {
+        if (child.length === 0) {
             return '';
         } else {
             return child.map(cate => {
@@ -57,6 +57,7 @@ const ProductsList = props => {
                         to={`${cate.url_path}${cate.url_suffix}`}
                         className={classes.product}
                     >
+                        {cate.image? 
                         <Image
                             alt={cate.name}
                             classes={{
@@ -67,6 +68,16 @@ const ProductsList = props => {
                             type={cate.name}
                             width={IMAGE_WIDTH}
                         />
+                        : <Image
+                        alt={cate.name}
+                        classes={{
+                            image: classes.image,
+                            root: classes.imageContainer
+                        }}
+                        resource={IMAGE_DEFAULT}
+                        type={cate.name}
+                        width={IMAGE_WIDTH}
+                    />}
                         <span className={classes.productName}>{cate.name}</span>
                     </Link>
                 );
@@ -84,7 +95,7 @@ const ProductsList = props => {
                         })}
                     </span>
                     <span className={classes.icon}>
-                        <RiArrowRightSLine />
+                        <RiArrowRightSLine size={20} />
                     </span>
                 </Link>
                 
@@ -93,12 +104,12 @@ const ProductsList = props => {
                 {renderProductsList()}
             </div>
             <div className={classes.subCategory}>
-                <div className={classes.titleSubCate}>
+                {child.length === 0 ? '' : <div className={classes.titleSubCate}>
                     {formatMessage({
                         id: 'titleSubCategory',
                         defaultMessage: 'Sub categories'
                     })}
-                </div>
+                </div>}
                 <div className={classes.wrapSubCate}>{renderSubCate()}</div>
             </div>
         </div>
