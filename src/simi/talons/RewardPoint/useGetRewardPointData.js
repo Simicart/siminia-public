@@ -9,7 +9,7 @@ import {
 import { deriveErrorMessage } from '@magento/peregrine/lib/util/deriveErrorMessage';
 import { useAppContext } from '@magento/peregrine/lib/context/app';
 
-export const useGetRewardPointData = () => {
+export const useGetRewardPointData = props => {
     const [{ isSignedIn }] = useUserContext();
     const [
         ,
@@ -28,7 +28,7 @@ export const useGetRewardPointData = () => {
     const { data: rewardTransactionData } = useQuery(GET_CUSTOMER_TRANSACTION, {
         variables: { pageSize: 100 },
         fetchPolicy: 'cache-and-network',
-        skip: !isSignedIn
+        skip: !isSignedIn || (props && props.onCart)
     });
     const [mpRewardPoints] = useMutation(SET_REWARD_SUBSCRIBE_STATUS);
     const customerRewardPoint = rewardPointData
