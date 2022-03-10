@@ -88,7 +88,7 @@ export const usePriceSummary = (props = {}) => {
             !cartId ||
             !window.SMCONFIGS ||
             !window.SMCONFIGS.plugins ||
-            !window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS,
+            !window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS_PRO,
         variables: {
             cartId
         }
