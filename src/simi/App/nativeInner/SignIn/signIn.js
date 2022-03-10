@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { func, shape, string } from 'prop-types';
 import { Form } from 'informed';
@@ -15,11 +15,13 @@ import { GET_CART_DETAILS_QUERY } from './signIn.gql';
 import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
 import Password from '../Password';
 import FormError from '@magento/venia-ui/lib/components/FormError/formError';
+import { useWindowSize } from '@magento/peregrine';
 
 const SignIn = props => {
     const classes = useStyle(defaultClasses, props.classes);
     const { setDefaultUsername, showCreateAccount, showForgotPassword } = props;
-
+    const windowSize = useWindowSize();
+    const isPhone = windowSize.innerWidth < 450;
     const { formatMessage } = useIntl();
     const talonProps = useSignIn({
         getCartDetailsQuery: GET_CART_DETAILS_QUERY,
@@ -36,9 +38,8 @@ const SignIn = props => {
         isBusy,
         setFormApi
     } = talonProps;
-    const [labelEmail, setLabelEmail] = useState(false)
-    const [labelPass, setLabelPass] = useState(false)
-   
+    const [labelEmail, setLabelEmail] = useState(false);
+    const [labelPass, setLabelPass] = useState(false);
 
     if (isBusy) {
         return (
@@ -57,16 +58,16 @@ const SignIn = props => {
         root: classes.forgotPasswordButton
     };
 
-   
-
     return (
         <div className={classes.root}>
-            <span className={classes.title}>
-                <FormattedMessage
-                    id={'signIn.titleText'}
-                    defaultMessage={'Sign-in to Your Account'}
-                />
-            </span>
+            {!isPhone ? (
+                <span className={classes.title}>
+                    <FormattedMessage
+                        id={'signIn.titleText'}
+                        defaultMessage={'Sign-in to Your Account'}
+                    />
+                </span>
+            ) : null}
             <FormError errors={Array.from(errors.values())} />
             <Form
                 getApi={setFormApi}
@@ -74,20 +75,16 @@ const SignIn = props => {
                 onSubmit={handleSubmit}
             >
                 <Field
-                    // label={formatMessage({
-                    //     id: 'signIn.emailAddressText',
-                    //     defaultMessage: 'Email address'
-                    // }) }
-                    
-                   
+                // label={formatMessage({
+                //     id: 'signIn.emailAddressText',
+                //     defaultMessage: 'Email address'
+                // }) }
                 >
                     <TextInput
                         autoComplete="email"
                         field="email"
                         validate={isRequired}
                         placeholder="Email"
-                        
-                       
                     />
                 </Field>
                 <Password
@@ -100,7 +97,6 @@ const SignIn = props => {
                     placeholder="Password"
                     autoComplete="current-password"
                     isToggleButtonHidden={false}
-                    
                 />
                 <div className={classes.forgotPasswordButtonContainer}>
                     <LinkButton
@@ -121,16 +117,28 @@ const SignIn = props => {
                             defaultMessage={'Sign In'}
                         />
                     </Button>
-                    <Button
-                        priority="normal"
-                        type="button"
-                        onClick={handleCreateAccount}
-                    >
-                        <FormattedMessage
-                            id={'signIn.createAccountText'}
-                            defaultMessage={'Create an Account'}
-                        />
-                    </Button>
+                    {!isPhone ? (
+                        <Button
+                            priority="normal"
+                            type="button"
+                            onClick={handleCreateAccount}
+                        >
+                            <FormattedMessage
+                                id={'signIn.createAccountText'}
+                                defaultMessage={'Create an Account'}
+                            />
+                        </Button>
+                    ) : (
+                        <div className={classes.registerBtnContainer}>
+                            <span>No Account? </span>
+                            <span className={classes.registerBtn} onClick={handleCreateAccount}>
+                                <FormattedMessage
+                                    id={'Register'}
+                                    defaultMessage={'Register'}
+                                />
+                            </span>
+                        </div>
+                    )}
                 </div>
             </Form>
         </div>

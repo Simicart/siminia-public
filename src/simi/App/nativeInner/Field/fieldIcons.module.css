@@ -52,6 +52,7 @@
 @media (max-width:450px) {
     .input > input {
         border: none;
-    border-bottom: 1px solid #F2F2F3;
+        border-bottom: 1px solid #F2F2F3;
+        padding: 0;
     }
 }
