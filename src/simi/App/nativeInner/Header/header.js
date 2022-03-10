@@ -17,11 +17,15 @@ import CurrencySwitcher from '@magento/venia-ui/lib/components/Header/currencySw
 import PageLoadingIndicator from '@magento/venia-ui/lib/components/PageLoadingIndicator';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useWindowSize } from '@magento/peregrine';
-import { useIntl } from 'react-intl';
+import { useIntl,FormattedMessage } from 'react-intl';
 import { isBot, isHeadlessChrome } from '../../../Helper/BotDetect';
 import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
 import defaultClasses from './header.module.css';
 import { useQuery } from '@apollo/client';
+import { ArrowLeft } from 'react-feather';
+import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
+import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
+import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 
 
 // check if bot or headless chrome / wont get cart to avoid perf accection
@@ -39,6 +43,17 @@ const Header = props => {
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth <= 1280;
 
+    const storeConfig = Identify.getStoreConfig();
+
+    const { itemCount: itemsQty } = useCartTrigger({
+        mutations: {
+            createCartMutation: CREATE_CART_MUTATION
+        },
+        queries: {
+            getItemCountQuery: GET_ITEM_COUNT_QUERY
+        },
+        storeConfig
+    });
 
     const { data } = useQuery(RESOLVE_URL, {
         variables: {
@@ -58,8 +73,9 @@ const Header = props => {
         (location.pathname === '/checkout');
 
  
+    const type =  location && location.pathname ? location.pathname : null
 
-    const storeConfig = Identify.getStoreConfig();
+    // const storeConfig = Identify.getStoreConfig();
     const [userData] = useUserContext();
 
     let topInsets = 0;
@@ -156,65 +172,70 @@ const Header = props => {
                     Identify.isRtl() ? classes['header-search-rtl'] : ''
                 }`}
             >
-                <SearchForm history={history} />
+                <SearchForm itemsQty={itemsQty} history={history} />
             </div>
         );
     };
+
+    const renderHeader = (type) => {
+        if(type === "/sign-in") {
+            return <div className={classes.specHeader}>
+                <ArrowLeft onClick={() => history.goBack()} />
+                <span>
+                <FormattedMessage
+                    id="signIn.signInText"
+                    defaultMessage="Sign In"
+                />
+                </span>
+            </div>
+        }
+        if(type === "/create-account") {
+            return <div className={classes.specHeader}>
+                <ArrowLeft onClick={() => history.goBack()} />
+                <span>
+                <FormattedMessage
+                    id="Register"
+                    defaultMessage="Register"
+                />
+                </span>
+            </div>
+        }
+        if(type === "/forgot-password") {
+            return <div className={classes.specHeader}>
+                <ArrowLeft onClick={() => history.goBack()} />
+                <span>
+                <FormattedMessage
+                    id="navHeader.forgotPasswordText"
+                    defaultMessage="Forgot Password"
+                />
+                </span>
+            </div>
+        } 
+        if(type === "/cart") {
+            return <div className={classes.specHeader}>
+                <ArrowLeft onClick={() => history.goBack()} />
+                <span>
+                <FormattedMessage
+                    id="cartPage.titlle"
+                    defaultMessage="Shopping Cart"
+                /> ({itemsQty})
+                </span>
+            </div>
+        } 
+        else return !isSimpleHeader && !isHiddenHeader && renderSearchForm()
+    }
+
+
     if (isPhone) {
         return (
             <React.Fragment>
-                {/* {!isHiddenHeader ? (
-                    <header id="siminia-main-header">
-                        <div
-                            style={{
-                                backgroundColor: 'rgba(255,255,255,0.92)',
-                                backdropFilter: 'blur(10px)'
-                            }}
-                        >
-                            <div className="container">
-                                <div
-                                    className={`${
-                                        classes['header-app-bar']
-                                    } ${Identify.isRtl() &&
-                                        classes['header-app-bar-rtl']}`}
-                                >
-                                    <NavTrigger>
-                                        {!isSimpleHeader && (
-                                            <MenuIcon
-                                                color="#333132"
-                                                style={{
-                                                    width: 35,
-                                                    height: 35
-                                                }}
-                                            />
-                                        )}
-                                    </NavTrigger>
-                                    {renderLogo()}
-                                    <div className={classes['right-bar']}>
-                                        {!isSimpleHeader && !isBotOrHeadless && (
-                                            <div
-                                                className={
-                                                    classes['right-bar-item']
-                                                }
-                                            >
-                                                <CartTrigger />
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="id-message">
-                            <ToastMessage />
-                        </div>
-                    </header>
-                ) : null} */}
-
                 {!isHiddenHeader && !isSimpleHeader ? (
                     <div className={classes.virtualHeader} />
                 ) : null}
 
-                {!isSimpleHeader && !isHiddenHeader && renderSearchForm()}
+                {/* {!isSimpleHeader && !isHiddenHeader && renderSearchForm()}
+                 */}
+                 {renderHeader(type)}
             </React.Fragment>
         );
     }
