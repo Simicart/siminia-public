@@ -2,54 +2,52 @@ import React from 'react';
 import { shape, string } from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useSignInPage } from '@magento/peregrine/lib/talons/SignInPage/useSignInPage';
+import { useForgotPasswordPage } from '@magento/peregrine/lib/talons/ForgotPasswordPage/useForgotPasswordPage';
 import { useStyle } from '@magento/venia-ui/lib/classify';
+import ForgotPassword from '../../ForgotPassword';
 import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
-import SignIn from '../../SignIn';
 
-import defaultClasses from './signInPage.module.css';
+import defaultClasses from './forgotPasswordPage.module.css';
 
-const SignInPage = props => {
+const ForgotPasswordPage = props => {
     const classes = useStyle(defaultClasses, props.classes);
-    const { signInProps } = useSignInPage(props);
+    const { forgotPasswordProps } = useForgotPasswordPage(props);
     const { formatMessage } = useIntl();
 
     return (
         <div className={classes.root}>
             <StoreTitle>
                 {formatMessage({
-                    id: 'signInPage.title',
-                    defaultMessage: 'Sign In'
+                    id: 'forgotPasswordPage.title',
+                    defaultMessage: 'Forgot Your Password?'
                 })}
             </StoreTitle>
             <h1 className={classes.header}>
                 <FormattedMessage
-                    id="signInPage.header"
-                    defaultMessage="Sign In or Create Account"
+                    id="forgotPasswordPage.header"
+                    defaultMessage="Forgot Your Password?"
                 />
             </h1>
             <div className={classes.contentContainer}>
-                <SignIn {...signInProps} />
+                <ForgotPassword {...forgotPasswordProps} />
             </div>
         </div>
     );
 };
 
-SignInPage.defaultProps = {
-    createAccountPageUrl: '/create-account',
-    forgotPasswordPageUrl: '/forgot-password',
-    signedInRedirectUrl: '/order-history'
+ForgotPasswordPage.defaultProps = {
+    signedInRedirectUrl: '/order-history',
+    signInPageUrl: '/sign-in'
 };
 
-SignInPage.propTypes = {
+ForgotPasswordPage.propTypes = {
     classes: shape({
         root: string,
         header: string,
         contentContainer: string
     }),
-    createAccountPageUrl: string,
-    forgotPasswordPageUrl: string,
-    signedInRedirectUrl: string
+    signedInRedirectUrl: string,
+    signInPageUrl: string
 };
 
-export default SignInPage;
+export default ForgotPasswordPage;
