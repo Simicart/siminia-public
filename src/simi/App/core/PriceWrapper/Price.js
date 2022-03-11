@@ -1,15 +1,12 @@
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import Price from '@magento/venia-ui/lib/components/Price';
-import {CrossedOutPrice} from "./CrossedOutPrice";
+import { CrossedOutPrice } from './CrossedOutPrice';
 
-export const PriceWrapper = (props) => {
+export const PriceWrapper = props => {
+    const { fromValue, toValue, currencyCode, value, baseValue } = props;
 
-    const {fromValue, toValue, currencyCode, value, baseValue} = props
-
-    const isFromToPrice = !!fromValue && !!toValue
-
-    console.log(props)
+    const isFromToPrice = !!fromValue && !!toValue;
 
     if (!!baseValue && baseValue > value) {
         return (
@@ -18,13 +15,10 @@ export const PriceWrapper = (props) => {
                     currencyCode={currencyCode}
                     value={baseValue}
                 />
-                <span>{' '}</span>
-                <Price
-                    currencyCode={currencyCode}
-                    value={value}
-                />
+                <span> </span>
+                <Price currencyCode={currencyCode} value={value} />
             </>
-        )
+        );
     }
 
     if (isFromToPrice) {
@@ -35,36 +29,22 @@ export const PriceWrapper = (props) => {
                         id={'productDetail.fromPrice'}
                         defaultMessage={'From'}
                     />
-                    <span>{' '}</span>
-                    <Price currencyCode={currencyCode}
-                           value={fromValue}
-                    />
-                    <span>{' '}</span>
+                    <span> </span>
+                    <Price currencyCode={currencyCode} value={fromValue} />
+                    <span> </span>
                     <FormattedMessage
                         id={'productDetail.toPrice'}
                         defaultMessage={'to'}
                     />
-                    <span>{' '}</span>
-                    <Price currencyCode={currencyCode}
-                           value={toValue}
-                    />
+                    <span> </span>
+                    <Price currencyCode={currencyCode} value={toValue} />
                 </>
-            )
+            );
         } else {
-            return (
-                <Price
-                    currencyCode={currencyCode}
-                    value={fromValue}
-                />
-            )
+            return <Price currencyCode={currencyCode} value={fromValue} />;
         }
     } else {
-        return (
-            <Price
-                currencyCode={currencyCode}
-                value={value}
-            />
-        )
+        return <Price currencyCode={currencyCode} value={value} />;
     }
 };
 

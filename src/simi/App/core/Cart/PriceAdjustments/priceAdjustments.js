@@ -44,12 +44,13 @@ const PriceAdjustments = props => {
     const [enableWarningPoint, setEnalbleWarningPoint] = useState(false);
     const { spendRewardPointHandle, flatData } = usePriceSummary();
     const { priceData, subtotal } = flatData;
+    const subtotalVal = subtotal && subtotal.value ? subtotal.value : 0;
     const mpRewardSpent =
         priceData &&
         priceData.filter(function(rewardData) {
             return rewardData.code == 'mp_reward_spent';
         });
-    const { customerRewardPoint } = useGetRewardPointData();
+    const { customerRewardPoint } = useGetRewardPointData({ onCart: true });
     const exchange_rate = customerRewardPoint.current_exchange_rates;
     const spending_rate = exchange_rate ? exchange_rate.spending_rate : '';
     const words = spending_rate ? spending_rate.split(' points') : '';
@@ -58,7 +59,7 @@ const PriceAdjustments = props => {
     const pointSpending = spending_point[1];
     const moneySpending = money[1] ? money[1].split('.') : '';
     const maxPoint = Math.floor(
-        (pointSpending * subtotal.value) / moneySpending[0]
+        (pointSpending * subtotalVal) / moneySpending[0]
     );
     const balance = customerRewardPoint.point_balance;
     let rewardPointSelected = 0;

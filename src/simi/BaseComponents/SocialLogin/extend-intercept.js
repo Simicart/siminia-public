@@ -54,6 +54,24 @@ module.exports = targets => {
         `<${SocialLogin} mode="popup" showCreateAccount={showCreateAccount} isPopup={props.isPopup} />`
     );
 
+    // Add Social login to native inner
+    const NativeInnerSignInComponent = targetables.reactComponent(
+        '@simicart/siminia/src/simi/App/nativeInner/SignIn/signIn.js'
+    );
+
+    const InnerSocialLogin = NativeInnerSignInComponent.addImport(
+        "SocialLogin from '@simicart/siminia/src/simi/BaseComponents/SocialLogin/components/SocialAuthentication/socialAuthentication'"
+    );
+
+    NativeInnerSignInComponent.surroundJSX(
+        'div className={classes.root}',
+        'React.Fragment'
+    ).insertAfterJSX(
+        'div className={classes.root}',
+        `<${InnerSocialLogin} mode="popup" showCreateAccount={showCreateAccount} isPopup={props.isPopup} />`
+    );
+
+
     // Add Social Login component to Create account
     /*
     const CreateAccountComponent = targetables.reactComponent(
@@ -79,6 +97,21 @@ module.exports = targets => {
     CreateAccountComponent.surroundJSX('Form', 'React.Fragment').insertAfterJSX(
         'Form',
         `<${SocialLoginReg} mode="popup" />`
+    );
+
+
+    // Add Social login to native inner create account
+    const NativeInnerCreateAccountComponent = targetables.reactComponent(
+        '@simicart/siminia/src/simi/App/nativeInner/Customer/CreateAccountPage/CreateAccount.js'
+    );
+
+    const InnerSocialLoginReg = NativeInnerCreateAccountComponent.addImport(
+        "SocialLogin from '@simicart/siminia/src/simi/BaseComponents/SocialLogin/components/SocialAuthentication/socialAuthentication'"
+    );
+
+    NativeInnerCreateAccountComponent.surroundJSX('Form', 'React.Fragment').insertAfterJSX(
+        'Form',
+        `<${InnerSocialLoginReg} mode="popup" />`
     );
 
     // Add Social Login component to Cart page
