@@ -96,7 +96,7 @@ export const cateUrlSuffix = () => {
 
 export const productUrlSuffix = () => {
     const savedSuffix = Identify.getDataFromStoreage(
-        Identify.LOCAL_STOREAGE,
+        Identify.SESSION_STOREAGE,
         'PRODUCT_URL_SUFFIX'
     );
     if (savedSuffix) return savedSuffix;
@@ -104,7 +104,7 @@ export const productUrlSuffix = () => {
         const storeConfig = Identify.getStoreConfig();
         const suffix = storeConfig.storeConfig.product_url_suffix;
         Identify.storeDataToStoreage(
-            Identify.LOCAL_STOREAGE,
+            Identify.SESSION_STOREAGE,
             'PRODUCT_URL_SUFFIX',
             suffix
         );
