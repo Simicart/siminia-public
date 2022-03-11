@@ -1,0 +1,185 @@
+.root {
+    align-content: start;
+    display: grid;
+    row-gap: 0.5rem;
+    position: relative;
+}
+
+.icon_trash {
+    background-color: aliceblue;
+}
+.root_disabled {
+    composes: root;
+    opacity: 0.5;
+}
+
+.name {
+    font-size: var(--venia-typography-detail-XL-fontSize);
+    font-weight: var(--venia-global-fontWeight-semibold);
+    height: 40px;
+}
+
+.detail {
+    color: rgb(var(--venia-global-color-text-alt));
+    font-size: var(--venia-typography-detail-L-fontSize);
+}
+
+.option {
+    composes: detail;
+}
+
+.outOfStock {
+    color: rgb(var(--venia-global-color-error));
+    font-size: var(--venia-typography-detail-L-fontSize);
+}
+
+.priceContainer {
+    font-size: var(--venia-typography-detail-XL-fontSize);
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.image_disabled {
+    composes: image;
+    opacity: 0.6;
+}
+
+.addToCart {
+    composes: root_highPriority from '@magento/venia-ui/lib/components/Button/button.module.css';
+    justify-self: left;
+    margin-top: 0.25rem;
+}
+
+.deleteItem {
+    margin: 0 0.5rem 0 1rem;
+    justify-self: right;
+    position: absolute;
+    left: 0;
+}
+
+.actionWrap {
+    display: flex;
+    align-items: flex-start;
+}
+
+.moreActions {
+    align-items: center;
+    background-color: rgb(var(--venia-global-color-gray-100));
+    border-radius: 50%;
+    /**
+        Hide actions menu until PWA-1683
+
+        display: inline-flex;
+     */
+    display: none;
+    padding: 0.125rem;
+}
+
+.close {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    left: -15px;
+    opacity: 0.7;
+    background-color: #F4F4F4;
+    /* padding: 6px; */
+    border-radius: 50%;
+  }
+  .close:hover {
+    opacity: 1;
+  }
+  .close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 18px;
+    width: 2px;
+    top: 6px;
+    background-color: #333;
+  }
+  .close:before {
+    transform: rotate(45deg);
+  }
+  .close:after {
+    transform: rotate(-45deg);
+  }
+
+
+@media (max-width: 480px) {
+    .addToCart {
+        min-width: 100%;
+    }
+}
+
+@media (max-width:768px){
+    .root {
+        grid-template-areas: 'image product delete'
+                             'image share addCart';
+        grid-template-columns: 1fr 3fr 1fr;
+        column-gap: 0.5rem;
+        row-gap: 0;
+    }
+    .addToCart {
+        grid-area: addCart;
+        /* composes: root_highPriority from '@magento/venia-ui/lib/components/Button/button.module.css'; */
+        height: 30px;
+        width: 58px;
+        border-radius: 15px;
+        background-color: #FF5F59;
+        border: none;
+        min-height: unset;
+        margin: 0;
+    }
+    .share{
+        grid-area: share;
+        box-sizing: border-box;
+        height: 30px;
+        width: 58px;
+        border: 1px solid #C3BEBE;
+        border-radius: 15px;
+        background-color: #FFFFFF;
+        margin-left: 70%;
+    }
+    .share svg{
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .deleteItem {
+        grid-area: delete;
+        margin: 0;
+        margin-left: 40px;
+    }
+    .wrapImage{
+        grid-area: image;
+    }
+    .actionWrap {
+        grid-area: product;
+        display: unset;
+    }
+    .wrapImage > div{
+        height: 101px;
+        width: 101px;
+    }
+    .wrapImage > div > img{
+        border-radius: 8px;
+    }
+    .name{
+        color: #4F4F4F;
+        font-family: Roboto;
+        font-size: 13px;
+        letter-spacing: 0;
+        line-height: 15px;
+    }
+    .priceContainer{
+        color: #150826;
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 19px;
+    }
+}

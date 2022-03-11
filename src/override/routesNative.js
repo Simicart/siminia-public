@@ -127,7 +127,7 @@ const WishlistPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "WishlistPage"*/ '/src/simi/App/core/WishlistPage')
+                import(/* webpackChunkName: "WishlistPage"*/ '/src/simi/App/nativeInner/WishlistPage')
             }
             {...props}
         />
