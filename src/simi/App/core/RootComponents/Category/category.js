@@ -11,7 +11,7 @@ import CategoryHeader from './categoryHeader';
 import NoProductsFound from 'src/simi/BaseComponents/Products/NoProductsFound';
 import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent';
 import { useIntl } from 'react-intl';
-import Seo from '../../SeoBasic'
+import Seo from '../../SeoBasic';
 import Canonical from '../../SeoBasic/Canonical';
 import MarkupCategory from '../../SeoBasic/Markup/Category';
 
@@ -84,9 +84,9 @@ const Category = props => {
 
     return (
         <div className="container">
-            <Seo pageType="CATEGORY"/>
+            <Seo pageType="CATEGORY" />
             <Canonical type="CATEGORY" />
-            <MarkupCategory category={category}/>
+            <MarkupCategory category={category} />
             {breadcrumb && breadcrumb.length ? (
                 <div style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
                     <Breadcrumbs breadcrumb={breadcrumb} />
@@ -111,14 +111,14 @@ const Category = props => {
                     />
                 ]
             })}
-            {category && category.name && category.image && (
+            {/*category && category.name && category.image && (
                 <CategoryHeader
                     name={category.name}
                     image_url={resourceUrl(category.image, {
                         type: 'image-category'
                     })}
                 />
-            )}
+                )*/}
             {pageControl.totalPages === 0 && !isApplyingFilter ? (
                 <NoProductsFound categoryId={id} />
             ) : (

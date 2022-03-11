@@ -78,6 +78,8 @@ export const useProduct = props => {
         );
 
         if (!product) {
+            if (data.products.items && data.products.items.length)
+                return data.products.items[0];
             return null;
         }
 
