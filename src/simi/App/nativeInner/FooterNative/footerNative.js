@@ -69,7 +69,7 @@ const FooterNative = props => {
 
     const isHiddenBottomMenu =
         (data && data.route && data.route.type === TYPE_PRODUCT) ||
-        location.pathname === '/sign-in'
+        location.pathname === '/sign-in' || location.pathname === '/forgot-password'|| location.pathname === '/create-account'
             ? true
             : false;
     const pathName =
