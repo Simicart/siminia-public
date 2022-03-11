@@ -54,7 +54,8 @@ const CategoryList = props => {
         }
         else {
             if(childCategories.length){
-                return childCategories.map((item, index) => {
+                return  <div  className={classes.leftContent}>
+                    {childCategories.map((item, index) => {
                     return (
                         <div
                             className={
@@ -66,7 +67,8 @@ const CategoryList = props => {
                             <span className={classes.name}>{item.name}</span>
                         </div>
                     );
-                });
+                })}
+                </div>
             }else {
                 return (
                     <ErrorView
@@ -128,7 +130,7 @@ const CategoryList = props => {
         <div className={classes.root}>
             {header}
             <div className={classes.mainContent}>
-                <div className={classes.leftContent}>{renderLeftContent()}</div>
+               {renderLeftContent()}
                 <div className={classes.rightContent}>
                     {renderRightContent()}
                 </div>
