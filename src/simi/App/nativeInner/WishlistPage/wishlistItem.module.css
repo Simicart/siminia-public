@@ -121,7 +121,10 @@
                              'image share addCart';
         grid-template-columns: 1fr 3fr 1fr;
         column-gap: 0.5rem;
-        row-gap: 0;
+        row-gap: 0; 
+        border-radius: 8px;
+        background-color: #FFFFFF;
+        padding: 10px;
     }
     .addToCart {
         grid-area: addCart;
@@ -142,7 +145,7 @@
         border: 1px solid #C3BEBE;
         border-radius: 15px;
         background-color: #FFFFFF;
-        margin-left: 70%;
+        margin-left: 60%;
     }
     .share svg{
         margin-left: auto;
@@ -151,7 +154,7 @@
     .deleteItem {
         grid-area: delete;
         margin: 0;
-        margin-left: 40px;
+        margin-left: 30px;
     }
     .wrapImage{
         grid-area: image;

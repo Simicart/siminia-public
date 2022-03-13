@@ -10,6 +10,7 @@ import defaultClasses from './wishlistPage.module.css';
 import LeftMenu from '../../core/LeftMenu';
 import CreateWishlist from '@magento/venia-ui/lib/components/WishlistPage/createWishlist.js';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
+import { useWindowSize } from '@magento/peregrine';
 
 
 const WishlistPage = props => {
@@ -30,7 +31,10 @@ const WishlistPage = props => {
     });
 
     const [{ cartId }] = useCartContext();
-    
+
+    const windowSize = useWindowSize();
+    const isMobileSite = windowSize.innerWidth <= 768;
+
     const wishlistElements = useMemo(() => {
         if (wishlists.length === 0) {
             return <Wishlist />;
@@ -85,7 +89,7 @@ const WishlistPage = props => {
     }
 
     return (
-        <div className={`${classes.root} container`}>
+        <div className={`${classes.root} ${!isMobileSite ? 'container' :''}`}>
             <div className={classes.wrapper}>
                 <LeftMenu label="WishList" />
                 <div className={classes.container}>

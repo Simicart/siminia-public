@@ -99,4 +99,10 @@
     .heading{
         display: none;
     }
+    .root {
+        padding-left: 0;
+        padding-right: 0;
+        row-gap: 0;
+        background-color: #F2F2F3;
+    }
 }
