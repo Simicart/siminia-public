@@ -4,6 +4,7 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 
 import DEFAULT_OPERATIONS from '@magento/peregrine/lib/talons/CategoryTree/categoryTree.gql';
+import Identify from 'src/simi/Helper/Identify';
 
 /**
  * @typedef {object} CategoryNode
@@ -25,6 +26,7 @@ import DEFAULT_OPERATIONS from '@magento/peregrine/lib/talons/CategoryTree/categ
  * @return {{ childCategories: Map<number, CategoryNode> }}
  */
 export const useCategoryTree = props => {
+    const storeConfig = Identify.getStoreConfig();
     const { categoryId, updateCategories } = props;
 
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
@@ -35,9 +37,10 @@ export const useCategoryTree = props => {
     });
     const { data } = queryResult;
 
-    const { data: categoryUrlData } = useQuery(getCategoryUrlSuffixQuery, {
-        fetchPolicy: 'cache-first'
-    });
+    // const { data: categoryUrlData } = useQuery(getCategoryUrlSuffixQuery, {
+    //     fetchPolicy: 'cache-first'
+    // });
+    const categoryUrlData = storeConfig;
 
     const categoryUrlSuffix = useMemo(() => {
         if (categoryUrlData) {
