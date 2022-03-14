@@ -54,7 +54,7 @@ const OrderHistoryPage = props => {
 const OrderDetailPage = props => {
     return (
         <LazyComponent
-            component={() => import('src/simi/App/core/OrderDetailPage')}
+            component={() => import('src/simi/App/nativeInner/OrderDetailPage')}
             {...props}
         />
     );
