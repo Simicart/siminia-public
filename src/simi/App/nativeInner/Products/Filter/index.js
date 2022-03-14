@@ -284,7 +284,13 @@ const Filter = props => {
                 
             </div>
         ) : (
-            ''
+            <div className='noFilters'>
+                {formatMessage({
+                        id: 'noFilters',
+                        defaultMessage:
+                            `Sorry! We couldn't find any filters`
+                    })}
+            </div>
         );
 
     return isPhone ? (
