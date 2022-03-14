@@ -149,7 +149,7 @@ const BasicSearch = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "BasicSearch"*/ 'src/simi/App/core/RootComponents/Search')
+                import(/* webpackChunkName: "BasicSearch"*/ 'src/simi/App/nativeInner/RootComponents/Search')
             }
             {...props}
         />
