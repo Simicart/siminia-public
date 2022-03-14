@@ -44,7 +44,7 @@ const OrderHistoryPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "OrderHistoryPage"*/ 'src/simi/App/core/OrderHistoryPage')
+                import(/* webpackChunkName: "OrderHistoryPage"*/ 'src/simi/App/nativeInner/OrderHistoryPage')
             }
             {...props}
         />
