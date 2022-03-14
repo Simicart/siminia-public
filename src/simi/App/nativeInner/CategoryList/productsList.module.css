@@ -75,6 +75,7 @@
     .root img:nth-child(2){
         margin-left: auto;
         margin-right: auto;
+        object-fit: contain;
     }
     .imageContainer{
         margin:0;

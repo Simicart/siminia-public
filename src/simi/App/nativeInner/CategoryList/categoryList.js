@@ -15,7 +15,6 @@ import { MdModelTraining } from 'react-icons/md';
 import { FcNews } from 'react-icons/fc';
 import {BsCartCheck} from 'react-icons/bs'
 
-
 const CategoryList = props => {
     const { id, title } = props;
     const talonProps = useCategoryList({ id });
@@ -63,7 +62,8 @@ const CategoryList = props => {
                             }
                             onClick={() => setActive(index)}
                         >
-                            <span className={classes.icon}>{listIcon[index]}</span>
+                            {/* <span className={classes.icon}>{listIcon[index]}</span> */}
+                            <img className={classes.imgLogo} src='https://magento24.pwa-commerce.com/media/logo/stores/1/Lays-Logo.png' alt='logo' />
                             <span className={classes.name}>{item.name}</span>
                         </div>
                     );
