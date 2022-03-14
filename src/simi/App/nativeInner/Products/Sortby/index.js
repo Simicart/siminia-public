@@ -103,7 +103,7 @@ const Sortby = props => {
 
     return (
         <div className="top-sort-by">
-            <div className={`${showingDropdown ? 'active' : 'unActive'}`}></div>
+            {/* <div className={`${showingDropdown ? 'active' : 'unActive'}`}></div> */}
             {selections.length === 0 ? (
                 <span />
             ) : (

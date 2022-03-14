@@ -8,60 +8,111 @@ import Image from '@magento/venia-ui/lib/components/Image';
 import defaultClasses from './productsList.module.css';
 import { useIntl } from 'react-intl';
 import { RiArrowRightSLine } from 'react-icons/ri';
-
+import { BsCartCheck } from 'react-icons/bs';
+const IMAGE_DEFAULT = 'https://magento24.pwa-commerce.com/media/logo/stores/1/Lays-Logo.png'
 const IMAGE_WIDTH = 80;
-
 const ProductsList = props => {
     const { childCate } = props;
-    const {category_url_suffix} = props.storeConfig || {}
+    const items = childCate && childCate.products ? childCate.products.items : []
     const { formatMessage } = useIntl();
     const child = childCate && childCate.children ? childCate.children : [];
     const talonProps = useCategoryTile({
         item: props.childCate,
         storeConfig: props.storeConfig
     });
-    const { image, item, handleClick } = talonProps;
+    const { handleClick } = talonProps;
     const classes = useStyle(defaultClasses, props.classes);
-    
-    const product =
-        child && child[0] && child[0].products ? child[0].products.items : [];
+
     const renderProductsList = () => {
-        return product
+        return items
             .filter((i, index) => index < 6)
             .map(item => {
-               return <Link to={`${item.url_key}${category_url_suffix}`} className={classes.product}>
-                    <Image
-                        alt={item.name}
-                        classes={{ image: classes.image, root: classes.imageContainer }}
-                        resource={item.image.url}
-                        type={item.image.__typename}
-                        width={IMAGE_WIDTH}
-                    />
-                    <span className={classes.price}> 
-                    <Price currencyCode={item.price_range.minimum_price.final_price.currency} value={item.price_range.minimum_price.final_price.value} />
-                    </span>
-                </Link>
+                return (
+                    <Link
+                        to={`${item.url_key}${item.url_suffix}`}
+                        className={classes.product}
+                    >
+                        <Image
+                            alt={item.name}
+                            classes={{
+                                image: classes.image,
+                                root: classes.imageContainer
+                            }}
+                            resource={item.image.url}
+                            type={item.image.__typename}
+                            width={IMAGE_WIDTH}
+                        />               
+                        <span className={classes.productName}>{item.name}</span>
+                    </Link>
+                );
             });
     };
+    const renderSubCate = () => {
+        if (child.length === 0) {
+            return '';
+        } else {
+            return child.map(cate => {
+                return (
+                    <Link
+                        to={`${cate.url_path}${cate.url_suffix}`}
+                        className={classes.product}
+                    >
+                        {cate.image? 
+                        <Image
+                            alt={cate.name}
+                            classes={{
+                                image: classes.image,
+                                root: classes.imageContainer
+                            }}
+                            resource={cate.image}
+                            type={cate.name}
+                            width={IMAGE_WIDTH}
+                        />
+                        : <Image
+                        alt={cate.name}
+                        classes={{
+                            image: classes.image,
+                            root: classes.imageContainer
+                        }}
+                        resource={IMAGE_DEFAULT}
+                        type={cate.name}
+                        width={IMAGE_WIDTH}
+                    />}
+                        <span className={classes.productName}>{cate.name}</span>
+                    </Link>
+                );
+            });
+        }
+    };
     return (
-    <div className={classes.root}>
-        <div className={classes.viewAll} onClick={handleClick}>
-            <Link to={item.url} >
-                <span className={classes.title}>
-                {formatMessage({
+        <div className={classes.root}>
+            <div className={classes.viewAll} onClick={handleClick}>
+                <Link to={`${childCate.url_path}${childCate.url_suffix}`}>
+                    <span className={classes.title}>
+                        {formatMessage({
                             id: 'productList',
-                            defaultMessage:
-                                `View All ${item.name}`
+                            defaultMessage: `View All ${childCate.name}`
                         })}
-                </span>
-            </Link>
-            <span className={classes.icon}><RiArrowRightSLine/></span>
+                    </span>
+                    <span className={classes.icon}>
+                        <RiArrowRightSLine size={20} />
+                    </span>
+                </Link>
+                
+            </div>
+            <div className={classes.wrapProductsList}>
+                {renderProductsList()}
+            </div>
+            <div className={classes.subCategory}>
+                {child.length === 0 ? '' : <div className={classes.titleSubCate}>
+                    {formatMessage({
+                        id: 'titleSubCategory',
+                        defaultMessage: 'Sub categories'
+                    })}
+                </div>}
+                <div className={classes.wrapSubCate}>{renderSubCate()}</div>
+            </div>
         </div>
-        <div className={classes.wrapProductsList}>
-            {renderProductsList()}
-        </div>
-        
-    </div>
     );
 };
 

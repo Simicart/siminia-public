@@ -110,7 +110,6 @@ const Category = props => {
                     <MarkupCategoryBasic category={category} />
                 </>
             )}
-
             {breadcrumb && breadcrumb.length ? (
                 <div style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
                     <Breadcrumbs breadcrumb={breadcrumb} />

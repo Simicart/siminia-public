@@ -36,6 +36,13 @@ import PriceAdjustments from '../Cart/PriceAdjustments/priceAdjustments';
 
 import Identify from 'src/simi/Helper/Identify';
 import ButtonLoader from '../../../BaseComponents/ButtonLoader';
+
+const deliveryTimeEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME) === 1;
+
 require('./checkoutPage.scss');
 const CheckoutPage = props => {
     const { classes: propClasses, history } = props;
@@ -83,7 +90,6 @@ const CheckoutPage = props => {
     } = talonProps;
 
     const deliveryDateTime = useRef(null);
-    console.log('reff', deliveryDateTime);
 
     const [, { addToast }] = useToasts();
     useEffect(() => {
@@ -202,7 +208,6 @@ const CheckoutPage = props => {
                 </Button>
             </div>
         ) : null;
-        console.log(openDeli);
 
         const shippingMethodSection =
             checkoutStep >= CHECKOUT_STEP.SHIPPING_METHOD ? (
@@ -213,19 +218,25 @@ const CheckoutPage = props => {
                         onSuccess={scrollShippingMethodIntoView}
                         setPageIsUpdating={setIsUpdating}
                     />
-                    <div className="main-delivery">
-                        <label className="check-container">
-                            Delivery Time
-                            <input
-                                onClick={() => setOpenDeli(!openDeli)}
-                                type="checkbox"
-                            />
-                            <span className="checkmark" />
-                        </label>
-                    </div>
-                    {openDeli ? (
-                        <DeliveryDateTime ref={deliveryDateTime} />
-                    ) : null}
+                    {deliveryTimeEnabled ? (
+                        <React.Fragment>
+                            <div className="main-delivery">
+                                <label className="check-container">
+                                    {formatMessage({ id: 'Delivery Time' })}
+                                    <input
+                                        onClick={() => setOpenDeli(!openDeli)}
+                                        type="checkbox"
+                                    />
+                                    <span className="checkmark" />
+                                </label>
+                            </div>
+                            {openDeli ? (
+                                <DeliveryDateTime ref={deliveryDateTime} />
+                            ) : null}
+                        </React.Fragment>
+                    ) : (
+                        ''
+                    )}
                 </>
             ) : (
                 <h3 className={classes.shipping_method_heading}>
@@ -282,7 +293,7 @@ const CheckoutPage = props => {
             ) : null;
 
         const reviewOrderButtonType =
-            (reviewOrderButtonClicked || isUpdating || !isPaymentAvailable) ? (
+            reviewOrderButtonClicked || isUpdating || !isPaymentAvailable ? (
                 <ButtonLoader classes={classes.loader_button} />
             ) : (
                 <Button

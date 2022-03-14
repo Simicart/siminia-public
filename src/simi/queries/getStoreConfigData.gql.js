@@ -1,5 +1,17 @@
 import { gql } from '@apollo/client';
 
+const socialLoginEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_SOCIAL_LOGIN &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_SOCIAL_LOGIN) === 1;
+
+const mageworxSeoEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
+
 const GET_STORE_CONFIG = gql`
     query storeConfigData {
         storeConfig {
@@ -19,8 +31,6 @@ const GET_STORE_CONFIG = gql`
             base_static_url
             base_media_url
             secure_base_url
-            secure_base_link_url
-            secure_base_static_url
             secure_base_media_url
             cms_home_page
             store_group_name
@@ -46,7 +56,26 @@ const GET_STORE_CONFIG = gql`
             default_keywords
             default_description
             root_category_id
-            configurable_thumbnail_source
+            ${
+                mageworxSeoEnabled
+                    ? `
+                mageworx_seo
+            `
+                    : ''
+            }
+            ${
+                socialLoginEnabled
+                    ? `
+                amsociallogin_general_enabled
+                amsociallogin_general_login_position
+                amsociallogin_general_button_shape
+                amsociallogin_general_popup_enabled
+                amsociallogin_general_button_position
+                amsociallogin_general_redirect_type
+                amsociallogin_general_custom_url
+            `
+                    : ''
+            }
         }
         availableStores {
             category_url_suffix
@@ -97,6 +126,17 @@ const GET_STORE_CONFIG = gql`
                     }
                 }
             }
+        }
+        ${
+            socialLoginEnabled
+                ? `
+            amSocialLoginButtonConfig {
+                type
+                label
+                url
+            }
+        `
+                : ''
         }
     }
 `;

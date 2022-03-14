@@ -17,52 +17,75 @@ import CurrencySwitcher from '@magento/venia-ui/lib/components/Header/currencySw
 import PageLoadingIndicator from '@magento/venia-ui/lib/components/PageLoadingIndicator';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useWindowSize } from '@magento/peregrine';
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { isBot, isHeadlessChrome } from '../../../Helper/BotDetect';
-
+import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
 import defaultClasses from './header.module.css';
+import { useQuery } from '@apollo/client';
+import { ArrowLeft } from 'react-feather';
+import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
+import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
+import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 
 // check if bot or headless chrome / wont get cart to avoid perf accection
 // can modify deeper on  peregrine/lib/context/cart.js:83 to avoid creating cart - db wasting - https://prnt.sc/2628k9h
 const isBotOrHeadless = isBot() || isHeadlessChrome();
 
+const TYPE_PRODUCT = 'PRODUCT';
+
 const Header = props => {
     const history = useHistory();
     const location = useLocation();
+    const pathname = location.pathname;
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth <= 1280;
 
-    const isSimpleHeader =
-        location &&
-        location.pathname &&
-        (location.pathname === '/checkout');
-
-    const pathName =
-        location && location.pathname
-            ? location.pathname.split('/').length
-            : null;
-    const isHtml =
-        location && location.pathname ? location.pathname.split('.')[1] : null;
-    const isDetailPage =
-        location && location.pathname
-            ? location.pathname.split('-').length
-            : null;
-
-    const isBrand =
-        location && location.pathname ? location.pathname.split('.')[0] : null;
-    const isHiddenHeader =
-        location &&
-        location.pathname &&
-        ((location.pathname === '/sign-in' && isPhone && isHtml === 'html') ||
-            (isPhone &&
-                pathName === 2 &&
-                isHtml === 'html' &&
-                isBrand !== '/brands' &&
-                isDetailPage > 1));
-
     const storeConfig = Identify.getStoreConfig();
+
+    const { itemCount: itemsQty } = useCartTrigger({
+        mutations: {
+            createCartMutation: CREATE_CART_MUTATION
+        },
+        queries: {
+            getItemCountQuery: GET_ITEM_COUNT_QUERY
+        },
+        storeConfig
+    });
+
+    const { data } = useQuery(RESOLVE_URL, {
+        variables: {
+            url: pathname
+        },
+        skip: !pathname || pathname === '/',
+        fetchPolicy: 'cache-first'
+    });
+
+    const isHiddenHeader =
+        (data && data.route && data.route.type === TYPE_PRODUCT) ||
+        pathname === '/sign-in'
+            ? true
+            : false;
+
+    const isSimpleHeader =
+        location && location.pathname && location.pathname === '/checkout';
+
+    const type = location && location.pathname ? location.pathname : null;
+    const myProfile = [
+        '/order-history',
+        '/wishlist',
+        '/address-book',
+        '/saved-payments',
+        '/product-review',
+        '/communications',
+        '/account-information',
+        '/account-subcriptions',
+        '/reward-points',
+        '/reward-transactions'
+    ];
+
+    // const storeConfig = Identify.getStoreConfig();
     const [userData] = useUserContext();
 
     let topInsets = 0;
@@ -159,65 +182,95 @@ const Header = props => {
                     Identify.isRtl() ? classes['header-search-rtl'] : ''
                 }`}
             >
-                <SearchForm history={history} />
+                <SearchForm itemsQty={itemsQty} history={history} />
             </div>
         );
     };
+
+    const renderHeader = type => {
+        if (type === '/sign-in') {
+            return (
+                <div className={classes.specHeader}>
+                    <ArrowLeft onClick={() => history.goBack()} />
+                    <span>
+                        <FormattedMessage
+                            id="signIn.signInText"
+                            defaultMessage="Sign In"
+                        />
+                    </span>
+                </div>
+            );
+        }
+        if (type === '/create-account') {
+            return (
+                <div className={classes.specHeader}>
+                    <ArrowLeft onClick={() => history.goBack()} />
+                    <span>
+                        <FormattedMessage
+                            id="Register"
+                            defaultMessage="Register"
+                        />
+                    </span>
+                </div>
+            );
+        }
+        if (type === '/forgot-password') {
+            return (
+                <div className={classes.specHeader}>
+                    <ArrowLeft onClick={() => history.goBack()} />
+                    <span>
+                        <FormattedMessage
+                            id="navHeader.forgotPasswordText"
+                            defaultMessage="Forgot Password"
+                        />
+                    </span>
+                </div>
+            );
+        }
+        if (type === '/cart') {
+            return (
+                <div className={classes.specHeader}>
+                    <ArrowLeft onClick={() => history.goBack()} />
+                    <span>
+                        <FormattedMessage
+                            id="cartPage.titlle"
+                            defaultMessage="Shopping Cart"
+                        />{' '}
+                        ({itemsQty})
+                    </span>
+                </div>
+            );
+        }
+        if (myProfile.includes(type)) {
+            return (
+                <div className={classes.specHeader}>
+                    <ArrowLeft onClick={() => history.goBack()} />
+                    <span>
+                        {type
+                            .split('/')[1]
+                            .replace('-', ' ')
+                            .charAt(0)
+                            .toUpperCase() +
+                            type
+                                .split('/')[1]
+                                .replace('-', ' ')
+                                .slice(1)}
+                    </span>
+                </div>
+            );
+        } else return !isSimpleHeader && !isHiddenHeader && renderSearchForm();
+    };
+
     if (isPhone) {
         return (
             <React.Fragment>
-                {/* {!isHiddenHeader ? (
-                    <header id="siminia-main-header">
-                        <div
-                            style={{
-                                backgroundColor: 'rgba(255,255,255,0.92)',
-                                backdropFilter: 'blur(10px)'
-                            }}
-                        >
-                            <div className="container">
-                                <div
-                                    className={`${
-                                        classes['header-app-bar']
-                                    } ${Identify.isRtl() &&
-                                        classes['header-app-bar-rtl']}`}
-                                >
-                                    <NavTrigger>
-                                        {!isSimpleHeader && (
-                                            <MenuIcon
-                                                color="#333132"
-                                                style={{
-                                                    width: 35,
-                                                    height: 35
-                                                }}
-                                            />
-                                        )}
-                                    </NavTrigger>
-                                    {renderLogo()}
-                                    <div className={classes['right-bar']}>
-                                        {!isSimpleHeader && !isBotOrHeadless && (
-                                            <div
-                                                className={
-                                                    classes['right-bar-item']
-                                                }
-                                            >
-                                                <CartTrigger />
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="id-message">
-                            <ToastMessage />
-                        </div>
-                    </header>
-                ) : null} */}
-
                 {!isHiddenHeader && !isSimpleHeader ? (
                     <div className={classes.virtualHeader} />
                 ) : null}
 
-                {!isSimpleHeader && !isHiddenHeader && renderSearchForm()}
+                {/* {!isSimpleHeader && !isHiddenHeader && renderSearchForm()}
+                 */}
+                {renderHeader(type)}
             </React.Fragment>
         );
     }

@@ -8,7 +8,7 @@ const mageworxSeoEnabled =
 export const GET_STORE_CONFIG_DATA = gql`
 query storeConfigData {
     storeConfig {
-        ${mageworxSeoEnabled ? `mageworx_seo` : ``}
+        ${mageworxSeoEnabled ? `mageworx_seo` : `id`}
     }
     currency {
         default_display_currency_code

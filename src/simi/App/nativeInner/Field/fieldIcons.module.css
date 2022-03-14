@@ -1,0 +1,58 @@
+.root {
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-template-areas: 'before input after';
+    grid-template-columns: auto 1fr auto;
+    height: 2.5rem;
+    width: 100%;
+}
+
+.input {
+    align-items: center;
+    display: flex;
+    grid-column: before-start / after-end;
+    grid-row: input-start / input-end;
+}
+
+.input > input {
+    padding-left: calc(1.875rem * var(--iconsBefore) + 0.625rem);
+    padding-right: calc(1.875rem * var(--iconsAfter) + 0.625rem);
+    
+   
+}
+
+.before,
+.after {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 2px;
+    pointer-events: none;
+    width: 2.5rem;
+    z-index: 1;
+}
+
+.before:empty,
+.after:empty {
+    display: none;
+}
+
+.before {
+    grid-area: before;
+}
+
+.after {
+    grid-area: after;
+}
+
+.before svg {
+    stroke: rgb(var(--venia-global-color-gray-600));
+}
+
+@media (max-width:450px) {
+    .input > input {
+        border: none;
+        border-bottom: 1px solid #F2F2F3;
+        padding: 0;
+    }
+}

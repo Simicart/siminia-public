@@ -29,7 +29,14 @@ export const RewardPointFragment = rewardPointEnabled
               }
           }
       `
-    : ``;
+    : gql`
+          fragment RewardPointFragment on CartPrices {
+              subtotal_excluding_tax {
+                  currency
+                  value
+              }
+          }
+      `;
 
 export const PriceSummaryFragment = gql`
     fragment PriceSummaryFragment on Cart {

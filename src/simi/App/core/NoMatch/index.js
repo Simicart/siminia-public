@@ -2,7 +2,15 @@ import React, { useEffect } from 'react';
 import Loading from 'src/simi/BaseComponents/Loading';
 import { useQuery } from '@apollo/client';
 import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
-import RsHome from '../SeoBasic/Markup/RsHome';
+import RsHome from '../Seo/Markup/RsHome';
+import RsHomeBasic from '../SeoBasic/Markup/RsHome';
+import RsSeller from '../Seo/Markup/RsSeller';
+
+const mageworxSeoEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
 
 //import Page404 from './Page404';
 const Page404 = props => {
@@ -100,7 +108,12 @@ const NoMatch = props => {
     const renderHomeSeo = () => {
         return (
             <React.Fragment>
-                <RsHome type="home" />
+                {mageworxSeoEnabled ? (
+                    <RsHome type="home" />
+                ) : (
+                    <RsHomeBasic type="home" />
+                )}
+                {mageworxSeoEnabled ? <RsSeller type="home" /> : ''}
             </React.Fragment>
         );
     };

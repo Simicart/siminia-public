@@ -81,12 +81,6 @@ const Griditem = props => {
     let imageUrl = small_image;
     //comment out this line when server got issue decoding images
     imageUrl = resourceUrl(imageUrl, { type: 'image-product', width: 260 });
-    
-
-
-  
-
-
     const image = (
         <div
             className={itemClasses['siminia-product-image']}

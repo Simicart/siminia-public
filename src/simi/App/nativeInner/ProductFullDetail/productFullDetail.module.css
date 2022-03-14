@@ -382,6 +382,7 @@
         justify-content:space-between;
         align-items: baseline;
         margin: 0;
+        border-bottom: none;
     }
     .actions {
         composes: section;
@@ -391,6 +392,9 @@
         row-gap: 1.5rem;
         justify-items: left;
     }
+    .wrapperDes {
+        border-bottom: 1px solid rgb(223,225, 226);
+    }
     
 }
 @media (min-width: 450px) {
@@ -398,4 +402,16 @@
         display:none;
     }
 
+}
+
+@media (max-width: 768px) {
+    .gallery-items .siminia-product-grid-item {
+        max-width: -webkit-fill-available;
+        border-radius: 8px;
+        background-color: #FFFFFF;
+    }
+    .upsell-crosssell-container {
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
 }

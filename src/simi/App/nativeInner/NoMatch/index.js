@@ -109,6 +109,7 @@ const NoMatch = props => {
         );
     }
 
+    
     if (data) {
         if (data.route && data.route.type) {
             const { type } = data.route;

@@ -37,7 +37,7 @@ const GET_PRODUCT_LABEL = gql`
                 }
                 
                 `
-                        : ``
+                        : `sku`
                 }
                
               

@@ -1,0 +1,142 @@
+:root {
+  --amsl-google-button__background: #fff;
+  --amsl-google-button__rectangle__background: #448fff;
+  --amsl-facebook-button__background: #3c5a99;
+  --amsl-facebook-button__rectangle__background: #3c5a99;
+  --amsl-twitter-button__background: #1da1f2;
+  --amsl-twitter-button__rectangle__background: var(
+    --amsl-twitter-button__background
+  );
+  --amsl-linkedin-button__background: #0077b7;
+  --amsl-linkedin-button__rectangle__background: var(
+    --amsl-linkedin-button__background
+  );
+  --amsl-instagram-button__background: linear-gradient(
+    0deg,
+    #e09b3d,
+    #c74c4d,
+    #c21975,
+    #7024c4
+  );
+  --amsl-instagram-button__rectangle__background: var(
+    --amsl-instagram-button__background
+  );
+  --amsl-amazon-button__background: #fff;
+  --amsl-amazon-button__rectangle__background: #232f3e;
+  --amsl-paypal-button__background: #fff;
+  --amsl-paypal-button__rectangle__background: #009cde;
+  --amsl-twitch-button__background: #6441a5;
+  --amsl-twitch-button__rectangle__background: var(
+    --amsl-twitch-button__background
+  );
+  --amsl-apple-button__background: #fff;
+  --amsl-apple-button__rectangle__background: var(
+    --amsl-apple-button__background
+  );
+}
+
+.root {
+  padding: 2rem;
+  background: rgb(var(--venia-global-color-gray));
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.account .list {
+  justify-content: flex-start;
+}
+
+.button {
+  --amslBtnBg: --amsl-google-button__background;
+  display: block;
+  margin: 0.5rem;
+  width: 4rem;
+  height: 4rem;
+  background: var(--amslBtnBg);
+  border-radius: 0.5rem;
+  transition: opacity 0.3s;
+  box-shadow: 0 3px 6px rgb(var(--venia-global-color-gray-900) / 0.2);
+  overflow: hidden;
+}
+
+.button:hover {
+  box-shadow: 0 3px 6px rgb(var(--venia-global-color-gray-900) / 0.1);
+  opacity: 0.9;
+}
+
+.round .button {
+  border-radius: 4rem;
+}
+
+.rectangle {
+  display: block;
+}
+
+.rectangle .button {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  margin: 0;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  border-radius: 0.25rem;
+  min-width: 0;
+}
+
+.rectangle .button + .button {
+  margin-top: 1rem;
+}
+
+.button.apple {
+  color: rgb(var(--venia-global-color-text));
+}
+
+.text {
+  margin-left: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.showMore {
+  display: block;
+  margin: 1.25rem auto 0 auto;
+  color: rgb(var(--venia-brand-color-1-700));
+  font-size: var(--venia-global-fontSize-200);
+  line-height: 1.25rem;
+  cursor: pointer;
+}
+
+.showMore:hover {
+  text-decoration: underline;
+}
+
+.showMore:after {
+  content: '';
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-left: 1px solid rgb(var(--venia-brand-color-1-700));
+  border-bottom: 1px solid rgb(var(--venia-brand-color-1-700));
+  transform: rotate(-45deg);
+  margin-left: 0.5rem;
+  position: relative;
+  top: -2px;
+}
+
+.message {
+  display: block;
+  margin-top: 0.5rem;
+  color: rgb(var(--venia-global-color-error));
+  font-size: 0.875rem;
+  font-weight: var(--venia-global-fontWeight-semibold);
+  line-height: 1rem;
+  padding: 0.625rem 0.125rem 0.125rem;
+}

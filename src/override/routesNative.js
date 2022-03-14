@@ -22,7 +22,7 @@ const CreateAccountPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "CreateAccountPage"*/ 'src/simi/App/core/Customer/CreateAccountPage')
+                import(/* webpackChunkName: "CreateAccountPage"*/ 'src/simi/App/nativeInner/Customer/CreateAccountPage')
             }
             {...props}
         />
@@ -33,7 +33,7 @@ const ForgotPasswordPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "ForgotPasswordPage"*/ 'src/simi/App/core/Customer/ForgotPasswordPage')
+                import(/* webpackChunkName: "ForgotPasswordPage"*/ 'src/simi/App/nativeInner/Customer/ForgotPasswordPage')
             }
             {...props}
         />
@@ -44,7 +44,7 @@ const OrderHistoryPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "OrderHistoryPage"*/ 'src/simi/App/core/OrderHistoryPage')
+                import(/* webpackChunkName: "OrderHistoryPage"*/ 'src/simi/App/nativeInner/OrderHistoryPage')
             }
             {...props}
         />
@@ -127,7 +127,7 @@ const WishlistPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "WishlistPage"*/ '/src/simi/App/core/WishlistPage')
+                import(/* webpackChunkName: "WishlistPage"*/ '/src/simi/App/nativeInner/WishlistPage')
             }
             {...props}
         />
@@ -236,7 +236,7 @@ const Brands = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "Brands"*/ 'src/simi/App/core/ShopByBrand/components/brands')
+                import(/* webpackChunkName: "Brands"*/ 'src/simi/App/nativeInner/ShopByBrand/components/brands')
             }
             {...props}
         />
@@ -247,7 +247,7 @@ const BrandDetails = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "BrandDetails"*/ 'src/simi/App/core/ShopByBrand/components/branddetails/index.js')
+                import(/* webpackChunkName: "BrandDetails"*/ 'src/simi/App/nativeInner/ShopByBrand/components/branddetails/index.js')
             }
             {...props}
         />
@@ -258,7 +258,7 @@ const BrandCategory = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "BrandCategory"*/ 'src/simi/App/core/ShopByBrand/components/category/index.js')
+                import(/* webpackChunkName: "BrandCategory"*/ 'src/simi/App/nativeInner/ShopByBrand/components/category/index.js')
             }
             {...props}
         />
