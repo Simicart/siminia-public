@@ -1,6 +1,8 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useQuery, useMutation } from '@apollo/client';
+// import { useOrderRow } from './useOrderRow';
+import AlertMessages from '../ProductFullDetail/AlertMessages';
 
 import { useParams } from 'react-router-dom';
 import DEFAULT_OPERATIONS from './orderDetailPage.gql';
@@ -11,6 +13,7 @@ import { useStyle } from '@magento/venia-ui/lib/classify';
 import LeftMenu from '../../core/LeftMenu';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import { MdLocationPin } from 'react-icons/Md';
+import { useOrderRow } from '../OrderHistoryPage/useOrderRow';
 
 const OrderDetailPage = props => {
     const [width, setWidth] = useState(window.innerWidth);
@@ -39,14 +42,36 @@ const OrderDetailPage = props => {
         reorderItemMutation
     } = talonProps;
 
+    // const talonImageProps = useOrderRow({items})
+    // console.log("hieubachjvan", talonImageProps);
+    const [alertMsg, setAlertMsg] = useState(-1);
+    const [alertText, setAlertText] = useState('');
+    const successMsg = `This order has been reordered successfully`;
+
     const classes = useStyle(defaultClasses, props.classes);
 
     const [reorderItem, { data, loading, error }] = useMutation(
         reorderItemMutation
     );
 
+    useEffect(() => {
+        if (data) {
+            setAlertMsg(true);
+            setAlertText('This order has been reordered successfully');
+        }
+        if (error) {
+            setAlertMsg(true);
+            setAlertText('Error! An error occurred. Please try again later');
+        }
+    }, [data, error]);
+
     if (loadingDetail) {
-        return fullPageLoadingIndicator;
+        return (
+            <div>
+                <div className={classes.loader} />
+                <div className={classes.modal_loader} />
+            </div>
+        );
     }
 
     if (!dataDetail) {
@@ -71,7 +96,8 @@ const OrderDetailPage = props => {
             </div>
         );
     }
-    console.log('testtt', dataDetail);
+    const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
+    console.log('testtt', items);
 
     const { customer } = dataDetail;
     const listItem = customer.orders.items[0].items;
@@ -527,174 +553,33 @@ const OrderDetailPage = props => {
             <div className={classes.mbHeading}>
                 <span className={classes.status}>{status}</span>
             </div>
-            {loading ? (
-                fullPageLoadingIndicator
-            ) : (
-                <div className={classes.rootMobile}>
-                    <div className={classes.shippingAddressContainer}>
-                        <MdLocationPin className={classes.addressIcon} />
-                        <div className={classes.mbShipTo}>
-                            <div >
-                                {formatMessage({
-                                    id: 'Shipping Address',
-                                    defaultMessage: 'Shipping Address'
-                                })}
-                            </div>
+            <AlertMessages
+                message={alertText}
+                setAlertMsg={setAlertMsg}
+                alertMsg={alertMsg}
+                status={data ? 'success' : 'error'}
+            />
 
-                            <span>
-                                {
-                                    customer.orders.items[0].billing_address
-                                        .firstname
-                                }{' '}
-                                {
-                                    customer.orders.items[0].billing_address
-                                        .lastname
-                                }
-                                {' | '}
-                                {
-                                    customer.orders.items[0].billing_address
-                                        .telephone
-                                }
-                            </span>
-                            <span>
-                                <span>
-                                    {formatMessage({
-                                        id: 'Address',
-                                        defaultMessage: 'Address'
-                                    })}
-                                </span>
-                                :{' '}
-                                {
-                                    customer.orders.items[0].billing_address
-                                        .street[0]
-                                }
-                            </span>
-                            {/* <span>
-                                {
-                                    customer.orders.items[0].billing_address
-                                        .telephone
-                                }
-                            </span> */}
-                            {/* <div className={classes.method}>
-                            {customer.orders.items[0].shipping_method}
-                        </div> */}
-                        </div>
-                    </div>
-                    <div className={classes.mbId}>
-                        <span>Order ID</span>
-                        <span>{orderId}</span>
-                    </div>
-                    <div className={classes.mbMyOrder}>
-                        <div className={classes.title}>
-                            {formatMessage({
-                                id: 'My Order',
-                                defaultMessage: 'My Order'
-                            })}
-                        </div>
-                        <div />
-                        {orderItemMb(listItem)}
-                    </div>
-                    <div>
-                            <button onClick={() => window.print()}>
-                                {formatMessage({
-                                    id: 'Print order',
-                                    defaultMessage: 'Print order'
-                                })}
-                            </button>
-                            <button
-                                disabled={loading ? true : false}
-                                className={loading ? classes.btnDis : null}
-                                onClick={() =>
-                                    reorderItem({ variables: { orderId } })
-                                }
-                            >
-                                {formatMessage({
-                                    id: 'Reorder',
-                                    defaultMessage: 'Reorder'
-                                })}
-                            </button>
-                    </div>
-                    <div className={classes.mbHeadInfo}>
-                        <div className={classes.mbHeadInfoItem}>
-                            <span>
-                                {formatMessage({
-                                    id: 'Date',
-                                    defaultMessage: 'Date'
-                                })}
-                            </span>
-                            <span>
-                                {dateFormat(
-                                    customer.orders.items[0].order_date
-                                )}
-                            </span>
-                            <span>
-                                {timeFormat(
-                                    customer.orders.items[0].order_date
-                                )}
-                            </span>
-                        </div>
-                        <div className={classes.mbHeadInfoItem}>
-                            <span>
-                                {formatMessage({
-                                    id: 'Order Total',
-                                    defaultMessage: 'Order Total'
-                                })}
-                            </span>
-                            <span>
-                                {forMatCurrentValue(
-                                    customer.orders.items[0].total.subtotal
-                                        .currency
-                                )}
-                                {subTotal}
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className={classes.mbPayment}>
+            <div className={classes.rootMobile}>
+                {loading ? <div>
+                    <div className={classes.loader} />
+                    <div className={classes.modal_loader} />
+                </div> : null}
+                <div className={classes.shippingAddressContainer}>
+                    <MdLocationPin className={classes.addressIcon} />
+                    <div className={classes.mbShipTo}>
                         <div>
                             {formatMessage({
-                                id: 'Payment method',
-                                defaultMessage: 'Payment Method'
+                                id: 'Shipping Address',
+                                defaultMessage: 'Shipping Address'
                             })}
                         </div>
-                        <div />
+
                         <span>
-                            {customer.orders.items[0].payment_methods[0].name}
-                        </span>
-                        <div>
-                            {formatMessage({
-                                id: 'Billing Address',
-                                defaultMessage: 'Billing Address'
-                            })}
-                        </div>
-                        <span>
-                            <span>
-                                {formatMessage({
-                                    id: 'Name',
-                                    defaultMessage: 'Name'
-                                })}
-                            </span>
-                            :{' '}
                             {customer.orders.items[0].billing_address.firstname}{' '}
                             {customer.orders.items[0].billing_address.lastname}
-                        </span>
-                        <span>
-                            <span>
-                                {formatMessage({
-                                    id: 'Email',
-                                    defaultMessage: 'Email'
-                                })}{' '}
-                            </span>
-                            :
-                        </span>
-                        <span>
-                            <span>
-                                {formatMessage({
-                                    id: 'Company',
-                                    defaultMessage: 'Company'
-                                })}
-                            </span>
-                            : {customer.orders.items[0].billing_address.company}
+                            {' | '}
+                            {customer.orders.items[0].billing_address.telephone}
                         </span>
                         <span>
                             <span>
@@ -706,103 +591,144 @@ const OrderDetailPage = props => {
                             :{' '}
                             {customer.orders.items[0].billing_address.street[0]}
                         </span>
+                        {/* <span>
+                                {
+                                    customer.orders.items[0].billing_address
+                                        .telephone
+                                }
+                            </span> */}
+                    </div>
+                </div>
+                <div className={classes.mbId}>
+                    <span>Order ID</span>
+                    <span>{orderId}</span>
+                </div>
+                <div className={classes.mbMyOrder}>
+                    <div className={classes.title}>
+                        {formatMessage({
+                            id: 'My Order',
+                            defaultMessage: 'My Order'
+                        })}
+                    </div>
+                    <div />
+                    {orderItemMb(listItem)}
+
+                    <div className={classes.shippingMethod}>
                         <span>
-                            <span>
-                                {formatMessage({
-                                    id: 'Country',
-                                    defaultMessage: 'Country'
-                                })}
-                            </span>
-                            :{' '}
-                            {customer.orders.items[0].billing_address.street[1]}
+                            {formatMessage({
+                                id: 'global.shippingMethod',
+                                defaultMessage: 'Shipping Method'
+                            })}
                         </span>
-                        <span>
+                        <div className={classes.price}>
                             <span>
-                                {formatMessage({
-                                    id: 'Phone Number',
-                                    defaultMessage: 'Phone Number'
-                                })}
+                                {customer.orders.items[0].shipping_method}
                             </span>
-                            :{' '}
-                            {customer.orders.items[0].billing_address.telephone}
-                        </span>
-                        <div className={classes.method}>
                             <span>
-                                {formatMessage({
-                                    id: 'Coupon code',
-                                    defaultMessage: 'Coupon code'
-                                })}
+                                {forMatCurrentValue(
+                                    customer.orders.items[0].total
+                                        .total_shipping.currency
+                                )}
+                                {
+                                    customer.orders.items[0].total
+                                        .total_shipping.value
+                                }
                             </span>
                         </div>
                     </div>
-                    {/* <div className={classes.mbMyOrder}>
-                        <div>
-                            {formatMessage({
-                                id: 'My Order',
-                                defaultMessage: 'My Order'
-                            })}
-                        </div>
-                        <div />
-                        {orderItemMb(listItem)}
-                    </div> */}
-                    <div className={classes.mbTotal}>
+                    <div className={classes.subTotal}>
                         <span>
                             {formatMessage({
-                                id: 'Subtotal',
+                                id: 'miniCart.subtotal',
                                 defaultMessage: 'Subtotal'
                             })}
-                            :{' '}
+                        </span>
+                        <span>
                             {forMatCurrentValue(
                                 customer.orders.items[0].total.subtotal.currency
                             )}
                             {subTotal}
                         </span>
-                        <span>
-                            {formatMessage({
-                                id: 'Shipping Fee',
-                                defaultMessage: 'Shipping Fee'
-                            })}
-                            :{' '}
-                            {forMatCurrentValue(
-                                customer.orders.items[0].total.total_shipping
-                                    .currency
-                            )}
-                            {
-                                customer.orders.items[0].total.total_shipping
-                                    .value
-                            }
-                        </span>
-                        <span>
-                            {formatMessage({
-                                id: 'Tax',
-                                defaultMessage: 'Tax'
-                            })}
-                            :{' '}
-                            {forMatCurrentValue(
-                                customer.orders.items[0].total.total_tax
-                                    .currency
-                            )}
-                            {customer.orders.items[0].total.total_tax.value}
-                        </span>
-                        <div>
-                            <span className={classes.child1}>
-                                {formatMessage({
-                                    id: 'Grand total',
-                                    defaultMessage: 'Grand total'
-                                })}
-                                :{' '}
-                            </span>
-                            <span className={classes.child2}>
-                                {forMatCurrentValue(
-                                    customer.orders.items[0].total.subtotal
-                                        .currency
-                                )}
-                                {grandTotal}
-                            </span>
-                        </div>
                     </div>
                 </div>
-            )}
+                <div className={classes.mbPayment}>
+                    <div>
+                        {formatMessage({
+                            id: 'Payment method',
+                            defaultMessage: 'Payment Method'
+                        })}
+                    </div>
+
+                    <span>
+                        {customer.orders.items[0].payment_methods[0].name}
+                    </span>
+                </div>
+
+                <div className={classes.mbBuyAgain}>
+                    <button
+                        disabled={loading ? true : false}
+                        className={loading ? classes.btnDis : null}
+                        onClick={() => reorderItem({ variables: { orderId } })}
+                    >
+                        {formatMessage({
+                            id: 'Reorder',
+                            defaultMessage: 'Reorder'
+                        })}
+                    </button>
+                </div>
+
+                <div className={classes.mbTotal}>
+                    <span>
+                        {formatMessage({
+                            id: 'Subtotal',
+                            defaultMessage: 'Subtotal'
+                        })}
+                        :{' '}
+                        {forMatCurrentValue(
+                            customer.orders.items[0].total.subtotal.currency
+                        )}
+                        {subTotal}
+                    </span>
+                    <span>
+                        {formatMessage({
+                            id: 'Shipping Fee',
+                            defaultMessage: 'Shipping Fee'
+                        })}
+                        :{' '}
+                        {forMatCurrentValue(
+                            customer.orders.items[0].total.total_shipping
+                                .currency
+                        )}
+                        {customer.orders.items[0].total.total_shipping.value}
+                    </span>
+                    <span>
+                        {formatMessage({
+                            id: 'Tax',
+                            defaultMessage: 'Tax'
+                        })}
+                        :{' '}
+                        {forMatCurrentValue(
+                            customer.orders.items[0].total.total_tax.currency
+                        )}
+                        {customer.orders.items[0].total.total_tax.value}
+                    </span>
+                    <div>
+                        <span className={classes.child1}>
+                            {formatMessage({
+                                id: 'Grand total',
+                                defaultMessage: 'Grand total'
+                            })}
+                            :{' '}
+                        </span>
+                        <span className={classes.child2}>
+                            {forMatCurrentValue(
+                                customer.orders.items[0].total.subtotal.currency
+                            )}
+                            {grandTotal}
+                        </span>
+                    </div>
+                </div>
+            </div>
         </>
     );
 };

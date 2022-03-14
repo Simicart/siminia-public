@@ -292,9 +292,9 @@ const Products = props => {
                                     <span className="label">
                                         <span
                                             className={`${
-                                                showFilter
-                                                    ? 'activeIconFilter'
-                                                    : ''
+                                                filterData === null
+                                                    ? ''
+                                                    : 'activeIconFilter'
                                             } icon-filter`}
                                         >
                                             <BiFilterAlt />

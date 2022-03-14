@@ -38,6 +38,7 @@ const GET_ORDER_DETAIL = gql`
       }
         items {
           product_name
+          product_url_key
           product_sku
           quantity_ordered
           product_sale_price {
