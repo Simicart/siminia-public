@@ -273,6 +273,7 @@ Rate
         width: 100%;
         height: auto;
         padding: 3px;
+        border-radius: 6px;
     }
     .product-grid-actions {
         display: none;

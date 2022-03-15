@@ -67,9 +67,15 @@ const FooterNative = props => {
         storeConfig
     });
 
+
+    const isOrderDetailPage =
+        location.pathname.split('/order-history')[1] !== '' &&
+        location.pathname.split('/order-history').length === 2
+            ? true
+            : false;
     const isHiddenBottomMenu =
         (data && data.route && data.route.type === TYPE_PRODUCT) ||
-        location.pathname === '/sign-in' || location.pathname === '/forgot-password'|| location.pathname === '/create-account'
+        location.pathname === '/sign-in' || location.pathname === '/forgot-password'|| location.pathname === '/create-account' || isOrderDetailPage
             ? true
             : false;
     const pathName =

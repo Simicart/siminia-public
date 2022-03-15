@@ -91,7 +91,7 @@ const Category = props => {
         }
         breadcrumb.push({ name: category.name });
     }
-  
+
     return (
         <div className="container">
             {mageworxSeoEnabled ? (
@@ -134,14 +134,14 @@ const Category = props => {
                     />
                 ]
             })}
-            {category && category.name && category.image && (
+            {/*category && category.name && category.image && (
                 <CategoryHeader
                     name={category.name}
                     image_url={resourceUrl(category.image, {
                         type: 'image-category'
                     })}
                 />
-            )}
+                )*/}
             {pageControl.totalPages === 0 && !isApplyingFilter ? (
                 <NoProductsFound categoryId={id} />
             ) : (

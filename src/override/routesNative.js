@@ -44,7 +44,7 @@ const OrderHistoryPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "OrderHistoryPage"*/ 'src/simi/App/core/OrderHistoryPage')
+                import(/* webpackChunkName: "OrderHistoryPage"*/ 'src/simi/App/nativeInner/OrderHistoryPage')
             }
             {...props}
         />
@@ -54,7 +54,7 @@ const OrderHistoryPage = props => {
 const OrderDetailPage = props => {
     return (
         <LazyComponent
-            component={() => import('src/simi/App/core/OrderDetailPage')}
+            component={() => import('src/simi/App/nativeInner/OrderDetailPage')}
             {...props}
         />
     );
@@ -85,7 +85,7 @@ const AccountInformationPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "AccountInformationPage"*/ '/src/simi/App/core/AccountInformationPage')
+                import(/* webpackChunkName: "AccountInformationPage"*/ '/src/simi/App/nativeInner/AccountInformationPage')
             }
             {...props}
         />
@@ -149,7 +149,7 @@ const BasicSearch = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "BasicSearch"*/ 'src/simi/App/core/RootComponents/Search')
+                import(/* webpackChunkName: "BasicSearch"*/ 'src/simi/App/nativeInner/RootComponents/Search')
             }
             {...props}
         />

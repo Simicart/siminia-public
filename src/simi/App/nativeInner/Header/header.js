@@ -17,7 +17,7 @@ import CurrencySwitcher from '@magento/venia-ui/lib/components/Header/currencySw
 import PageLoadingIndicator from '@magento/venia-ui/lib/components/PageLoadingIndicator';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useWindowSize } from '@magento/peregrine';
-import { useIntl,FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { isBot, isHeadlessChrome } from '../../../Helper/BotDetect';
 import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
 import defaultClasses from './header.module.css';
@@ -26,7 +26,6 @@ import { ArrowLeft } from 'react-feather';
 import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
-
 
 // check if bot or headless chrome / wont get cart to avoid perf accection
 // can modify deeper on  peregrine/lib/context/cart.js:83 to avoid creating cart - db wasting - https://prnt.sc/2628k9h
@@ -37,7 +36,7 @@ const TYPE_PRODUCT = 'PRODUCT';
 const Header = props => {
     const history = useHistory();
     const location = useLocation();
-    const pathname = location.pathname
+    const pathname = location.pathname;
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
     const windowSize = useWindowSize();
@@ -62,18 +61,35 @@ const Header = props => {
         skip: !pathname || pathname === '/',
         fetchPolicy: 'cache-first'
     });
-    
-   
 
-    const isHiddenHeader = ((data && data.route && data.route.type === TYPE_PRODUCT) || (pathname === "/sign-in") ) ? true : false
+    const isHiddenHeader =
+        (data && data.route && data.route.type === TYPE_PRODUCT) ||
+        pathname === '/sign-in'
+            ? true
+            : false;
 
     const isSimpleHeader =
-        location &&
-        location.pathname &&
-        (location.pathname === '/checkout');
+        location && location.pathname && location.pathname === '/checkout';
 
- 
-    const type =  location && location.pathname ? location.pathname : null
+    const type = location && location.pathname ? location.pathname : null;
+    const isOrderDetailPage =
+        type.split('/order-history')[1] !== '' &&
+        type.split('/order-history').length === 2
+            ? true
+            : false;
+    
+    const myProfile = [
+        '/order-history',
+        '/wishlist',
+        '/address-book',
+        '/saved-payments',
+        '/product-review',
+        '/communications',
+        '/account-information',
+        '/account-subcriptions',
+        '/reward-points',
+        '/reward-transactions'
+    ];
 
     // const storeConfig = Identify.getStoreConfig();
     const [userData] = useUserContext();
@@ -177,54 +193,92 @@ const Header = props => {
         );
     };
 
-    const renderHeader = (type) => {
-        if(type === "/sign-in") {
-            return <div className={classes.specHeader}>
-                <ArrowLeft onClick={() => history.goBack()} />
-                <span>
-                <FormattedMessage
-                    id="signIn.signInText"
-                    defaultMessage="Sign In"
-                />
-                </span>
-            </div>
+    const renderHeader = type => {
+        if (type === '/sign-in') {
+            return (
+                <div className={classes.specHeader}>
+                    <ArrowLeft onClick={() => history.goBack()} />
+                    <span>
+                        <FormattedMessage
+                            id="signIn.signInText"
+                            defaultMessage="Sign In"
+                        />
+                    </span>
+                </div>
+            );
         }
-        if(type === "/create-account") {
-            return <div className={classes.specHeader}>
-                <ArrowLeft onClick={() => history.goBack()} />
-                <span>
-                <FormattedMessage
-                    id="Register"
-                    defaultMessage="Register"
-                />
-                </span>
-            </div>
+        if (type === '/create-account') {
+            return (
+                <div className={classes.specHeader}>
+                    <ArrowLeft onClick={() => history.goBack()} />
+                    <span>
+                        <FormattedMessage
+                            id="Register"
+                            defaultMessage="Register"
+                        />
+                    </span>
+                </div>
+            );
         }
-        if(type === "/forgot-password") {
-            return <div className={classes.specHeader}>
-                <ArrowLeft onClick={() => history.goBack()} />
-                <span>
-                <FormattedMessage
-                    id="navHeader.forgotPasswordText"
-                    defaultMessage="Forgot Password"
-                />
-                </span>
-            </div>
-        } 
-        if(type === "/cart") {
-            return <div className={classes.specHeader}>
-                <ArrowLeft onClick={() => history.goBack()} />
-                <span>
-                <FormattedMessage
-                    id="cartPage.titlle"
-                    defaultMessage="Shopping Cart"
-                /> ({itemsQty})
-                </span>
-            </div>
-        } 
-        else return !isSimpleHeader && !isHiddenHeader && renderSearchForm()
-    }
-
+        if (type === '/forgot-password') {
+            return (
+                <div className={classes.specHeader}>
+                    <ArrowLeft onClick={() => history.goBack()} />
+                    <span>
+                        <FormattedMessage
+                            id="navHeader.forgotPasswordText"
+                            defaultMessage="Forgot Password"
+                        />
+                    </span>
+                </div>
+            );
+        }
+        if (type === '/cart') {
+            return (
+                <div className={classes.specHeader}>
+                    <ArrowLeft onClick={() => history.goBack()} />
+                    <span>
+                        <FormattedMessage
+                            id="cartPage.titlle"
+                            defaultMessage="Shopping Cart"
+                        />{' '}
+                        ({itemsQty})
+                    </span>
+                </div>
+            );
+        }
+        if (isOrderDetailPage) {
+            return (
+                <div className={classes.specHeader}>
+                    <ArrowLeft onClick={() => history.goBack()} />
+                    <span>
+                        <FormattedMessage
+                            id="navHeader.OrderDetails"
+                            defaultMessage="Order Details"
+                        />
+                    </span>
+                </div>
+            );
+        }
+        if (myProfile.includes(type)) {
+            return (
+                <div className={classes.specHeader}>
+                    <ArrowLeft onClick={() => history.goBack()} />
+                    <span>
+                        {type
+                            .split('/')[1]
+                            .replace('-', ' ')
+                            .charAt(0)
+                            .toUpperCase() +
+                            type
+                                .split('/')[1]
+                                .replace('-', ' ')
+                                .slice(1)}
+                    </span>
+                </div>
+            );
+        } else return !isSimpleHeader && !isHiddenHeader && renderSearchForm();
+    };
 
     if (isPhone) {
         return (
@@ -235,7 +289,7 @@ const Header = props => {
 
                 {/* {!isSimpleHeader && !isHiddenHeader && renderSearchForm()}
                  */}
-                 {renderHeader(type)}
+                {renderHeader(type)}
             </React.Fragment>
         );
     }

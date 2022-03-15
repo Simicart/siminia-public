@@ -70,7 +70,11 @@
         background-color: #fff;
         transition: 0.4s all;
     }
-    .wrapProductsList{
-
+    .imgLogo{
+        object-fit: contain;
+        margin-left: auto;
+        margin-right: auto;
+        height: 80px;
+        width: 80px;
     }
 }

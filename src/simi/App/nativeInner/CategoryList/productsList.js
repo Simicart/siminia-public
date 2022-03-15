@@ -9,11 +9,15 @@ import defaultClasses from './productsList.module.css';
 import { useIntl } from 'react-intl';
 import { RiArrowRightSLine } from 'react-icons/ri';
 import { BsCartCheck } from 'react-icons/bs';
-const IMAGE_DEFAULT = 'https://magento24.pwa-commerce.com/media/logo/stores/1/Lays-Logo.png'
+const IMAGE_DEFAULT =
+    'https://magento24.pwa-commerce.com/media/logo/stores/1/Lays-Logo.png';
 const IMAGE_WIDTH = 80;
 const ProductsList = props => {
     const { childCate } = props;
-    const items = childCate && childCate.products ? childCate.products.items : []
+    const total_count =
+        (childCate && childCate.products && childCate.products.total_count) || 0;
+    const items =
+        childCate && childCate.products ? childCate.products.items : [];
     const { formatMessage } = useIntl();
     const child = childCate && childCate.children ? childCate.children : [];
     const talonProps = useCategoryTile({
@@ -41,7 +45,7 @@ const ProductsList = props => {
                             resource={item.image.url}
                             type={item.image.__typename}
                             width={IMAGE_WIDTH}
-                        />               
+                        />
                         <span className={classes.productName}>{item.name}</span>
                     </Link>
                 );
@@ -57,27 +61,17 @@ const ProductsList = props => {
                         to={`${cate.url_path}${cate.url_suffix}`}
                         className={classes.product}
                     >
-                        {cate.image? 
                         <Image
                             alt={cate.name}
                             classes={{
                                 image: classes.image,
                                 root: classes.imageContainer
                             }}
-                            resource={cate.image}
+                            resource={cate.image ? cate.image : IMAGE_DEFAULT}
                             type={cate.name}
                             width={IMAGE_WIDTH}
                         />
-                        : <Image
-                        alt={cate.name}
-                        classes={{
-                            image: classes.image,
-                            root: classes.imageContainer
-                        }}
-                        resource={IMAGE_DEFAULT}
-                        type={cate.name}
-                        width={IMAGE_WIDTH}
-                    />}
+
                         <span className={classes.productName}>{cate.name}</span>
                     </Link>
                 );
@@ -87,7 +81,7 @@ const ProductsList = props => {
     return (
         <div className={classes.root}>
             <div className={classes.viewAll} onClick={handleClick}>
-                <Link to={`${childCate.url_path}${childCate.url_suffix}`}>
+                {total_count > 0 ? <Link to={`${childCate.url_path}${childCate.url_suffix}`}>
                     <span className={classes.title}>
                         {formatMessage({
                             id: 'productList',
@@ -97,19 +91,22 @@ const ProductsList = props => {
                     <span className={classes.icon}>
                         <RiArrowRightSLine size={20} />
                     </span>
-                </Link>
-                
+                </Link> : ''}
             </div>
             <div className={classes.wrapProductsList}>
                 {renderProductsList()}
             </div>
             <div className={classes.subCategory}>
-                {child.length === 0 ? '' : <div className={classes.titleSubCate}>
-                    {formatMessage({
-                        id: 'titleSubCategory',
-                        defaultMessage: 'Sub categories'
-                    })}
-                </div>}
+                {child.length === 0 ? (
+                    ''
+                ) : (
+                    <div className={classes.titleSubCate}>
+                        {formatMessage({
+                            id: 'titleSubCategory',
+                            defaultMessage: 'Sub categories'
+                        })}
+                    </div>
+                )}
                 <div className={classes.wrapSubCate}>{renderSubCate()}</div>
             </div>
         </div>
