@@ -134,5 +134,14 @@
 @media (max-width: 450px) {
     .reviewList {
         font-family: Roboto;
+        padding-bottom: 10px;
+    }
+    .reviewsContainer {
+        margin-bottom: 30px;
+        padding: 0 10px;
+        background-color: #fff;
+        .reviewBtn {
+            margin-bottom: 0;
+        }
     }
 }

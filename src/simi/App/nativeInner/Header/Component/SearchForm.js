@@ -189,7 +189,7 @@ const SearchForm = props => {
                     onKeyUp={() => startSearch()}
                 >
                     <Search
-                        style={{ width: 35, height: 35, display: 'block' }}
+                        style={{ width: 27, height: 25, display: 'block', marginTop:4 }}
                     />
                 </div>
 

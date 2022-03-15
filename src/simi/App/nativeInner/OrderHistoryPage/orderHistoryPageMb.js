@@ -7,7 +7,8 @@ import { useOrderHistoryPage } from '../../../talons/OrderHistory/useOrderHistor
 import Button from '@magento/venia-ui/lib/components/Button';
 
 const OrderHistoryPageMb = props => {
-    // const { orders } = props;
+    const { orderRow } = props;
+    console.log("hieu", orderRow);
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
     const [status, setStatus] = useState('All');

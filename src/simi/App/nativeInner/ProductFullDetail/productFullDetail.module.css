@@ -354,6 +354,7 @@
         border-radius:50%;
         background-color: #808080;
         color: #fff;
+        margin-left: 10px;
     }
     .headerBtn {
         display: flex;
@@ -364,7 +365,7 @@
         position: fixed;
         z-index: 3;
         width: 100%;
-        padding-right: 15px;
+        /* padding-right: 15px; */
     }
     .headerBtnRight {
         display: flex;
@@ -394,6 +395,8 @@
     }
     .wrapperDes {
         border-bottom: 1px solid rgb(223,225, 226);
+        background-color: #fff;
+        padding: 0 10px;
     }
     
 }
@@ -412,6 +415,12 @@
     }
     .upsell-crosssell-container {
         margin-top: 30px;
-        margin-bottom: 50px;
+        margin-bottom: 10px;
+        padding: 0 10px;
+    }
+    .upsell-crosssell-container:last-child {
+        margin-top: 10px;
+        /* margin-bottom: 50px; */
+        padding: 0 10px;
     }
 }

@@ -60,6 +60,11 @@
 .fieldsContainer {
     padding: 30px;
 }
+@media (max-width: 450px) {
+    .fieldsContainer {
+        padding: 20px 0;
+    }
+}
 .heading {
     display: flex;
     flex-direction: column;

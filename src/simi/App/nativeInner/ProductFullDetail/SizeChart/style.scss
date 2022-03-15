@@ -51,16 +51,17 @@
 }
 @media (max-width: 450px) {
     .main-sizechart {
-        padding: 15px 0;
+        padding: 15px 10px;
         font-size: 1rem;
         font-weight: 600;
         line-height: 1.5;
-        margin-bottom: 1.5rem;
         border-color: #efefef;
         border-style: solid;
         border-width: 0 0 2px;
         display: flex;
         justify-content: space-between;
+        background-color: #fff;
+        margin:15px 0;
         .product-sizechart {
             position: fixed;
             z-index: 5;

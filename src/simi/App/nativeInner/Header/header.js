@@ -72,6 +72,12 @@ const Header = props => {
         location && location.pathname && location.pathname === '/checkout';
 
     const type = location && location.pathname ? location.pathname : null;
+    const isOrderDetailPage =
+        type.split('/order-history')[1] !== '' &&
+        type.split('/order-history').length === 2
+            ? true
+            : false;
+    
     const myProfile = [
         '/order-history',
         '/wishlist',
@@ -237,6 +243,19 @@ const Header = props => {
                             defaultMessage="Shopping Cart"
                         />{' '}
                         ({itemsQty})
+                    </span>
+                </div>
+            );
+        }
+        if (isOrderDetailPage) {
+            return (
+                <div className={classes.specHeader}>
+                    <ArrowLeft onClick={() => history.goBack()} />
+                    <span>
+                        <FormattedMessage
+                            id="navHeader.OrderDetails"
+                            defaultMessage="Order Details"
+                        />
                     </span>
                 </div>
             );

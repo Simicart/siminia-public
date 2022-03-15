@@ -4,6 +4,7 @@
         position: fixed;
         z-index: 5;
         width: 100%;
+        
     }
 
     .main-alert.null {
@@ -42,14 +43,19 @@
     .main-alert.open.success,
     .main-alert.close.success {
         background-color: #5FAF4B;
+        z-index: 10;
     }
     .main-alert.open.error,
     .main-alert.close.error {
         background-color: #e51c24;
+        z-index: 10;
+
     }
     .main-alert.open.warning,
     .main-alert.close.warning {
         background-color: #df954c;
+        z-index: 10;
+
     }
 
     @keyframes msgIn {

@@ -91,7 +91,7 @@ const Category = props => {
         }
         breadcrumb.push({ name: category.name });
     }
-  
+
     return (
         <div className="container">
             {mageworxSeoEnabled ? (
