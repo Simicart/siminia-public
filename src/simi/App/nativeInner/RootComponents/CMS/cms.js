@@ -3,7 +3,7 @@ import { number, shape, string } from 'prop-types';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import { useCmsPage } from '@magento/peregrine/lib/talons/Cms/useCmsPage';
 import RichContent from '@magento/venia-ui/lib/components/RichContent';
-import CategoryList from '../../CategoryList';
+import CategoryList from '@magento/venia-ui/lib/components/CategoryList';
 import { Meta, StoreTitle } from '@magento/venia-ui/lib/components/Head';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import { useIntl } from 'react-intl';

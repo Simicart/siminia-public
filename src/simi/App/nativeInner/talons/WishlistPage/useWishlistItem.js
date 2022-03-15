@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
-import mergeOperations from '../../util/shallowMerge';
+import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import defaultOperations from './wishlistItem.gql';
 
 const SUPPORTED_PRODUCT_TYPES = ['SimpleProduct', 'ConfigurableProduct'];

@@ -21,7 +21,6 @@ import ActionMenu from '@magento/venia-ui/lib/components/WishlistPage/actionMenu
  */
 const Wishlist = props => {
     const { data, shouldRenderVisibilityToggle, isCollapsed } = props;
-    // console.log("props",props);
     const { formatMessage } = useIntl();
     const { id, items_count: itemsCount, name, visibility } = data;
 

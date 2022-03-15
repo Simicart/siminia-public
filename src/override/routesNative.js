@@ -264,7 +264,16 @@ const BrandCategory = props => {
         />
     );
 };
-
+const CategoryList = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "CategoryList"*/ 'src/simi/App/nativeInner/CategoryList/index.js')
+            }
+            {...props}
+        />
+    );
+};
 const Routes = props => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
@@ -296,6 +305,11 @@ const Routes = props => {
                             />
                         </div>
                     )}
+                />
+                <Route
+                    exact
+                    path="/categories"
+                    render={props => <CategoryList id={2} {...props} />}
                 />
                 <Route
                     exact

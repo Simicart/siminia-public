@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { Trash2, User } from 'react-feather';
 import { useIntl } from 'react-intl';
 import { useToasts, useWindowSize } from '@magento/peregrine';
-import { useWishlistItem } from '@magento/peregrine/lib/talons/WishlistPage/useWishlistItem';
+import { useWishlistItem } from '../talons/WishlistPage/useWishlistItem';
 
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
 import Icon from '@magento/venia-ui/lib/components/Icon';
@@ -15,7 +15,7 @@ import defaultClasses from './wishlistItem.module.css';
 
 const WishlistItem = props => {
     const { item } = props;
-
+    console.log("props",props)
     const { configurable_options: configurableOptions = [], product } = item;
     const {
         name,
@@ -95,7 +95,7 @@ const WishlistItem = props => {
         ? classes.root_disabled
         : classes.root;
 
-    const addToCart = isSupportedProductType ? (
+    const addToCart = (
         <button className={classes.addToCart} {...addToCartButtonProps}>
             {!isMobileSite ? (
                 formatMessage({
@@ -106,7 +106,7 @@ const WishlistItem = props => {
                 <FiShoppingCart />
             )}
         </button>
-    ) : null;
+    );
 
     return (
         <div className={rootClass}>
