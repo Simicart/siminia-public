@@ -65,6 +65,56 @@ const OrderDetailPage = props => {
         }
     }, [data, error]);
 
+    //.......................thumbnail image...........................
+
+    // const [items, setItems] = useState([]);
+    // const [listImage, setListImage] = useState([]);
+    const [listUrlImg, setListUrlImg] = useState([]);
+
+    const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
+
+    const talonThumbnail = useOrderRow({ items });
+
+    // const test = talonThumbnail.imagesData.map((item) => {
+    //     return item.thumbnail.url
+    // })
+    const handleImage = (list, listItem) => {
+        console.log('hiu', list);
+        let result = [];
+        list.forEach((item, index) => {
+            if (item[1]) {
+
+                item[1].variants.forEach((i, idx) => {
+                    if (i.product.sku === listItem[index].product_sku) {
+                        result.push(i.product.thumbnail.url);
+                    }
+                });
+            } else {
+                result.push("https://taiwantopsales.com/wp-content/uploads/2018/10/placeholder-600x600.jpg")
+            }
+        });
+        return result;
+    };
+    let result = Object.entries(talonThumbnail.imagesData);
+    const listImage =
+        dataDetail && dataDetail.customer
+            ? dataDetail.customer.orders.items[0].items
+            : [];
+
+    // useEffect(() => {
+    //     // setItems(dataDetail ? dataDetail.customer.orders.items[0].items : []);
+    //     // let result = Object.entries(talonThumbnail.imagesData);
+    //     // setListImage(
+    //     //     dataDetail && dataDetail.customer
+    //     //         ? dataDetail.customer.orders.items[0].items
+    //     //         : []
+    //     // );
+    //     console.log("hahaha",handleImage(result, listImage))
+
+    // }, [dataDetail, talonThumbnail, listImage]);
+
+    //.......................thumbnail image...........................
+
     if (loadingDetail) {
         return (
             <div>
@@ -96,8 +146,8 @@ const OrderDetailPage = props => {
             </div>
         );
     }
-    const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
-    console.log('testtt', items);
+    const listUrlImage = handleImage(result, listImage);
+    // const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
 
     const { customer } = dataDetail;
     const listItem = customer.orders.items[0].items;
@@ -106,7 +156,7 @@ const OrderDetailPage = props => {
     const mpRewardPoints = customer.orders.items[0].mp_reward_points;
     console.log(mpRewardPoints);
     const status = customer.orders.items[0].status;
-    console.log('dataDetailaa', customer);
+    console.log('testtt', listItem);
 
     const dateFormat = date => {
         const mystring = date;
@@ -155,6 +205,7 @@ const OrderDetailPage = props => {
         } else return null;
         return html;
     };
+    console.log('listitemmm', listItem);
 
     const orderItemMb = listItem => {
         let html = null;
@@ -162,38 +213,36 @@ const OrderDetailPage = props => {
             html = listItem.map((item, index) => {
                 return (
                     <div className={classes.orderItemMb}>
-                        <div className={classes.orderItemMbHeading}>
-                            <span>{item.product_name}</span>
-                            <span>
-                                {forMatCurrentValue(
-                                    item.product_sale_price.currency
-                                )}
-                                {item.product_sale_price.value}
-                            </span>
+                        <img
+                            className={classes.orderItemMbImg}
+                            src={listUrlImage[index]}
+                            alt="loasd"
+                            style={{ height: 100, marginRight: 15 }}
+                        />
+                        <div style={{width:'70%'}} className={classes.orderItemMbContent}>
+                            <div className={classes.orderItemMbHeading}>
+                                <span>{item.product_name}</span>
+                            </div>
+                            <div>
+                                <span>SKU: </span>
+                                <span>{item.product_sku}</span>
+                            </div>
                         </div>
-                        <div>
-                            <span>SKU: </span>
-                            <span>{item.product_sku}</span>
-                        </div>
-                        <div>
-                            <span>Qty: </span>
-                            <span>{item.quantity_ordered}</span>
-                        </div>
-                        <div>
-                            <span>
-                                {formatMessage({
-                                    id: 'Price',
-                                    defaultMessage: 'Price'
-                                })}
-                                :
-                            </span>
-                            <span>
-                                {' '}
-                                {forMatCurrentValue(
-                                    item.product_sale_price.currency
-                                )}
-                                {item.product_sale_price.value}
-                            </span>
+                        <div className={classes.orderItemQty}>
+                            <div>
+                              
+                                <span>x{item.quantity_ordered}</span>
+                            </div>
+                            <div>
+                               
+                                <span className={classes.orderItemPrice}>
+                                    {' '}
+                                    {forMatCurrentValue(
+                                        item.product_sale_price.currency
+                                    )}
+                                    {item.product_sale_price.value}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 );
@@ -561,10 +610,12 @@ const OrderDetailPage = props => {
             />
 
             <div className={classes.rootMobile}>
-                {loading ? <div>
-                    <div className={classes.loader} />
-                    <div className={classes.modal_loader} />
-                </div> : null}
+                {loading ? (
+                    <div>
+                        <div className={classes.loader} />
+                        <div className={classes.modal_loader} />
+                    </div>
+                ) : null}
                 <div className={classes.shippingAddressContainer}>
                     <MdLocationPin className={classes.addressIcon} />
                     <div className={classes.mbShipTo}>
