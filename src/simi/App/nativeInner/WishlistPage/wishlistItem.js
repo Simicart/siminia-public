@@ -15,7 +15,6 @@ import defaultClasses from './wishlistItem.module.css';
 
 const WishlistItem = props => {
     const { item } = props;
-    console.log("props",props)
     const { configurable_options: configurableOptions = [], product } = item;
     const {
         name,
