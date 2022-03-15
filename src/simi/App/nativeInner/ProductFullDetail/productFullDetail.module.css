@@ -411,7 +411,7 @@
         background-color: #FFFFFF;
     }
     .upsell-crosssell-container {
-        margin-top: 30px;
-        margin-bottom: 50px;
+        margin-top: 0;
+        margin-bottom: 0;
     }
 }

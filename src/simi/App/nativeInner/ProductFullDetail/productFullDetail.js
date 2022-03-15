@@ -683,38 +683,44 @@ const ProductFullDetail = props => {
                     />
                 ) : null}
                 <ProductReview product={product} ref={productReview} />
-                <ProductDetailExtraProducts
-                    classes={classes}
-                    products={relatedProducts}
-                    history={history}
-                >
-                    <FormattedMessage
-                        id="productFullDetail.relatedProducts"
-                        defaultMessage="Related Product"
-                    />
-                </ProductDetailExtraProducts>
-
-                <ProductDetailExtraProducts
-                    classes={classes}
-                    products={upsellProducts}
-                    history={history}
-                >
-                    <FormattedMessage
-                        id="productFullDetail.upsellProduct"
-                        defaultMessage="Upsell Product"
-                    />
-                </ProductDetailExtraProducts>
-
-                <ProductDetailExtraProducts
-                    classes={classes}
-                    products={crosssellProducts}
-                    history={history}
-                >
-                    <FormattedMessage
-                        id="productFullDetail.crosssellProduct"
-                        defaultMessage="Crosssell Product"
-                    />
-                </ProductDetailExtraProducts>
+                <div className="wrapperRelatedProducts">
+                    <ProductDetailExtraProducts
+                        classes={classes}
+                        products={relatedProducts}
+                        history={history}
+                    >
+                        <FormattedMessage
+                            id="productFullDetail.relatedProducts"
+                            defaultMessage="Related Product"
+                        />
+                    </ProductDetailExtraProducts>
+                </div>
+                
+                <div className="wrapperUpsellProduct">
+                    <ProductDetailExtraProducts
+                        classes={classes}
+                        products={upsellProducts}
+                        history={history}
+                    >
+                        <FormattedMessage
+                            id="productFullDetail.upsellProduct"
+                            defaultMessage="Upsell Product"
+                        />
+                    </ProductDetailExtraProducts>
+                </div>
+                
+                <div className="wrapperCrosssellProducts">
+                    <ProductDetailExtraProducts
+                        classes={classes}
+                        products={crosssellProducts}
+                        history={history}
+                    >
+                        <FormattedMessage
+                            id="productFullDetail.crosssellProduct"
+                            defaultMessage="Crosssell Product"
+                        />
+                    </ProductDetailExtraProducts>
+                </div>
             </div>
         </div>
     );
