@@ -11,7 +11,6 @@ import defaultClasses from './orderRow.module.css';
 
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
-
 import DEFAULT_OPERATIONS from '../../core/OrderDetailPage/orderDetailPage.gql';
 
 const OrderRow = props => {
@@ -29,8 +28,9 @@ const OrderRow = props => {
     } = order;
     const { grand_total: grandTotal } = total;
     const { currency, value: orderTotal } = grandTotal;
-    console.log('order', order);
+    console.log('order', items);
     const orderId = order.number;
+     
     // Convert date to ISO-8601 format so Safari can also parse it
     const isoFormattedDate = orderDate.replace(' ', 'T');
     const formattedDate = new Date(isoFormattedDate).toLocaleDateString(

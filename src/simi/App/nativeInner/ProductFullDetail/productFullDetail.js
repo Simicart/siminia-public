@@ -78,6 +78,7 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product, history } = props;
+    
 
     const talonProps = useProductFullDetail({ product });
     const {
