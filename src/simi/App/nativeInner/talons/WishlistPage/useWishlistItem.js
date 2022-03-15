@@ -61,7 +61,7 @@ export const useWishlistItem = props => {
     const [{ cartId }] = useCartContext();
 
     const [isRemovalInProgress, setIsRemovalInProgress] = useState(false);
-
+    const [alertMsg, setAlertMsg] = useState(-1)
     const [
         removeProductFromWishlistError,
         setRemoveProductFromWishlistError
@@ -161,6 +161,7 @@ export const useWishlistItem = props => {
         ) {
             try {
                 await addWishlistItemToCart();
+                setAlertMsg(true)
             } catch (error) {
                 console.error(error);
             }
@@ -213,7 +214,9 @@ export const useWishlistItem = props => {
         hasRemoveProductFromWishlistError: !!removeProductFromWishlistError,
         imageProps,
         isSupportedProductType,
-        isInStock
+        isInStock,
+        setAlertMsg,
+        alertMsg
     };
 };
 
