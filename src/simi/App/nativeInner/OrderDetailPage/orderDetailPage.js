@@ -1,9 +1,7 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useQuery, useMutation } from '@apollo/client';
-// import { useOrderRow } from './useOrderRow';
 import AlertMessages from '../ProductFullDetail/AlertMessages';
-
 import { useParams } from 'react-router-dom';
 import DEFAULT_OPERATIONS from './orderDetailPage.gql';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
@@ -42,8 +40,6 @@ const OrderDetailPage = props => {
         reorderItemMutation
     } = talonProps;
 
-    // const talonImageProps = useOrderRow({items})
-    // console.log("hieubachjvan", talonImageProps);
     const [alertMsg, setAlertMsg] = useState(-1);
     const [alertText, setAlertText] = useState('');
     const successMsg = `This order has been reordered successfully`;
@@ -65,32 +61,25 @@ const OrderDetailPage = props => {
         }
     }, [data, error]);
 
-    //.......................thumbnail image...........................
-
-    // const [items, setItems] = useState([]);
-    // const [listImage, setListImage] = useState([]);
     const [listUrlImg, setListUrlImg] = useState([]);
 
     const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
 
     const talonThumbnail = useOrderRow({ items });
 
-    // const test = talonThumbnail.imagesData.map((item) => {
-    //     return item.thumbnail.url
-    // })
     const handleImage = (list, listItem) => {
-        console.log('hiu', list);
         let result = [];
         list.forEach((item, index) => {
             if (item[1]) {
-
                 item[1].variants.forEach((i, idx) => {
                     if (i.product.sku === listItem[index].product_sku) {
                         result.push(i.product.thumbnail.url);
                     }
                 });
             } else {
-                result.push("https://taiwantopsales.com/wp-content/uploads/2018/10/placeholder-600x600.jpg")
+                result.push(
+                    'https://taiwantopsales.com/wp-content/uploads/2018/10/placeholder-600x600.jpg'
+                );
             }
         });
         return result;
@@ -100,20 +89,6 @@ const OrderDetailPage = props => {
         dataDetail && dataDetail.customer
             ? dataDetail.customer.orders.items[0].items
             : [];
-
-    // useEffect(() => {
-    //     // setItems(dataDetail ? dataDetail.customer.orders.items[0].items : []);
-    //     // let result = Object.entries(talonThumbnail.imagesData);
-    //     // setListImage(
-    //     //     dataDetail && dataDetail.customer
-    //     //         ? dataDetail.customer.orders.items[0].items
-    //     //         : []
-    //     // );
-    //     console.log("hahaha",handleImage(result, listImage))
-
-    // }, [dataDetail, talonThumbnail, listImage]);
-
-    //.......................thumbnail image...........................
 
     if (loadingDetail) {
         return (
@@ -154,9 +129,8 @@ const OrderDetailPage = props => {
     const subTotal = customer.orders.items[0].total.subtotal.value;
     const grandTotal = customer.orders.items[0].total.base_grand_total.value;
     const mpRewardPoints = customer.orders.items[0].mp_reward_points;
-    console.log(mpRewardPoints);
+
     const status = customer.orders.items[0].status;
-    console.log('testtt', listItem);
 
     const dateFormat = date => {
         const mystring = date;
@@ -168,8 +142,6 @@ const OrderDetailPage = props => {
         const arrayStrig = mystring.split(' ');
         return arrayStrig[1];
     };
-
-    // console.log("date",dateFormat(customer.orders.items[0].order_date ));
 
     const forMatCurrentValue = value => {
         if (value == 'USD') {
@@ -205,7 +177,6 @@ const OrderDetailPage = props => {
         } else return null;
         return html;
     };
-    console.log('listitemmm', listItem);
 
     const orderItemMb = listItem => {
         let html = null;
@@ -219,7 +190,10 @@ const OrderDetailPage = props => {
                             alt="loasd"
                             style={{ height: 100, marginRight: 15 }}
                         />
-                        <div style={{width:'70%'}} className={classes.orderItemMbContent}>
+                        <div
+                            style={{ width: '70%' }}
+                            className={classes.orderItemMbContent}
+                        >
                             <div className={classes.orderItemMbHeading}>
                                 <span>{item.product_name}</span>
                             </div>
@@ -230,11 +204,9 @@ const OrderDetailPage = props => {
                         </div>
                         <div className={classes.orderItemQty}>
                             <div>
-                              
                                 <span>x{item.quantity_ordered}</span>
                             </div>
                             <div>
-                               
                                 <span className={classes.orderItemPrice}>
                                     {' '}
                                     {forMatCurrentValue(
@@ -527,7 +499,6 @@ const OrderDetailPage = props => {
         );
         return html;
     };
-    // console.log('dataDetail', customer.orders.items[0].billing_address);
 
     if (width > 767) {
         return (
