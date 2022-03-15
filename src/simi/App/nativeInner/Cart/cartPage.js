@@ -237,7 +237,6 @@ const CartPage = props => {
                     })}
                 </StoreTitle>
                 {cartBody}
-                <HeightPad height={50}/>
                 {loadingComponent}
                 {notiComponent}
             </div>
