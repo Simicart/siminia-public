@@ -6,7 +6,7 @@ const FooterFixedBtn = props => {
     const { addToCartPopup, setAddToCartPopup, typeBtn, setTypeBtn } = props;
     return (
         <>
-        <div className="virtual" >haha</div>
+        <div className="virtual"/>
         <div className="main-footerFixedBtn">
             <ul>
                 <li className="msg-icon">
