@@ -12,7 +12,7 @@ import defaultClasses from './orderDetailPage.module.scss';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import LeftMenu from '../../core/LeftMenu';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
-import { MdLocationPin } from 'react-icons/Md';
+import { MdLocationPin } from 'react-icons/md';
 import { useOrderRow } from '../OrderHistoryPage/useOrderRow';
 
 const OrderDetailPage = props => {
