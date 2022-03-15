@@ -1,0 +1,13 @@
+query getProductFiltersByBrand($brandConfigValue: FilterEqualTypeInput!) {
+    products(filter: { brand: $brandConfigValue }) {
+        aggregations {
+            label
+            count
+            attribute_code
+            options {
+                label
+                value
+            }
+        }
+    }
+}

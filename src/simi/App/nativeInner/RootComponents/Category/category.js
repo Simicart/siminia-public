@@ -72,7 +72,6 @@ const Category = props => {
     }
 
     const isMobileSite = window.innerWidth <= 768;
-
     const { category, mageworx_canonical_url } = products;
 
     const isApplyingFilter = window.location.search ? true : false;
@@ -138,7 +137,7 @@ const Category = props => {
                     />
                 ]
             })}
-            {category && category.name && category.image && (
+            {!isMobileSite && category && category.name && category.image && (
                 <CategoryHeader
                     name={category.name}
                     image_url={resourceUrl(category.image, {

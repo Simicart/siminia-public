@@ -4,33 +4,33 @@
         min-width: 217px;
         // margin-bottom: 15px;
         z-index: 3;
-        .unActive{
-            position: absolute;
-            height: 4px;
-            width: 34px;
-            border-radius: 2px;
-            background-color: #FFC700;
-            left: 20%;
-            top: 0px;
-            left: 0;
-            z-index: 2;
-            transition: 0.4s all;
-        }
-        .active{
-            position: absolute;
-            height: 4px;
-            width: 34px;
-            border-radius: 2px;
-            background-color: #FFC700;
-            left: 20%;
-            top: 0px;
-            left: 7%;
-            z-index: 2;
-            animation: ani 0.4s;
-            -moz-animation: ani 0.4s ;
-            -webkit-animation: ani 0.4s ;
-            -o-animation: ani 0.4s ;
-        }
+        // .unActive{
+        //     position: absolute;
+        //     height: 4px;
+        //     width: 34px;
+        //     border-radius: 2px;
+        //     background-color: #FFC700;
+        //     left: 20%;
+        //     top: 0px;
+        //     left: 0;
+        //     z-index: 2;
+        //     transition: 0.4s all;
+        // }
+        // .active{
+        //     position: absolute;
+        //     height: 4px;
+        //     width: 34px;
+        //     border-radius: 2px;
+        //     background-color: #FFC700;
+        //     left: 20%;
+        //     top: 0px;
+        //     left: 7%;
+        //     z-index: 2;
+        //     animation: ani 0.4s;
+        //     -moz-animation: ani 0.4s ;
+        //     -webkit-animation: ani 0.4s ;
+        //     -o-animation: ani 0.4s ;
+        // }
 
 
 

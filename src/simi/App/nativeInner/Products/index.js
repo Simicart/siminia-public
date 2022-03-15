@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Gallery from './Gallery';
 import Identify from 'src/simi/Helper/Identify';
 import Sortby from './Sortby';
@@ -103,6 +103,7 @@ const Products = props => {
                 >
                     {filter}
                 </div>
+                
             );
         }
         return shopby;
@@ -239,6 +240,8 @@ const Products = props => {
         return html;
     };
 
+
+  
     const [showingDropdown, setShowDropdown] = useState(false);
     const [showFilter, setShowFilter] = useState(false);
 
@@ -251,7 +254,6 @@ const Products = props => {
         count++;
     };
     const clickFilter = () => {
-        count = 0;
         setShowFilter(!showFilter);
         setShowDropdown(false);
     };
@@ -267,15 +269,15 @@ const Products = props => {
             setShowFilter(false);
         }
     };
-    // useEventListener(globalThis, 'keydown', handleClickOutside);
-    useEventListener(globalThis, 'click', handleClickOutside);
+    useEventListener(globalThis, 'keydown', handleClickOutside);
+    useEventListener(globalThis, 'mousedown', handleClickOutside);
 
     return (
         <article className="products-root" id="root-product-list">
             <h1 className="title">
                 <div className="categoryTitle">{title}</div>
             </h1>
-            {isPhone ? itemCount : ''}
+
             <div className="product-list-container-siminia">
                 <div className="wrapper">
                     {windowSize.innerWidth > 768 ? (
@@ -290,9 +292,9 @@ const Products = props => {
                                     <span className="label">
                                         <span
                                             className={`${
-                                                showFilter
-                                                    ? 'activeIconFilter'
-                                                    : ''
+                                                filterData === null
+                                                    ? ''
+                                                    : 'activeIconFilter'
                                             } icon-filter`}
                                         >
                                             <BiFilterAlt />
@@ -341,6 +343,7 @@ const Products = props => {
                                             <ChevronDown size={15} />
                                         )}
                                     </span>
+                                    {count === 0 ? <div className='active'></div> : ''}
                                 </div>
                             </div>
                         </div>
@@ -349,7 +352,7 @@ const Products = props => {
                         <Sortby
                             showingDropdown={showingDropdown}
                             data={data}
-                            sortByData={sortByData}
+                            sortByData={sortByData === null ? {position: 'ASC'} : sortByData}
                         />
                     ) : (
                         ''
@@ -374,6 +377,7 @@ const Products = props => {
                     {renderList()}
                 </div>
             </div>
+            {showFilter ? <div className="bg-white"></div> : ''}
         </article>
     );
 };

@@ -292,6 +292,30 @@ body.fixed-scroll {
     .virtualHeader {
         height: 55px
     }
+    .specHeader {
+        height: 55px;
+        background: #fff;
+        position:fixed;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        padding: 0 10px;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.3);
+        top: 0;
+        z-index: 5;
+
+    }
+    .specHeader > svg {
+        margin-right: 20px;
+    }
+    .specHeader > span {
+        color: #150826;
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 21px;
+    }
     .header-search-form input {
         border: 1px solid #000;
        
