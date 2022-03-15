@@ -105,8 +105,6 @@ const ProductFullDetail = props => {
     } = talonProps;
     const successMsg = `${productDetails.name} was added to shopping cart`;
 
-    console.log('description', product.short_description);
-
     let History = useHistory();
     const [moreBtn, setMoreBtn] = useState(false);
     const storeConfig = Identify.getStoreConfig();
@@ -148,8 +146,10 @@ const ProductFullDetail = props => {
     const { formatMessage } = useIntl();
     const productReview = useRef(null);
     const carouselImgSize = useRef(null);
-    const positionFooterFixed = carouselImgSize&&carouselImgSize.current ? (40/carouselImgSize.current.clientHeight)*100 : 514
-    console.log("hahahahaahj",positionFooterFixed );
+    const positionFooterFixed =
+        carouselImgSize && carouselImgSize.current
+            ? (40 / carouselImgSize.current.clientHeight) * 100
+            : 514;
 
     const scrollToReview = () => {
         smoothScrollToView(document.querySelector('.reviewsContainer'));
@@ -418,7 +418,7 @@ const ProductFullDetail = props => {
                 alertMsg={alertMsg}
                 status="success"
             />
-            
+
             {addToCartPopup ? (
                 <AddToCartPopup
                     options={options}
@@ -480,7 +480,10 @@ const ProductFullDetail = props => {
                         ) : null}
 
                         {!isMobileSite ? review : null}
-                        <section ref={carouselImgSize} className={classes.imageCarousel}>
+                        <section
+                            ref={carouselImgSize}
+                            className={classes.imageCarousel}
+                        >
                             {isMobileSite ? (
                                 <div className={classes.headerBtn}>
                                     <button
@@ -527,14 +530,18 @@ const ProductFullDetail = props => {
                                 </div>
                             ) : null}
                             {isMobileSite ? (
-                                <StatusBar status={product.stock_status} position={positionFooterFixed} />
+                                <StatusBar
+                                    status={product.stock_status}
+                                    position={positionFooterFixed}
+                                />
                             ) : null}
                             <Carousel
                                 product={product}
                                 optionSelections={optionSelections}
                                 optionCodes={optionCodes}
                                 labelData={
-                                    product.mp_label_data && product.mp_label_data.length > 0
+                                    product.mp_label_data &&
+                                    product.mp_label_data.length > 0
                                         ? product.mp_label_data
                                         : null
                                 }
@@ -719,7 +726,6 @@ const ProductFullDetail = props => {
                     setAddToCartPopup={setAddToCartPopup}
                     typeBtn={typeBtn}
                     setTypeBtn={setTypeBtn}
-                    
                 />
             ) : null}
         </div>
