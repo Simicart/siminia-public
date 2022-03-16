@@ -1,7 +1,7 @@
 .main-status-bar {
     position: absolute;
     z-index: 1;
-    top: 92.5%;
+    // top: 92.5%;
     border-radius: 16px 16px 0 0;
     background-color: #ededed;
     height: 40px;
@@ -28,6 +28,10 @@
         padding: 0 20px;
     }
 }
+.virtual {
+    height:55px;
+}
+
 .main-footerFixedBtn {
     position: fixed;
     bottom: -1px;
@@ -35,6 +39,7 @@
     width: 100%;
     background: #fff;
     z-index: 5;
+   
     ul {
         display: flex;
         line-height: 50px;
