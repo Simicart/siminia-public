@@ -12,9 +12,11 @@ import LeftMenu from '../../core/LeftMenu';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import { MdLocationPin } from 'react-icons/md';
 import { useOrderRow } from '../OrderHistoryPage/useOrderRow';
-
+import ImageLoading from '../ProductImageCarousel/imageLoading';
+import Loader from '../Loader'
 const OrderDetailPage = props => {
     const [width, setWidth] = useState(window.innerWidth);
+    const [placeHoder, setPlaceholder] = useState(true);
 
     useEffect(() => {
         const handleSize = () => {
@@ -92,10 +94,7 @@ const OrderDetailPage = props => {
 
     if (loadingDetail) {
         return (
-            <div>
-                <div className={classes.loader} />
-                <div className={classes.modal_loader} />
-            </div>
+           <Loader />
         );
     }
 
@@ -184,12 +183,16 @@ const OrderDetailPage = props => {
             html = listItem.map((item, index) => {
                 return (
                     <div className={classes.orderItemMb}>
+                        {/* {placeHoder ? (
+                            <ImageLoading height={100} width={80} />
+                        ) : null} */}
                         <img
                             className={classes.orderItemMbImg}
                             src={listUrlImage[index]}
-                            alt="order-img"
                             style={{ height: 100, marginRight: 15 }}
+                            onLoad={() => setPlaceholder(false)}
                         />
+
                         <div
                             style={{ width: '70%' }}
                             className={classes.orderItemMbContent}
@@ -582,10 +585,7 @@ const OrderDetailPage = props => {
 
             <div className={classes.rootMobile}>
                 {loading ? (
-                    <div>
-                        <div className={classes.loader} />
-                        <div className={classes.modal_loader} />
-                    </div>
+                    <Loader />
                 ) : null}
                 <div className={classes.shippingAddressContainer}>
                     <MdLocationPin className={classes.addressIcon} />
