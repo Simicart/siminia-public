@@ -8,7 +8,8 @@
     }
 
     .main-alert.null {
-        top: -9%;
+        top: -10%;
+        left: 0;
         color: #fff;
         display: flex;
         font-size: 15px;
@@ -20,7 +21,8 @@
 
     .main-alert.close {
         animation: msgOut 0.4s;
-        top: -9%;
+        top: -10%;
+        left: 0;
         color: #fff;
         display: flex;
         font-size: 15px;
@@ -31,6 +33,7 @@
     }
     .main-alert.open {
         animation: msgIn 0.4s;
+        left: 0;
         top: 0;
         color: #fff;
         display: flex;

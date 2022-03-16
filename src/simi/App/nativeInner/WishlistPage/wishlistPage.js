@@ -53,7 +53,6 @@ const WishlistPage = props => {
         return fullPageLoadingIndicator;
     }
     
-
     let content;
     if (error) {
         const derivedErrorMessage = deriveErrorMessage([error]);
