@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Form } from 'informed';
 import { GrClose } from 'react-icons/gr';
+import Loader from '../Loader'
 
 require('./statusBar.scss');
 
@@ -28,12 +29,9 @@ const AddToCartPopup = props => {
 
     return (
         <div className="main-AddToCartPopup">
-            {loading ? (
-                <div>
-                    <div className="loader" />
-                    <div className="modal-loader" />
-                </div>
-            ) : null}
+            {/* {loading ? ( */}
+                <Loader />
+            {/* ) : null} */}
             <div className="modal" />
             <div
                 ref={ref}

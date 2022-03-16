@@ -43,6 +43,7 @@ export const useOrderHistoryPage = (props = {}) => {
 
 
     const orders = orderData ? orderData.customer.orders.items : [];
+    const total_count = orderData ? orderData.customer.orders.total_count : null;
 
     const isLoadingWithoutData = !orderData && orderLoading;
     const isBackgroundLoading = !!orderData && orderLoading;
@@ -101,6 +102,7 @@ export const useOrderHistoryPage = (props = {}) => {
         orders,
         pageInfo,
         searchText,
+        total_count
        
     };
 };

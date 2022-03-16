@@ -5,10 +5,10 @@ import { useStyle } from '@magento/venia-ui/lib/classify';
 import { Link } from 'react-router-dom';
 import { useOrderHistoryPage } from '../../../talons/OrderHistory/useOrderHistoryPage';
 import Button from '@magento/venia-ui/lib/components/Button';
-
+import Loader from '../Loader';
 const OrderHistoryPageMb = props => {
     const { orderRow } = props;
-    console.log("hieu", orderRow);
+    console.log('hieu', orderRow);
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
     const [status, setStatus] = useState('All');
@@ -18,13 +18,28 @@ const OrderHistoryPageMb = props => {
     const talonProps = useOrderHistoryPage(currentPage);
     const {
         loadMoreOrders,
-
         isBackgroundLoading,
         isLoadingWithoutData,
-        orders
+        orders,
+        total_count
     } = talonProps;
 
-    // let handleFilterOrders;
+    useEffect(() => {
+        const handleScroll = () => {
+            if (orders.length < total_count) {
+                if (
+                    window.innerHeight + document.documentElement.scrollTop ===
+                    document.documentElement.offsetHeight
+                ) {
+                    console.log('hahahaa', orders.length, total_count);
+                    loadMoreOrders();
+                }
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [orders, total_count, loadMoreOrders]);
+
     useEffect(() => {
         let handleFilterOrders = orders.filter(order => {
             if (status === 'All') {
@@ -35,7 +50,7 @@ const OrderHistoryPageMb = props => {
     }, [status, orders]);
 
     const loadMoreButton = loadMoreOrders ? (
-        <button className={classes.loadMoreBtn} onClick={loadMoreOrders}>
+        <button className={classes.loadMoreBtn}>
             <FormattedMessage
                 id={'orderHistoryPage.loadMore'}
                 defaultMessage={'Load More'}
@@ -44,26 +59,30 @@ const OrderHistoryPageMb = props => {
     ) : null;
 
     const listStatusBtn = ['All', 'Pending', 'Completed', 'Canceled'];
-   
 
     const renderStatusBtn = listStatusBtn => {
         let html = null;
         html = listStatusBtn.map((s, index) => {
-            const left=16+102*index;
+            const left = 16 + 102 * index;
             return (
                 <>
-                <button
-                    onClick={() => setStatus(s)}
-                    key={index}
-                    className={
-                        s === status
-                        ? classes.statusBtnActive
-                        : classes.statusBtn
-                    }
+                    <button
+                        onClick={() => setStatus(s)}
+                        key={index}
+                        className={
+                            s === status
+                                ? classes.statusBtnActive
+                                : classes.statusBtn
+                        }
                     >
-                    {s}
-                </button>
-                {s === status ? <div style={{left: left}} className={classes.activeIcon}/> : null}
+                        {s}
+                    </button>
+                    {s === status ? (
+                        <div
+                            style={{ left: left }}
+                            className={classes.activeIcon}
+                        />
+                    ) : null}
                 </>
             );
         });
@@ -81,57 +100,32 @@ const OrderHistoryPageMb = props => {
             html = listItem.map((item, index) => {
                 return (
                     <Link to={`/order-history/${item.number}`}>
-                    <div key={index} className={classes.orderItem}>
-                        <div className={classes.orderItemHead}>
-                            <span>Order ID {item.number}</span>
-                            {/* <span>
+                        <div key={index} className={classes.orderItem}>
+                            <div className={classes.orderItemHead}>
+                                <span>Order ID {item.number}</span>
+                            </div>
+                            <div className={classes.date}>
+                                <span>
+                                    {formatMessage({
+                                        id: 'Data',
+                                        defaultMessage: 'Date'
+                                    })}
+                                </span>
+                                <span>: {item.order_date}</span>
+                            </div>
+                            <div className={classes.total}>
+                                <span>Order Total: </span>
                                 {forMatCurrentValue(
                                     item.items[0].product_sale_price.currency
                                 )}
                                 {item.total.grand_total.value}
-                            </span> */}
+                            </div>
+                            <div className={classes.status}>
+                                <span>Status: </span>
+                                <span>{item.status}</span>
+                            </div>
                         </div>
-                        <div className={classes.date}>
-                            <span>
-                                {formatMessage({
-                                    id: 'Data',
-                                    defaultMessage: 'Date'
-                                })}
-                            </span>
-                            <span>: {item.order_date}</span>
-                        </div>
-                        {/* <div className={classes.shipTo}>
-                            <span>
-                                {formatMessage({
-                                    id: 'Ship to',
-                                    defaultMessage: 'Ship to'
-                                })}
-                            </span>
-                            <span>
-                                : {item.billing_address.firstname}
-                                {item.billing_address.lastname}
-                            </span>
-                        </div> */}
-
-                        {/* <div className={classes.viewOrder}>
-                            <Link to={`/order-history/${item.number}`}>
-                                <button>View order</button>
-                            </Link>
-                        </div> */}
-                        <div className={classes.total}>
-                            <span>Order Total: </span>
-                            {forMatCurrentValue(
-                                item.items[0].product_sale_price.currency
-                            )}
-                            {item.total.grand_total.value}
-                        </div>
-                        <div className={classes.status} >
-                            <span>Status: </span>
-                            <span>{item.status}</span>
-                        </div>
-                    </div>
                     </Link>
-
                 );
             });
             return html;
@@ -141,25 +135,16 @@ const OrderHistoryPageMb = props => {
 
     return (
         <>
-            {isBackgroundLoading || isLoadingWithoutData ? (
-                <div>
-                    <div className={classes.loader} />
-                    <div className={classes.modalLoader} />
-                </div>
-            ) : null}
+            {isBackgroundLoading || isLoadingWithoutData ? <Loader /> : null}
             <div className={classes.statusBtnContainer}>
-                {/* {formatMessage({
-                    id: 'My orders',
-                    defaultMessage: 'My orders'
-                })} */}
                 {renderStatusBtn(listStatusBtn)}
             </div>
             <div className={classes.mobileRoot}>
                 {renderOrderList(ordersFilter)}
-                {status === "All" ?loadMoreButton : null}
-                {ordersFilter.length === 0 ?
-                <p>You have no products on {status}.</p>
-                : null}
+                {status === 'All' ? loadMoreButton : null}
+                {ordersFilter.length === 0 ? (
+                    <p>You have no products on {status}.</p>
+                ) : null}
             </div>
         </>
     );
