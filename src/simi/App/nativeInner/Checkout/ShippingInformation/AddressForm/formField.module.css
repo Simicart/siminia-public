@@ -1,0 +1,9 @@
+.root {
+    color: rgb(var(--venia-global-color-text));
+    display: grid;
+    align-content: start;
+}
+
+.label {
+    display: none;
+}
