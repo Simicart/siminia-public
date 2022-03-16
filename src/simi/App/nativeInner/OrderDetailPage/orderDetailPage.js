@@ -187,7 +187,7 @@ const OrderDetailPage = props => {
                         <img
                             className={classes.orderItemMbImg}
                             src={listUrlImage[index]}
-                            alt="loasd"
+                            alt="order-img"
                             style={{ height: 100, marginRight: 15 }}
                         />
                         <div
