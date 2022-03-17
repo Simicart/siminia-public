@@ -1,0 +1,29 @@
+.root {
+    display: grid;
+    gap: 1.125rem;
+    padding: 2rem;
+}
+
+.heading_container {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr;
+}
+
+.heading {
+    font-weight: 600;
+}
+
+.card_details_container {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.payment_details {
+}
+
+@media (max-width: 960px) {
+    .root {
+        padding: 0 0.625rem;
+    }
+}

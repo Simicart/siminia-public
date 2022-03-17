@@ -240,9 +240,8 @@
 
 @media (max-width: 960px) {
     .root {
-        padding-left: 0;
-        padding-right: 0;
-        padding-top: 0;
+        padding: 0;
+        background-color: #F2F2F3;
     }
 
     .root h3,
@@ -287,7 +286,7 @@
     }
 
     .summaryContainer div[class*='orderSummary-root'] {
-        padding: 0 15px 25px;
+        padding: 0 10px 0;
     }
 
     .review_order_button,
@@ -295,10 +294,53 @@
         margin-top: 15px;
         width: 100%;
     }
+
+    .heading_container {
+        display: none;
+    }
+
+    .shipping_information_container, .shipping_method_container, .payment_information_container, .price_adjustments_container, .items_review_container {
+        padding: 1.25rem 0;
+        background-color: #FFF;
+    }
+
+    .root div[class*='paymentInformation-payment_info_container'], .root div[class*='itemsReview-items_review_container'] {
+        border: none
+    }
+
+    .root span[class*='lineItems'] {
+        margin-top: 0;
+    }
+
+    .root span[class*='totalLabel'] {
+        text-transform: none;
+        font-weight: 400;
+    }
+
+    .root span[class*='totalPrice'] {
+        font-size: 18px;
+        line-height: 21px;
+        font-weight: 400;
+    }
+
+    .shipping_method_heading {
+        border: none;
+    }
+
+    .shipping_method_heading, .payment_information_heading {
+        padding: 0 0.625rem;
+    }
+
+    .root span[class*='addressCard-defaultBadge'] {
+        position: absolute;
+        right: 15px;
+        bottom: 20px;
+        margin: 0;
+    }
 }
 
 .checkout_mobile_header {
-    background-color: #452B4E;
+    background-color: rgb(var(--venia-brand-color-1-700));
     padding: 23px 10px;
     display: flex;
     align-items: center;

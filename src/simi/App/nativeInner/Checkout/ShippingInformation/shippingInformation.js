@@ -7,21 +7,19 @@ import { useShippingInformation } from '@magento/peregrine/lib/talons/CheckoutPa
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
-import AddressForm from '@magento/venia-ui/lib/components/AddressForm';
+import AddressForm from '@magento/venia-ui/lib/components/CheckoutPage/ShippingInformation/AddressForm';
 import Card from './card';
 import defaultClasses from './shippingInformation.module.css';
 import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
 
-const EditModal = React.lazy(() => import('./editModal'));
+const EditModal = React.lazy(() => import('@magento/venia-ui/lib/components/CheckoutPage/ShippingInformation/editModal'));
 
 const ShippingInformation = props => {
     const {
         classes: propClasses,
         onSave,
         onSuccess,
-        toggleActiveContent,
-        toggleSignInContent,
-        setGuestSignInUsername
+        toggleActiveContent
     } = props;
     const talonProps = useShippingInformation({
         onSave,
@@ -73,7 +71,6 @@ const ShippingInformation = props => {
                 <LinkButton
                     onClick={handleEditShipping}
                     className={classes.editButton}
-                    data-cy="ShippingInformation-editButton"
                 >
                     <Icon
                         size={16}
@@ -93,10 +90,7 @@ const ShippingInformation = props => {
         </Fragment>
     ) : (
         <Fragment>
-            <h3
-                data-cy="ShippingInformation-editTitle"
-                className={classes.editTitle}
-            >
+            <h3 className={classes.editTitle}>
                 <FormattedMessage
                     id={'shippingInformation.editTitle'}
                     defaultMessage={'1. Shipping Information'}
@@ -106,18 +100,12 @@ const ShippingInformation = props => {
                 <AddressForm
                     onSuccess={onSuccess}
                     shippingData={shippingData}
-                    toggleSignInContent={toggleSignInContent}
-                    setGuestSignInUsername={setGuestSignInUsername}
                 />
             </div>
         </Fragment>
     );
 
-    return (
-        <div className={rootClassName} data-cy="ShippingInformation-root">
-            {shippingInformation}
-        </div>
-    );
+    return <div className={rootClassName}>{shippingInformation}</div>;
 };
 
 export default ShippingInformation;
@@ -136,7 +124,5 @@ ShippingInformation.propTypes = {
     }),
     onSave: func.isRequired,
     onSuccess: func.isRequired,
-    toggleActiveContent: func.isRequired,
-    toggleSignInContent: func.isRequired,
-    setGuestSignInUsername: func.isRequired
+    toggleActiveContent: func.isRequired
 };

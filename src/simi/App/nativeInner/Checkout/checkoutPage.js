@@ -17,14 +17,14 @@ import Icon from '@magento/venia-ui/lib/components/Icon';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import StockStatusMessage from '@magento/venia-ui/lib/components/StockStatusMessage';
 import FormError from '@magento/venia-ui/lib/components/FormError';
-import AddressBook from '@magento/venia-ui/lib/components/CheckoutPage/AddressBook';
+import AddressBook from './AddressBook';
 import GuestSignIn from '@magento/venia-ui/lib/components/CheckoutPage/GuestSignIn';
 import PaymentInformation from './PaymentInformation';
 import payments from './PaymentInformation/paymentMethodCollection';
-import ShippingMethod from '@magento/venia-ui/lib/components/CheckoutPage/ShippingMethod';
+import ShippingMethod from './ShippingMethod';
 import ShippingInformation from './ShippingInformation';
-import OrderConfirmationPage from '@magento/venia-ui/lib/components/CheckoutPage/OrderConfirmationPage';
-import ItemsReview from '@magento/venia-ui/lib/components/CheckoutPage/ItemsReview';
+// import OrderConfirmationPage from '@magento/venia-ui/lib/components/CheckoutPage/OrderConfirmationPage';
+import ItemsReview from './ItemsReview';
 
 import defaultClasses from './checkoutPage.module.css';
 import ScrollAnchor from '@magento/venia-ui/lib/components/ScrollAnchor/scrollAnchor';
@@ -32,7 +32,7 @@ import DeliveryDateTime from './DeliveryDateTime';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
 import OrderSummary from './OrderSummary/orderSummary';
-import PriceAdjustments from 'src/simi/App/core/Cart/PriceAdjustments/priceAdjustments';
+import PriceAdjustments from './PriceAdjustments';
 
 import Identify from 'src/simi/Helper/Identify';
 import ButtonLoader from '../../../BaseComponents/ButtonLoader';
@@ -426,48 +426,63 @@ const CheckoutPage = props => {
                         />
                     </ScrollAnchor>
                 </div>
-                {/* <div className={classes.shipping_method_container}>
+                <div className={classes.shipping_method_container}>
                     <ScrollAnchor ref={shippingMethodRef}>
                         {shippingMethodSection}
                     </ScrollAnchor>
-                </div> */}
-                {/* <div className={classes.payment_information_container}>
+                </div>
+                <div className={classes.payment_information_container}>
                     {paymentInformationSection}
                 </div>
                 {priceAdjustmentsSection}
                 {reviewOrderButton}
                 {itemsReview}
                 {orderSummary}
-                {placeOrderButton} */}
+                {placeOrderButton}
                 {/* <button onClick={()=>deliveryDateTime.current.handleSubmit()}>tesst</button> */}
             </div>
         );
     }
 
-    // const addressBookElement = !isGuestCheckout ? (
-    //     <AddressBook
-    //         activeContent={activeContent}
-    //         toggleActiveContent={toggleAddressBookContent}
-    //         onSuccess={scrollShippingInformationIntoView}
-    //     />
-    // ) : null;
+    const addressBookElement = !isGuestCheckout ? (
+        <AddressBook
+            activeContent={activeContent}
+            toggleActiveContent={toggleAddressBookContent}
+            onSuccess={scrollShippingInformationIntoView}
+        />
+    ) : null;
 
-    // const signInElement = isGuestCheckout ? (
-    //     <GuestSignIn
-    //         isActive={activeContent === 'signIn'}
-    //         toggleActiveContent={toggleSignInContent}
-    //     />
-    // ) : null;
+    const signInElement = isGuestCheckout ? (
+        <GuestSignIn
+            isActive={activeContent === 'signIn'}
+            toggleActiveContent={toggleSignInContent}
+        />
+    ) : null;
 
-    const checkoutHeader = isMobile && (
-        <div className={classes.checkout_mobile_header}>
-            <span>{<ArrowLeftIcon />}</span>
-            <h1>{formatMessage({
-                id: 'checkoutPage.titleCheckout',
-                defaultMessage: 'Checkout'
-            })}</h1>
-        </div>
-    )
+    let checkoutHeader = null
+    if(isMobile) {
+        if(activeContent === 'addressBook') {
+            checkoutHeader = <div className={classes.checkout_mobile_header} onClick={() => toggleAddressBookContent()} >
+                <span>{<ArrowLeftIcon />}</span>
+                <h1>{formatMessage({
+                    id: 'addressBook.headerText',
+                    defaultMessage: 'Change Shipping Information'
+                })}</h1>
+            </div>
+        } else {
+            checkoutHeader = <div className={classes.checkout_mobile_header} onClick={() => history.push('/cart')} >
+                <span>{<ArrowLeftIcon />}</span>
+                <h1>{formatMessage({
+                    id: 'checkoutPage.titleCheckout',
+                    defaultMessage: 'Checkout'
+                })}</h1>
+            </div>
+        }
+    }
+        // if(activeContent === ) {
+
+        // }
+      
 
     return (
         <React.Fragment>
@@ -480,8 +495,8 @@ const CheckoutPage = props => {
                     })}
                 </StoreTitle>
                 {checkoutContent}
-                {/* {addressBookElement}
-                {signInElement} */}
+                {addressBookElement}
+                {signInElement}
             </div>
         </React.Fragment>
         

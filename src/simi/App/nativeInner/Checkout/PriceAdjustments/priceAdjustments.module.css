@@ -1,0 +1,86 @@
+.root {
+    border: 1px solid rgb(0, 88, 178, 0.5);
+    border-bottom: none;
+}
+.root > div {
+    border: none;
+}
+.root > div > div {
+    border-bottom: 1px solid rgb(0, 88, 178, 0.5);
+}
+.sectionRoot {
+    font-size: 18px;
+}
+.sectionRoot span[class*='label'] {
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .root {
+        font-size: 16px;
+    }
+    .sectionTitle {
+        font-size: 16px;
+    }
+    .sectionRoot span[class*='label'] {
+        font-size: 14px;
+    }
+}
+
+.sessionTitleWrapper {
+    align-items: center;
+    display: grid;
+    gap: 1.5rem;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr;
+    height: 4.5rem;
+    justify-items: start;
+    padding: 0 1.5rem;
+}
+
+.sessionContentsContainer {
+    padding: 0 1.5rem 1.5rem;
+}
+
+
+@media (max-width: 960px) {
+    .root {
+        border: none;
+    }
+    .sessionTitleWrapper {
+        padding: 0 0.625rem;
+        height: 3.5rem;
+    }
+
+    .root > div > div {
+        border-bottom: 1px solid rgb(var(--venia-global-color-gray-400));
+    }
+
+    .sessionContentsContainer {
+        padding: 0 0.625rem 1.5rem;
+    }
+}
+
+.slider {
+    width: 100%;
+}
+.message {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    min-width: 50%;
+}
+.userBalance {
+    margin: 0 1rem 1rem 0;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+}
+.pointSpend {
+    margin: 1rem 0;
+    display: flex;
+}
+.pointInput {
+    text-align: center;
+    margin-left: 15px;
+    min-width: 70px;
+    max-height: 30px;
+}

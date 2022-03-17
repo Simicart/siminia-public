@@ -1,7 +1,7 @@
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import PriceSummary from 'src/simi/App/core/Cart/PriceSummary/priceSummary';
+import PriceSummary from './PriceSummary';
 
 import defaultClasses from './orderSummary.module.css';
 

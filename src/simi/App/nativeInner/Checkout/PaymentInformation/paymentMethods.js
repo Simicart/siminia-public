@@ -7,7 +7,7 @@ import { usePaymentMethods } from '@magento/peregrine/lib/talons/CheckoutPage/Pa
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import RadioGroup from '@magento/venia-ui/lib/components/RadioGroup';
 import Radio from '@magento/venia-ui/lib/components/RadioGroup/radio';
-import defaultClasses from '@magento/venia-ui/lib/components/CheckoutPage/PaymentInformation/paymentMethods.module.css';
+import defaultClasses from './paymentMethods.module.css';
 import payments from './paymentMethodCollection';
 import Identify from 'src/simi/Helper/Identify';
 

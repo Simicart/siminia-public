@@ -6,6 +6,7 @@ import defaultClasses from './card.module.css';
 
 const Card = props => {
     const { classes: propClasses, shippingData } = props;
+
     const {
         city,
         country: { label: country },
@@ -29,13 +30,12 @@ const Card = props => {
 
     return (
         <div className={classes.root}>
-            <span>{email}</span>
-            <span>{nameString}</span>
-            <span>{telephone}</span>
+            <span>{`${nameString} | ${telephone} `}</span>
             <div className={classes.address}>
                 {streetRows}
                 <span>{additionalAddressString}</span>
             </div>
+            <span>{email}</span>
         </div>
     );
 };

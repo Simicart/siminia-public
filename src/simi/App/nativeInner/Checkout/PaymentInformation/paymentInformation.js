@@ -7,12 +7,12 @@ import { usePaymentInformation } from '@magento/peregrine/lib/talons/CheckoutPag
 import CheckoutError from '@magento/peregrine/lib/talons/CheckoutPage/CheckoutError';
 
 import { useStyle } from '@magento/venia-ui/lib/classify';
-import defaultClasses from '@magento/venia-ui/lib/components/CheckoutPage/PaymentInformation/paymentInformation.module.css';
+import defaultClasses from './paymentInformation.module.css';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 
 const PaymentMethods = React.lazy(() => import('./paymentMethods'));
 const EditModal = React.lazy(() => import('@magento/venia-ui/lib/components/CheckoutPage/PaymentInformation/editModal'));
-const Summary = React.lazy(() => import('@magento/venia-ui/lib/components/CheckoutPage/PaymentInformation/summary'));
+const Summary = React.lazy(() => import('./summary'));
 
 const PaymentInformation = props => {
     const {

@@ -21,3 +21,12 @@
     clip: rect(1px, 1px, 1px, 1px);
     white-space: nowrap;
 }
+
+@media(max-width: 960px) {
+    .root {
+        margin-top: 0%;
+    }
+    .title {
+        display: none;
+    }
+}

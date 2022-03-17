@@ -21,6 +21,7 @@
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: 1fr;
+    overflow: hidden;
 }
 
 .cardTitle {
@@ -60,7 +61,7 @@
 
     .root {
         border: 0;
-        padding: 0 10px;
+        padding: 0 0.625rem;
     }
 }
 
