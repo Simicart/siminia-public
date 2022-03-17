@@ -3,8 +3,7 @@
     row-gap: 0.5rem;
     padding-top: 19px;
     padding-bottom: 21px;
-    border-bottom: solid 1px #0058ac;
-    border-bottom: #F2F2F3;
+    border-bottom: 1px solid #F2F2F3;
 }
 
 .name {
@@ -136,12 +135,12 @@
     .image {
         max-width: 202px;
         max-height: 202px;
+        border: solid 1px #EFEFEF;
     }
 
     .details {
         margin-left: 3rem;
     }
-
 }
 
 
