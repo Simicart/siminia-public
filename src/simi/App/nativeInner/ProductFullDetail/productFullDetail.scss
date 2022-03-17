@@ -412,3 +412,14 @@
         }
     }
 }
+
+@media (max-width: 768px) {
+    .p-fulldetails-ctn{
+        .wrapperRelatedProducts{
+            margin-top: 15px;
+        }
+        .wrapperCrosssellProducts{
+            margin-bottom: 50px;
+        }
+    }
+}

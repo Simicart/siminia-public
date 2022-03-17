@@ -414,13 +414,7 @@
         background-color: #FFFFFF;
     }
     .upsell-crosssell-container {
-        margin-top: 30px;
-        margin-bottom: 10px;
-        padding: 0 10px;
-    }
-    .upsell-crosssell-container:last-child {
-        margin-top: 10px;
-        /* margin-bottom: 50px; */
-        padding: 0 10px;
+        margin-top: 0;
+        margin-bottom: 0;
     }
 }

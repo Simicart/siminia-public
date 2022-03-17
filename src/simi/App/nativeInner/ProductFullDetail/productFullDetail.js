@@ -687,39 +687,39 @@ const ProductFullDetail = props => {
                     />
                 ) : null}
                 <ProductReview product={product} ref={productReview} />
-                <ProductDetailExtraProducts
-                    classes={classes}
-                    products={relatedProducts}
-                    history={history}
-                >
-                    <FormattedMessage
-                        id="productFullDetail.relatedProducts"
-                        defaultMessage="Related Product"
-                    />
-                </ProductDetailExtraProducts>
-
-                <ProductDetailExtraProducts
-                    classes={classes}
-                    products={upsellProducts}
-                    history={history}
-                >
-                    <FormattedMessage
-                        id="productFullDetail.upsellProduct"
-                        defaultMessage="Upsell Product"
-                    />
-                </ProductDetailExtraProducts>
-
-                <ProductDetailExtraProducts
-                    classes={classes}
-                    products={crosssellProducts}
-                    history={history}
-                >
-                    <FormattedMessage
-                        id="productFullDetail.crosssellProduct"
-                        defaultMessage="Crosssell Product"
-                    />
-                </ProductDetailExtraProducts>
-            </div>
+                    <ProductDetailExtraProducts
+                        classes={classes}
+                        products={relatedProducts}
+                        history={history}
+                    >
+                        <FormattedMessage
+                            id="productFullDetail.relatedProducts"
+                            defaultMessage="Related Product"
+                        />
+                    </ProductDetailExtraProducts>
+                
+                    <ProductDetailExtraProducts
+                        classes={classes}
+                        products={upsellProducts}
+                        history={history}
+                    >
+                        <FormattedMessage
+                            id="productFullDetail.upsellProduct"
+                            defaultMessage="Upsell Product"
+                        />
+                    </ProductDetailExtraProducts>
+                
+                    <ProductDetailExtraProducts
+                        classes={classes}
+                        products={crosssellProducts}
+                        history={history}
+                    >
+                        <FormattedMessage
+                            id="productFullDetail.crosssellProduct"
+                            defaultMessage="Crosssell Product"
+                        />
+                    </ProductDetailExtraProducts>
+                </div>
             {isMobileSite ? (
                 <FooterFixedBtn
                     addToCartPopup={addToCartPopup}
