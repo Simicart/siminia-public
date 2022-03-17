@@ -75,7 +75,7 @@ const MyAccountPage = props => {
                 }
             >
                 <span>Order</span>
-                <Link to='/order-history'>View All</Link>
+                <Link to="/order-history">View All</Link>
             </div>
             <div
                 className={
@@ -84,36 +84,52 @@ const MyAccountPage = props => {
                         : `${classes.accMyOrderB} ${classes.disabled}`
                 }
             >
-                <div>
+                <Link
+                    to={{
+                        pathname: '/order-history',
+                        state: {id:"Pending"}
+                    }}
+                >
                     <span>
                         <MdPendingActions />
                     </span>
                     <span>Pending</span>
-                </div>
-                <div>
+                </Link>
+                <Link
+                    to={{
+                        pathname: '/order-history',
+                        state: {id:"Completed"}
+                    }}
+                >
                     <span>
                         <MdIncompleteCircle />
                     </span>
                     <span>Completed</span>
-                </div>
-                <div>
+                </Link>
+                <Link
+                    to={{
+                        pathname: '/order-history',
+                        state: {id:"Canceled"}
+                        
+                    }}
+                >
                     <span>
                         <MdOutlineCancelPresentation />
                     </span>
                     <span>Canceled</span>
-                </div>
+                </Link>
             </div>
         </div>
     );
     const LogOutBtn = (
-        <div className={classes.logout}>
-            <Link to="/logout.html">
+        // <div className={classes.logout}>
+            <Link className={classes.logout} to="/logout.html">
                 {formatMessage({
                     id: 'Log out',
                     defaultMessage: 'Log out'
                 })}
             </Link>
-        </div>
+        // </div>
     );
     // const handle = (e) => {
 

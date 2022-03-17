@@ -7,13 +7,12 @@ import { useOrderHistoryPage } from '../../../talons/OrderHistory/useOrderHistor
 import Button from '@magento/venia-ui/lib/components/Button';
 import Loader from '../Loader';
 const OrderHistoryPageMb = props => {
-    const { orderRow } = props;
-    console.log('hieu', orderRow);
+    
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
     const [status, setStatus] = useState('All');
     const [ordersFilter, setOrdersFilter] = useState([]);
-
+    const {statusId} = props
     const currentPage = 1;
     const talonProps = useOrderHistoryPage(currentPage);
     const {
@@ -24,6 +23,14 @@ const OrderHistoryPageMb = props => {
         total_count
     } = talonProps;
 
+    
+
+    useEffect(() => {
+        if(statusId === "Pending") setStatus("Pending")
+        if(statusId === "Completed") setStatus("Completed")
+        if(statusId === "Canceled") setStatus("Canceled")
+    },[])
+
     useEffect(() => {
         const handleScroll = () => {
             if (orders.length < total_count) {
@@ -31,7 +38,7 @@ const OrderHistoryPageMb = props => {
                     window.innerHeight + document.documentElement.scrollTop ===
                     document.documentElement.offsetHeight
                 ) {
-                    console.log('hahahaa', orders.length, total_count);
+                    
                     loadMoreOrders();
                 }
             }
