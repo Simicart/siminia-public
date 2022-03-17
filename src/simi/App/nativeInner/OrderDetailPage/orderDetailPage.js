@@ -1,9 +1,7 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useQuery, useMutation } from '@apollo/client';
-// import { useOrderRow } from './useOrderRow';
 import AlertMessages from '../ProductFullDetail/AlertMessages';
-
 import { useParams } from 'react-router-dom';
 import DEFAULT_OPERATIONS from './orderDetailPage.gql';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
@@ -12,11 +10,13 @@ import defaultClasses from './orderDetailPage.module.scss';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import LeftMenu from '../../core/LeftMenu';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
-import { MdLocationPin } from 'react-icons/Md';
+import { MdLocationPin } from 'react-icons/md';
 import { useOrderRow } from '../OrderHistoryPage/useOrderRow';
-
+import ImageLoading from '../ProductImageCarousel/imageLoading';
+import Loader from '../Loader'
 const OrderDetailPage = props => {
     const [width, setWidth] = useState(window.innerWidth);
+    const [placeHoder, setPlaceholder] = useState(true);
 
     useEffect(() => {
         const handleSize = () => {
@@ -42,8 +42,6 @@ const OrderDetailPage = props => {
         reorderItemMutation
     } = talonProps;
 
-    // const talonImageProps = useOrderRow({items})
-    // console.log("hieubachjvan", talonImageProps);
     const [alertMsg, setAlertMsg] = useState(-1);
     const [alertText, setAlertText] = useState('');
     const successMsg = `This order has been reordered successfully`;
@@ -65,12 +63,38 @@ const OrderDetailPage = props => {
         }
     }, [data, error]);
 
+    const [listUrlImg, setListUrlImg] = useState([]);
+
+    const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
+
+    const talonThumbnail = useOrderRow({ items });
+
+    const handleImage = (list, listItem) => {
+        let result = [];
+        list.forEach((item, index) => {
+            if (item[1]) {
+                item[1].variants.forEach((i, idx) => {
+                    if (i.product.sku === listItem[index].product_sku) {
+                        result.push(i.product.thumbnail.url);
+                    }
+                });
+            } else {
+                result.push(
+                    'https://taiwantopsales.com/wp-content/uploads/2018/10/placeholder-600x600.jpg'
+                );
+            }
+        });
+        return result;
+    };
+    let result = Object.entries(talonThumbnail.imagesData);
+    const listImage =
+        dataDetail && dataDetail.customer
+            ? dataDetail.customer.orders.items[0].items
+            : [];
+
     if (loadingDetail) {
         return (
-            <div>
-                <div className={classes.loader} />
-                <div className={classes.modal_loader} />
-            </div>
+           <Loader />
         );
     }
 
@@ -96,17 +120,16 @@ const OrderDetailPage = props => {
             </div>
         );
     }
-    const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
-    console.log('testtt', items);
+    const listUrlImage = handleImage(result, listImage);
+    // const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
 
     const { customer } = dataDetail;
     const listItem = customer.orders.items[0].items;
     const subTotal = customer.orders.items[0].total.subtotal.value;
     const grandTotal = customer.orders.items[0].total.base_grand_total.value;
     const mpRewardPoints = customer.orders.items[0].mp_reward_points;
-    console.log(mpRewardPoints);
+
     const status = customer.orders.items[0].status;
-    console.log('dataDetailaa', customer);
 
     const dateFormat = date => {
         const mystring = date;
@@ -118,8 +141,6 @@ const OrderDetailPage = props => {
         const arrayStrig = mystring.split(' ');
         return arrayStrig[1];
     };
-
-    // console.log("date",dateFormat(customer.orders.items[0].order_date ));
 
     const forMatCurrentValue = value => {
         if (value == 'USD') {
@@ -162,38 +183,41 @@ const OrderDetailPage = props => {
             html = listItem.map((item, index) => {
                 return (
                     <div className={classes.orderItemMb}>
-                        <div className={classes.orderItemMbHeading}>
-                            <span>{item.product_name}</span>
-                            <span>
-                                {forMatCurrentValue(
-                                    item.product_sale_price.currency
-                                )}
-                                {item.product_sale_price.value}
-                            </span>
+                        {/* {placeHoder ? (
+                            <ImageLoading height={100} width={80} />
+                        ) : null} */}
+                        <img
+                            className={classes.orderItemMbImg}
+                            src={listUrlImage[index]}
+                            style={{ height: 100, marginRight: 15 }}
+                            onLoad={() => setPlaceholder(false)}
+                        />
+
+                        <div
+                            style={{ width: '70%' }}
+                            className={classes.orderItemMbContent}
+                        >
+                            <div className={classes.orderItemMbHeading}>
+                                <span>{item.product_name}</span>
+                            </div>
+                            <div>
+                                <span>SKU: </span>
+                                <span>{item.product_sku}</span>
+                            </div>
                         </div>
-                        <div>
-                            <span>SKU: </span>
-                            <span>{item.product_sku}</span>
-                        </div>
-                        <div>
-                            <span>Qty: </span>
-                            <span>{item.quantity_ordered}</span>
-                        </div>
-                        <div>
-                            <span>
-                                {formatMessage({
-                                    id: 'Price',
-                                    defaultMessage: 'Price'
-                                })}
-                                :
-                            </span>
-                            <span>
-                                {' '}
-                                {forMatCurrentValue(
-                                    item.product_sale_price.currency
-                                )}
-                                {item.product_sale_price.value}
-                            </span>
+                        <div className={classes.orderItemQty}>
+                            <div>
+                                <span>x{item.quantity_ordered}</span>
+                            </div>
+                            <div>
+                                <span className={classes.orderItemPrice}>
+                                    {' '}
+                                    {forMatCurrentValue(
+                                        item.product_sale_price.currency
+                                    )}
+                                    {item.product_sale_price.value}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 );
@@ -478,7 +502,6 @@ const OrderDetailPage = props => {
         );
         return html;
     };
-    // console.log('dataDetail', customer.orders.items[0].billing_address);
 
     if (width > 767) {
         return (
@@ -561,10 +584,9 @@ const OrderDetailPage = props => {
             />
 
             <div className={classes.rootMobile}>
-                {loading ? <div>
-                    <div className={classes.loader} />
-                    <div className={classes.modal_loader} />
-                </div> : null}
+                {loading ? (
+                    <Loader />
+                ) : null}
                 <div className={classes.shippingAddressContainer}>
                     <MdLocationPin className={classes.addressIcon} />
                     <div className={classes.mbShipTo}>

@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import { Trash2, User } from 'react-feather';
-import { useIntl } from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import { useToasts, useWindowSize } from '@magento/peregrine';
-import { useWishlistItem } from '@magento/peregrine/lib/talons/WishlistPage/useWishlistItem';
+import { useWishlistItem } from '../talons/WishlistPage/useWishlistItem';
+import AlertMessages from '../ProductFullDetail/AlertMessages';
 
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
 import Icon from '@magento/venia-ui/lib/components/Icon';
@@ -12,11 +13,12 @@ import { FiShoppingCart } from 'react-icons/fi';
 import { VscTrash } from 'react-icons/vsc';
 import { BsFillShareFill } from 'react-icons/bs';
 import defaultClasses from './wishlistItem.module.css';
+import { Link } from 'react-router-dom';
+import { ConfirmPopup } from '../Cart/ConfirmPopup';
 
 const WishlistItem = props => {
     const { item } = props;
-
-    const { configurable_options: configurableOptions = [], product } = item;
+    const { configurable_options: configurableOptions = [], product, __typename } = item;
     const {
         name,
         price_range: priceRange,
@@ -33,14 +35,14 @@ const WishlistItem = props => {
         handleRemoveProductFromWishlist,
         hasError,
         isRemovalInProgress,
-        isSupportedProductType
+        isSupportedProductType,
+        setAlertMsg,
+        alertMsg
     } = talonProps;
-
     const { formatMessage } = useIntl();
     const [, { addToast }] = useToasts();
     const windowSize = useWindowSize();
     const isMobileSite = windowSize.innerWidth <= 768;
-    // console.log("adddd", addToCartButtonProps);
 
     useEffect(() => {
         if (hasError) {
@@ -95,7 +97,7 @@ const WishlistItem = props => {
         ? classes.root_disabled
         : classes.root;
 
-    const addToCart = isSupportedProductType ? (
+    const addToCart = ( __typename === 'SimpleWishlistItem' ? 
         <button className={classes.addToCart} {...addToCartButtonProps}>
             {!isMobileSite ? (
                 formatMessage({
@@ -105,11 +107,31 @@ const WishlistItem = props => {
             ) : (
                 <FiShoppingCart />
             )}
+        </button> : <button className={classes.addToCart}>
+            {!isMobileSite ? (
+                formatMessage({
+                    id: 'wishlistItem.addToCart',
+                    defaultMessage: 'Add to Cart'
+                })
+            ) : (
+                <Link to={`${product.url_key}${product.url_suffix}`}>
+                    <FiShoppingCart />
+                </Link>
+            )}
         </button>
-    ) : null;
-
+    );
+    const successMsg = formatMessage({
+        id: 'addCartSuccess',
+        defaultMessage: `You added ${product.name} to your shopping cart`
+    })
     return (
         <div className={rootClass}>
+            <AlertMessages
+                message={successMsg}
+                setAlertMsg={setAlertMsg}
+                alertMsg={alertMsg}
+                status="success"
+            />
             <div className={classes.wrapImage}>
                 <Image {...imageProps} />
             </div>
@@ -118,11 +140,21 @@ const WishlistItem = props => {
                 onClick={handleRemoveProductFromWishlist}
                 aria-label={removeProductAriaLabel}
             >
-                {/* <Icon  size={16} src={User} /> */}
                 {!isMobileSite ? (
                     <div className={classes.close} />
                 ) : (
-                    <VscTrash size={25} />
+                    <ConfirmPopup
+                            trigger={
+                                <VscTrash size={25} />
+                            }
+                            content={<FormattedMessage
+                                id={'Delete Warning'}
+                                defaultMessage={'Are you sure about remove\n' +
+                                    ' this item from wish list?'}
+                            />
+                            }
+                            confirmCallback={handleRemoveProductFromWishlist}
+                        />
                 )}
             </button>
             <div className={classes.actionWrap}>

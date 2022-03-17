@@ -76,6 +76,7 @@
         margin-left: auto;
         margin-right: auto;
         object-fit: contain;
+        border: solid 1px #EFEFEF;
     }
     .imageContainer{
         margin:0;

@@ -9,6 +9,8 @@ export const WishlistItemFragment = gql`
     fragment WishlistItemFragment on WishlistItemInterface {
         id
         product {
+            url_key
+          	url_suffix
             ${
                 productLabelEnabled
                     ? `

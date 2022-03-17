@@ -29,6 +29,7 @@ import combine from '@magento/venia-ui/lib/util/combineValidators';
 import RadioGroup from '@magento/venia-ui/lib/components/RadioGroup';
 import Radio from '@magento/venia-ui/lib/components/RadioGroup/radio';
 import Password from '../Password';
+import { validators } from './validators';
 
 const AccountInformationPage = props => {
     const { history } = props;
@@ -274,6 +275,7 @@ const AccountInformationPage = props => {
                                         field="firstname"
                                         validate={isRequired}
                                         validateOnBlur
+                                        
                                     />
                                 </Field>
                             </div>
@@ -326,12 +328,7 @@ const AccountInformationPage = props => {
                                         defaultMessage: 'Current Password'
                                     })}
                                     fieldName="password"
-                                    validate={combine([
-                                        isRequired,
-                                        [hasLengthAtLeast, 8],
-                                        validatePassword,
-                                        [isNotEqualToField, 'password']
-                                    ])}
+                                    validate={validators.get('oldPass')}
                                     autoComplete="current-password"
                                     isToggleButtonHidden={false}
                                 />
@@ -343,12 +340,7 @@ const AccountInformationPage = props => {
                                         defaultMessage: 'New Password'
                                     })}
                                     fieldName="password"
-                                    validate={combine([
-                                        isRequired,
-                                        [hasLengthAtLeast, 8],
-                                        validatePassword,
-                                        [isNotEqualToField, 'password']
-                                    ])}
+                                    validate={validators.get('newPassword')}
                                     autoComplete="new-password"
                                     isToggleButtonHidden={false}
                                 />
@@ -361,12 +353,7 @@ const AccountInformationPage = props => {
                                         defaultMessage: 'Confirm Password'
                                     })}
                                     fieldName="password"
-                                    validate={combine([
-                                        isRequired,
-                                        [hasLengthAtLeast, 8],
-                                        validatePassword,
-                                        [isNotEqualToField, 'password']
-                                    ])}
+                                    validate={validators.get('confirmNewPass')}
                                     autoComplete="confirm-password"
                                     isToggleButtonHidden={false}
                                 />

@@ -154,7 +154,7 @@ const OrderHistoryPage = props => {
     }, [addToast, errorMessage]);
 
     if (width < 767) {
-        return <OrderHistoryPageMb orders={orders} />;
+        return <OrderHistoryPageMb  />;
     }
     return (
         <OrderHistoryContextProvider>

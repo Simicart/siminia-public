@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
-import mergeOperations from '../../util/shallowMerge';
+import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import defaultOperations from './wishlistItem.gql';
 
 const SUPPORTED_PRODUCT_TYPES = ['SimpleProduct', 'ConfigurableProduct'];
@@ -61,7 +61,7 @@ export const useWishlistItem = props => {
     const [{ cartId }] = useCartContext();
 
     const [isRemovalInProgress, setIsRemovalInProgress] = useState(false);
-
+    const [alertMsg, setAlertMsg] = useState(-1)
     const [
         removeProductFromWishlistError,
         setRemoveProductFromWishlistError
@@ -161,6 +161,7 @@ export const useWishlistItem = props => {
         ) {
             try {
                 await addWishlistItemToCart();
+                setAlertMsg(true)
             } catch (error) {
                 console.error(error);
             }
@@ -213,7 +214,9 @@ export const useWishlistItem = props => {
         hasRemoveProductFromWishlistError: !!removeProductFromWishlistError,
         imageProps,
         isSupportedProductType,
-        isInStock
+        isInStock,
+        setAlertMsg,
+        alertMsg
     };
 };
 

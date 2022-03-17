@@ -124,7 +124,7 @@
         row-gap: 0; 
         border-radius: 8px;
         background-color: #FFFFFF;
-        padding: 10px;
+        padding: 4px;
     }
     .addToCart {
         grid-area: addCart;
@@ -132,7 +132,8 @@
         height: 30px;
         width: 58px;
         border-radius: 15px;
-        background-color: #FF5F59;
+        background-color: #0058ac;
+        border-color: #0058ac;
         border: none;
         min-height: unset;
         margin: 0;
