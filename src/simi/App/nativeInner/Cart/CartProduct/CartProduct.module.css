@@ -135,7 +135,6 @@
     .image {
         max-width: 202px;
         max-height: 202px;
-        border: solid 1px #EFEFEF;
     }
 
     .details {
@@ -161,5 +160,11 @@
 
     .name {
         font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .image {
+        border: solid 1px #EFEFEF;
     }
 }
