@@ -7,8 +7,6 @@ import { useAddressCard } from '@magento/peregrine/lib/talons/CheckoutPage/Addre
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import defaultClasses from './addressCard.module.css';
-import Radio from '@magento/venia-ui/lib/components/RadioGroup/radio';
-import RadioGroup from '@magento/venia-ui/lib/components/RadioGroup';
 
 const AddressCard = props => {
     const {
