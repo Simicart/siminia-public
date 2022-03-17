@@ -209,7 +209,7 @@ const ProductImageCarousel = props => {
                                 }}
                                 className="carousel-image-container"
                             >
-                                {placeHoder ? <ImageLoading /> : null}
+                                {placeHoder ? <ImageLoading height={445}  /> : null}
                                 <img
                                     src={src}
                                     width={IMAGE_WIDTH}

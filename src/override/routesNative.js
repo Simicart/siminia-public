@@ -44,7 +44,7 @@ const OrderHistoryPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "OrderHistoryPage"*/ 'src/simi/App/core/OrderHistoryPage')
+                import(/* webpackChunkName: "OrderHistoryPage"*/ 'src/simi/App/nativeInner/OrderHistoryPage')
             }
             {...props}
         />
@@ -54,7 +54,7 @@ const OrderHistoryPage = props => {
 const OrderDetailPage = props => {
     return (
         <LazyComponent
-            component={() => import('src/simi/App/core/OrderDetailPage')}
+            component={() => import('src/simi/App/nativeInner/OrderDetailPage')}
             {...props}
         />
     );
@@ -79,13 +79,24 @@ const RewardTransactions = props => {
         />
     );
 };
+//import MyAccountPage from '@magento/venia-ui/lib/components/AccountInformationPage';
+const MyAccountPage = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "AccountInformationPage"*/ '/src/simi/App/nativeInner/MyAccountPage')
+            }
+            {...props}
+        />
+    );
+};
 
 //import AccountInformationPage from '@magento/venia-ui/lib/components/AccountInformationPage';
 const AccountInformationPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "AccountInformationPage"*/ '/src/simi/App/core/AccountInformationPage')
+                import(/* webpackChunkName: "AccountInformationPage"*/ '/src/simi/App/nativeInner/AccountInformationPage')
             }
             {...props}
         />
@@ -127,7 +138,7 @@ const WishlistPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "WishlistPage"*/ '/src/simi/App/core/WishlistPage')
+                import(/* webpackChunkName: "WishlistPage"*/ '/src/simi/App/nativeInner/WishlistPage')
             }
             {...props}
         />
@@ -149,7 +160,7 @@ const BasicSearch = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "BasicSearch"*/ 'src/simi/App/core/RootComponents/Search')
+                import(/* webpackChunkName: "BasicSearch"*/ 'src/simi/App/nativeInner/RootComponents/Search')
             }
             {...props}
         />
@@ -264,7 +275,16 @@ const BrandCategory = props => {
         />
     );
 };
-
+const CategoryList = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "CategoryList"*/ 'src/simi/App/nativeInner/CategoryList/index.js')
+            }
+            {...props}
+        />
+    );
+};
 const Routes = props => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
@@ -296,6 +316,11 @@ const Routes = props => {
                             />
                         </div>
                     )}
+                />
+                <Route
+                    exact
+                    path="/categories"
+                    render={props => <CategoryList id={2} {...props} />}
                 />
                 <Route
                     exact
@@ -425,6 +450,11 @@ const Routes = props => {
                 />
                 <Route
                     exact
+                    path="/my-account"
+                    render={props => <MyAccountPage {...props} />}
+                />
+                <Route
+                    exact
                     path="/account-subcriptions"
                     render={props => <AccountSubcriptionPage {...props} />}
                 />
@@ -462,6 +492,7 @@ const Routes = props => {
                         <PPfailure key="ppExpressFailure" {...props} />
                     )}
                 />
+                
                 {HomePage ? (
                     <Route
                         exact

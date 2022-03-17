@@ -225,18 +225,27 @@
     // .wrapperReviewSum {
     //     display: none;
     // }
+    .productInfo {
+        background-color: #fff;
+        padding: 18px 10px;
+        margin-bottom: 15px;
+    }
     .main-product-detail-native {
         font-family: Roboto !important;
         font-size: 16px;
+        background: #f2f2f3;
         .header-icon {
             padding: 8px;
             border-radius: 50%;
-            background-color: #808080;
+            background-color: rgba(40, 40, 40, 0.5);
             color: #fff;
             margin-right: 15px;
             .padding-15 {
                 padding: 0 15px;
             }
+        }
+        .header-icon:last-child {
+            margin-right: 10px;
         }
         .header-more {
             position: absolute;
@@ -286,8 +295,8 @@
 
             color: #fff;
         }
-        .icon-root-3Vw {
-            background-color: #808080;
+        span[class*="icon-root-"] {
+            background-color: rgba(40, 40, 40, 0.5);
             padding: 8px;
             border-radius: 50%;
         }
@@ -369,8 +378,10 @@
         .sku-details {
             display: flex;
             align-items: center;
-            border-bottom: 1px solid rgb(223, 225, 226);
-            padding: 1rem 0;
+            border-bottom: 1px solid #dfe1e2;
+            padding: 1rem 10px;
+            background-color: #fff;
+            margin-top: 15px;
             span {
                 margin-right: 1rem;
             }
@@ -398,6 +409,17 @@
             to {
                 left: 100%;
             }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .p-fulldetails-ctn {
+        .wrapperRelatedProducts {
+            margin-top: 15px;
+        }
+        .wrapperCrosssellProducts {
+            margin-bottom: 50px;
         }
     }
 }

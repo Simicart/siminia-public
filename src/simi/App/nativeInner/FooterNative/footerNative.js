@@ -25,10 +25,10 @@ const FooterNative = props => {
     const listMenuContent = ['Home', 'Category', 'Cart', 'Malls', 'Account'];
     const listMenuUrl = [
         '',
-        'home',
+        'categories',
         'cart',
         'brands.html',
-        'account-information'
+        'my-account'
     ];
     const [iconActive, setIconActive] = useState();
     const listIcon = [
@@ -67,9 +67,15 @@ const FooterNative = props => {
         storeConfig
     });
 
+
+    const isOrderDetailPage =
+        location.pathname.split('/order-history')[1] !== '' &&
+        location.pathname.split('/order-history').length === 2
+            ? true
+            : false;
     const isHiddenBottomMenu =
         (data && data.route && data.route.type === TYPE_PRODUCT) ||
-        location.pathname === '/sign-in' || location.pathname === '/forgot-password'|| location.pathname === '/create-account'
+        location.pathname === '/sign-in' || location.pathname === '/forgot-password'|| location.pathname === '/create-account' || isOrderDetailPage
             ? true
             : false;
     const pathName =
@@ -79,7 +85,7 @@ const FooterNative = props => {
         if (pathName === '') {
             setIconActive(0);
         }
-        if (pathName === 'home' || pathNameLength > 2) {
+        if (pathName === 'categories' || pathNameLength > 2) {
             setIconActive(1);
         }
         if (pathName === 'cart') {
@@ -88,17 +94,18 @@ const FooterNative = props => {
         if (pathName === 'brands.html') {
             setIconActive(3);
         }
-        if (pathName === 'account-information') {
-            if (isSignedIn) {
+        if (pathName === 'my-account') {
+            // if (isSignedIn) {
                 setIconActive(4);
-            } else window.location.pathname = '/sign-in';
+            // } else window.location.pathname = '/sign-in';
         }
     }, [pathName, isSignedIn, pathNameLength]);
 
     const handleUrl = index => {
-        if (index === 4) {
-            return isSignedIn ? listMenuUrl[4] : 'sign-in';
-        } else return listMenuUrl[index];
+        // if (index === 4) {
+        //     return isSignedIn ? listMenuUrl[4] : 'sign-in';
+        // } else return
+        return listMenuUrl[index];
     };
     if (isHiddenBottomMenu || !isPhone) {
         return null;

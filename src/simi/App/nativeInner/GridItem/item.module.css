@@ -268,11 +268,12 @@ Rate
         margin: 0;
     }
     .siminia-product-image img {
-        /* max-width: 186px;
-        max-height: 186px; */
+        /* max-width: 186px;*/
+        max-height: 186px; 
         width: 100%;
         height: auto;
-        padding: 3px;
+        border-radius: 6px;
+        padding-top: 4px;
     }
     .product-grid-actions {
         display: none;

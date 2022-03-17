@@ -11,6 +11,7 @@ import { BiShoppingBag, BiX, BiArrowBack } from 'react-icons/bi';
 import { ArrowLeft } from 'react-feather';
 import { useWindowSize } from '@magento/peregrine';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import { logoUrl } from 'src/simi/Helper/Url';
 
 require('./search.scss');
 
@@ -22,7 +23,7 @@ const SearchForm = props => {
     // const storeConfig = Identify.getStoreConfig();
     const history = useHistory();
     const location = useLocation();
-    const itemsQty = props.itemsQty
+    const itemsQty = props.itemsQty;
 
     const displayBackBtn =
         location.pathname !== '/' &&
@@ -30,8 +31,6 @@ const SearchForm = props => {
         location.pathname !== '/cart' &&
         location.pathname !== '/brands.html' &&
         location.pathname !== '/account-information';
-
-    console.log('tessthieu', location.pathname);
 
     useEffect(() => {
         setOpenSearchField(false);
@@ -55,8 +54,6 @@ const SearchForm = props => {
     const [searchVal, setSearchVal] = useState('');
     const { formatMessage } = useIntl();
     const [openSearchField, setOpenSearchField] = useState(false);
-
-    console.log('test123456', openSearchField);
 
     const startSearch = () => {
         if (searchVal.length > 1) {
@@ -157,10 +154,10 @@ const SearchForm = props => {
                 <Link to="/">
                     <img
                         className="main-header-icon"
-                        src="https://magento24.pwa-commerce.com/media/logo/stores/1/Lays-Logo.png"
+                        src={logoUrl()}
                         alt="logo"
                     />
-                    <span className="header-title">SimiCart</span>
+                    {/* <span className="header-title">SimiCart</span> */}
                 </Link>
             );
         } else
@@ -177,17 +174,7 @@ const SearchForm = props => {
     return (
         <>
             <div className={classes['header-search-form']}>
-                {isPhone
-                    ? // <Link to="/">
-                      //     <img
-                      //         className="main-header-icon"
-                      //         src="https://magento24.pwa-commerce.com/media/logo/stores/1/Lays-Logo.png"
-                      //         alt="logo"
-                      //     />
-                      //     <span className="header-title">SimiCart</span>
-                      // </Link>
-                      renderHeaderIcon(displayBackBtn)
-                    : null}
+                {isPhone ? renderHeaderIcon(displayBackBtn) : null}
                 <label htmlFor="siminia-search-field" className="hidden">
                     {formatMessage({ id: 'Search' })}
                 </label>
@@ -203,7 +190,12 @@ const SearchForm = props => {
                     onKeyUp={() => startSearch()}
                 >
                     <Search
-                        style={{ width: 35, height: 35, display: 'block' }}
+                        style={{
+                            width: 27,
+                            height: 25,
+                            display: 'block',
+                            marginTop: 4
+                        }}
                     />
                 </div>
 

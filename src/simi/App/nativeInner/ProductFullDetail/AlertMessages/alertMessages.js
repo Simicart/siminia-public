@@ -1,16 +1,30 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { BiCheckCircle, BiErrorCircle, BiError } from 'react-icons/bi';
+
 
 require('./styles.scss');
 
 const AlertMessages = props => {
     const { message, status, alertMsg, setAlertMsg } = props;
-    setTimeout(() => {
-        if(alertMsg !== -1) {
 
-            setAlertMsg(false);
-        }
-    }, 2000);
+    useEffect(() => {
+        const TimerId = setTimeout(() => {
+            if(alertMsg !== -1) {
+    
+                setAlertMsg(false);
+            }
+        }, 2000);
+
+        return () => clearTimeout(TimerId);
+
+    }, [alertMsg, setAlertMsg])
+    
+    // setTimeout(() => {
+    //     if(alertMsg !== -1) {
+
+    //         setAlertMsg(false);
+    //     }
+    // }, 2000);
     const handleSetClass = s => {
         if (s === -1) {
             return 'null';

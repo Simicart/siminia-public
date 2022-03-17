@@ -4,10 +4,12 @@
         position: fixed;
         z-index: 5;
         width: 100%;
+        
     }
 
     .main-alert.null {
-        top: -9%;
+        top: -10%;
+        left: 0;
         color: #fff;
         display: flex;
         font-size: 15px;
@@ -19,7 +21,8 @@
 
     .main-alert.close {
         animation: msgOut 0.4s;
-        top: -9%;
+        top: -10%;
+        left: 0;
         color: #fff;
         display: flex;
         font-size: 15px;
@@ -30,6 +33,7 @@
     }
     .main-alert.open {
         animation: msgIn 0.4s;
+        left: 0;
         top: 0;
         color: #fff;
         display: flex;
@@ -42,14 +46,19 @@
     .main-alert.open.success,
     .main-alert.close.success {
         background-color: #5FAF4B;
+        z-index: 10;
     }
     .main-alert.open.error,
     .main-alert.close.error {
         background-color: #e51c24;
+        z-index: 10;
+
     }
     .main-alert.open.warning,
     .main-alert.close.warning {
         background-color: #df954c;
+        z-index: 10;
+
     }
 
     @keyframes msgIn {

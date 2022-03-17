@@ -105,8 +105,6 @@ const ProductFullDetail = props => {
     } = talonProps;
     const successMsg = `${productDetails.name} was added to shopping cart`;
 
-    console.log('description', product.short_description);
-
     let History = useHistory();
     const [moreBtn, setMoreBtn] = useState(false);
     const storeConfig = Identify.getStoreConfig();
@@ -147,6 +145,11 @@ const ProductFullDetail = props => {
 
     const { formatMessage } = useIntl();
     const productReview = useRef(null);
+    const carouselImgSize = useRef(null);
+    const positionFooterFixed =
+        carouselImgSize && carouselImgSize.current
+            ? (40 / carouselImgSize.current.clientHeight) * 100
+            : 514;
 
     const scrollToReview = () => {
         smoothScrollToView(document.querySelector('.reviewsContainer'));
@@ -415,14 +418,7 @@ const ProductFullDetail = props => {
                 alertMsg={alertMsg}
                 status="success"
             />
-            {isMobileSite ? (
-                <FooterFixedBtn
-                    addToCartPopup={addToCartPopup}
-                    setAddToCartPopup={setAddToCartPopup}
-                    typeBtn={typeBtn}
-                    setTypeBtn={setTypeBtn}
-                />
-            ) : null}
+
             {addToCartPopup ? (
                 <AddToCartPopup
                     options={options}
@@ -441,7 +437,7 @@ const ProductFullDetail = props => {
             ) : null}
 
             {/* <div className={'p-fulldetails-ctn container'}> */}
-            <div className={'p-fulldetails-ctn container '}>
+            <div className={'p-fulldetails-ctn  '}>
                 {mageworxSeoEnabled ? (
                     <DataStructure
                         avg_rating={avg_rating}
@@ -484,7 +480,10 @@ const ProductFullDetail = props => {
                         ) : null}
 
                         {!isMobileSite ? review : null}
-                        <section className={classes.imageCarousel}>
+                        <section
+                            ref={carouselImgSize}
+                            className={classes.imageCarousel}
+                        >
                             {isMobileSite ? (
                                 <div className={classes.headerBtn}>
                                     <button
@@ -531,13 +530,17 @@ const ProductFullDetail = props => {
                                 </div>
                             ) : null}
                             {isMobileSite ? (
-                                <StatusBar status={product.stock_status} />
+                                <StatusBar
+                                    status={product.stock_status}
+                                    position={positionFooterFixed}
+                                />
                             ) : null}
                             <Carousel
                                 product={product}
                                 optionSelections={optionSelections}
                                 optionCodes={optionCodes}
                                 labelData={
+                                    product.mp_label_data &&
                                     product.mp_label_data.length > 0
                                         ? product.mp_label_data
                                         : null
@@ -553,19 +556,21 @@ const ProductFullDetail = props => {
                             }}
                             errors={errors.get('form') || []}
                         />
-
                         {isMobileSite ? (
-                            <div className="wrapperTitle">
-                                <section className={classes.title}>
-                                    <h1 className={classes.productName}>
-                                        {productDetails.name}
-                                        <Pdetailsbrand product={product} />
-                                    </h1>
-                                </section>
+                            <div className="productInfo">
+                                <div className="wrapperTitle">
+                                    <section className={classes.title}>
+                                        <h1 className={classes.productName}>
+                                            {productDetails.name}
+                                            <Pdetailsbrand product={product} />
+                                        </h1>
+                                    </section>
+                                </div>
+                                {wrapperPrice}
+                                {review}
                             </div>
                         ) : null}
-                        {isMobileSite ? wrapperPrice : null}
-                        {isMobileSite ? review : null}
+
                         {!isMobileSite ? (
                             <div className="wrapperOptions">
                                 <section className={classes.options}>
@@ -682,39 +687,47 @@ const ProductFullDetail = props => {
                     />
                 ) : null}
                 <ProductReview product={product} ref={productReview} />
-                <ProductDetailExtraProducts
-                    classes={classes}
-                    products={relatedProducts}
-                    history={history}
-                >
-                    <FormattedMessage
-                        id="productFullDetail.relatedProducts"
-                        defaultMessage="Related Product"
-                    />
-                </ProductDetailExtraProducts>
-
-                <ProductDetailExtraProducts
-                    classes={classes}
-                    products={upsellProducts}
-                    history={history}
-                >
-                    <FormattedMessage
-                        id="productFullDetail.upsellProduct"
-                        defaultMessage="Upsell Product"
-                    />
-                </ProductDetailExtraProducts>
-
-                <ProductDetailExtraProducts
-                    classes={classes}
-                    products={crosssellProducts}
-                    history={history}
-                >
-                    <FormattedMessage
-                        id="productFullDetail.crosssellProduct"
-                        defaultMessage="Crosssell Product"
-                    />
-                </ProductDetailExtraProducts>
-            </div>
+                    <ProductDetailExtraProducts
+                        classes={classes}
+                        products={relatedProducts}
+                        history={history}
+                    >
+                        <FormattedMessage
+                            id="productFullDetail.relatedProducts"
+                            defaultMessage="Related Product"
+                        />
+                    </ProductDetailExtraProducts>
+                
+                    <ProductDetailExtraProducts
+                        classes={classes}
+                        products={upsellProducts}
+                        history={history}
+                    >
+                        <FormattedMessage
+                            id="productFullDetail.upsellProduct"
+                            defaultMessage="Upsell Product"
+                        />
+                    </ProductDetailExtraProducts>
+                
+                    <ProductDetailExtraProducts
+                        classes={classes}
+                        products={crosssellProducts}
+                        history={history}
+                    >
+                        <FormattedMessage
+                            id="productFullDetail.crosssellProduct"
+                            defaultMessage="Crosssell Product"
+                        />
+                    </ProductDetailExtraProducts>
+                </div>
+            {isMobileSite ? (
+                <FooterFixedBtn
+                    addToCartPopup={addToCartPopup}
+                    setAddToCartPopup={setAddToCartPopup}
+                    typeBtn={typeBtn}
+                    setTypeBtn={setTypeBtn}
+                />
+            ) : null}
         </div>
     );
 };

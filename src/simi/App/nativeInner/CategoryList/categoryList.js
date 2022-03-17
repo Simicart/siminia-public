@@ -13,8 +13,8 @@ import { GiNurseFemale, GiJerusalemCross } from 'react-icons/gi';
 import { FiWatch } from 'react-icons/fi';
 import { MdModelTraining } from 'react-icons/md';
 import { FcNews } from 'react-icons/fc';
-import {BsCartCheck} from 'react-icons/bs'
-
+import { BsCartCheck } from 'react-icons/bs';
+import { logoUrl } from 'src/simi/Helper/Url';
 
 const CategoryList = props => {
     const { id, title } = props;
@@ -23,6 +23,8 @@ const CategoryList = props => {
     const { formatMessage } = useIntl();
     const classes = useStyle(defaultClasses, props.classes);
     const [active, setActive] = useState(0);
+    const placeHolderImg = logoUrl();
+
     const listIcon = [
         <BsCartCheck size={30} />,
         <BsCartCheck size={30} />,
@@ -41,35 +43,46 @@ const CategoryList = props => {
     ) : null;
 
     const renderLeftContent = () => {
-        if(!childCategories){
+        if (!childCategories) {
             if (error) {
                 if (process.env.NODE_ENV !== 'production') {
                     console.error(error);
                 }
-    
+
                 return <ErrorView />;
             } else if (loading) {
                 return fullPageLoadingIndicator;
             }
-        }
-        else {
-            if(childCategories.length){
-                return  <div  className={classes.leftContent}>
-                    {childCategories.map((item, index) => {
-                    return (
-                        <div
-                            className={
-                                active === index ? classes.active : classes.unActive
-                            }
-                            onClick={() => setActive(index)}
-                        >
-                            <span className={classes.icon}>{listIcon[index]}</span>
-                            <span className={classes.name}>{item.name}</span>
-                        </div>
-                    );
-                })}
-                </div>
-            }else {
+        } else {
+            if (childCategories.length) {
+                return (
+                    <div className={classes.leftContent}>
+                        {childCategories.map((item, index) => {
+                            return (
+                                <div
+                                    className={
+                                        active === index
+                                            ? classes.active
+                                            : classes.unActive
+                                    }
+                                    key={index}
+                                    onClick={() => setActive(index)}
+                                >
+                                    {/* <span className={classes.icon}>{listIcon[index]}</span> */}
+                                    <img
+                                        className={classes.imgLogo}
+                                        src={item.image || placeHolderImg}
+                                        alt="logo"
+                                    />
+                                    <span className={classes.name}>
+                                        {item.name}
+                                    </span>
+                                </div>
+                            );
+                        })}
+                    </div>
+                );
+            } else {
                 return (
                     <ErrorView
                         message={formatMessage({
@@ -80,40 +93,36 @@ const CategoryList = props => {
                 );
             }
         }
-        
     };
     const renderRightContent = () => {
-        if(!childCategories){
+        if (!childCategories) {
             if (error) {
                 if (process.env.NODE_ENV !== 'production') {
                     console.error(error);
                 }
-    
+
                 return <ErrorView />;
             } else if (loading) {
                 return fullPageLoadingIndicator;
             }
-        }
-        else {
-            if(childCategories.length){
+        } else {
+            if (childCategories.length) {
                 return (
                     <div className={classes.wrapProductsList}>
                         {childCategories
                             .filter((i, key) => key === active)
                             .map((childCate, index) => (
-                                <div>
+                                <div key={childCate.url_key}>
                                     <ProductsList
                                         icon={listIcon[index]}
                                         childCate={childCate}
-                                        key={childCate.url_key}
                                         storeConfig={storeConfig}
                                     />
                                 </div>
                             ))}
                     </div>
                 );
-            }
-            else {
+            } else {
                 return (
                     <ErrorView
                         message={formatMessage({
@@ -124,13 +133,12 @@ const CategoryList = props => {
                 );
             }
         }
-       
     };
     return (
         <div className={classes.root}>
             {header}
             <div className={classes.mainContent}>
-               {renderLeftContent()}
+                {renderLeftContent()}
                 <div className={classes.rightContent}>
                     {renderRightContent()}
                 </div>

@@ -11,10 +11,13 @@ import { useAccountTrigger } from '@magento/peregrine/lib/talons/Header/useAccou
 import { useIntl } from 'react-intl';
 import defaultClasses from './MyAccount.module.css';
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
+import { useWindowSize } from '@magento/peregrine';
 
 const AccountMenu = React.lazy(() => import('./AccountMenu'));
 
 const MyAccount = props => {
+    const windowSize = useWindowSize();
+    const isPhone = windowSize.innerWidth < 450;
     const history = useHistory();
     const { formatMessage } = useIntl();
     const { classes: propClasses, userData: user } = props;
@@ -36,7 +39,7 @@ const MyAccount = props => {
     const account = firstname ? (
         <span
             className={classes['customer-firstname']}
-            style={{ color: '#0058AC' }}
+            style={!isPhone ? { color: '#0058AC' } : { color: '#fff' }}
         >
             {formatMessage(
                 { id: 'accountChip.chipText', defaultMessage: 'Hi, {name}' },
@@ -46,21 +49,42 @@ const MyAccount = props => {
     ) : (
         formatMessage({ id: 'Account' })
     );
+    const handleClick = e => {
+        if (isPhone) {
+            if (isSignedIn) history.push('/account-information');
+            else history.push('/sign-in');
+        } else if (isSignedIn) handleTriggerClick(e);
+        else history.push('/sign-in');
+    };
     return (
         <Fragment>
             <div
                 role="presentation"
                 ref={accountMenuTriggerRef}
-                onClick={e => {
-                    if (isSignedIn) handleTriggerClick(e);
-                    else history.push('/sign-in');
-                }}
+                // onClick={e => {
+                //     if (isSignedIn) handleTriggerClick(e);
+                //     else history.push('/sign-in');
+                // }}
+                onClick={handleClick}
+                className={classes.root}
             >
                 <div
                     className={classes['item-icon']}
                     style={{ display: 'flex', justifyContent: 'center' }}
                 >
-                    <User style={{ width: 35, height: 35, display: 'block' }} />
+                    {!isPhone ? (
+                        <User
+                            style={{ width: 35, height: 35, display: 'block' }}
+                        />
+                    ) : isSignedIn ? (
+                        <span className={classes.accountLetter}>
+                            {firstname.slice(0, 1).toUpperCase()}
+                        </span>
+                    ) : (
+                        <User
+                            style={{ width: 35, height: 35, display: 'block' }}
+                        />
+                    )}
                 </div>
                 <div
                     className={classes['item-text']}

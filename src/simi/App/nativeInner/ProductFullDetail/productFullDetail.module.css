@@ -3,7 +3,6 @@
 }
 
 @media (max-width: 400px) {
-    
 }
 
 @media (min-width: 1024px) {
@@ -111,7 +110,6 @@
     }
     .imageCarousel > div > div > div:nth-child(2) > div {
         margin-inline-start: 0px;
-        
     }
 }
 
@@ -141,7 +139,7 @@
     row-gap: 1.5rem;
     justify-items: center;
 }
-@media (max-width:450px) {
+@media (max-width: 450px) {
     .actions > button {
         width: 100%;
     }
@@ -273,7 +271,6 @@
 
 #smpb-product-breadcrumb-wrapper > div {
     max-width: 100%;
-   
 }
 
 .reviewImage {
@@ -323,7 +320,8 @@
 }
 
 @media (max-width: 1023px) {
-    .description, .details{
+    .description,
+    .details {
         margin-inline-start: 0px;
     }
     .imageCarousel > div > div > div:nth-child(2) > div {
@@ -332,39 +330,39 @@
     .imageCarousel {
         margin-inline-start: 0px;
     }
-    .noReview{
+    .noReview {
         padding-inline-start: 0px;
     }
 }
-@media (max-width:450px) {   
+@media (max-width: 450px) {
     .section {
         border-color: rgb(var(--venia-global-color-border));
         border-style: solid;
         border-width: 0 0 1px;
-        display: flex; 
+        display: flex;
         padding: 1rem 0;
         align-items: center;
-       
     }
     .section > strong {
         margin-left: 1rem;
     }
     .backBtn {
         padding: 6px;
-        border-radius:50%;
-        background-color: #808080;
+        border-radius: 50%;
+        background-color: rgba(40, 40, 40, 0.5);
         color: #fff;
+        margin-left: 10px;
     }
     .headerBtn {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        line-height:3rem;
+        line-height: 3rem;
         margin-top: 10px;
         position: fixed;
         z-index: 3;
         width: 100%;
-        padding-right: 15px;
+        /* padding-right: 15px; */
     }
     .headerBtnRight {
         display: flex;
@@ -372,14 +370,14 @@
         position: relative;
     }
     .productName {
-        color: #4F4F4F;
+        color: #4f4f4f;
     }
     .imageCarousel > div > div > div:nth-child(2) > div {
         display: none;
     }
     .description {
         display: flex;
-        justify-content:space-between;
+        justify-content: space-between;
         align-items: baseline;
         margin: 0;
         border-bottom: none;
@@ -393,60 +391,25 @@
         justify-items: left;
     }
     .wrapperDes {
-        border-bottom: 1px solid rgb(223,225, 226);
+        border-bottom: 1px solid rgb(223, 225, 226);
+        background-color: #fff;
+        padding: 0 10px;
     }
-    
 }
 @media (min-width: 450px) {
     .backBtn {
-        display:none;
+        display: none;
     }
-
 }
 
 @media (max-width: 768px) {
     .gallery-items .siminia-product-grid-item {
-        width: 36%!important;
-        min-width: 36%;
-        max-height: 165px;
-        margin-bottom: 60px;
-    }
-    .gallery-items .siminia-product-grid-item > div:nth-child(1){
-        height: 120px;
-    }
-    .gallery-items .siminia-product-grid-item > div:nth-child(1)> div:nth-child(1) > a > img{
-        height: 100%;
-    }
-    .gallery-items .siminia-product-grid-item > div:nth-child(2){
-        margin: 0;
-        padding: 0;
+        max-width: -webkit-fill-available;
+        border-radius: 8px;
+        background-color: #ffffff;
     }
     .upsell-crosssell-container {
         margin-top: 0;
         margin-bottom: 0;
     }
-    /*
-    .gallery-items .siminia-product-grid-item > div:nth-child(2){
-        display: flex;
-        padding: 0;
-        margin: 0;
-    }
-    .gallery-items .siminia-product-grid-item > div:nth-child(2) > div:nth-child(2){
-        display: none;
-    }
-    .gallery-items .siminia-product-grid-item > div:nth-child(2)> div{
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .gallery-items .siminia-product-grid-item > div:nth-child(2) > div:nth-child(1),
-    .gallery-items .siminia-product-grid-item > div:nth-child(2) > div:last-child{
-        display: none;
-    }*/
-    .gallery-items {
-        overflow-y: hidden;   
-    }
-    /* .upsell-crosssell-container {
-        margin-top: 20px;
-        margin-bottom: 50px;
-    }  */
 }

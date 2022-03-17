@@ -15,6 +15,7 @@ export const useAccountInformationPage = props => {
     } = props;
 
     const [isActiveForm, setIsActiveForm] = useState(defaultForm);
+    const [alertMsg, setAlertMsg] = useState(-1)
     const apolloClient = useApolloClient();
     const [{ isSignedIn, currentUser }, { getUserDetails }] = useUserContext();
 
@@ -65,6 +66,7 @@ export const useAccountInformationPage = props => {
                 if (onSubmit) {
                     onSubmit();
                 }
+                setAlertMsg(true)
             } catch (err) {
                 // Do nothing. The error message is handled above.
             }
@@ -120,6 +122,8 @@ export const useAccountInformationPage = props => {
         errors: derivedErrorMessage,
         isActiveForm,
         handleActiveForm,
-        isLoading: updateCustomerLoading || updateCustomerPasswordLoading || reFetchLoading
+        isLoading: updateCustomerLoading || updateCustomerPasswordLoading || reFetchLoading,
+        setAlertMsg,
+        alertMsg
     };
 };
