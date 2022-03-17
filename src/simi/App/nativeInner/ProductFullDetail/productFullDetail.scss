@@ -233,11 +233,11 @@
     .main-product-detail-native {
         font-family: Roboto !important;
         font-size: 16px;
-        background: #F2F2F3;
+        background: #f2f2f3;
         .header-icon {
             padding: 8px;
             border-radius: 50%;
-            background-color: #808080;
+            background-color: rgba(40, 40, 40, 0.5);
             color: #fff;
             margin-right: 15px;
             .padding-15 {
@@ -295,8 +295,8 @@
 
             color: #fff;
         }
-        .icon-root-3Vw {
-            background-color: #808080;
+        span[class*="icon-root-"] {
+            background-color: rgba(40, 40, 40, 0.5);
             padding: 8px;
             border-radius: 50%;
         }
@@ -414,11 +414,11 @@
 }
 
 @media (max-width: 768px) {
-    .p-fulldetails-ctn{
-        .wrapperRelatedProducts{
+    .p-fulldetails-ctn {
+        .wrapperRelatedProducts {
             margin-top: 15px;
         }
-        .wrapperCrosssellProducts{
+        .wrapperCrosssellProducts {
             margin-bottom: 50px;
         }
     }
