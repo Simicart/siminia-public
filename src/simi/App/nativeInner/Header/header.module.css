@@ -143,6 +143,9 @@ header {
 .item-icon {
     margin-inline-end: 9px;
     position: relative;
+    
+    
+    
 }
 .right-bar-item a:hover {
     text-decoration: none !important;
@@ -305,6 +308,29 @@ body.fixed-scroll {
         z-index: 5;
 
     }
+    .item-icon {
+        background-color: #fff;
+        padding: 7px;
+        border-radius:50%;
+    }
+    .myAccountHead {
+        height: 80px;
+        background:linear-gradient(to right, #0058ac 0%, #3e9cf3 100%);
+        position:fixed;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        padding: 0 10px;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.3);
+        top: 0;
+        z-index: 5;
+        display: flex;
+        justify-content:space-between;
+    }
+    .myAccountHead > svg {
+        font-size:30px;
+        color: #fff;
+    }
     .specHeader > svg {
         margin-right: 20px;
     }
@@ -327,6 +353,13 @@ body.fixed-scroll {
     .header-search-form .search-icon {
         right: 16px;
         top: -5px;
+    }
+    .item-text {
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 0;
+        color: #fff ;
     }
     /* @keyframes inputIn {
         from {

@@ -12,7 +12,7 @@ const OrderHistoryPageMb = props => {
     const { formatMessage } = useIntl();
     const [status, setStatus] = useState('All');
     const [ordersFilter, setOrdersFilter] = useState([]);
-
+    const {statusId} = props
     const currentPage = 1;
     const talonProps = useOrderHistoryPage(currentPage);
     const {
@@ -22,6 +22,14 @@ const OrderHistoryPageMb = props => {
         orders,
         total_count
     } = talonProps;
+
+    
+
+    useEffect(() => {
+        if(statusId === "Pending") setStatus("Pending")
+        if(statusId === "Completed") setStatus("Completed")
+        if(statusId === "Canceled") setStatus("Canceled")
+    },[])
 
     useEffect(() => {
         const handleScroll = () => {

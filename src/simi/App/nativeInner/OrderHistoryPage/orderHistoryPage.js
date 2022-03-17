@@ -29,6 +29,7 @@ const errorIcon = (
 );
 
 const OrderHistoryPage = props => {
+    // console.log("paosdo",props.location);
     const [currentPage, setCurrentPage] = useState(1);
     const talonProps = useOrderHistoryPage(currentPage);
     const {
@@ -154,7 +155,7 @@ const OrderHistoryPage = props => {
     }, [addToast, errorMessage]);
 
     if (width < 767) {
-        return <OrderHistoryPageMb  />;
+        return <OrderHistoryPageMb statusId={props.location && props.location.state ? props.location.state.id : null}  />;
     }
     return (
         <OrderHistoryContextProvider>

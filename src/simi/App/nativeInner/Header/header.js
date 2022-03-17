@@ -23,6 +23,7 @@ import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoR
 import defaultClasses from './header.module.css';
 import { useQuery } from '@apollo/client';
 import { ArrowLeft } from 'react-feather';
+import {BiChevronRight} from 'react-icons/bi'
 import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
@@ -247,6 +248,15 @@ const Header = props => {
                 </div>
             );
         }
+        if (type === '/my-account') {
+            return (
+                <div  className={classes.myAccountHead}>
+                    <MyAccount classes={classes} userData={userData} />
+                    <BiChevronRight  />
+                </div>
+            );
+        }
+      
         if (isOrderDetailPage) {
             return (
                 <div className={classes.specHeader}>
