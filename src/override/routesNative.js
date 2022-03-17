@@ -79,6 +79,17 @@ const RewardTransactions = props => {
         />
     );
 };
+//import MyAccountPage from '@magento/venia-ui/lib/components/AccountInformationPage';
+const MyAccountPage = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "AccountInformationPage"*/ '/src/simi/App/nativeInner/MyAccountPage')
+            }
+            {...props}
+        />
+    );
+};
 
 //import AccountInformationPage from '@magento/venia-ui/lib/components/AccountInformationPage';
 const AccountInformationPage = props => {
@@ -439,6 +450,11 @@ const Routes = props => {
                 />
                 <Route
                     exact
+                    path="/my-account"
+                    render={props => <MyAccountPage {...props} />}
+                />
+                <Route
+                    exact
                     path="/account-subcriptions"
                     render={props => <AccountSubcriptionPage {...props} />}
                 />
@@ -476,6 +492,7 @@ const Routes = props => {
                         <PPfailure key="ppExpressFailure" {...props} />
                     )}
                 />
+                
                 {HomePage ? (
                     <Route
                         exact

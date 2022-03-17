@@ -6,13 +6,14 @@ import { useSignInPage } from '@magento/peregrine/lib/talons/SignInPage/useSignI
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
 import SignIn from '../../SignIn';
-
 import defaultClasses from './signInPage.module.css';
 
 const SignInPage = props => {
     const classes = useStyle(defaultClasses, props.classes);
     const { signInProps } = useSignInPage(props);
     const { formatMessage } = useIntl();
+    
+    
 
     return (
         <div className={classes.root}>
@@ -35,10 +36,13 @@ const SignInPage = props => {
     );
 };
 
+const isMobile = window.innerWidth < 450
+const signedInRedirectUrl = isMobile ? 'my-account' : 'order-history'
+
 SignInPage.defaultProps = {
     createAccountPageUrl: '/create-account',
     forgotPasswordPageUrl: '/forgot-password',
-    signedInRedirectUrl: '/order-history'
+    signedInRedirectUrl:  signedInRedirectUrl
 };
 
 SignInPage.propTypes = {

@@ -28,7 +28,7 @@ const FooterNative = props => {
         'categories',
         'cart',
         'brands.html',
-        'account-information'
+        'my-account'
     ];
     const [iconActive, setIconActive] = useState();
     const listIcon = [
@@ -94,17 +94,18 @@ const FooterNative = props => {
         if (pathName === 'brands.html') {
             setIconActive(3);
         }
-        if (pathName === 'account-information') {
-            if (isSignedIn) {
+        if (pathName === 'my-account') {
+            // if (isSignedIn) {
                 setIconActive(4);
-            } else window.location.pathname = '/sign-in';
+            // } else window.location.pathname = '/sign-in';
         }
     }, [pathName, isSignedIn, pathNameLength]);
 
     const handleUrl = index => {
-        if (index === 4) {
-            return isSignedIn ? listMenuUrl[4] : 'sign-in';
-        } else return listMenuUrl[index];
+        // if (index === 4) {
+        //     return isSignedIn ? listMenuUrl[4] : 'sign-in';
+        // } else return
+        return listMenuUrl[index];
     };
     if (isHiddenBottomMenu || !isPhone) {
         return null;
