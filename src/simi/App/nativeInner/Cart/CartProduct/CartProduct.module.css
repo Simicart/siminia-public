@@ -163,3 +163,10 @@
         font-size: 0.9rem;
     }
 }
+
+@media (max-width: 768px) {
+    .image {
+        padding: 2px;
+        border: solid 1px #EFEFEF;
+    }
+}
