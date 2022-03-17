@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
+import Identify from '../../../../Helper/Identify';
 
 import DEFAULT_OPERATIONS from './categoryList.gql';
 
@@ -16,10 +17,10 @@ export const useCategoryList = props => {
     const { id } = props;
 
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
-    const { getCategoryListQuery, getStoreConfigQuery } = operations;
+    const { getCategoryListQuery } = operations;
 
     const { loading, error, data } = useQuery(getCategoryListQuery, {
-        fetchPolicy: 'cache-and-network',
+        fetchPolicy: 'cache-first',
         nextFetchPolicy: 'cache-first',
         skip: !id,
         variables: {
@@ -27,10 +28,7 @@ export const useCategoryList = props => {
         }
     });
 
-    const { data: storeConfigData } = useQuery(getStoreConfigQuery, {
-        fetchPolicy: 'cache-and-network'
-    });
-
+    const storeConfigData = Identify.getStoreConfig();
     const storeConfig = storeConfigData ? storeConfigData.storeConfig : null;
 
     return {

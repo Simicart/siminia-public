@@ -11,6 +11,7 @@ import { BiShoppingBag, BiX, BiArrowBack } from 'react-icons/bi';
 import { ArrowLeft } from 'react-feather';
 import { useWindowSize } from '@magento/peregrine';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import { logoUrl } from 'src/simi/Helper/Url';
 
 require('./search.scss');
 
@@ -153,7 +154,7 @@ const SearchForm = props => {
                 <Link to="/">
                     <img
                         className="main-header-icon"
-                        src="https://magento24.pwa-commerce.com/media/logo/stores/1/Lays-Logo.png"
+                        src={logoUrl()}
                         alt="logo"
                     />
                     {/* <span className="header-title">SimiCart</span> */}
@@ -189,7 +190,12 @@ const SearchForm = props => {
                     onKeyUp={() => startSearch()}
                 >
                     <Search
-                        style={{ width: 27, height: 25, display: 'block', marginTop:4 }}
+                        style={{
+                            width: 27,
+                            height: 25,
+                            display: 'block',
+                            marginTop: 4
+                        }}
                     />
                 </div>
 

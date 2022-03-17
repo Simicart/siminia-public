@@ -9,13 +9,14 @@ import defaultClasses from './productsList.module.css';
 import { useIntl } from 'react-intl';
 import { RiArrowRightSLine } from 'react-icons/ri';
 import { BsCartCheck } from 'react-icons/bs';
-const IMAGE_DEFAULT =
-    'https://magento24.pwa-commerce.com/media/logo/stores/1/Lays-Logo.png';
+
 const IMAGE_WIDTH = 80;
+import { logoUrl } from 'src/simi/Helper/Url';
 const ProductsList = props => {
     const { childCate } = props;
     const total_count =
-        (childCate && childCate.products && childCate.products.total_count) || 0;
+        (childCate && childCate.products && childCate.products.total_count) ||
+        0;
     const items =
         childCate && childCate.products ? childCate.products.items : [];
     const { formatMessage } = useIntl();
@@ -24,6 +25,7 @@ const ProductsList = props => {
         item: props.childCate,
         storeConfig: props.storeConfig
     });
+    const placeHolder = logoUrl();
     const { handleClick } = talonProps;
     const classes = useStyle(defaultClasses, props.classes);
 
@@ -33,6 +35,7 @@ const ProductsList = props => {
             .map(item => {
                 return (
                     <Link
+                        key={item.url_key}
                         to={`${item.url_key}${item.url_suffix}`}
                         className={classes.product}
                     >
@@ -58,6 +61,7 @@ const ProductsList = props => {
             return child.map(cate => {
                 return (
                     <Link
+                        key={cate.url_path}
                         to={`${cate.url_path}${cate.url_suffix}`}
                         className={classes.product}
                     >
@@ -67,7 +71,7 @@ const ProductsList = props => {
                                 image: classes.image,
                                 root: classes.imageContainer
                             }}
-                            resource={cate.image ? cate.image : IMAGE_DEFAULT}
+                            resource={cate.image || placeHolder}
                             type={cate.name}
                             width={IMAGE_WIDTH}
                         />
@@ -81,17 +85,21 @@ const ProductsList = props => {
     return (
         <div className={classes.root}>
             <div className={classes.viewAll} onClick={handleClick}>
-                {total_count > 0 ? <Link to={`${childCate.url_path}${childCate.url_suffix}`}>
-                    <span className={classes.title}>
-                        {formatMessage({
-                            id: 'productList',
-                            defaultMessage: `View All ${childCate.name}`
-                        })}
-                    </span>
-                    <span className={classes.icon}>
-                        <RiArrowRightSLine size={20} />
-                    </span>
-                </Link> : ''}
+                {total_count > 0 ? (
+                    <Link to={`${childCate.url_path}${childCate.url_suffix}`}>
+                        <span className={classes.title}>
+                            {formatMessage({
+                                id: 'productList',
+                                defaultMessage: `View All ${childCate.name}`
+                            })}
+                        </span>
+                        <span className={classes.icon}>
+                            <RiArrowRightSLine size={20} />
+                        </span>
+                    </Link>
+                ) : (
+                    ''
+                )}
             </div>
             <div className={classes.wrapProductsList}>
                 {renderProductsList()}
