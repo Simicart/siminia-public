@@ -4,7 +4,7 @@ require('./styles.scss')
 const ImageLoading = props => {
 
     return <div class="main-item">
-    <div class="animated-background">
+    <div style={{height: props.height, width: props.width ? props.width : 'auto'}} class="animated-background">
       <div class="background-masker"></div>
     </div>
     

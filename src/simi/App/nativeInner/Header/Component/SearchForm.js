@@ -156,7 +156,7 @@ const SearchForm = props => {
                         src="https://magento24.pwa-commerce.com/media/logo/stores/1/Lays-Logo.png"
                         alt="logo"
                     />
-                    <span className="header-title">SimiCart</span>
+                    {/* <span className="header-title">SimiCart</span> */}
                 </Link>
             );
         } else

@@ -25,7 +25,7 @@ const FooterNative = props => {
     const listMenuContent = ['Home', 'Category', 'Cart', 'Malls', 'Account'];
     const listMenuUrl = [
         '',
-        'home',
+        'categories',
         'cart',
         'brands.html',
         'account-information'
@@ -85,7 +85,7 @@ const FooterNative = props => {
         if (pathName === '') {
             setIconActive(0);
         }
-        if (pathName === 'home' || pathNameLength > 2) {
+        if (pathName === 'categories' || pathNameLength > 2) {
             setIconActive(1);
         }
         if (pathName === 'cart') {
