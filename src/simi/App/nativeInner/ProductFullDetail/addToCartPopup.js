@@ -29,9 +29,9 @@ const AddToCartPopup = props => {
 
     return (
         <div className="main-AddToCartPopup">
-            {/* {loading ? ( */}
+            {loading ? (
                 <Loader />
-            {/* ) : null} */}
+             ) : null}
             <div className="modal" />
             <div
                 ref={ref}
