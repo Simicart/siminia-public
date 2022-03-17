@@ -22,14 +22,16 @@ import {
     isRequired,
     hasLengthAtLeast,
     validatePassword,
-    isNotEqualToField
+    isNotEqualToField,
+    isEqualToField
 } from '@magento/venia-ui/lib/util/formValidators';
 import combine from '@magento/venia-ui/lib/util/combineValidators';
 
 import RadioGroup from '@magento/venia-ui/lib/components/RadioGroup';
 import Radio from '@magento/venia-ui/lib/components/RadioGroup/radio';
 import Password from '../Password';
-import { validators } from './validators';
+import Loader from '../Loader'
+import AlertMessages from '../ProductFullDetail/AlertMessages';
 
 const AccountInformationPage = props => {
     const { history } = props;
@@ -43,16 +45,19 @@ const AccountInformationPage = props => {
         defaultForm = history.location.state.profile_edit;
     }
     const { formatMessage } = useIntl();
-
     const onSubmit = () => {
-        showToastMessage(
-            formatMessage({
-                id: 'accountInformationPage.save',
-                defaultMessage: 'You saved the account information.'
-            })
-        );
+        <AlertMessages
+                message={formatMessage({
+                    id: 'accountInformationPage.save',
+                    defaultMessage: 'You saved the account information.'
+                })}
+                setAlertMsg={setAlertMsg}
+                alertMsg={alertMsg}
+                status="success"
+            />
         return;
-    };
+        
+    }
     const talonProps = useAccountInformationPage({
         defaultForm,
         updateCustomerMutation: CUSTOMER_UPDATE,
@@ -69,7 +74,9 @@ const AccountInformationPage = props => {
         errors,
         isActiveForm,
         handleActiveForm,
-        isLoading
+        isLoading,
+        setAlertMsg,
+        alertMsg
     } = talonProps;
     const errorMessage = errors ? (
         <Message>
@@ -81,155 +88,10 @@ const AccountInformationPage = props => {
             />
         </Message>
     ) : null;
-
-    const handleOnChange = e => {};
-
-    const renderAlternativeForm = () => {
-        switch (isActiveForm) {
-            case 'email':
-                return (
-                    <React.Fragment>
-                        <h4 className={classes.titleH4}>
-                            <FormattedMessage
-                                id={'accountInformationPage.titleChangeEmail'}
-                                defaultMessage={'Change Email'}
-                            />
-                        </h4>
-                        <div className={classes.inputContent}>
-                            <Field
-                                label={formatMessage({
-                                    id: 'global.labelEmail',
-                                    defaultMessage: 'Email *'
-                                })}
-                                required={true}
-                            >
-                                <TextInput
-                                    placeholder={formatMessage({
-                                        id: 'global.inputEmail',
-                                        defaultMessage: 'Email'
-                                    })}
-                                    field="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    validate={isRequired}
-                                    validateOnBlur
-                                />
-                            </Field>
-                        </div>
-                        <div className={classes.inputContent}>
-                            <Field
-                                label={formatMessage({
-                                    id: 'global.labelCurrentPassword',
-                                    defaultMessage: 'Current password *'
-                                })}
-                                required={true}
-                            >
-                                <TextInput
-                                    placeholder={formatMessage({
-                                        id: 'global.inputCurrentPassword',
-                                        defaultMessage: 'Current Password'
-                                    })}
-                                    field="password"
-                                    type="password"
-                                    validate={isRequired}
-                                    validateOnBlur
-                                />
-                            </Field>
-                        </div>
-                    </React.Fragment>
-                );
-            case 'password':
-                return (
-                    <React.Fragment>
-                        <h4 className={classes.titleH4}>
-                            <FormattedMessage
-                                id={
-                                    'accountInformationPage.titleChangePassword'
-                                }
-                                defaultMessage={'Change Password'}
-                            />
-                        </h4>
-                        <div className={classes.inputContent}>
-                            <Field
-                                label={formatMessage({
-                                    id: 'global.labelCurrentPassword2',
-                                    defaultMessage: 'Current password *'
-                                })}
-                                required={true}
-                            >
-                                <TextInput
-                                    placeholder={formatMessage({
-                                        id: 'global.inputCurrentPassword2',
-                                        defaultMessage: 'Current Password'
-                                    })}
-                                    field="current_password"
-                                    type="password"
-                                    validate={combine([
-                                        isRequired,
-                                        [hasLengthAtLeast, 8],
-                                        validatePassword,
-                                        [isNotEqualToField, 'password']
-                                    ])}
-                                    validateOnBlur
-                                />
-                            </Field>
-                        </div>
-                        <div className={classes.inputContent}>
-                            <Field
-                                label={formatMessage({
-                                    id: 'global.labelNewPassword',
-                                    defaultMessage: 'New password *'
-                                })}
-                                required={true}
-                            >
-                                <TextInput
-                                    placeholder={formatMessage({
-                                        id: 'global.inputNewPassword',
-                                        defaultMessage: 'New password'
-                                    })}
-                                    field="new_password"
-                                    type="password"
-                                    validate={combine([
-                                        isRequired,
-                                        [hasLengthAtLeast, 8],
-                                        validatePassword,
-                                        [isNotEqualToField, 'password']
-                                    ])}
-                                    validateOnBlur
-                                    onChange={e => handleOnChange(e)}
-                                />
-                            </Field>
-                        </div>
-
-                        <div className={classes.inputContent}>
-                            <Field
-                                label={formatMessage({
-                                    id: 'global.labelConfirmNewPassword',
-                                    defaultMessage: 'Confirm new password *'
-                                })}
-                                required={true}
-                            >
-                                <TextInput
-                                    placeholder={formatMessage({
-                                        id: 'global.inputConfirmNewPassword',
-                                        defaultMessage: 'Confirm new password'
-                                    })}
-                                    field="confirm_password"
-                                    type="password"
-                                    validate={combine([
-                                        isRequired,
-                                        [hasLengthAtLeast, 8],
-                                        validatePassword,
-                                        [isNotEqualToField, 'password']
-                                    ])}
-                                    validateOnBlur
-                                />
-                            </Field>
-                        </div>
-                    </React.Fragment>
-                );
-        }
-    };
+    if(isLoading){
+        return <Loader/>
+    }
+    
 
     let pageContent = null;
     if (!initialValues) {
@@ -262,15 +124,13 @@ const AccountInformationPage = props => {
                                 <Field
                                     label={formatMessage({
                                         id: 'global.labelFirstName',
-                                        defaultMessage: 'First Name' + ' *'
+                                        defaultMessage: 'First Name *'
                                     })}
                                     required={true}
                                 >
-                                    <TextInput
-                                        placeholder={formatMessage({
-                                            id: 'global.inputFirstName',
-                                            defaultMessage: 'First name'
-                                        })}
+                                    <TextInput                               
+                                        mask={value => value && value.trim()}
+                                        maskOnBlur={true}
                                         autoComplete="given-name"
                                         field="firstname"
                                         validate={isRequired}
@@ -288,10 +148,6 @@ const AccountInformationPage = props => {
                                     required={true}
                                 >
                                     <TextInput
-                                        placeholder={formatMessage({
-                                            id: 'global.inputLastName',
-                                            defaultMessage: 'Last name'
-                                        })}
                                         autoComplete="family-name"
                                         field="lastname"
                                         validate={isRequired}
@@ -308,10 +164,6 @@ const AccountInformationPage = props => {
                                     required={true}
                                 >
                                     <TextInput
-                                        placeholder={formatMessage({
-                                            id: 'global.inputEmail',
-                                            defaultMessage: 'Email'
-                                        })}
                                         field="email"
                                         type="email"
                                         autoComplete="email"
@@ -328,74 +180,45 @@ const AccountInformationPage = props => {
                                         defaultMessage: 'Current Password'
                                     })}
                                     fieldName="password"
-                                    validate={validators.get('oldPass')}
+                                    validate={isRequired}
                                     autoComplete="current-password"
                                     isToggleButtonHidden={false}
                                 />
                             </div>
                             <div className={classes.inputContent}>
                                 <Password
+                                    fieldName="newPassword"
                                     label={formatMessage({
                                         id: 'accountInfo.newPassword',
                                         defaultMessage: 'New Password'
                                     })}
-                                    fieldName="password"
-                                    validate={validators.get('newPassword')}
-                                    autoComplete="new-password"
+                                    validate={combine([
+                                        isRequired,
+                                        [hasLengthAtLeast, 8],
+                                        validatePassword,
+                                        [isNotEqualToField, 'password']
+                                    ])}
                                     isToggleButtonHidden={false}
                                 />
                             </div>
 
                             <div className={classes.inputContent}>
                             <Password
+                                    fieldName="confirmPassword"
                                     label={formatMessage({
                                         id: 'accountInfo.confirmPassword',
                                         defaultMessage: 'Confirm Password'
                                     })}
-                                    fieldName="password"
-                                    validate={validators.get('confirmNewPass')}
-                                    autoComplete="confirm-password"
+                                    validate={combine([
+                                        isRequired,
+                                        [hasLengthAtLeast, 8],
+                                        validatePassword,
+                                        [isEqualToField, 'newPassword']
+                                    ])}
                                     isToggleButtonHidden={false}
                                 />
                             </div>
-                            <div className={classes.radioCheckbox}>
-                                <RadioCheckbox
-                                    key={randomString(2)}
-                                    defaultChecked={
-                                        isActiveForm === 'email' ? true : false
-                                    }
-                                    title={formatMessage({
-                                        id: 'global.checkboxChangeEmail',
-                                        defaultMessage: 'Change Email'
-                                    })}
-                                    onClick={() =>
-                                        handleActiveForm(
-                                            isActiveForm === 'email'
-                                                ? false
-                                                : 'email'
-                                        )
-                                    }
-                                />
-                                <RadioCheckbox
-                                    key={randomString(2)}
-                                    defaultChecked={
-                                        isActiveForm === 'password'
-                                            ? true
-                                            : false
-                                    }
-                                    title={formatMessage({
-                                        id: 'global.checkboxChangePassword',
-                                        defaultMessage: 'Change Password'
-                                    })}
-                                    onClick={() =>
-                                        handleActiveForm(
-                                            isActiveForm === 'password'
-                                                ? false
-                                                : 'password'
-                                        )
-                                    }
-                                />
-                            </div>
+                            
                         </div>
                         <div className={classes.alternativeEditColumn}>
                             {/* {renderAlternativeForm()} */}
@@ -416,6 +239,15 @@ const AccountInformationPage = props => {
     }
     return (
         <div className={`${classes.root} container`}>
+            <AlertMessages
+                message={formatMessage({
+                    id: 'accountInformationPage.save',
+                    defaultMessage: 'You saved the account information.'
+                })}
+                setAlertMsg={setAlertMsg}
+                alertMsg={alertMsg}
+                status="success"
+            />
             <div className={classes.wrapper}>
                 <LeftMenu label="Account Information" />
                 <div className={`${classes.container}`}>
