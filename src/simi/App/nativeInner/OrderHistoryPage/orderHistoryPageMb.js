@@ -7,8 +7,7 @@ import { useOrderHistoryPage } from '../../../talons/OrderHistory/useOrderHistor
 import Button from '@magento/venia-ui/lib/components/Button';
 import Loader from '../Loader';
 const OrderHistoryPageMb = props => {
-    const { orderRow } = props;
-    console.log('hieu', orderRow);
+    
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
     const [status, setStatus] = useState('All');
@@ -31,7 +30,7 @@ const OrderHistoryPageMb = props => {
                     window.innerHeight + document.documentElement.scrollTop ===
                     document.documentElement.offsetHeight
                 ) {
-                    console.log('hahahaa', orders.length, total_count);
+                    
                     loadMoreOrders();
                 }
             }
