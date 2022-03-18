@@ -96,7 +96,12 @@ const NoMatch = props => {
 
     if (pageMaskedId && pageMaskedId !== 'notfound') {
         return (
-            <div className="pagebuilder-component-ctn">
+            <div
+                className="pagebuilder-component-ctn"
+                style={{
+                    backgroundColor: '#f2f2f3'
+                }}
+            >
                 <PageBuilderComponent
                     key={pageMaskedId}
                     endPoint={endPoint}
@@ -109,7 +114,6 @@ const NoMatch = props => {
         );
     }
 
-    
     if (data) {
         if (data.route && data.route.type) {
             const { type } = data.route;
