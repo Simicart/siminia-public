@@ -127,7 +127,7 @@ const ProductReviewPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "ProductReviewPage"*/ '/src/simi/App/core/ProductReviewPage')
+                import(/* webpackChunkName: "ProductReviewPage"*/ '/src/simi/App/nativeInner/ProductReviewPage')
             }
             {...props}
         />
