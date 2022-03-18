@@ -1,0 +1,85 @@
+.container {
+    margin-top: 2rem;
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+.contentContainer {
+    padding: 0 1rem 1rem;
+}
+.imageContainer {
+    min-width: 150px;
+}
+.name {
+    text-transform: capitalize;
+    font-size: 14px;
+    line-height: 14px;
+    color: #000;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.reviewSummary {
+    font-size: 14px;
+    line-height: 19px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.reviewText {
+    font-size: 14px;
+    line-height: 19px;
+    margin-bottom: 10px;
+    text-align: justify;
+    letter-spacing: normal;
+    max-width: 800px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+.reviewTextMore {
+    font-size: 14px;
+    line-height: 19px;
+    margin-bottom: 10px;
+    text-align: justify;
+    letter-spacing: normal;
+}
+.time {
+    font-size: 14px;
+    line-height: 14px;
+}
+.reviewButton {
+    align-items: center;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: auto;
+    text-align: center;
+    border-color: #0058ac;
+    background: #0058ac;
+    color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    min-height: 30px;
+    min-width: 100px;
+    margin-bottom: 15px;
+    float: right
+}
+@media screen and (min-width: 767px) and (max-width: 1023px) {
+    .reviewText {
+        font-size: 14px;
+        line-height: 19px;
+        margin-bottom: 10px;
+        text-align: justify;
+        letter-spacing: normal;
+        max-width: 500px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+    }
+}
+
+
