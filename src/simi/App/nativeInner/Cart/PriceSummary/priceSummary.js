@@ -11,6 +11,9 @@ import TaxSummary from '../../../core/Cart/PriceSummary/taxSummary';
 import {usePriceSummary} from '../../../../talons/Cart/usePriceSummary';
 import {RedButton} from "../RedButton";
 import {PriceWithColor} from "../PriceWithColor";
+
+import { useWindowSize, useToasts } from '@magento/peregrine';
+
 /**
  * A child component of the CartPage component.
  * This component fetches and renders cart data, such as subtotal, discounts applied,
@@ -29,6 +32,10 @@ import {PriceWithColor} from "../PriceWithColor";
 export const PriceSummary = props => {
     const {isUpdating} = props;
     const classes = useStyle(defaultClasses, defaultClasses_1, props.classes);
+
+    const windowSize = useWindowSize();
+    const isMobile = windowSize.innerWidth <= 450;
+    
     const talonProps = usePriceSummary();
 
     const {
@@ -94,7 +101,7 @@ export const PriceSummary = props => {
 
     const proceedToCheckoutButton = !isCheckout ? (
         <div className={classes.checkoutButton_container}>
-            <span className={classes.totalPricePiece}>
+            {!isMobile && <span className={classes.totalPricePiece}>
                 <FormattedMessage
                     id={'cart.total'}
                     defaultMessage={'Total'}
@@ -105,7 +112,7 @@ export const PriceSummary = props => {
                     ) :
                     <span className={classes.pricePlaceholder}/>
                 }
-            </span>
+            </span>}
             <RedButton
                 disabled={isPriceUpdating}
                 onClick={handleProceedToCheckout}
@@ -129,105 +136,108 @@ export const PriceSummary = props => {
     ) : null;
 
     return (
-        <div className={classes.root}>
-            <div className={classes.lineItems}>
-                {mpRewardEarn ? (
+        <React.Fragment>
+            <div className={classes.root}>
+                <div className={classes.lineItems}>
+                    {mpRewardEarn ? (
+                        <span className={classes.lineItemLabel}>
+                            <FormattedMessage
+                                id={'priceSummary.rewardEarnTitle'}
+                                defaultMessage={`${mpRewardEarn.title}`}
+                            />
+                        </span>
+                    ) : null}
+                    {mpRewardEarn ? (
+                        <span className={priceClass}>
+                            <FormattedMessage
+                                id={'priceSummary.rewardEarnValue'}
+                                defaultMessage={`${mpRewardEarn.value} points`}
+                            />
+                        </span>
+                    ) : null}
+                    {mpRewardSpent ? (
+                        <span className={classes.lineItemLabel}>
+                            <FormattedMessage
+                                id={'priceSummary.rewardSpentTitle'}
+                                defaultMessage={`${mpRewardSpent.title}`}
+                            />
+                        </span>
+                    ) : null}
+                    {mpRewardSpent ? (
+                        <span className={priceClass}>
+                            <FormattedMessage
+                                id={'priceSummary.rewardSpentValue'}
+                                defaultMessage={`${mpRewardSpent.value} points`}
+                            />
+                        </span>
+                    ) : null}
                     <span className={classes.lineItemLabel}>
                         <FormattedMessage
-                            id={'priceSummary.rewardEarnTitle'}
-                            defaultMessage={`${mpRewardEarn.title}`}
+                            id={'priceSummary.lineItemLabel'}
+                            defaultMessage={'Subtotal'}
                         />
                     </span>
-                ) : null}
-                {mpRewardEarn ? (
-                    <span className={priceClass}>
-                        <FormattedMessage
-                            id={'priceSummary.rewardEarnValue'}
-                            defaultMessage={`${mpRewardEarn.value} points`}
-                        />
-                    </span>
-                ) : null}
-                {mpRewardSpent ? (
-                    <span className={classes.lineItemLabel}>
-                        <FormattedMessage
-                            id={'priceSummary.rewardSpentTitle'}
-                            defaultMessage={`${mpRewardSpent.title}`}
-                        />
-                    </span>
-                ) : null}
-                {mpRewardSpent ? (
-                    <span className={priceClass}>
-                        <FormattedMessage
-                            id={'priceSummary.rewardSpentValue'}
-                            defaultMessage={`${mpRewardSpent.value} points`}
-                        />
-                    </span>
-                ) : null}
-                <span className={classes.lineItemLabel}>
-                    <FormattedMessage
-                        id={'priceSummary.lineItemLabel'}
-                        defaultMessage={'Subtotal'}
-                    />
-                </span>
-                <span className={priceClass}>
-                    <PriceWithColor
-                        value={subtotal.value}
-                        currencyCode={subtotal.currency}
-                    />
-                </span>
-                {mpRewardDiscount ? (
-                    <span className={classes.lineItemLabel}>
-                        <FormattedMessage
-                            id={'priceSummary.rewardDiscountTitle'}
-                            defaultMessage={`${mpRewardDiscount.title}`}
-                        />
-                    </span>
-                ) : null}
-                {mpRewardDiscount ? (
                     <span className={priceClass}>
                         <PriceWithColor
-                            value={mpRewardDiscount.value}
+                            value={subtotal.value}
                             currencyCode={subtotal.currency}
                         />
                     </span>
-                ) : null}
-                <DiscountSummary
-                    classes={{
-                        lineItemLabel: classes.lineItemLabel,
-                        price: priceClass
-                    }}
-                    data={discounts}
-                />
-                <GiftCardSummary
-                    classes={{
-                        lineItemLabel: classes.lineItemLabel,
-                        price: priceClass
-                    }}
-                    data={giftCards}
-                />
-                <TaxSummary
-                    classes={{
-                        lineItemLabel: classes.lineItemLabel,
-                        price: priceClass
-                    }}
-                    data={taxes}
-                    isCheckout={isCheckout}
-                />
-                <ShippingSummary
-                    classes={{
-                        lineItemLabel: classes.lineItemLabel,
-                        price: priceClass
-                    }}
-                    data={shipping}
-                    isCheckout={isCheckout}
-                />
-                <span className={classes.totalLabel}>{totalPriceLabel}</span>
-                <span className={totalPriceClass}>
-                    <PriceWithColor value={total.value} currencyCode={total.currency}/>
-                </span>
+                    {mpRewardDiscount ? (
+                        <span className={classes.lineItemLabel}>
+                            <FormattedMessage
+                                id={'priceSummary.rewardDiscountTitle'}
+                                defaultMessage={`${mpRewardDiscount.title}`}
+                            />
+                        </span>
+                    ) : null}
+                    {mpRewardDiscount ? (
+                        <span className={priceClass}>
+                            <PriceWithColor
+                                value={mpRewardDiscount.value}
+                                currencyCode={subtotal.currency}
+                            />
+                        </span>
+                    ) : null}
+                    <DiscountSummary
+                        classes={{
+                            lineItemLabel: classes.lineItemLabel,
+                            price: priceClass
+                        }}
+                        data={discounts}
+                    />
+                    <GiftCardSummary
+                        classes={{
+                            lineItemLabel: classes.lineItemLabel,
+                            price: priceClass
+                        }}
+                        data={giftCards}
+                    />
+                    <TaxSummary
+                        classes={{
+                            lineItemLabel: classes.lineItemLabel,
+                            price: priceClass
+                        }}
+                        data={taxes}
+                        isCheckout={isCheckout}
+                    />
+                    <ShippingSummary
+                        classes={{
+                            lineItemLabel: classes.lineItemLabel,
+                            price: priceClass
+                        }}
+                        data={shipping}
+                        isCheckout={isCheckout}
+                    />
+                    <span className={classes.totalLabel}>{totalPriceLabel}</span>
+                    <span className={totalPriceClass}>
+                        <PriceWithColor value={total.value} currencyCode={total.currency}/>
+                    </span>
+                </div>
+                {proceedToCheckoutButton}
             </div>
-            {proceedToCheckoutButton}
-        </div>
+        </React.Fragment>
+        
     );
 };
 
