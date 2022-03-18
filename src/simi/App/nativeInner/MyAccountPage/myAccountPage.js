@@ -87,7 +87,7 @@ const MyAccountPage = props => {
                 <Link
                     to={{
                         pathname: '/order-history',
-                        state: {id:"Pending"}
+                        state: { id: 'Pending' }
                     }}
                 >
                     <span>
@@ -98,7 +98,7 @@ const MyAccountPage = props => {
                 <Link
                     to={{
                         pathname: '/order-history',
-                        state: {id:"Completed"}
+                        state: { id: 'Completed' }
                     }}
                 >
                     <span>
@@ -109,8 +109,7 @@ const MyAccountPage = props => {
                 <Link
                     to={{
                         pathname: '/order-history',
-                        state: {id:"Canceled"}
-                        
+                        state: { id: 'Canceled' }
                     }}
                 >
                     <span>
@@ -123,21 +122,20 @@ const MyAccountPage = props => {
     );
     const LogOutBtn = (
         // <div className={classes.logout}>
-            <Link className={classes.logout} to="/logout.html">
-                {formatMessage({
-                    id: 'Log out',
-                    defaultMessage: 'Log out'
-                })}
-            </Link>
+        <Link className={classes.logout} to="/logout.html">
+            {formatMessage({
+                id: 'Log out',
+                defaultMessage: 'Log out'
+            })}
+        </Link>
         // </div>
     );
-    // const handle = (e) => {
 
-    //         e.preventDefault();
-
-    // }
     const Services = servicesList.map((service, index) => {
-        const reformat = service.replace(/\s/g, '-');
+        const reformat =
+            service !== 'Contact Us'
+                ? service.replace(/\s/g, '-')
+                : 'contact.html';
         const urlText = reformat.toLowerCase();
         return (
             <Link
