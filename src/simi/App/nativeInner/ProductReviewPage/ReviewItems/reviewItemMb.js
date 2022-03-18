@@ -78,6 +78,12 @@ const ReviewItemMb = props => {
                     ''
                 )}
                 <div className={classes.time}>{created_at}</div>
+                <Link to={itemLink} className={classes.viewDetails}>
+                    <FormattedMessage
+                                id={'reviewItem.viewDetails'}
+                                defaultMessage={'View Details'}
+                            />
+                </Link>
             </div>
         </div>
     );
