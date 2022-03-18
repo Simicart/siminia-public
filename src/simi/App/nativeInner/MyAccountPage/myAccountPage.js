@@ -162,9 +162,7 @@ const MyAccountPage = props => {
                 <div className={classes.accServicesTitle}>Services</div>
                 <div className={classes.accServicesContent}>{Services}</div>
             </div>
-            <div className={classes.imgContainer}>
-                <img src={require('./images/image.png')} alt="images" />
-            </div>
+           
             {isSignedIn ? LogOutBtn : null}
         </div>
     );
