@@ -1,0 +1,26 @@
+.root {
+    display: grid;
+    font-size: 1rem;
+    row-gap: 0.5rem;
+    padding-top: 1.125rem;
+}
+
+.address {
+    display: grid;
+    gap: 0.5rem;
+    padding-top: 1.125rem;
+}
+
+@media (max-width: 960px) {
+
+    .root {
+        font-size: 14px;
+        line-height: 16px;
+        padding-top: 0.625rem;
+    }
+
+    .address {
+        padding-top: 0;
+    }
+
+}

@@ -149,7 +149,7 @@ const Checkout = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "Checkout"*/ 'src/simi/App/core/Checkout')
+                import(/* webpackChunkName: "Checkout"*/ 'src/simi/App/nativeInner/Checkout')
             }
             {...props}
         />
@@ -204,7 +204,7 @@ const CheckoutSuccess = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "CheckoutSuccess"*/ 'src/simi/App/core/CheckoutSuccess')
+                import(/* webpackChunkName: "CheckoutSuccess"*/ 'src/simi/App/nativeInner/CheckoutSuccess')
             }
             {...props}
         />

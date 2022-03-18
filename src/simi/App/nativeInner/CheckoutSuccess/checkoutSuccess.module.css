@@ -1,0 +1,138 @@
+.root {
+    padding-bottom: 30px;
+}
+
+.mainContainer {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.imageHeader {
+    max-width: 317px;
+    width: 100%;
+    margin: auto;
+    margin-top: 70px;
+}
+
+.heading {
+    line-height: 1.1;
+    font-size: 30px;
+    margin-bottom: 25px;
+    color: #333333;
+    font-weight: 700;
+    margin-top: 25px;
+    hyphens: auto;
+}
+
+.mainContainer p {
+    color: #333333;
+    margin-top: 0rem;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.orderNumber {
+    font-size: 16px;
+    color: #333333;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.actionsToolbar {
+    margin-bottom: 10px;
+}
+
+.continue {
+    margin: 0;
+    display: block;
+    min-width: 200px;
+    max-width: 260px;
+    text-decoration: none;
+    border-radius: 3px;
+    background-color: #0058ac;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    padding: 9px 20px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+.continue:hover {
+    background-color: #0058ac;
+    border-color: #0058ac;
+    opacity: 0.8;
+}
+
+.guest {
+    margin-top: 30px;
+    text-align: center;
+}
+.guest p {
+    margin-top: 0rem;
+    margin-bottom: 1rem;
+}
+.guest .createAccount {
+    padding: 9px 20px;
+}
+.guest .createAccount span {
+    text-transform: uppercase;
+}
+@media (min-width: 768px), print {
+    .mainContainer {
+        margin-top: 25px;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    .heading {
+        display: inline-block;
+    }
+}
+@media (min-width: 1024px), print {
+    .mainContainer {
+        margin-left: 150px;
+        margin-right: 150px;
+    }
+}
+
+@media(max-width: 960px) {
+    .heading {
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 500;
+        margin-bottom: 14px;
+        margin-top: 30px;
+    }
+
+    .additionalText {
+        font-size: 14px;
+        line-height: 16px;
+        font-weight: 400;
+    }
+
+    .orderNumber {
+        width: 100%;
+        border-radius: 5px;
+        padding: 10px 15px;
+        font-size: 16px;
+        line-height: 19px;
+        font-weight: 400;
+        box-shadow: 1px 1px 5px 0 rgba(0,0,0,0.25);
+        margin: 40px auto 0;
+        max-width: 95.412%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .orderNumberIcon {
+        height: 20px;
+    }
+
+
+    .mainContainer {
+        margin-bottom: 90px;
+    }
+}
