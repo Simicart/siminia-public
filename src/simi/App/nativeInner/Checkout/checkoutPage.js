@@ -18,7 +18,7 @@ import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/Loadi
 import StockStatusMessage from '@magento/venia-ui/lib/components/StockStatusMessage';
 import FormError from '@magento/venia-ui/lib/components/FormError';
 import AddressBook from './AddressBook';
-import GuestSignIn from '@magento/venia-ui/lib/components/CheckoutPage/GuestSignIn';
+import GuestSignIn from './GuestSignIn';
 import PaymentInformation from './PaymentInformation';
 import payments from './PaymentInformation/paymentMethodCollection';
 import ShippingMethod from './ShippingMethod';
@@ -416,7 +416,7 @@ const CheckoutPage = props => {
                     />
                     {!isMobile && <h1 className={classes.heading}>{headerText}</h1>}
                 </div>
-                {!isMobile && signInContainerElement}
+                {signInContainerElement}
                 <div className={classes.shipping_information_container}>
                     <ScrollAnchor ref={shippingInformationRef}>
                         <ShippingInformation
@@ -467,6 +467,14 @@ const CheckoutPage = props => {
                 <h1>{formatMessage({
                     id: 'addressBook.headerText',
                     defaultMessage: 'Change Shipping Information'
+                })}</h1>
+            </div>
+        } if(activeContent === 'signIn') {
+            checkoutHeader = <div className={classes.checkout_mobile_header} onClick={() => toggleSignInContent()} >
+                <span>{<ArrowLeftIcon />}</span>
+                <h1>{formatMessage({
+                    id: "checkoutPage.guestSignIn.header",
+                    defaultMessage: "Account Sign-in"
                 })}</h1>
             </div>
         } else {
