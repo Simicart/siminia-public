@@ -74,8 +74,8 @@ const MyAccountPage = props => {
                         : `${classes.accMyOrderT} ${classes.disabled}`
                 }
             >
-                <span>Order</span>
-                <Link to="/order-history">View All</Link>
+                <span>{formatMessage({id:'Order'})}</span>
+                <Link to="/order-history">{formatMessage({id:'View All'})}</Link>
             </div>
             <div
                 className={
@@ -93,7 +93,9 @@ const MyAccountPage = props => {
                     <span>
                         <MdPendingActions />
                     </span>
-                    <span>Pending</span>
+                    <span>{formatMessage({
+                        id: 'Pending'
+                    })}</span>
                 </Link>
                 <Link
                     to={{
@@ -104,7 +106,9 @@ const MyAccountPage = props => {
                     <span>
                         <MdIncompleteCircle />
                     </span>
-                    <span>Completed</span>
+                    <span>{formatMessage({
+                        id: 'Completed'
+                    })}</span>
                 </Link>
                 <Link
                     to={{
@@ -115,7 +119,9 @@ const MyAccountPage = props => {
                     <span>
                         <MdOutlineCancelPresentation />
                     </span>
-                    <span>Canceled</span>
+                    <span>{formatMessage({
+                        id: 'Canceled'
+                    })}</span>
                 </Link>
             </div>
         </div>
@@ -150,7 +156,7 @@ const MyAccountPage = props => {
                 }
             >
                 <span>{iconList[index]}</span>
-                <span>{service}</span>
+                <span>{formatMessage({id:service})}</span>
             </Link>
         );
     });
@@ -159,7 +165,7 @@ const MyAccountPage = props => {
         <div className={classes.myAccountPageRoot}>
             {MyOrders}
             <div className={classes.accServices}>
-                <div className={classes.accServicesTitle}>Services</div>
+                <div className={classes.accServicesTitle}>{formatMessage({id:"Your Account"})}</div>
                 <div className={classes.accServicesContent}>{Services}</div>
             </div>
            
