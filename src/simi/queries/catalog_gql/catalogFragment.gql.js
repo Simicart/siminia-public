@@ -3,6 +3,12 @@ import gql from 'graphql-tag';
 export const CategoryFragment = gql`
     fragment CategoryFragment on CategoryTree {
         description
+        cms_block {
+            identifier
+            title
+            content
+        }
+        display_mode
         url_key
         url_path
         name

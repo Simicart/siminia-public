@@ -17,6 +17,55 @@
     grid-template-columns: repeat(auto-fit, 6rem);
     justify-content: center;
 }
+.mainContent{
+    display: grid;
+    grid-template-columns: 113px calc(100% - 113px);
+    flex-wrap: wrap;
+    grid-column-gap: 0px;
+    padding: 0;
+}
+.leftContent{
+    background-color: #F2F2F3;
+    height: auto;
+}
+.rightContent{
+    height: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.active, .unActive{
+    height: auto;
+    width: 100%;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #F2F2F3;
+}
+.icon{
+    
+}
+.icon svg{
+    margin-left: auto;
+    margin-right: auto;
+}
+.name{
+    color: #4F4F4F;
+    font-family: Roboto;
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 14px;
+}
+.active{
+    background-color: #fff;
+    transition: 0.4s all;
+}
+.imgLogo{
+    object-fit: contain;
+    margin-left: auto;
+    margin-right: auto;
+    height: 80px;
+    width: 80px;
+}
 @media (max-width: 768px) {
     .root {
         /* display: grid;
@@ -40,7 +89,7 @@
         height: auto;
     }
     .rightContent{
-        height: 100vh;
+        height: 100%;
         padding-right: 15px;
         padding-left: 15px;
     }

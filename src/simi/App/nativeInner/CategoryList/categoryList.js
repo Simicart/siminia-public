@@ -24,6 +24,7 @@ const CategoryList = props => {
     const classes = useStyle(defaultClasses, props.classes);
     const [active, setActive] = useState(0);
     const placeHolderImg = logoUrl();
+    const isMobileSite = window.innerWidth <= 768;
 
     const listIcon = [
         <BsCartCheck size={30} />,
@@ -94,6 +95,7 @@ const CategoryList = props => {
             }
         }
     };
+ 
     const renderRightContent = () => {
         if (!childCategories) {
             if (error) {
@@ -135,7 +137,7 @@ const CategoryList = props => {
         }
     };
     return (
-        <div className={classes.root}>
+        <div className={`${classes.root} ${!isMobileSite ? 'container' : ''}`}>
             {header}
             <div className={classes.mainContent}>
                 {renderLeftContent()}

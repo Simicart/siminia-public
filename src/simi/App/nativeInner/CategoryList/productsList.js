@@ -9,9 +9,11 @@ import defaultClasses from './productsList.module.css';
 import { useIntl } from 'react-intl';
 import { RiArrowRightSLine } from 'react-icons/ri';
 import { BsCartCheck } from 'react-icons/bs';
+import { render } from 'react-dom';
 
 const IMAGE_WIDTH = 80;
 import { logoUrl } from 'src/simi/Helper/Url';
+import CategoryDescription from './CategoryDescription';
 const ProductsList = props => {
     const { childCate } = props;
     const total_count =
@@ -28,7 +30,7 @@ const ProductsList = props => {
     const placeHolder = logoUrl();
     const { handleClick } = talonProps;
     const classes = useStyle(defaultClasses, props.classes);
-
+    
     const renderProductsList = () => {
         return items
             .filter((i, index) => index < 6)
@@ -84,6 +86,7 @@ const ProductsList = props => {
     };
     return (
         <div className={classes.root}>
+           <CategoryDescription childCate = {childCate}/>
             <div className={classes.viewAll} onClick={handleClick}>
                 {total_count > 0 ? (
                     <Link to={`${childCate.url_path}${childCate.url_suffix}`}>

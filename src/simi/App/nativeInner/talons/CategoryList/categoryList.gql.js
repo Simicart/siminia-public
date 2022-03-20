@@ -6,6 +6,13 @@ export const GET_CATEGORY_LIST = gql`
             id
             children {
                 id
+                cms_block {
+                    content
+                    identifier
+                    title
+                }
+                description
+                display_mode
                 products {
                     total_count
                     items {
