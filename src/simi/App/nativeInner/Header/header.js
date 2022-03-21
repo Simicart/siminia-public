@@ -90,7 +90,8 @@ const Header = props => {
         '/account-subcriptions',
         '/reward-points',
         '/reward-transactions',
-        '/checkout'
+        '/checkout',
+        '/contact.html'
     ];
 
     // const storeConfig = Identify.getStoreConfig();
@@ -276,7 +277,7 @@ const Header = props => {
                 <div className={classes.specHeader}>
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
-                        {type
+                        {type !== '/contact.html' ? type
                             .split('/')[1]
                             .replace('-', ' ')
                             .charAt(0)
@@ -284,7 +285,7 @@ const Header = props => {
                             type
                                 .split('/')[1]
                                 .replace('-', ' ')
-                                .slice(1)}
+                                .slice(1) : 'Contact Us'}
                     </span>
                 </div>
             );

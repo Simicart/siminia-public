@@ -23,13 +23,7 @@ const TYPE_PRODUCT = 'PRODUCT';
 const FooterNative = props => {
     const [{ isSignedIn }] = useUserContext();
     const listMenuContent = ['Home', 'Category', 'Cart', 'Malls', 'Account'];
-    const listMenuUrl = [
-        '',
-        'categories',
-        'cart',
-        'brands.html',
-        'my-account'
-    ];
+    const listMenuUrl = ['', 'categories', 'cart', 'brands.html', 'my-account'];
     const [iconActive, setIconActive] = useState();
     const listIcon = [
         <BiHomeAlt />,
@@ -67,7 +61,6 @@ const FooterNative = props => {
         storeConfig
     });
 
-
     const isOrderDetailPage =
         location.pathname.split('/order-history')[1] !== '' &&
         location.pathname.split('/order-history').length === 2
@@ -75,7 +68,12 @@ const FooterNative = props => {
             : false;
     const isHiddenBottomMenu =
         (data && data.route && data.route.type === TYPE_PRODUCT) ||
-        location.pathname === '/sign-in' || location.pathname === '/forgot-password'|| location.pathname === '/create-account' || isOrderDetailPage
+        location.pathname === '/sign-in' ||
+        location.pathname === '/forgot-password' ||
+        location.pathname === '/create-account' ||
+        location.pathname === '/checkout' ||
+        location.pathname === '/cart' ||
+        isOrderDetailPage
             ? true
             : false;
     const pathName =
@@ -96,7 +94,7 @@ const FooterNative = props => {
         }
         if (pathName === 'my-account') {
             // if (isSignedIn) {
-                setIconActive(4);
+            setIconActive(4);
             // } else window.location.pathname = '/sign-in';
         }
     }, [pathName, isSignedIn, pathNameLength]);

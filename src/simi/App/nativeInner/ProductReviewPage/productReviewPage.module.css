@@ -49,8 +49,26 @@
 }
 
 @media screen and (max-width: 768px) { 
+    .root {
+        padding: 0;
+        min-height: 100vh;
+        background-color: #F2F2F3;
+    }
+    .container{
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding-left: 15px;
+        padding-right: 15px;
+        grid-gap: 10px;
+    }
     .wrapper {
         display: grid;
         grid-template-columns: unset;
+    }
+    .heading{
+        display: none;
+    }
+    .headingTotal{
+        display: none;
     }
 }

@@ -69,8 +69,8 @@ const CartPage = props => {
         setLoading
     } = useLoading()
 
-    const setIsCartUpdating = useCallback((v) => {
-        setLoading(v)
+    const setIsCartUpdating = useCallback((v, setGlobalLoading = true) => {
+        if(setGlobalLoading) setLoading(v)
         _setIsCartUpdating(v)
     }, [setLoading, _setIsCartUpdating])
 
@@ -164,7 +164,7 @@ const CartPage = props => {
             </div>
             <div className={classes.body}>
                 <div className={classes.items_container}>{productListing}</div>
-                {(!isCartUpdating && !firstProductsLoad) && (
+                {!firstProductsLoad && (
                     <Fragment>
                         <div ref={summaryRef}>
                             <div className={classes.price_adjustments_container}>
@@ -220,11 +220,11 @@ const CartPage = props => {
         }
     )
 
-    const cartHeader = (
-        <SimpleHeader
-            titleText={headerText}
-        />
-    )
+    // const cartHeader = (
+    //     <SimpleHeader
+    //         titleText={headerText}
+    //     />
+    // )
 
     return (
         <Fragment>

@@ -1,0 +1,129 @@
+.root {
+    display: grid;
+    gap: 1rem;
+}
+.root button{
+    background-color: rgb(0,88,178);
+    color: #fff;
+    align-items: center;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: auto;
+    text-align: center;
+    border-color: #0058ac;
+    background: #0058ac;
+    color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    min-width: 10rem;
+    max-width: 100%;
+    min-height: 50px;
+    outline: none;
+    padding: calc(0.5rem + 1px) 1.5rem calc(0.5rem - 1px);
+    padding-top: 9px;
+    text-transform: uppercase;
+    transition-duration: 256ms;
+    transition-property: background-color, border-color, color;
+    transition-timing-function: var(--venia-global-anim-standard);
+}
+.root button:hover {
+    opacity: 0.8;
+}
+
+.root button:focus {
+    box-shadow: -6px 6px rgb(var(--venia-brand-color-1-100));
+}
+
+.root button:active {
+    transition-duration: 128ms;
+    background: #0065c4;
+}
+
+
+.message {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+}
+
+.prompt {
+    font-weight: var(--venia-global-fontWeight-semibold);
+}
+
+.shipping_methods {
+    grid-area: methods;
+}
+
+.shipping_methods_hidden {
+    composes: shipping_methods;
+    display: none;
+}
+
+.mask {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.estimateButton {
+    composes: root_normalPriority from '@magento/venia-ui/lib/components/Button/button.module.css';
+    justify-self: start;
+    align-items: center;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: auto;
+    text-align: center;
+    border-color: #0058ac;
+    background: #0058ac;
+    color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    min-width: 10rem;
+    max-width: 100%;
+    min-height: 50px;
+    outline: none;
+    padding: calc(0.5rem + 1px) 1.5rem calc(0.5rem - 1px);
+    padding-top: 9px;
+    text-transform: uppercase;
+    transition-duration: 256ms;
+    transition-property: background-color, border-color, color;
+    transition-timing-function: var(--venia-global-anim-standard);
+}
+.estimateButton:hover {
+    opacity: 0.8;
+}
+
+.estimateButton:focus {
+    box-shadow: -6px 6px rgb(var(--venia-brand-color-1-100));
+}
+
+.estimateButton:active {
+    transition-duration: 128ms;
+    background: #0065c4;
+}
+/*
+ * Mobile-specific styles.
+ */
+
+@media (max-width: 960px) {
+    .root button {
+        font-size: 10px;
+        padding: calc(0.25rem + 1px) 1.25rem calc(0.25rem - 1px);
+        min-height: 35px;     
+    }
+}
+@media (max-width: 640px) {
+    .root {
+        padding-right: unset;
+    }
+}
