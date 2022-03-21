@@ -89,7 +89,8 @@ const Header = props => {
         '/account-information',
         '/account-subcriptions',
         '/reward-points',
-        '/reward-transactions'
+        '/reward-transactions',
+        '/checkout'
     ];
 
     // const storeConfig = Identify.getStoreConfig();
@@ -287,7 +288,7 @@ const Header = props => {
                     </span>
                 </div>
             );
-        } else return !isSimpleHeader && !isHiddenHeader && renderSearchForm();
+        } else return !isHiddenHeader && renderSearchForm();
     };
 
     if (isPhone) {
