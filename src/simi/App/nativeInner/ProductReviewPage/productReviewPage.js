@@ -21,7 +21,7 @@ const ProductReviewPage = props => {
     } = talonProps;
     const classes = useStyle(defaultClasses);
     const [width, setWidth] = useState(window.innerWidth);
-
+    const isMobileSite = window.innerWidth <= 768;
     useEffect(() => {
         const handleSize = () => {
             setWidth(window.innerWidth);
@@ -86,7 +86,7 @@ const ProductReviewPage = props => {
         reviews.length
     ]);
     return (
-        <div className={`${classes.root} container`}>
+        <div className={`${classes.root} ${!isMobileSite ? 'container' : ''}`}>
             <StoreTitle>{PAGE_TITLE}</StoreTitle>
             <div className={classes.wrapper}>
                 <LeftMenu label="Product Review" />

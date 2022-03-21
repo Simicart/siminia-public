@@ -70,10 +70,55 @@
 
 @media screen and (max-width: 768px) { 
     .container {
-        padding-top: 19px;
-        padding-bottom: 21px;
-        border-bottom: 1px solid #F2F2F3;
-        margin-bottom: 0;
+        padding-top: 0;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
         margin-top: 0;
+        display: grid;
+        grid-template-areas:
+        'image review';
+        grid-template-columns: 1fr 3fr;
+        column-gap: 0.5rem;
+        row-gap: 0;
+        border-radius: 8px;
+        background-color: #FFFFFF;
+        padding: 4px;
+        border:none
+    }
+    .imageContainer {
+        grid-area: image;
+        min-width: 101px;
+    }
+    .imageContainer > div{
+        height: 101px;
+        width: 101px;
+    }
+    .imageContainer > div > img{
+        width: 100%;
+        height: 100%;
+        -o-object-fit: contain;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+    .contentContainer {
+        padding: 0;
+    }
+    .reviewButton{
+        display: none;
+    }
+    .name, .reviewSummary, .viewDetails {
+        color: #4F4F4F;
+        font-family: Roboto;
+        font-size: 13px;
+        letter-spacing: 0;
+        line-height: 15px;
+        margin-bottom: 2px;
+    }
+    .reviewText {
+        margin-bottom: 2px;
+    }
+    .viewDetails{
+        text-decoration: underline;
+        font-weight: bold;
     }
 }
