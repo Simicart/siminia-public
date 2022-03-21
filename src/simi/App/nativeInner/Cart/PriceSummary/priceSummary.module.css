@@ -77,11 +77,27 @@
     .checkoutButton_container > button {
         max-width: 7.5rem;
     }
-
 }
 
 @media (max-width: 768px) {
     .root{
         padding: 0;
+    }
+
+    .checkoutButton_container {
+        margin-top: 0;
+        position: fixed;
+        bottom: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        z-index: 1;
+        width: 100%;
+    }
+
+    .checkoutButton_container > button {
+        max-width: unset;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        border-radius: 0;
     }
 }
