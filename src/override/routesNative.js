@@ -117,7 +117,7 @@ const AddressBookPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "AddressBookPage"*/ '/src/simi/App/core/AddressBookPage')
+                import(/* webpackChunkName: "AddressBookPage"*/ '/src/simi/App/nativeInner/AddressBookPage')
             }
             {...props}
         />
