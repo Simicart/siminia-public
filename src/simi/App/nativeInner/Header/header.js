@@ -90,7 +90,8 @@ const Header = props => {
         '/account-subcriptions',
         '/reward-points',
         '/reward-transactions',
-        '/contact.html'
+        '/contact.html',
+        '/account-setting',
     ];
 
     // const storeConfig = Identify.getStoreConfig();

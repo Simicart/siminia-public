@@ -51,6 +51,17 @@ const OrderHistoryPage = props => {
     );
 };
 
+const AccountSettingPage = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import( 'src/simi/App/nativeInner/AccountSettingPage')
+            }
+            {...props}
+        />
+    );
+};
+
 const OrderDetailPage = props => {
     return (
         <LazyComponent
@@ -405,6 +416,11 @@ const Routes = props => {
                     exact
                     path="/order-history"
                     render={props => <OrderHistoryPage {...props} />}
+                />
+                <Route
+                    exact
+                    path="/account-setting"
+                    render={props => <AccountSettingPage {...props} />}
                 />
                 <Route
                     exact
