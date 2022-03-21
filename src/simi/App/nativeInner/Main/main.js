@@ -13,6 +13,7 @@ const storage = new BrowserPersistence();
 import { Helmet } from 'react-helmet';
 import RsSeller from '../../core/Seo/Markup/RsSeller';
 import { useWindowSize } from '@magento/peregrine';
+import { configColor } from '../../../Config';
 
 const mageworxSeoEnabled =
     window.SMCONFIGS &&
@@ -66,7 +67,7 @@ const Main = props => {
                 {!!url && <link rel={'icon'} type="image/png" href={url} />}
             </Helmet>
             {/* <StoreTitle /> comment out due to requesting extra query */}
-            <main className={classes.root}>
+            <main style={{ backgroundColor: configColor.app_background}} className={classes.root}>
                 <div
                     className="app-loading"
                     style={{ display: 'none' }}

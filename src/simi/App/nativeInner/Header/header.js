@@ -90,6 +90,7 @@ const Header = props => {
         '/account-subcriptions',
         '/reward-points',
         '/reward-transactions',
+        '/checkout',
         '/contact.html'
     ];
 
@@ -288,7 +289,7 @@ const Header = props => {
                     </span>
                 </div>
             );
-        } else return !isSimpleHeader && !isHiddenHeader && renderSearchForm();
+        } else return !isHiddenHeader && renderSearchForm();
     };
 
     if (isPhone) {
