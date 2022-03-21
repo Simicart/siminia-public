@@ -240,7 +240,7 @@
 
 @media (max-width: 960px) {
     .root {
-        padding: 0;
+        padding: 3.5rem 0 3.5rem 0;
         background-color: #F2F2F3;
     }
 
@@ -295,6 +295,10 @@
     .place_order_button {
         margin-top: 15px;
         width: 100%;
+        position: fixed;
+        bottom: 0;
+        margin-top: 0;
+        z-index: 2;
     }
 
     .heading_container {
@@ -338,6 +342,35 @@
         right: 15px;
         bottom: 20px;
         margin: 0;
+    }
+
+    .empty_cart_container {
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.625rem;
+    }
+
+    .empty_cart_container h3 {
+        margin-top: 2rem;
+        margin-bottom: 2.5rem;
+        font-size: 0.9rem;
+        line-height: 1rem;
+        letter-spacing: 0;
+        padding: 0;
+    }
+
+    .emptyCartButton {
+        border-radius: 25px;
+        background-color: var(--venia-global-color-gray-50);
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        width: 100%;
+        color: white;
+        text-transform: uppercase;
+        font-weight: bold;
+        max-width: 16rem;
     }
 }
 
