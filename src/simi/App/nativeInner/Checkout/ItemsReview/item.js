@@ -23,8 +23,6 @@ const Item = props => {
     const className = isHidden ? classes.root_hidden : classes.root;
     const configured_variant = configuredVariant(configurable_options, product);
 
-    console.log(props)
-
     const windowSize = useWindowSize();
     const isMobile = windowSize.innerWidth <= 450;
 

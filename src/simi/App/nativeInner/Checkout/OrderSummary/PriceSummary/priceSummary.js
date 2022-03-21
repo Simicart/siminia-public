@@ -10,6 +10,7 @@ import GiftCardSummary from '@magento/venia-ui/lib/components/CartPage/PriceSumm
 import ShippingSummary from 'src/simi/App/core/Cart/PriceSummary/shippingSummary';
 import TaxSummary from 'src/simi/App/core/Cart/PriceSummary/taxSummary';
 import { usePriceSummary } from 'src/simi/talons/Cart/usePriceSummary';
+import { useWindowSize } from '@magento/peregrine';
 
 /**
  * A child component of the CartPage component.
@@ -39,6 +40,10 @@ const PriceSummary = props => {
         isLoading,
         flatData
     } = talonProps;
+
+    const windowSize = useWindowSize();
+    const isMobile = windowSize.innerWidth <= 450;
+
     const { formatMessage } = useIntl();
     let mpRewardEarn, mpRewardDiscount, mpRewardSpent;
 
@@ -82,10 +87,13 @@ const PriceSummary = props => {
         : classes.totalPrice;
 
     const totalPriceLabel = isCheckout
-        ? formatMessage({
-              id: 'priceSummary.grandTotal',
-              defaultMessage: 'Grand Total'
-          })
+        ? (isMobile ? formatMessage({
+            id: 'priceSummary.grandTotal',
+            defaultMessage: 'Grand Total'
+        }) : formatMessage({
+            id: 'priceSummary.total',
+            defaultMessage: 'Total'
+        })) 
         : formatMessage({
               id: 'priceSummary.estimatedTotal',
               defaultMessage: 'Estimated Total'
