@@ -74,8 +74,8 @@ const MyAccountPage = props => {
                         : `${classes.accMyOrderT} ${classes.disabled}`
                 }
             >
-                <span>Order</span>
-                <Link to="/order-history">View All</Link>
+                <span>{formatMessage({id:'Order'})}</span>
+                <Link to="/order-history">{formatMessage({id:'View All'})}</Link>
             </div>
             <div
                 className={
@@ -87,57 +87,61 @@ const MyAccountPage = props => {
                 <Link
                     to={{
                         pathname: '/order-history',
-                        state: {id:"Pending"}
+                        state: { id: 'Pending' }
                     }}
                 >
                     <span>
                         <MdPendingActions />
                     </span>
-                    <span>Pending</span>
+                    <span>{formatMessage({
+                        id: 'Pending'
+                    })}</span>
                 </Link>
                 <Link
                     to={{
                         pathname: '/order-history',
-                        state: {id:"Completed"}
+                        state: { id: 'Completed' }
                     }}
                 >
                     <span>
                         <MdIncompleteCircle />
                     </span>
-                    <span>Completed</span>
+                    <span>{formatMessage({
+                        id: 'Completed'
+                    })}</span>
                 </Link>
                 <Link
                     to={{
                         pathname: '/order-history',
-                        state: {id:"Canceled"}
-                        
+                        state: { id: 'Canceled' }
                     }}
                 >
                     <span>
                         <MdOutlineCancelPresentation />
                     </span>
-                    <span>Canceled</span>
+                    <span>{formatMessage({
+                        id: 'Canceled'
+                    })}</span>
                 </Link>
             </div>
         </div>
     );
     const LogOutBtn = (
         // <div className={classes.logout}>
-            <Link className={classes.logout} to="/logout.html">
-                {formatMessage({
-                    id: 'Log out',
-                    defaultMessage: 'Log out'
-                })}
-            </Link>
+        <Link className={classes.logout} to="/logout.html">
+            {formatMessage({
+                id: 'Log out',
+                defaultMessage: 'Log out'
+            })}
+        </Link>
         // </div>
     );
-    // const handle = (e) => {
 
-    //         e.preventDefault();
-
-    // }
     const Services = servicesList.map((service, index) => {
-        const reformat = service.replace(/\s/g, '-');
+        const reformat =
+            service !== 'Contact Us'
+                ? service.replace(/\s/g, '-')
+                : 'contact.html';
         const urlText = reformat.toLowerCase();
         return (
             <Link
@@ -152,7 +156,7 @@ const MyAccountPage = props => {
                 }
             >
                 <span>{iconList[index]}</span>
-                <span>{service}</span>
+                <span>{formatMessage({id:service})}</span>
             </Link>
         );
     });
@@ -161,12 +165,10 @@ const MyAccountPage = props => {
         <div className={classes.myAccountPageRoot}>
             {MyOrders}
             <div className={classes.accServices}>
-                <div className={classes.accServicesTitle}>Services</div>
+                <div className={classes.accServicesTitle}>{formatMessage({id:"Your Account"})}</div>
                 <div className={classes.accServicesContent}>{Services}</div>
             </div>
-            <div className={classes.imgContainer}>
-                <img src={require('./images/image.png')} alt="images" />
-            </div>
+           
             {isSignedIn ? LogOutBtn : null}
         </div>
     );
