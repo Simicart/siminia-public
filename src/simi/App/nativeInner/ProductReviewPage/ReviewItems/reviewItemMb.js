@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Image from '@magento/venia-ui/lib/components/Image';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Button from '@magento/venia-ui/lib/components/Button';
-
+import { MdKeyboardArrowUp } from 'react-icons/md';
 const ReviewItemMb = props => {
     const item = props.review;
     const IMAGE_SIZE = 150;
@@ -29,7 +29,7 @@ const ReviewItemMb = props => {
     if (reviewText) {
         reviewTextWidth = reviewText.offsetWidth;
     }
-    const showMoreCondition = reviewTextWidth < MAX_WIDTH ? true : false;
+    const showMoreCondition = text.length < MAX_WIDTH ? true : false;
     return (
         <div className={classes.container}>
             <Link to={itemLink} className={classes.imageContainer}>
@@ -57,33 +57,31 @@ const ReviewItemMb = props => {
                 >
                     {text}
                 </div>
+                <div className={classes.time}>{created_at}</div>
                 {!showMoreCondition ? (
-                    <Button
+                    <div
                         className={classes.reviewButton}
                         onClick={viewMoreHandle}
                     >
                         {showMore ? (
-                            <FormattedMessage
-                                id={'reviewItem.seeMore'}
-                                defaultMessage={'See More'}
-                            />
+                            <div className={classes.viewDetails}>
+                                <FormattedMessage
+                                    id={'reviewItem.viewDetails'}
+                                    defaultMessage={'View Details'}
+                                />
+                            </div>
                         ) : (
-                            <FormattedMessage
-                                id={'reviewItem.seeLess'}
-                                defaultMessage={'See Less '}
-                            />
+                            <div className={classes.viewDetails}>
+                                <FormattedMessage
+                                    id={'reviewItem.viewSummary'}
+                                    defaultMessage={'View Summary'}
+                                />
+                            </div>
                         )}
-                    </Button>
+                    </div>
                 ) : (
                     ''
                 )}
-                <div className={classes.time}>{created_at}</div>
-                <Link to={itemLink} className={classes.viewDetails}>
-                    <FormattedMessage
-                                id={'reviewItem.viewDetails'}
-                                defaultMessage={'View Details'}
-                            />
-                </Link>
             </div>
         </div>
     );

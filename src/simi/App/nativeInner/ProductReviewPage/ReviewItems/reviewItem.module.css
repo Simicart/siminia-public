@@ -30,7 +30,7 @@
     margin-bottom: 10px;
     text-align: justify;
     letter-spacing: normal;
-    max-width: 800px;
+    max-width: 700px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow-x: hidden;
@@ -47,26 +47,28 @@
     line-height: 14px;
 }
 .reviewButton {
-    align-items: center;
+    color: #4F4F4F;
+    font-family: Roboto;
+    font-size: 13px;
+    letter-spacing: 0;
+    line-height: 15px;
+    margin-bottom: 2px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    justify-content: left;
+    text-decoration: underline;
+    min-height: unset;
+    min-width: unset;
     cursor: pointer;
-    display: inline-flex;
-    justify-content: center;
-    line-height: 1;
-    pointer-events: auto;
-    text-align: center;
-    border-color: #0058ac;
-    background: #0058ac;
-    color: white;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 16px;
-    min-height: 30px;
-    min-width: 100px;
-    margin-bottom: 15px;
-    float: right
+    margin-top: 10px;
+    text-transform: capitalize;
+    font-size: 14px;
+    line-height: 14px;
+    color: #000;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 @media screen and (min-width: 767px) and (max-width: 1023px) {
     .reviewText {
