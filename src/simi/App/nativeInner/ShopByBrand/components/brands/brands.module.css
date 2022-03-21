@@ -109,13 +109,16 @@
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .brandPageRoot {
         margin-top: 20px;
     }
 
     .brandPageHeader {
         width: 68.7%;
+    }
+    .breadCrumb{
+        display: none;
     }
 }
 
@@ -237,7 +240,7 @@
     white-space: nowrap;
     overflow: hidden;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
 }
 .searchItem:hover {
     background-color: #f0f0f0;

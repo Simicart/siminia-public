@@ -224,7 +224,7 @@
                 display: grid;
                 grid-template-areas: "title itemCount";
                 grid-template-columns: 1fr min-content;
-                margin-top: 40px;
+                margin-top: 0px;
                 .category-title{
                     grid-area: title;
                     font-weight: 600;

@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import { BiFilterAlt } from 'react-icons/bi';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 import { ChevronDown, ChevronUp } from 'react-feather';
+import CategoryDesription from '../CategoryList/CategoryDescription'
 require('./products.scss');
 
 let count = 0;
@@ -35,6 +36,7 @@ const Products = props => {
         pageSize,
         pageControl
     } = props;
+    const { category } = data;
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
     const isMobileSite = windowSize.innerWidth <= 768;
@@ -191,7 +193,7 @@ const Products = props => {
     };
     const renderCarouselChildCate = () => {
         let html = null;
-        const { category } = data;
+        
         if (
             category &&
             category.children &&
@@ -368,6 +370,7 @@ const Products = props => {
                 >
                     {renderLeftNavigation()}
                 </div>
+                <CategoryDesription childCate={category}/>
                 <div
                     className={`${
                         renderCarouselChildCate() ? 'marginTop' : ''
