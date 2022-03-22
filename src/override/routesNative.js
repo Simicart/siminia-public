@@ -438,7 +438,7 @@ const Routes = props => {
                     render={props => (
                         <LazyComponent
                             component={() =>
-                                import(/* webpackChunkName: "SavedPaymentsPage"*/ 'src/simi/App/core/SavedPaymentsPage/index.js')
+                                import(/* webpackChunkName: "SavedPaymentsPage"*/ 'src/simi/App/nativeInner/SavedPaymentsPage/index.js')
                             }
                             {...props}
                         />
