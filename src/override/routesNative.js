@@ -74,7 +74,7 @@ const RewardPointsPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import('src/simi/App/core/RewardPoint/RewardPointDataPage')
+                import('src/simi/App/nativeInner/RewardPoint/RewardPointDataPage')
             }
             {...props}
         />
@@ -84,7 +84,7 @@ const RewardTransactions = props => {
     return (
         <LazyComponent
             component={() =>
-                import('src/simi/App/core/RewardPoint/RewardTransactions')
+                import('src/simi/App/nativeInner/RewardPoint/RewardTransactions')
             }
             {...props}
         />
