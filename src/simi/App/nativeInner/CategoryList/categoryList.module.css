@@ -92,6 +92,7 @@
         height: 100%;
         padding-right: 15px;
         padding-left: 15px;
+        background-color: #fff;
     }
     .active, .unActive{
         height: auto;

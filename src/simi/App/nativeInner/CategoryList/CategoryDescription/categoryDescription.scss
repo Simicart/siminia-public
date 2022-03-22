@@ -1,6 +1,12 @@
 @media (max-width: 768px) {
-    .description{
+    .wrapRichContent{
         padding-top: 15px;
+        > div > div > div:nth-child(2){
+            padding : 0 10px;
+        }
+    }
+    .paddingTop{
+        padding-top: 60px;
     }
     .wrapBlock{
         .titleBlock{
@@ -20,5 +26,4 @@
             margin-right: auto;
         }
     }
-    
 }
