@@ -50,16 +50,15 @@
 
 @media (max-width: 960px) {
     .root {
+        padding-bottom: 40px;
     }
-}
 
-
-@media (max-width: 960px) {
     .summary_container {
         margin-left: 0;
         margin-right: 0;
         padding-bottom: 30px;
     }
+    
 }
 
 

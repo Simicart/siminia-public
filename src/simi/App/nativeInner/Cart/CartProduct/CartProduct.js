@@ -222,7 +222,7 @@ const CartProduct = props => {
                     <Image
                         alt={name}
                         classes={{
-                            root: classes.imageRoot, image: classes.image
+                            root: classes.imageRoot, image: classes.image, placeholder_layoutOnly: `${classes.placeholder_layoutOnly} ${classes.placeholder}`
                         }}
                         width={IMAGE_SIZE}
                         resource={image}

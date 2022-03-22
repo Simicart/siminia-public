@@ -149,14 +149,16 @@ export const PriceAdjustments = (props) => {
                         })}
                         classes={{
                             root: classes.sectionRoot,
-                            title: classes.sectionTitle
+                            title: classes.sectionTitle,
+                            title_wrapper: classes.title_wrapper,
+                            contents_container: classes.contents_container
                         }}
                     >
                         <Suspense fallback={<LoadingIndicator />}>
                             <div className={classes.userBalance}>
                                 <FormattedMessage
                                     id={'rewardPoint.userBalance'}
-                                    defaultMessage={`You have ${balance} points`}
+                                    defaultMessage={`You have ${balance || 0} points`}
                                 />
                             </div>
                             {balance > 0 ? (
@@ -228,46 +230,7 @@ export const PriceAdjustments = (props) => {
                     </Section>
                 ) : null}
                 <GiftCardSection setIsCartUpdating={setIsCartUpdating} />
-                {/* <Section
-                    id={'gift_options'}
-                    title={formatMessage({
-                        id: 'priceAdjustments.giftOptions',
-                        defaultMessage: 'See Gift Options'
-                    })}
-                    classes={{
-                        root: classes.sectionRoot,
-                        title: classes.sectionTitle
-                    }}
-                >
-                    <Suspense fallback={<LoadingIndicator />}>
-                        <GiftOptions />
-                    </Suspense>
-                </Section> */}
             </Accordion>
         </div>
     )
-    // return (
-    //     <Accordion classes={{
-    //         root: classes.accordRoot
-    //     }}>
-    //         <Section
-    //             id={'coupon_code'}
-    //             title={formatMessage({
-    //                 id: 'priceAdjustments.couponCode',
-    //                 defaultMessage: 'Coupon Code'
-    //             })}
-    //             classes={{
-    //                 root: classes.sectionRoot,
-    //                 title: classes.sectionTitle,
-    //                 title_wrapper: classes.title_wrapper,
-    //                 contents_container: classes.contents_container
-    //             }}
-    //         >
-    //             <Suspense fallback={<LoadingIndicator/>}>
-    //                 <CouponCode setIsCartUpdating={props.setIsCartUpdating}
-    //                             makeNotification={makeNotification}/>
-    //             </Suspense>
-    //         </Section>
-    //     </Accordion>
-    // );
 };
