@@ -135,7 +135,7 @@ const AddressCard = props => {
                             src={EditIcon}
                         />
                     </LinkButton>}
-                    {isPhone && isDefaultShipping ? "[Default]" : null}
+                    {isPhone && isDefaultShipping ? "Is default" : null}
 
                     {deleteButtonElement}
                     {maybeConfirmingDeleteOverlay}
