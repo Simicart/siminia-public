@@ -6,7 +6,7 @@ import { useStyle } from '@magento/venia-ui/lib/classify';
 import { isRequired } from '@magento/venia-ui/lib/util/formValidators';
 
 import Checkbox from '@magento/venia-ui/lib/components/Checkbox';
-import Country from '@magento/venia-ui/lib/components/Country';
+import Country from '../Country';
 import Dialog from '../Dialog';
 import Field from '@magento/venia-ui/lib/components/Field';
 import FormError from '@magento/venia-ui/lib/components/FormError';
