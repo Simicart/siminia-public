@@ -36,6 +36,8 @@ import PriceAdjustments from './PriceAdjustments';
 
 import Identify from 'src/simi/Helper/Identify';
 import ButtonLoader from '../../../BaseComponents/ButtonLoader';
+import {configColor} from "../../../Config";
+import Image from "@magento/venia-ui/lib/components/Image";
 
 const deliveryTimeEnabled =
     window.SMCONFIGS &&
@@ -176,12 +178,29 @@ const CheckoutPage = props => {
                 {!isMobile && <div className={classes.heading_container}>
                     <h1 className={classes.heading}>{heading}</h1>
                 </div>}
+                {isMobile && <Image src={require('../../../../../static/images/empty-cart.png')}
+                   alt={'no-cart'}
+                    className={classes.emptyImage}
+                />}
                 <h3>
                     <FormattedMessage
                         id={'checkoutPage.emptyMessage'}
                         defaultMessage={'There are no items in your cart.'}
                     />
                 </h3>
+                {isMobile && <button 
+                    onClick={() => history.push('/')} 
+                    className={classes.emptyCartButton}
+                    style={{
+                        backgroundColor: configColor.button_background,
+                        color: configColor.button_text_color,
+                    }}
+                >
+                    <FormattedMessage
+                        id={'Continue Shopping'}
+                        defaultMessage={'Continue Shopping'}
+                    />
+                </button>}
             </div>
         );
     } else {
@@ -385,6 +404,7 @@ const CheckoutPage = props => {
                 ? classes.checkoutContent
                 : classes.checkoutContent_hidden;
 
+        console.log(checkoutStep)
         const stockStatusMessageElement = (
             <Fragment>
                 <FormattedMessage
@@ -459,55 +479,18 @@ const CheckoutPage = props => {
         />
     ) : null;
 
-    let checkoutHeader = null
-    if(isMobile) {
-        if(activeContent === 'addressBook') {
-            checkoutHeader = <div className={classes.checkout_mobile_header} onClick={() => toggleAddressBookContent()} >
-                <span>{<ArrowLeftIcon />}</span>
-                <h1>{formatMessage({
-                    id: 'addressBook.headerText',
-                    defaultMessage: 'Change Shipping Information'
-                })}</h1>
-            </div>
-        } if(activeContent === 'signIn') {
-            checkoutHeader = <div className={classes.checkout_mobile_header} onClick={() => toggleSignInContent()} >
-                <span>{<ArrowLeftIcon />}</span>
-                <h1>{formatMessage({
-                    id: "checkoutPage.guestSignIn.header",
-                    defaultMessage: "Account Sign-in"
-                })}</h1>
-            </div>
-        } else {
-            checkoutHeader = <div className={classes.checkout_mobile_header} onClick={() => history.push('/cart')} >
-                <span>{<ArrowLeftIcon />}</span>
-                <h1>{formatMessage({
+    return (
+        <div className={`${classes.root} checkout-step-${checkoutStep}`}>
+            <StoreTitle>
+                {formatMessage({
                     id: 'checkoutPage.titleCheckout',
                     defaultMessage: 'Checkout'
-                })}</h1>
-            </div>
-        }
-    }
-        // if(activeContent === ) {
-
-        // }
-      
-
-    return (
-        <React.Fragment>
-            {checkoutHeader}
-            <div className={classes.root}>
-                <StoreTitle>
-                    {formatMessage({
-                        id: 'checkoutPage.titleCheckout',
-                        defaultMessage: 'Checkout'
-                    })}
-                </StoreTitle>
-                {checkoutContent}
-                {addressBookElement}
-                {signInElement}
-            </div>
-        </React.Fragment>
-        
+                })}
+            </StoreTitle>
+            {checkoutContent}
+            {addressBookElement}
+            {signInElement}
+        </div>
     );
 };
 
