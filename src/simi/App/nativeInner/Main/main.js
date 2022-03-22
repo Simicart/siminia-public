@@ -47,6 +47,8 @@ const Main = props => {
 
     //wont render if chose storeview before to avoid rtl issue
     if (!storeConfig && storeCode) return '';
+
+    
    
 
     try {
@@ -55,6 +57,7 @@ const Main = props => {
     } catch (err) {
         console.warn('no splash screen found');
     }
+    console.log("hahah", configColor.app_background);
     return (
         <React.Fragment>
             {mageworxSeoEnabled ? (
