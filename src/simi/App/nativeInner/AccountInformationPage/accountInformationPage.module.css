@@ -65,7 +65,7 @@ button.saveProfile {
     text-transform: uppercase;
     min-height: 50px;
     width: 184px;
-    background-color: #0058AC;
+    background-color: var(--venia-global-color-button);
     color: #FFFFFF;
     font-size: 16px;
     font-weight: 600;
@@ -208,8 +208,10 @@ button.saveProfile {
     }
     .inputContent > div > span > span > input{
         border: none!important;
-        border-bottom: 1px solid #F2F2F2!important;
+        border-bottom: 1px solid #0058AC!important;
         padding: 0;
+        background: none!important;
+        border-radius: 0px!important;
     }
     .inputContent > div > span > span {
         height: 1rem;
