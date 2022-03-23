@@ -11,7 +11,7 @@ const CategoryDescription = props => {
     const renderBlock = () => {
         if (cms_block) {
             return (
-                <div className="wrapBlock">
+                <div className={`${description ? '' : 'paddingTop'} wrapBlock`}>
                     <div className="titleBlock">{cms_block.title}</div>
                     <div className="content">
                         <div
@@ -27,7 +27,9 @@ const CategoryDescription = props => {
     };
     return (
         <>
-            <RichContent html={description} />
+            <div className={`${description ? 'wrapRichContent' : ''}`}>
+                <RichContent html={description} />
+            </div>
             {renderBlock()}
         </>
     );

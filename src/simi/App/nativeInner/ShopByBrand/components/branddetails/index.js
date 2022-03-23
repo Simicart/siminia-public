@@ -14,6 +14,8 @@ const BrandDetails = (props) => {
     const { brandUrl = "" } = useParams();
     const { formatMessage } = useIntl();
     const { brandData, brandLoading, derivedErrorMessage } = useBrandDetails({ url_key: brandUrl.replace('.html', '') });
+    const isMobileSite = window.innerWidth <= 768;
+
     if (brandLoading)
         return fullPageLoadingIndicator;
     if (derivedErrorMessage)
@@ -44,7 +46,7 @@ const BrandDetails = (props) => {
 
     ];
     return (
-        <div className={`${classes.rootDetails} container` }>
+        <div className={`${classes.rootDetails} ${!isMobileSite ? 'container' : ''}` }>
             <Title>{brandInformation.meta_title}</Title>
             <Meta name="description" content={brandInformation.meta_description} />
             <Meta name="keywords" content={brandInformation.meta_keywords} />

@@ -47,3 +47,8 @@
 .brandCategoryItem:hover {
     opacity: 0.8;
 }
+@media (max-width: 768px) {
+    .rootDetails {
+        padding: 0;
+    }
+}

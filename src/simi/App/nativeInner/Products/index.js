@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import { BiFilterAlt } from 'react-icons/bi';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 import { ChevronDown, ChevronUp } from 'react-feather';
-import CategoryDesription from '../CategoryList/CategoryDescription'
+import CategoryDesription from '../CategoryList/CategoryDescription';
 require('./products.scss');
 
 let count = 0;
@@ -105,7 +105,6 @@ const Products = props => {
                 >
                     {filter}
                 </div>
-                
             );
         }
         return shopby;
@@ -193,7 +192,7 @@ const Products = props => {
     };
     const renderCarouselChildCate = () => {
         let html = null;
-        
+
         if (
             category &&
             category.children &&
@@ -242,8 +241,6 @@ const Products = props => {
         return html;
     };
 
-
-  
     const [showingDropdown, setShowDropdown] = useState(false);
     const [showFilter, setShowFilter] = useState(false);
 
@@ -345,7 +342,11 @@ const Products = props => {
                                             <ChevronDown size={15} />
                                         )}
                                     </span>
-                                    {count === 0 ? <div className='active'></div> : ''}
+                                    {count === 0 ? (
+                                        <div className="active" />
+                                    ) : (
+                                        ''
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -354,7 +355,11 @@ const Products = props => {
                         <Sortby
                             showingDropdown={showingDropdown}
                             data={data}
-                            sortByData={sortByData === null ? {position: 'ASC'} : sortByData}
+                            sortByData={
+                                sortByData === null
+                                    ? { position: 'ASC' }
+                                    : sortByData
+                            }
                         />
                     ) : (
                         ''
@@ -370,7 +375,9 @@ const Products = props => {
                 >
                     {renderLeftNavigation()}
                 </div>
-                <CategoryDesription childCate={category}/>
+                <div className="wrapCategoryDesription">
+                    <CategoryDesription childCate={category} />
+                </div>
                 <div
                     className={`${
                         renderCarouselChildCate() ? 'marginTop' : ''
@@ -380,7 +387,7 @@ const Products = props => {
                     {renderList()}
                 </div>
             </div>
-            {showFilter ? <div className="bg-white"></div> : ''}
+            {showFilter ? <div className="bg-white" /> : ''}
         </article>
     );
 };
