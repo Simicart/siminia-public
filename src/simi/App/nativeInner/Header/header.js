@@ -263,7 +263,7 @@ const Header = props => {
       
         if (isOrderDetailPage) {
             return (
-                <div className={classes.specHeader}>
+                <div className={classes.specHeader} >
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -276,7 +276,7 @@ const Header = props => {
         }
         if (myProfile.includes(type)) {
             return (
-                <div className={classes.specHeader}>
+                <div className={classes.specHeader} id="siminia-text-header">
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         {type !== '/contact.html' ? type
