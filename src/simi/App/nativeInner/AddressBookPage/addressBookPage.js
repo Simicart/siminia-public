@@ -90,7 +90,7 @@ const AddressBookPage = props => {
 
         return (
             Array.from(customerAddresses)
-                // .sort(defaultToBeginning)
+                .sort(defaultToBeginning)
                 .map((addressEntry, index) => {
                     const countryName = countryDisplayNameMap.get(
                         addressEntry.country_code
@@ -106,7 +106,7 @@ const AddressBookPage = props => {
 
                     return (
                         <div className={classes.addAddressWrapper}>
-                           {customerAddresses.length !== 1 ? <div
+                           {/* {customerAddresses.length !== 1 ? <div
                                 className={
                                classes.normal
                                 }
@@ -115,7 +115,7 @@ const AddressBookPage = props => {
                                 }
                             >
                                 {isDefaultShipping  ? <div className={classes.default} /> : null}
-                            </div> : null}
+                            </div> : null} */}
 
                             <AddressCard
                                 address={addressEntry}
@@ -132,6 +132,7 @@ const AddressBookPage = props => {
                                 setDefaultShipping={setDefault}
                                 isDefaultShipping={isDefaultShipping}
                                 indexAddress={index}
+                                isPhone={isPhone}
                             />
                         </div>
                     );
