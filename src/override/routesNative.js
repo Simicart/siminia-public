@@ -51,6 +51,17 @@ const OrderHistoryPage = props => {
     );
 };
 
+const AccountSettingPage = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import( 'src/simi/App/nativeInner/AccountSettingPage')
+            }
+            {...props}
+        />
+    );
+};
+
 const OrderDetailPage = props => {
     return (
         <LazyComponent
@@ -63,7 +74,7 @@ const RewardPointsPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import('src/simi/App/core/RewardPoint/RewardPointDataPage')
+                import('src/simi/App/nativeInner/RewardPoint/RewardPointDataPage')
             }
             {...props}
         />
@@ -73,7 +84,7 @@ const RewardTransactions = props => {
     return (
         <LazyComponent
             component={() =>
-                import('src/simi/App/core/RewardPoint/RewardTransactions')
+                import('src/simi/App/nativeInner/RewardPoint/RewardTransactions')
             }
             {...props}
         />
@@ -106,7 +117,7 @@ const AccountSubcriptionPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "AccountSubcriptionPage"*/ '/src/simi/App/core/AccountSubcriptionPage')
+                import(/* webpackChunkName: "AccountSubcriptionPage"*/ '/src/simi/App/nativeInner/AccountSubcriptionPage')
             }
             {...props}
         />
@@ -408,6 +419,11 @@ const Routes = props => {
                 />
                 <Route
                     exact
+                    path="/account-setting"
+                    render={props => <AccountSettingPage {...props} />}
+                />
+                <Route
+                    exact
                     path="/order-history/:orderId"
                     render={props => <OrderDetailPage {...props} />}
                 />
@@ -422,7 +438,7 @@ const Routes = props => {
                     render={props => (
                         <LazyComponent
                             component={() =>
-                                import(/* webpackChunkName: "SavedPaymentsPage"*/ 'src/simi/App/core/SavedPaymentsPage/index.js')
+                                import(/* webpackChunkName: "SavedPaymentsPage"*/ 'src/simi/App/nativeInner/SavedPaymentsPage/index.js')
                             }
                             {...props}
                         />

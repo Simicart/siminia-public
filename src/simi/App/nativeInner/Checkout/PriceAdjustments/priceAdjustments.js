@@ -99,25 +99,6 @@ const PriceAdjustments = props => {
         <div className={classes.root}>
             <Accordion canOpenMultiple={true}>
                 <Section
-                    id={'shipping_method'}
-                    title={formatMessage({
-                        id: 'priceAdjustments.shippingMethod',
-                        defaultMessage: 'Estimate your Shipping'
-                    })}
-                    classes={{
-                        root: classes.sectionRoot,
-                        title: classes.sectionTitle,
-                        title_wrapper: classes.sessionTitleWrapper,
-                        contents_container: classes.sessionContentsContainer
-                    }}
-                >
-                    <Suspense fallback={<LoadingIndicator />}>
-                        <ShippingMethods
-                            setIsCartUpdating={setIsCartUpdating}
-                        />
-                    </Suspense>
-                </Section>
-                <Section
                     id={'coupon_code'}
                     title={formatMessage({
                         id: 'priceAdjustments.couponCode',
@@ -224,21 +205,6 @@ const PriceAdjustments = props => {
                     </Section>
                 ) : null}
                 <GiftCardSection setIsCartUpdating={setIsCartUpdating} />
-                {/* <Section
-                    id={'gift_options'}
-                    title={formatMessage({
-                        id: 'priceAdjustments.giftOptions',
-                        defaultMessage: 'See Gift Options'
-                    })}
-                    classes={{
-                        root: classes.sectionRoot,
-                        title: classes.sectionTitle
-                    }}
-                >
-                    <Suspense fallback={<LoadingIndicator />}>
-                        <GiftOptions />
-                    </Suspense>
-                </Section> */}
             </Accordion>
         </div>
     );

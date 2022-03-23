@@ -10,3 +10,9 @@
     padding-top: 30px;
     padding-bottom: 10px;
 }
+@media (max-width:500px) {
+    .root {
+        min-height: 100vh;
+    }
+
+}

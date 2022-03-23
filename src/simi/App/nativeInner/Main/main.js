@@ -13,6 +13,7 @@ const storage = new BrowserPersistence();
 import { Helmet } from 'react-helmet';
 import RsSeller from '../../core/Seo/Markup/RsSeller';
 import { useWindowSize } from '@magento/peregrine';
+import { configColor } from '../../../Config';
 
 const mageworxSeoEnabled =
     window.SMCONFIGS &&
@@ -46,6 +47,8 @@ const Main = props => {
 
     //wont render if chose storeview before to avoid rtl issue
     if (!storeConfig && storeCode) return '';
+
+    
    
 
     try {
@@ -54,6 +57,7 @@ const Main = props => {
     } catch (err) {
         console.warn('no splash screen found');
     }
+    console.log("hahah", configColor.app_background);
     return (
         <React.Fragment>
             {mageworxSeoEnabled ? (
@@ -66,7 +70,7 @@ const Main = props => {
                 {!!url && <link rel={'icon'} type="image/png" href={url} />}
             </Helmet>
             {/* <StoreTitle /> comment out due to requesting extra query */}
-            <main className={classes.root}>
+            <main style={{ backgroundColor: configColor.app_background}} className={classes.root}>
                 <div
                     className="app-loading"
                     style={{ display: 'none' }}

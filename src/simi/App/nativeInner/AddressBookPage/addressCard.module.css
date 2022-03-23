@@ -141,6 +141,12 @@
     .telephone {
         margin-top: 0;
     }
+    .actionContainer {
+        display:flex;
+        flex-direction: column;
+        justify-content:end;
+        font-weight: 500;
+    }
 }
 
 @media (max-width: 384px) {

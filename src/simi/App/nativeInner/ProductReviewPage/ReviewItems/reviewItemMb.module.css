@@ -104,9 +104,9 @@
         padding: 0;
     }
     .reviewButton{
-        display: none;
+        /* display: none; */
     }
-    .name, .reviewSummary, .viewDetails {
+    .name, .reviewSummary {
         color: #4F4F4F;
         font-family: Roboto;
         font-size: 13px;
@@ -117,8 +117,27 @@
     .reviewText {
         margin-bottom: 2px;
     }
-    .viewDetails{
+    .reviewButton{
+        color: #4F4F4F;
+        font-family: Roboto;
+        font-size: 13px;
+        letter-spacing: 0;
+        line-height: 15px;
+        margin-bottom: 2px;
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+        justify-content: left;
         text-decoration: underline;
-        font-weight: bold;
+        min-height: unset;
+        min-width: unset;
+    }
+
+    .reviewText {
+        margin-bottom: 2px;
+    }
+    .reviewTextMore {
+        margin-bottom: 2px;
     }
 }

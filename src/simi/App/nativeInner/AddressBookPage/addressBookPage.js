@@ -11,7 +11,7 @@ import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/Loadi
 import LeftMenu from '../../core/LeftMenu';
 import { useWindowSize } from '@magento/peregrine';
 import AddressCard from './addressCard';
-import AddEditDialog from '@magento/venia-ui/lib/components/AddressBookPage/addEditDialog.js';
+import AddEditDialog from './addEditDialog.js';
 import defaultClasses from './addressBookPage.module.css';
 import defaultOperations from '../talons/AddressBookPage/addressBookPage.gql';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
@@ -90,7 +90,7 @@ const AddressBookPage = props => {
 
         return (
             Array.from(customerAddresses)
-                // .sort(defaultToBeginning)
+                .sort(defaultToBeginning)
                 .map((addressEntry, index) => {
                     const countryName = countryDisplayNameMap.get(
                         addressEntry.country_code
@@ -106,7 +106,7 @@ const AddressBookPage = props => {
 
                     return (
                         <div className={classes.addAddressWrapper}>
-                            <div
+                           {/* {customerAddresses.length !== 1 ? <div
                                 className={
                                classes.normal
                                 }
@@ -114,8 +114,8 @@ const AddressBookPage = props => {
                                     handleSetDefaultShipping(addressEntry.id)
                                 }
                             >
-                                {isDefaultShipping ? <div className={classes.default} /> : null}
-                            </div>
+                                {isDefaultShipping  ? <div className={classes.default} /> : null}
+                            </div> : null} */}
 
                             <AddressCard
                                 address={addressEntry}
@@ -132,6 +132,7 @@ const AddressBookPage = props => {
                                 setDefaultShipping={setDefault}
                                 isDefaultShipping={isDefaultShipping}
                                 indexAddress={index}
+                                isPhone={isPhone}
                             />
                         </div>
                     );

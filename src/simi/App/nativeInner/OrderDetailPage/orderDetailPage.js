@@ -72,7 +72,7 @@ const OrderDetailPage = props => {
     const handleImage = (list, listItem) => {
         let result = [];
         list.forEach((item, index) => {
-            if (item[1]) {
+            if (item[1] && item[1].variants) {
                 item[1].variants.forEach((i, idx) => {
                     if (i.product.sku === listItem[index].product_sku) {
                         result.push(i.product.thumbnail.url);

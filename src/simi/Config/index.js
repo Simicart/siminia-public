@@ -14,7 +14,7 @@ window.DEFAULT_COLORS = {
     menu_icon_color: '#ffffff',
     search_box_background: '#f3f3f3',
     search_text_color: '#7f7f7f',
-    app_background: '#ffffff',
+    app_background: '#F2F2F3',
     content_color: '#131313',
     image_border_color: '#f5f5f5',
     line_color: '#e8e8e8',
@@ -24,7 +24,8 @@ window.DEFAULT_COLORS = {
     section_color: '#f8f8f9',
     status_bar_background: '#ffffff',
     status_bar_text: '#000000',
-    loading_color: '#000000'
+    loading_color: '#000000',
+
 };
 
 export const configColor = {

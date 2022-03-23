@@ -21,7 +21,8 @@ const AddressCard = props => {
         onConfirmDelete,
         onEdit,
         onDelete,
-        isDefaultShipping
+        isDefaultShipping,
+        isPhone
     } = props;
 
     const {
@@ -105,8 +106,8 @@ const AddressCard = props => {
 
     return (
         <div>
-            <div className={classes.root}>
-                <div className={classes.contentContainer}>
+            <div  className={classes.root}>
+                <div onClick={onEdit} className={classes.contentContainer}>
                     <span className={classes.name}>{nameString}</span>
                     {streetRows}
                     <span className={classes.additionalAddress}>
@@ -124,7 +125,7 @@ const AddressCard = props => {
                 </div>
 
                 <div className={classes.actionContainer}>
-                    <LinkButton
+                    {!isPhone && <LinkButton
                         classes={{ root: classes.editButton }}
                         onClick={onEdit}
                     >
@@ -133,7 +134,8 @@ const AddressCard = props => {
                             size={16}
                             src={EditIcon}
                         />
-                    </LinkButton>
+                    </LinkButton>}
+                    {isPhone && isDefaultShipping ? "Is default" : null}
 
                     {deleteButtonElement}
                     {maybeConfirmingDeleteOverlay}

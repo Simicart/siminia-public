@@ -70,3 +70,9 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+
+@media (max-width: 960px) {
+    .checkout-step-1, .checkout-step-2 {
+        padding-bottom: 0;
+    }
+}

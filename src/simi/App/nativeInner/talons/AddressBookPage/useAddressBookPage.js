@@ -159,9 +159,10 @@ export const useAddressBookPage = (props = {}) => {
                         },
                         refetchQueries: [{ query: getCustomerAddressesQuery }],
                         awaitRefetchQueries: true
+                        
                     });
-
                     setIsDialogOpen(false);
+                   
                 } catch {
                     // Make sure any errors from the mutations are displayed.
                     setDisplayError(true);
