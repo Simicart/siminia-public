@@ -12,7 +12,6 @@ import NoProductsFound from 'src/simi/BaseComponents/Products/NoProductsFound';
 import { useSearchContentSimiPagination } from 'src/simi/talons/Search/useSearchContentSimiPagination';
 import TitleHelper from 'src/simi/Helper/TitleHelper';
 import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
-
 const Search = props => {
     const { classes, location, history } = props;
     const { formatMessage } = useIntl();
@@ -57,27 +56,34 @@ const Search = props => {
     const title = formatMessage({ id: 'Search results for' }) + ' ' + inputText;
 
     return (
-        <div className={`${!isMobileSite ? classes['container'] : classes['bg-color']} `}>      
-        <div className={`${classes.root} container simi-fadein`}>
-            {TitleHelper.renderMetaHeader({ title })}
-            <Breadcrumbs breadcrumb={breadcrumb} history={history} />
-            {pageControl.totalPages > 0 ? (
-                <Products
-                    type={'category'}
-                    title={title}
-                    history={history}
-                    pageSize={pageSize}
-                    data={products}
-                    sortByData={sortByData}
-                    filterData={appliedFilter}
-                    loading={loading}
-                    loadStyle={loadStyle}
-                    pageControl={pageControl}
-                />
-            ) : (
-                <NoProductsFound />
-            )}
-        </div>
+        <div
+            className={`${
+                !isMobileSite ? classes['container'] : classes['bg-color']
+            } `}
+        >
+            <div className={`${classes.root} container simi-fadein`}>
+                {TitleHelper.renderMetaHeader({ title })}
+                <Breadcrumbs breadcrumb={breadcrumb} history={history} />
+
+                {pageControl.totalPages > 0 ? (
+                    <div className={classes.wrapProducts}>
+                        <Products
+                            type={'category'}
+                            title={title}
+                            history={history}
+                            pageSize={pageSize}
+                            data={products}
+                            sortByData={sortByData}
+                            filterData={appliedFilter}
+                            loading={loading}
+                            loadStyle={loadStyle}
+                            pageControl={pageControl}
+                        />
+                    </div>
+                ) : (
+                    <NoProductsFound />
+                )}
+            </div>
         </div>
     );
 };

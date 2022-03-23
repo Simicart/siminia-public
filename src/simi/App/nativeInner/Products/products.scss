@@ -216,7 +216,7 @@
             display: none;
         }
         .listing-product{
-            margin-top: 80px;
+            margin-top: 20px;
             .product-list-top{
                 padding-bottom: 0px;
                 border-bottom: none;
@@ -244,7 +244,7 @@
             
         }
         .marginTop{
-            margin-top: 120px
+            margin-top: 50px
         }
         .sortby-filter{
             display: grid;
@@ -362,9 +362,13 @@
             position: relative;
             padding-left: 10px;
             padding-right: 10px;
-            .wrapRichContent{
-                padding-top: 60px;
+            .wrapCategoryDesription{
+                margin-top: 70px;
+                .wrapRichContent{
+                    
+                }
             }
+            
             .wrapper {
                 position: fixed;
                 width: -webkit-fill-available;
