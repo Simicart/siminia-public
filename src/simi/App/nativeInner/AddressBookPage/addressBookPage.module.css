@@ -35,7 +35,7 @@
     display: inline-block;
     padding: 0 20px;
     border-radius: 4px;
-    background-color: #0058ac;
+    background-color: var(--venia-global-color-button);
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0;
@@ -125,7 +125,7 @@
         line-height: 55px;
         text-align: center;
         z-index: 7;
-        background-color: #0058ac;
+        background-color: var(--venia-global-color-button);
         color: #fff;
         font-family: Roboto;
         font-size: 16px;

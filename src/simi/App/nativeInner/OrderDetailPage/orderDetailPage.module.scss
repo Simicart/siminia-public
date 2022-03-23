@@ -34,7 +34,7 @@
         margin-bottom: 30px;
 
         thead > tr {
-            border: 1px solid #0058ac;
+            border: 1px solid var(--venia-global-color-button);
             background-color: #dae8f6;
             height: 45px;
             text-align: left;
@@ -145,7 +145,7 @@
     display: flex;
     justify-content: space-between;
     button {
-        color: #0058ac;
+        color: var(--venia-global-color-button);
         font-family: Roboto;
         font-size: 16px;
         font-weight: bold;
@@ -237,7 +237,7 @@
 }
 .mbHeading {
     padding: 20px;
-    background-color: #0058ac;
+    background-color: var(--venia-global-color-button);
     // margin-bottom: 20px;
     //  height: 30px;
     width: 100%;
@@ -273,7 +273,7 @@
     padding: 15px;
     background-color: #fff;
     button {
-        color: #0058ac;
+        color: var(--venia-global-color-button);
         font-family: Roboto;
         font-size: 16px;
         font-weight: bold;
@@ -299,7 +299,7 @@
     box-sizing: border-box;
     // height: 77px;
     // width: 343px;
-    border: 1px solid #0058ac;
+    border: 1px solid var(--venia-global-color-button);
     background-color: #dae8f6;
     margin-bottom: 30px;
     .mbHeadInfoItem {
@@ -312,7 +312,7 @@
         }
         span:nth-child(1),
         span:nth-child(3) {
-            color: #0058ac;
+            color: var(--venia-global-color-button);
             font-family: Roboto;
             font-size: 12px;
             letter-spacing: 0;
@@ -387,7 +387,7 @@
         font-size: 16px;
         letter-spacing: 0;
         line-height: 19px;
-        background-color: #0058ac;
+        background-color: var(--venia-global-color-button);
     }
 }
 .mbPayment {
@@ -541,7 +541,7 @@
 .loader {
     border: 8px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 8px solid #0058ac;
+    border-top: 8px solid var(--venia-global-color-button);
     width: 50px;
     height: 50px;
     -webkit-animation: spin 2s linear infinite;

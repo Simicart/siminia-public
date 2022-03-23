@@ -1,7 +1,7 @@
 .switchersContainer {
     display: block;
     width: 100%;
-    background-color: #0058ac;
+    background-color: var(--venia-global-color-button);
     direction: ltr;
 }
 .switchersContainer button[class*='trigger'] {
@@ -222,7 +222,7 @@ body.fixed-scroll {
     opacity: 0;
     width: 100%;
     height: 100%;
-    background: #0058ac;
+    background: var(--venia-global-color-button);
     transform: translateX(-100%);
     transform-origin: left;
     transition: transform 0.25s linear;
@@ -254,7 +254,7 @@ body.fixed-scroll {
         margin: 0;
         max-width: unset;
         padding: 16px;
-        background: #0058ac;
+        background: var(--venia-global-color-button);
     }
     .header-search-form {
         margin-inline-start: 0;
@@ -315,7 +315,7 @@ body.fixed-scroll {
     }
     .myAccountHead {
         height: 80px;
-        background:linear-gradient(to right, #0058ac 0%, #3e9cf3 100%);
+        background:linear-gradient(to right, var(--venia-global-color-button) 0%, #e4c7a5 100%);
         position:fixed;
         display: flex;
         width: 100%;

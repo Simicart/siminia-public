@@ -2,7 +2,7 @@
     position: absolute;
     min-width: 20px;
     height: 20px;
-    background: #0058ac;
+    background: var(--venia-global-color-button);
     color: #fff;
     border-radius: 10px;
     padding-left: 6px;

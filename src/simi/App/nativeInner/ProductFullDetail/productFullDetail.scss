@@ -24,7 +24,7 @@
             padding-top: 0px;
             padding-bottom: 10px;
             span {
-                color: #0058ac;
+                color: var(--venia-global-color-button);
                 font-size: 14px;
                 font-weight: 600;
                 letter-spacing: 0;
@@ -286,7 +286,7 @@
             border: 1px solid #fff;
             border-radius: 50%;
             font-size: 15px;
-            background: #0058ac;
+            background: var(--venia-global-color-button);
             line-height: 26px;
             // padding: 0 7px;
             width: 26px;

@@ -220,7 +220,7 @@
     border: none;
 }
 .quantityRoot button:nth-child(2) {
-    background-color: #0058b2;
+    background-color:  var(--venia-global-color-button);
 }
 .quantityRoot input {
     transition: all 0.2s ease-out;
