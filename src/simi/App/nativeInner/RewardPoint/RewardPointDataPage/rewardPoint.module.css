@@ -134,6 +134,9 @@ btn {
     .form{
         padding: 0 10px;
     }
+    .buttonsContainer{
+        margin-top: 10px;
+    }
 	table, thead, tbody, th, td, tr { 
 		display: block; 
 	}

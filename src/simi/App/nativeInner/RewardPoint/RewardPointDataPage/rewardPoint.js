@@ -15,23 +15,11 @@ import { useToasts, useWindowSize } from '@magento/peregrine';
 import { Form } from 'informed';
 import Field from '@magento/venia-ui/lib/components/Field';
 import Checkbox from '@magento/venia-ui/lib/components/Checkbox';
+import AlertMessages from '../../ProductFullDetail/AlertMessages';
+import Loader from '../../Loader'
 
 const RewardPointDataPage = props => {
     const { formatMessage } = useIntl();
-    
-    const [, { addToast }] = useToasts();
-
-    const afterSubmit = useCallback(() => {
-        addToast({
-            type: 'info',
-            message: formatMessage({
-                id: 'rewardPoint.preferencesText',
-                defaultMessage: 'Your preferences have been updated.'
-            }),
-            timeout: 5000
-        });
-    }, [addToast, formatMessage]);
-
     const classes = useStyle(defaultClasses);
     const talonProps = useGetRewardPointData();
     const {
@@ -42,7 +30,8 @@ const RewardPointDataPage = props => {
     let history = useHistory();
     const windowSize = useWindowSize();
     const isMobileSite = windowSize.innerWidth <= 768;
-    
+    const [alertMsg, setAlertMsg] = useState(-1)
+
     const handleViewAll = () => {
         history.push('/reward-transactions');
     };
@@ -50,9 +39,7 @@ const RewardPointDataPage = props => {
         mpRewardPoints({
             variables: { isUpdate, isExpire }
         });
-        if (afterSubmit) {
-            afterSubmit();
-        }
+        setAlertMsg(true)
     };
     const [width, setWidth] = useState(window.innerWidth);
 
@@ -82,7 +69,7 @@ const RewardPointDataPage = props => {
         />
     );
     if (isLoadingWithoutData) {
-        return <LoadingIndicator />;
+        return <Loader/>
     }
     let isUpdate = notification_update == 1 ? true : false;
     let isExpire = notification_expire == 1 ? true : false;
@@ -170,6 +157,15 @@ const RewardPointDataPage = props => {
     );
     return (
         <div className={`${classes.root} ${!isMobileSite ? 'container' : ''}`}>
+             <AlertMessages
+                message={formatMessage({
+                    id: 'rewardPoint.preferencesText',
+                    defaultMessage: 'Your preferences have been updated.'
+                })}
+                setAlertMsg={setAlertMsg}
+                alertMsg={alertMsg}
+                status="success"
+            />
             <div className={classes.wrapper}>
                 <LeftMenu label="Reward Points" />
                 <div className={classes.wrapperContainer}>
