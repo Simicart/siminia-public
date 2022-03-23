@@ -1,0 +1,114 @@
+
+.root {
+    display: grid;
+    padding: 2rem 3rem;
+    /* row-gap: 2rem; */
+}
+.wrapper {
+    display: grid;
+    grid-template-columns: 20% auto;
+}
+@media (max-width: 960px) {
+    .wrapper {
+        display: grid;
+        grid-template-columns: auto;
+    }
+}
+.container {
+    display: flex;
+    justify-content: center;
+}
+@media (min-width: 376px) and (max-width:745px) {
+    .container {
+        display: block;
+        justify-content: center;
+        /* flex-direction: column; */
+    }
+}
+.containerSub {
+    min-width: 80%;
+}
+.heading {
+    /* justify-self: center; */
+    font-family: poppins;
+    font-weight: var(--venia-global-fontWeight-bold);
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 14px;
+    padding-top: 20px;
+    margin-bottom: 30px;
+}
+.title {
+    font-size: 1.5rem;
+    font-family: var(--venia-global-fontFamily-serif);
+    font-weight: var(--venia-global-fontWeight-bold);
+    margin-bottom: 15px;
+}
+.textSpan {
+    text-transform: uppercase;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.form {
+    display: grid;
+}
+
+.buttonsContainer {
+    display: flex;
+    justify-content: flex-start;
+    height: 50px;
+    margin-top: 30px;
+}
+
+@media (max-width: 960px) {
+    .buttonsContainer {
+        justify-content: center;
+    }
+    .wrapper{
+        padding: 0px;
+        margin-top: 0px;
+    }
+    .title {
+        font-size: 18px;
+        line-height: 14px;
+        font-family: Roboto;
+    }
+    .textSpan{
+        font-size: 14px;
+        line-height: 14px;
+    }
+    .buttonsContainer {
+        display: flex;
+        justify-content: flex-start;
+        height: auto;
+        margin-top: 50px;
+        background-color: #0058ac;
+        color: #fff;
+        padding: 10px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-family: Roboto;
+        display:flex;
+        justify-content: center;
+        font-weight: 500;
+        
+    }
+    .disabled {
+        display: flex;
+        justify-content: flex-start;
+        height: auto;
+        margin-top: 50px;
+        background-color: #0058ac;
+        color: #fff;
+        padding: 10px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-family: Roboto;
+        display:flex;
+        justify-content: center;
+        font-weight: 500;
+        opacity: 0.8;
+    }
+}
