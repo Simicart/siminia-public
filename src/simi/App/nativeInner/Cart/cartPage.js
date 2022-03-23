@@ -16,8 +16,8 @@ import {RedButton} from "./RedButton";
 import {ProductListingWithBrandSeparation} from "./ProductListingWithBrandSeparation";
 import {useBottomNotification} from "./bottomNotificationHook";
 import {useLoading} from "./loadingHook/useLoading";
-import HeightPad from "./HeightPad/heightPad";
-import SimpleHeader from "./SimpleHeader/simpleHeader";
+// import HeightPad from "./HeightPad/heightPad";
+// import SimpleHeader from "./SimpleHeader/simpleHeader";
 
 const CheckIcon = <Icon size={20} src={Check}/>;
 
@@ -208,17 +208,17 @@ const CartPage = props => {
         !isCartUpdating && totalQuantity > 0 && hasItems && !firstProductsLoad
     )
 
-    const headerText = doneFlickering ? formatMessage({
-            id: 'cart.headTitle',
-            defaultMessage: 'Shopping Cart ({total})',
-        }, {
-            total: totalQuantity
-        }
-    ) : formatMessage({
-            id: 'cart.headTitleNoQuantity',
-            defaultMessage: 'Shopping Cart',
-        }
-    )
+    // const headerText = doneFlickering ? formatMessage({
+    //         id: 'cart.headTitle',
+    //         defaultMessage: 'Shopping Cart ({total})',
+    //     }, {
+    //         total: totalQuantity
+    //     }
+    // ) : formatMessage({
+    //         id: 'cart.headTitleNoQuantity',
+    //         defaultMessage: 'Shopping Cart',
+    //     }
+    // )
 
     // const cartHeader = (
     //     <SimpleHeader

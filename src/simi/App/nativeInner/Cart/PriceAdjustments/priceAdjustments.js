@@ -12,6 +12,7 @@ import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
 import { useGetRewardPointData } from '../../../../talons/RewardPoint/useGetRewardPointData';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { showFogLoading } from '../../../../BaseComponents/Loading/GlobalLoading';
+import {configColor} from "../../../../Config";
 
 const CouponCode = React.lazy(() => import('../CouponCode'));
 // const GiftOptions = React.lazy(() =>
@@ -162,7 +163,7 @@ export const PriceAdjustments = (props) => {
                                 />
                             </div>
                             {balance > 0 ? (
-                                <div>
+                                <div className={classes.rewardPointRoot}>
                                     <input
                                         type="range"
                                         className={classes.slider}
@@ -199,6 +200,10 @@ export const PriceAdjustments = (props) => {
                                     <Button
                                         priority="high"
                                         onClick={applyHandle}
+                                        style={{
+                                            backgroundColor: configColor.button_background,
+                                            color: configColor.button_text_color,
+                                        }}
                                     >
                                         <FormattedMessage
                                             id={'rewardPoint.applyButton'}
