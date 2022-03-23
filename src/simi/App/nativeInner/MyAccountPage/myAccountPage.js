@@ -23,7 +23,8 @@ import {
     Settings,
     UserCheck,
     Gift,
-    HelpCircle
+    HelpCircle,
+    Pocket
 } from 'react-feather';
 import { Link } from 'react-router-dom';
 import Icon from '@magento/venia-ui/lib/components/Icon';
@@ -37,7 +38,7 @@ const servicesList = [
     'Account Subcriptions',
     'Reward Points',
     'Contact Us',
-    'Help Center'
+    'Saved Payments',
 ];
 const signInRequired = [
     'Address Book',
@@ -62,7 +63,7 @@ const MyAccountPage = props => {
         <Icon className={classes.icon} size={22} src={UserCheck} />,
         <Icon className={classes.icon} size={22} src={Gift} />,
         <Icon className={classes.icon} size={22} src={Users} />,
-        <Icon className={classes.icon} size={22} src={HelpCircle} />
+        <Icon className={classes.icon} size={22} src={Pocket} />
     ];
 
     const MyOrders = (
