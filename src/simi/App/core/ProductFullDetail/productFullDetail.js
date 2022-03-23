@@ -48,6 +48,7 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product, history } = props;
+
     const talonProps = useProductFullDetail({ product });
     const {
         breadcrumbCategoryId,
@@ -195,6 +196,7 @@ const ProductFullDetail = props => {
     );
     const { price } = product || {};
     return (
+        <>
         <div className="p-fulldetails-ctn container">
             <DataStructure product ={product} price={price} />
             {breadcrumbs}
@@ -380,6 +382,7 @@ const ProductFullDetail = props => {
                 />
             </ProductDetailExtraProducts>
         </div>
+        </>
     );
 };
 
