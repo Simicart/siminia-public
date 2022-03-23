@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { mergeClasses, useStyle } from '@magento/venia-ui/lib/classify';
 import { shape, string } from 'prop-types';
 import defaultClasses from './rewardPoint.module.css';
@@ -10,9 +10,28 @@ import { useHistory } from 'react-router-dom';
 import { useGetRewardPointData } from '../../../../talons/RewardPoint/useGetRewardPointData';
 import LeftMenu from '../../../core/LeftMenu';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
-import Checkbox from '../../../../BaseComponents/Checkbox';
+// import Checkbox from '../../../../BaseComponents/Checkbox';
+import { useToasts, useWindowSize } from '@magento/peregrine';
+import { Form } from 'informed';
+import Field from '@magento/venia-ui/lib/components/Field';
+import Checkbox from '@magento/venia-ui/lib/components/Checkbox';
 
 const RewardPointDataPage = props => {
+    const { formatMessage } = useIntl();
+    
+    const [, { addToast }] = useToasts();
+
+    const afterSubmit = useCallback(() => {
+        addToast({
+            type: 'info',
+            message: formatMessage({
+                id: 'rewardPoint.preferencesText',
+                defaultMessage: 'Your preferences have been updated.'
+            }),
+            timeout: 5000
+        });
+    }, [addToast, formatMessage]);
+
     const classes = useStyle(defaultClasses);
     const talonProps = useGetRewardPointData();
     const {
@@ -21,6 +40,9 @@ const RewardPointDataPage = props => {
         mpRewardPoints
     } = talonProps;
     let history = useHistory();
+    const windowSize = useWindowSize();
+    const isMobileSite = windowSize.innerWidth <= 768;
+    
     const handleViewAll = () => {
         history.push('/reward-transactions');
     };
@@ -28,9 +50,11 @@ const RewardPointDataPage = props => {
         mpRewardPoints({
             variables: { isUpdate, isExpire }
         });
+        if (afterSubmit) {
+            afterSubmit();
+        }
     };
     const [width, setWidth] = useState(window.innerWidth);
-    const isMobileSite = window.innerWidth <= 768;
 
     useEffect(() => {
         const handleSize = () => {
@@ -60,8 +84,8 @@ const RewardPointDataPage = props => {
     if (isLoadingWithoutData) {
         return <LoadingIndicator />;
     }
-    const isUpdate = notification_update == 1 ? true : false;
-    const isExpire = notification_expire == 1 ? true : false;
+    let isUpdate = notification_update == 1 ? true : false;
+    let isExpire = notification_expire == 1 ? true : false;
 
     const transactionRow =
         transactions && transactions.items
@@ -91,13 +115,13 @@ const RewardPointDataPage = props => {
                       expireDateString = 'N/A';
                   } else expireDateString = expireDateFormat;
                   return (
-                      <tr>
-                          <th>{transaction_id}</th>
-                          <th>{dateFormat}</th>
-                          <th>{comment}</th>
-                          <th>{point_amount}</th>
-                          <th>{rewardStatus}</th>
-                          <th>{expireDateString}</th>
+                      <tr className={classes.title}>
+                          <td>{transaction_id}</td>
+                          <td>{dateFormat}</td>
+                          <td>{comment}</td>
+                          <td>{point_amount}</td>
+                          <td>{rewardStatus}</td>
+                          <td>{expireDateString}</td>
                       </tr>
                   );
               })
@@ -136,14 +160,7 @@ const RewardPointDataPage = props => {
                 <div>
                     <table>
                         <thead>
-                            <tr>
-                                <th>Transaction</th>
-                                <th>Date</th>
-                                <th>Comment</th>
-                                <th>Amount</th>
-                                <th>Status</th>
-                                <th>Expire Date</th>
-                            </tr>
+                            <tr />
                         </thead>
                         <tbody>{transactionRow}</tbody>
                     </table>
@@ -152,7 +169,7 @@ const RewardPointDataPage = props => {
         </div>
     );
     return (
-        <div className={`${classes.root} ${!isMobileSite ? 'container' : ''} `}>
+        <div className={`${classes.root} ${!isMobileSite ? 'container' : ''}`}>
             <div className={classes.wrapper}>
                 <LeftMenu label="Reward Points" />
                 <div className={classes.wrapperContainer}>
@@ -160,27 +177,43 @@ const RewardPointDataPage = props => {
                     {rewardPointDataContent}
                     {rewardTransactionContent}
                     <div className={classes.rewardNotification}>
-                        <div className={classes.rewardTitle}>
-                            Email Notification
+                        <div className={classes.emailTitle}>
+                            {formatMessage({
+                                        id :'rewardPoint. emailNotification',
+                                        defaultMessage :' Email Notification'
+                                    })}
                         </div>
-                        <Checkbox
-                            label="Subcribe to balance update"
-                            onClick={() => {
-                                isUpdate = !isUpdate;
-                            }}
-                        />
-                        <Checkbox
-                            label="Subcribe to points experation notification"
-                            onClick={() => {
-                                isExpire = !isExpire;
-                            }}
-                        />
-                        <Button priority="high" onClick={handleSave}>
-                            <FormattedMessage
-                                id={'rewardPoint.saveButton'}
-                                defaultMessage={'Save'}
+                        <Form className={classes.form} onSubmit={handleSave}>
+                            <Checkbox
+                                field="update"
+                                label={formatMessage({
+                                    id: 'rewardPoint.update',
+                                    defaultMessage: 'Subcribe to balance update'
+                                })}
+                                onClick={() => {
+                                    isUpdate = !isUpdate;
+                                }}
                             />
-                        </Button>
+                            <Checkbox
+                                field="experationNotification"
+                                label={formatMessage({
+                                    id: 'rewardPoint.experationNotification"',
+                                    defaultMessage:
+                                        'Subcribe to points experation notification'
+                                })}
+                                onClick={() => {
+                                    isExpire = !isExpire;
+                                }}
+                            />
+                            <div className={classes.buttonsContainer}>
+                                <Button type="submit" priority="high">
+                                    {formatMessage({
+                                        id :'rewardPoint.saveButton',
+                                        defaultMessage :'Save'
+                                    })}
+                                </Button>
+                            </div>
+                        </Form>
                     </div>
                 </div>
             </div>
