@@ -75,7 +75,7 @@
         width: 100%;
     }
     .buttonsContainer > button {
-        border-radius: 20px;
+        border-radius: 4px;
     }
     .registerBtnContainer {
         font-family: Roboto;
@@ -88,6 +88,6 @@
         left: 32%;
     }
     .registerBtn {
-        color: #0058ac;
+        color: var(--venia-global-color-button);
     }
 }

@@ -8,7 +8,7 @@
     text-align: center;
     border-color: var(--venia-global-color-button);
     background: var(--venia-global-color-button);
-    color: white;
+    color: var(--venia-global-color-button-text);
     border-style: solid;
     border-width: 1px;
     border-radius: 4px;

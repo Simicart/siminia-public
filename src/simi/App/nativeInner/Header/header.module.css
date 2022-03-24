@@ -315,7 +315,7 @@ body.fixed-scroll {
     }
     .myAccountHead {
         height: 80px;
-        background:linear-gradient(to right, var(--venia-global-color-button) 0%, #e4c7a5 100%);
+        background:linear-gradient(to right, var(--venia-global-color-button) 0%, #ffffff 100%);
         position:fixed;
         display: flex;
         width: 100%;

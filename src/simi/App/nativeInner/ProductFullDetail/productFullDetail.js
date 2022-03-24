@@ -7,7 +7,6 @@ import Identify from 'src/simi/Helper/Identify';
 import Price from '@simicart/siminia/src/simi/App/core/PriceWrapper/Price.js';
 import { configColor } from 'src/simi/Config';
 import AlertMessages from './AlertMessages';
-
 import { useProductFullDetail } from '../talons/useProductFullDetail';
 import { isProductConfigurable } from '@magento/peregrine/lib/util/isProductConfigurable';
 import { smoothScrollToView } from 'src/simi/Helper/Behavior';
@@ -337,7 +336,7 @@ const ProductFullDetail = props => {
 
     const wrapperPrice = (
         <div className="wrapperPrice">
-            <span className="labelPrice">
+            <span className="labelPrice" style={{color: configColor.price_color}}>
                 {!isMobileSite ? (
                     <FormattedMessage
                         id="productFullDetail.labelPrice"
@@ -345,7 +344,7 @@ const ProductFullDetail = props => {
                     />
                 ) : null}
             </span>
-            <span className={classes.productPrice}>{pricePiece}</span>
+            <span style={{color: configColor.price_color}} className={classes.productPrice}>{pricePiece}</span>
             {isOutOfStock ? (
                 <span className="outOfStock">
                     <FormattedMessage
