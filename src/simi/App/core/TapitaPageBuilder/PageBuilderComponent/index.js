@@ -11,7 +11,7 @@ import LzL from 'src/simi/BaseComponents/LazyLoad';
 import './pagebuilder.css';
 
 const PageBuilderComponent = props => {
-    const { key, endPoint, maskedId, pageData, overRender, toPreview } = props;
+    const { key, endPoint, maskedId, pageData, overRender, toPreview, layoutFilter=null } = props;
     const history = useHistory();
     return (
         <PbComponent
@@ -41,6 +41,7 @@ const PageBuilderComponent = props => {
             overRender={overRender}
             toPreview={toPreview}
             lazyloadPlaceHolder={isBot() ? null : <div />}
+            layoutFilter={layoutFilter}
         />
     );
 };

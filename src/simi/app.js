@@ -14,6 +14,8 @@ import {
     StoreTitle
 } from '@magento/venia-ui/lib/components/Head';
 import useDelayedTransition from './talons/useDelayedTransition';
+import { configColor } from './Config';
+import { Helmet } from 'react-helmet';
 
 import {
     AlertCircle as AlertCircleIcon,
@@ -94,11 +96,7 @@ const App = props => {
 
     const { hasOverlay, handleCloseDrawer } = talonProps;
     const mainComponent = useMemo(
-        () => (
-            <Main>
-                {renderError ? '' : <Routes />}
-            </Main>
-        ),
+        () => <Main>{renderError ? '' : <Routes />}</Main>,
         [renderError]
     );
     if (renderError) {
@@ -114,6 +112,24 @@ const App = props => {
 
     return (
         <HeadProvider>
+            {!!configColor && (
+                <Helmet
+                    style={[
+                        {
+                            cssText: `
+                        html {
+                            --venia-global-color-button: ${
+                                configColor.button_background
+                            };
+                            --venia-global-color-button-text: ${
+                                configColor.button_text_color
+                            };
+                        }
+                    `
+                        }
+                    ]}
+                />
+            )}
             {/* move StoreTitle to main to avoid querying too many APIs
             <StoreTitle />*/}
             {mainComponent}

@@ -36,6 +36,7 @@ const Product = props => {
 
     const { error, loading, product: originalProduct } = talonProps;
     const { loading: pbLoading, findPage, allPages } = pbFinderProps;
+
     const product = originalProduct ? prepareProduct(originalProduct) : false;
     useEffect(() => {
         if (!pbLoading && !allPages && !requestedPbPages) {
@@ -129,6 +130,7 @@ const Product = props => {
                 }
                 return parseInt(el2.priority) - parseInt(el1.priority);
             });
+
             if (pbPages.length && pbPages[0]) return pbPages[0];
         }
     }, [allPages, product]);
@@ -158,7 +160,7 @@ const Product = props => {
             </h1>
         );
     }
-    
+
     return (
         <Fragment>
             <Seo pageType="PRODUCT"/>
