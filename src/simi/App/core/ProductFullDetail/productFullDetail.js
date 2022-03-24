@@ -334,7 +334,14 @@ const ProductFullDetail = props => {
                                 defaultMessage={'Product Description'}
                             />
                         </span>
-                        <RichContent html={productDetails.description} />
+                        <RichContent
+                            html={
+                                productDetails.description &&
+                                productDetails.description.html
+                                    ? productDetails.description.html
+                                    : productDetails.description
+                            }
+                        />
                     </section>
 
                     <section className={classes.details}>
