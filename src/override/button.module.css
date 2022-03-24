@@ -6,9 +6,9 @@
     line-height: 1;
     pointer-events: auto;
     text-align: center;
-    border-color: #0058ac;
-    background: #0058ac;
-    color: white;
+    border-color: var(--venia-global-color-button);
+    background: var(--venia-global-color-button);
+    color: var(--venia-global-color-button-text);
     border-style: solid;
     border-width: 1px;
     border-radius: 4px;
@@ -63,7 +63,7 @@
 .root_lowPriority {
     composes: root;
     background: white;
-    color: #0058ac;
+    color: var(--venia-global-color-button);
     --stroke: var(--venia-global-color-gray-700);
 }
 .root_lowPriority:hover {
@@ -80,7 +80,7 @@
 .root_normalPriority {
     composes: root;
     background: white;
-    color: #0058ac;
+    color: var(--venia-global-color-button);
 }
 .root_normalPriorityNegative {
     composes: root_normalPriority;
