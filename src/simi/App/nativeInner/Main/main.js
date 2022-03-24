@@ -57,7 +57,6 @@ const Main = props => {
     } catch (err) {
         console.warn('no splash screen found');
     }
-    console.log("hahah", configColor.app_background);
     return (
         <React.Fragment>
             {mageworxSeoEnabled ? (
