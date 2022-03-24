@@ -375,7 +375,7 @@ const Products = props => {
                 >
                     {renderLeftNavigation()}
                 </div>
-                <div className="wrapCategoryDesription">
+                <div className={`${category ? 'wrapCategoryDesription' : ''}`}>
                     <CategoryDesription childCate={category} />
                 </div>
                 <div

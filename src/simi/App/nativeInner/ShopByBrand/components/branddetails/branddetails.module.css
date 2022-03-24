@@ -30,6 +30,8 @@
     padding-top: 15px;
     padding-bottom: 15px;
     border-bottom: solid 1px #eaeaea;
+    background-color: #fff;
+    margin-bottom: 15px;
 }
 .brandCategoriesTitle {
     margin-bottom: 15px;
@@ -50,5 +52,5 @@
 @media (max-width: 768px) {
     .rootDetails {
         padding: 0;
-    }
+    }  
 }

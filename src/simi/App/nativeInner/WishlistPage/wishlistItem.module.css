@@ -129,11 +129,11 @@
     .addToCart {
         grid-area: addCart;
         /* composes: root_highPriority from '@magento/venia-ui/lib/components/Button/button.module.css'; */
-        height: 30px;
+        height: 35px;
         width: 58px;
         border-radius: 15px;
-        background-color: #0058ac;
-        border-color: #0058ac;
+        background-color: var(--venia-global-color-button);
+        border-color: var(--venia-global-color-button);
         border: none;
         min-height: unset;
         margin: 0;
@@ -141,7 +141,7 @@
     .share{
         grid-area: share;
         box-sizing: border-box;
-        height: 30px;
+        height: 35px;
         width: 58px;
         border: 1px solid #C3BEBE;
         border-radius: 15px;
