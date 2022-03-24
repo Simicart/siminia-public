@@ -53,7 +53,7 @@
     "rendertron-middleware": "~0.1.5",
     "sass": "~1.43.4",
     "sass-loader": "^7.1.0",
-    "simi-pagebuilder-react": "^1.3.8",
+    "simi-pagebuilder-react": "^1.4.0",
     "universal-cookie": "^4.0.3"
   },
   "devDependencies": {
