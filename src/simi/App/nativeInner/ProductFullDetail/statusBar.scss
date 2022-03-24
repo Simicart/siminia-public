@@ -11,7 +11,7 @@
     align-items: center;
     .first-item {
         border-radius: 16px 0 0 0;
-        background-color: #0058ac;
+        background-color: var(--venia-global-color-button);
         height: 40px;
         line-height: 40px;
         color: #ffffff;
@@ -60,11 +60,11 @@
             justify-content: center;
         }
         li:nth-child(2) {
-            background-color: #ededed;
+            background-color: var(--venia-global-color-gray-237);
             color: #000;
         }
         li:nth-child(3) {
-            background-color: #0058ac;
+            background-color: var(--venia-global-color-button);
             color: #ededed;
         }
     }
@@ -114,7 +114,7 @@
 // .loader {
 //     border: 8px solid #f3f3f3;
 //     border-radius: 50%;
-//     border-top: 8px solid #0058ac;
+//     border-top: 8px solid var(--venia-global-color-button);
 //     width: 50px;
 //     height: 50px;
 //     -webkit-animation: spin 2s linear infinite;

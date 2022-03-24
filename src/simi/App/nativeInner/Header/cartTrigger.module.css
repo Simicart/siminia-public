@@ -49,7 +49,7 @@
     min-height: 2.5rem;
     outline: none;
     text-transform: uppercase;
-    background-color: #0058ac;
+    background-color: var(--venia-global-color-button);
     grid-column: 1 / span 1;
     margin: auto;
     border: none;

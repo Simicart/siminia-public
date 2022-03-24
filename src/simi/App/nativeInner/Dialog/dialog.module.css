@@ -223,7 +223,7 @@
     .submitBtn {
         font-size: 18px;
         font-weight: 500;
-        background-color: #0058ac;
+        background-color: var(--venia-global-color-button);
         color: #fff;
         text-align: center;
         padding: 5px 0;

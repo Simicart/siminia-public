@@ -57,7 +57,7 @@
 }
 .viewOrder {
     a > button {
-        color: #0058AC;
+        color: var(--venia-global-color-button);
         font-family: Roboto;
         font-size: 14px;
         font-weight: bold;
@@ -83,7 +83,7 @@
         text-align: center;
         border-radius: 3px;
         background-color: #fff;
-        border: 1px solid #0058AC;
+        border: 1px solid var(--venia-global-color-button);
         font-size: 12px;
         padding: 5px 0;
     }
@@ -91,7 +91,7 @@
         content: "";
         height: 0px;
         width: 0px;
-        border-top: 10px solid #0058AC;
+        border-top: 10px solid var(--venia-global-color-button);
         border-right: 10px solid transparent;
         border-bottom: 5px solid transparent;
         position: absolute;
@@ -103,7 +103,7 @@
 .loader {
     border: 8px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 8px solid #0058ac;
+    border-top: 8px solid var(--venia-global-color-button);
     width: 50px;
     height: 50px;
     -webkit-animation: spin 2s linear infinite;
@@ -134,7 +134,7 @@
 //     height: 30px;
 //     width: 100px;
 //     border-radius: 46px 0 0 46px;
-//     background-color: #0058AC;
+//     background-color: var(--venia-global-color-button);
 //     color: #fff;
 //     line-height: 30px;
 //     padding-left: 20px;
@@ -142,7 +142,7 @@
 // }
 .loadMoreBtn {
     font-family: roboto;
-    color: #0058AC;
+    color: var(--venia-global-color-button);
     font-weight: 600;
     text-decoration: underline;
 }
