@@ -96,8 +96,9 @@
 
     .checkoutButton_container > button {
         max-width: unset;
-        padding-top: 0.75rem;
-        padding-bottom: 0.75rem;
-        border-radius: 0;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        border-radius: 4px;
+        min-height: 50px;
     }
 }

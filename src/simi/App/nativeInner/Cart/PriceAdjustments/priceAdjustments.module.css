@@ -36,3 +36,43 @@
 .estimateButton {
     justify-self: flex-start;
 }
+
+
+.slider {
+    width: 100%;
+}
+.message {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    min-width: 50%;
+}
+.userBalance {
+    margin: 0 1rem 1rem 0;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+}
+.pointSpend {
+    margin: 1rem 0;
+    display: flex;
+}
+.pointInput {
+    text-align: center;
+    margin-left: 15px;
+    min-width: 70px;
+    max-height: 30px;
+}
+
+@media(max-width: 960px) {
+    .rewardPointRoot > button {
+        height: 35px;
+        min-height: 35px;
+        padding-top: 7px;
+    }
+    .message {
+        min-width: fit-content;
+    }
+
+    .pointInput {
+        width: 100%;
+    }
+}
