@@ -1,4 +1,4 @@
-import React, {Fragment, useCallback, useEffect, useRef, useState} from 'react';
+import React, {Fragment, useCallback, useEffect, useRef, useState, Suspense} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Check} from 'react-feather';
 import {useCartPage} from '@magento/peregrine/lib/talons/CartPage/useCartPage';
@@ -16,6 +16,8 @@ import {RedButton} from "./RedButton";
 import {ProductListingWithBrandSeparation} from "./ProductListingWithBrandSeparation";
 import {useBottomNotification} from "./bottomNotificationHook";
 import {useLoading} from "./loadingHook/useLoading";
+import { useWindowSize } from '@magento/peregrine';
+import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 // import HeightPad from "./HeightPad/heightPad";
 // import SimpleHeader from "./SimpleHeader/simpleHeader";
 
@@ -38,6 +40,7 @@ const CheckIcon = <Icon size={20} src={Check}/>;
  * @example <caption>Importing into your project</caption>
  * import CartPage from "@magento/venia-ui/lib/components/CartPage";
  */
+
 const CartPage = props => {
 
     const talonProps = useCartPage();
@@ -245,5 +248,22 @@ const CartPage = props => {
     );
 };
 
-export default CartPage;
+const CoreCartPage = React.lazy(() => import('src/simi/App/core/Cart'))
+
+const HOCartPage = props => {
+    const windowSize = useWindowSize();
+    const isPhone = windowSize.innerWidth < 450
+
+    if(isPhone) {
+        return <CartPage {...props} />
+    }
+
+    return (
+        <Suspense fallback={<LoadingIndicator />}>
+            <CoreCartPage {...props} />
+        </Suspense>
+    )
+}
+
+export default HOCartPage;
 
