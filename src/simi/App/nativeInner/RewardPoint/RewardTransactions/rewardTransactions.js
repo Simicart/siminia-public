@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import { useGetRewardPointData } from '../../../../talons/RewardPoint/useGetRewardPointData';
-import LeftMenu from '../../../core/LeftMenu';
+import LeftMenu from '../../../core/LeftMenu'
 import defaultClasses from './rewardTransaction.module.css';
 import { FormattedMessage } from 'react-intl';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 import moment from 'moment';
+import { useWindowSize } from '@magento/peregrine';
 
 const RewardTransaction = props => {
     const classes = useStyle(defaultClasses);
     const talonProps = useGetRewardPointData();
     const { customerTransactions, isLoadingWithoutData } = talonProps;
     const [width, setWidth] = useState(window.innerWidth);
-
+    const windowSize = useWindowSize();
+    const isMobileSite = windowSize.innerWidth <= 768;
     useEffect(() => {
         const handleSize = () => {
             setWidth(window.innerWidth);
@@ -27,6 +29,7 @@ const RewardTransaction = props => {
     if (isLoadingWithoutData) {
         return <LoadingIndicator />;
     }
+    
     const transactionRow =
         customerTransactions && customerTransactions.items
             ? customerTransactions.items.map(transaction => {
@@ -56,18 +59,18 @@ const RewardTransaction = props => {
                   } else expireDateString = expireDateFormat;
                   return (
                       <tr>
-                          <th>{transaction_id}</th>
-                          <th>{dateFormat}</th>
-                          <th>{comment}</th>
-                          <th>{point_amount}</th>
-                          <th>{rewardStatus}</th>
-                          <th>{expireDateString}</th>
+                          <td>{transaction_id}</td>
+                          <td>{dateFormat}</td>
+                          <td>{comment}</td>
+                          <td>{point_amount}</td>
+                          <td>{rewardStatus}</td>
+                          <td>{expireDateString}</td>
                       </tr>
                   );
               })
             : null;
     return (
-        <div className={`${classes.root} container`}>
+        <div className={`${classes.root} ${!isMobileSite ? 'container' : ''}`}>
             <div className={classes.wrapper}>
                 <LeftMenu label="Reward Transactions" />
                 <div className={classes.wrapperContainer}>
@@ -81,12 +84,7 @@ const RewardTransaction = props => {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Transaction</th>
-                                    <th>Date</th>
-                                    <th>Comment</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                    <th>Expire Date</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>{transactionRow}</tbody>
