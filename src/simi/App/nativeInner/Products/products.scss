@@ -4,6 +4,7 @@
         font-weight: 400;
         margin: 0 0 1.5rem;
         padding: 0 0.25rem 6px;
+        margin-top: 15px;
     }
 
     .categoryTitle {
@@ -27,6 +28,9 @@
             padding-bottom: 10px;
             border-bottom: solid 1px #d3d3d3;
             margin-bottom: 29px;
+            .category-title{
+                display: none;
+            }
         }
         .items-count {
             font-weight: 400;
@@ -203,6 +207,14 @@
         } 
     }
     @media (max-width: 768px) {
+        .wrapCategoryDesription{
+            padding: 0 10px;
+            .wrapRichContent{
+                .blocks-promo{
+                    padding-top: 15px;
+                }
+            }
+        }
         .bg-white{
             position: fixed;
             top: 0;
@@ -216,7 +228,7 @@
             display: none;
         }
         .listing-product{
-            margin-top: 20px;
+            margin-top: 0;
             .product-list-top{
                 padding-bottom: 0px;
                 border-bottom: none;
@@ -226,6 +238,7 @@
                 grid-template-columns: 1fr min-content;
                 margin-top: 0px;
                 .category-title{
+                    display: unset;
                     grid-area: title;
                     font-weight: 600;
                     font-size: 14px;
@@ -244,7 +257,7 @@
             
         }
         .marginTop{
-            margin-top: 50px
+            margin-top: 50px;
         }
         .sortby-filter{
             display: grid;
@@ -362,14 +375,14 @@
             position: relative;
             padding-left: 10px;
             padding-right: 10px;
-            .wrapCategoryDesription{
-                margin-top: 70px;
-                .wrapRichContent{
-                    .blocks-promo{
-                        padding-top: 15px;
-                    }
-                }
-            }
+            // .wrapCategoryDesription{
+            //     margin-top: 70px;
+            //     .wrapRichContent{
+            //         .blocks-promo{
+            //             padding-top: 15px;
+            //         }
+            //     }
+            // }
             
             .wrapper {
                 position: fixed;

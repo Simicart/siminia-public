@@ -276,7 +276,9 @@ const Products = props => {
             <h1 className="title">
                 <div className="categoryTitle">{title}</div>
             </h1>
-
+            <div className={`${category ? 'wrapCategoryDesription' : ''}`}>
+                    <CategoryDesription childCate={category} />
+                </div>
             <div className="product-list-container-siminia">
                 <div className="wrapper">
                     {windowSize.innerWidth > 768 ? (
@@ -375,9 +377,7 @@ const Products = props => {
                 >
                     {renderLeftNavigation()}
                 </div>
-                <div className={`${category ? 'wrapCategoryDesription' : ''}`}>
-                    <CategoryDesription childCate={category} />
-                </div>
+                
                 <div
                     className={`${
                         renderCarouselChildCate() ? 'marginTop' : ''

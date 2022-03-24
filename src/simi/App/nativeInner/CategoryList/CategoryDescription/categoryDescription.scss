@@ -1,6 +1,14 @@
+.wrapRichContent{
+    .extra-main-content .extra-col1 .extra_content{ 
+        max-height: unset;
+    }
+    .category-description-fade {
+        height: unset;
+    }
+    
+}
 @media (max-width: 768px) {
     .wrapRichContent{
-        padding-top: 15px;
         > div > div > div:nth-child(2){
             padding : 0 10px;
         }
@@ -20,6 +28,9 @@
             white-space: nowrap;
             margin-top: 11px;
             height: 22px;
+        }
+        .content{
+            margin-bottom: 15px;
         }
         .content img{
             margin-left: auto;
