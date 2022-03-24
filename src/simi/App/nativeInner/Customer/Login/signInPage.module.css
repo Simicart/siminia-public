@@ -31,5 +31,6 @@
         padding-bottom: 2rem;
         border: 2px solid rgb(var(--venia-global-color-border));
         border-radius: 0.375rem;
+        background-color: white;
     }
 }

@@ -3,7 +3,7 @@
     min-width: 20px;
     height: 20px;
     background: var(--venia-global-color-button);
-    color: #fff;
+    color: var(--venia-global-color-button-text);
     border-radius: 10px;
     padding-left: 6px;
     padding-right: 6px;

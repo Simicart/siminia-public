@@ -40,7 +40,7 @@
     font-weight: 600;
     letter-spacing: 0;
     line-height: 50px;
-    color: #fff;
+    color: var(--venia-global-color-button-text);
     cursor: pointer;
 }
 
@@ -126,7 +126,7 @@
         text-align: center;
         z-index: 7;
         background-color: var(--venia-global-color-button);
-        color: #fff;
+        color: var(--venia-global-color-button-text);
         font-family: Roboto;
         font-size: 16px;
         font-weight: 500;

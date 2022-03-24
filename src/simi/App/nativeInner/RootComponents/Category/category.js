@@ -94,76 +94,92 @@ const Category = props => {
     }
 
     return (
-        <div className={`${!isMobileSite ? 'container' : 'bg-color'} `}>
-            {mageworxSeoEnabled ? (
-                <>
-                    <Seo pageType="CATEGORY" />
-                    <Canonical url={mageworx_canonical_url} type="CATEGORY" />
-                    <MarkupCategory category={category} />
-                </>
-            ) : (
-                <>
-                    <SeoBasic pageType="CATEGORY" />
-                    <CanonicalBasic
-                        url={mageworx_canonical_url}
-                        type="CATEGORY"
-                    />
-                    <MarkupCategoryBasic category={category} />
-                </>
-            )}
+        <div style={isMobileSite ? {} : { backgroundColor: 'white' }}>
+            <div className={`${!isMobileSite ? 'container' : 'bg-color'} `}>
+                {mageworxSeoEnabled ? (
+                    <>
+                        <Seo pageType="CATEGORY" />
+                        <Canonical
+                            url={mageworx_canonical_url}
+                            type="CATEGORY"
+                        />
+                        <MarkupCategory category={category} />
+                    </>
+                ) : (
+                    <>
+                        <SeoBasic pageType="CATEGORY" />
+                        <CanonicalBasic
+                            url={mageworx_canonical_url}
+                            type="CATEGORY"
+                        />
+                        <MarkupCategoryBasic category={category} />
+                    </>
+                )}
 
-            {!isMobileSite && breadcrumb && breadcrumb.length ? (
-                <div style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
-                    <Breadcrumbs breadcrumb={breadcrumb} />
-                </div>
-            ) : (
-                ''
-            )}
-            {TitleHelper.renderMetaHeader({
-                title: category.meta_title
-                    ? category.meta_title
-                    : category.name,
-                desc: category.meta_description
-                    ? category.meta_description
-                    : null,
-                meta_other: [
-                    <meta
-                        name="keywords"
-                        content={
-                            category.meta_keywords ? category.meta_keywords : ''
-                        }
-                        key="keywords"
-                    />
-                ]
-            })}
-            {category && category.name && category.image && (
-                <div className="wrapCategoryHeader">
-                    <CategoryHeader
-                        name={category.name}
-                        image_url={resourceUrl(category.image, {
-                            type: 'image-category'
-                        })}
-                    />
-                </div>
-            )}
-            {pageControl.totalPages === 0 && !isApplyingFilter ? (
-                <NoProductsFound categoryId={id} />
-            ) : (
-                <div className={`${category.image ? '' : 'wrapProductsListing' }`}>
-                    <Products
-                        type={'category'}
-                        title={categoryTitle}
-                        history={history}
-                        pageSize={pageSize}
-                        data={products}
-                        sortByData={sortByData}
-                        filterData={appliedFilter}
-                        loading={loading}
-                        loadStyle={loadStyle}
-                        pageControl={pageControl}
-                    />
-                </div>
-            )}
+                {!isMobileSite && breadcrumb && breadcrumb.length ? (
+                    <div
+                        style={{
+                            paddingTop: '1.5rem',
+                            paddingBottom: '1.5rem'
+                        }}
+                    >
+                        <Breadcrumbs breadcrumb={breadcrumb} />
+                    </div>
+                ) : (
+                    ''
+                )}
+                {TitleHelper.renderMetaHeader({
+                    title: category.meta_title
+                        ? category.meta_title
+                        : category.name,
+                    desc: category.meta_description
+                        ? category.meta_description
+                        : null,
+                    meta_other: [
+                        <meta
+                            name="keywords"
+                            content={
+                                category.meta_keywords
+                                    ? category.meta_keywords
+                                    : ''
+                            }
+                            key="keywords"
+                        />
+                    ]
+                })}
+                {category && category.name && category.image && (
+                    <div className="wrapCategoryHeader">
+                        <CategoryHeader
+                            name={category.name}
+                            image_url={resourceUrl(category.image, {
+                                type: 'image-category'
+                            })}
+                        />
+                    </div>
+                )}
+                {pageControl.totalPages === 0 && !isApplyingFilter ? (
+                    <NoProductsFound categoryId={id} />
+                ) : (
+                    <div
+                        className={`${
+                            category.image ? '' : 'wrapProductsListing'
+                        }`}
+                    >
+                        <Products
+                            type={'category'}
+                            title={categoryTitle}
+                            history={history}
+                            pageSize={pageSize}
+                            data={products}
+                            sortByData={sortByData}
+                            filterData={appliedFilter}
+                            loading={loading}
+                            loadStyle={loadStyle}
+                            pageControl={pageControl}
+                        />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

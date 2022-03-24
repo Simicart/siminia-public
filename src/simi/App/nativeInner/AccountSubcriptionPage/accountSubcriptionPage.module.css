@@ -84,7 +84,7 @@
         justify-content: flex-start;
         height: auto;
         margin-top: 50px;
-        background-color: #0058ac;
+        background-color: var( --venia-global-color-button);
         color: #fff;
         padding: 10px;
         border-radius: 30px;
@@ -100,7 +100,7 @@
         justify-content: flex-start;
         height: auto;
         margin-top: 50px;
-        background-color: #0058ac;
+        background-color: var( --venia-global-color-button);
         color: #fff;
         padding: 10px;
         border-radius: 30px;
