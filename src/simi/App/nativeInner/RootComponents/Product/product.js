@@ -5,10 +5,8 @@ import { useProduct } from '@simicart/siminia/src/simi/talons/ProductFullDetail/
 
 import ErrorView from '@magento/venia-ui/lib/components/ErrorView';
 import { StoreTitle, Meta } from '@magento/venia-ui/lib/components/Head';
-import  {
-    ProductBuilderFullDetail
-} from '@simicart/siminia/src/simi/App/core/ProductFullDetail';
-import ProductFullDetail from '../../ProductFullDetail'
+import { ProductBuilderFullDetail } from '@simicart/siminia/src/simi/App/core/ProductFullDetail';
+import ProductFullDetail from '../../ProductFullDetail';
 import { prepareProduct } from 'src/simi/Helper/Product';
 import mapProduct from '@magento/venia-ui/lib/util/mapProduct';
 import ProductShimmer from './product.shimmer';
@@ -20,6 +18,7 @@ const storage = new BrowserPersistence();
 const storeCode = storage.getItem('store_view_code') || STORE_VIEW_CODE;
 import Seo from '@simicart/siminia/src/simi/App/core/Seo';
 
+const isMobileSite = window.innerWidth <= 450;
 /*
  * As of this writing, there is no single Product query type in the M2.3 schema.
  * The recommended solution is to use filter criteria on a Products query.
@@ -34,7 +33,6 @@ const Product = props => {
         operations: DEFAULT_OPERATIONS,
         mapProduct
     });
-
 
     const { error, loading, product: originalProduct } = talonProps;
     const { loading: pbLoading, findPage, allPages } = pbFinderProps;
@@ -160,23 +158,24 @@ const Product = props => {
             </h1>
         );
     }
-    
+
     return (
-        <Fragment>
-            <Seo pageType="PRODUCT"/>
-            <StoreTitle>{product.name}</StoreTitle>
-            <Meta name="description" content={product.meta_description} />
-            {foudThepage || pageMaskedId ? (
-                <ProductBuilderFullDetail
-                    product={product}
-                    pageData={foudThepage}
-                    maskedId={pageMaskedId}
-                />
-            ) : (
-                <ProductFullDetail product={product} />
-            )}
-           
-        </Fragment>
+        <div style={isMobileSite ? {} : { backgroundColor: 'white' }}>
+            <div className={`${!isMobileSite ? 'container' : 'bg-color'} `}>
+                <Seo pageType="PRODUCT" />
+                <StoreTitle>{product.name}</StoreTitle>
+                <Meta name="description" content={product.meta_description} />
+                {foudThepage || pageMaskedId ? (
+                    <ProductBuilderFullDetail
+                        product={product}
+                        pageData={foudThepage}
+                        maskedId={pageMaskedId}
+                    />
+                ) : (
+                    <ProductFullDetail product={product} />
+                )}
+            </div>
+        </div>
     );
 };
 
