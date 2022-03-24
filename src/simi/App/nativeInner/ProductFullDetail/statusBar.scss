@@ -14,7 +14,7 @@
         background-color: var(--venia-global-color-button);
         height: 40px;
         line-height: 40px;
-        color: #ffffff;
+        color: var(--venia-global-color-button-text);
         font-size: 14px;
         letter-spacing: 0;
         padding: 0 10px;
@@ -65,7 +65,7 @@
         }
         li:nth-child(3) {
             background-color: var(--venia-global-color-button);
-            color: #ededed;
+            color: var(--venia-global-color-button-text);
         }
     }
 }

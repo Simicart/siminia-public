@@ -71,7 +71,7 @@
     align-items: center;
     position: relative;
     padding: 20px;
-    background-color: #0058b2;
+    background-color: var(--venia-global-color-button);
 }
 .closeBtn {
     position: absolute;
@@ -91,26 +91,20 @@
     margin-top: 20px;
 }
 .writeRWBtn {
-    box-sizing: border-box;
-    height: 45px;
-    width: 167px;
-    border: 1px solid #0058b2;
-    background-color: #ffffff;
-    color: #0058b2;
+    background: var(--venia-global-color-button);
+    color: var(--venia-global-color-button-text);
+    padding: 5px 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
     font-family: Roboto;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0;
-    line-height: 45px;
-    margin-top: 20px;
-    text-transform: uppercase;
 }
 .submitReviewBtn {
     height: 45px;
     width: 167px;
     border-radius: 22.5px !important;
-    background-color: #0058b2;
-    color: #ffffff;
+    background-color: var(--venia-global-color-button);
+    color: var(--venia-global-color-button-text);
     font-family: Roboto;
     font-size: 16px;
     font-weight: 500;
@@ -122,9 +116,9 @@
     .submitReviewBtn {
         height: 45px;
         width: 100%;
-        border-radius: 22.5px !important;
-        background-color: #0058b2;
-        color: #ffffff;
+        border-radius: 4px !important;
+        background-color: var(--venia-global-color-button);
+        color: var(--venia-global-color-button-text);
         font-family: Roboto;
         font-size: 16px;
         font-weight: 500;

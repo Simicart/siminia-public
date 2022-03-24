@@ -12,7 +12,7 @@ import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator'
 import TextInput from '../TextInput';
 import defaultClasses from './signIn.module.css';
 import { GET_CART_DETAILS_QUERY } from './signIn.gql';
-import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
+import LinkButton from '../LinkButton';
 import Password from '../Password';
 import FormError from '@magento/venia-ui/lib/components/FormError/formError';
 import { useWindowSize } from '@magento/peregrine';

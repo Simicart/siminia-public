@@ -224,10 +224,10 @@
         font-size: 18px;
         font-weight: 500;
         background-color: var(--venia-global-color-button);
-        color: #fff;
+        color: var(--venia-global-color-button-text);
         text-align: center;
         padding: 5px 0;
-        border-radius: 20px;
+        border-radius: 4px;
         width: 100%;
         
     }
