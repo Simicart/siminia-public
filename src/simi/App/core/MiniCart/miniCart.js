@@ -16,6 +16,7 @@ import StockStatusMessage from '@magento/venia-ui/lib/components/StockStatusMess
 import ProductList from './ProductList';
 import defaultClasses from './miniCart.module.css';
 import operations from './miniCart.gql';
+import { configColor } from 'src/simi/Config';
 
 const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
 
@@ -94,7 +95,7 @@ const MiniCart = React.forwardRef((props, ref) => {
                         defaultMessage={'Subtotal'}
                     />
                 </span>
-                <span className={classes.priceSubtotal}>
+                <span style={{color: configColor.price_color}} className={classes.priceSubtotal}>
                     <Price
                         currencyCode={subTotal.currency}
                         value={subTotal.value}
@@ -106,7 +107,7 @@ const MiniCart = React.forwardRef((props, ref) => {
                         defaultMessage={'Grand Total'}
                     />
                 </span>
-                <span className={classes.priceGrandTotal}>
+                <span style={{color: configColor.price_color}} className={classes.priceGrandTotal}>
                     <Price
                         currencyCode={subTotal.currency}
                         value={subTotal.value}
