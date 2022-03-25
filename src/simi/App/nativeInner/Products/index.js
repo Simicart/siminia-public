@@ -36,11 +36,10 @@ const Products = props => {
         pageSize,
         pageControl
     } = props;
-    const { category } = data;
+    const { category, products } = data;
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
     const isMobileSite = windowSize.innerWidth <= 768;
-    const { products } = data;
     const { total_count } = products;
     const { formatMessage } = useIntl();
 
@@ -270,15 +269,14 @@ const Products = props => {
     };
     useEventListener(globalThis, 'keydown', handleClickOutside);
     useEventListener(globalThis, 'mousedown', handleClickOutside);
-
     return (
         <article className="products-root" id="root-product-list">
             <h1 className="title">
                 <div className="categoryTitle">{title}</div>
             </h1>
             <div className={`${category ? 'wrapCategoryDesription' : ''}`}>
-                    <CategoryDesription childCate={category} />
-                </div>
+                <CategoryDesription childCate={category} />
+            </div>
             <div className="product-list-container-siminia">
                 <div className="wrapper">
                     {windowSize.innerWidth > 768 ? (
@@ -368,7 +366,9 @@ const Products = props => {
                     )}
                     {renderCarouselChildCate()}
                 </div>
-                {windowSize.innerWidth > 768 ? renderLeftNavigation() : ''}
+                {windowSize.innerWidth > 768 && products.filters.length > 0
+                    ? renderLeftNavigation()
+                    : ''}
                 <div
                     ref={dropdownRef}
                     className={`${
@@ -377,7 +377,7 @@ const Products = props => {
                 >
                     {renderLeftNavigation()}
                 </div>
-                
+
                 <div
                     className={`${
                         renderCarouselChildCate() ? 'marginTop' : ''

@@ -3,11 +3,9 @@
         font-size: 18px;
         line-height: 24px;
         font-weight: 600;
-        color: #e02020;
     }
     .regular-price .price {
         font-weight: 400;
-        color: #4f4f4f;
     }
     .sale_off {
         display: none;
@@ -21,7 +19,6 @@
         .small > div > span > span, .product-prices > div>span>span{
             height: 19px;
             width: 61px;
-            color: #150826;
             font-family: Roboto;
             font-size: 16px;
             font-weight: 500;
@@ -33,7 +30,6 @@
             column-gap: 6px;
             .regular-price-value{
                 > span > span {
-                    color: #4F4F4F;
                     font-family: Roboto;
                     font-size: 14px;
                     letter-spacing: 0;

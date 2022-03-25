@@ -5,6 +5,7 @@
         margin: 0 0 1.5rem;
         padding: 0 0.25rem 6px;
         margin-top: 15px;
+        display: none;
     }
 
     .categoryTitle {
@@ -14,8 +15,16 @@
         line-height: 41px;
         font-weight: 600;
         text-align: start;
+        display: none;
     }
-
+    .wrapCategoryDesription{
+        padding: 0 10px;
+        .wrapRichContent{
+            .blocks-promo{
+                padding-top: 15px;
+            }
+        }
+    }
     /*
     *   List products
     */
@@ -208,6 +217,7 @@
     }
     @media (max-width: 768px) {
         .wrapCategoryDesription{
+            margin-top: 70px;
             padding: 0 10px;
             .wrapRichContent{
                 .blocks-promo{
