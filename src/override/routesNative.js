@@ -331,7 +331,7 @@ const Routes = props => {
                 <Route
                     exact
                     path="/categories"
-                    render={props => <CategoryList id={2} {...props} />}
+                    render={props => <CategoryList {...props} />}
                 />
                 <Route
                     exact

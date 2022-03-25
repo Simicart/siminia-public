@@ -34,12 +34,12 @@
         
     }
     .main-header-icon {
-        max-width: 15%;
         position: fixed;
         /* left: 21px; */
         z-index: 2;
-        left: 1%;
+        left: 15px;
         top: 11px;
+        max-height: 32px;
     }
     .main-header-backIcon {
         max-width: 15%;

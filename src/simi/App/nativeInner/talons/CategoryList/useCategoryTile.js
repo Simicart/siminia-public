@@ -14,7 +14,9 @@ const previewImageSize = 480;
 export const useCategoryTile = props => {
     const { item, storeConfig } = props;
     const { image, productImagePreview } = item;
-    const { category_url_suffix } = storeConfig;
+    const category_url_suffix = storeConfig
+        ? storeConfig.category_url_suffix
+        : '';
 
     const imageObj = useMemo(() => {
         const previewProduct = productImagePreview.items[0];

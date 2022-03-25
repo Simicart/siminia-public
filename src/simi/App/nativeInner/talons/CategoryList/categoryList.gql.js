@@ -13,7 +13,7 @@ export const GET_CATEGORY_LIST = gql`
                 }
                 description
                 display_mode
-                products {
+                products(pageSize: 6) {
                     total_count
                     items {
                         name
@@ -39,7 +39,7 @@ export const GET_CATEGORY_LIST = gql`
                     url_key
                     url_path
                     image
-                    products {
+                    products(pageSize: 1) {
                         items {
                             name
                             image {

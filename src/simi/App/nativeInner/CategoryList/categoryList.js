@@ -95,7 +95,7 @@ const CategoryList = props => {
             }
         }
     };
- 
+
     const renderRightContent = () => {
         if (!childCategories) {
             if (error) {
@@ -150,7 +150,7 @@ const CategoryList = props => {
 };
 
 CategoryList.propTypes = {
-    id: number.isRequired,
+    id: number,
     title: string,
     classes: shape({
         root: string,

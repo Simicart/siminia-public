@@ -30,7 +30,7 @@ const ProductsList = props => {
     const placeHolder = logoUrl();
     const { handleClick } = talonProps;
     const classes = useStyle(defaultClasses, props.classes);
-    
+
     const renderProductsList = () => {
         return items
             .filter((i, index) => index < 6)
@@ -73,7 +73,16 @@ const ProductsList = props => {
                                 image: classes.image,
                                 root: classes.imageContainer
                             }}
-                            resource={cate.image || placeHolder}
+                            resource={
+                                cate.image ||
+                                (cate &&
+                                cate.products &&
+                                cate.products.items &&
+                                cate.products.items[0] &&
+                                cate.products.items[0].image
+                                    ? cate.products.items[0].image.url
+                                    : placeHolder)
+                            }
                             type={cate.name}
                             width={IMAGE_WIDTH}
                         />
@@ -86,7 +95,7 @@ const ProductsList = props => {
     };
     return (
         <div className={classes.root}>
-           <CategoryDescription childCate = {childCate}/>
+            <CategoryDescription childCate={childCate} />
             <div className={classes.viewAll} onClick={handleClick}>
                 {total_count > 0 ? (
                     <Link to={`${childCate.url_path}${childCate.url_suffix}`}>

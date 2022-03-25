@@ -14,11 +14,19 @@ import DEFAULT_OPERATIONS from './categoryList.gql';
  * @return {{ childCategories: array, error: object }}
  */
 export const useCategoryList = props => {
-    const { id } = props;
-
+    const storeConfigData = Identify.getStoreConfig();
+    const id =
+        props.id ||
+        (storeConfigData &&
+        storeConfigData.categoryList &&
+        storeConfigData.categoryList[0] &&
+        storeConfigData.categoryList[0]
+            ? storeConfigData.categoryList[0].id
+            : null);
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const { getCategoryListQuery } = operations;
 
+    const storeConfig = storeConfigData ? storeConfigData.storeConfig : null;
     const { loading, error, data } = useQuery(getCategoryListQuery, {
         fetchPolicy: 'cache-first',
         nextFetchPolicy: 'cache-first',
@@ -27,10 +35,6 @@ export const useCategoryList = props => {
             id
         }
     });
-
-    const storeConfigData = Identify.getStoreConfig();
-    const storeConfig = storeConfigData ? storeConfigData.storeConfig : null;
-
     return {
         childCategories:
             (data && data.category && data.category.children) || null,
