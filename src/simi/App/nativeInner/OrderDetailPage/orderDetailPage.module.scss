@@ -368,7 +368,7 @@
     }
 }
 .mbBuyAgain {
-    height: 60px;
+    // height: 60px;
     background-color: #fff;
     position: fixed;
     bottom: 0;
@@ -379,15 +379,16 @@
     justify-content: center;
     align-items: center;
     button {
-        height: 40px;
-        width: 186px;
-        border-radius: 4px;
+        min-height: 50px;
+        width: 100%;
+        // border-radius: 4px;
         color: var(--venia-global-color-button-text);
         font-family: Roboto;
-        font-size: 16px;
+        font-size: 18px;
         letter-spacing: 0;
-        line-height: 19px;
+        line-height: 50px;
         background-color: var(--venia-global-color-button);
+        font-weight: 500;
     }
 }
 .mbPayment {

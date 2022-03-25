@@ -105,9 +105,11 @@
 
 @media (max-width: 640px) {
     .root {
-        padding-top: 5px;
-        min-height: 45px;
-        font-size: 14px;
-        line-height: 16px;
+        /* padding-top: 5px; */
+        min-height: 50px;
+        font-size: 18px;
+       
+        width: 100%;
+        border-radius:4px;
     }
 }

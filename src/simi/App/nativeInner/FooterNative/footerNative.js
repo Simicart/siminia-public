@@ -17,6 +17,8 @@ import {
     BiWallet,
     BiUser
 } from 'react-icons/bi';
+import { config } from 'process';
+import { configColor } from '../../../Config';
 
 const TYPE_PRODUCT = 'PRODUCT';
 
@@ -26,11 +28,11 @@ const FooterNative = props => {
     const listMenuUrl = ['', 'categories', 'cart', 'brands.html', 'my-account'];
     const [iconActive, setIconActive] = useState();
     const listIcon = [
-        <BiHomeAlt />,
-        <BiCategoryAlt />,
-        <BiCart />,
-        <BiWallet />,
-        <BiUser />
+        <BiHomeAlt  />,
+        <BiCategoryAlt  />,
+        <BiCart  />,
+        <BiWallet  />,
+        <BiUser  />
     ];
     const storeConfig = Identify.getStoreConfig();
 
@@ -116,6 +118,7 @@ const FooterNative = props => {
                     iconActive === index ? classes.active : null
                 }`}
                 key={index}
+                
             >
                 {index === 2 ? (
                     <span className={classes.cartQty}>{itemsQty}</span>

@@ -114,7 +114,7 @@
 }
 @media (max-width: 450px) {
     .submitReviewBtn {
-        height: 45px;
+        height: 50px;
         width: 100%;
         border-radius: 4px !important;
         background-color: var(--venia-global-color-button);

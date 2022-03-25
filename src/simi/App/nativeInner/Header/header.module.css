@@ -283,7 +283,7 @@ body.fixed-scroll {
         margin: 0;
         max-width: unset;
         padding: 16px;
-        background: #fff;
+       
         height: 55px;
         position: fixed;
         z-index: 8;
