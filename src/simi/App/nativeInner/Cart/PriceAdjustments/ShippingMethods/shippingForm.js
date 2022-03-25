@@ -13,6 +13,7 @@ import FormError from '@magento/venia-ui/lib/components/FormError';
 import Region from '@magento/venia-ui/lib/components/Region';
 import Postcode from '@magento/venia-ui/lib/components/Postcode';
 import defaultClasses from './shippingForm.module.css';
+import {configColor} from "../../../../../Config";
 
 const ShippingForm = props => {
     const { hasMethods, selectedShippingFields, setIsCartUpdating } = props;
@@ -69,6 +70,10 @@ const ShippingForm = props => {
                         disabled={isSetShippingLoading}
                         priority="normal"
                         type="submit"
+                        style={{
+                            backgroundColor: configColor.button_background,
+                            color: configColor.button_text_color,
+                        }}
                     >
                         {shippingStatusMessage}
                     </Button>

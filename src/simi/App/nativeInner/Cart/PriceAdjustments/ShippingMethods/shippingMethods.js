@@ -8,6 +8,7 @@ import Button from '@magento/venia-ui/lib/components/Button';
 import ShippingForm from './shippingForm';
 import defaultClasses from './shippingMethods.module.css';
 import ShippingRadios from 'src/simi/App/core/Cart/PriceAdjustments/ShippingMethods/shippingRadios';
+import {configColor} from "../../../../../Config";
 
 /**
  * A child component of the PriceAdjustments component.
@@ -73,6 +74,10 @@ const ShippingMethods = props => {
                 root_normalPriority: classes.estimateButton
             }}
             onClick={showForm}
+            style={{
+                backgroundColor: configColor.button_background,
+                color: configColor.button_text_color,
+            }}
         >
             <FormattedMessage
                 id={'shippingMethods.estimateButton'}
