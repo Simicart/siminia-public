@@ -221,8 +221,9 @@ button.saveProfile {
     button.saveProfile {
         margin-top: 7px;
         margin-bottom: 0;
-        height: 40px;
-        width: 120px;
+        min-height: 50px;
+        width: 100%;
+        border-radius: 4px;
     }
 
     .rowEditProfile {

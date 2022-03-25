@@ -12,6 +12,7 @@ import { ArrowLeft } from 'react-feather';
 import { useWindowSize } from '@magento/peregrine';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { logoUrl } from 'src/simi/Helper/Url';
+import {configColor} from '../../../../../simi/Config'
 
 require('./search.scss');
 
@@ -162,7 +163,7 @@ const SearchForm = props => {
             );
         } else
             return (
-                <div className="main-header-backIcon">
+                <div className="main-header-backIcon" style={{color: configColor.top_menu_icon_color}}>
                     <ArrowLeft onClick={() => history.goBack()} />
                     <Link to="/" className="header-title">
                         SimiCart
@@ -194,7 +195,8 @@ const SearchForm = props => {
                             width: 27,
                             height: 25,
                             display: 'block',
-                            marginTop: 4
+                            marginTop: 4,
+                            fill: configColor.top_menu_icon_color
                         }}
                     />
                 </div>
@@ -211,8 +213,8 @@ const SearchForm = props => {
             </div>
             {isPhone ? (
                 <Link to="/cart" className="shopping-cart-icon">
-                    <BiShoppingBag />
-                    <span className="header-cartQty">{itemsQty}</span>
+                    <BiShoppingBag style={{fill:configColor.top_menu_icon_color}} />
+                    <span className="header-cartQty" style={{backgroundColor: configColor.top_menu_icon_color, color:configColor.key_color}}>{itemsQty}</span>
                 </Link>
             ) : null}
         </>

@@ -27,7 +27,7 @@ import {BiChevronRight} from 'react-icons/bi'
 import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
-
+import {configColor} from '../../../../simi/Config'
 // check if bot or headless chrome / wont get cart to avoid perf accection
 // can modify deeper on  peregrine/lib/context/cart.js:83 to avoid creating cart - db wasting - https://prnt.sc/2628k9h
 const isBotOrHeadless = isBot() || isHeadlessChrome();
@@ -192,6 +192,7 @@ const Header = props => {
                 className={`${classes['header-search']} ${
                     Identify.isRtl() ? classes['header-search-rtl'] : ''
                 }`}
+                style={{backgroundColor: configColor.key_color}}
             >
                 <SearchForm itemsQty={itemsQty} history={history} />
             </div>
@@ -201,7 +202,7 @@ const Header = props => {
     const renderHeader = type => {
         if (type === '/sign-in') {
             return (
-                <div className={classes.specHeader}>
+                <div className={classes.specHeader}  style={{backgroundColor: configColor.key_color}}>
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -214,7 +215,7 @@ const Header = props => {
         }
         if (type === '/create-account') {
             return (
-                <div className={classes.specHeader}>
+                <div className={classes.specHeader}  style={{backgroundColor: configColor.key_color}}>
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -227,7 +228,7 @@ const Header = props => {
         }
         if (type === '/forgot-password') {
             return (
-                <div className={classes.specHeader}>
+                <div className={classes.specHeader}  style={{backgroundColor: configColor.key_color}}>
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -240,7 +241,7 @@ const Header = props => {
         }
         if (type === '/cart') {
             return (
-                <div className={classes.specHeader}>
+                <div className={classes.specHeader}  style={{backgroundColor: configColor.key_color}}>
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -263,7 +264,7 @@ const Header = props => {
       
         if (isOrderDetailPage) {
             return (
-                <div className={classes.specHeader} >
+                <div className={classes.specHeader}  style={{backgroundColor: configColor.key_color}} >
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -276,7 +277,7 @@ const Header = props => {
         }
         if (myProfile.includes(type)) {
             return (
-                <div className={classes.specHeader} id="siminia-text-header">
+                <div className={classes.specHeader}  style={{backgroundColor: configColor.key_color}} id="siminia-text-header">
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         {type !== '/contact.html' ? type
