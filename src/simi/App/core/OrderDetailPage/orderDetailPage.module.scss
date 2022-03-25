@@ -34,7 +34,7 @@
         margin-bottom: 30px;
 
         thead > tr {
-            border: 1px solid #0058ac;
+            border: 1px solid var(--venia-global-color-button);
             background-color: #dae8f6;
             height: 45px;
             text-align: left;
@@ -122,7 +122,7 @@
     display: flex;
     justify-content: space-between;
     button {
-        color: #0058ac;
+        color: var(--venia-global-color-button);
         font-family: poppins;
         font-size: 16px;
         font-weight: bold;
@@ -233,7 +233,7 @@
     display: flex;
     justify-content: space-between;
     button {
-        color: #0058ac;
+        color: var(--venia-global-color-button);
         font-family: poppins;
         font-size: 16px;
         font-weight: bold;
@@ -259,7 +259,7 @@
     box-sizing: border-box;
     // height: 77px;
     // width: 343px;
-    border: 1px solid #0058ac;
+    border: 1px solid var(--venia-global-color-button);
     background-color: #dae8f6;
     margin-bottom: 30px;
     .mbHeadInfoItem {
@@ -272,7 +272,7 @@
         }
         span:nth-child(1),
         span:nth-child(3) {
-            color: #0058ac;
+            color: var(--venia-global-color-button);
             font-family: poppins;
             font-size: 12px;
             letter-spacing: 0;

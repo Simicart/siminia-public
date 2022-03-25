@@ -276,7 +276,7 @@ const ProductFullDetail = props => {
                                         defaultMessage="Per pack: "
                                     />
                                 </span>
-                                <span className={classes.productPrice}>
+                                <span style={{color: configColor.price_color}} className={classes.productPrice}>
                                     {pricePiece}
                                 </span>
                                 {isOutOfStock ? (

@@ -56,7 +56,7 @@
 }
 .viewOrder {
     a > button {
-        color: #0058AC;
+        color: var(--venia-global-color-button);
         font-family: poppins;
         font-size: 14px;
         font-weight: bold;
@@ -71,7 +71,7 @@
     height: 30px;
     width: 100px;
     border-radius: 46px 0 0 46px;
-    background-color: #0058AC;
+    background-color: var(--venia-global-color-button);
     color: #fff;
     line-height: 30px;
     padding-left: 20px;

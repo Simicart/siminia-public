@@ -19,3 +19,9 @@
     top: -3px;
     text-align: center;
 }
+@media (max-width: 768px) {
+    .root {
+        background-color: var(--venia-global-color-button);
+        color: var(--venia-global-color-button-text)
+    }
+}

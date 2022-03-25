@@ -6,7 +6,7 @@
 }
 .logout {
     height: 50px;
-    background-color: #DAE8F6;
+    background-color: var(--venia-global-color-button);
     text-align: center;
 
 }
@@ -15,7 +15,7 @@
     font-size: 14px;
   font-weight: 600;
   letter-spacing: 0;
-  color: #0058AC;
+  color: var(--venia-global-color-button-text);
   
 }
 
