@@ -10,7 +10,7 @@
     transition-duration: 384ms;
     transition-property: opacity;
     transition-timing-function: var(--venia-global-anim-standard);
-    border-bottom: 1px solid rgb(var(--venia-global-color-border));;
+    border-bottom: 1px solid rgb(var(--venia-global-color-border));
 }
 .root:last-child{
     border-bottom: none;
@@ -86,7 +86,8 @@
 .quantity > form > div button:nth-child(5){
     height: 35px;
     width: 35px;
-    background-color: #F4F4F4;
+    background-color: #fff;
+    border: 1px solid var(--venia-global-color-button);
 }
 .price {
     grid-column: 2 / span 1;
