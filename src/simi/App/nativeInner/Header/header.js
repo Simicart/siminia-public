@@ -23,11 +23,11 @@ import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoR
 import defaultClasses from './header.module.css';
 import { useQuery } from '@apollo/client';
 import { ArrowLeft } from 'react-feather';
-import {BiChevronRight} from 'react-icons/bi'
+import { BiChevronRight } from 'react-icons/bi';
 import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
-import {configColor} from '../../../../simi/Config'
+import { configColor } from '../../../../simi/Config';
 // check if bot or headless chrome / wont get cart to avoid perf accection
 // can modify deeper on  peregrine/lib/context/cart.js:83 to avoid creating cart - db wasting - https://prnt.sc/2628k9h
 const isBotOrHeadless = isBot() || isHeadlessChrome();
@@ -78,7 +78,7 @@ const Header = props => {
         type.split('/order-history').length === 2
             ? true
             : false;
-    
+
     const myProfile = [
         '/order-history',
         '/wishlist',
@@ -92,20 +92,23 @@ const Header = props => {
         '/reward-transactions',
         '/contact.html',
         '/account-setting',
-        '/checkout',
-        
+        '/checkout'
     ];
 
     // const storeConfig = Identify.getStoreConfig();
     const [userData] = useUserContext();
 
     let topInsets = 0;
-    if (window.simicartRNinsets) {
-        try {
+    try {
+        if (window.simicartRNinsets) {
             const simicartRNinsets = JSON.parse(window.simicartRNinsets);
             topInsets = parseInt(simicartRNinsets.top);
-        } catch (err) {}
-    }
+        } else if (window.simpifyRNinsets) {
+            const simpifyRNinsets = JSON.parse(window.simpifyRNinsets);
+            topInsets = parseInt(simpifyRNinsets.top);
+        }
+    } catch (err) {}
+
     let headerHeight = isPhone ? 62 : 107;
     headerHeight += topInsets;
 
@@ -192,7 +195,7 @@ const Header = props => {
                 className={`${classes['header-search']} ${
                     Identify.isRtl() ? classes['header-search-rtl'] : ''
                 }`}
-                style={{backgroundColor: configColor.key_color}}
+                style={{ backgroundColor: configColor.key_color }}
             >
                 <SearchForm itemsQty={itemsQty} history={history} />
             </div>
@@ -202,7 +205,10 @@ const Header = props => {
     const renderHeader = type => {
         if (type === '/sign-in') {
             return (
-                <div className={classes.specHeader}  style={{backgroundColor: configColor.key_color}}>
+                <div
+                    className={classes.specHeader}
+                    style={{ backgroundColor: configColor.key_color }}
+                >
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -215,7 +221,10 @@ const Header = props => {
         }
         if (type === '/create-account') {
             return (
-                <div className={classes.specHeader}  style={{backgroundColor: configColor.key_color}}>
+                <div
+                    className={classes.specHeader}
+                    style={{ backgroundColor: configColor.key_color }}
+                >
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -228,7 +237,10 @@ const Header = props => {
         }
         if (type === '/forgot-password') {
             return (
-                <div className={classes.specHeader}  style={{backgroundColor: configColor.key_color}}>
+                <div
+                    className={classes.specHeader}
+                    style={{ backgroundColor: configColor.key_color }}
+                >
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -241,7 +253,10 @@ const Header = props => {
         }
         if (type === '/cart') {
             return (
-                <div className={classes.specHeader}  style={{backgroundColor: configColor.key_color}}>
+                <div
+                    className={classes.specHeader}
+                    style={{ backgroundColor: configColor.key_color }}
+                >
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -255,16 +270,19 @@ const Header = props => {
         }
         if (type === '/my-account') {
             return (
-                <div  className={classes.myAccountHead}>
+                <div className={classes.myAccountHead}>
                     <MyAccount classes={classes} userData={userData} />
-                    <BiChevronRight  />
+                    <BiChevronRight />
                 </div>
             );
         }
-      
+
         if (isOrderDetailPage) {
             return (
-                <div className={classes.specHeader}  style={{backgroundColor: configColor.key_color}} >
+                <div
+                    className={classes.specHeader}
+                    style={{ backgroundColor: configColor.key_color }}
+                >
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -277,18 +295,24 @@ const Header = props => {
         }
         if (myProfile.includes(type)) {
             return (
-                <div className={classes.specHeader}  style={{backgroundColor: configColor.key_color}} id="siminia-text-header">
+                <div
+                    className={classes.specHeader}
+                    style={{ backgroundColor: configColor.key_color }}
+                    id="siminia-text-header"
+                >
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
-                        {type !== '/contact.html' ? type
-                            .split('/')[1]
-                            .replace('-', ' ')
-                            .charAt(0)
-                            .toUpperCase() +
-                            type
-                                .split('/')[1]
-                                .replace('-', ' ')
-                                .slice(1) : 'Contact Us'}
+                        {type !== '/contact.html'
+                            ? type
+                                  .split('/')[1]
+                                  .replace('-', ' ')
+                                  .charAt(0)
+                                  .toUpperCase() +
+                              type
+                                  .split('/')[1]
+                                  .replace('-', ' ')
+                                  .slice(1)
+                            : 'Contact Us'}
                     </span>
                 </div>
             );
