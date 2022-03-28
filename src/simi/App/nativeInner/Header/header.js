@@ -109,8 +109,10 @@ const Header = props => {
         }
     } catch (err) {}
 
-    let headerHeight = isPhone ? 62 : 107;
+    let headerHeight = isPhone ? 55 : 107;
     headerHeight += topInsets;
+
+    // console.log("headerheidd", window.simicartRNinsets);
 
     const { isSignedIn } = userData;
     const renderRightBar = () => {
@@ -207,7 +209,7 @@ const Header = props => {
             return (
                 <div
                     className={classes.specHeader}
-                    style={{ backgroundColor: configColor.key_color }}
+                    style={{ backgroundColor: configColor.key_color}}
                 >
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
@@ -323,7 +325,7 @@ const Header = props => {
         return (
             <React.Fragment>
                 {!isHiddenHeader && !isSimpleHeader ? (
-                    <div className={classes.virtualHeader} />
+                    <div className={classes.virtualHeader} style={{height:headerHeight }} />
                 ) : null}
 
                 {/* {!isSimpleHeader && !isHiddenHeader && renderSearchForm()}
