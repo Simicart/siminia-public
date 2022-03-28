@@ -299,6 +299,7 @@
         bottom: 0;
         margin-top: 0;
         z-index: 2;
+        border-radius: 0px;
     }
 
     .heading_container {
