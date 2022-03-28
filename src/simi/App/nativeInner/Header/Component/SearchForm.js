@@ -92,7 +92,7 @@ const SearchForm = props => {
         if (isPhone) {
             if (openSearchField) {
                 return (
-                    <div className="siminia-search-field-wrapper" style={{paddingTop:topInsets===0 ? 20 : topInsets}}>
+                    <div className="siminia-search-field-wrapper" style={{paddingTop:topInsets===0 ? 38 : topInsets}}>
                         <div>
                             <BiArrowBack
                                 className="header-close-icon"

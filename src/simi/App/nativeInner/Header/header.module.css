@@ -93,6 +93,7 @@ header {
 .header-search {
     width: 100%;
     max-width: 748px;
+    
 }
 .header-search-form {
     position: relative;
@@ -107,13 +108,14 @@ header {
     height: 45px;
     border-radius: 23px !important;
 }
-.header-search-form .search-icon {
+@media (min-width: 1023px) {.header-search-form .search-icon {
     /* display: inline-block; */
-    /* position: absolute; */
+    position: absolute;
     right: 14px;
     top: 5px;
     cursor: pointer;
-}
+   
+}}
 .search-icon a {
     display: block;
 }
@@ -269,6 +271,7 @@ body.fixed-scroll {
     .header-search-form .search-icon {
         right: 16px;
         top: 4px;
+        
     }
     .header-search-form input::placeholder {
         font-size: 16px;
@@ -353,6 +356,7 @@ body.fixed-scroll {
     .header-search-form .search-icon {
         right: 16px;
         top: -5px;
+        position: none;
     }
     .item-text {
         font-family: Roboto;
