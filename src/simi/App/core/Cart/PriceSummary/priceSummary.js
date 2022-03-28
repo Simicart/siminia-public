@@ -10,6 +10,7 @@ import GiftCardSummary from '@magento/venia-ui/lib/components/CartPage/PriceSumm
 import ShippingSummary from './shippingSummary';
 import TaxSummary from './taxSummary';
 import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
+import { configColor } from 'src/simi/Config';
 
 /**
  * A child component of the CartPage component.
@@ -206,7 +207,7 @@ const PriceSummary = props => {
                     isCheckout={isCheckout}
                 />
                 <span className={classes.totalLabel}>{totalPriceLabel}</span>
-                <span className={totalPriceClass}>
+                <span style={{color: configColor.price_color}}  className={totalPriceClass}>
                     <Price value={total.value} currencyCode={total.currency} />
                 </span>
             </div>

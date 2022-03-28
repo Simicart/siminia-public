@@ -8,7 +8,7 @@ import { useStyle } from '@magento/venia-ui/lib/classify.js';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import Image from '@magento/venia-ui/lib/components/Image';
 import Price from '@magento/venia-ui/lib/components/Price';
-
+import { configColor } from 'src/simi/Config';
 import defaultClasses from './wishlistItem.module.css';
 
 const WishlistItem = props => {
@@ -38,8 +38,6 @@ const WishlistItem = props => {
 
     const { formatMessage } = useIntl();
     const [, { addToast }] = useToasts();
-
-    // console.log("adddd", addToCartButtonProps);
 
     useEffect(() => {
         if (hasError) {
@@ -118,7 +116,7 @@ const WishlistItem = props => {
             <div className={classes.actionWrap}>
                 <span className={classes.name}>{name}</span>{' '}
             </div>
-            <div className={classes.priceContainer}>
+            <div style={{color: configColor.price_color}}  className={classes.priceContainer}>
                 <Price currencyCode={currency} value={unitPrice} />
             </div>
             

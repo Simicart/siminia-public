@@ -4,6 +4,7 @@ import Search from 'src/simi/BaseComponents/Icon/Search';
 import defaultClasses from '../header.module.css';
 import { mergeClasses } from 'src/classify';
 import { useIntl } from 'react-intl';
+import {configColor} from '../../../../Config'
 require('./search.scss');
 
 const SearchAutoComplete = React.lazy(() =>
@@ -59,7 +60,7 @@ const SearchForm = props => {
                 onClick={() => startSearch()}
                 onKeyUp={() => startSearch()}
             >
-                <Search style={{ width: 35, height: 35, display: 'block' }} />
+                <Search style={{ width: 35, height: 35, display: 'block', fill: configColor.top_menu_icon_color }} />
             </div>
             {searchVal && searchVal.length > 2 && (
                 <Suspense fallback={null}>

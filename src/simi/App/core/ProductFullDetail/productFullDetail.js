@@ -350,7 +350,7 @@ const ProductFullDetail = props => {
                                         defaultMessage="Per pack: "
                                     />
                                 </span>
-                                <span className={classes.productPrice}>
+                                <span style={{color: configColor.price_color}} className={classes.productPrice}>
                                     {pricePiece}
                                 </span>
                                 {isOutOfStock ? (
@@ -418,7 +418,14 @@ const ProductFullDetail = props => {
                                 defaultMessage={'Product Description'}
                             />
                         </span>
-                        <RichContent html={productDetails.description} />
+                        <RichContent
+                            html={
+                                productDetails.description &&
+                                productDetails.description.html
+                                    ? productDetails.description.html
+                                    : productDetails.description
+                            }
+                        />
                     </section>
 
                     <section className={classes.details}>

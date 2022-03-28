@@ -124,6 +124,12 @@ const App = props => {
                             --venia-global-color-button-text: ${
                                 configColor.button_text_color
                             };
+                            --venia-global-key-color: ${
+                                configColor.key_color
+                            };
+                            --venia-top-menu-icon-color: ${
+                                configColor.top_menu_icon_color
+                            }
                         }
                     `
                         }

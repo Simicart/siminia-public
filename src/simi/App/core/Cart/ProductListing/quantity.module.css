@@ -12,18 +12,19 @@
 .root button {
     height: 45px;
     width: 45px;
-    background-color: #f4f4f4;
+    background-color: #fff;
+    border: 1px solid var(--venia-global-color-button);
 }
 .root button:nth-child(2) {
-    background-color: #0058b2;
+    background-color: var(--venia-global-color-button);
 }
 .root input {
     transition: all 0.2s ease-out;
 }
 .root input:focus {
     outline: none;
-    border-color: #1878b9;
-    box-shadow: 0 0 0 1px #1878b9;
+    border-color: var(--venia-global-color-button);
+    box-shadow: 0 0 0 1px var(--venia-global-color-button);
 }
 
 .wrap {
@@ -83,7 +84,7 @@
 }
 .button_increment {
     composes: button;
-    background-color: #0058b2;
+    background-color: var(--venia-global-color-button);
 }
 
 .icon {

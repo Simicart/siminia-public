@@ -20,6 +20,7 @@ import DiscountSummary from '../Cart/PriceSummary/discountSummary';
 import TaxSummary from '../Cart/PriceSummary/taxSummary';
 import ShippingSummary from '../Cart/PriceSummary/shippingSummary';
 import GiftCardSummary from '@magento/venia-ui/lib/components/CartPage/PriceSummary/giftCardSummary';
+import { configColor } from 'src/simi/Config';
 
 const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
 
@@ -40,7 +41,7 @@ const MiniCart = React.forwardRef((props, ref) => {
         setIsOpen,
         operations
     });
-
+    
     const {
         closeMiniCart,
         errorMessage,
@@ -96,7 +97,7 @@ const MiniCart = React.forwardRef((props, ref) => {
         }
     }, [addToast, errorMessage]);
 
-    const header = subtotal ? (
+    const header = subTotal ? (
         <Fragment>
             <div className={classes.stockStatusMessageContainer}>
                 <StockStatusMessage cartItems={productList} />
@@ -225,6 +226,7 @@ const MiniCart = React.forwardRef((props, ref) => {
                         defaultMessage={'Continue Shopping'}
                     />
                 </button>
+                
             </div>
         </div>
     ) : (

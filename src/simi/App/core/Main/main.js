@@ -9,6 +9,7 @@ import { BrowserPersistence } from '@magento/peregrine/lib/util';
 import LzL from 'src/simi/BaseComponents/LazyLoad';
 import RsHome from '../Seo/Markup/RsHome';
 import RsHomeBasic from '../SeoBasic/Markup/RsHome';
+import { configColor } from '../../../Config';
 const storage = new BrowserPersistence();
 import { Helmet } from 'react-helmet';
 

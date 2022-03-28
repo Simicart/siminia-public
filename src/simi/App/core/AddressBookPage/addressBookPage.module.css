@@ -35,12 +35,12 @@
     display: inline-block;
     padding: 0 20px;
     border-radius: 4px;
-    background-color: #0058ac;
+    background-color: var(--venia-global-color-button);
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0;
     line-height: 50px;
-    color: #fff;
+    color: var(--venia-global-color-button-text);
     cursor: pointer;
 }
 
