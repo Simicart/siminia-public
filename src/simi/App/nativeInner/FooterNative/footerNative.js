@@ -98,6 +98,9 @@ const FooterNative = props => {
     const pathName =
         location && location.pathname ? location.pathname.split('/')[1] : null;
 
+    const bottomMenuStyle = { backgroundColor: configColor.key_color, height: bottomMenuHeight, display: 'flex',alignItems: 'start', paddingTop: 10}
+    
+
     useEffect(() => {
         if (pathName === '') {
             setIconActive(0);
@@ -149,7 +152,7 @@ const FooterNative = props => {
     return (
         <>
             <div className={classes.virtualFooter} style={{height: bottomMenuHeight}} />
-            <div className={classes.mainFooter}>{MenuItems}</div>
+            <div className={classes.mainFooter} style={bottomMenuStyle}>{MenuItems}</div>
         </>
     );
 };

@@ -3,68 +3,70 @@
     left: 14px;
 }
 @media (max-width: 450px) {
-
     .siminia-search-field-wrapper {
-        width: 100vw;
-        height: 93.6vh;
         background-color: #fff;
-        position: absolute;
-        right: -46px;
-        top: -15px;
+        right: -60px;
+        top: -36px;
         z-index: 2;
-        animation: inputIn .4s;
+        animation: inputIn 0.4s;
         padding: 10px;
         display: flex;
-       .header-search-icon {
-        margin-top: 5px;
-        margin-left: 10px;
-       }
-       .header-close-icon {
-        font-size: 23px;
-        margin-top: 10px;
-        margin-right: 9px;
-       }
-
+        /* height: 5vh; */
+        position: absolute;
+        width: 100vw;
+        height: 93vh;
+        .header-search-icon {
+            margin-top: 5px;
+            margin-left: 10px;
+        }
+        .header-close-icon {
+            font-size: 23px;
+            margin-top: 10px;
+            margin-right: 9px;
+        }
     }
     .siminia-search-field {
         // position:fixed;
         width: 100%;
         z-index: 10;
         left: 0;
-        
     }
     .main-header-icon {
-        position: fixed;
+        position: absolute;
         /* left: 21px; */
         z-index: 2;
-        left: 15px;
-        top: 11px;
+        left: 10px;
+        bottom: 15px;
         max-height: 32px;
     }
     .main-header-backIcon {
         max-width: 15%;
-        position: fixed;
+        position: absolute;
         /* left: 21px; */
         z-index: 2;
         left: 2%;
-        top: 17px;
+        bottom: 17px;
+        display: flex;
+        align-items: center;
     }
     .header-title {
-        position: fixed;
+        // position: fixed;
         left: 71px;
         top: 14px;
         font-size: 20px;
         font-weight: 600;
     }
     .shopping-cart-icon {
-        font-size:20px;
-        margin-top: 1px;
+        font-size: 20px;
         margin-right: 10px;
+        margin-bottom: 5px;
+        position: relative;
+        margin-left: 15px;
     }
     .header-cartQty {
         position: absolute;
-        top: 5px;
-        right: 15px;
+        top: -12px;
+        right: -11px;
         border: 1px solid #fff;
         border-radius: 50%;
         font-size: 12px;
