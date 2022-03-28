@@ -96,7 +96,7 @@
 .pageNumberBtnActive {
     width: 40px;
     height: 40px;
-    background-color: #0058ac;
+    background-color: var(--venia-global-color-button);
     color:#fff;
     margin-right: .75rem;
 }

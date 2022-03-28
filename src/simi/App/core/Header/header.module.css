@@ -251,7 +251,7 @@ body.fixed-scroll {
         margin: 0;
         max-width: unset;
         padding: 16px;
-        background: #0058ac;
+        background: var(--venia-global-key-color);
     }
     .header-search-form {
         margin-inline-start: 0;

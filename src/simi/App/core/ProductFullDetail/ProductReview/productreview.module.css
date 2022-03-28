@@ -3,7 +3,7 @@
     /* height: 60vh; */
     background-color: #fff;
     position: absolute;
-    top: 14%;
+    top: 21%;
     left: 25%;
     border-radius: 8px;
 }
@@ -66,7 +66,7 @@
     align-items: center;
     position: relative;
     padding: 20px;
-    background-color: #0058b2;
+    background-color: var(--venia-global-color-button);
 }
 .closeBtn {
     position: absolute;
@@ -89,9 +89,9 @@
     box-sizing: border-box;
     height: 45px;
     width: 167px;
-    border: 1px solid #0058b2;
+    border: 1px solid var(--venia-global-color-button);
     background-color: #ffffff;
-    color: #0058b2;
+    color: var(--venia-global-color-button);
     font-family: poppins;
     font-size: 14px;
     font-weight: 500;
@@ -104,7 +104,7 @@
     height: 45px;
     width: 167px;
     border-radius: 22.5px !important;
-    background-color: #0058b2;
+    background-color: var(--venia-global-color-button);
     color: #ffffff;
     font-family: poppins;
     font-size: 16px;
