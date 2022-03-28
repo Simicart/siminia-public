@@ -16,7 +16,9 @@
 .wrapperContainer {
     margin: 0 20px
 }
-
+.buttonsContainer{
+    margin-top: 10px;
+}
 .block1,
 .block2,
 .block3 {
@@ -134,9 +136,7 @@ btn {
     .form{
         padding: 0 10px;
     }
-    .buttonsContainer{
-        margin-top: 10px;
-    }
+   
 	table, thead, tbody, th, td, tr { 
 		display: block; 
 	}

@@ -10,9 +10,9 @@
                 grid-area: done;
                 height: auto;
                 padding: 10px 20px;
-                background-color: #0058ac;
+                background-color: var(--venia-global-color-button);
+                color: var(--venia-global-color-button-text);
                 >span{
-                    color: #ededed;
                     font-size: 16px;
                     font-weight: 500;
                     letter-spacing: 0;
@@ -250,8 +250,8 @@
                         height: auto;
                         padding: 10px 20px;
                         background-color: var(--venia-global-color-button);
+                        color: var(--venia-global-color-button-text);
                         >span{
-                            color: #ededed;
                             font-size: 16px;
                             font-weight: 500;
                             letter-spacing: 0;
