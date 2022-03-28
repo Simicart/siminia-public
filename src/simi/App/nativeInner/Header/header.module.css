@@ -93,7 +93,6 @@ header {
 .header-search {
     width: 100%;
     max-width: 748px;
-    
 }
 .header-search-form {
     position: relative;
@@ -108,14 +107,20 @@ header {
     height: 45px;
     border-radius: 23px !important;
 }
-@media (min-width: 1023px) {.header-search-form .search-icon {
-    /* display: inline-block; */
-    position: absolute;
-    right: 14px;
-    top: 5px;
-    cursor: pointer;
-   
-}}
+@media (min-width: 1023px) {
+    .header-search-form .search-icon {
+        /* display: inline-block; */
+        position: absolute;
+        right: 14px;
+        top: 5px;
+        cursor: pointer;
+    }
+    .header-search {
+        width: 100%;
+        max-width: 748px;
+        height: auto !important; 
+    }
+}
 .search-icon a {
     display: block;
 }
@@ -145,9 +150,6 @@ header {
 .item-icon {
     margin-inline-end: 9px;
     position: relative;
-    
-    
-    
 }
 .right-bar-item a:hover {
     text-decoration: none !important;
@@ -271,7 +273,6 @@ body.fixed-scroll {
     .header-search-form .search-icon {
         right: 16px;
         top: 4px;
-        
     }
     .header-search-form input::placeholder {
         font-size: 16px;
@@ -281,7 +282,7 @@ body.fixed-scroll {
         display: none;
     }
 }
-@media (max-width:450px) {
+@media (max-width: 450px) {
     .header-search {
         margin: 0;
         max-width: unset;
@@ -292,46 +293,49 @@ body.fixed-scroll {
         top: 0;
         box-shadow: 0 0 4px 0 rgb(0 0 0 / 30%);
         display: flex;
-        justify-content:flex-end;
+        justify-content: flex-end;
         align-items: flex-end;
     }
     .virtualHeader {
-        height: 55px
+        height: 55px;
     }
     .specHeader {
         height: 55px;
         background: #fff;
-        position:fixed;
+        position: fixed;
         display: flex;
         width: 100%;
         align-items: center;
         padding: 0 10px;
-        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.3);
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
         top: 0;
         z-index: 5;
-
     }
     .item-icon {
         background-color: #fff;
         padding: 7px;
-        border-radius:50%;
+        border-radius: 50%;
     }
     .myAccountHead {
         height: 80px;
-        background:linear-gradient(to right, var(--venia-global-color-button) 0%, #ffffff 100%);
-        position:fixed;
+        background: linear-gradient(
+            to right,
+            var(--venia-global-color-button) 0%,
+            #ffffff 100%
+        );
+        position: fixed;
         display: flex;
         width: 100%;
         align-items: center;
         padding: 0 10px;
-        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.3);
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
         top: 0;
         z-index: 5;
         display: flex;
-        justify-content:space-between;
+        justify-content: space-between;
     }
     .myAccountHead > svg {
-        font-size:30px;
+        font-size: 30px;
         color: #fff;
     }
     .specHeader > svg {
@@ -347,8 +351,8 @@ body.fixed-scroll {
     }
     .header-search-form input {
         border: 1px solid #000;
-       
-        left:10%;
+
+        left: 10%;
         top: 13px;
         /* animation: inputIn 0.4s; */
         width: 89%;
@@ -363,7 +367,7 @@ body.fixed-scroll {
         font-size: 18px;
         font-weight: 500;
         letter-spacing: 0;
-        color: #fff ;
+        color: #fff;
     }
     /* @keyframes inputIn {
         from {
@@ -379,7 +383,7 @@ body.fixed-scroll {
     right: unset;
 }
 @media (max-width: 768px) {
-    header{
+    header {
         display: none;
     }
 }
