@@ -22,6 +22,7 @@ import { gql } from '@apollo/client';
 import defaultClasses from './item.module.css';
 import Quantity from '../../Cart/ProductListing/quantity';
 import { useQuantity } from '../../../../talons/MiniCart/useQuantity';
+import { configColor } from 'src/simi/Config';
 
 const Item = props => {
     const {
@@ -40,7 +41,6 @@ const Item = props => {
         storeUrlSuffix,
         item
     } = props;
-    
     const { formatMessage } = useIntl();
     const talonProps = useQuantity({
         operations: {
@@ -139,7 +139,7 @@ const Item = props => {
                 />
             </button>
             </div>
-            <span className={classes.price}>
+            <span style={{color: configColor.price_color}} className={classes.price}>
                 <Price
                     currencyCode={prices.price.currency}
                     value={prices.price.value}

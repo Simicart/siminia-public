@@ -9,6 +9,7 @@ import DiscountSummary from './discountSummary';
 import GiftCardSummary from '@magento/venia-ui/lib/components/CartPage/PriceSummary/giftCardSummary';
 import ShippingSummary from './shippingSummary';
 import TaxSummary from './taxSummary';
+import { configColor } from 'src/simi/Config';
 
 /**
  * A child component of the CartPage component.
@@ -98,7 +99,7 @@ const PriceSummary = props => {
                     defaultMessage={'Summary'}
                 />
             </span>
-            <div className={classes.lineItems}>
+            <div style={{color: configColor.price_color}}  className={classes.lineItems}>
                 <span className={classes.lineItemLabel}>
                     <FormattedMessage
                         id={'priceSummary.lineItemLabel'}
@@ -142,7 +143,7 @@ const PriceSummary = props => {
                     isCheckout={isCheckout}
                 />
                 <span className={classes.totalLabel}>{totalPriceLabel}</span>
-                <span className={totalPriceClass}>
+                <span style={{color: configColor.price_color}}  className={totalPriceClass}>
                     <Price value={total.value} currencyCode={total.currency} />
                 </span>
             </div>

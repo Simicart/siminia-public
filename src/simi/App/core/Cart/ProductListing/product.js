@@ -21,6 +21,7 @@ import defaultClasses from './product.module.css';
 import { CartPageFragment } from '@magento/peregrine/lib/talons/CartPage/cartPageFragments.gql.js';
 import { AvailableShippingMethodsCartFragment } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/ShippingMethods/shippingMethodsFragments.gql.js';
 import { func } from 'prop-types';
+import { configColor } from 'src/simi/Config';
 
 const IMAGE_SIZE = 100;
 
@@ -215,7 +216,7 @@ const Product = props => {
                         <Link to={itemLink}>{name}</Link>
                     </div>
                     {itemOption}
-                    <span className={classes.price}>
+                    <span style={{color: configColor.price_color}} className={classes.price}>
                         <span className={classes.labelPrice} />
                         <Price currencyCode={currency} value={unitPrice} />
                         <FormattedMessage

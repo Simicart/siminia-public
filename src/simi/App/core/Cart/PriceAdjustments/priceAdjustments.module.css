@@ -1,12 +1,12 @@
 .root {
-    border: 1px solid rgb(0, 88, 178, 0.5);
+    border: 1px solid rgb(var(--venia-global-color-border));
     border-bottom: none;
 }
 .root > div {
     border: none;
 }
 .root > div > div {
-    border-bottom: 1px solid rgb(0, 88, 178, 0.5);
+    border-bottom: 1px solid rgb(var(--venia-global-color-border));
 }
 .sectionRoot {
     font-size: 18px;

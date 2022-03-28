@@ -41,7 +41,6 @@ const ReviewItem = props => {
             }
         }
     }, [reviewText]);
-    console.log(showMoreCondition)
     
     return (
         <div className={classes.container}>
@@ -71,22 +70,26 @@ const ReviewItem = props => {
                     {text}
                 </div>
                 {!showMoreCondition ? (
-                    <Button
+                    <div
                         className={classes.reviewButton}
                         onClick={viewMoreHandle}
                     >
                         {showMore ? (
+                        <div className={classes.viewDetails}>
                             <FormattedMessage
-                                id={'reviewItem.seeMore'}
-                                defaultMessage={'See More'}
+                                id={'reviewItem.viewDetails'}
+                                defaultMessage={'View Details'}
                             />
-                        ) : (
+                        </div>
+                    ) : (
+                        <div className={classes.viewDetails}>
                             <FormattedMessage
-                                id={'reviewItem.seeLess'}
-                                defaultMessage={'See Less '}
+                                id={'reviewItem.viewSummary'}
+                                defaultMessage={'View Summary'}
                             />
-                        )}
-                    </Button>
+                        </div>
+                    )}
+                    </div>
                 ) : (
                     ''
                 )}

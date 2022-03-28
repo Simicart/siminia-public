@@ -6,7 +6,8 @@
     text-transform: uppercase;
     .remove-all-products {
         border: none;
-        color: #0058b2;
+        color: var(--venia-global-color-button);
+        font-family: poppins;
         font-size: 16px;
         letter-spacing: 0;
         line-height: 22px;
@@ -21,7 +22,7 @@
     .right-buttons {
         box-sizing: border-box;
         min-width: 210px;
-        border: 1px solid #0058ac;
+        border: 1px solid var(--venia-global-color-button);
         background-color: #ffffff;
     }
     .continue-shopping {
@@ -32,7 +33,7 @@
         }
     }
     .right-buttons > div {
-        color: #0058ac;
+        color: var(--venia-global-color-button);
         font-size: 16px;
         letter-spacing: 0;
         font-weight: 500;
@@ -48,11 +49,11 @@
             box-sizing: border-box;
             min-height: 45px;
             font-size: 16px;
-            border: 1px solid #0058ac;
+            border: 1px solid var(--venia-global-color-button);
             background-color: #ffffff;
         }
         .right-buttons > div {
-            color: #0058ac;
+            color: var(--venia-global-color-button);
             font-size: 16px;
             font-weight: 600;
             height: 100%;
@@ -61,7 +62,7 @@
         }
         .remove-all-products {
             border: none;
-            color: #0058b2;
+            color: var(--venia-global-color-button);
             font-weight: 600;
             width: 100%;
             text-decoration: underline;
@@ -101,12 +102,12 @@
                 }
             }
             .confirm-alert-cancel {
-                border: 1px solid #0058b2;
+                border: 1px solid var(--venia-global-color-button);
                 background-color: #fff;
-                color: #0058b2;
+                color: var(--venia-global-color-button);
             }
             .confirm-alert-ok {
-                background-color: #0058b2;
+                background-color: var(--venia-global-color-button);
                 color: #ffffff;
             }
         }

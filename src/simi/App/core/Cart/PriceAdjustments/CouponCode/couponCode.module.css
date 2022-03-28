@@ -6,7 +6,7 @@
     grid-column-gap: 0rem;
 }
 .entryForm button{
-    background-color: #0058AC;
+    background-color: var(--venia-global-color-button);;
     color: #fff;
     border-radius: 0px!important;
     color: #FFFFFF;

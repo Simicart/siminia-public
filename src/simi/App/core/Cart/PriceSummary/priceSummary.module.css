@@ -81,7 +81,7 @@
     height: 50px;
     min-width: 294px;
     border-radius: 4px;
-    background-color: #0058ac;
+    background-color: var(--venia-global-color-button);
     border-width: 0 !important;
 }
 .checkoutButton_container > button > span {
