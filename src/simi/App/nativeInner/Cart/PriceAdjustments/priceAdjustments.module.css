@@ -64,9 +64,9 @@
 
 @media(max-width: 960px) {
     .rewardPointRoot > button {
-        height: 35px;
         min-height: 35px;
         padding-top: 7px;
+        font-size: 0.8rem;
     }
     .message {
         min-width: fit-content;

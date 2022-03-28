@@ -1,10 +1,10 @@
 .root_normalPriority {
     border-radius: 4px;
-    background-color: #FF5F59;
+    background-color: var(--venia-global-color-button);
+    color: rgb(var(--venia-global-color-gray-50));
     padding-top: 1rem;
     padding-bottom: 1rem;
     width: 100%;
-    color: #fff;
     text-transform: uppercase;
     font-weight: bold;
     line-height: 1rem;
