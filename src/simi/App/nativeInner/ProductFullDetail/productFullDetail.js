@@ -30,7 +30,8 @@ const SimiProductOptions = React.lazy(() =>
     import('@simicart/siminia/src/simi/App/core/SimiProductOptions')
 );
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
-import { ProductDetailExtraProducts } from './productDetailExtraProducts.js';
+import { ProductDetailExtraProducts as ProductDetailExtraProductsMB } from './productDetailExtraProducts.js';
+import {ProductDetailExtraProducts} from '../../core/ProductFullDetail/productDetailExtraProducts'
 import ProductReview from '@simicart/siminia/src/simi/App/nativeInner/ProductFullDetail/ProductReview';
 import ProductLabel from '@simicart/siminia/src/simi/App/core/ProductFullDetail/ProductLabel';
 import Pdetailsbrand from '@simicart/siminia/src/simi/App/core/ProductFullDetail/Pdetailsbrand';
@@ -686,7 +687,7 @@ const ProductFullDetail = props => {
                     />
                 ) : null}
                 <ProductReview product={product} ref={productReview} />
-                    <ProductDetailExtraProducts
+                    {isMobileSite ?  <ProductDetailExtraProductsMB
                         classes={classes}
                         products={relatedProducts}
                         history={history}
@@ -695,9 +696,19 @@ const ProductFullDetail = props => {
                             id="productFullDetail.relatedProducts"
                             defaultMessage="Related Product"
                         />
-                    </ProductDetailExtraProducts>
+                    </ProductDetailExtraProductsMB>:  <ProductDetailExtraProducts
+                        classes={classes}
+                        products={relatedProducts}
+                        history={history}
+                    >
+                        <FormattedMessage
+                            id="productFullDetail.relatedProducts"
+                            defaultMessage="Related Product"
+                        />
+                    </ProductDetailExtraProducts>}
+                   
                 
-                    <ProductDetailExtraProducts
+                    {isMobileSite ? <ProductDetailExtraProductsMB
                         classes={classes}
                         products={upsellProducts}
                         history={history}
@@ -706,9 +717,18 @@ const ProductFullDetail = props => {
                             id="productFullDetail.upsellProduct"
                             defaultMessage="Upsell Product"
                         />
-                    </ProductDetailExtraProducts>
+                    </ProductDetailExtraProductsMB> : <ProductDetailExtraProducts
+                        classes={classes}
+                        products={upsellProducts}
+                        history={history}
+                    >
+                        <FormattedMessage
+                            id="productFullDetail.upsellProduct"
+                            defaultMessage="Upsell Product"
+                        />
+                    </ProductDetailExtraProducts>}
                 
-                    <ProductDetailExtraProducts
+                    {isMobileSite ? <ProductDetailExtraProductsMB
                         classes={classes}
                         products={crosssellProducts}
                         history={history}
@@ -717,7 +737,16 @@ const ProductFullDetail = props => {
                             id="productFullDetail.crosssellProduct"
                             defaultMessage="Crosssell Product"
                         />
-                    </ProductDetailExtraProducts>
+                    </ProductDetailExtraProductsMB> : <ProductDetailExtraProducts
+                        classes={classes}
+                        products={crosssellProducts}
+                        history={history}
+                    >
+                        <FormattedMessage
+                            id="productFullDetail.crosssellProduct"
+                            defaultMessage="Crosssell Product"
+                        />
+                    </ProductDetailExtraProducts>}
                 </div>
             {isMobileSite ? (
                 <FooterFixedBtn

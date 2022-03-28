@@ -274,10 +274,15 @@ const Products = props => {
             <h1 className="title">
                 <div className="categoryTitle">{title}</div>
             </h1>
-            <div className={`${category ? 'wrapCategoryDesription' : ''}`}>
-                <CategoryDesription childCate={category} />
-            </div>
+            {windowSize.innerWidth > 768 ? (
+                <div className={`${category ? 'wrapCategoryDesription' : ''}`}>
+                    <CategoryDesription childCate={category} />
+                </div>) : ''}
             <div className="product-list-container-siminia">
+            {windowSize.innerWidth <= 768 ? (
+                <div className={`${category ? 'wrapCategoryDesription' : ''}`}>
+                    <CategoryDesription childCate={category} />
+                </div>) : ''}
                 <div className="wrapper">
                     {windowSize.innerWidth > 768 ? (
                         ''
