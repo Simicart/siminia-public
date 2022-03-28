@@ -141,7 +141,7 @@ export const PriceAdjustments = (props) => {
                         <CouponCode setIsCartUpdating={setIsCartUpdating} makeNotification={makeNotification} />
                     </Suspense>
                 </Section>
-                {/* {rewardPointEnabled && balance ? ( */}
+                {rewardPointEnabled && balance ? (
                     <Section
                         id={'reward_points'}
                         title={formatMessage({
@@ -233,7 +233,7 @@ export const PriceAdjustments = (props) => {
                             )}
                         </Suspense>
                     </Section>
-                {/* ) : null} */}
+                ) : null}
                 <GiftCardSection setIsCartUpdating={setIsCartUpdating} />
             </Accordion>
         </div>
