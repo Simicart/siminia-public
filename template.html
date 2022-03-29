@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#ff6334">
     <link rel="manifest" href="/manifest.json">
 
@@ -149,6 +149,27 @@
         @media (min-width: 1620px) {
             #root .container {
                 width: 1430px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            /* native style */
+            a,
+            input,
+            button,
+            span,
+            div {
+                -webkit-tap-highlight-color: transparent;
+            }
+            div,
+            span,
+            p,
+            table {
+                user-select: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
             }
         }
     </style>
