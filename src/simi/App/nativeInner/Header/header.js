@@ -328,7 +328,7 @@ const Header = props => {
     if (isPhone) {
         return (
             <React.Fragment>
-                {!isHiddenHeader && !isSimpleHeader ? (
+                {!isHiddenHeader  ? (
                     <div className={classes.virtualHeader} style={{height:headerHeight }} />
                 ) : null}
 
