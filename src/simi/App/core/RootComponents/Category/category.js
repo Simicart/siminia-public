@@ -93,7 +93,7 @@ const Category = props => {
     }
 
     return (
-        <div className="container">
+        <div style={{backgroundColor: '#fff'}} className="container">
             {mageworxSeoEnabled ? (
                 <>
                     <Seo pageType="CATEGORY" />

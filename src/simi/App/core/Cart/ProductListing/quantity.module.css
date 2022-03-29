@@ -13,7 +13,6 @@
     height: 45px;
     width: 45px;
     background-color: #fff;
-    border: 1px solid var(--venia-global-color-button);
 }
 .root button:nth-child(2) {
     background-color: var(--venia-global-color-button);

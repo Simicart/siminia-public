@@ -2,6 +2,7 @@
     padding: 2.5rem 3rem;
     max-width: 1080px;
     margin: 0 auto;
+    background-color: #fff;
 }
 .root > div > div > div > div {
     border-radius: 0;
