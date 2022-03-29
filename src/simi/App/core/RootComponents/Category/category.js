@@ -83,7 +83,7 @@ const Category = props => {
     }
 
     return (
-        <div className="container">
+        <div style={{backgroundColor: '#fff'}} className="container">
             <Seo pageType="CATEGORY" />
             <Canonical type="CATEGORY" />
             <MarkupCategory category={category} />
@@ -135,6 +135,7 @@ const Category = props => {
                     pageControl={pageControl}
                 />
             )}
+           
         </div>
     );
 };
