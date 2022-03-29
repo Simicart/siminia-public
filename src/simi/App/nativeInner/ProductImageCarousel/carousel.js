@@ -31,7 +31,7 @@ const IMAGE_WIDTH = 640;
  * @returns {React.Element} React carousel component that displays a product image
  */
 const ProductImageCarousel = props => {
-    const { optionSelections, product, optionCodes } = props;
+    const { optionSelections, product, optionCodes, topInsets } = props;
     const { formatMessage } = useIntl();
     const lightbox = useRef(null);
     const [renderLightBox, setRenderLightBox] = useState(false);
@@ -128,7 +128,8 @@ const ProductImageCarousel = props => {
                     getUrlBuffer() + '/media/catalog/product' + item.file
             };
         }, this);
-        return <ImageLightbox ref={lightbox} images={images} />;
+        return <ImageLightbox ref={lightbox} images={images} />
+    
     };
 
     const onChangeItemDefault = () => {};

@@ -63,11 +63,13 @@ const Header = props => {
         fetchPolicy: 'cache-first'
     });
 
+    // const isHiddenHeader =
+    //     (data && data.route && data.route.type === TYPE_PRODUCT) ||
+    //     pathname === '/sign-in'
+    //         ? true
+    //         : false;
     const isHiddenHeader =
-        (data && data.route && data.route.type === TYPE_PRODUCT) ||
-        pathname === '/sign-in'
-            ? true
-            : false;
+        (data && data.route && data.route.type === TYPE_PRODUCT) 
 
     const isSimpleHeader =
         location && location.pathname && location.pathname === '/checkout';
@@ -285,7 +287,7 @@ const Header = props => {
             return (
                 <div
                     className={classes.specHeader}
-                    style={{ backgroundColor: configColor.key_color }}
+                    style={headerStyle}
                 >
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>

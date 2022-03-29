@@ -69,6 +69,17 @@ const OrderDetailPage = props => {
 
     const talonThumbnail = useOrderRow({ items });
 
+    let bottomInsets = 0;
+    try {
+        if (window.simicartRNinsets) {
+            const simicartRNinsets = JSON.parse(window.simicartRNinsets);
+            bottomInsets = parseInt(simicartRNinsets.bottom);
+        } else if (window.simpifyRNinsets) {
+            const simpifyRNinsets = JSON.parse(window.simpifyRNinsets);
+            bottomInsets = parseInt(simpifyRNinsets.bottom);
+        }
+    } catch (err) {}
+
     const handleImage = (list, listItem) => {
         let result = [];
         list.forEach((item, index) => {
@@ -686,7 +697,7 @@ const OrderDetailPage = props => {
                     </span>
                 </div>
 
-                <div className={classes.mbBuyAgain}>
+                <div style={{height: 55+bottomInsets}} className={classes.mbBuyAgain}>
                     <button
                         disabled={loading ? true : false}
                         className={loading ? classes.btnDis : null}

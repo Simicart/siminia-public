@@ -3,11 +3,11 @@ import { BiMessageAltDetail } from 'react-icons/bi';
 require('./statusBar.scss');
 
 const FooterFixedBtn = props => {
-    const { addToCartPopup, setAddToCartPopup, typeBtn, setTypeBtn } = props;
+    const { addToCartPopup, setAddToCartPopup, typeBtn, setTypeBtn, bottomInsets } = props;
     return (
         <>
-        <div className="virtual"/>
-        <div className="main-footerFixedBtn">
+        <div style={{height: 55+ bottomInsets}} className="virtual"/>
+        <div style={{ height: 55+ bottomInsets}}  className="main-footerFixedBtn">
             <ul>
                 <li className="msg-icon">
                     <BiMessageAltDetail />

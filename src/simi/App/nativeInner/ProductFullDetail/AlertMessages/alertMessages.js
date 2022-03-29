@@ -5,7 +5,7 @@ import { BiCheckCircle, BiErrorCircle, BiError } from 'react-icons/bi';
 require('./styles.scss');
 
 const AlertMessages = props => {
-    const { message, status, alertMsg, setAlertMsg } = props;
+    const { message, status, alertMsg, setAlertMsg, topInsets } = props;
 
     useEffect(() => {
         const TimerId = setTimeout(() => {
@@ -45,7 +45,7 @@ const AlertMessages = props => {
     }
 
     return (
-        <div className={`main-alert ${handleSetClass(alertMsg)} ${status}`}>
+        <div className={`${topInsets === 0 ? 'main-alert' : 'main-alert-native'} ${handleSetClass(alertMsg)} ${status}`}>
             {handleRenderIcon(status)}
             <h1>{message}</h1>
         </div>

@@ -25,7 +25,7 @@ const mageworxSeoEnabled =
 
 require('./productReview.scss');
 const ProductReview = forwardRef((props, ref) => {
-    const { product } = props;
+    const { product, topInsets } = props;
     const history = useHistory();
     const storeConfig = Identify.getStoreConfig();
     const enabledReview =
@@ -131,6 +131,7 @@ const ProductReview = forwardRef((props, ref) => {
         let html = null;
         html = (
             <div className={classes.mainPopup}>
+                <div style={{height: topInsets}} />
                 <div className={classes.heading}>
                     <div className={classes.closeBtn}>
                         <button onClick={togglePopup}>

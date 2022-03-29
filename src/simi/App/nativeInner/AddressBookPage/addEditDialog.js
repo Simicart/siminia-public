@@ -23,7 +23,8 @@ const AddEditDialog = props => {
         isEditMode,
         isOpen,
         onCancel,
-        onConfirm
+        onConfirm,
+        topInsets
     } = props;
 
     const { formatMessage } = useIntl();
@@ -87,6 +88,7 @@ const AddEditDialog = props => {
             onConfirm={onConfirm}
             shouldDisableAllButtons={isBusy}
             title={title}
+            topInsets={topInsets}
         >
             <FormError
                 classes={{ root: classes.errorContainer }}
