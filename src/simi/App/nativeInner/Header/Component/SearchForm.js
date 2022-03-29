@@ -25,6 +25,7 @@ const SearchForm = props => {
     const history = useHistory();
     const location = useLocation();
     const itemsQty = props.itemsQty;
+    const topInsets = props.topInsets
 
     const displayBackBtn =
         location.pathname !== '/' &&
@@ -91,7 +92,7 @@ const SearchForm = props => {
         if (isPhone) {
             if (openSearchField) {
                 return (
-                    <div className="siminia-search-field-wrapper">
+                    <div className="siminia-search-field-wrapper" style={{paddingTop:topInsets===0 ? 38 : topInsets}}>
                         <div>
                             <BiArrowBack
                                 className="header-close-icon"
@@ -157,6 +158,7 @@ const SearchForm = props => {
                         className="main-header-icon"
                         src={logoUrl()}
                         alt="logo"
+                        
                     />
                     {/* <span className="header-title">SimiCart</span> */}
                 </Link>
@@ -164,7 +166,9 @@ const SearchForm = props => {
         } else
             return (
                 <div className="main-header-backIcon" style={{color: configColor.top_menu_icon_color}}>
+                    <div style={{marginRight:30}}>
                     <ArrowLeft onClick={() => history.goBack()} />
+                    </div>
                     <Link to="/" className="header-title">
                         SimiCart
                     </Link>
@@ -174,8 +178,9 @@ const SearchForm = props => {
 
     return (
         <>
+         {isPhone ? renderHeaderIcon(displayBackBtn) : null}
             <div className={classes['header-search-form']}>
-                {isPhone ? renderHeaderIcon(displayBackBtn) : null}
+                {/* {isPhone ? renderHeaderIcon(displayBackBtn) : null} */}
                 <label htmlFor="siminia-search-field" className="hidden">
                     {formatMessage({ id: 'Search' })}
                 </label>

@@ -109,8 +109,12 @@ const Header = props => {
         }
     } catch (err) {}
 
-    let headerHeight = isPhone ? 62 : 107;
+    let headerHeight = isPhone ? 55 : 107;
     headerHeight += topInsets;
+    const myAccountHead = 80 + topInsets
+
+    // console.log("headerheidd", window.simicartRNinsets);
+    const headerStyle = { backgroundColor: configColor.key_color, height: headerHeight, display: 'flex',alignItems: 'end', paddingBottom:16}
 
     const { isSignedIn } = userData;
     const renderRightBar = () => {
@@ -195,20 +199,20 @@ const Header = props => {
                 className={`${classes['header-search']} ${
                     Identify.isRtl() ? classes['header-search-rtl'] : ''
                 }`}
-                style={{ backgroundColor: configColor.key_color }}
+                style={{ backgroundColor: configColor.key_color,  height: headerHeight }}
             >
-                <SearchForm itemsQty={itemsQty} history={history} />
+                <SearchForm itemsQty={itemsQty} history={history} topInsets={topInsets} />
             </div>
         );
     };
+
 
     const renderHeader = type => {
         if (type === '/sign-in') {
             return (
                 <div
                     className={classes.specHeader}
-                    style={{ backgroundColor: configColor.key_color }}
-                >
+                    style={headerStyle}                >
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -223,7 +227,7 @@ const Header = props => {
             return (
                 <div
                     className={classes.specHeader}
-                    style={{ backgroundColor: configColor.key_color }}
+                    style={headerStyle}
                 >
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
@@ -239,7 +243,7 @@ const Header = props => {
             return (
                 <div
                     className={classes.specHeader}
-                    style={{ backgroundColor: configColor.key_color }}
+                    style={headerStyle}
                 >
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
@@ -255,7 +259,7 @@ const Header = props => {
             return (
                 <div
                     className={classes.specHeader}
-                    style={{ backgroundColor: configColor.key_color }}
+                    style={headerStyle}
                 >
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
@@ -270,7 +274,7 @@ const Header = props => {
         }
         if (type === '/my-account') {
             return (
-                <div className={classes.myAccountHead}>
+                <div className={classes.myAccountHead} style={{ backgroundColor: configColor.key_color, height: myAccountHead, display: 'flex',alignItems: 'end', paddingBottom:16}}>
                     <MyAccount classes={classes} userData={userData} />
                     <BiChevronRight />
                 </div>
@@ -297,7 +301,7 @@ const Header = props => {
             return (
                 <div
                     className={classes.specHeader}
-                    style={{ backgroundColor: configColor.key_color }}
+                    style={headerStyle}
                     id="siminia-text-header"
                 >
                     <ArrowLeft onClick={() => history.goBack()} />
@@ -323,7 +327,7 @@ const Header = props => {
         return (
             <React.Fragment>
                 {!isHiddenHeader && !isSimpleHeader ? (
-                    <div className={classes.virtualHeader} />
+                    <div className={classes.virtualHeader} style={{height:headerHeight }} />
                 ) : null}
 
                 {/* {!isSimpleHeader && !isHiddenHeader && renderSearchForm()}

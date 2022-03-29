@@ -48,6 +48,23 @@ const FooterNative = props => {
     });
 
     const isPhone = windowSize.innerWidth <= 450;
+
+
+    let bottomInsets = 0;
+    try {
+        if (window.simicartRNinsets) {
+            const simicartRNinsets = JSON.parse(window.simicartRNinsets);
+            bottomInsets = parseInt(simicartRNinsets.bottom);
+        } else if (window.simpifyRNinsets) {
+            const simpifyRNinsets = JSON.parse(window.simpifyRNinsets);
+            bottomInsets = parseInt(simpifyRNinsets.bottom);
+        }
+    } catch (err) {}
+
+    let bottomMenuHeight = isPhone ? 55 : 107;
+    bottomMenuHeight += bottomInsets;
+
+
     const pathNameLength =
         location && location.pathname
             ? location.pathname.split('/').length
@@ -80,6 +97,9 @@ const FooterNative = props => {
             : false;
     const pathName =
         location && location.pathname ? location.pathname.split('/')[1] : null;
+
+    const bottomMenuStyle = { backgroundColor: configColor.key_color, height: bottomMenuHeight, display: 'flex',alignItems: 'start', paddingTop: 10}
+    
 
     useEffect(() => {
         if (pathName === '') {
@@ -131,8 +151,8 @@ const FooterNative = props => {
 
     return (
         <>
-            <div className={classes.virtualFooter} />
-            <div className={classes.mainFooter}>{MenuItems}</div>
+            <div className={classes.virtualFooter} style={{height: bottomMenuHeight}} />
+            <div className={classes.mainFooter} style={bottomMenuStyle}>{MenuItems}</div>
         </>
     );
 };
