@@ -119,6 +119,33 @@ const CheckoutPage = props => {
         }
     }, [addToast, error, formatMessage, hasError]);
 
+    useEffect(() => {
+        const svgSelector = document.querySelector('#siminia-text-header svg')
+        const titleSelector = document.querySelector('#siminia-text-header span')
+        switch(activeContent) {
+            case 'addressBook':
+                if(svgSelector) svgSelector.style.display = 'none'
+                if(titleSelector) titleSelector.innerHTML = "Change Shipping Information"
+                break
+            case 'signIn':
+                if(svgSelector) svgSelector.style.display = 'none'
+                if(titleSelector) titleSelector.innerHTML = "Change Shipping Information"
+                break
+            default: 
+                if(svgSelector) svgSelector.style.display = 'flex'
+                if(titleSelector) titleSelector.innerHTML = "Checkout"
+            // case 'addressBook':
+            //     if(svgSelector) svgSelector.style.display = 'none'
+            //     if(titleSelector) titleSelector.innerHTML = ""
+            //     break
+        }
+            
+        return () => {
+            if(svgSelector) svgSelector.style.display = 'flex'
+            if(titleSelector) titleSelector.innerHTML = "Checkout"
+        }
+    }, [activeContent])
+
     const classes = useStyle(defaultClasses, propClasses);
 
     const windowSize = useWindowSize();
@@ -404,7 +431,6 @@ const CheckoutPage = props => {
                 ? classes.checkoutContent
                 : classes.checkoutContent_hidden;
 
-        console.log(checkoutStep)
         const stockStatusMessageElement = (
             <Fragment>
                 <FormattedMessage
