@@ -82,12 +82,14 @@
 }
 .quantity > form > div span:nth-child(3) > span > input{
     height: 35px;
+    border-color: #979797!important ;
 }
 .quantity > form > div button:nth-child(5){
     height: 35px;
     width: 35px;
-    background-color: #fff;
-    border: 1px solid var(--venia-global-color-button);
+    background: white;
+    color: var(--venia-global-color-button);
+    --stroke: var(--venia-global-color-gray-700);
 }
 .price {
     grid-column: 2 / span 1;

@@ -260,12 +260,12 @@
     display: block;
     box-sizing: border-box;
     min-height: 50px;
-    background-color: #0058B2;
+    background-color: var(--venia-global-color-button);
     padding-top: 22px ;
     padding-inline-start : 40px;
     padding-bottom: 18px;
     padding-inline-end: 40px; 
-    color: #FFFFFF;
+    color: var(--venia-global-color-button-text);
     margin-top: 20px;
     font-size: 14px;
     font-weight: bold;
