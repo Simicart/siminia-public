@@ -65,7 +65,6 @@ const MiniCart = React.forwardRef((props, ref) => {
         shipping,
         priceData
     } = flatData;
-
     const classes = useStyle(defaultClasses, props.classes);
     const rootClass = isOpen ? classes.root_open : classes.root;
     const contentsClass = isOpen ? classes.contents_open : classes.contents;
@@ -97,7 +96,7 @@ const MiniCart = React.forwardRef((props, ref) => {
         }
     }, [addToast, errorMessage]);
 
-    const header = subTotal ? (
+    const header = subtotal ? (
         <Fragment>
             <div className={classes.stockStatusMessageContainer}>
                 <StockStatusMessage cartItems={productList} />
