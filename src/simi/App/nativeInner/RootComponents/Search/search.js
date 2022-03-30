@@ -8,12 +8,13 @@ import defaultClasses from './search.module.css';
 import Products from 'src/simi/App/nativeInner/Products';
 import { withRouter } from 'react-router-dom';
 import CategoryContentShimmer from '@magento/venia-ui/lib/RootComponents/Category/categoryContent.shimmer';
-import NoProductsFound from 'src/simi/BaseComponents/Products/NoProductsFound';
+import NoProductsFound from 'src/simi/App/nativeInner/Products/NoProductsFound';
 import { useSearchContentSimiPagination } from 'src/simi/talons/Search/useSearchContentSimiPagination';
 import TitleHelper from 'src/simi/Helper/TitleHelper';
 import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
 const Search = props => {
     const { classes, location, history } = props;
+    const search = location.search ? location.search.slice(3) : '';
     const { formatMessage } = useIntl();
 
     const loadStyle = 2; // 1: button load-more, 2: pagination
@@ -38,7 +39,6 @@ const Search = props => {
         pageControl,
         inputText
     } = talonProps;
-
     const isMobileSite = window.innerWidth <= 768;
 
     if (!inputText) {
@@ -63,8 +63,7 @@ const Search = props => {
         >
             <div className={`${classes.root} container simi-fadein`}>
                 {TitleHelper.renderMetaHeader({ title })}
-                <Breadcrumbs breadcrumb={breadcrumb} history={history} />
-
+                {!isMobileSite ? <Breadcrumbs breadcrumb={breadcrumb} history={history} /> : ''}
                 {pageControl.totalPages > 0 ? (
                     <div className={classes.wrapProducts}>
                         <Products
@@ -81,7 +80,7 @@ const Search = props => {
                         />
                     </div>
                 ) : (
-                    <NoProductsFound />
+                    <NoProductsFound search ={search}/>
                 )}
             </div>
         </div>

@@ -76,7 +76,7 @@
     }
     .mainContent{
         display: grid;
-        grid-template-columns: 113px calc(100% - 113px);
+        grid-template-columns: auto;
         flex-wrap: wrap;
         grid-column-gap: 0px;
         padding: 0;
@@ -86,20 +86,23 @@
     }
     .leftContent{
         background-color: #F2F2F3;
-        height: auto;
+        height: 83vh;
+        position: fixed;
+        width: 113px;
+        overflow-y: scroll;
     }
     .rightContent{
-        height: 100%;
+        height: 100vh;
         padding-right: 15px;
         padding-left: 15px;
         background-color: #fff;
+        margin-left: 113px;
     }
     .active, .unActive{
         height: auto;
         width: 100%;
         text-align: center;
-        padding-top: 15px;
-        padding-bottom: 15px;
+        padding: 10px 0;
         background-color: #F2F2F3;
     }
     .icon{
@@ -124,7 +127,7 @@
         object-fit: contain;
         margin-left: auto;
         margin-right: auto;
-        height: 80px;
-        width: 80px;
+        height: 70px;
+        width: 70px;
     }
 }

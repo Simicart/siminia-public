@@ -11,3 +11,22 @@
     font-weight: 600;
     text-align: center;
 }
+@media (max-width: 768px) {
+    .root {
+        height: 70vh;
+    }
+    .imgNoProducts{
+        max-width: 250px;
+    }
+    .noProducts
+    {
+        font-family: Roboto;
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 0;
+        line-height: 16px;
+    }
+    .search{
+        font-weight: bold;
+    }
+}
