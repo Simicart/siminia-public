@@ -13,7 +13,7 @@ import { useWindowSize } from '@magento/peregrine';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { logoUrl } from 'src/simi/Helper/Url';
 import {configColor} from '../../../../../simi/Config'
-
+import {HiOutlineMicrophone} from 'react-icons/hi'
 require('./search.scss');
 
 const SearchAutoComplete = React.lazy(() =>
@@ -99,35 +99,51 @@ const SearchForm = props => {
                                 onClick={() => handleCloseSearch()}
                             />
                         </div>
-                        <input
-                            autoFocus
-                            className="siminia-search-field"
-                            type="text"
-                            id="siminia-search-field"
-                            ref={e => {
-                                searchField = e;
-                            }}
-                            onBlur={() => handleBlur()}
-                            placeholder={formatMessage({
-                                id: 'search your product'
-                            })}
-                            onChange={() => handleSearchField()}
-                            onKeyPress={e => {
-                                if (e.key === 'Enter') startSearch();
-                            }}
-                        />
-                        <div
-                            onClick={() => startSearch()}
-                            className="header-search-icon"
-                        >
-                            <Search
-                                style={{
-                                    width: 35,
-                                    height: 35,
-                                    display: 'block'
+                        <div className='wrap-content'>
+                        <div className='wrap-search'>
+                            <span
+                                onClick={() => startSearch()}
+                                className="header-search-icon"
+                            >
+                                <Search
+                                    style={{
+                                        width: 25,
+                                        height: 25,
+                                        display: 'inline-block'
+                                    }}
+                                />
+                            </span>
+                            <input
+                                autoFocus
+                                className="siminia-search-field"
+                                type="text"
+                                id="siminia-search-field"
+                                ref={e => {
+                                    searchField = e;
+                                }}
+                                onBlur={() => handleBlur()}
+                                placeholder={formatMessage({
+                                    id: 'search your product'
+                                })}
+                                onChange={() => handleSearchField()}
+                                onKeyPress={e => {
+                                    if (e.key === 'Enter') startSearch();
                                 }}
                             />
+                            <span className='micro-icon'>
+                                <HiOutlineMicrophone size={20}/>
+                            </span> 
                         </div>
+                        <span className='cancel'>
+                                {formatMessage({
+                                    id: 'cancel',
+                                    defaultMessage: 'cancel'
+                                })}
+                            </span>
+                        </div>
+                        
+                        
+                        
                     </div>
                 );
             } else return null;
