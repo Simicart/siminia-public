@@ -125,24 +125,20 @@ const CheckoutPage = props => {
         switch(activeContent) {
             case 'addressBook':
                 if(svgSelector) svgSelector.style.display = 'none'
-                if(titleSelector) titleSelector.innerHTML = "Change Shipping Information"
+                if(titleSelector) titleSelector.innerHTML = formatMessage({ id: 'addressBook.headerText', defaultMessage: 'Change Shipping Information' })
                 break
             case 'signIn':
                 if(svgSelector) svgSelector.style.display = 'none'
-                if(titleSelector) titleSelector.innerHTML = "Change Shipping Information"
+                if(titleSelector) titleSelector.innerHTML = formatMessage({ id: "checkoutPage.guestSignIn.header", defaultMessage: 'Account Sign-in' })
                 break
             default: 
                 if(svgSelector) svgSelector.style.display = 'flex'
-                if(titleSelector) titleSelector.innerHTML = "Checkout"
-            // case 'addressBook':
-            //     if(svgSelector) svgSelector.style.display = 'none'
-            //     if(titleSelector) titleSelector.innerHTML = ""
-            //     break
+                if(titleSelector) titleSelector.innerHTML = formatMessage({ id: 'checkoutPage.checkout', defaultMessage: 'Checkout'})
         }
             
         return () => {
             if(svgSelector) svgSelector.style.display = 'flex'
-            if(titleSelector) titleSelector.innerHTML = "Checkout"
+            if(titleSelector) titleSelector.innerHTML = formatMessage({ id: 'checkoutPage.checkout', defaultMessage: 'Checkout'})
         }
     }, [activeContent])
 

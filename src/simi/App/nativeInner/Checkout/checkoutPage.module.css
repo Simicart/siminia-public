@@ -269,7 +269,7 @@
         justify-items: center;
         margin-bottom: 1rem;
         background-color: #ffffff;
-        padding: 1.25rem 0;
+        padding: 1.25rem 0.625rem;
     }
 
     .signInLabel {
@@ -315,8 +315,28 @@
         border: none
     }
 
+    .root div[class*='guestForm-buttons'] {
+        padding: 1rem 0;
+    }
+
+    .root div[class*='guestForm-buttons'] > button, .root div[class*='shippingMethod-formButtons'] > button  {
+        min-height: 35px;
+        font-size: 16px;
+    }
+
+    .root form[class*='couponCode-entryForm'] label {
+       min-height: 20px;
+    }
+
+    .root form[class*='couponCode-entryForm'] button {
+        height: unset;
+        min-height: 35px;
+        border-radius: 4px;
+    }
+
     .root span[class*='lineItems'] {
         margin-top: 0;
+
     }
 
     .root span[class*='totalLabel'] {
@@ -372,6 +392,12 @@
         text-transform: uppercase;
         font-weight: bold;
         max-width: 16rem;
+    }
+
+    .signInButton {
+        font-size: 16px;
+        min-height: 35px;
+
     }
 }
 
