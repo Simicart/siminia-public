@@ -86,9 +86,10 @@
     }
     .leftContent{
         background-color: #F2F2F3;
-        height: auto;
+        height: 83vh;
         position: fixed;
         width: 113px;
+        overflow-y: scroll;
     }
     .rightContent{
         height: 100vh;
