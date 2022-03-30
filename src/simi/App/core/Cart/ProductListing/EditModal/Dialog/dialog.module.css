@@ -138,7 +138,7 @@
 }
 
 .confirmButton {
-    composes: root_highPriority from '@magento/venia-ui/lib/components/Button/button.module.css';
+    composes: root_highPriority from 'src/override/button.module.css';
     align-items: center;
     cursor: pointer;
     display: inline-flex;
@@ -146,9 +146,9 @@
     line-height: 1;
     pointer-events: auto;
     text-align: center;
-    border-color: #0058ac;
-    background: #0058ac;
-    color: white;
+    border-color: var(--venia-global-color-button);
+    background-color: var(--venia-global-color-button);
+    color: var(--venia-global-color-button-text);    
     border-style: solid;
     border-width: 1px;
     border-radius: 4px;
@@ -168,7 +168,7 @@
 }
 
 .cancelButton {
-    composes: root_lowPriority from '@magento/venia-ui/lib/components/Button/button.module.css';
+    composes: root_lowPriority from 'src/override/button.module.css';
     align-items: center;
     cursor: pointer;
     display: inline-flex;
@@ -176,9 +176,9 @@
     line-height: 1;
     pointer-events: auto;
     text-align: center;
-    border-color: #0058ac;
-    background: #fff;
-    color: #0058ac;
+    background: white;
+    color: var(--venia-global-color-button);
+    border-color: var(--venia-global-color-button);
     border-style: solid;
     border-width: 1px;
     border-radius: 4px;
