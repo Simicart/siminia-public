@@ -7,7 +7,7 @@ import { FaChevronRight } from 'react-icons/fa';
 require('./style.scss');
 
 const SizeChart = props => {
-    const {isMobileSite} = props
+    const {isMobileSite, topInsets} = props
     const [open, setOpen] = useState(false);
     const item = props.sizeChart;
     const { formatMessage } = useIntl();
@@ -92,6 +92,7 @@ const SizeChart = props => {
             <div className="main-sizechart">
                 {open ? (
                     <div className="product-sizechart">
+                        <div style={{height: topInsets}} />
                         <div
                             className="close-icon"
                             onClick={() => setOpen(false)}

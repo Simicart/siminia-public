@@ -283,6 +283,19 @@ const ProductFullDetail = props => {
             </p>
         </div>
     );
+    let topInsets = 0;
+    let bottomInsets = 0;
+    try {
+        if (window.simicartRNinsets) {
+            const simicartRNinsets = JSON.parse(window.simicartRNinsets);
+            topInsets = parseInt(simicartRNinsets.top);
+            bottomInsets = parseInt(simicartRNinsets.bottom);
+        } else if (window.simpifyRNinsets) {
+            const simpifyRNinsets = JSON.parse(window.simpifyRNinsets);
+            topInsets = parseInt(simpifyRNinsets.top);
+            bottomInsets = parseInt(simpifyRNinsets.bottom);
+        }
+    } catch (err) {}
 
     const pricePiece = switchExtraPriceForNormalPrice ? (
         <Price currencyCode={extraPrice.currency} value={extraPrice.value} />
@@ -382,6 +395,7 @@ const ProductFullDetail = props => {
         <SizeChart
             sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null}
             isMobileSite={isMobileSite}
+            topInsets={topInsets}
         />
     ) : null;
     const cartAction = (
@@ -410,13 +424,17 @@ const ProductFullDetail = props => {
         </div>
     );
 
+    
+
     return (
-        <div className={isMobileSite ? 'main-product-detail-native' : null}>
+        <div  className={isMobileSite ? 'main-product-detail-native' : null}>
+            <div style={{height:topInsets}}></div>
             <AlertMessages
                 message={successMsg}
                 setAlertMsg={setAlertMsg}
                 alertMsg={alertMsg}
                 status="success"
+                topInsets={topInsets}
             />
 
             {addToCartPopup ? (
@@ -433,6 +451,7 @@ const ProductFullDetail = props => {
                     alertMsg={alertMsg}
                     productName={productDetails.name}
                     addToCartPopup={addToCartPopup}
+                    bottomInsets={bottomInsets}
                 />
             ) : null}
 
@@ -545,6 +564,7 @@ const ProductFullDetail = props => {
                                         ? product.mp_label_data
                                         : null
                                 }
+                                topInsets = {topInsets}
                             />
                             {/* {isMobileSite ? <FooterFixedBtn /> : null} */}
                             {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
@@ -626,7 +646,9 @@ const ProductFullDetail = props => {
 
                                         <div
                                             className={desStatus(descripttion)}
+                                            
                                         >
+                                            <div style={{height: topInsets}} />
                                             <div
                                                 className="des-title"
                                                 onClick={() =>
@@ -686,7 +708,7 @@ const ProductFullDetail = props => {
                         }
                     />
                 ) : null}
-                <ProductReview product={product} ref={productReview} />
+                <ProductReview topInsets={topInsets} product={product} ref={productReview} />
                     {isMobileSite ?  <ProductDetailExtraProductsMB
                         classes={classes}
                         products={relatedProducts}
@@ -754,6 +776,7 @@ const ProductFullDetail = props => {
                     setAddToCartPopup={setAddToCartPopup}
                     typeBtn={typeBtn}
                     setTypeBtn={setTypeBtn}
+                    bottomInsets={bottomInsets}
                 />
             ) : null}
         </div>

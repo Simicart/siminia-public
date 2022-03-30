@@ -57,7 +57,7 @@ const Dialog = props => {
         shouldDisableConfirmButton,
         shouldShowButtons = true,
         shouldUnmountOnHide,
-        title
+        title,topInsets
     } = props;
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 450
@@ -137,7 +137,8 @@ const Dialog = props => {
                 />
                 {/* The Dialog. */}
                 <div className={classes.dialog}>
-                    <div className={classes.header}>
+                    <div style={{height:topInsets}} />
+                    <div style={{height:55+topInsets, paddingTop:topInsets}}  className={classes.header}>
                         {isPhone && maybeCloseXButton}
                         <span className={classes.headerText}>{title}</span>
                         {!isPhone && maybeCloseXButton}

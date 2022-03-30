@@ -77,9 +77,92 @@
             top: -9%;
         }
     }
+
+    .main-alert-native {
+        padding: 10px;
+        position: fixed;
+        z-index: 5;
+        width: 100%;
+        
+    }
+
+    .main-alert-native.null {
+        top: -10%;
+        left: 0;
+        color: #fff;
+        display: flex;
+        font-size: 15px;
+        svg {
+            font-size: 23px;
+            margin-right: 5px;
+        }
+    }
+
+    .main-alert-native.close {
+        animation: msgOutNa 0.4s;
+        top: -10%;
+        left: 0;
+        color: #fff;
+        display: flex;
+        font-size: 15px;
+        svg {
+            font-size: 23px;
+            margin-right: 5px;
+        }
+    }
+    .main-alert-native.open {
+        animation: msgInNa 0.4s;
+        left: 0;
+        top: 5%;
+        color: #fff;
+        display: flex;
+        font-size: 15px;
+        svg {
+            font-size: 23px;
+            margin-right: 5px;
+        }
+    }
+    .main-alert-native.open.success,
+    .main-alert-native.close.success {
+        background-color: #5FAF4B;
+        z-index: 10;
+    }
+    .main-alert-native.open.error,
+    .main-alert-native.close.error {
+        background-color: #e51c24;
+        z-index: 10;
+
+    }
+    .main-alert-native.open.warning,
+    .main-alert-native.close.warning {
+        background-color: #df954c;
+        z-index: 10;
+
+    }
+    @keyframes msgInNa {
+        from {
+            top: -9%;
+        }
+        to {
+            top: 5%;
+        }
+    }
+    @keyframes msgOutNa {
+        from {
+            top: 5%;
+        }
+        to {
+            top: -9%;
+        }
+    }
+
+
 }
 @media (min-width: 451px) {
     .main-alert {
+        display: none;
+    }
+    .main-alert-native {
         display: none;
     }
 }

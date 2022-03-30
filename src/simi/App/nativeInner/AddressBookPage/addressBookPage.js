@@ -46,6 +46,21 @@ const AddressBookPage = props => {
 
     const [isDefault, setDefault] = useState();
 
+    let bottomInsets = 0;
+    let topInsets = 0;
+    try {
+        if (window.simicartRNinsets) {
+            const simicartRNinsets = JSON.parse(window.simicartRNinsets);
+            bottomInsets = parseInt(simicartRNinsets.bottom);
+            topInsets = parseInt(simicartRNinsets.top);
+        } else if (window.simpifyRNinsets) {
+            const simpifyRNinsets = JSON.parse(window.simpifyRNinsets);
+            bottomInsets = parseInt(simpifyRNinsets.bottom);
+            topInsets = parseInt(simpifyRNinsets.top);
+        }
+    } catch (err) {}
+
+
     const { formatMessage } = useIntl();
     const classes = useStyle(defaultClasses, props.classes);
 
@@ -204,12 +219,14 @@ const AddressBookPage = props => {
                     isOpen={isDialogOpen}
                     onCancel={handleCancelDialog}
                     onConfirm={handleConfirmDialog}
+                    topInsets ={topInsets}
                 />
             </div>
             {isPhone ? (
                 <div
                     onClick={handleAddAddress}
                     className={classes.addAddressMb}
+                    style={{height: 55+ bottomInsets}}
                 >
                     {formatMessage({
                         id: 'Add new address',

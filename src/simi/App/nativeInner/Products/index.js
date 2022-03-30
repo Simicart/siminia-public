@@ -256,6 +256,18 @@ const Products = props => {
         setShowDropdown(false);
     };
 
+    let topInsets = 0;
+    try {
+        if (window.simicartRNinsets) {
+            const simicartRNinsets = JSON.parse(window.simicartRNinsets);
+            topInsets = parseInt(simicartRNinsets.top);
+        } else if (window.simpifyRNinsets) {
+            const simpifyRNinsets = JSON.parse(window.simpifyRNinsets);
+            topInsets = parseInt(simpifyRNinsets.top);
+        }
+    } catch (err) {}
+    const heightFixed = 55+topInsets
+
     const dropdownRef = useRef(null);
     const handleClickOutside = e => {
         if (
@@ -283,7 +295,7 @@ const Products = props => {
                 <div className={`${category ? 'wrapCategoryDesription' : ''}`}>
                     <CategoryDesription childCate={category} />
                 </div>) : ''}
-                <div className="wrapper">
+                <div  style={{top:heightFixed}} className="wrapper">
                     {windowSize.innerWidth > 768 ? (
                         ''
                     ) : (
