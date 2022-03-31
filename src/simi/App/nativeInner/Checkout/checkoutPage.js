@@ -38,6 +38,7 @@ import Identify from 'src/simi/Helper/Identify';
 import ButtonLoader from '../../../BaseComponents/ButtonLoader';
 import {configColor} from "../../../Config";
 import Image from "@magento/venia-ui/lib/components/Image";
+import {getBottomInsets} from 'src/simi/App/nativeInner/Helper/Native'
 
 const deliveryTimeEnabled =
     window.SMCONFIGS &&
@@ -327,7 +328,7 @@ const CheckoutPage = props => {
         const priceAdjustmentsSection =
             checkoutStep === CHECKOUT_STEP.PAYMENT ? (
                 <div className={classes.price_adjustments_container}>
-                    <PriceAdjustments setPageIsUpdating={setIsUpdating} />
+                    <PriceAdjustments setPageIsUpdating={setIsUpdating} isMobile={isMobile} hideEstimateShipping={true}/>
                 </div>
             ) : null;
 
@@ -364,6 +365,8 @@ const CheckoutPage = props => {
                 </div>
             ) : null;
 
+        const bottomInsets = getBottomInsets()
+
         const placeOrderButton =
             checkoutStep === CHECKOUT_STEP.REVIEW ? (
                 <Button
@@ -381,6 +384,7 @@ const CheckoutPage = props => {
                     }}
                     priority="high"
                     className={classes.place_order_button}
+                    style={{ bottom: bottomInsets }}
                     disabled={
                         isUpdating || placeOrderLoading || orderDetailsLoading
                     }

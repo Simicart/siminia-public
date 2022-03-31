@@ -37,8 +37,8 @@ const ShippingMethods = React.lazy(() => import('./ShippingMethods'));
  * import PriceAdjustments from '@magento/venia-ui/lib/components/CartPage/PriceAdjustments'
  */
 
-export const PriceAdjustments = (props) => {
-    const { makeNotification } = props
+const PriceAdjustments = (props) => {
+    const { makeNotification, setIsCartUpdating, hideEstimateShipping } = props
 
     const classes = useStyle(defaultClasses, props.classes);
     const [{ cartId }] = useCartContext();
@@ -68,7 +68,6 @@ export const PriceAdjustments = (props) => {
     if (mpRewardSpent && mpRewardSpent.length > 0)
         rewardPointSelected = mpRewardSpent[0].value;
 
-    const { setIsCartUpdating } = props;
     const { formatMessage } = useIntl();
     const applyHandle = () => {
         if (rewardPoint > balance) {
@@ -105,7 +104,7 @@ export const PriceAdjustments = (props) => {
                 }}
                 canOpenMultiple={true}
             >
-                <Section
+                {!hideEstimateShipping && <Section
                     id={'shipping_method'}
                     title={formatMessage({
                         id: 'priceAdjustments.shippingMethod',
@@ -123,7 +122,7 @@ export const PriceAdjustments = (props) => {
                             setIsCartUpdating={(update) => setIsCartUpdating(update, false)}
                         />
                     </Suspense>
-                </Section>
+                </Section>}
                 <Section
                     id={'coupon_code'}
                     title={formatMessage({
@@ -239,3 +238,9 @@ export const PriceAdjustments = (props) => {
         </div>
     )
 };
+
+PriceAdjustments.defaultProps = {
+    hideEstimateShipping: false
+}
+
+export default PriceAdjustments

@@ -7,7 +7,7 @@ import {useToasts} from '@magento/peregrine';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import {StoreTitle} from '@magento/venia-ui/lib/components/Head';
 import {fullPageLoadingIndicator} from '@magento/venia-ui/lib/components/LoadingIndicator';
-import {PriceAdjustments} from './PriceAdjustments';
+import PriceAdjustments from './PriceAdjustments';
 import {PriceSummary} from './PriceSummary';
 import defaultClasses from '../../core/Cart/cartPage.module.css';
 import defaultClasses_1 from './cartPage.module.css';
@@ -207,9 +207,9 @@ const CartPage = props => {
         </div>
     )
 
-    const doneFlickering = (
-        !isCartUpdating && totalQuantity > 0 && hasItems && !firstProductsLoad
-    )
+    // const doneFlickering = (
+    //     !isCartUpdating && totalQuantity > 0 && hasItems && !firstProductsLoad
+    // )
 
     // const headerText = doneFlickering ? formatMessage({
     //         id: 'cart.headTitle',
