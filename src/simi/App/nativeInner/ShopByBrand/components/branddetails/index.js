@@ -51,7 +51,7 @@ const BrandDetails = (props) => {
             <Meta name="description" content={brandInformation.meta_description} />
             <Meta name="keywords" content={brandInformation.meta_keywords} />
             <div className={classes.breadCrumb}>
-                <Breadcrumbs breadcrumb={breadcrumbs} history={props.history} />
+                {!isMobileSite ? <Breadcrumbs breadcrumb={breadcrumbs} history={props.history} /> : ''}
             </div>
             {/* <h1>{brandInformation.page_title}</h1> */}
             <Categories classes={classes} />

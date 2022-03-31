@@ -11,7 +11,6 @@ import noFilters from '../Icon/noFilters.png';
 
 const NoProductsFound = props => {
     const { search } = props;
-    console.log('props', props);
     const classes = mergeClasses(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
 
