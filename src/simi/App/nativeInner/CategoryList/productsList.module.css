@@ -111,6 +111,7 @@
     .root {
         width: auto;
         text-align: left;
+        padding-bottom: 55px;
     }
     .wrapProductsList,.wrapSubCate{
         display: flex;
@@ -177,7 +178,7 @@
         height: 5rem;
     }
     .subCategory{
-
+        /* padding-bottom: 55px; */
     }
     .titleSubCate{
         text-transform: uppercase;

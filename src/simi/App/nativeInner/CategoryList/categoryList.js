@@ -140,7 +140,9 @@ const CategoryList = props => {
         <div className={`${classes.root} ${!isMobileSite ? 'container' : ''}`}>
             {header}
             <div className={classes.mainContent}>
-                {renderLeftContent()}
+                <div className={classes.wrapLeftContent}>
+                    {renderLeftContent()}
+                </div>
                 <div className={classes.rightContent}>
                     {renderRightContent()}
                 </div>

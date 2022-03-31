@@ -76,7 +76,7 @@
     }
     .mainContent{
         display: grid;
-        grid-template-columns: auto;
+        grid-template-columns: 113px calc(100% - 113px);
         flex-wrap: wrap;
         grid-column-gap: 0px;
         padding: 0;
@@ -84,19 +84,24 @@
     .header{
         display: none;
     }
+    .wrapLeftContent{
+        height: 100%;
+        background-color: #F2F2F3;
+    }
     .leftContent{
         background-color: #F2F2F3;
-        height: 83vh;
+        height: 100%;
         position: fixed;
         width: 113px;
         overflow-y: scroll;
+        padding-bottom: 111px;
     }
     .rightContent{
         height: 100vh;
         padding-right: 15px;
         padding-left: 15px;
         background-color: #fff;
-        margin-left: 113px;
+        /* margin-left: 113px; */
     }
     .active, .unActive{
         height: auto;
