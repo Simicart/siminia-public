@@ -13,7 +13,7 @@
 }
 @media (max-width: 768px) {
     .root {
-        height: 70vh;
+        /* height: 70vh; */
     }
     .imgNoProducts{
         max-width: 250px;
