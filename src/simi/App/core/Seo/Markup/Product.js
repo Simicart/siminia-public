@@ -432,11 +432,18 @@ const Product = props => {
         reviews instanceof Array
     ) {
         let _reviews = reviews.map(item => {
+            const value =
+                item &&
+                item.ratings_breakdown &&
+                item.ratings_breakdown[0] &&
+                item.ratings_breakdown[0].value
+                    ? item.ratings_breakdown[0].value
+                    : '';
             return {
                 '@type': 'Review',
                 reviewRating: {
                     '@type': 'Rating',
-                    ratingValue: parseInt(item.ratings_breakdown[0].value)
+                    ratingValue: parseInt(value)
                 },
                 author: {
                     '@type': 'Person',
