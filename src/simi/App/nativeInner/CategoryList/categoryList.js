@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { string, number, shape } from 'prop-types';
 import { useCategoryList } from '../talons/CategoryList/useCategoryList';
@@ -15,6 +15,7 @@ import { MdModelTraining } from 'react-icons/md';
 import { FcNews } from 'react-icons/fc';
 import { BsCartCheck } from 'react-icons/bs';
 import { logoUrl } from 'src/simi/Helper/Url';
+import {useHistory, useLocation} from 'react-router-dom'
 
 const CategoryList = props => {
     const { id, title } = props;
@@ -23,9 +24,12 @@ const CategoryList = props => {
     const { formatMessage } = useIntl();
     const classes = useStyle(defaultClasses, props.classes);
     const [active, setActive] = useState(0);
+    const [cateActive, setCateActive] = useState('what-is-new');
     const placeHolderImg = logoUrl();
     const isMobileSite = window.innerWidth <= 768;
-
+    const history = useHistory();
+    const location = useLocation();
+   
     const listIcon = [
         <BsCartCheck size={30} />,
         <BsCartCheck size={30} />,
@@ -34,6 +38,20 @@ const CategoryList = props => {
         <BsCartCheck size={30} />,
         <BsCartCheck size={30} />
     ];
+    
+    console.log("location", location);
+  
+
+    const handleClickCate = (index, url) => {
+
+        if(location.hash !== '#' + url) {
+            history.push(location.pathname + '#' +url)
+        }
+    }
+
+    useEffect(() => {
+        setCateActive(location.hash !== '' ? location.hash.slice(1,) : (childCategories ? childCategories[0].url_key : null))
+    }, [location,childCategories]);
 
     const header = title ? (
         <div className={classes.header}>
@@ -62,12 +80,12 @@ const CategoryList = props => {
                             return (
                                 <div
                                     className={
-                                        active === index
+                                        cateActive === item.url_key
                                             ? classes.active
                                             : classes.unActive
                                     }
                                     key={index}
-                                    onClick={() => setActive(index)}
+                                    onClick={() => handleClickCate(index, item.url_key)}
                                 >
                                     {/* <span className={classes.icon}>{listIcon[index]}</span> */}
                                     <img
@@ -112,7 +130,7 @@ const CategoryList = props => {
                 return (
                     <div className={classes.wrapProductsList}>
                         {childCategories
-                            .filter((i, key) => key === active)
+                            .filter((i, key) => i.url_key === cateActive)
                             .map((childCate, index) => (
                                 <div key={childCate.url_key}>
                                     <ProductsList
@@ -146,6 +164,7 @@ const CategoryList = props => {
                 <div className={classes.rightContent}>
                     {renderRightContent()}
                 </div>
+                {/* <button style={{height:100}} onClick={() => history.push(location.pathname + '/hieu')}>123</button> */}
             </div>
         </div>
     );

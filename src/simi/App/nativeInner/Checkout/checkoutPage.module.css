@@ -240,7 +240,7 @@
 
 @media (max-width: 960px) {
     .root {
-        padding: 3.5rem 0 3.5rem 0;
+        padding: 0 0 3.5rem 0;
         background-color: #F2F2F3;
     }
 
@@ -306,8 +306,12 @@
         display: none;
     }
 
-    .shipping_information_container, .shipping_method_container, .payment_information_container, .price_adjustments_container, .items_review_container {
+    .shipping_information_container, .shipping_method_container, .payment_information_container, .items_review_container {
         padding: 1.25rem 0;
+        background-color: #FFF;
+    }
+
+    .price_adjustments_container {
         background-color: #FFF;
     }
 
@@ -398,6 +402,21 @@
         font-size: 16px;
         min-height: 35px;
 
+    }
+
+    .root div[class*='guestForm-buttons'] {
+        padding: 1rem 0;
+    }
+
+    .root div[class*='priceAdjustments-sectionRoot'] {
+        margin-top: 0;
+        border-bottom: 1px solid rgb(var(--venia-global-color-gray-400));
+        padding: 1.125rem 0.675rem;
+    }
+
+    .root div[class*='priceAdjustments-accordRoot'] {
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 

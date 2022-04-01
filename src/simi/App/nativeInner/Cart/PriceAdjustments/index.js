@@ -1,1 +1,1 @@
-export * from './priceAdjustments'
+export { default }from './priceAdjustments'

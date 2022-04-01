@@ -12,6 +12,7 @@ import NoProductsFound from 'src/simi/App/nativeInner/Products/NoProductsFound';
 import { useSearchContentSimiPagination } from 'src/simi/talons/Search/useSearchContentSimiPagination';
 import TitleHelper from 'src/simi/Helper/TitleHelper';
 import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
+
 const Search = props => {
     const { classes, location, history } = props;
     const search = location.search ? location.search.slice(3) : '';
