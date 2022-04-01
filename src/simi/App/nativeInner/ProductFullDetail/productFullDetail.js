@@ -105,6 +105,8 @@ const ProductFullDetail = props => {
     } = talonProps;
     const successMsg = `${productDetails.name} was added to shopping cart`;
 
+    
+
     let History = useHistory();
     const [moreBtn, setMoreBtn] = useState(false);
     const storeConfig = Identify.getStoreConfig();
@@ -238,6 +240,7 @@ const ProductFullDetail = props => {
             ]);
         }
     }
+    
 
     const cartCallToActionText = () => {
         if (typeBtn === 'add to cart') {

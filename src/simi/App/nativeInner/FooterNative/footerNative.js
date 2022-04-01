@@ -150,10 +150,10 @@ const FooterNative = props => {
     });
 
     return (
-        <>
+        <div>
             <div className={classes.virtualFooter} style={{height: bottomMenuHeight}} />
             <div className={classes.mainFooter} style={bottomMenuStyle}>{MenuItems}</div>
-        </>
+        </div>
     );
 };
 
