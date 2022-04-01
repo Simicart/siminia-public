@@ -15,7 +15,7 @@ import { MdModelTraining } from 'react-icons/md';
 import { FcNews } from 'react-icons/fc';
 import { BsCartCheck } from 'react-icons/bs';
 import { logoUrl } from 'src/simi/Helper/Url';
-import {useHistory, useLocation} from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom';
 
 const CategoryList = props => {
     const { id, title } = props;
@@ -29,7 +29,7 @@ const CategoryList = props => {
     const isMobileSite = window.innerWidth <= 768;
     const history = useHistory();
     const location = useLocation();
-   
+
     const listIcon = [
         <BsCartCheck size={30} />,
         <BsCartCheck size={30} />,
@@ -38,20 +38,22 @@ const CategoryList = props => {
         <BsCartCheck size={30} />,
         <BsCartCheck size={30} />
     ];
-    
-    console.log("location", location);
-  
 
     const handleClickCate = (index, url) => {
-
-        if(location.hash !== '#' + url) {
-            history.push(location.pathname + '#' +url)
+        if (location.hash !== '#' + url) {
+            history.push(location.pathname + '#' + url);
         }
-    }
+    };
 
     useEffect(() => {
-        setCateActive(location.hash !== '' ? location.hash.slice(1,) : (childCategories ? childCategories[0].url_key : null))
-    }, [location,childCategories]);
+        setCateActive(
+            location.hash !== ''
+                ? location.hash.slice(1)
+                : childCategories
+                ? childCategories[0].url_key
+                : null
+        );
+    }, [location, childCategories]);
 
     const header = title ? (
         <div className={classes.header}>
@@ -85,7 +87,9 @@ const CategoryList = props => {
                                             : classes.unActive
                                     }
                                     key={index}
-                                    onClick={() => handleClickCate(index, item.url_key)}
+                                    onClick={() =>
+                                        handleClickCate(index, item.url_key)
+                                    }
                                 >
                                     {/* <span className={classes.icon}>{listIcon[index]}</span> */}
                                     <img
