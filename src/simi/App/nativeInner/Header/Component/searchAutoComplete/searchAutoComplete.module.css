@@ -27,8 +27,9 @@
     right: 0;
     transition-property: opacity, transform, visibility;
     z-index: 3;
+    top: 65px;
 }
-@media (max-width: 450px) {
+@media (max-width: 768px) {
     .root {
         background-color: white;
         border: 1px solid rgb(var(--venia-global-color-border));
@@ -41,7 +42,7 @@
         /* right: 6px; */
         transition-property: opacity, transform, visibility;
         z-index: 3;
-        top: 65px;
+        top: 90px;
         right: 52px;
         left: 43px;
     }

@@ -58,8 +58,8 @@ const SortbyPrice = props => {
                 </span>
                 {count === 0 ? (
                     <div className="double-icon">
-                        <ChevronUp size={15} />
-                        <ChevronDown size={15} />
+                        <span className="dropup"><ChevronUp size={15} /></span>
+                        <span className="dropdown"><ChevronDown size={15} /></span>
                     </div>
                 ) : (
                     <span className="icon">

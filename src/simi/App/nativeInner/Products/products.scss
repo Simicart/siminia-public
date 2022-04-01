@@ -251,11 +251,11 @@
                     display: unset;
                     grid-area: title;
                     font-weight: 600;
-                    font-size: 14px;
-                    line-height: 19px;
+                    font-size: 23px;
+                    line-height: 22px;
                     white-space: nowrap;
                     // margin-top: 11px;
-                    height: 22px;
+                    height: 28px;
                 }
                 .items-count-ctn{
                     grid-area: itemCount;
@@ -277,6 +277,7 @@
             background-color: #FFFFFF;
             // box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
             padding-bottom: 14px;
+            align-items: center;
             // position: relative;
             .product-list-filter{
                 grid-area: filter;
