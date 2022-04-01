@@ -11,8 +11,8 @@ import TaxSummary from '../../../core/Cart/PriceSummary/taxSummary';
 import {usePriceSummary} from '../../../../talons/Cart/usePriceSummary';
 import {RedButton} from "../RedButton";
 import {PriceWithColor} from "../PriceWithColor";
-
-import { useWindowSize, useToasts } from '@magento/peregrine';
+import {getBottomInsets} from 'src/simi/App/nativeInner/Helper/Native'
+import { useWindowSize } from '@magento/peregrine';
 
 /**
  * A child component of the CartPage component.
@@ -99,8 +99,10 @@ export const PriceSummary = props => {
             defaultMessage: 'Grand Total'
         });
 
+    const bottomInsets = getBottomInsets()
+
     const proceedToCheckoutButton = !isCheckout ? (
-        <div className={classes.checkoutButton_container}>
+        <div className={classes.checkoutButton_container}  style={{bottom: bottomInsets}}>
             {!isMobile && <span className={classes.totalPricePiece}>
                 <FormattedMessage
                     id={'cart.total'}
