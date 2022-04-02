@@ -230,38 +230,6 @@ export const ProductDetailsFragment = gql`
             id
             sku
         }
-
-        custom_attributes {
-            selected_attribute_options {
-                attribute_option {
-                    uid
-                    label
-                    is_default
-                }
-            }
-            entered_attribute_value {
-                value
-            }
-            attribute_metadata {
-                uid
-                code
-                label
-                attribute_labels {
-                    store_code
-                    label
-                }
-                data_type
-                is_system
-                entity_type
-                ui_input {
-                    ui_input_type
-                    is_html_allowed
-                }
-                ... on ProductAttributeMetadata {
-                    used_in_components
-                }
-            }
-        }
     }
     ${SimiPriceFragment}
     ${ProductCustomAttributesFragment}
