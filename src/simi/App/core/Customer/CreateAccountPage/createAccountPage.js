@@ -4,7 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useCreateAccountPage } from '@magento/peregrine/lib/talons/CreateAccountPage/useCreateAccountPage';
 import { useStyle } from '@magento/venia-ui/lib/classify';
-import CreateAccount from './CreateAccount';
+import CreateAccount from '../CreateAccount';
 import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
 
 import defaultClasses from './createAccountPage.module.css';
