@@ -61,6 +61,17 @@ const SearchAutoComplete = props => {
         [runSearch]
     );
 
+    let topInsets = 0;
+    try {
+        if (window.simicartRNinsets) {
+            const simicartRNinsets = JSON.parse(window.simicartRNinsets);
+            topInsets = parseInt(simicartRNinsets.top);
+        } else if (window.simpifyRNinsets) {
+            const simpifyRNinsets = JSON.parse(window.simpifyRNinsets);
+            topInsets = parseInt(simpifyRNinsets.top);
+        }
+    } catch (err) {}
+
     // run the query once on mount, and again whenever state changes
     useEffect(() => {
         if (visible) {
@@ -115,13 +126,14 @@ const SearchAutoComplete = props => {
     }
 
     return (
-        <div className={rootClassName} ref={wrapperRef}>
+        <div style={{top: 65 + topInsets}} className={rootClassName} ref={wrapperRef}>
             <div
                 role="button"
                 tabIndex="0"
                 className={classes['close-icon']}
                 onClick={() => setVisible(false)}
                 onKeyUp={() => setVisible(false)}
+                
             >
                 <Close style={{ width: 14, height: 14, display: 'block' }} />
             </div>

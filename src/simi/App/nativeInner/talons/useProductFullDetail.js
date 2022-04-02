@@ -220,8 +220,12 @@ export const useProductFullDetail = props => {
 
     const [
         addProductToCart,
-        { error: errorAddingProductToCart, loading: isAddProductLoading }
+        { error: errorAddingProductToCart, loading: isAddProductLoading}
     ] = useMutation(operations.addProductToCartMutation);
+
+    
+
+   
 
     const urlKey = product.url_key;
 
@@ -811,6 +815,7 @@ export const useProductFullDetail = props => {
             errorAddingDownloadableProduct
         ]
     );
+    
 
     const wishlistItemOptions = useMemo(() => {
         const options = {
