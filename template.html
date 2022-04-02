@@ -49,7 +49,19 @@
             notification_api: "/rest/V1/simiconnector/",
             logo_url: "https://www.simicart.com/skin/frontend/default/simicart2.1/images/simicart/new_logo_small.png",
             //eg. url is https://codymap.com/magento23 and media url must include pub, value should be 'magento23/pub/'
-            media_url_prefix: 'pub/'
+            media_url_prefix: 'pub/',
+            plugins: {
+                'SM_CONNECTOR': 0, //https://github.com/Simicart/SimiCart-Magento2.x-GraphQl
+                'SM_META_PACKAGES': 0, //https://github.com/magento/magento2-pwa
+                'SM_ENABLE_PRODUCT_LABEL': 0,
+                'SM_ENABLE_SHOP_BY_BRAND': 0,
+                'SM_ENABLE_REWARD_POINTS': 0,
+                'SM_ENABLE_REWARD_POINTS_PRO': 0,
+                'SM_ENABLE_DELIVERY_TIME': 0,
+                'SM_ENABLE_SIZE_CHART': 0,
+                'SM_ENABLE_SOCIAL_LOGIN': 0,
+                'SM_ENABLE_MAGEWORX_SEO': 0
+            }
         };
     </script>
     <script
