@@ -22,6 +22,7 @@ import { CartPageFragment } from '@magento/peregrine/lib/talons/CartPage/cartPag
 import { AvailableShippingMethodsCartFragment } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/ShippingMethods/shippingMethodsFragments.gql.js';
 import { func } from 'prop-types';
 import { configColor } from 'src/simi/Config';
+import { taxConfig } from '../../../../Helper/Pricing';
 
 const IMAGE_SIZE = 100;
 
@@ -29,6 +30,11 @@ const HeartIcon = <Icon size={16} src={Heart} />;
 
 const Product = props => {
     const { item } = props;
+    const merchantTaxConfig = taxConfig();
+    const showExcludedTax =
+        merchantTaxConfig &&
+        merchantTaxConfig.tax_cart_display_price &&
+        parseInt(merchantTaxConfig.tax_cart_display_price) === 1;
 
     const { formatMessage } = useIntl();
     const talonProps = useProduct({
@@ -216,9 +222,23 @@ const Product = props => {
                         <Link to={itemLink}>{name}</Link>
                     </div>
                     {itemOption}
-                    <span style={{color: configColor.price_color}} className={classes.price}>
+                    <span
+                        style={{ color: configColor.price_color }}
+                        className={classes.price}
+                    >
                         <span className={classes.labelPrice} />
-                        <Price currencyCode={currency} value={unitPrice} />
+                        {showExcludedTax ? (
+                            <Price currencyCode={currency} value={unitPrice} />
+                        ) : (
+                            <Price
+                                currencyCode={
+                                    item.prices.row_total_including_tax.currency
+                                }
+                                value={
+                                    item.prices.row_total_including_tax.value
+                                }
+                            />
+                        )}
                         <FormattedMessage
                             id={'product.price'}
                             defaultMessage={' ea.'}
