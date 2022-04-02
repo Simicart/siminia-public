@@ -28,6 +28,7 @@ export const useAddressBookPage = (props = {}) => {
         getCustomerAddressesQuery,
         updateCustomerAddressMutation,
     } = operations;
+    
 
     const [
         ,
@@ -89,6 +90,7 @@ export const useAddressBookPage = (props = {}) => {
     // Update the page indicator if the GraphQL query is in flight.
     useEffect(() => {
         setPageLoading(isRefetching);
+       
     }, [isRefetching, setPageLoading]);
 
     const handleAddAddress = useCallback(() => {
@@ -159,9 +161,10 @@ export const useAddressBookPage = (props = {}) => {
                         },
                         refetchQueries: [{ query: getCustomerAddressesQuery }],
                         awaitRefetchQueries: true
-                        
+                       
                     });
                     setIsDialogOpen(false);
+                    
                    
                 } catch {
                     // Make sure any errors from the mutations are displayed.
@@ -200,6 +203,7 @@ export const useAddressBookPage = (props = {}) => {
                 }
             }
         },
+        
         [
             createCustomerAddress,
             formAddress,

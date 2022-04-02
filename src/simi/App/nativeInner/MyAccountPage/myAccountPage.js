@@ -101,14 +101,14 @@ const MyAccountPage = props => {
                 <Link
                     to={{
                         pathname: '/order-history',
-                        state: { id: 'Completed' }
+                        state: { id: 'Complete' }
                     }}
                 >
                     <span>
                         <MdIncompleteCircle />
                     </span>
                     <span>{formatMessage({
-                        id: 'Completed'
+                        id: 'Complete'
                     })}</span>
                 </Link>
                 <Link

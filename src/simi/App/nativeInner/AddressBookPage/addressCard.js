@@ -21,7 +21,6 @@ const AddressCard = props => {
         onConfirmDelete,
         onEdit,
         onDelete,
-        isDefaultShipping,
         isPhone
     } = props;
 
@@ -68,11 +67,13 @@ const AddressCard = props => {
         .join(' ');
     const additionalAddressString = `${city}, ${region} ${postcode}`;
 
-    const deleteButtonElement = !isDefaultShipping ? (
+    const deleteButtonElement = !defaultBadge ? (
         <LinkButton classes={{ root: classes.deleteButton }} onClick={onDelete}>
             <Icon classes={{ icon: null }} size={16} src={TrashIcon} />
         </LinkButton>
     ) : null;
+   
+    
 
     const maybeConfirmingDeleteOverlay = isConfirmingDelete ? (
         <div className={classes.confirmDeleteContainer}>
@@ -135,7 +136,7 @@ const AddressCard = props => {
                             src={EditIcon}
                         />
                     </LinkButton>}
-                    {isPhone && isDefaultShipping ? "Is default" : null}
+                    {isPhone && defaultBadge ? "Is default" : null}
 
                     {deleteButtonElement}
                     {maybeConfirmingDeleteOverlay}
