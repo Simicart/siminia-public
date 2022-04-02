@@ -17,7 +17,7 @@ import defaultOperations from '../talons/AddressBookPage/addressBookPage.gql';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import { useMutation } from '@apollo/client';
 import Loader from '../Loader';
-import Checkbox from '@magento/venia-ui/lib/components/Checkbox';
+
 
 const AddressBookPage = props => {
     const talonProps = useAddressBookPage();
@@ -111,8 +111,7 @@ const AddressBookPage = props => {
                         addressEntry.country_code
                     );
 
-                    const isDefaultShipping =
-                        addressEntry.id === isDefault ? true : false;
+                    
                     const boundEdit = () => handleEditAddress(addressEntry);
                     const boundDelete = () =>
                         handleDeleteAddress(addressEntry.id);
@@ -121,17 +120,6 @@ const AddressBookPage = props => {
 
                     return (
                         <div className={classes.addAddressWrapper}>
-                           {/* {customerAddresses.length !== 1 ? <div
-                                className={
-                               classes.normal
-                                }
-                                onClick={() =>
-                                    handleSetDefaultShipping(addressEntry.id)
-                                }
-                            >
-                                {isDefaultShipping  ? <div className={classes.default} /> : null}
-                            </div> : null} */}
-
                             <AddressCard
                                 address={addressEntry}
                                 countryName={countryName}
@@ -145,7 +133,6 @@ const AddressBookPage = props => {
                                 onDelete={boundDelete}
                                 onEdit={boundEdit}
                                 setDefaultShipping={setDefault}
-                                isDefaultShipping={isDefaultShipping}
                                 indexAddress={index}
                                 isPhone={isPhone}
                             />

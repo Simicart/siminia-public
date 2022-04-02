@@ -7,12 +7,11 @@ import { useOrderHistoryPage } from '../../../talons/OrderHistory/useOrderHistor
 import Button from '@magento/venia-ui/lib/components/Button';
 import Loader from '../Loader';
 const OrderHistoryPageMb = props => {
-    
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
     const [status, setStatus] = useState('All');
     const [ordersFilter, setOrdersFilter] = useState([]);
-    const {statusId} = props
+    const { statusId } = props;
     const currentPage = 1;
     const talonProps = useOrderHistoryPage(currentPage);
     const {
@@ -23,13 +22,11 @@ const OrderHistoryPageMb = props => {
         total_count
     } = talonProps;
 
-    
-
     useEffect(() => {
-        if(statusId === "Pending") setStatus("Pending")
-        if(statusId === "Completed") setStatus("Completed")
-        if(statusId === "Canceled") setStatus("Canceled")
-    },[])
+        if (statusId === 'Pending') setStatus('Pending');
+        if (statusId === 'Complete') setStatus('Complete');
+        if (statusId === 'Canceled') setStatus('Canceled');
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -38,7 +35,6 @@ const OrderHistoryPageMb = props => {
                     window.innerHeight + document.documentElement.scrollTop ===
                     document.documentElement.offsetHeight
                 ) {
-                    
                     loadMoreOrders();
                 }
             }
@@ -65,7 +61,7 @@ const OrderHistoryPageMb = props => {
         </button>
     ) : null;
 
-    const listStatusBtn = ['All', 'Pending', 'Completed', 'Canceled'];
+    const listStatusBtn = ['All', 'Pending', 'Complete', 'Canceled'];
 
     const renderStatusBtn = listStatusBtn => {
         let html = null;
@@ -150,7 +146,20 @@ const OrderHistoryPageMb = props => {
                 {renderOrderList(ordersFilter)}
                 {status === 'All' ? loadMoreButton : null}
                 {ordersFilter.length === 0 ? (
-                    <p>You have no products on {status}.</p>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <img
+                            src={require('./noOrder.png')}
+                            alt="no order"
+                            style={{ marginBottom: 15, marginTop: 70 }}
+                        />
+                        <p>You have no products on {status}.</p>
+                    </div>
                 ) : null}
             </div>
         </>
