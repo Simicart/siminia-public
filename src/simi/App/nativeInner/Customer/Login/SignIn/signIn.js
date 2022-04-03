@@ -46,7 +46,6 @@ const SignIn = props => {
         setFormApi,
         recaptchaWidgetProps
     } = talonProps;
-    console.log("talonProps",talonProps);
     const forgotPasswordClasses = {
         root: classes.forgotPasswordButton
     };

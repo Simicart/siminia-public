@@ -10,7 +10,11 @@ import Field from '@magento/venia-ui/lib/components/Field';
 import GoogleReCaptcha from '../../../GoogleReCaptcha';
 import TextInput from '@magento/venia-ui/lib/components/TextInput';
 import defaultClasses from './forgotPasswordForm.module.css';
-
+const metaPackagesEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES) === 1;
 const ForgotPasswordForm = props => {
     const classes = useStyle(defaultClasses, props.classes);
     const {
@@ -43,7 +47,7 @@ const ForgotPasswordForm = props => {
                     data-cy="email"
                 />
             </Field>
-            <GoogleReCaptcha {...recaptchaWidgetProps} />
+            {metaPackagesEnabled ? <GoogleReCaptcha {...recaptchaWidgetProps} /> : '' }
             <div className={classes.buttonContainer}>
                 <Button
                     className={classes.cancelButton}
