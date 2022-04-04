@@ -182,7 +182,7 @@ const SearchForm = props => {
         } else
             return (
                 <div className="main-header-backIcon" style={{color: configColor.top_menu_icon_color}}>
-                    <div style={{marginRight:30}}>
+                    <div style={{marginRight:20}}>
                     <ArrowLeft onClick={() => history.goBack()} />
                     </div>
                     <Link to="/" className="header-title">
