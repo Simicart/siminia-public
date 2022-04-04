@@ -126,7 +126,7 @@ const SearchAutoComplete = props => {
     }
 
     return (
-        <div style={{top: 65 + topInsets}} className={rootClassName} ref={wrapperRef}>
+        <div style={{top: 75 + topInsets}} className={rootClassName} ref={wrapperRef}>
             <div
                 role="button"
                 tabIndex="0"
