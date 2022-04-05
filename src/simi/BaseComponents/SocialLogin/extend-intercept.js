@@ -71,6 +71,20 @@ module.exports = targets => {
         `<${InnerSocialLogin} mode="popup" showCreateAccount={showCreateAccount} isPopup={props.isPopup} />`
     );
 
+    const NativeInnerSignInComponentNew = targetables.reactComponent(
+        '@simicart/siminia/src/simi/App/nativeInner/Customer/Login/SignIn/signIn.js'
+    );
+    const InnerSocialLoginNew = NativeInnerSignInComponentNew.addImport(
+        "SocialLogin from '@simicart/siminia/src/simi/BaseComponents/SocialLogin/components/SocialAuthentication/socialAuthentication'"
+    );
+
+    NativeInnerSignInComponentNew.surroundJSX(
+        'div data-cy="SignIn-root" className={classes.root}',
+        'React.Fragment'
+    ).insertAfterJSX(
+        'div data-cy="SignIn-root" className={classes.root}',
+        `<${InnerSocialLoginNew} mode="popup" showCreateAccount={showCreateAccount} isPopup={props.isPopup} />`
+    );
 
     // Add Social Login component to Create account
     /*
