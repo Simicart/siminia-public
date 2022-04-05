@@ -1,9 +1,14 @@
 .root {
     align-items: center;
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
-    height: 50vh;
+    height: auto;
     justify-content: center;
+}
+.imgNoProducts{
+    width: 50%;
+    max-height: 350px;
+    margin-left: 25%;
 }
 
 .title {
@@ -13,10 +18,16 @@
 }
 @media (max-width: 768px) {
     .root {
-        /* height: 70vh; */
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: 50vh;
+        justify-content: center;
     }
     .imgNoProducts{
         max-width: 250px;
+        max-height: unset;
+        margin-left: 0;
     }
     .noProducts
     {

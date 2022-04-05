@@ -84,13 +84,10 @@ const OrderDetailPage = props => {
         list.forEach((item, index) => {
             if (item[1] && item[1].variants) {
                 item[1].variants.forEach((i, idx) => {
-                    if (i.product.sku === listItem[index].product_sku) {
-                        result[listItem[index].product_sku] =
-                            i.product.thumbnail.url;
-                    }
+                    result[i.product.sku] = i.product.thumbnail.url;
                 });
             }
-            if (item[1] && item[1].thumbnail)
+            if (item[1] && item[1].thumbnail && !result[item[0]])
                 result[item[0]] = item[1].thumbnail.url;
         });
         return result;
