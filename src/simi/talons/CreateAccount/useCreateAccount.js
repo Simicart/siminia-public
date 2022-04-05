@@ -7,6 +7,8 @@ import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { useAwaitQuery } from '../../hooks/useAwaitQuery';
 import { retrieveCartId } from '@magento/peregrine/lib/store/actions/cart';
 import { useGoogleReCaptcha } from '../../hooks/useGoogleReCaptcha';
+import { clearCartDataFromCache } from '@magento/peregrine/lib/Apollo/clearCartDataFromCache';
+import { clearCustomerDataFromCache } from '@magento/peregrine/lib/Apollo/clearCustomerDataFromCache';
 
 import DEFAULT_OPERATIONS from './createAccount.gql';
 
@@ -118,8 +120,8 @@ export const useCreateAccount = props => {
                 await setToken(token);
 
                 // Clear all cart/customer data from cache and redux.
-                await apolloClient.clearCacheData(apolloClient, 'cart');
-                await apolloClient.clearCacheData(apolloClient, 'customer');
+                await clearCartDataFromCache(apolloClient);
+                await clearCustomerDataFromCache(apolloClient);
                 await removeCart();
 
                 // Create and get the customer's cart id.
