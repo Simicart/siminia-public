@@ -172,6 +172,17 @@ button.saveProfile {
     }
 }
 @media (max-width: 768px) {
+    .changePasswordButtonContainer {
+        align-items: left;
+        display: flex;
+        justify-content: left;
+        justify-self: start;
+        text-align: center;
+    }
+    .changePasswordButton {
+        composes: root from '@magento/venia-ui/lib/components/LinkButton/linkButton.module.css';
+        padding: 0;
+    }
     .heading{
         display: none;
     }
