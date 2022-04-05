@@ -1,0 +1,68 @@
+.entryForm, .entryFormError {
+    display: flex;
+}
+
+.applyButtonContainer {
+    flex: 1;
+    min-width: 5rem;
+}
+
+.applyButtonContainer > button {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+}
+
+.couponCodeInput {
+    border: none;
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+    background: none;
+}
+
+.couponCodeInput::placeholder, .couponCodeInput:-ms-input-placeholder, .couponCodeInput::-ms-input-placeholder {
+    color: #C3BEBE;
+}
+
+.removeCurrentTextIcon {
+    width: 19px;
+    cursor: pointer;
+}
+
+.internalTextContainer {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #150826;
+    font-size: 0.9rem;
+    margin-right: 0.6rem;
+    width: 100%;
+}
+
+.appliedCoupon {
+    display: flex;
+    justify-content: space-between;
+}
+
+.loadingRoot {
+    align-content: center;
+    align-items: center;
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    width: 100%;
+}
+
+@media (max-width: 960px) {
+    .applyButtonContainer > button {
+        min-height: 35px;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+    }
+
+    .internalTextContainer {
+        min-height: 35px;
+        height: 35px;
+    }
+}

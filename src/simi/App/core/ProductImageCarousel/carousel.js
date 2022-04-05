@@ -7,9 +7,13 @@ import { transparentPlaceholder } from '@magento/peregrine/lib/util/images';
 import { Carousel } from 'react-responsive-carousel';
 import ImageLightbox from './ImageLightbox';
 import { resourceUrl, getUrlBuffer, logoUrl } from 'src/simi/Helper/Url';
-
+import ProductLabel from '../ProductFullDetail/ProductLabel';
 import './style.css';
 import { useWindowSize } from '@magento/peregrine';
+import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
+import { useQuery } from '@apollo/client';
+import getUrlKey from '../../../../../src/util/getUrlKey'
+import DEFAULT_OPERATIONS from '../../core/ProductFullDetail/ProductLabel/productLabel.gql'
 
 const IMAGE_WIDTH = 640;
 
@@ -35,6 +39,17 @@ const ProductImageCarousel = props => {
 
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
+    const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
+    const { getProductLabel } = operations;
+
+    const { data, error, loading } = useQuery(getProductLabel, {
+        fetchPolicy: 'cache-and-network',
+        variables: {
+            urlKey: getUrlKey()
+        }
+    });
+   
+   
 
     useEffect(() => {
         if (lightbox && lightbox.current && autoToggleLightBox !== false) {
@@ -141,6 +156,8 @@ const ProductImageCarousel = props => {
         />
     );
 
+    const imageWidth =document.querySelector(".product-detail-carousel") ? document.querySelector(".product-detail-carousel").offsetWidth : null
+
     return (
         <div className="product-detail-carousel" id="product-detail-carousel">
             <Carousel
@@ -173,7 +190,7 @@ const ProductImageCarousel = props => {
                         }
                     />
                 ) : (
-                    carouselImages.map(function(item) {
+                    carouselImages.map(function(item, index) {
                         const src = item.file
                             ? resourceUrl(item.file, {
                                   type: 'image-product',
@@ -195,11 +212,19 @@ const ProductImageCarousel = props => {
                                     alt={item.url}
                                     style={{ objectFit: 'contain' }}
                                 />
+                                {/* {index == 0 ? 
+                                <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} />
+                            : null} */}
+
                             </div>
                         );
                     })
                 )}
             </Carousel>
+            
+            {/* <ProductLabel imageWidth={imageWidth} productLabel = {loading ? null : data.products.items[0].mp_label_data} /> */}
+            <ProductLabel imageWidth={imageWidth} productLabel = {data && data.products && data.products.items[0] && data.products.items[0].mp_label_data ? data.products.items[0].mp_label_data : null} />
+
             {renderLightBox && renderImageLightboxBlock()}
         </div>
     );

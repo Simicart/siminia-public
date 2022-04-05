@@ -1,0 +1,177 @@
+.root {
+    display: grid;
+    padding: 2rem 3rem;
+    /* row-gap: 2rem; */
+}
+.wrapper {
+    display: grid;
+    grid-template-columns: 20% auto;
+}
+@media (max-width: 960px) {
+    .wrapper {
+        display: grid;
+        grid-template-columns: auto;
+    }
+}
+.wrapperContainer {
+    margin: 0 20px
+}
+.buttonsContainer{
+    margin-top: 10px;
+}
+.block1,
+.block2,
+.block3 {
+    flex: 1 0 auto;
+    margin: 20px 20px;
+    height: 50px;
+    text-align: center;
+}
+.point1,
+.point2,
+.point3 {
+    height: 50px;
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    color: #fff
+}
+.point1 {
+    background: #649162;
+}
+.point2 {
+    background: rgb(15, 81, 224);
+}
+.point3 {
+    background: rgb(92, 141, 139);
+}
+.rewardPointData {
+    display: flex;
+    margin-bottom: 30px;
+    margin-left: 20px;
+}
+.rewardPointTransaction {
+    margin-left: 20px;
+}
+.rewardNotification {
+    margin-left: 20px;
+}
+.linkButton {
+    margin-left: 15px;
+    font-size: 16px;
+    color:rgb(22, 18, 248)
+}
+.form{
+    padding: 0 10px;
+}
+th,
+td {
+    border-bottom: 1px solid #ddd;
+}
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+tr {
+    height: 50px;
+}
+btn {
+    text-decoration: none !important;
+}
+.rewardPageTitle {
+    margin: 40px 0 25px 20px;
+    border-bottom: 1px solid #224bbb;
+    font-size: 20px;
+}
+.rewardTitle, .emailTitle {
+    margin: 40px 0 25px;
+    border-bottom: 1px solid #224bbb;
+    font-size: 20px;
+}
+
+.label {
+    margin-top: 10px;
+    text-align: center;
+    line-height: 10px;
+}
+
+@media (max-width: 768px) {
+    .root {
+        padding: 15px 0px;
+    }
+    .wrapperContainer{
+        margin: 0;
+        padding: 0 10px;
+    }
+    .rewardPointData {
+        margin-bottom: 0;
+        margin-left: 0;
+    }
+    .rewardPageTitle {
+        display: none;
+    }
+    .rewardTitle{
+        margin-top: 70px;
+        padding: 0 10px;
+    }
+    .emailTitle{
+        margin-top: 15px;
+    }
+    .block1,
+    .block2,
+    .block3 {
+        flex: auto;
+        margin: 0;
+    }
+    .rewardPointTransaction {
+        margin-left: 0;
+    }
+    .rewardNotification {
+        margin-left: 0;
+    }
+    .form{
+        padding: 0 10px;
+    }
+   
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr {
+        border: 1px solid #ccc; 
+        height: unset;
+        padding-bottom: 15px;
+    }
+	
+	td { 
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+    td:nth-of-type(1):before { content: "Transaction"; font-weight: bold;}
+	td:nth-of-type(2):before { content: "Date"; font-weight: bold;}
+	td:nth-of-type(3):before { content: "Comment"; font-weight: bold;}
+	td:nth-of-type(4):before { content: "Amount"; font-weight: bold;}
+	td:nth-of-type(5):before { content: "Status"; font-weight: bold;}
+	td:nth-of-type(6):before { content: "Expire Date"; font-weight: bold;}
+}

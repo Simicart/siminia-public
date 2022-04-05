@@ -8,6 +8,6 @@
     line-height: 32px;
 }
 .root > li{
-    border-bottom: 1px solid #0058AC;
+    border-bottom: 1px solid rgb(var(--venia-global-color-border));
     padding-bottom: 17px;
 }

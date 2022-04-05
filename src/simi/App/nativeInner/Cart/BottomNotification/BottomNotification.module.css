@@ -1,0 +1,31 @@
+.notificationContainer {
+    position: fixed;
+    background: blue;
+    font-size: 0.9rem;
+    color: white;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    transform: translateY(-100%);
+}
+
+.innerContainer {
+    display: flex;
+    padding: 0.9rem;
+    align-items: center;
+}
+
+.successContainer {
+    background: #5FAF4B;
+}
+
+.failContainer {
+    background: #FF5F59;
+}
+
+.iconContainer {
+    margin-right: 10px;
+}

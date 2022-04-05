@@ -1,6 +1,77 @@
 import { gql } from '@apollo/client';
 import { SimiPriceFragment } from 'src/simi/queries/catalog_gql/catalogFragment.gql';
 
+export const ProductCustomAttributesFragment = metaPackageEnabled
+    ? gql`
+          fragment ProductCustomAttributesFragment on ProductInterface {
+              custom_attributes {
+                  selected_attribute_options {
+                      attribute_option {
+                          uid
+                          label
+                          is_default
+                      }
+                  }
+                  entered_attribute_value {
+                      value
+                  }
+                  attribute_metadata {
+                      uid
+                      code
+                      label
+                      attribute_labels {
+                          store_code
+                          label
+                      }
+                      data_type
+                      is_system
+                      entity_type
+                      ui_input {
+                          ui_input_type
+                          is_html_allowed
+                      }
+                      ... on ProductAttributeMetadata {
+                          used_in_components
+                      }
+                  }
+              }
+          }
+      `
+    : gql`
+          fragment ProductCustomAttributesFragment on ProductInterface {
+              id
+          }
+      `;
+
+const sizeChartEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_SIZE_CHART &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_SIZE_CHART) === 1;
+
+const productLabelEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL) === 1;
+const shopByBrandEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_SHOP_BY_BRAND &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_SHOP_BY_BRAND) === 1;
+
+const mageworxSeoEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
+
+const metaPackageEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES) === 1;
+
 export const ProductDetailsFragment = gql`
     fragment ProductDetailsFragment on ProductInterface {
         __typename
@@ -16,6 +87,60 @@ export const ProductDetailsFragment = gql`
         }
         id
         uid
+        ${
+            mageworxSeoEnabled
+                ? `
+            mageworx_canonical_url{
+                url
+                __typename
+                extraData
+            }`
+                : ``
+        }
+        ${
+            sizeChartEnabled
+                ? `
+            mp_sizeChart {
+                rule_id
+                name
+                rule_content
+                template_styles
+                enabled
+                display_type
+                conditions_serialized
+                attribute_code
+                demo_templates
+                priority
+                rule_description
+            }
+        `
+                : ``
+        }
+        ${
+            productLabelEnabled
+                ? `
+            mp_label_data {
+                list_position
+                list_position_grid
+                label_image
+                
+                label_font
+                label_font_size
+                label_color
+                label_template
+                priority
+                label
+            }        
+        `
+                : ``
+        }
+        ${
+            shopByBrandEnabled
+                ? `mpbrand{
+                image
+            }`
+                : ``
+        }
         media_gallery_entries {
             # id is deprecated and unused in our code, but lint rules require we
             # request it if available
@@ -26,7 +151,7 @@ export const ProductDetailsFragment = gql`
             disabled
             file
         }
-        media_gallery{
+        media_gallery {
             disabled
             url
             label
@@ -35,8 +160,9 @@ export const ProductDetailsFragment = gql`
         meta_description
         name
         price {
-            ...SimiPriceFragment    
+            ...SimiPriceFragment
         }
+        ...ProductCustomAttributesFragment
         sku
         small_image {
             url
@@ -183,6 +309,7 @@ export const ProductDetailsFragment = gql`
         }
     }
     ${SimiPriceFragment}
+    ${ProductCustomAttributesFragment}
 `;
 
 // might detach upsell_products and cross-sell for performance

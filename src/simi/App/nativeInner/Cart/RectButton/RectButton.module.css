@@ -1,0 +1,21 @@
+.root_normalPriority {
+    border-radius: 4px;
+    background-color: var(--venia-global-color-button);
+    color: rgb(var(--venia-global-color-gray-50));
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    width: 100%;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 1rem;
+}
+
+.root_normalPriority:active {
+    filter: brightness(130%);
+    opacity: 0.8;
+    outline: none;
+}
+
+.root_normalPriority:focus-visible {
+    outline: none;
+}

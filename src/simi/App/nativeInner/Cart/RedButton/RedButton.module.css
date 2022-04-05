@@ -1,0 +1,22 @@
+.root_normalPriority {
+    border-radius: 25px;
+    background-color: #FF5F59;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    width: 100%;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 1rem;
+}
+
+.root_normalPriority:active {
+    filter: brightness(130%);
+    opacity: 0.8;
+    outline: none;
+}
+
+.root_normalPriority:focus-visible {
+    outline: none;
+}
+

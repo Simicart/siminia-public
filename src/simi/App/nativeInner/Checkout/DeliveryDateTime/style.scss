@@ -1,0 +1,54 @@
+.react-datepicker-popper {
+    z-index: 4;
+}
+
+.deliveryTime-main {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    row-gap: 1rem;
+    column-gap: 1rem;
+    margin-top: 1rem;
+    border: 1px solid rgb(181, 184, 186);
+    padding: 2rem;
+    .text-area {
+        display: flex;
+        flex-direction: column;
+    }
+    .header {
+        font-size: 18px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    .react-datepicker__tab-loop {
+        position: absolute;
+        top: 0;
+    }
+    .react-datepicker__input-container > input {
+        width: 100%;
+    }
+    .btn-updateTime {
+        background-color: var(--venia-global-color-button);
+        color: var(--venia-global-color-button-text);
+        padding: 9px 24px;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+}
+
+@media (min-width: 960px) {
+    .deliveryTime-main {
+        grid-template-columns: auto auto;
+        grid-template-areas:
+            'header header'
+            'main main'
+            'main main'
+            'footer footer';
+
+        .header {
+            grid-area: header;
+        }
+        .btn-updateTime {
+            grid-area: footer;
+        }
+    }
+}

@@ -1,0 +1,87 @@
+.root {
+    display: grid;
+    padding: 2rem 3rem;
+    /* row-gap: 2rem; */
+}
+.wrapper {
+    display: grid;
+    grid-template-columns: 20% auto;
+}
+@media (max-width: 960px) {
+    .wrapper {
+        display: grid;
+        grid-template-columns: auto;
+    }
+}
+th,
+td {
+    border-bottom: 1px solid #ddd;
+}
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+tr {
+    height: 50px;
+}
+.wrapperContainer {
+    padding: 2rem 3rem;
+    text-align: center;
+}
+.transactionTitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+@media (max-width: 768px) {
+    .root {
+        padding: 10px;
+    }
+    .wrapperContainer {
+        padding: 0; 
+    }
+    .transactionTitle {
+        display: none;
+    }
+    table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr {
+        border: 1px solid #ccc; 
+        height: unset;
+        padding-bottom: 15px;
+    }
+	
+	td { 
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+    td:nth-of-type(1):before { content: "Transaction"; font-weight: bold;}
+	td:nth-of-type(2):before { content: "Date"; font-weight: bold;}
+	td:nth-of-type(3):before { content: "Comment"; font-weight: bold;}
+	td:nth-of-type(4):before { content: "Amount"; font-weight: bold;}
+	td:nth-of-type(5):before { content: "Status"; font-weight: bold;}
+	td:nth-of-type(6):before { content: "Expire Date"; font-weight: bold;}
+}

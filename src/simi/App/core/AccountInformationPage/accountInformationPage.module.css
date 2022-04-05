@@ -65,8 +65,8 @@ button.saveProfile {
     text-transform: uppercase;
     min-height: 50px;
     width: 184px;
-    background-color: #0058AC;
-    color: #FFFFFF;
+    background-color: var(--venia-global-color-button);
+    color: var(--venia-global-color-button-text);
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0;

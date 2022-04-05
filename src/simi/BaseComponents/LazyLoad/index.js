@@ -6,7 +6,7 @@ const LazyLoad = props => {
     if (isBot() || isRendertron()) {
         return props.children ? props.children : ''
     }
-    return <ReactLazyLoad {...props} />
+    return <ReactLazyLoad {...props}  />
 }
 
 export default LazyLoad;

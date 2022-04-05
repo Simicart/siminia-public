@@ -1,5 +1,44 @@
 import gql from 'graphql-tag';
 import { CategoryFragment, ProductOfListFragment } from './catalogFragment.gql';
+const productLabelEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL) === 1;
+
+export const ProductLabelFragment = productLabelEnabled
+    ? gql`
+          fragment ProductLabelFragment on ProductInterface {
+              mp_label_data {
+                  rule_id
+                  priority
+                  label_template
+                  label_image
+                  label
+                  label_font
+                  label_font_size
+                  label_color
+                  label_css
+                  label_position
+                  label_position_grid
+                  same
+                  list_template
+                  list_image
+                  list_label
+                  list_font
+                  list_font_size
+                  list_css
+                  list_position
+                  list_position_grid
+                  name
+              }
+          }
+      `
+    : gql`
+          fragment ProductLabelFragment on ProductInterface {
+              sku
+          }
+      `;
 
 export const getCateNoFilter = gql`
     query getCateNoFilter(
@@ -14,6 +53,7 @@ export const getCateNoFilter = gql`
             children {
                 id
                 name
+                url_path
             }
         }
         products(
@@ -24,6 +64,7 @@ export const getCateNoFilter = gql`
         ) {
             items {
                 ...ProductOfListFragment
+                ...ProductLabelFragment
             }
             page_info {
                 total_pages
@@ -31,7 +72,7 @@ export const getCateNoFilter = gql`
             total_count
         }
     }
-
+    ${ProductLabelFragment}
     ${CategoryFragment}
     ${ProductOfListFragment}
 `;

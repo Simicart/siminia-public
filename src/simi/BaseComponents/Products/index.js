@@ -10,6 +10,7 @@ import LoadMore from './loadMore';
 import NoProductsFound from './NoProductsFound';
 import { useIntl } from 'react-intl';
 import { useWindowSize } from '@magento/peregrine';
+import CategoryDesription from '../../App/core/CategoryDescription';
 
 require('./products.scss');
 
@@ -32,7 +33,7 @@ const Products = props => {
 
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
-    const { products } = data;
+    const { products, category } = data;
     const { total_count } = products;
     const { formatMessage } = useIntl();
 
@@ -130,7 +131,7 @@ const Products = props => {
     const renderList = () => {
         const items = data ? data.products.items : null;
         if (!data) return <Loading />;
-
+        console.log("propsss",props)
         return (
             <React.Fragment>
                 <div className="product-list-top">
@@ -183,8 +184,26 @@ const Products = props => {
             <h1 className="title">
                 <div className="categoryTitle">{title}</div>
             </h1>
+            {windowSize.innerWidth > 768 ? (
+                <div className={`${category ? 'wrapCategoryDesription' : ''}`}>
+                    <CategoryDesription childCate={category} />
+                </div>
+            ) : (
+                ''
+            )}
             {isPhone ? itemCount : ''}
             <div className="product-list-container-siminia">
+                {windowSize.innerWidth <= 768 ? (
+                    <div
+                        className={`${
+                            category ? 'wrapCategoryDesription' : ''
+                        }`}
+                    >
+                        <CategoryDesription childCate={category} />
+                    </div>
+                ) : (
+                    ''
+                )}
                 {renderLeftNavigation()}
                 <div
                     className="listing-product"

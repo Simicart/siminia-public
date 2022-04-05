@@ -1,0 +1,416 @@
+.root {
+    padding: 0;
+}
+
+@media (max-width: 400px) {
+}
+
+@media (min-width: 1024px) {
+    .root {
+        align-items: start;
+        display: grid;
+        grid-auto-flow: row;
+        grid-template-areas:
+            'images title'
+            'images errors'
+            'images options'
+            'images quantity'
+            'images cart'
+            'images .';
+        grid-template-columns: 1.5625fr 1fr;
+        grid-template-rows: repeat(5, min-content) 1fr [fold];
+        padding: 0;
+    }
+}
+
+.section {
+    border-color: rgb(var(--venia-global-color-border));
+    border-style: solid;
+    border-width: 0 0 1px;
+    margin: 0 1.5rem;
+    padding: 1.5rem 0;
+}
+
+.sectionTitle {
+    align-items: center;
+    display: flex;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+    /* margin-bottom: 1.5rem; */
+}
+
+.title {
+    align-items: center;
+    display: grid;
+    grid-area: title;
+    grid-gap: 1rem;
+    grid-template-columns: 1fr max-content;
+    line-height: 1.5;
+    padding: 0.5rem 1.5rem;
+}
+
+.reviewSum {
+    line-height: 1.5;
+    padding: 0.2rem 1.5rem;
+    display: flex;
+    cursor: pointer;
+}
+
+.noReview {
+    color: #0091ff;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 19px;
+    padding: 0 1.5rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.static-rate {
+    margin-inline-end: 10px;
+    margin-top: 3px;
+}
+
+@media (min-width: 1024px) {
+    .title {
+        padding: 1.5rem;
+    }
+
+    .reviewSum {
+        padding: 0.2rem 1.5rem 1rem;
+    }
+}
+
+.productName {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+@media (min-width: 1024px) {
+    .productName {
+        font-size: 1.3125rem;
+        font-weight: 400;
+    }
+}
+
+.imageCarousel {
+    grid-area: images;
+    grid-column: 1 / 2;
+    grid-row: 1 / fold;
+    margin: 0 auto;
+    max-width: 640px;
+}
+
+@media (min-width: 1024px) {
+    .imageCarousel {
+        margin: 0;
+        max-width: 800px;
+        padding: 1.5rem 0;
+    }
+    .imageCarousel > div > div > div:nth-child(2) > div {
+        margin-inline-start: 0px;
+    }
+}
+
+.options {
+    grid-area: options;
+}
+
+.formErrors {
+    composes: section;
+    grid-area: errors;
+}
+
+.quantity {
+    composes: section;
+    grid-area: quantity;
+}
+
+.quantityTitle {
+    composes: title from '@simicart/siminia/src/simi/App/core/ProductOptions/option.module.css';
+}
+
+.actions {
+    composes: section;
+    align-items: center;
+    display: grid;
+    grid-area: cart;
+    row-gap: 1.5rem;
+    justify-items: center;
+}
+@media (max-width: 450px) {
+    .actions > button {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .actions {
+        border-bottom-width: 0;
+    }
+}
+
+.description {
+    composes: section;
+    grid-column: 1 / span 1;
+    grid-row: fold / span 1;
+}
+
+@media (min-width: 1024px) {
+    .description {
+        align-self: stretch;
+        border-top-width: 1px;
+        margin: 0;
+        /* padding-left: 1.5rem; */
+        padding-right: 1.5rem;
+    }
+}
+
+.descriptionTitle {
+    composes: sectionTitle;
+}
+
+.details {
+    composes: section;
+    grid-column: 2 / span 1;
+    grid-row: fold / span 1;
+}
+
+@media (min-width: 1024px) {
+    .details {
+        align-self: stretch;
+        border-top-width: 1px;
+        margin: 0;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+.detailsTitle {
+    composes: sectionTitle;
+}
+
+.related {
+    composes: section;
+    border-bottom-width: 0;
+    grid-column: 1 / span 2;
+}
+
+.relatedTitle {
+    composes: sectionTitle;
+}
+
+.quantityRoot {
+    --stroke: var(--venia-global-color-gray-600);
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 4rem 1fr;
+    grid-column-gap: 0rem;
+    align-items: center;
+    justify-items: center;
+    border: none;
+    max-width: 154px;
+}
+
+.quantityRoot button {
+    height: 45px;
+    width: 45px;
+    background-color: #f4f4f4;
+    border: none;
+}
+.quantityRoot button:nth-child(2) {
+    background-color:  var(--venia-global-color-button);
+}
+.quantityRoot input {
+    transition: all 0.2s ease-out;
+    font-weight: 500 !important;
+    border-color: transparent !important;
+}
+.quantityRoot input:focus {
+    outline: none;
+    border-color: #1878b9;
+    box-shadow: 0 0 0 1px #1878b9;
+}
+.quantityRoot > span {
+    box-sizing: border-box;
+    height: 45px;
+    width: 45px;
+    border: 1px solid #979797;
+    background-color: #ffffff;
+}
+.quantityRoot > span > span > input {
+    background-color: #ffffff !important;
+    color: #111111;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 22px;
+}
+
+.unavailableContainer {
+    align-items: center;
+    background-color: rgb(var(--venia-global-color-gray));
+    color: rgb(var(--venia-global-color-gray-700));
+    column-gap: 0.5rem;
+    display: grid;
+    font-style: italic;
+    grid-auto-flow: column;
+    justify-content: start;
+    padding: 0.75rem;
+    width: 100%;
+}
+
+.smProductBuilderRoot .smpbAddCartBtn:hover {
+    opacity: 0.8;
+}
+
+.smProductBuilderRoot.addToCartDisabled .smpbAddCartBtn {
+    opacity: 0.3;
+}
+
+#smpb-product-breadcrumb-wrapper > div {
+    max-width: 100%;
+}
+
+.reviewImage {
+    width: 100px;
+    height: auto;
+}
+
+.mainPopup {
+    width: 50vw;
+    height: 50vh;
+    background-color: antiquewhite;
+}
+
+.gallery-items {
+    /*grid-template-columns: repeat(4, minmax(0, 1fr)) !important;*/
+    display: flex !important;
+    flex-direction: row;
+    overflow: auto;
+    overflow-y: visible;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    padding-bottom: 10px; /*show shadow */
+}
+
+.gallery-items::-webkit-scrollbar {
+    display: none;
+}
+
+.gallery-items .siminia-product-grid-item {
+}
+
+.product-grid-actions {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .siminia-product-grid-item:hover {
+        background-color: white;
+        box-shadow: 1px 3px 12px 1px rgba(0, 0, 0, 0.3);
+        z-index: 2;
+    }
+}
+
+.upsell-crosssell-container {
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 1023px) {
+    .description,
+    .details {
+        margin-inline-start: 0px;
+    }
+    .imageCarousel > div > div > div:nth-child(2) > div {
+        margin-inline-start: 0px;
+    }
+    .imageCarousel {
+        margin-inline-start: 0px;
+    }
+    .noReview {
+        padding-inline-start: 0px;
+    }
+}
+@media (max-width: 450px) {
+    .section {
+        border-color: rgb(var(--venia-global-color-border));
+        border-style: solid;
+        border-width: 0 0 1px;
+        display: flex;
+        padding: 1rem 0;
+        align-items: center;
+    }
+    .section > strong {
+        margin-left: 1rem;
+    }
+    .backBtn {
+        padding: 6px;
+        border-radius: 50%;
+        background-color: rgba(40, 40, 40, 0.5);
+        color: #fff;
+        margin-left: 10px;
+    }
+    .headerBtn {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        line-height: 3rem;
+        margin-top: 10px;
+        position: fixed;
+        z-index: 3;
+        width: 100%;
+        /* padding-right: 15px; */
+    }
+    .headerBtnRight {
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+    .productName {
+        color: #4f4f4f;
+    }
+    .imageCarousel > div > div > div:nth-child(2) > div {
+        display: none;
+    }
+    .description {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin: 0;
+        border-bottom: none;
+    }
+    .actions {
+        composes: section;
+        align-items: center;
+        display: grid;
+        grid-area: cart;
+        row-gap: 1.5rem;
+        justify-items: left;
+    }
+    .wrapperDes {
+        border-bottom: 1px solid rgb(223, 225, 226);
+        background-color: #fff;
+        padding: 0 10px;
+    }
+}
+@media (min-width: 450px) {
+    .backBtn {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-items .siminia-product-grid-item {
+        max-width: -webkit-fill-available;
+        border-radius: 8px;
+        background-color: #ffffff;
+    }
+    .upsell-crosssell-container {
+        margin-top: 15px;
+        margin-bottom: 0;
+        padding: 0 10px;
+    }
+}

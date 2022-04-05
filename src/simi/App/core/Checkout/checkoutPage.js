@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { shape, string } from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AlertCircle as AlertCircleIcon } from 'react-feather';
@@ -19,10 +19,8 @@ import StockStatusMessage from '@magento/venia-ui/lib/components/StockStatusMess
 import FormError from '@magento/venia-ui/lib/components/FormError';
 import AddressBook from '@magento/venia-ui/lib/components/CheckoutPage/AddressBook';
 import GuestSignIn from '@magento/venia-ui/lib/components/CheckoutPage/GuestSignIn';
-import OrderSummary from '@magento/venia-ui/lib/components/CheckoutPage/OrderSummary';
 import PaymentInformation from './PaymentInformation';
 import payments from './PaymentInformation/paymentMethodCollection';
-import PriceAdjustments from '@magento/venia-ui/lib/components/CheckoutPage/PriceAdjustments';
 import ShippingMethod from '@magento/venia-ui/lib/components/CheckoutPage/ShippingMethod';
 import ShippingInformation from '@magento/venia-ui/lib/components/CheckoutPage/ShippingInformation';
 import OrderConfirmationPage from '@magento/venia-ui/lib/components/CheckoutPage/OrderConfirmationPage';
@@ -30,15 +28,29 @@ import ItemsReview from '@magento/venia-ui/lib/components/CheckoutPage/ItemsRevi
 
 import defaultClasses from './checkoutPage.module.css';
 import ScrollAnchor from '@magento/venia-ui/lib/components/ScrollAnchor/scrollAnchor';
-
+import DeliveryDateTime from './DeliveryDateTime';
+import { useCartContext } from '@magento/peregrine/lib/context/cart';
 const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
+import OrderSummary from './OrderSummary/orderSummary';
+import PriceAdjustments from '../Cart/PriceAdjustments/priceAdjustments';
 
 import Identify from 'src/simi/Helper/Identify';
+import ButtonLoader from '../../../BaseComponents/ButtonLoader';
 
+const deliveryTimeEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME) === 1;
+
+require('./checkoutPage.scss');
 const CheckoutPage = props => {
     const { classes: propClasses, history } = props;
     const { formatMessage } = useIntl();
     const talonProps = useCheckoutPage();
+    const [openDeli, setOpenDeli] = useState(false);
+
+    const [{ cartId }] = useCartContext();
 
     const {
         /**
@@ -76,6 +88,8 @@ const CheckoutPage = props => {
         toggleAddressBookContent,
         toggleSignInContent
     } = talonProps;
+
+    const deliveryDateTime = useRef(null);
 
     const [, { addToast }] = useToasts();
     useEffect(() => {
@@ -197,12 +211,33 @@ const CheckoutPage = props => {
 
         const shippingMethodSection =
             checkoutStep >= CHECKOUT_STEP.SHIPPING_METHOD ? (
-                <ShippingMethod
-                    pageIsUpdating={isUpdating}
-                    onSave={setShippingMethodDone}
-                    onSuccess={scrollShippingMethodIntoView}
-                    setPageIsUpdating={setIsUpdating}
-                />
+                <>
+                    <ShippingMethod
+                        pageIsUpdating={isUpdating}
+                        onSave={setShippingMethodDone}
+                        onSuccess={scrollShippingMethodIntoView}
+                        setPageIsUpdating={setIsUpdating}
+                    />
+                    {deliveryTimeEnabled ? (
+                        <React.Fragment>
+                            <div className="main-delivery">
+                                <label className="check-container">
+                                    {formatMessage({ id: 'Delivery Time' })}
+                                    <input
+                                        onClick={() => setOpenDeli(!openDeli)}
+                                        type="checkbox"
+                                    />
+                                    <span className="checkmark" />
+                                </label>
+                            </div>
+                            {openDeli ? (
+                                <DeliveryDateTime ref={deliveryDateTime} />
+                            ) : null}
+                        </React.Fragment>
+                    ) : (
+                        ''
+                    )}
+                </>
             ) : (
                 <h3 className={classes.shipping_method_heading}>
                     <FormattedMessage
@@ -257,8 +292,10 @@ const CheckoutPage = props => {
                 </div>
             ) : null;
 
-        const reviewOrderButton =
-            checkoutStep === CHECKOUT_STEP.PAYMENT ? (
+        const reviewOrderButtonType =
+            reviewOrderButtonClicked || isUpdating || !isPaymentAvailable ? (
+                <ButtonLoader classes={classes.loader_button} />
+            ) : (
                 <Button
                     onClick={handleReviewOrder}
                     priority="high"
@@ -274,7 +311,12 @@ const CheckoutPage = props => {
                         defaultMessage={'Review Order'}
                     />
                 </Button>
-            ) : null;
+            );
+
+        const reviewOrderButton =
+            checkoutStep === CHECKOUT_STEP.PAYMENT
+                ? reviewOrderButtonType
+                : null;
 
         const itemsReview =
             checkoutStep === CHECKOUT_STEP.REVIEW ? (
@@ -291,6 +333,7 @@ const CheckoutPage = props => {
                             Identify.LOCAL_STOREAGE,
                             'simi_selected_payment_code'
                         );
+
                         if (selectedPaymentMethod === 'paypal_express') {
                             history.push('/paypal_express.html');
                             return;
@@ -399,6 +442,7 @@ const CheckoutPage = props => {
                 {itemsReview}
                 {orderSummary}
                 {placeOrderButton}
+                {/* <button onClick={()=>deliveryDateTime.current.handleSubmit()}>tesst</button> */}
             </div>
         );
     }

@@ -1,0 +1,283 @@
+.left-navigation {
+    .filter-products {
+        .reset-done-filter{
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-template-areas: "reset done";
+            justify-content: space-evenly;
+            background: unset;
+            .btnDone {
+                grid-area: done;
+                height: auto;
+                padding: 10px 20px;
+                background-color: var(--venia-global-color-button);
+                color: var(--venia-global-color-button-text);
+                >span{
+                    font-size: 16px;
+                    font-weight: 500;
+                    letter-spacing: 0;
+                    line-height: 19px;
+                }
+            }
+            .btnReset {
+                grid-area: reset;
+                box-sizing: border-box;
+                height: auto;
+                padding: 10px 20px;
+                background-color: #ededed;   
+                .action-clear{
+                    color: #000;
+                    font-size: 16px;
+                    font-weight: 500;
+                    letter-spacing: 0;
+                    line-height: 19px;
+                    margin: 0;
+                    padding: 0;
+                    text-decoration: none;
+                }
+            }
+        }
+        padding: 20px 18px;
+        background-color: #f4f4f4;
+        .title {
+            text-transform: uppercase;
+            color: #2d2d2d;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .filter-name {
+            line-height: 20px;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 16px;
+            margin-top: 24px;
+        }
+        .filter-name-text {
+            font-size: 16px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .dropdownplus {
+            padding: 20px 0px 18px;
+            margin-top: -1px;
+            .filter-option-items {
+                padding-top: 10px;
+                padding-bottom: 5px;
+            }
+            .dropdownplus-title {
+                font-size: 18px;
+                font-weight: 600;
+                display: flex;
+                justify-content: space-between;
+                line-height: 24px;
+                svg {
+                    width: 20px !important;
+                    height: 20px !important;
+                }
+            }
+            &:hover .dropdownplus-title {
+                cursor: pointer;
+                color: #0058ac;
+            }
+            .dropdownplus-title-minus-ic {
+                width: 25px;
+                height: 25px;
+            }
+            .dropdownplus-title-plus-ic {
+                width: 25px;
+                height: 25px;
+            }
+        }
+
+        .dropdownplus:not(:last-child) {
+            border-bottom: 1px solid #d3d3d3;
+        }
+
+        .filter-item {
+            margin-top: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            /*
+            checkbox
+            */
+            input {
+                display: none;
+            }
+            .filter-item-checked {
+                display: none;
+            }
+            input[type='checkbox']:checked ~ .filter-item-unchecked {
+                display: none;
+            }
+            input[type='checkbox']:checked ~ .filter-item-checked {
+                display: block;
+            }
+            .filter-item-text-ctn {
+                font-size: 14px;
+                margin-inline-start: 2px;
+                line-height: 19px;
+                padding-top: 3px;
+                font-weight: 400;
+                .filter-item-count {
+                    margin-inline-start: 5px;
+                    color: #888;
+                    font-size: 13px;
+                }
+            }
+            &:hover .filter-item-text-ctn {
+                color: #0058ac;
+            }
+        }
+        .clear-filter {
+            .action-clear {
+                font-size: 15px;
+                color: #0058ac;
+                padding: 0;
+                border: none;
+                margin-bottom: 12px;
+                margin-top: 15px;
+                height: 22px;
+                cursor: pointer;
+                text-align: center;
+                text-decoration: underline;
+                font-weight: 600;
+            }
+            .action-clear:hover {
+                text-decoration: none;
+            }
+        }
+        button[class*='button-root_highPriority'] {
+            margin-top: 15px;
+            min-width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+        @media (min-width: 1024px) {
+            width: 275px;
+        }
+    }
+    @media (min-width: 1024px) {
+        min-width: 275px;
+    }
+}
+
+.siminia-phone-filter {
+    margin-top: 5px;
+    min-height: 45px;
+    z-index: 4;
+    font-size: 14px;
+    padding: 8px 16px 6px;
+    &.showing {
+        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+            0 1px 2px rgba(0, 0, 0, 0.24);
+        box-shadow: 0 2px 15px 0 rgba(130, 130, 130, 0.74);
+        border: none;
+    }
+    .filter-products {
+        border: none;
+        background-color: white;
+        padding: 10px 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .left-navigation {
+        .siminia-phone-filter{
+            border: none;
+            margin-top: 0px;
+            padding: 0px;
+            min-height: 100%;
+            position: relative;
+            .noFilters{
+                position: absolute;
+                z-index: 1;
+                font-size: 1rem;
+                font-weight: 600;
+                text-align: center;
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                justify-content: center;
+                padding: 0 10px;
+            }
+            > div{
+                justify-content: flex-end;
+            }
+            .filter-products{
+                >div {
+                    padding: 40px 10px;
+                }
+                padding: 0;
+                .filter-item {
+                    .filter-item-text-ctn{
+                        color: #150826;
+                        font-size: 14px;
+                        letter-spacing: 0;
+                        line-height: 16px;
+                    }
+                    &:hover .filter-item-text-ctn {
+                        color: unset;
+                    }
+                }
+                .dropdownplus {
+                    border-bottom: 1px solid #F2F2F3;
+                    padding:5px;
+                    margin-bottom: 20px;
+                    .dropdownplus-title {
+                        color: #150826;
+                        font-size: 16px;
+                        font-weight: 500;
+                        letter-spacing: 0;
+                        line-height: 19px;
+                    }
+                }
+                .reset-done-filter{
+                    position: sticky;
+                    bottom: 0px;
+                    left: 0;
+                    z-index: 1;
+                    margin-top: 100%;
+                    display: grid;
+                    grid-template-columns: auto auto;
+                    grid-template-areas: "reset done";
+                    justify-content: space-evenly;
+                    background: white;
+                    padding-bottom: 35px;
+                    .btnDone {
+                        grid-area: done;
+                        height: auto;
+                        padding: 10px 20px;
+                        background-color: var(--venia-global-color-button);
+                        color: var(--venia-global-color-button-text);
+                        >span{
+                            font-size: 16px;
+                            font-weight: 500;
+                            letter-spacing: 0;
+                            line-height: 19px;
+                        }
+                    }
+                    .btnReset {
+                        grid-area: reset;
+                        box-sizing: border-box;
+                        height: auto;
+                        padding: 10px 20px;
+                        background-color: #ededed;   
+                        .action-clear{
+                            color: #000;
+                            font-size: 16px;
+                            font-weight: 500;
+                            letter-spacing: 0;
+                            line-height: 19px;
+                            margin: 0;
+                            padding: 0;
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+        }   
+    }
+}

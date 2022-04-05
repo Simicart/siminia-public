@@ -30,7 +30,7 @@
     <!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#ff6334">
     <link rel="manifest" href="/manifest.json">
 
@@ -63,10 +63,22 @@
             notification_api: "/rest/V1/simiconnector/",
             logo_url: "https://www.simicart.com/skin/frontend/default/simicart2.1/images/simicart/new_logo_small.png",
             //eg. url is https://codymap.com/magento23 and media url must include pub, value should be 'magento23/pub/'
-            media_url_prefix: 'pub/'
+            media_url_prefix: 'pub/',
+            plugins: {
+                'SM_ENABLE_CONNECTOR': 1, //https://github.com/Simicart/SimiCart-Magento2.x-GraphQl
+                'SM_ENABLE_META_PACKAGES': 1, //https://github.com/magento/magento2-pwa
+                'SM_ENABLE_PRODUCT_LABEL': 1,
+                'SM_ENABLE_SHOP_BY_BRAND': 1,
+                'SM_ENABLE_REWARD_POINTS': 1,
+                'SM_ENABLE_REWARD_POINTS_PRO': 0,
+                'SM_ENABLE_DELIVERY_TIME': 1,
+                'SM_ENABLE_SIZE_CHART': 1,
+                'SM_ENABLE_SOCIAL_LOGIN': 1,
+                'SM_ENABLE_MAGEWORX_SEO': 1
+            }
         };
     </script>
-    <script src="https://magento.pwa-commerce.com/pub/siminiapreload.php" ></script>
+    <script src="https://magento.pwa-commerce.com/pub/siminiapreload.php"></script>
     <script type="text/javascript">
         window.addEventListener('error', function (e) {
             if (
@@ -106,10 +118,12 @@
             }
         }, true);
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script type="text/javascript">
         if (!window.smIsLightHouse) {
-                document.write('<link  href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">');
-                document.write('<link rel="stylesheet" href="/static/core-theme-style.css?v=12.0.0" media="print" onload="this.media=\'all\'"></link>');
+            document.write('<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">');
+            document.write('<link rel="stylesheet" href="/static/core-theme-style.css?v=12.0.0" media="print" onload="this.media=\'all\'"></link>');
         }
     </script>
     <style>
@@ -153,6 +167,29 @@
         @media (min-width: 1620px) {
             #root .container {
                 width: 1430px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+
+            /* native style */
+            a,
+            input,
+            button,
+            span,
+            div {
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            div,
+            span,
+            p,
+            table {
+                user-select: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
             }
         }
     </style>

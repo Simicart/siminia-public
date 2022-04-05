@@ -1,6 +1,8 @@
 const moduleOverrideWebpackPlugin = require('./src/override/moduleOverrideWebpackPlugin');
 const componentOverrideMapping = require('./src/override/componentOverrideMapping');
 
+const amSocialLoginIntercept = require('./src/simi/BaseComponents/SocialLogin/extend-intercept');
+
 /* eslint-disable */
 /**
  * Custom interceptors for the project.
@@ -22,8 +24,12 @@ const componentOverrideMapping = require('./src/override/componentOverrideMappin
 
 function localIntercept(targets) {
     targets.of('@magento/pwa-buildpack').webpackCompiler.tap(compiler => {
-        new moduleOverrideWebpackPlugin(componentOverrideMapping).apply(compiler);
-    })
+        new moduleOverrideWebpackPlugin(componentOverrideMapping).apply(
+            compiler
+        );
+    });
+
+    amSocialLoginIntercept(targets);
 }
 
 module.exports = localIntercept;

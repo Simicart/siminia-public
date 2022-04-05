@@ -1,0 +1,14 @@
+.bg-color{
+    background-color: #F2F2F3;
+}
+.wrapCategoryHeader{
+    display: none;
+}
+@media (max-width: 768px) {
+    .wrapCategoryHeader{
+        display: none;
+    }
+    .wrapProductsListing{
+        margin-top: 70px;
+    }
+}

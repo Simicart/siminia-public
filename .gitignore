@@ -4,3 +4,4 @@ dist
 lastCachedGraphQLSchema.json
 yarn-error.log
 .env
+.idea

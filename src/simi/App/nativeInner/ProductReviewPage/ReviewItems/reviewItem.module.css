@@ -1,0 +1,87 @@
+.container {
+    margin-top: 2rem;
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+.contentContainer {
+    padding: 0 1rem 1rem;
+}
+.imageContainer {
+    min-width: 150px;
+}
+.name {
+    text-transform: capitalize;
+    font-size: 14px;
+    line-height: 14px;
+    color: #000;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.reviewSummary {
+    font-size: 14px;
+    line-height: 19px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.reviewText {
+    font-size: 14px;
+    line-height: 19px;
+    margin-bottom: 10px;
+    text-align: justify;
+    letter-spacing: normal;
+    max-width: 700px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+.reviewTextMore {
+    font-size: 14px;
+    line-height: 19px;
+    margin-bottom: 10px;
+    text-align: justify;
+    letter-spacing: normal;
+}
+.time {
+    font-size: 14px;
+    line-height: 14px;
+}
+.reviewButton {
+    color: #4F4F4F;
+    font-family: Roboto;
+    font-size: 13px;
+    letter-spacing: 0;
+    line-height: 15px;
+    margin-bottom: 2px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    justify-content: left;
+    text-decoration: underline;
+    min-height: unset;
+    min-width: unset;
+    cursor: pointer;
+    margin-top: 10px;
+    text-transform: capitalize;
+    font-size: 14px;
+    line-height: 14px;
+    color: #000;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+@media screen and (min-width: 767px) and (max-width: 1023px) {
+    .reviewText {
+        font-size: 14px;
+        line-height: 19px;
+        margin-bottom: 10px;
+        text-align: justify;
+        letter-spacing: normal;
+        max-width: 500px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+    }
+}
+
+

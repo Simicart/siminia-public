@@ -17,6 +17,7 @@ let requestedPbPages = false;
 import { BrowserPersistence } from '@magento/peregrine/lib/util';
 const storage = new BrowserPersistence();
 const storeCode = storage.getItem('store_view_code') || STORE_VIEW_CODE;
+import Seo from '../../Seo';
 
 /*
  * As of this writing, there is no single Product query type in the M2.3 schema.
@@ -35,6 +36,7 @@ const Product = props => {
 
     const { error, loading, product: originalProduct } = talonProps;
     const { loading: pbLoading, findPage, allPages } = pbFinderProps;
+
     const product = originalProduct ? prepareProduct(originalProduct) : false;
     useEffect(() => {
         if (!pbLoading && !allPages && !requestedPbPages) {
@@ -128,6 +130,7 @@ const Product = props => {
                 }
                 return parseInt(el2.priority) - parseInt(el1.priority);
             });
+
             if (pbPages.length && pbPages[0]) return pbPages[0];
         }
     }, [allPages, product]);
@@ -157,9 +160,10 @@ const Product = props => {
             </h1>
         );
     }
-    
+
     return (
         <Fragment>
+            <Seo pageType="PRODUCT"/>
             <StoreTitle>{product.name}</StoreTitle>
             <Meta name="description" content={product.meta_description} />
             {foudThepage || pageMaskedId ? (
@@ -171,6 +175,7 @@ const Product = props => {
             ) : (
                 <ProductFullDetail product={product} />
             )}
+            
         </Fragment>
     );
 };

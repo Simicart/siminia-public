@@ -22,6 +22,8 @@ import { gql } from '@apollo/client';
 import defaultClasses from './item.module.css';
 import Quantity from '../../Cart/ProductListing/quantity';
 import { useQuantity } from '../../../../talons/MiniCart/useQuantity';
+import { configColor } from 'src/simi/Config';
+import { taxConfig } from '../../../../Helper/Pricing';
 
 const Item = props => {
     const {
@@ -40,7 +42,11 @@ const Item = props => {
         storeUrlSuffix,
         item
     } = props;
-    
+    const merchantTaxConfig = taxConfig();
+    const showExcludedTax =
+        merchantTaxConfig &&
+        merchantTaxConfig.tax_cart_display_price &&
+        parseInt(merchantTaxConfig.tax_cart_display_price) === 1;
     const { formatMessage } = useIntl();
     const talonProps = useQuantity({
         operations: {
@@ -48,10 +54,8 @@ const Item = props => {
         },
         ...props
     });
-   
-    const {
-        handleUpdateItemQuantity,
-    } = talonProps;
+
+    const { handleUpdateItemQuantity } = talonProps;
 
     const classes = useStyle(defaultClasses, propClasses);
     const itemLink = useMemo(
@@ -103,10 +107,12 @@ const Item = props => {
                 {product.name}
             </Link>
             <ProductOptions
-                options={configurable_options ||  
+                options={
+                    configurable_options ||
                     downloadable_customizable_options ||
                     bundle_options ||
-                    customizable_options}
+                    customizable_options
+                }
                 classes={{
                     options: classes.options
                 }}
@@ -125,25 +131,35 @@ const Item = props => {
                     onChange={handleUpdateItemQuantity}
                 />
                 <button
-                onClick={removeItem}
-                type="button"
-                className={classes.deleteButton}
-                disabled={isDeleting}
-            >
-                <Icon
-                    size={16}
-                    src={DeleteIcon}
-                    classes={{
-                        icon: classes.editIcon
-                    }}
-                />
-            </button>
+                    onClick={removeItem}
+                    type="button"
+                    className={classes.deleteButton}
+                    disabled={isDeleting}
+                >
+                    <Icon
+                        size={16}
+                        src={DeleteIcon}
+                        classes={{
+                            icon: classes.editIcon
+                        }}
+                    />
+                </button>
             </div>
-            <span className={classes.price}>
-                <Price
-                    currencyCode={prices.price.currency}
-                    value={prices.price.value}
-                />
+            <span
+                style={{ color: configColor.price_color }}
+                className={classes.price}
+            >
+                {showExcludedTax ? (
+                    <Price
+                        currencyCode={prices.price.currency}
+                        value={prices.price.value}
+                    />
+                ) : (
+                    <Price
+                        currencyCode={prices.row_total_including_tax.currency}
+                        value={prices.row_total_including_tax.value}
+                    />
+                )}
                 <FormattedMessage
                     id={'productList.each'}
                     defaultMessage={' ea.'}

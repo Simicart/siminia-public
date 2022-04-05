@@ -25,6 +25,17 @@ const GET_ORDER_DETAIL = gql`
           company
           
         }
+        mp_delivery_information {
+          mp_delivery_date
+          mp_delivery_time
+          mp_house_security_code
+          mp_delivery_comment
+       }
+       mp_reward_points {
+        earn
+        spent
+        discount
+      }
         items {
           product_name
           product_sku

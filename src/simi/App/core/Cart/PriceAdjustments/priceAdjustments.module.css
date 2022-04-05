@@ -1,12 +1,12 @@
 .root {
-    border: 1px solid rgb(0, 88, 178, 0.5);
+    border: 1px solid rgb(var(--venia-global-color-border));
     border-bottom: none;
 }
 .root > div {
     border: none;
 }
 .root > div > div {
-    border-bottom: 1px solid rgb(0, 88, 178, 0.5);
+    border-bottom: 1px solid rgb(var(--venia-global-color-border));
 }
 .sectionRoot {
     font-size: 18px;
@@ -25,4 +25,27 @@
     .sectionRoot span[class*='label'] {
         font-size: 14px;
     }
+}
+.slider {
+    width: 100%;
+}
+.message {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    min-width: 50%;
+}
+.userBalance {
+    margin: 0 1rem 1rem 0;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+}
+.pointSpend {
+    margin: 1rem 0;
+    display: flex;
+}
+.pointInput {
+    text-align: center;
+    margin-left: 15px;
+    min-width: 70px;
+    max-height: 30px;
 }

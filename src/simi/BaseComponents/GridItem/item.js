@@ -23,6 +23,7 @@ import { useGridItem } from '../../talons/Category/useGridItem';
 import { useHistory } from 'react-router-dom';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToListButton';
+import ProductLabel from '../../App/core/ProductFullDetail/ProductLabel';
 // const AddToListButton = React.lazy(() =>
 //     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
 // );
@@ -54,10 +55,12 @@ const Griditem = props => {
         type_id,
         small_image,
         rating_summary,
-        review_count
+        review_count,
+        mp_label_data
     } = item;
 
     const product_url = `/${url_key}${productUrlSuffix()}`;
+    // const imageWidth = document.querySelector("#product-image-label").offsetWidth
 
     //if uncomment this - should comment out useDelayedTransition() at src/simi/app.js
     //saveDataToUrl(product_url, item);
@@ -78,8 +81,6 @@ const Griditem = props => {
     let imageUrl = small_image;
     //comment out this line when server got issue decoding images
     imageUrl = resourceUrl(imageUrl, { type: 'image-product', width: 260 });
-    
-
     const image = (
         <div
             className={itemClasses['siminia-product-image']}
@@ -96,13 +97,16 @@ const Griditem = props => {
                     width: '100%',
                     padding: 1
                 }}
+                
             >
                 <Link to={location}>
                     <Image
                         src={imageUrl}
                         alt={name}
                         fallBackUrl={small_image}
+                        className="product-image-label"
                     />
+                    <ProductLabel  productLabel = {mp_label_data ? mp_label_data : null} label_tyle="gallery"/>
                 </Link>
                 {item.price && item.price.has_special_price ? (
                 <div
@@ -118,6 +122,8 @@ const Griditem = props => {
         </div>
     );
     const productOutStock = item.stock_status === 'OUT_OF_STOCK';
+    
+    
     return (
         <div
             className={` ${

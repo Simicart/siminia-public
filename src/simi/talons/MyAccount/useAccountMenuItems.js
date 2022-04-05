@@ -13,8 +13,13 @@ export const useAccountMenuItems = props => {
     const handleSignOut = useCallback(() => {
         onSignOut();
     }, [onSignOut]);
+    const rewardPointEnabled =
+        window.SMCONFIGS &&
+        window.SMCONFIGS.plugins &&
+        window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
+        parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
-    const MENU_ITEMS = [
+    let MENU_ITEMS = [
         {
             name: 'Order History',
             id: 'accountMenu.orderHistoryLink',
@@ -62,6 +67,21 @@ export const useAccountMenuItems = props => {
             url: '/account-subcriptions'
         }
     ];
+    const rewardItems = [
+        {
+            name: 'Reward Points',
+            id: 'rewardPoints.rewardPointsLink',
+            url: '/reward-points'
+        },
+        {
+            name: 'Reward Transactions',
+            id: 'rewardTransactions.rewardTransactionsLink',
+            url: '/reward-transactions'
+        }
+    ];
+    if(rewardPointEnabled){
+        MENU_ITEMS = MENU_ITEMS.concat(rewardItems)
+    }
 
     return {
         handleSignOut,

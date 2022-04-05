@@ -1,0 +1,80 @@
+.hidden {
+    opacity: 0;
+    transform: translate3d(0, -2rem, 0);
+    transition-duration: 192ms;
+    transition-timing-function: var(--venia-global-anim-out);
+    visibility: hidden;
+}
+
+.visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    transition-duration: 224ms;
+    transition-timing-function: var(--venia-global-anim-in);
+    visibility: visible;
+}
+
+.root {
+    background-color: white;
+    border: 1px solid rgb(var(--venia-global-color-border));
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    display: grid;
+    font-size: 0.8125rem;
+    gap: 0.75rem;
+    left: 0;
+    padding: 1rem 1rem;
+    position: absolute;
+    right: 0;
+    transition-property: opacity, transform, visibility;
+    z-index: 3;
+    top: 65px;
+}
+@media (max-width: 768px) {
+    .root {
+        background-color: white;
+        border: 1px solid rgb(var(--venia-global-color-border));
+        box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+        display: grid;
+        font-size: 0.8125rem;
+        gap: 0.75rem;
+        padding: 1rem 1rem;
+        position: fixed;
+        /* right: 6px; */
+        transition-property: opacity, transform, visibility;
+        z-index: 3;
+        top: 90px;
+        right: 52px;
+        left: 43px;
+    }
+}
+
+.root_hidden {
+    composes: root hidden;
+}
+
+.root_visible {
+    composes: root visible;
+}
+
+.message {
+    color: rgb(var(--venia-global-color-text-alt));
+    padding: 0 0.75rem;
+    text-align: center;
+}
+
+.message:empty {
+    padding: 0;
+}
+
+.suggestions {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.suggestions:empty {
+    display: none;
+}
+.close-icon {
+    display: flex;
+    justify-content: flex-end;
+}

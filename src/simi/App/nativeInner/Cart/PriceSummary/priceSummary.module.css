@@ -1,0 +1,104 @@
+.totalLabel {
+    margin-top: 0;
+    color: #150826;
+    letter-spacing: 0;
+    line-height: 21px;
+    font-size: 1.1rem;
+}
+
+.totalPrice {
+    letter-spacing: 0;
+    margin-top: 0;
+    line-height: 21px;
+    font-size: 1.1rem;
+    color: #150826;
+}
+
+.checkoutButton_container > button {
+    border-radius: 20px;
+    background-color: var(--venia-global-color-button);
+    color: rgb(var(--venia-global-color-gray-50));
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    width: 100%;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 1rem;
+    max-width: 7rem;
+}
+
+.checkoutButton_container > button * {
+    font-size: 0.8rem;
+    text-transform: none;
+    display: inline;
+}
+
+.checkoutIcon {
+    margin-bottom: -2px;
+    color: rgb(var(--venia-global-color-gray-50));
+}
+
+.checkoutButton_container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    margin-top: 2rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    background: white;
+}
+
+.totalPricePiece {
+    margin-right: 1.3rem;
+    color: #150826;
+    font-weight: 600;
+}
+
+.checkoutLockIcon {
+    margin-right: 2px;
+}
+
+.root {
+    padding: 15px 10px 0 10px;
+}
+
+.pricePlaceholder {
+    width: 1rem;
+    display: inline-block;
+}
+
+
+@media (min-width: 961px) {
+    .root {
+        padding: 0;
+    }
+
+
+    .checkoutButton_container > button {
+        max-width: 7.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .root{
+        padding: 0;
+    }
+
+    .checkoutButton_container {
+        margin-top: 0;
+        position: fixed;
+        bottom: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        z-index: 1;
+        width: 100%;
+    }
+
+    .checkoutButton_container > button {
+        max-width: unset;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        border-radius: 0px;
+        min-height: 50px;
+    }
+}

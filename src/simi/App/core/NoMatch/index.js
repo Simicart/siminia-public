@@ -2,7 +2,16 @@ import React, { useEffect } from 'react';
 import Loading from 'src/simi/BaseComponents/Loading';
 import { useQuery } from '@apollo/client';
 import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
-import LzL from 'src/simi/BaseComponents/LazyLoad';
+import RsHome from '../Seo/Markup/RsHome';
+import RsHomeBasic from '../SeoBasic/Markup/RsHome';
+import RsSeller from '../Seo/Markup/RsSeller';
+
+const mageworxSeoEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
+
 //import Page404 from './Page404';
 const Page404 = props => {
     return (
@@ -25,7 +34,7 @@ const Product = props => {
         />
     );
 };
-// import CMS from 'src/simi/App/core/RootComponents/CMS';
+//import CMS from 'src/simi/App/core/RootComponents/CMS';
 const CMS = props => {
     return (
         <LazyComponent
@@ -36,6 +45,7 @@ const CMS = props => {
         />
     );
 };
+//import Category from 'src/simi/App/core/RootComponents/Category';
 const Category = props => {
     return (
         <LazyComponent
@@ -56,6 +66,7 @@ import { LazyComponent } from '../../../BaseComponents/LazyComponent/';
 import { usePbFinder } from 'simi-pagebuilder-react';
 export const endPoint = 'https://tapita.io/pb/graphql/';
 export const integrationToken = '149NbMq20jsTkleXftqn3hNh2Epj17TMV1641796505';
+
 import PageBuilderComponent from '../TapitaPageBuilder/PageBuilderComponent';
 
 //store code
@@ -95,9 +106,23 @@ const NoMatch = props => {
         }
     }, [pathname, pageMaskedId, pathToFind, findPage]);
 
+    const renderHomeSeo = () => {
+        return (
+            <React.Fragment>
+                {mageworxSeoEnabled ? (
+                    <RsHome type="home" />
+                ) : (
+                    <RsHomeBasic type="home" />
+                )}
+                {mageworxSeoEnabled ? <RsSeller type="home" /> : ''}
+            </React.Fragment>
+        );
+    };
+
     if (pageMaskedId && pageMaskedId !== 'notfound') {
         return (
             <div className="pagebuilder-component-ctn">
+                {renderHomeSeo()}
                 <PageBuilderComponent
                     key={pageMaskedId}
                     endPoint={endPoint}
@@ -105,21 +130,6 @@ const NoMatch = props => {
                     pageData={
                         pageData && pageData.publish_items ? pageData : false
                     }
-                    overRender={(item, itemProps, innerContent) => {
-                        if (!item || !itemProps) return false;
-                        const { type } = item;
-                        if (
-                            type === 'container' &&
-                            item.stylesParsed &&
-                            item.stylesParsed.backgroundImage
-                        ) {
-                            return (
-                                <LzL>
-                                    <div {...itemProps}>{innerContent}</div>
-                                </LzL>
-                            );
-                        }
-                    }}
                 />
             </div>
         );
@@ -137,7 +147,12 @@ const NoMatch = props => {
             else if (type === TYPE_CATEGORY)
                 return <Category {...{ ...props, ...data.route }} />;
             else if (type === TYPE_CMS_PAGE)
-                return <CMS {...{ ...props, ...data.route }} />;
+                return (
+                    <React.Fragment>
+                        {renderHomeSeo()}
+                        <CMS {...{ ...props, ...data.route }} />
+                    </React.Fragment>
+                );
         } else {
             if (pbLoading || pathname !== pathToFind) {
                 return '';

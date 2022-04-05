@@ -8,12 +8,22 @@ import CategoryContentShimmer from './categoryContent.shimmer';
 /* import { useCategoryContent } from 'src/simi/talons/Category/useCategoryContent'; */
 import { useCategoryContentSimiPagination } from 'src/simi/talons/Category/useCategoryContentSimiPagination';
 import CategoryHeader from './categoryHeader';
+import SeoBasic from '../../SeoBasic';
+import CanonicalBasic from '../../SeoBasic/CanonicalBasic';
+import MarkupCategoryBasic from '../../SeoBasic/Markup/Category';
 import NoProductsFound from 'src/simi/BaseComponents/Products/NoProductsFound';
 import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent';
 import { useIntl } from 'react-intl';
-import Seo from '../../SeoBasic'
-import Canonical from '../../SeoBasic/Canonical';
-import MarkupCategory from '../../SeoBasic/Markup/Category';
+// import Seo from '../../Seo';
+import Canonical from '../../Seo/Canonical';
+import MarkupCategory from '../../Seo/Markup/Category';
+import Seo from '../../Seo';
+
+const mageworxSeoEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
 
 //call chunked package along with API (for opimizing the package purpose)
 const Products = props => {
@@ -60,7 +70,7 @@ const Category = props => {
         );
     }
 
-    const { category } = products;
+    const { category, mageworx_canonical_url } = products;
 
     const isApplyingFilter = window.location.search ? true : false;
 
@@ -83,10 +93,23 @@ const Category = props => {
     }
 
     return (
-        <div className="container">
-            <Seo pageType="CATEGORY"/>
-            <Canonical type="CATEGORY" />
-            <MarkupCategory category={category}/>
+        <div style={{backgroundColor: '#fff'}} className="container">
+            {mageworxSeoEnabled ? (
+                <>
+                    <Seo pageType="CATEGORY" />
+                    <Canonical url={mageworx_canonical_url} type="CATEGORY" />
+                    <MarkupCategory category={category} />
+                </>
+            ) : (
+                <>
+                    <SeoBasic pageType="CATEGORY" />
+                    <CanonicalBasic
+                        url={mageworx_canonical_url}
+                        type="CATEGORY"
+                    />
+                    <MarkupCategoryBasic category={category} />
+                </>
+            )}
             {breadcrumb && breadcrumb.length ? (
                 <div style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
                     <Breadcrumbs breadcrumb={breadcrumb} />
@@ -111,14 +134,14 @@ const Category = props => {
                     />
                 ]
             })}
-            {category && category.name && category.image && (
+            {/*category && category.name && category.image && (
                 <CategoryHeader
                     name={category.name}
                     image_url={resourceUrl(category.image, {
                         type: 'image-category'
                     })}
                 />
-            )}
+                )*/}
             {pageControl.totalPages === 0 && !isApplyingFilter ? (
                 <NoProductsFound categoryId={id} />
             ) : (

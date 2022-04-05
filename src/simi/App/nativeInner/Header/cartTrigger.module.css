@@ -1,0 +1,69 @@
+.root {
+    min-width: 3rem;
+    position: relative;
+    display: block;
+}
+
+.minicartRoot {
+    height: 0;
+    overflow: visible;
+    left: -100vw;
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    transition: opacity 192ms var(--venia-global-anim-out),
+        visibility 192ms var(--venia-global-anim-out), left 0s 192ms;
+    visibility: hidden;
+    width: calc(100vw - 2rem);
+    max-width: calc(
+        var(--venia-global-maxWidth) + var(--content-width) * 2 - 8rem
+    );
+    z-index: 3;
+    transform: translate3d(-50%, 0, 0);
+}
+
+.minicartRootOpen {
+    composes: minicartRoot;
+    left: 50%;
+    opacity: 1;
+    transition: opacity 224ms var(--venia-global-anim-in),
+        visibility 224ms var(--venia-global-anim-in), left 0s;
+    visibility: visible;
+}
+.miniCartBody {
+    max-height: 23rem;
+    min-height: 10rem;
+    overflow-y: auto;
+    padding: 1.5rem;
+    text-align: start;
+    font-size: 12px;
+    line-height: 13px;
+}
+.miniCartBody a {
+    font-weight: 600;
+    line-height: 16px;
+}
+.miniCartBody button.checkoutButton {
+    max-width: 100%;
+    min-width: 10rem;
+    min-height: 2.5rem;
+    outline: none;
+    text-transform: uppercase;
+    background-color: var(--venia-global-color-button);
+    grid-column: 1 / span 1;
+    margin: auto;
+    border: none;
+    padding: calc(0.5rem + 1px) 1.5rem calc(0.5rem - 1px);
+    color: var(--venia-global-color-button-text);
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    line-height: 19px;
+    font-weight: 600;
+}
+
+@media (max-width: 1023px) {
+    .root {
+        min-width: unset;
+    }
+}

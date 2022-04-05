@@ -1,0 +1,78 @@
+.accordRoot {
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.sectionTitle {
+    color: #150826;
+    font-weight: 500;
+}
+
+.title_wrapper {
+    align-items: center;
+    display: grid;
+    gap: 1.5rem;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr;
+    /*height: 4.5rem;*/
+    justify-items: start;
+}
+
+
+.contents_container {
+    padding: 0;
+    margin-top: 13px;
+}
+
+.contents_container:empty {
+    display: none;
+}
+
+.sectionRoot {
+    margin-top: 30px;
+}
+
+.estimateButton {
+    justify-self: flex-start;
+}
+
+
+.slider {
+    width: 100%;
+}
+.message {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    min-width: 50%;
+}
+.userBalance {
+    margin: 0 1rem 1rem 0;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+}
+.pointSpend {
+    margin: 1rem 0;
+    display: flex;
+}
+.pointInput {
+    text-align: center;
+    margin-left: 15px;
+    min-width: 70px;
+    max-height: 30px;
+}
+
+@media(max-width: 960px) {
+    .rewardPointRoot > button {
+        min-height: 35px;
+        padding-top: 7px;
+        font-size: 0.8rem;
+    }
+    .message {
+        min-width: fit-content;
+    }
+
+    .pointInput {
+        width: 100%;
+    }
+}

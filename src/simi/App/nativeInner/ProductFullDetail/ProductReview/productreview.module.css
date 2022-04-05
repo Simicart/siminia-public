@@ -1,0 +1,225 @@
+.mainPopup {
+    width: 50vw;
+    /* height: 60vh; */
+    background-color: #fff;
+    position: absolute;
+    top: 14%;
+    left: 25%;
+    border-radius: 8px;
+}
+
+.footerBtn {
+    color: #444444;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 22px;
+    margin-right: 55px;
+}
+
+.footerBtnActive {
+    color: #000;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 550;
+    letter-spacing: 0;
+    line-height: 22px;
+    margin-right: 55px;
+}
+.reviewImage {
+    max-width: 10%;
+}
+
+.overlayActive {
+    position: fixed;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 7;
+    cursor: pointer;
+}
+.overlayNone {
+    position: fixed;
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 7;
+    cursor: pointer;
+}
+.fieldsContainer {
+    padding: 30px;
+}
+@media (max-width: 450px) {
+    .fieldsContainer {
+        padding: 20px 0;
+    }
+}
+.heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 20px;
+    background-color: var(--venia-global-color-button);
+}
+.closeBtn {
+    position: absolute;
+    right: 12px;
+    top: 10px;
+}
+.closeBtn > button > svg {
+    color: #fff;
+}
+.reviewProductName {
+    color: #ffffff;
+    font-family: Roboto;
+    font-size: 21px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 28px;
+    margin-top: 20px;
+}
+.writeRWBtn {
+    background: var(--venia-global-color-button);
+    color: var(--venia-global-color-button-text);
+    padding: 5px 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    font-family: Roboto;
+}
+.submitReviewBtn {
+    height: 45px;
+    width: 167px;
+    border-radius: 22.5px !important;
+    background-color: var(--venia-global-color-button);
+    color: var(--venia-global-color-button-text);
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 45px;
+    margin-top: 20px;
+}
+@media (max-width: 450px) {
+    .submitReviewBtn {
+        height: 50px;
+        width: 100%;
+        border-radius: 4px !important;
+        background-color: var(--venia-global-color-button);
+        color: var(--venia-global-color-button-text);
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 45px;
+        margin-top: 20px;
+    }
+    .writeRWBtn {
+        font-family: Roboto;
+    }
+    .reviewProductName {
+        font-family: Roboto;
+    }
+}
+.submitBtnContainer {
+    display: flex;
+    justify-content: right;
+}
+.writeRWContainer {
+    display: flex;
+    justify-content: right;
+    margin-bottom: 30px;
+
+    border-top: 1px solid rgb(223, 225, 226);
+}
+@media screen and (max-width: 767px) {
+    .mainPopup {
+        width: 90vw;
+        top: 7%;
+        left: 5%;
+    }
+    .details_review {
+        display: flex;
+        justify-content: space-around;
+    }
+    .footerBtn {
+        margin-right: 0px;
+    }
+    .footerBtnActive {
+        margin-right: 0;
+    }
+}
+@media screen and (max-width: 450px) {
+    
+    .overlayActive {
+        position: fixed;
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0);
+        z-index: 7;
+        cursor: pointer;
+    }
+    .mainPopup {
+        position: fixed;
+        z-index: 5;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: #fff;
+        padding: 15px;
+        animation: mymove .4s;
+    }
+    @keyframes mymove {
+        from {left: 100%;}
+        to {left: 0%;}
+      }
+}
+.rating {
+    display: flex;
+    align-items: flex-end;
+
+}
+.ratingName {
+    margin-right: 10px;
+    color: #111111;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 19px;
+}
+.content {
+    color: #111111;
+    font-family: Roboto;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 22px;
+}
+.noReivew {
+    color: #111111;
+  font-family: Roboto;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 22px;
+  margin-top: 15px;
+}

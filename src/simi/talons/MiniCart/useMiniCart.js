@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
@@ -27,6 +27,20 @@ import Identify from 'src/simi/Helper/Identify';
  *      configurableThumbnailSource: String
  *  }
  */
+ const flattenData = data => {
+    if (!data) return {};
+    return {
+        subtotal: data.cart.prices.subtotal_excluding_tax,
+        total: data.cart.prices.grand_total,
+        discounts: data.cart.prices.discounts,
+        giftCards: data.cart.applied_gift_cards,
+        taxes: data.cart.prices.applied_taxes,
+        shipping: data.cart.shipping_addresses,
+        priceData: data.cart.prices.mp_reward_segments
+    };
+};
+
+
 export const useMiniCart = props => {
     const { setIsOpen } = props;
     const storeConfig = Identify.getStoreConfig();
@@ -41,6 +55,9 @@ export const useMiniCart = props => {
     const [{ cartId }] = useCartContext();
     const history = useHistory();
 
+    const match = useRouteMatch('/checkout');
+    const isCheckout = !!match;
+
     const { data: miniCartData, loading: miniCartLoading } = useQuery(
         miniCartQuery,
         {
@@ -50,7 +67,6 @@ export const useMiniCart = props => {
             skip: !cartId
         }
     );
-
     // const { data: storeConfigData } = useQuery(getStoreConfigQuery, {
     //     fetchPolicy: 'cache-and-network'
     // });
@@ -75,18 +91,6 @@ export const useMiniCart = props => {
             error: removeItemError
         }
     ] = useMutation(removeItemMutation);
-
-    const totalQuantity = useMemo(() => {
-        if (!miniCartLoading && miniCartData) {
-            return miniCartData.cart.total_quantity;
-        }
-    }, [miniCartData, miniCartLoading]);
-
-    const subTotal = useMemo(() => {
-        if (!miniCartLoading && miniCartData) {
-            return miniCartData.cart.prices.subtotal_excluding_tax;
-        }
-    }, [miniCartData, miniCartLoading]);
 
     const productList = useMemo(() => {
         if (!miniCartLoading && miniCartData) {
@@ -137,9 +141,9 @@ export const useMiniCart = props => {
         handleRemoveItem,
         loading: miniCartLoading || (removeItemCalled && removeItemLoading),
         productList,
-        subTotal,
-        totalQuantity,
         configurableThumbnailSource,
-        storeUrlSuffix
+        storeUrlSuffix,
+        flatData: flattenData(miniCartData),
+        isCheckout
     };
 };

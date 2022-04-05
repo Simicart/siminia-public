@@ -1,0 +1,36 @@
+.brandNameContainer {
+    padding-bottom: 10px;
+}
+
+.mallIcon {
+    border-radius: 3px;
+    background-color: #FF5F59;
+    padding: 2px 7px;
+    margin-right: 14px;
+    font-size: 10px;
+    color: white;
+    font-weight: 600;
+}
+
+.brandName {
+    font-size: 0.9rem;
+    letter-spacing: 0;
+    line-height: 1.4rem;
+    color: #150826;
+    margin-right: 11px;
+}
+
+.forwardIcon {
+    display: inline;
+}
+
+.brandZoneContainer {
+    padding-bottom: 0.8rem;
+}
+
+.fullLine {
+    border-bottom: 1px solid #C3BEBE;
+    width: 100%;
+    position: absolute;
+    left: 0;
+}

@@ -1,0 +1,54 @@
+.back-zone {
+    top: 18px;
+    max-width: 15%;
+    position: fixed;
+    /* left: 21px; */
+    z-index: 2;
+    left: 1%;
+}
+
+.title-zone {
+    left: 40px;
+    position: fixed;
+    /*left: 71px;*/
+    top: 14px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.header-search {
+    margin: 0;
+    max-width: unset;
+    padding: 16px;
+    background: #fff;
+    height: 55px;
+    position: fixed;
+    z-index: 8;
+    top: 0;
+    box-shadow: 0 0 4px 0 rgb(0 0 0 / 30%);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.header-search-form .search-icon {
+    right: 16px;
+    top: -5px;
+}
+
+.virtualHeader {
+    height: 55px;
+    width: 100%;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: white;
+}
+
+.main-header-icon {
+
+}
+
+.header-title {
+
+}

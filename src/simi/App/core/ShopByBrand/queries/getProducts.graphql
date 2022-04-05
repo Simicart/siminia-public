@@ -1,0 +1,82 @@
+#import "src/simi/queries/Fragments/SimiPrice"
+query category($currentPage: Int, $pageSize: Int, $stringId: String, $sort: ProductAttributeSortInput, $simiFilter: String, $simiProductSort:SimiProductSort) {
+    simiproducts(pageSize: $pageSize, currentPage: $currentPage, filter: {category_id: {eq: $stringId}}, sort: $sort, simiFilter: $simiFilter, simiProductSort:$simiProductSort) {
+        total_count
+        simi_filters {
+            name
+            filter_items_count
+            request_var
+            position
+            filter_items {
+                label
+                value_string
+                items_count
+                swatch_value
+            }
+        }
+        sort_fields {
+            default
+            options {
+                value
+                label
+            }
+        }
+        items {
+            id
+            name
+            sku
+            small_image {
+                url
+                label
+            }
+            url_key
+            special_price
+            special_from_date
+            type_id
+            special_to_date
+            stock_status
+            price {
+                ... SimiPrice
+            }
+            price_tiers {
+                quantity
+                final_price {
+                    value
+                    currency
+                }
+            }
+            simiExtraField
+            rating_summary
+            review_count
+            mpbrand {
+                ... on MageplazaBrands {
+                    brand_id
+                    value
+                    default_value
+                    url_key
+                    image
+                    short_description
+                    product_quantity
+                }
+            }
+            # price_tiers {
+            #     quantity
+            #     final_price {
+            #         currency
+            #         value
+            #     }
+            #     discount {
+            #         amount_off
+            #         percent_off
+            #     }
+            # }
+        }
+        page_info {
+            total_pages
+        }
+        total_count
+        minPrice
+        maxPrice
+        mageworx_canonical_url
+    }
+}

@@ -39,7 +39,7 @@
     /* font-weight: var(--venia-global-fontWeight-bold); */
 }
 .viewOrder {
-    color: #0058AC;
+    color: var(--venia-global-color-button);
     font-family: poppins;
     font-size: 14px;
     font-weight: 500;
@@ -157,7 +157,7 @@
     }
 }
 .btn {
-    color: #0058AC;
+    color: var(--venia-global-color-button);
     font-family: poppins;
     font-size: 14px;
     font-weight: 500;

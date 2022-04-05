@@ -1,0 +1,142 @@
+fragment SimiPriceFragment on ProductPrices {
+        regularPrice {
+            amount {
+                currency
+                value
+            }
+            adjustments {
+                amount {
+                    currency
+                    value
+                }
+                code
+                description
+            }
+        }
+        minimalPrice {
+            amount {
+                currency
+                value
+            }
+            adjustments {
+                amount {
+                    currency
+                    value
+                }
+                code
+                description
+            }
+        }
+        maximalPrice {
+            amount {
+                currency
+                value
+            }
+            adjustments {
+                amount {
+                    currency
+                    value
+                }
+                code
+                description
+            }
+        }
+    }
+fragment ProductOfListFragment on ProductInterface {
+        id
+        name
+        sku
+        small_image {
+            url
+            label
+        }
+        media_gallery_entries {
+            label
+            position
+            disabled
+            file
+        }
+        url_key
+        special_price
+        special_from_date
+        type_id
+        special_to_date
+        stock_status
+        price {
+            ...SimiPriceFragment
+        }
+        price_tiers {
+            quantity
+            final_price {
+                value
+                currency
+            }
+        }
+        rating_summary
+        review_count
+        ... on CustomizableProductInterface {
+            options {
+                title
+            }
+        }
+    }
+query getBrandProducts(
+    $pageSize: Int!
+    $currentPage: Int!
+    $filters: ProductAttributeFilterInput!
+    $sort: ProductAttributeSortInput
+) {
+    products(
+        pageSize: $pageSize
+        currentPage: $currentPage
+        filter: $filters
+        sort: $sort
+    ) {
+        items {
+            # id is always required, even if the fragment includes it.
+            id
+            # TODO: Once this issue is resolved we can use a
+            # GalleryItemFragment here:
+            # https://github.com/magento/magento2/issues/28584
+            ...ProductOfListFragment
+            name
+            mpbrand{
+              attribute_id
+              brand_id
+              default_value
+              image
+              description
+            }
+            mp_label_data {
+                  list_position
+                  list_position_grid
+                  label_image
+                  rule_id
+                  label_font
+                  label_font_size
+                  label_color
+                  label_template
+                  priority
+                  label
+                  list_css
+            }
+            price {
+                regularPrice {
+                    amount {
+                        currency
+                        value
+                    }
+                }
+            }
+            small_image {
+                url
+            }
+            url_key
+            url_suffix
+        }
+        page_info {
+            total_pages
+        }
+        total_count
+    }
+}

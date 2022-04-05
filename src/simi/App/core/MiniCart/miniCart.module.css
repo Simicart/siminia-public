@@ -87,9 +87,8 @@
     margin: 0 1rem;
     padding: 0rem 0.5rem;
     row-gap: 1rem;
-    border-top: 2px solid #0058AC;
+    border-top: 2px solid var(--venia-global-color-button);
 }
-
 .stockStatusMessageContainer {
     grid-column-end: span 2;
 }
@@ -180,8 +179,8 @@
     line-height: 1;
     pointer-events: auto;
     text-align: center;
-    border-color: #0058ac;
-    background: #0058ac;
+    border-color: var(--venia-global-color-button);
+    background-color: var(--venia-global-color-button);
     color: white;
     border-style: solid;
     border-width: 1px;
@@ -209,7 +208,7 @@
 
 }
 .viewCartButton span{
-    color: #0058AC;
+    color: var(--venia-global-color-button);
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
@@ -226,7 +225,7 @@
     line-height: 1;
     pointer-events: auto;
     text-align: center;
-    border-color: #0058ac;
+    border-color: var(--venia-global-color-button);
     color: white;
     border-style: solid;
     border-width: 1px;
@@ -261,12 +260,12 @@
     display: block;
     box-sizing: border-box;
     min-height: 50px;
-    background-color: #0058B2;
+    background-color: var(--venia-global-color-button);
     padding-top: 22px ;
     padding-inline-start : 40px;
     padding-bottom: 18px;
     padding-inline-end: 40px; 
-    color: #FFFFFF;
+    color: var(--venia-global-color-button-text);
     margin-top: 20px;
     font-size: 14px;
     font-weight: bold;

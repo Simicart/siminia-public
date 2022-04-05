@@ -10,7 +10,7 @@
     transition-duration: 384ms;
     transition-property: opacity;
     transition-timing-function: var(--venia-global-anim-standard);
-    border-bottom: 1px solid #E4E4E4;
+    border-bottom: 1px solid rgb(var(--venia-global-color-border));
 }
 .root:last-child{
     border-bottom: none;
@@ -75,18 +75,21 @@
 .quantity > form > div button:nth-child(2){
     height: 35px;
     width: 35px;
-    background-color: #0058B2;
+    background-color: var(--venia-global-color-button);
 }
 .quantity > form > div span:nth-child(3){
     width: 35px;
 }
 .quantity > form > div span:nth-child(3) > span > input{
     height: 35px;
+    border-color: #979797!important ;
 }
 .quantity > form > div button:nth-child(5){
     height: 35px;
     width: 35px;
-    background-color: #F4F4F4;
+    background: white;
+    color: var(--venia-global-color-button);
+    --stroke: var(--venia-global-color-gray-700);
 }
 .price {
     grid-column: 2 / span 1;
