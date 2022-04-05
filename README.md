@@ -26,7 +26,7 @@ scripts (modify the build script and add siminia scripts):
 
 ```
   "scripts": {
-    "build": "yarn venia run build && yarn run build:siminia",
+    "build": "yarn run build:siminia",
     "build:siminia": "yarn workspace @simicart/siminia run build",
     "watch:siminia": "yarn workspace @simicart/siminia run watch",
     "stage:siminia": "yarn workspace @simicart/siminia run start",

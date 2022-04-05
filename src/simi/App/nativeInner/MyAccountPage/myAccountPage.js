@@ -3,6 +3,8 @@ import defaultClasses from './myAccountPage.module.css';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { FormattedMessage, useIntl } from 'react-intl';
+import CacheHelper from 'src/simi/Helper/CacheHelper';
+
 import {
     MdPendingActions,
     MdIncompleteCircle,
@@ -38,7 +40,7 @@ const servicesList = [
     'Account Subcriptions',
     'Reward Points',
     'Contact Us',
-    'Saved Payments',
+    'Saved Payments'
 ];
 const signInRequired = [
     'Address Book',
@@ -66,6 +68,11 @@ const MyAccountPage = props => {
         <Icon className={classes.icon} size={22} src={Pocket} />
     ];
 
+    const cleanCache = () => {
+        CacheHelper.clearCaches();
+        window.location.reload();
+    };
+
     const MyOrders = (
         <div className={classes.accMyOrder}>
             <div
@@ -75,8 +82,10 @@ const MyAccountPage = props => {
                         : `${classes.accMyOrderT} ${classes.disabled}`
                 }
             >
-                <span>{formatMessage({id:'Order'})}</span>
-                <Link to="/order-history">{formatMessage({id:'View All'})}</Link>
+                <span>{formatMessage({ id: 'Order' })}</span>
+                <Link to="/order-history">
+                    {formatMessage({ id: 'View All' })}
+                </Link>
             </div>
             <div
                 className={
@@ -94,22 +103,26 @@ const MyAccountPage = props => {
                     <span>
                         <MdPendingActions />
                     </span>
-                    <span>{formatMessage({
-                        id: 'Pending'
-                    })}</span>
+                    <span>
+                        {formatMessage({
+                            id: 'Pending'
+                        })}
+                    </span>
                 </Link>
                 <Link
                     to={{
                         pathname: '/order-history',
-                        state: { id: 'Completed' }
+                        state: { id: 'Complete' }
                     }}
                 >
                     <span>
                         <MdIncompleteCircle />
                     </span>
-                    <span>{formatMessage({
-                        id: 'Completed'
-                    })}</span>
+                    <span>
+                        {formatMessage({
+                            id: 'Complete'
+                        })}
+                    </span>
                 </Link>
                 <Link
                     to={{
@@ -120,9 +133,11 @@ const MyAccountPage = props => {
                     <span>
                         <MdOutlineCancelPresentation />
                     </span>
-                    <span>{formatMessage({
-                        id: 'Canceled'
-                    })}</span>
+                    <span>
+                        {formatMessage({
+                            id: 'Canceled'
+                        })}
+                    </span>
                 </Link>
             </div>
         </div>
@@ -157,7 +172,7 @@ const MyAccountPage = props => {
                 }
             >
                 <span>{iconList[index]}</span>
-                <span>{formatMessage({id:service})}</span>
+                <span>{formatMessage({ id: service })}</span>
             </Link>
         );
     });
@@ -166,10 +181,12 @@ const MyAccountPage = props => {
         <div className={classes.myAccountPageRoot}>
             {MyOrders}
             <div className={classes.accServices}>
-                <div className={classes.accServicesTitle}>{formatMessage({id:"Your Account"})}</div>
+                <div className={classes.accServicesTitle}>
+                    {formatMessage({ id: 'Your Account' })}
+                </div>
                 <div className={classes.accServicesContent}>{Services}</div>
             </div>
-           
+
             {isSignedIn ? LogOutBtn : null}
         </div>
     );

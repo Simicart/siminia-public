@@ -78,6 +78,8 @@ const AddEditDialog = props => {
         defaultMessage: 'Make this my default address'
     });
 
+    
+
     return (
         <Dialog
             confirmTranslationId={'global.save'}

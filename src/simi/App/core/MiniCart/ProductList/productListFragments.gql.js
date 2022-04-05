@@ -36,6 +36,18 @@ export const ProductListFragment = gql`
                     currency
                     value
                 }
+                row_total_including_tax {
+                    value
+                    currency
+                }
+                row_total {
+                    value
+                    currency
+                }
+                total_item_discount {
+                    value
+                    currency
+                }
             }
             quantity
             ... on ConfigurableCartItem {

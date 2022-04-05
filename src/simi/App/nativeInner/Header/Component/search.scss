@@ -2,7 +2,7 @@
     right: unset !important;
     left: 14px;
 }
-@media (max-width: 450px) {
+@media (max-width: 780px) {
     .siminia-search-field-wrapper {
         background-color: #fff;
         right: -60px;
@@ -83,8 +83,8 @@
         position: absolute;
         /* left: 21px; */
         z-index: 2;
-        left: 2%;
-        bottom: 17px;
+        left: 10px;
+        bottom: 12px;
         display: flex;
         align-items: center;
     }

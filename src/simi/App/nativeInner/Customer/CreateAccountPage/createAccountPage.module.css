@@ -47,4 +47,7 @@
     .root {
         padding: 0;
     }
+    .cancelButton{
+        grid-row-start: 1;
+    }
 }

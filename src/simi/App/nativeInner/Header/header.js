@@ -41,7 +41,7 @@ const Header = props => {
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
     const windowSize = useWindowSize();
-    const isPhone = windowSize.innerWidth <= 1280;
+    const isPhone = windowSize.innerWidth <= 780;
 
     const storeConfig = Identify.getStoreConfig();
 
@@ -116,7 +116,7 @@ const Header = props => {
     const myAccountHead = 80 + topInsets
 
     // console.log("headerheidd", window.simicartRNinsets);
-    const headerStyle = { backgroundColor: configColor.key_color, height: headerHeight, display: 'flex',alignItems: 'end', paddingBottom:16}
+    const headerStyle = { backgroundColor: configColor.key_color, height: headerHeight, display: 'flex',alignItems: 'flex-end', paddingBottom:16}
 
     const { isSignedIn } = userData;
     const renderRightBar = () => {
@@ -276,7 +276,7 @@ const Header = props => {
         }
         if (type === '/my-account') {
             return (
-                <div className={classes.myAccountHead} style={{ backgroundColor: configColor.key_color, height: myAccountHead, display: 'flex',alignItems: 'end', paddingBottom:16}}>
+                <div className={classes.myAccountHead} style={{ backgroundColor: configColor.key_color, height: myAccountHead, display: 'flex',alignItems: 'flex-end', paddingBottom:16}}>
                     <MyAccount classes={classes} userData={userData} />
                     <BiChevronRight />
                 </div>

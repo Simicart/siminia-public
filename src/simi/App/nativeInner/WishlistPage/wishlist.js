@@ -11,6 +11,7 @@ import WishlistItems from './wishlistItems';
 import Button from '@magento/venia-ui/lib/components/Button';
 import defaultClasses from './wishlist.module.css';
 import ActionMenu from '@magento/venia-ui/lib/components/WishlistPage/actionMenu';
+import NoWishList from './NoWishList';
 
 /**
  * A single wishlist container.
@@ -81,12 +82,7 @@ const Wishlist = props => {
             {loadMoreButton}
         </Fragment>
     ) : (
-        <p className={classes.emptyListText}>
-            <FormattedMessage
-                id={'wishlist.emptyListText'}
-                defaultMessage={'There are currently no items in this list'}
-            />
-        </p>
+        <NoWishList/>
     );
 
     const wishlistName = name ? (

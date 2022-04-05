@@ -47,6 +47,7 @@ import {
 } from 'react-feather';
 import { FaChevronRight } from 'react-icons/fa';
 import { BiHelpCircle, BiHome } from 'react-icons/bi';
+// import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
@@ -459,7 +460,7 @@ const ProductFullDetail = props => {
             ) : null}
 
             {/* <div className={'p-fulldetails-ctn container'}> */}
-            <div className={'p-fulldetails-ctn  '}>
+            <div className={'p-fulldetails-ctn  ' } style={{backgroundColor: isMobileSite ? configColor.app_background : "#fff"}}>
                 {mageworxSeoEnabled ? (
                     <DataStructure
                         avg_rating={avg_rating}
@@ -584,7 +585,8 @@ const ProductFullDetail = props => {
                                 <div className="wrapperTitle">
                                     <section className={classes.title}>
                                         <h1 className={classes.productName}>
-                                            {productDetails.name}
+                                            {/* {productDetails.name} */}
+                                            <div  dangerouslySetInnerHTML={{ __html: productDetails.name }} />
                                             <Pdetailsbrand product={product} />
                                         </h1>
                                     </section>
