@@ -53,7 +53,10 @@ export const useOrderRow = props => {
             const mappedImagesData = {};
             items.forEach(item => {
                 const product = data.products.items.find(
-                    element => item.product_url_key === element.url_key
+                    element =>
+                        item.product_url_key === element.url_key ||
+                        item.product_sku.includes(element.sku) ||
+                        element.sku.includes(item.product_sku)
                 );
                 if (
                     configurableThumbnailSource === 'itself' &&
@@ -74,7 +77,6 @@ export const useOrderRow = props => {
             return {};
         }
     }, [data, items, configurableThumbnailSource]);
-
     const [isOpen, setIsOpen] = useState(false);
 
     const handleContentToggle = useCallback(() => {
