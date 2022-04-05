@@ -188,18 +188,6 @@ const MyAccountPage = props => {
             </div>
 
             {isSignedIn ? LogOutBtn : null}
-            <button
-                style={{
-                    marginTop: 10,
-                    backgroundColor: '#000',
-                    color: '#fff',
-                    padding: 10,
-                    borderRadius: 4
-                }}
-                onClick={cleanCache}
-            >
-                Clean caches
-            </button>
         </div>
     );
 };

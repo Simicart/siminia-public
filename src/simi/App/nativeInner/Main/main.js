@@ -26,7 +26,7 @@ const Main = props => {
     const storeCode = storage.getItem('store_view_code') || null;
     const windowSize = useWindowSize();
 
-    const isPhone = windowSize.innerWidth <= 450;
+    const isPhone = windowSize.innerWidth <= 780;
     const faviconUrl = storeConfig
         ? storeConfig['storeConfig']['head_shortcut_icon']
         : null;
