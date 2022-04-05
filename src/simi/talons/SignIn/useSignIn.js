@@ -8,6 +8,9 @@ import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useAwaitQuery } from '../../hooks/useAwaitQuery';
 import { retrieveCartId } from '@magento/peregrine/lib//store/actions/cart';
 
+import { clearCartDataFromCache } from '@magento/peregrine/lib/Apollo/clearCartDataFromCache';
+import { clearCustomerDataFromCache } from '@magento/peregrine/lib/Apollo/clearCustomerDataFromCache';
+
 import DEFAULT_OPERATIONS from './signIn.gql';
 
 export const useSignIn = props => {
@@ -69,6 +72,7 @@ export const useSignIn = props => {
                 // Get recaptchaV3 data for login
                 const recaptchaData = await generateReCaptchaData();
 
+                console.log('19');
                 // Sign in and set the token.
                 const signInResponse = await signIn({
                     variables: {
@@ -79,16 +83,19 @@ export const useSignIn = props => {
                 });
                 const token = signInResponse.data.generateCustomerToken.token;
                 await setToken(token);
+                console.log('11');
 
                 // Clear all cart/customer data from cache and redux.
-                await apolloClient.clearCacheData(apolloClient, 'cart');
-                await apolloClient.clearCacheData(apolloClient, 'customer');
+                await clearCartDataFromCache(apolloClient);
+                await clearCustomerDataFromCache(apolloClient);
                 await removeCart();
 
+                console.log('12');
                 // Create and get the customer's cart id.
                 await createCart({
                     fetchCartId
                 });
+                console.log('19');
                 const destinationCartId = await retrieveCartId();
 
                 // Merge the guest cart into the customer cart.
