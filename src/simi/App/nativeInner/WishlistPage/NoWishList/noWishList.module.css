@@ -1,0 +1,30 @@
+.root {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    justify-content: center;
+}
+
+.title {
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+}
+@media (max-width: 768px) {
+    .root {
+        /* height: 70vh; */
+    }
+    .imgNoWishList{
+        max-width: 250px;
+    }
+    .noWishList
+    {
+        font-family: Roboto;
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 0;
+        line-height: 16px;
+    }
+   
+}

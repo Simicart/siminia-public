@@ -1,128 +1,146 @@
-import { useCallback, useState, useMemo } from 'react';
-import { useApolloClient } from '@apollo/client';
+import { useCallback, useMemo, useState } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
-import { simiUseMutation, simiUseAwaitQuery, simiUseQuery as useQuery } from 'src/simi/Network/Query';
-import { showFogLoading, hideFogLoading } from 'src/simi/BaseComponents/Loading/GlobalLoading';
 
 export const useAccountInformationPage = props => {
-
     const {
-        defaultForm,
-        updateCustomerMutation,
-        updateCustomerPasswordMutation,
-        customerQuery,
-        onSubmit
+        mutations: {
+            setCustomerInformationMutation,
+            changeCustomerPasswordMutation
+        },
+        queries: { getCustomerInformationQuery }
     } = props;
 
-    const [isActiveForm, setIsActiveForm] = useState(defaultForm);
+    const [{ isSignedIn }] = useUserContext();
+    const [shouldShowNewPassword, setShouldShowNewPassword] = useState(false);
+
+    const [isUpdateMode, setIsUpdateMode] = useState(false);
     const [alertMsg, setAlertMsg] = useState(-1)
-    const apolloClient = useApolloClient();
-    const [{ isSignedIn, currentUser }, { getUserDetails }] = useUserContext();
+    // Use local state to determine whether to display errors or not.
+    // Could be replaced by a "reset mutation" function from apollo client.
+    // https://github.com/apollographql/apollo-feature-requests/issues/170
+    const [displayError, setDisplayError] = useState(false);
 
-    const { data: reFetchData, loading: reFetchLoading, error: fetchError } = useQuery(
-        customerQuery,
+    const { data: accountInformationData, error: loadDataError } = useQuery(
+        getCustomerInformationQuery,
         {
-            fetchPolicy: 'no-cache',
-            skip: !isSignedIn
+            skip: !isSignedIn,
+            fetchPolicy: 'cache-and-network',
+            nextFetchPolicy: 'cache-first'
         }
     );
 
-    const [updateCustomer, { data: customerDataUpdated, error: updateCustomerError, loading: updateCustomerLoading }] = simiUseMutation(
-        updateCustomerMutation,
+    const [
+        setCustomerInformation,
         {
-            fetchPolicy: 'no-cache'
+            error: customerInformationUpdateError,
+            loading: isUpdatingCustomerInformation
         }
-    );
-    const [updateCustomerPassword, { error: updateCustomerPasswordError, loading: updateCustomerPasswordLoading }] = simiUseMutation(
-        updateCustomerPasswordMutation,
+    ] = useMutation(setCustomerInformationMutation);
+
+    const [
+        changeCustomerPassword,
         {
-            fetchPolicy: 'no-cache'
+            error: customerPasswordChangeError,
+            loading: isChangingCustomerPassword
         }
-    );
+    ] = useMutation(changeCustomerPasswordMutation);
 
-    const fetchUserDetails = simiUseAwaitQuery(customerQuery);
+    const initialValues = useMemo(() => {
+        if (accountInformationData) {
+            return { customer: accountInformationData.customer };
+        }
+    }, [accountInformationData]);
 
-    const handleUpdateInfo = useCallback(
-        async (formValues) => {
-            // showFogLoading();
+    const handleChangePassword = useCallback(() => {
+        setShouldShowNewPassword(true);
+    }, [setShouldShowNewPassword]);
+
+    const handleCancel = useCallback(() => {
+        setIsUpdateMode(false);
+        setShouldShowNewPassword(false);
+    }, [setIsUpdateMode]);
+
+    const showUpdateMode = useCallback(() => {
+        setIsUpdateMode(true);
+
+        // If there were errors from removing/updating info, hide them
+        // when we open the modal.
+        setDisplayError(false);
+    }, [setIsUpdateMode]);
+
+    const handleSubmit = useCallback(
+        async ({ email, firstname, lastname, password, newPassword }) => {
             try {
-                const currentPassword = formValues.current_password;
-                const newPassword = formValues.new_password;
-                await updateCustomer({
-                    variables: formValues
-                });
+                email = email.trim();
+                firstname = firstname.trim();
+                lastname = lastname.trim();
+                password = password.trim();
+                newPassword = newPassword ? newPassword.trim() : newPassword;
 
-                if (isActiveForm === 'password') {
-                    await updateCustomerPassword({
+                if (
+                    initialValues.customer.email !== email ||
+                    initialValues.customer.firstname !== firstname ||
+                    initialValues.customer.lastname !== lastname
+                ) {
+                    await setCustomerInformation({
                         variables: {
-                            currentPassword,
-                            newPassword
+                            customerInput: {
+                                email,
+                                firstname,
+                                lastname,
+                                // You must send password because it is required
+                                // when changing email.
+                                password
+                            }
                         }
                     });
                 }
-
-                await getUserDetails({ fetchUserDetails });
-
-                if (onSubmit) {
-                    onSubmit();
+                if (password && newPassword) {
+                    await changeCustomerPassword({
+                        variables: {
+                            currentPassword: password,
+                            newPassword: newPassword
+                        }
+                    });
                 }
                 setAlertMsg(true)
-            } catch (err) {
-                // Do nothing. The error message is handled above.
-            }
+                // After submission, close the form if there were no errors.
+                handleCancel(false);
+            } catch {
+                // Make sure any errors from the mutation are displayed.
+                setDisplayError(true);
 
-            // hideFogLoading();
+                // we have an onError link that logs errors, and FormError
+                // already renders this error, so just return to avoid
+                // triggering the success callback
+                return;
+            }
         },
         [
-            isActiveForm,
-            updateCustomer,
-            onSubmit,
-            updateCustomerPassword,
-            apolloClient
+            setCustomerInformation,
+            handleCancel,
+            changeCustomerPassword,
+            initialValues
         ]
     );
 
-    const handleActiveForm = useCallback(
-        (state) => {
-            setIsActiveForm(state);
-        }, [setIsActiveForm]
-    );
+    const errors = displayError
+        ? [customerInformationUpdateError, customerPasswordChangeError]
+        : [];
 
-    const initialValues = useMemo(() => {
-        if (customerDataUpdated) {
-            return customerDataUpdated.updateCustomer.customer;
-        }
-        if (reFetchData) {
-            return reFetchData.customer;
-        }
-        if (currentUser) {
-            return currentUser;
-        }
-    }, [reFetchData, customerDataUpdated, currentUser]);
-
-    let derivedErrorMessage;
-    if (updateCustomerError || updateCustomerPasswordError) {
-        const errorTarget = updateCustomerError || updateCustomerPasswordError;
-        if (errorTarget.graphQLErrors) {
-            // Apollo prepends "GraphQL Error:" onto the message,
-            // which we don't want to show to an end user.
-            // Build up the error message manually without the prepended text.
-            derivedErrorMessage = errorTarget.graphQLErrors
-                .map(({ message }) => message)
-                .join(', ');
-        } else {
-            // A non-GraphQL error occurred.
-            derivedErrorMessage = errorTarget.message;
-        }
-    }
     return {
-        isSignedIn,
+        handleCancel,
+        formErrors: errors,
+        handleSubmit,
+        handleChangePassword,
         initialValues,
-        handleUpdateInfo,
-        errors: derivedErrorMessage,
-        isActiveForm,
-        handleActiveForm,
-        isLoading: updateCustomerLoading || updateCustomerPasswordLoading || reFetchLoading,
+        isDisabled: isUpdatingCustomerInformation || isChangingCustomerPassword,
+        isUpdateMode,
+        loadDataError,
+        shouldShowNewPassword,
+        showUpdateMode,
+        isLoading : isUpdatingCustomerInformation || isChangingCustomerPassword,
         setAlertMsg,
         alertMsg
     };

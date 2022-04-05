@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense } from 'react';
+import React, { Fragment, Suspense, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Form } from 'informed';
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
@@ -11,11 +11,14 @@ import defaultClasses from './accountInformationPage.module.css';
 import { Colorbtn } from 'src/simi/BaseComponents/Button';
 import RadioCheckbox from 'src/simi/BaseComponents/RadioCheckbox';
 import LeftMenu from '../../core/LeftMenu';
+import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
 
 import CUSTOMER_UPDATE from 'src/simi/queries/customerUpdate.graphql';
 import CUSTOMER_PASSWORD_UPDATE from 'src/simi/queries/customerPasswordUpdate.graphql';
 import GET_CUSTOMER_QUERY from 'src/simi/queries/getCustomer.graphql';
+// import { useAccountInformationPage } from '../../../talons/MyAccount/useAccountInformationPage';
 import { useAccountInformationPage } from '../../../talons/MyAccount/useAccountInformationPage';
+
 import { randomString } from '../../core/TapitaPageBuilder/CarefreeHorizontalScroll/randomString';
 import { showToastMessage } from 'src/simi/Helper/Message';
 import {
@@ -30,55 +33,39 @@ import combine from '@magento/venia-ui/lib/util/combineValidators';
 import RadioGroup from '@magento/venia-ui/lib/components/RadioGroup';
 import Radio from '@magento/venia-ui/lib/components/RadioGroup/radio';
 import Password from '../Password';
-import Loader from '../Loader'
+import Loader from '../Loader';
 import AlertMessages from '../ProductFullDetail/AlertMessages';
+import AccountInformationPageOperations from './accountInformationPage.gql.js';
 
 const AccountInformationPage = props => {
-    const { history } = props;
-
-    let defaultForm = false;
-    if (
-        history.location.state &&
-        history.location.state.hasOwnProperty('profile_edit') &&
-        history.location.state.profile_edit
-    ) {
-        defaultForm = history.location.state.profile_edit;
-    }
-    const { formatMessage } = useIntl();
-    const onSubmit = () => {
-        <AlertMessages
-                message={formatMessage({
-                    id: 'accountInformationPage.save',
-                    defaultMessage: 'You saved the account information.'
-                })}
-                setAlertMsg={setAlertMsg}
-                alertMsg={alertMsg}
-                status="success"
-            />
-        return;
-        
-    }
+    
     const talonProps = useAccountInformationPage({
-        defaultForm,
-        updateCustomerMutation: CUSTOMER_UPDATE,
-        updateCustomerPasswordMutation: CUSTOMER_PASSWORD_UPDATE,
-        customerQuery: GET_CUSTOMER_QUERY,
-        onSubmit: onSubmit
+        ...AccountInformationPageOperations
     });
+    
 
     const classes = useStyle(defaultClasses, props.classes);
     const {
-        isSignedIn,
+        handleCancel,
+        formErrors,
+        handleChangePassword,
+        handleSubmit,
         initialValues,
-        handleUpdateInfo,
-        errors,
-        isActiveForm,
-        handleActiveForm,
+        isDisabled,
+        isUpdateMode,
+        loadDataError,
+        shouldShowNewPassword,
+        showUpdateMode,
         isLoading,
         setAlertMsg,
         alertMsg
     } = talonProps;
-    const errorMessage = errors ? (
+    const { formatMessage } = useIntl();
+    
+    if(isLoading){
+        return <Loader/>
+    }
+    const errorMessage = loadDataError ? (
         <Message>
             <FormattedMessage
                 id={'accountInformationPage.errorTryAgain'}
@@ -88,15 +75,53 @@ const AccountInformationPage = props => {
             />
         </Message>
     ) : null;
-    if(isLoading){
-        return <Loader/>
-    }
-    
 
+    const maybeNewPasswordField = shouldShowNewPassword ? ( 
+            <div className={classes.inputContent}>
+                <Password
+                    fieldName="newPassword"
+                    label={formatMessage({
+                        id: 'accountInformationPage.newPassword',
+                        defaultMessage: 'New Password'
+                    })}
+                    validate={combine([
+                        isRequired,
+                        [hasLengthAtLeast, 8],
+                        validatePassword,
+                        [isNotEqualToField, 'password']
+                    ])}
+                    isToggleButtonHidden={false}
+                />
+            </div>
+    ) : null;
+    const maybeChangePasswordButton = !shouldShowNewPassword ? (
+        <div className={classes.changePasswordButtonContainer}>
+            <LinkButton
+                classes={classes.changePasswordButton}
+                type="button"
+                onClick={handleChangePassword}
+            >
+                <FormattedMessage
+                    id={'accountInformationPage.changePassword'}
+                    defaultMessage={'Change Password'}
+                />
+            </LinkButton>
+        </div>
+    ) : null;
+    const passwordLabel = shouldShowNewPassword
+        ? formatMessage({
+              id: 'accountInformationPage.currentPassword',
+              defaultMessage: 'Current Password'
+          })
+        : formatMessage({
+              id: 'accountInformationPage.password',
+              defaultMessage: 'Password'
+          });
     let pageContent = null;
     if (!initialValues) {
         return fullPageLoadingIndicator;
     } else {
+        const { customer } = initialValues;
         pageContent = (
             <React.Fragment>
                 <h2 className={classes.titleEdit}>
@@ -107,8 +132,8 @@ const AccountInformationPage = props => {
                 </h2>
                 <Form
                     id="form-edit-profile"
-                    initialValues={initialValues}
-                    onSubmit={handleUpdateInfo}
+                    initialValues={customer}
+                    onSubmit={handleSubmit}
                 >
                     <div className={classes.rowEditProfile}>
                         <div className={classes.mainEditColumn}>
@@ -123,26 +148,25 @@ const AccountInformationPage = props => {
                             <div className={classes.inputContent}>
                                 <Field
                                     label={formatMessage({
-                                        id: 'global.labelFirstName',
+                                        id: 'accountInformationPage.labelFirstName',
                                         defaultMessage: 'First Name *'
                                     })}
                                     required={true}
                                 >
-                                    <TextInput                               
+                                    <TextInput
                                         mask={value => value && value.trim()}
                                         maskOnBlur={true}
                                         autoComplete="given-name"
                                         field="firstname"
                                         validate={isRequired}
                                         validateOnBlur
-                                        
                                     />
                                 </Field>
                             </div>
                             <div className={classes.inputContent}>
                                 <Field
                                     label={formatMessage({
-                                        id: 'global.labelLasttName',
+                                        id: 'accountInformationPage.labelLasttName',
                                         defaultMessage: 'Last Name *'
                                     })}
                                     required={true}
@@ -158,7 +182,7 @@ const AccountInformationPage = props => {
                             <div className={classes.inputContent}>
                                 <Field
                                     label={formatMessage({
-                                        id: 'global.labelEmail',
+                                        id: 'accountInformationPage.labelEmail',
                                         defaultMessage: 'Email address *'
                                     })}
                                     required={true}
@@ -174,71 +198,48 @@ const AccountInformationPage = props => {
                                 </Field>
                             </div>
                             <div className={classes.inputContent}>
-                            <Password
-                                    label={formatMessage({
-                                        id: 'accountInfo.currentPassword',
-                                        defaultMessage: 'Current Password'
-                                    })}
+                                <Password
+                                    label={passwordLabel}
                                     fieldName="password"
                                     validate={isRequired}
                                     autoComplete="current-password"
                                     isToggleButtonHidden={false}
                                 />
                             </div>
-                            <div className={classes.inputContent}>
-                                <Password
-                                    fieldName="newPassword"
-                                    label={formatMessage({
-                                        id: 'accountInfo.newPassword',
-                                        defaultMessage: 'New Password'
-                                    })}
-                                    validate={combine([
-                                        isRequired,
-                                        [hasLengthAtLeast, 8],
-                                        validatePassword,
-                                        [isNotEqualToField, 'password']
-                                    ])}
-                                    isToggleButtonHidden={false}
-                                />
-                            </div>
+                            {maybeNewPasswordField}
 
-                            <div className={classes.inputContent}>
-                            <Password
-                                    fieldName="confirmPassword"
-                                    label={formatMessage({
-                                        id: 'accountInfo.confirmPassword',
-                                        defaultMessage: 'Confirm Password'
-                                    })}
-                                    validate={combine([
-                                        isRequired,
-                                        [hasLengthAtLeast, 8],
-                                        validatePassword,
-                                        [isEqualToField, 'newPassword']
-                                    ])}
-                                    isToggleButtonHidden={false}
-                                />
-                            </div>
                             
                         </div>
-                        <div className={classes.alternativeEditColumn}>
-                            {/* {renderAlternativeForm()} */}
-                        </div>
                     </div>
+                    {maybeChangePasswordButton}
                     <Colorbtn
                         text={formatMessage({
-                            id: 'global.save',
+                            id: 'accountInformationPage.save',
                             defaultMessage: 'SAVE'
                         })}
                         className={classes.saveProfile}
                         type="submit"
-                        disabled={isLoading}
                     />
                 </Form>
             </React.Fragment>
         );
     }
+    let topInsets = 0;
+    let bottomInsets = 0;
+    try {
+        if (window.simicartRNinsets) {
+            const simicartRNinsets = JSON.parse(window.simicartRNinsets);
+            topInsets = parseInt(simicartRNinsets.top);
+            bottomInsets = parseInt(simicartRNinsets.bottom);
+        } else if (window.simpifyRNinsets) {
+            const simpifyRNinsets = JSON.parse(window.simpifyRNinsets);
+            topInsets = parseInt(simpifyRNinsets.top);
+            bottomInsets = parseInt(simpifyRNinsets.bottom);
+        }
+    } catch (err) {}
     return (
         <div className={`${classes.root} container`}>
+            <div style={{height:topInsets}}></div>
             <AlertMessages
                 message={formatMessage({
                     id: 'accountInformationPage.save',
@@ -247,8 +248,10 @@ const AccountInformationPage = props => {
                 setAlertMsg={setAlertMsg}
                 alertMsg={alertMsg}
                 status="success"
+                topInsets={topInsets}
             />
             <div className={classes.wrapper}>
+            
                 <LeftMenu label="Account Information" />
                 <div className={`${classes.container}`}>
                     <div className={classes.containerSub}>

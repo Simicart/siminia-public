@@ -137,7 +137,6 @@ const WishlistItem = props => {
             </div>
             <button
                 className={classes.deleteItem}
-                onClick={handleRemoveProductFromWishlist}
                 aria-label={removeProductAriaLabel}
             >
                 {!isMobileSite ? (
