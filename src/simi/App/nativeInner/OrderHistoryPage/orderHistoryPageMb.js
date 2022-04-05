@@ -158,7 +158,7 @@ const OrderHistoryPageMb = props => {
                             alt="no order"
                             style={{ marginBottom: 15, marginTop: 70 }}
                         />
-                        <p>You have no products on {status}.</p>
+                        <p>There is no order with this status</p>
                     </div>
                 ) : null}
             </div>
