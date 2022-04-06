@@ -4,7 +4,7 @@ import { Form } from 'informed';
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
 import { Message } from '@magento/venia-ui/lib/components/Field';
 import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
-import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
+// import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import Field from '@magento/venia-ui/lib/components/Field';
 import TextInput from '@magento/venia-ui/lib/components/TextInput';
 import defaultClasses from './accountInformationPage.module.css';
@@ -36,7 +36,6 @@ import Password from '../Password';
 import Loader from '../Loader';
 import AlertMessages from '../ProductFullDetail/AlertMessages';
 import AccountInformationPageOperations from './accountInformationPage.gql.js';
-
 const AccountInformationPage = props => {
     
     const talonProps = useAccountInformationPage({
@@ -92,6 +91,20 @@ const AccountInformationPage = props => {
                     ])}
                     isToggleButtonHidden={false}
                 />
+                <Password
+                    fieldName="confirmPassword"
+                    label={formatMessage({
+                        id: 'accountInformationPage.confirmPassword',
+                        defaultMessage: 'Confirm New Password'
+                    })}
+                    validate={combine([
+                        isRequired,
+                        [hasLengthAtLeast, 8],
+                        validatePassword,
+                        [isEqualToField, 'newPassword']
+                    ])}
+                    isToggleButtonHidden={false}
+                />
             </div>
     ) : null;
     const maybeChangePasswordButton = !shouldShowNewPassword ? (
@@ -119,7 +132,7 @@ const AccountInformationPage = props => {
           });
     let pageContent = null;
     if (!initialValues) {
-        return fullPageLoadingIndicator;
+        return <Loader/>;
     } else {
         const { customer } = initialValues;
         pageContent = (

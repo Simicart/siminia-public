@@ -15,16 +15,16 @@ const SocialShare = props => {
     return (
         <div className={props.className}>
             <FacebookShareButton {...shareProps}>
-                <FacebookIcon size={42} round={true} />
+                <FacebookIcon size={30} round={true} />
             </FacebookShareButton>
             <TwitterShareButton {...shareProps}>
-                <TwitterIcon size={42} round={true} />
+                <TwitterIcon size={30} round={true} />
             </TwitterShareButton>
             <EmailShareButton {...shareProps}>
-                <EmailIcon size={42} round={true} />
+                <EmailIcon size={30} round={true} />
             </EmailShareButton>
             <PinterestShareButton {...shareProps}>
-                <PinterestIcon size={42} round={true} />
+                <PinterestIcon size={30} round={true} />
             </PinterestShareButton>
         </div>
     );
