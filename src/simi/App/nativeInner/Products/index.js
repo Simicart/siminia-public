@@ -383,7 +383,7 @@ const Products = props => {
                     )}
                     {renderCarouselChildCate()}
                 </div>
-                {windowSize.innerWidth > 768 
+                {windowSize.innerWidth > 768
                     ? renderLeftNavigation()
                     : ''}
                 <div
