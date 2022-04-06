@@ -35,7 +35,7 @@
     }
 }
 
-@media (min-width: 960px) {
+@media (min-width: 961px) {
     .deliveryTime-main {
         grid-template-columns: auto auto;
         grid-template-areas:
@@ -49,6 +49,18 @@
         }
         .btn-updateTime {
             grid-area: footer;
+        }
+    }
+}
+
+@media (max-width: 960px) {
+    .deliveryTime-main {
+        padding: 0.625rem;
+        border: none;
+
+        .btn-updateTime {
+            min-height: 35px;
+            padding: 6px 24px;
         }
     }
 }
