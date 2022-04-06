@@ -9,22 +9,26 @@ import {
     PinterestIcon,
     TwitterIcon
 } from 'react-share';
+import { useWindowSize } from '@magento/peregrine';
 
 const SocialShare = props => {
     const shareProps = { url: window.location.href };
+    const windowSize = useWindowSize();
+    const isMobileSite = windowSize.innerWidth <= 390;
+    const size = isMobileSite ? 21 : 30;
     return (
         <div className={props.className}>
             <FacebookShareButton {...shareProps}>
-                <FacebookIcon size={42} round={true} />
+                <FacebookIcon size={size} round={true} />
             </FacebookShareButton>
             <TwitterShareButton {...shareProps}>
-                <TwitterIcon size={42} round={true} />
+                <TwitterIcon size={size} round={true} />
             </TwitterShareButton>
             <EmailShareButton {...shareProps}>
-                <EmailIcon size={42} round={true} />
+                <EmailIcon size={size} round={true} />
             </EmailShareButton>
             <PinterestShareButton {...shareProps}>
-                <PinterestIcon size={42} round={true} />
+                <PinterestIcon size={size} round={true} />
             </PinterestShareButton>
         </div>
     );

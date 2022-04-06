@@ -1,4 +1,5 @@
 .wrapRichContent{
+    padding-top: 20px;
     .extra-main-content .extra-col1 .extra_content{ 
         max-height: unset;
     }
@@ -30,9 +31,7 @@
 }
 @media (max-width: 768px) {
     .wrapRichContent{
-        > div > div > div:nth-child(2){
-            padding : 0 10px;
-        }
+        padding-top: 15px;
     }
     .paddingTop{
         padding-top: 60px;

@@ -8,7 +8,9 @@
 .imgNoProducts{
     width: 50%;
     max-height: 350px;
+    object-fit: contain;
     margin-left: 25%;
+    margin-bottom: 15px;
 }
 
 .title {

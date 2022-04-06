@@ -16,6 +16,7 @@ import { logoUrl } from 'src/simi/Helper/Url';
 import CategoryDescription from './CategoryDescription';
 const ProductsList = props => {
     const { childCate } = props;
+    const { display_mode } = childCate;
     const total_count =
         (childCate && childCate.products && childCate.products.total_count) ||
         0;
@@ -95,40 +96,61 @@ const ProductsList = props => {
     };
     return (
         <div className={classes.root}>
-            <CategoryDescription childCate={childCate} />
-            <div className={classes.viewAll} onClick={handleClick}>
-                {total_count > 0 ? (
-                    <Link to={`${childCate.url_path}${childCate.url_suffix}`}>
-                        <span className={classes.title}>
+            {display_mode === 'PRODUCTS_AND_PAGE' || display_mode === 'PAGE' ? (
+                <CategoryDescription childCate={childCate} />
+            ) : (
+                ''
+            )}
+            {display_mode === 'PRODUCTS_AND_PAGE' ||
+            display_mode === 'PRODUCTS' ? (
+                <div className={classes.viewAll} onClick={handleClick}>
+                    {total_count > 0 ? (
+                        <Link
+                            to={`${childCate.url_path}${childCate.url_suffix}`}
+                        >
+                            <span className={classes.title}>
+                                {formatMessage({
+                                    id: 'productList',
+                                    defaultMessage: `View All ${childCate.name}`
+                                })}
+                            </span>
+                            <span className={classes.icon}>
+                                <RiArrowRightSLine size={20} />
+                            </span>
+                        </Link>
+                    ) : (
+                        ''
+                    )}
+                </div>
+            ) : (
+                ''
+            )}
+            {(display_mode === 'PRODUCTS_AND_PAGE' ||
+            display_mode === 'PRODUCTS') ? (
+                <div className={classes.wrapProductsList}>
+                    {renderProductsList()}
+                </div>
+            ) : (
+                ''
+            )}
+            {(display_mode === 'PRODUCTS_AND_PAGE' ||
+            display_mode === 'PRODUCTS') ? (
+                <div className={classes.subCategory}>
+                    {child.length === 0 ? (
+                        ''
+                    ) : (
+                        <div className={classes.titleSubCate}>
                             {formatMessage({
-                                id: 'productList',
-                                defaultMessage: `View All ${childCate.name}`
+                                id: 'titleSubCategory',
+                                defaultMessage: 'Sub categories'
                             })}
-                        </span>
-                        <span className={classes.icon}>
-                            <RiArrowRightSLine size={20} />
-                        </span>
-                    </Link>
-                ) : (
-                    ''
-                )}
-            </div>
-            <div className={classes.wrapProductsList}>
-                {renderProductsList()}
-            </div>
-            <div className={classes.subCategory}>
-                {child.length === 0 ? (
-                    ''
-                ) : (
-                    <div className={classes.titleSubCate}>
-                        {formatMessage({
-                            id: 'titleSubCategory',
-                            defaultMessage: 'Sub categories'
-                        })}
-                    </div>
-                )}
-                <div className={classes.wrapSubCate}>{renderSubCate()}</div>
-            </div>
+                        </div>
+                    )}
+                    <div className={classes.wrapSubCate}>{renderSubCate()}</div>
+                </div>
+            ) : (
+                ''
+            )}
         </div>
     );
 };
