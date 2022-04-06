@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Trash2, User } from 'react-feather';
 import {FormattedMessage, useIntl} from 'react-intl';
 import { useToasts, useWindowSize } from '@magento/peregrine';
@@ -15,7 +15,7 @@ import { BsFillShareFill } from 'react-icons/bs';
 import defaultClasses from './wishlistItem.module.css';
 import { Link } from 'react-router-dom';
 import { ConfirmPopup } from '../Cart/ConfirmPopup';
-
+import SocialShare from '../../../BaseComponents/SocialShare'
 const WishlistItem = props => {
     const { item } = props;
     const { configurable_options: configurableOptions = [], product, __typename } = item;
@@ -24,7 +24,6 @@ const WishlistItem = props => {
         price_range: priceRange,
         stock_status: stockStatus
     } = product;
-
     const { maximum_price: maximumPrice } = priceRange;
     const { final_price: finalPrice } = maximumPrice;
     const { currency, value: unitPrice } = finalPrice;
@@ -124,6 +123,10 @@ const WishlistItem = props => {
         id: 'addCartSuccess',
         defaultMessage: `You added ${product.name} to your shopping cart`
     })
+    const [share,setShare] = useState(false)
+    const handleShare = () =>{
+        setShare(!share);
+    }
     return (
         <div className={rootClass}>
             <AlertMessages
@@ -162,12 +165,17 @@ const WishlistItem = props => {
                     <Price currencyCode={currency} value={unitPrice} />
                 </div>
             </div>
-
+            <div className={classes.wrapSocialShare}>
+                {share ? <SocialShare className={classes.socialShare} /> : '' }
+                <button onClick={handleShare} className={classes.share}>
+                    <BsFillShareFill />
+                </button>
+                {addToCart}
+            </div>
+            
             {optionElements}
-            <button className={classes.share}>
-                <BsFillShareFill />
-            </button>
-            {addToCart}
+            
+            
         </div>
     );
 };

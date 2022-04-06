@@ -292,15 +292,16 @@
     }
 
     .review_order_button,
-    .place_order_button {
-        margin-top: 15px;
+    .place_order_button,
+    .loader_button {
         width: 100%;
-        position: fixed;
+        position: fixed !important;
         bottom: 0;
         margin-top: 0;
         z-index: 2;
         border-radius: 0px;
     }
+    
 
     .heading_container {
         display: none;
@@ -374,7 +375,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 0.625rem;
+        padding: 0 0.625rem 40px;
     }
 
     .empty_cart_container h3 {

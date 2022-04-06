@@ -10,6 +10,8 @@ import { useStyle } from '@magento/venia-ui/lib/classify';
 import defaultClasses from './paymentInformation.module.css';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 
+import Loader from 'src/simi/App/nativeInner/Loader'
+
 const PaymentMethods = React.lazy(() => import('./paymentMethods'));
 const EditModal = React.lazy(() => import('@magento/venia-ui/lib/components/CheckoutPage/PaymentInformation/editModal'));
 const Summary = React.lazy(() => import('./summary'));
@@ -21,7 +23,8 @@ const PaymentInformation = props => {
         resetShouldSubmit,
         setCheckoutStep,
         shouldSubmit,
-        checkoutError
+        checkoutError,
+        isMobile
     } = props;
 
     const classes = useStyle(defaultClasses, propClasses);
@@ -45,6 +48,10 @@ const PaymentInformation = props => {
     } = talonProps;
 
     if (isLoading) {
+        if(isMobile) {
+            return <Loader />
+        }
+        
         return (
             <LoadingIndicator classes={{ root: classes.loading }}>
                 <FormattedMessage

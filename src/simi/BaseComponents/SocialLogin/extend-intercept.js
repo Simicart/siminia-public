@@ -38,38 +38,38 @@ module.exports = targets => {
     */
 
     // Add Social Login component to Sign In
-    const SignInComponent = targetables.reactComponent(
-        '@magento/venia-ui/lib/components/SignIn/signIn.js'
-    );
+    // const SignInComponent = targetables.reactComponent(
+    //     '@magento/venia-ui/lib/components/SignIn/signIn.js'
+    // );
 
-    const SocialLogin = SignInComponent.addImport(
-        "SocialLogin from '@simicart/siminia/src/simi/BaseComponents/SocialLogin/components/SocialAuthentication/socialAuthentication'"
-    );
+    // const SocialLogin = SignInComponent.addImport(
+    //     "SocialLogin from '@simicart/siminia/src/simi/BaseComponents/SocialLogin/components/SocialAuthentication/socialAuthentication'"
+    // );
 
-    SignInComponent.surroundJSX(
-        'div className={classes.root}',
-        'React.Fragment'
-    ).insertAfterJSX(
-        'div className={classes.root}',
-        `<${SocialLogin} mode="popup" showCreateAccount={showCreateAccount} isPopup={props.isPopup} />`
-    );
+    // SignInComponent.surroundJSX(
+    //     'div className={classes.root}',
+    //     'React.Fragment'
+    // ).insertAfterJSX(
+    //     'div className={classes.root}',
+    //     `<${SocialLogin} mode="popup" showCreateAccount={showCreateAccount} isPopup={props.isPopup} />`
+    // );
 
     // Add Social login to native inner
-    const NativeInnerSignInComponent = targetables.reactComponent(
-        '@simicart/siminia/src/simi/App/nativeInner/SignIn/signIn.js'
-    );
+    // const NativeInnerSignInComponent = targetables.reactComponent(
+    //     '@simicart/siminia/src/simi/App/nativeInner/SignIn/signIn.js'
+    // );
 
-    const InnerSocialLogin = NativeInnerSignInComponent.addImport(
-        "SocialLogin from '@simicart/siminia/src/simi/BaseComponents/SocialLogin/components/SocialAuthentication/socialAuthentication'"
-    );
+    // const InnerSocialLogin = NativeInnerSignInComponent.addImport(
+    //     "SocialLogin from '@simicart/siminia/src/simi/BaseComponents/SocialLogin/components/SocialAuthentication/socialAuthentication'"
+    // );
 
-    NativeInnerSignInComponent.surroundJSX(
-        'div className={classes.root}',
-        'React.Fragment'
-    ).insertAfterJSX(
-        'div className={classes.root}',
-        `<${InnerSocialLogin} mode="popup" showCreateAccount={showCreateAccount} isPopup={props.isPopup} />`
-    );
+    // NativeInnerSignInComponent.surroundJSX(
+    //     'div className={classes.root}',
+    //     'React.Fragment'
+    // ).insertAfterJSX(
+    //     'div className={classes.root}',
+    //     `<${InnerSocialLogin} mode="popup" showCreateAccount={showCreateAccount} isPopup={props.isPopup} />`
+    // );
 
     const NativeInnerSignInComponentNew = targetables.reactComponent(
         '@simicart/siminia/src/simi/App/nativeInner/Customer/Login/SignIn/signIn.js'
