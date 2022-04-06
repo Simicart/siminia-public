@@ -5,11 +5,11 @@ import LeftMenu from '../../core/LeftMenu/leftMenu';
 import { useGetProductReview } from './useGetProductReview';
 import { useToasts } from '@magento/peregrine/lib/Toasts';
 import { FormattedMessage, useIntl } from 'react-intl';
-import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
+// import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
 import ReviewItem from './ReviewItems/reviewItem';
 import ReviewItemMb from './ReviewItems/reviewItemMb';
-
+import Loader from '../Loader';
 const ProductReviewPage = props => {
     const talonProps = useGetProductReview();
     const {
@@ -58,7 +58,7 @@ const ProductReviewPage = props => {
     }, [reviews]);
     const pageContents = useMemo(() => {
         if (isLoadingWithoutData) {
-            return <LoadingIndicator />;
+            return <Loader />;
         } else if (!isBackgroundLoading && !reviews.length) {
             return (
                 <div style={{textAlign: 'center'}}>

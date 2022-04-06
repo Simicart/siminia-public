@@ -190,3 +190,9 @@
         height: 22px;
     }
 }
+
+@media(min-width: 768px) and (max-width: 1023px) {
+    .product{
+        text-align: left;
+    }
+}
