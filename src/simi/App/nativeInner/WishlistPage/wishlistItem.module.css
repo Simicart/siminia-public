@@ -118,7 +118,7 @@
 @media (max-width:768px){
     .root {
         grid-template-areas: 'image product delete'
-                             'image share addCart';
+                             'image share share';
         grid-template-columns: 1fr 3fr 1fr;
         column-gap: 0.5rem;
         row-gap: 0; 
@@ -144,11 +144,19 @@
     .wrapSocialShare{
         grid-area: share;
         display: grid;
-        grid-template-areas: 'social icon';
-        grid-template-columns:  1fr min-content;
+        grid-template-areas: 'social icon addCart';
+        grid-template-columns:  1fr min-content min-content;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+        justify-content: center;
     }
     .socialShare{
         grid-area: social;
+        transition-delay: all 3s;
+    }
+    .socialShare button{
+        padding-right: 5px!important;
     }
     .share{
         grid-area: icon;
@@ -158,6 +166,8 @@
         border: 1px solid #C3BEBE;
         border-radius: 15px;
         background-color: #FFFFFF;
+        margin-right: 5px;
+        
         /* margin-left: 60%; */
     }
     .share svg{

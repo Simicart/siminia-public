@@ -170,11 +170,12 @@ const WishlistItem = props => {
                 <button onClick={handleShare} className={classes.share}>
                     <BsFillShareFill />
                 </button>
+                {addToCart}
             </div>
             
             {optionElements}
             
-            {addToCart}
+            
         </div>
     );
 };
