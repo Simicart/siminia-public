@@ -50,7 +50,7 @@ const SearchForm = props => {
     // });
     const windowSize = useWindowSize();
 
-    const isPhone = windowSize.innerWidth <= 450;
+    const isPhone = windowSize.innerWidth <= 780;
     let searchField = null;
     const [showAC, setShowAC] = useState(false);
     const [searchVal, setSearchVal] = useState('');

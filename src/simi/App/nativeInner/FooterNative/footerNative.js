@@ -47,7 +47,7 @@ const FooterNative = props => {
         fetchPolicy: 'cache-first'
     });
 
-    const isPhone = windowSize.innerWidth <= 450;
+    const isPhone = windowSize.innerWidth <= 780;
 
 
     let bottomInsets = 0;
