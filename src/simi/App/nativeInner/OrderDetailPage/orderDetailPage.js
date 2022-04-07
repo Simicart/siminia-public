@@ -43,6 +43,7 @@ const OrderDetailPage = props => {
         reorderItemMutation
     } = talonProps;
 
+
     const [alertMsg, setAlertMsg] = useState(-1);
     const [alertText, setAlertText] = useState('');
     const successMsg = `This order has been reordered successfully`;
@@ -65,6 +66,7 @@ const OrderDetailPage = props => {
     }, [data, error]);
 
     const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
+    
 
     const talonThumbnail = useOrderRow({ items });
 
@@ -129,10 +131,13 @@ const OrderDetailPage = props => {
     // const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
 
     const { customer } = dataDetail;
+
     const listItem = customer.orders.items[0].items;
     const subTotal = customer.orders.items[0].total.subtotal.value;
+    const discount = customer.orders.items[0].total.discounts[0].amount;
     const grandTotal = customer.orders.items[0].total.base_grand_total.value;
     const mpRewardPoints = customer.orders.items[0].mp_reward_points;
+    console.log("haha", customer, discount);
 
     const status = customer.orders.items[0].status;
 
@@ -153,7 +158,7 @@ const OrderDetailPage = props => {
         } else return null;
     };
 
-    console.log("name", listItem[0]);
+    console.log('name', listItem[0]);
 
     const renderTRTable = listItem => {
         let html = null;
@@ -161,7 +166,13 @@ const OrderDetailPage = props => {
             html = listItem.map((item, index) => {
                 return (
                     <tr key={index}>
-                        <td><div  dangerouslySetInnerHTML={{ __html: item.product_name }} /></td>
+                        <td>
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: item.product_name
+                                }}
+                            />
+                        </td>
                         <td>{item.product_sku}</td>
                         <td>
                             {forMatCurrentValue(
@@ -212,7 +223,11 @@ const OrderDetailPage = props => {
                         >
                             <div className={classes.orderItemMbHeading}>
                                 {/* <span>{item.product_name}</span> */}
-                                <div  dangerouslySetInnerHTML={{ __html: item.product_name }} />
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: item.product_name
+                                    }}
+                                />
                             </div>
                             <div>
                                 <span>SKU: </span>
@@ -624,6 +639,45 @@ const OrderDetailPage = props => {
                             :{' '}
                             {customer.orders.items[0].billing_address.street[0]}
                         </span>
+                        <span style={{ display: 'flex'}}>
+                            <span style={{marginRight: 5}}>
+                                {formatMessage({
+                                    id: 'Delivery Time',
+                                    defaultMessage: 'Delivery Time'
+                                })}
+                                :{' '}
+                            </span>
+                            {customer.orders.items[0].mp_delivery_information
+                                .mp_delivery_time ? (
+                                <span
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        alignItems: 'center'
+                                    }}
+                                    className={classes.infoItemContent}
+                                >
+                                    <span
+                                        style={{
+                                            fontWeight: 400,
+                                            marginRight: 5
+                                        }}
+                                    >
+                                        {customer.orders.items[0].mp_delivery_information.mp_delivery_date.slice(
+                                            0,
+                                            10
+                                        )}
+                                    </span>
+                                    <span>
+                                        {
+                                            customer.orders.items[0]
+                                                .mp_delivery_information
+                                                .mp_delivery_time
+                                        }
+                                    </span>
+                                </span>
+                            ) : null}
+                        </span>
                         {/* <span>
                                 {
                                     customer.orders.items[0].billing_address
@@ -747,6 +801,17 @@ const OrderDetailPage = props => {
                             customer.orders.items[0].total.total_tax.currency
                         )}
                         {customer.orders.items[0].total.total_tax.value}
+                    </span>
+                    <span>
+                        {formatMessage({
+                            id: 'Discount',
+                            defaultMessage: 'Discount'
+                        })}
+                        :{' '}
+                        -{forMatCurrentValue(
+                            discount.currency
+                        )}
+                        {discount.value}
                     </span>
                     <div>
                         <span className={classes.child1}>

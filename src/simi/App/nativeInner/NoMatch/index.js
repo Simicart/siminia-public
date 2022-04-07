@@ -87,6 +87,7 @@ const NoMatch = props => {
         skip: !pathname || pathname === '/',
         fetchPolicy: 'cache-first'
     });
+   
 
     useEffect(() => {
         if (pathname) {
