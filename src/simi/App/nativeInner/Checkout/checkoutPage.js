@@ -134,12 +134,7 @@ const CheckoutPage = props => {
                 break
             default: 
                 if(svgSelector) svgSelector.style.display = 'flex'
-                if(titleSelector) titleSelector.innerHTML = formatMessage({ id: 'checkoutPage.checkout', defaultMessage: 'Checkout'})
-        }
-            
-        return () => {
-            if(svgSelector) svgSelector.style.display = 'flex'
-            if(titleSelector) titleSelector.innerHTML = formatMessage({ id: 'checkoutPage.checkout', defaultMessage: 'Checkout'})
+                if(titleSelector) titleSelector.innerHTML = formatMessage({ id: "checkoutPage.checkout", defaultMessage: 'Checkout' })
         }
     }, [activeContent])
 
