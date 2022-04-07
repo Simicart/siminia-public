@@ -4,7 +4,7 @@ import { string, number, shape } from 'prop-types';
 import { useCategoryList } from '../talons/CategoryList/useCategoryList';
 
 import { useStyle } from '@magento/venia-ui/lib/classify';
-import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
+// import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import ErrorView from '@magento/venia-ui/lib/components/ErrorView';
 import defaultClasses from './categoryList.module.css';
 import ProductsList from './productsList';
@@ -16,7 +16,7 @@ import { FcNews } from 'react-icons/fc';
 import { BsCartCheck } from 'react-icons/bs';
 import { logoUrl } from 'src/simi/Helper/Url';
 import { useHistory, useLocation } from 'react-router-dom';
-
+import Loader from '../../nativeInner/Loader'
 const CategoryList = props => {
     const { id, title } = props;
     const talonProps = useCategoryList({ id });
@@ -72,7 +72,7 @@ const CategoryList = props => {
 
                 return <ErrorView />;
             } else if (loading) {
-                return fullPageLoadingIndicator;
+                return <Loader/>;
             }
         } else {
             if (childCategories.length) {
@@ -127,7 +127,7 @@ const CategoryList = props => {
 
                 return <ErrorView />;
             } else if (loading) {
-                return fullPageLoadingIndicator;
+                return <Loader/>;
             }
         } else {
             if (childCategories.length) {
