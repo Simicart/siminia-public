@@ -107,7 +107,7 @@ header {
     height: 45px;
     border-radius: 23px !important;
 }
-@media (min-width: 1023px) {
+@media (min-width: 780px) {
     .header-search-form .search-icon {
         /* display: inline-block; */
         position: absolute;
@@ -282,7 +282,7 @@ body.fixed-scroll {
         display: none;
     }
 }
-@media (max-width: 450px) {
+@media (max-width: 780px) {
     .header-search {
         margin: 0;
         max-width: unset;

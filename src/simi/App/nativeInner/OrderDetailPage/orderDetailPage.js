@@ -153,13 +153,15 @@ const OrderDetailPage = props => {
         } else return null;
     };
 
+    console.log("name", listItem[0]);
+
     const renderTRTable = listItem => {
         let html = null;
         if (listItem) {
             html = listItem.map((item, index) => {
                 return (
                     <tr key={index}>
-                        <td>{item.product_name}</td>
+                        <td><div  dangerouslySetInnerHTML={{ __html: item.product_name }} /></td>
                         <td>{item.product_sku}</td>
                         <td>
                             {forMatCurrentValue(
@@ -209,7 +211,8 @@ const OrderDetailPage = props => {
                             className={classes.orderItemMbContent}
                         >
                             <div className={classes.orderItemMbHeading}>
-                                <span>{item.product_name}</span>
+                                {/* <span>{item.product_name}</span> */}
+                                <div  dangerouslySetInnerHTML={{ __html: item.product_name }} />
                             </div>
                             <div>
                                 <span>SKU: </span>

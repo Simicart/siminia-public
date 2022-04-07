@@ -460,7 +460,7 @@ const ProductFullDetail = props => {
             ) : null}
 
             {/* <div className={'p-fulldetails-ctn container'}> */}
-            <div className={'p-fulldetails-ctn  '}>
+            <div className={'p-fulldetails-ctn  ' } style={{backgroundColor: isMobileSite ? configColor.app_background : "#fff"}}>
                 {mageworxSeoEnabled ? (
                     <DataStructure
                         avg_rating={avg_rating}
@@ -585,7 +585,8 @@ const ProductFullDetail = props => {
                                 <div className="wrapperTitle">
                                     <section className={classes.title}>
                                         <h1 className={classes.productName}>
-                                            {productDetails.name}
+                                            {/* {productDetails.name} */}
+                                            <div  dangerouslySetInnerHTML={{ __html: productDetails.name }} />
                                             <Pdetailsbrand product={product} />
                                         </h1>
                                     </section>
