@@ -54,6 +54,13 @@ export const getCateNoFilter = gql`
                 id
                 name
                 url_path
+                description
+                cms_block {
+                    identifier
+                    title
+                    content
+                }
+                display_mode
             }
         }
         products(

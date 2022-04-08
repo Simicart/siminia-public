@@ -268,10 +268,10 @@ const CartProduct = props => {
                     />
                 )}
 
-                <FormattedMessage
+                {/* <FormattedMessage
                     id={'product.price'}
                     defaultMessage={' ea.'}
-                />
+                /> */}
             </span>
         </div>
     );
