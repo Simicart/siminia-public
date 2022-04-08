@@ -37,6 +37,7 @@ const Products = props => {
         pageControl
     } = props;
     const { category, products } = data;
+    const { display_mode } = category;
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
     const isMobileSite = windowSize.innerWidth <= 768;
@@ -266,7 +267,7 @@ const Products = props => {
             topInsets = parseInt(simpifyRNinsets.top);
         }
     } catch (err) {}
-    const heightFixed = 55+topInsets
+    const heightFixed = 55 + topInsets;
 
     const dropdownRef = useRef(null);
     const handleClickOutside = e => {
@@ -289,13 +290,23 @@ const Products = props => {
             {windowSize.innerWidth > 768 ? (
                 <div className={`${category ? 'wrapCategoryDesription' : ''}`}>
                     <CategoryDesription childCate={category} />
-                </div>) : ''}
+                </div>
+            ) : (
+                ''
+            )}
             <div className="product-list-container-siminia">
-            {windowSize.innerWidth <= 768 ? (
-                <div className={`${category ? 'wrapCategoryDesription' : ''}`}>
-                    <CategoryDesription childCate={category} />
-                </div>) : ''}
-                <div  style={{top:heightFixed}} className="wrapper">
+                {windowSize.innerWidth <= 768 ? (
+                    <div
+                        className={`${
+                            category ? 'wrapCategoryDesription' : ''
+                        }`}
+                    >
+                        <CategoryDesription childCate={category} />
+                    </div>
+                ) : (
+                    ''
+                )}
+                <div style={{ top: heightFixed }} className="wrapper">
                     {windowSize.innerWidth > 768 ? (
                         ''
                     ) : (
@@ -383,9 +394,7 @@ const Products = props => {
                     )}
                     {renderCarouselChildCate()}
                 </div>
-                {windowSize.innerWidth > 768 && products.filters.length > 0
-                    ? renderLeftNavigation()
-                    : ''}
+                {windowSize.innerWidth > 768 ? renderLeftNavigation() : ''}
                 <div
                     ref={dropdownRef}
                     className={`${
@@ -394,15 +403,19 @@ const Products = props => {
                 >
                     {renderLeftNavigation()}
                 </div>
-
-                <div
-                    className={`${
-                        renderCarouselChildCate() ? 'marginTop' : ''
-                    } listing-product`}
-                    style={{ display: 'inline-block', width: '100%' }}
-                >
-                    {renderList()}
-                </div>
+                {display_mode === 'PRODUCTS_AND_PAGE' ||
+                display_mode === 'PRODUCTS' ? (
+                    <div
+                        className={`${
+                            renderCarouselChildCate() ? 'marginTop' : ''
+                        } listing-product`}
+                        style={{ display: 'inline-block', width: '100%' }}
+                    >
+                        {renderList()}
+                    </div>
+                ) : (
+                    ''
+                )}
             </div>
             {showFilter ? <div className="bg-white" /> : ''}
         </article>

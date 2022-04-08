@@ -24,8 +24,8 @@ const OrderHistoryPageMb = props => {
 
     useEffect(() => {
         if (statusId === 'Pending') setStatus('Pending');
-        if (statusId === 'Complete') setStatus('Complete');
-        if (statusId === 'Canceled') setStatus('Canceled');
+        else if (statusId === 'Complete') setStatus('Complete');
+        else if (statusId === 'Canceled') setStatus('Canceled');
     }, []);
 
     useEffect(() => {
@@ -49,7 +49,8 @@ const OrderHistoryPageMb = props => {
                 return orders;
             } else return order.status === status;
         });
-        setOrdersFilter(handleFilterOrders);
+        if (ordersFilter !== handleFilterOrders)
+            setOrdersFilter(handleFilterOrders);
     }, [status, orders]);
 
     const loadMoreButton = loadMoreOrders ? (

@@ -134,12 +134,7 @@ const CheckoutPage = props => {
                 break
             default: 
                 if(svgSelector) svgSelector.style.display = 'flex'
-                if(titleSelector) titleSelector.innerHTML = formatMessage({ id: 'checkoutPage.checkout', defaultMessage: 'Checkout'})
-        }
-            
-        return () => {
-            if(svgSelector) svgSelector.style.display = 'flex'
-            if(titleSelector) titleSelector.innerHTML = formatMessage({ id: 'checkoutPage.checkout', defaultMessage: 'Checkout'})
+                if(titleSelector) titleSelector.innerHTML = formatMessage({ id: "checkoutPage.checkout", defaultMessage: 'Checkout' })
         }
     }, [activeContent])
 
@@ -315,6 +310,7 @@ const CheckoutPage = props => {
                     resetShouldSubmit={resetReviewOrderButtonClicked}
                     setCheckoutStep={setCheckoutStep}
                     shouldSubmit={reviewOrderButtonClicked}
+                    isMobile={isMobile}
                 />
             ) : (
                 <h3 className={classes.payment_information_heading}>
@@ -332,6 +328,8 @@ const CheckoutPage = props => {
                 </div>
             ) : null;
 
+        const bottomInsets = getBottomInsets()
+
         const reviewOrderButtonType =
             reviewOrderButtonClicked || isUpdating || !isPaymentAvailable ? (
                 <ButtonLoader classes={classes.loader_button} />
@@ -340,6 +338,7 @@ const CheckoutPage = props => {
                     onClick={handleReviewOrder}
                     priority="high"
                     className={classes.review_order_button}
+                    style={{ bottom: bottomInsets }}
                     disabled={
                         reviewOrderButtonClicked ||
                         isUpdating ||
@@ -365,10 +364,11 @@ const CheckoutPage = props => {
                 </div>
             ) : null;
 
-        const bottomInsets = getBottomInsets()
-
         const placeOrderButton =
-            checkoutStep === CHECKOUT_STEP.REVIEW ? (
+            checkoutStep === CHECKOUT_STEP.REVIEW 
+            ? (isUpdating || placeOrderLoading || orderDetailsLoading) ? (
+                <ButtonLoader classes={classes.loader_button} />
+            ) :(
                 <Button
                     onClick={e => {
                         const selectedPaymentMethod = Identify.getDataFromStoreage(
@@ -469,6 +469,7 @@ const CheckoutPage = props => {
                             onSave={setShippingInformationDone}
                             onSuccess={scrollShippingInformationIntoView}
                             toggleActiveContent={toggleAddressBookContent}
+                            isMobile={isMobile}
                         />
                     </ScrollAnchor>
                 </div>

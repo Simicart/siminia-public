@@ -4,14 +4,14 @@ import { useWishlistPage } from '@magento/peregrine/lib/talons/WishlistPage/useW
 import { deriveErrorMessage } from '@magento/peregrine/lib/util/deriveErrorMessage';
 
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
-import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
+// import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import Wishlist from './wishlist';
 import defaultClasses from './wishlistPage.module.css';
 import LeftMenu from '../../core/LeftMenu';
 import CreateWishlist from '@magento/venia-ui/lib/components/WishlistPage/createWishlist.js';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { useWindowSize } from '@magento/peregrine';
-
+import Loader from '../Loader';
 
 const WishlistPage = props => {
     const talonProps = useWishlistPage();
@@ -50,7 +50,7 @@ const WishlistPage = props => {
     }, [shouldRenderVisibilityToggle, wishlists]);
 
     if (loading && !error) {
-        return fullPageLoadingIndicator;
+        return <Loader/>;
     }
     
     let content;

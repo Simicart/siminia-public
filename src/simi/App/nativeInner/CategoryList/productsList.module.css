@@ -16,6 +16,8 @@
     height: 5rem;
     object-fit: cover;
     object-position: center;
+    height: 100%!important;
+    width: 100%;
 }
 
 .image_empty {
@@ -32,7 +34,7 @@
 }
 .root {
     width: auto;
-    text-align: left;
+    text-align: center;
 }
 .wrapProductsList,.wrapSubCate{
     display: flex;
@@ -40,31 +42,27 @@
     margin: 0 -5px;
 }
 .product{
-    flex: unset;
-    max-width: 33.33%;
-    margin-bottom: 20px;
-    text-align: center;
-    padding: 0 5px;
-    border-radius: 8px;
-    background-color: #FFFFFF;
+    width: 16.66%;
 }
 .viewAll{
     margin-top: 22px;
     padding-bottom: 5px;
     border-bottom: 1px solid #F2F2F3;
     margin-bottom: 10px;
+    text-align: left;
+}
+.icon{
+    font-size: 20px;
 }
 .icon svg{
     display: inline-block;
-    float: right;
-    clear: both;
 }
 .title{
     color: #150826;
     font-family: Roboto;
     letter-spacing: 0;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 20px;
     line-height: 19px;
     white-space: nowrap;
     margin-top: 11px;
@@ -101,11 +99,12 @@
 .titleSubCate{
     text-transform: uppercase;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 20px;
     line-height: 19px;
     white-space: nowrap;
-    margin-top: 11px;
+    margin-top: 25px;
     height: 22px;
+    text-align: left;
 }
 @media (max-width: 768px) {
     .root {
@@ -188,5 +187,11 @@
         white-space: nowrap;
         margin-top: 11px;
         height: 22px;
+    }
+}
+
+@media(min-width: 768px) and (max-width: 1023px) {
+    .product{
+        text-align: left;
     }
 }

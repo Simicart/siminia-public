@@ -15,7 +15,7 @@ import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
 
 const Search = props => {
     const { classes, location, history } = props;
-    const search = location.search ? location.search.slice(3) : '';
+    const search = location.search ? location.search : '';
     const { formatMessage } = useIntl();
 
     const loadStyle = 2; // 1: button load-more, 2: pagination

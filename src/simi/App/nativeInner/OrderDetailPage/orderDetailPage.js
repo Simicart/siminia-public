@@ -1,6 +1,6 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
-import { useQuery, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import AlertMessages from '../ProductFullDetail/AlertMessages';
 import { useParams } from 'react-router-dom';
 import DEFAULT_OPERATIONS from './orderDetailPage.gql';
@@ -12,11 +12,12 @@ import LeftMenu from '../../core/LeftMenu';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import { MdLocationPin } from 'react-icons/md';
 import { useOrderRow } from '../OrderHistoryPage/useOrderRow';
-import ImageLoading from '../ProductImageCarousel/imageLoading';
-import Loader from '../Loader'
+import Loader from '../Loader';
+import { logoUrl } from 'src/simi/Helper/Url';
+
 const OrderDetailPage = props => {
     const [width, setWidth] = useState(window.innerWidth);
-    const [placeHoder, setPlaceholder] = useState(true);
+    const placeHolderImg = logoUrl();
 
     useEffect(() => {
         const handleSize = () => {
@@ -42,6 +43,7 @@ const OrderDetailPage = props => {
         reorderItemMutation
     } = talonProps;
 
+
     const [alertMsg, setAlertMsg] = useState(-1);
     const [alertText, setAlertText] = useState('');
     const successMsg = `This order has been reordered successfully`;
@@ -63,9 +65,8 @@ const OrderDetailPage = props => {
         }
     }, [data, error]);
 
-    const [listUrlImg, setListUrlImg] = useState([]);
-
     const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
+    
 
     const talonThumbnail = useOrderRow({ items });
 
@@ -80,33 +81,28 @@ const OrderDetailPage = props => {
         }
     } catch (err) {}
 
-    const handleImage = (list, listItem) => {
-        let result = [];
+    const handleImage = useCallback((list, listItem) => {
+        const result = {};
         list.forEach((item, index) => {
             if (item[1] && item[1].variants) {
                 item[1].variants.forEach((i, idx) => {
-                    if (i.product.sku === listItem[index].product_sku) {
-                        result.push(i.product.thumbnail.url);
-                    }
+                    result[i.product.sku] = i.product.thumbnail.url;
                 });
-            } else {
-                result.push(
-                    'https://taiwantopsales.com/wp-content/uploads/2018/10/placeholder-600x600.jpg'
-                );
             }
+            if (item[1] && item[1].thumbnail && !result[item[0]])
+                result[item[0]] = item[1].thumbnail.url;
         });
         return result;
-    };
-    let result = Object.entries(talonThumbnail.imagesData);
+    }, []);
+
+    const result = Object.entries(talonThumbnail.imagesData);
     const listImage =
         dataDetail && dataDetail.customer
             ? dataDetail.customer.orders.items[0].items
             : [];
 
     if (loadingDetail) {
-        return (
-           <Loader />
-        );
+        return <Loader />;
     }
 
     if (!dataDetail) {
@@ -135,10 +131,13 @@ const OrderDetailPage = props => {
     // const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
 
     const { customer } = dataDetail;
+
     const listItem = customer.orders.items[0].items;
     const subTotal = customer.orders.items[0].total.subtotal.value;
+    const discount = customer.orders.items[0].total.discounts[0].amount;
     const grandTotal = customer.orders.items[0].total.base_grand_total.value;
     const mpRewardPoints = customer.orders.items[0].mp_reward_points;
+    console.log("haha", customer, discount);
 
     const status = customer.orders.items[0].status;
 
@@ -159,7 +158,7 @@ const OrderDetailPage = props => {
         } else return null;
     };
 
-    console.log("name", listItem[0]);
+    console.log('name', listItem[0]);
 
     const renderTRTable = listItem => {
         let html = null;
@@ -167,7 +166,13 @@ const OrderDetailPage = props => {
             html = listItem.map((item, index) => {
                 return (
                     <tr key={index}>
-                        <td><div  dangerouslySetInnerHTML={{ __html: item.product_name }} /></td>
+                        <td>
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: item.product_name
+                                }}
+                            />
+                        </td>
                         <td>{item.product_sku}</td>
                         <td>
                             {forMatCurrentValue(
@@ -189,30 +194,40 @@ const OrderDetailPage = props => {
         } else return null;
         return html;
     };
-
     const orderItemMb = listItem => {
         let html = null;
         if (listItem) {
             html = listItem.map((item, index) => {
                 return (
-                    <div className={classes.orderItemMb}>
+                    <div className={classes.orderItemMb} key={index}>
                         {/* {placeHoder ? (
                             <ImageLoading height={100} width={80} />
                         ) : null} */}
                         <img
                             className={classes.orderItemMbImg}
-                            src={listUrlImage[index]}
-                            style={{ height: 100, marginRight: 15 }}
-                            onLoad={() => setPlaceholder(false)}
+                            src={
+                                listUrlImage[item.product_sku] || placeHolderImg
+                            }
+                            style={{
+                                marginRight: 15,
+                                minWidth: 100,
+                                maxWidth: 100,
+                                width: 100,
+                                objectFit: 'contain'
+                            }}
+                            alt={item.product_name}
                         />
-
                         <div
                             style={{ width: '70%' }}
                             className={classes.orderItemMbContent}
                         >
                             <div className={classes.orderItemMbHeading}>
                                 {/* <span>{item.product_name}</span> */}
-                                <div  dangerouslySetInnerHTML={{ __html: item.product_name }} />
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: item.product_name
+                                    }}
+                                />
                             </div>
                             <div>
                                 <span>SKU: </span>
@@ -225,7 +240,6 @@ const OrderDetailPage = props => {
                             </div>
                             <div>
                                 <span className={classes.orderItemPrice}>
-                                    {' '}
                                     {forMatCurrentValue(
                                         item.product_sale_price.currency
                                     )}
@@ -598,9 +612,7 @@ const OrderDetailPage = props => {
             />
 
             <div className={classes.rootMobile}>
-                {loading ? (
-                    <Loader />
-                ) : null}
+                {loading ? <Loader /> : null}
                 <div className={classes.shippingAddressContainer}>
                     <MdLocationPin className={classes.addressIcon} />
                     <div className={classes.mbShipTo}>
@@ -626,6 +638,45 @@ const OrderDetailPage = props => {
                             </span>
                             :{' '}
                             {customer.orders.items[0].billing_address.street[0]}
+                        </span>
+                        <span style={{ display: 'flex'}}>
+                            <span style={{marginRight: 5}}>
+                                {formatMessage({
+                                    id: 'Delivery Time',
+                                    defaultMessage: 'Delivery Time'
+                                })}
+                                :{' '}
+                            </span>
+                            {customer.orders.items[0].mp_delivery_information
+                                .mp_delivery_time ? (
+                                <span
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        alignItems: 'center'
+                                    }}
+                                    className={classes.infoItemContent}
+                                >
+                                    <span
+                                        style={{
+                                            fontWeight: 400,
+                                            marginRight: 5
+                                        }}
+                                    >
+                                        {customer.orders.items[0].mp_delivery_information.mp_delivery_date.slice(
+                                            0,
+                                            10
+                                        )}
+                                    </span>
+                                    <span>
+                                        {
+                                            customer.orders.items[0]
+                                                .mp_delivery_information
+                                                .mp_delivery_time
+                                        }
+                                    </span>
+                                </span>
+                            ) : null}
                         </span>
                         {/* <span>
                                 {
@@ -700,7 +751,10 @@ const OrderDetailPage = props => {
                     </span>
                 </div>
 
-                <div style={{height: 55+bottomInsets}} className={classes.mbBuyAgain}>
+                <div
+                    style={{ height: 55 + bottomInsets }}
+                    className={classes.mbBuyAgain}
+                >
                     <button
                         disabled={loading ? true : false}
                         className={loading ? classes.btnDis : null}
@@ -747,6 +801,17 @@ const OrderDetailPage = props => {
                             customer.orders.items[0].total.total_tax.currency
                         )}
                         {customer.orders.items[0].total.total_tax.value}
+                    </span>
+                    <span>
+                        {formatMessage({
+                            id: 'Discount',
+                            defaultMessage: 'Discount'
+                        })}
+                        :{' '}
+                        -{forMatCurrentValue(
+                            discount.currency
+                        )}
+                        {discount.value}
                     </span>
                     <div>
                         <span className={classes.child1}>

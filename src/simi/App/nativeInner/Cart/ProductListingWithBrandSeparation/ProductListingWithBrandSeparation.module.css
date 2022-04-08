@@ -34,3 +34,8 @@
     position: absolute;
     left: 0;
 }
+@media (max-width: 768px) {
+    .brandZoneContainer{
+        min-height: unset!important;
+    }
+}

@@ -14,6 +14,36 @@
     text-align: center;
 }
 
+.root_editModal {
+    background-color: white;
+    display: grid;
+    left: calc(50% - 370px);
+    grid-template-rows: auto 1fr;
+    max-height: 90vh;
+    max-width: 740px;
+    opacity: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 5vh;
+    transform: scale(1.15);
+    transition-duration: 192ms;
+    transition-timing-function: var(--venia-global-anim-out);
+    transition-property: opacity, transform, visibility;
+    visibility: hidden;
+    width: 100%;
+    z-index: 3;
+}
+
+.root_editModal_open {
+    composes: root_editModal;
+    box-shadow: 1px 0 rgb(var(--venia-global-color-border));
+    opacity: 1;
+    transform: scale(1);
+    transition-duration: 224ms;
+    transition-timing-function: var(--venia-global-anim-in);
+    visibility: visible;
+}
+
 /*
  * Mobile-specific styles.
  */
@@ -21,5 +51,21 @@
 @media (max-width: 960px) {
     .heading {
         border-width: 0;
+    }
+
+    .root_editModal {
+        bottom: 0;
+        height: 100%;
+        left: auto;
+        max-height: none;
+        /* max-width: 360px; */
+        right: 0;
+        top: 0;
+        transform: translate3d(100%, 0, 0);
+    }
+    
+    .root_editModal_open {
+        composes: root_editModal;
+        transform: translate3d(0, 0, 0);
     }
 }
