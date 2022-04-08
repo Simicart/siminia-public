@@ -358,7 +358,7 @@
         letter-spacing: 0;
         line-height: 19px;
     }
-    span > span {
+    span:nth-child(1) {
         color: #111111;
         font-family: Roboto;
         font-size: 14px;
@@ -366,6 +366,7 @@
         letter-spacing: 0;
         line-height: 19px;
     }
+    
 }
 .mbBuyAgain {
     // height: 60px;
