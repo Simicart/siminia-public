@@ -31,9 +31,11 @@ const DeliveryDateTime = forwardRef((props, ref) => {
         fetchPolicy: 'cache-and-network'
     });
     const [startDate, setDate] = useState(new Date());
-    const [deliTime, setDeliTime] = useState('');
+    const [deliTime, setDeliTime] = useState(data && data.deliveryTime && data.deliveryTime.deliveryTime ?data.deliveryTime.deliveryTime[0] : '' );
     const [houseSecurityCode, setHouseSecurityCode] = useState('');
     const [deliveryComment, setDeliveryComment] = useState('');
+
+    console.log("ashys", startDate, deliTime);
 
     const handleSubmit = () => {
         deliveryMutation({
