@@ -35,7 +35,6 @@ const DeliveryDateTime = forwardRef((props, ref) => {
     const [houseSecurityCode, setHouseSecurityCode] = useState('');
     const [deliveryComment, setDeliveryComment] = useState('');
 
-    console.log("ashys", startDate, deliTime);
 
     const handleSubmit = () => {
         deliveryMutation({
