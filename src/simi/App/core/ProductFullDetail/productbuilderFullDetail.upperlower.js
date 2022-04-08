@@ -11,6 +11,7 @@ import { useProductFullDetail } from 'src/simi/talons/ProductFullDetail/useProdu
 import ProductFullDetail from './productFullDetail';
 import PageBuilderComponent from '../TapitaPageBuilder/PageBuilderComponent';
 import { TreeDataProductDetailMarkerEnum } from 'simi-pagebuilder-react';
+import RichContent from '@magento/venia-ui/lib/components/RichContent/richContent';
 
 require('./productbuilderFullDetail.scss');
 
@@ -45,17 +46,61 @@ const ProductBuilderFullDetail = props => {
         } catch (err) {}
     });
 
+    const pDetails = JSON.parse(JSON.stringify(product));
+    const overRender = (item, itemProps, innerContent) => {
+        if (!item || !itemProps) return false;
+        const { type } = item;
+        if (type === 'productbuilder_productattribute') {
+            if (item.name) {
+                let attributeString = item.name;
+                attributeString = attributeString.substring(
+                    attributeString.indexOf('{{') + 2,
+                    attributeString.lastIndexOf('}}')
+                );
+                let attributeVal;
+                if (attributeString.includes('.')) {
+                    try {
+                        const attributepaths = attributeString.split('.');
+                        if (attributepaths && attributepaths.length) {
+                            attributeVal = pDetails;
+                            attributepaths.map(attributepath => {
+                                if (attributeVal[attributepath])
+                                    attributeVal = attributeVal[attributepath];
+                            });
+                        }
+                    } catch (err) {
+                        console.warn(err);
+                    }
+                }
+                if (attributeVal && typeof attributeVal !== 'object')
+                    return (
+                        <div {...itemProps}>
+                            <RichContent
+                                html={item.name.replace(
+                                    '{{' + attributeString + '}}',
+                                    attributeVal
+                                )}
+                            />
+                        </div>
+                    );
+            }
+        }
+        return false;
+    };
+
     return (
         <Fragment>
             <PageBuilderComponent
                 pageData={pageData}
                 key={maskedId}
+                overRender={overRender}
                 layoutFilter={TreeDataProductDetailMarkerEnum.TOP}
             />
             <ProductFullDetail product={product} />
             <PageBuilderComponent
                 pageData={pageData}
                 key={maskedId}
+                overRender={overRender}
                 layoutFilter={TreeDataProductDetailMarkerEnum.BOTTOM}
             />
         </Fragment>
