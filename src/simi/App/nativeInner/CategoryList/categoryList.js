@@ -24,7 +24,7 @@ const CategoryList = props => {
     const { formatMessage } = useIntl();
     const classes = useStyle(defaultClasses, props.classes);
     const [active, setActive] = useState(0);
-    const [cateActive, setCateActive] = useState('what-is-new');
+    const [cateActive, setCateActive] = useState('');
     const placeHolderImg = logoUrl();
     const isMobileSite = window.innerWidth <= 768;
     const history = useHistory();

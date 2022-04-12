@@ -2,11 +2,11 @@ import React from 'react';
 import {
     EmailShareButton,
     FacebookShareButton,
-    PinterestShareButton,
+    TelegramShareButton,
     TwitterShareButton,
     EmailIcon,
     FacebookIcon,
-    PinterestIcon,
+    TelegramIcon,
     TwitterIcon
 } from 'react-share';
 import { useWindowSize } from '@magento/peregrine';
@@ -27,9 +27,9 @@ const SocialShare = props => {
             <EmailShareButton {...shareProps}>
                 <EmailIcon size={size} round={true} />
             </EmailShareButton>
-            <PinterestShareButton {...shareProps}>
-                <PinterestIcon size={size} round={true} />
-            </PinterestShareButton>
+            <TelegramShareButton {...shareProps}>
+                <TelegramIcon size={size} round={true} />
+            </TelegramShareButton>
         </div>
     );
 };
