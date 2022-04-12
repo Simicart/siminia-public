@@ -55,6 +55,7 @@ const ProductLabel = props => {
 
     const width = styles.label.width;
     const height = styles.label.height;
+    console.log("hahaa", width, height);
 
     const topCenterLeft = 340 - height;
 
@@ -71,6 +72,7 @@ const ProductLabel = props => {
         window.innerWidth > 423 ? 240 - width * 0.6 : (240 - width * 0.6) / 2;
 
     //-----------------------------------------
+    console.log("hahah", label_tyle, positionGrid);
 
     let position;
     let positionText;
@@ -131,7 +133,26 @@ const ProductLabel = props => {
                     };
                     break;
                 case 'cc':
-                    position = {};
+                    position = {
+                        top: '41%',
+                        left: '34%',
+                        zIndex: index+2,
+                        height: height,
+                        width: width,
+                    };
+                    positionText = {
+                        top: '0%',
+                        left: leftMb,
+                        zIndex: index +3,
+                        height: height * 0.6,
+                        width: width * 0.6,
+                        color: labelColor,
+                        fontSize: 14,
+                        transform: `rotate(${styleLabel}deg)`,
+                        position: 'absolute',
+                        lineHeight: `${height * 0.6}px`,
+                        textAlign: 'center'
+                    };
                     break;
                 case 'cr':
                     position = {
@@ -211,7 +232,26 @@ const ProductLabel = props => {
                     };
                     break;
                 case 'tc':
-                    position = {};
+                    position = {
+                        top: '0%',
+                        left: `calc(50% - ${height/2}px)`,
+                        zIndex: index+2,
+                        height: height,
+                        width: width,
+                    };
+                    positionText = {
+                        top: '0%',
+                        left: `calc(50% - ${height/2}px)`,
+                        zIndex: index +3,
+                        height: height ,
+                        width: width ,
+                        color: labelColor,
+                        fontSize: 14,
+                        transform: `rotate(${styleLabel}deg)`,
+                        position: 'absolute',
+                        lineHeight: `${height }px`,
+                        textAlign: 'center'
+                    };
                     break;
                 case 'tr':
                     position = {
@@ -237,19 +277,68 @@ const ProductLabel = props => {
                     break;
                 case 'cl':
                     position = {
-                        position: 'absolute',
+                        top: `calc(50% - ${height/2}px)`,
                         left: 0,
-                        top: topCenterLeft
+                        zIndex: index+2,
+                        height: height,
+                        width: width,
+                    };
+                    positionText = {
+                        top: `calc(50% - ${height/2}px)`,
+                        left: 0,
+                        zIndex: index +3,
+                        height: height ,
+                        width: width ,
+                        color: labelColor,
+                        fontSize: 14,
+                        transform: `rotate(${styleLabel}deg)`,
+                        position: 'absolute',
+                        lineHeight: `${height }px`,
+                        textAlign: 'center'
                     };
                     break;
                 case 'cc':
-                    position = {};
+                    position = {
+                        top: `calc(50% - ${height/2}px)`,
+                        left: `calc(50% - ${width/2}px)`,
+                        zIndex: index+2,
+                        height: height,
+                        width: width,
+                    };
+                    positionText = {
+                        top: `calc(50% - ${height/2}px)`,
+                        left: `calc(50% - ${width/2}px)`,
+                        zIndex: index +3,
+                        height: height ,
+                        width: width ,
+                        color: labelColor,
+                        fontSize: 14,
+                        transform: `rotate(${styleLabel}deg)`,
+                        position: 'absolute',
+                        lineHeight: `${height}px`,
+                        textAlign: 'center'
+                    };
                     break;
                 case 'cr':
                     position = {
-                        position: 'absotule',
-                        left: `55%`,
-                        top: topCenterLeft
+                        top: `calc(50% - ${height/2}px)`,
+                        left: `calc(100% - ${width}px)`,
+                        zIndex: index+2,
+                        height: height,
+                        width: width,
+                    };
+                    positionText = {
+                        top: `calc(50% - ${height/2}px)`,
+                        left: `calc(100% - ${width}px)`,
+                        zIndex: index +3,
+                        height: height ,
+                        width: width ,
+                        color: labelColor,
+                        fontSize: 14,
+                        transform: `rotate(${styleLabel}deg)`,
+                        position: 'absolute',
+                        lineHeight: `${height }px`,
+                        textAlign: 'center'
                     };
                     break;
                 case 'bl':
@@ -262,7 +351,26 @@ const ProductLabel = props => {
                     };
                     break;
                 case 'bc':
-                    position = {};
+                    position = {
+                        top: `calc(100% - 40px - ${height}px)`,
+                        left: `calc(50% - ${height/2}px)`,
+                        zIndex: index+2,
+                        height: height,
+                        width: width,
+                    };
+                    positionText = {
+                        top: `calc(100% - 40px - ${height}px)`,
+                        left: `calc(50% - ${height/2}px)`,
+                        zIndex: index +3,
+                        height: height ,
+                        width: width ,
+                        color: labelColor,
+                        fontSize: 14,
+                        transform: `rotate(${styleLabel}deg)`,
+                        position: 'absolute',
+                        lineHeight: `${height }px`,
+                        textAlign: 'center'
+                    };
                     break;
                 case 'br':
                     position = {
@@ -282,8 +390,8 @@ const ProductLabel = props => {
                     top: 0,
                     left: 0,
                     zIndex: index+2,
-                    height: height * 0.6,
-                    width: width * 0.6,
+                    height: height ,
+                    width: width ,
                     position: 'absolute'
                     // height: height
                 };
@@ -297,95 +405,188 @@ const ProductLabel = props => {
                     fontSize: 14,
                     transform: `rotate(${styleLabel}deg)`,
                     position: 'absolute',
-                    lineHeight: `${height * 0.6}px`
+                    lineHeight: `${height}px`
                 };
                 break;
             case 'tc':
-                position = {};
+                position = {
+                    top: 0,
+                    left: `calc(50% - ${width / 2}px)`,
+                    zIndex: index+2,
+                    height: height ,
+                    width: width ,
+                    position: 'absolute'
+                    // height: height
+                };
+                positionText = {
+                    top: 0,
+                    left: `calc(50% - ${width / 2}px)`,
+                    zIndex: index +3,
+                    height: 'auto',
+                    width: 'auto',
+                    color: labelColor,
+                    fontSize: 14,
+                    transform: `rotate(${styleLabel}deg)`,
+                    position: 'absolute',
+                    lineHeight: `${height * 0.6}px`
+                };
                 break;
             case 'tr':
                 position = {
                     top: '0%',
                     left: leftMb,
                     zIndex: index+2,
-                    height: height * 0.6,
-                    width: width * 0.6
+                    height: height ,
+                    width: width 
                 };
                 positionText = {
                     top: '0%',
                     left: leftMb,
                     zIndex: index +3,
-                    height: height * 0.6,
-                    width: width * 0.6,
+                    height: height ,
+                    width: width ,
                     color: labelColor,
                     fontSize: 14,
                     transform: `rotate(${styleLabel}deg)`,
                     position: 'absolute',
-                    lineHeight: `${height * 0.6}px`,
+                    lineHeight: `${height}px`,
                     textAlign: 'center'
                 };
                 break;
             case 'cl':
                 position = {
-                    position: 'absolute',
+                    top: `calc(50% - ${height / 2}px)`,
                     left: 0,
-                    width: widthMb
+                    zIndex: index+2,
+                    height: height ,
+                    width: width ,
+                    position: 'absolute'
+                    // height: height
+                };
+                positionText = {
+                    top: `calc(50% - ${height / 2}px)`,
+                    left: 0,
+                    zIndex: index +3,
+                    height: 'auto',
+                    width: 'auto',
+                    color: labelColor,
+                    fontSize: 14,
+                    transform: `rotate(${styleLabel}deg)`,
+                    position: 'absolute',
+                    lineHeight: `${height}px`
                 };
                 break;
             case 'cc':
-                position = {};
+                position = {
+                    top: `calc(50% - ${height / 2}px)`,
+                    left: `calc(50% - ${width / 2}px)`,
+                    zIndex: index+2,
+                    height: height ,
+                    width: width ,
+                    position: 'absolute'
+                    // height: height
+                };
+                positionText = {
+                    top: `calc(50% - ${height / 2}px)`,
+                    left: `calc(50% - ${width / 2}px)`,
+                    zIndex: index +3,
+                    height: 'auto',
+                    width: 'auto',
+                    color: labelColor,
+                    fontSize: 14,
+                    transform: `rotate(${styleLabel}deg)`,
+                    position: 'absolute',
+                    lineHeight: `${height}px`
+                };
                 break;
             case 'cr':
                 position = {
+                    top: `calc(50% - ${height / 2}px)`,
+                    left: `calc(100% - ${width}px)`,
+                    zIndex: index+2,
+                    height: height ,
+                    width: width ,
+                    position: 'absolute'
+                    // height: height
+                };
+                positionText = {
+                    top: `calc(50% - ${height / 2}px)`,
+                    left: `calc(100% - ${width}px)`,
+                    zIndex: index +3,
+                    height: 'auto',
+                    width: 'auto',
+                    color: labelColor,
+                    fontSize: 14,
+                    transform: `rotate(${styleLabel}deg)`,
                     position: 'absolute',
-                    width: widthMb
+                    lineHeight: `${height}px`
                 };
                 break;
             case 'bl':
                 position = {
-                    top: '70%',
+                    top: `calc(100% - 40px - ${height}px)`,
                     left: 0,
                     zIndex: index+2,
-                    height: height * 0.6,
-                    width: width * 0.6,
+                    height: height ,
+                    width: width ,
                     position: 'absolute'
                 };
                 positionText = {
-                    top: '70%',
+                    top: `calc(100% - 40px - ${height}px)`,
                     left: 0,
                     zIndex: index +3,
-                    height: height * 0.6,
-                    width: width * 0.6,
+                    height: height ,
+                    width: width ,
                     color: labelColor,
                     fontSize: 14,
                     transform: `rotate(${styleLabel}deg)  `,
                     position: 'absolute',
-                    lineHeight: `${height * 0.6}px`
+                    lineHeight: `${height}px`
                 };
                 break;
             case 'bc':
-                position = {};
+                position = {
+                    top: `calc(100% - 40px ${height}px)`,
+                    left: `calc(50% - ${height/2}px)`,
+                    zIndex: index+2,
+                    height: height ,
+                    width: width ,
+                    position: 'absolute'
+                    // height: height
+                };
+                positionText = {
+                    top: `calc(100% - 40px ${height}px)`,
+                    left: `calc(50% - ${height/2}px)`,
+                    zIndex: index +3,
+                    height: 'auto',
+                    width: 'auto',
+                    color: labelColor,
+                    fontSize: 14,
+                    transform: `rotate(${styleLabel}deg)`,
+                    position: 'absolute',
+                    lineHeight: `${height}px`
+                };
                 break;
             case 'br':
                 position = {
                     top: '70%',
                     left: leftMb,
                     zIndex: index+2,
-                    height: height * 0.6,
-                    width: width * 0.6,
+                    height: height ,
+                    width: width ,
                     position: 'absolute'
                 };
                 positionText = {
                     top: '70%',
                     left: leftMb,
                     zIndex: index +3,
-                    height: height * 0.6,
-                    width: width * 0.6,
+                    height: height ,
+                    width: width ,
                     color: labelColor,
                     fontSize: 14,
                     transform: `rotate(${styleLabel}deg)  `,
                     position: 'absolute',
-                    lineHeight: `${height * 0.6}px`
+                    lineHeight: `${height }px`
                 };
                 break;
         }
