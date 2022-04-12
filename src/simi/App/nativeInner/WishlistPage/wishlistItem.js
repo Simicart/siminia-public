@@ -140,7 +140,7 @@ const WishlistItem = props => {
             .share({
               title: "My phone",
               text: "I shared this content via my mobile",
-              url: document.location.href,
+              url: `${window.location.host}/${product.url_key}${product.url_suffix}`
             })
             .then(() => {
               console.log('Successfully shared');
@@ -199,7 +199,7 @@ const WishlistItem = props => {
                 ) : (
                     <>
                         {share ? (
-                            <SocialShare className={classes.socialShare} />
+                            <SocialShare product={product} className={classes.socialShare} />
                         ) : (
                             ''
                         )}
