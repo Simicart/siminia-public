@@ -55,7 +55,6 @@ const Search = props => {
         { name: formatMessage({ id: 'Search results for' }) + ' ' + inputText }
     ];
     const title = formatMessage({ id: 'Search results for' }) + ' ' + inputText;
-
     return (
         <div
             className={`${
