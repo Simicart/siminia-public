@@ -16,11 +16,12 @@ import FormError from '@magento/venia-ui/lib/components/FormError';
 import Field from '@magento/venia-ui/lib/components/Field';
 import TextInput from '@magento/venia-ui/lib/components/TextInput';
 import TextArea from '@magento/venia-ui/lib/components/TextArea';
-import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
+// import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 import ErrorView from '@magento/venia-ui/lib/components/ErrorView';
 import ContactPageShimmer from './contactPage.shimmer';
 import defaultClasses from './contactPage.module.css';
-
+import AlertMessages from '../../nativeInner/ProductFullDetail/AlertMessages';
+import Loader from '../../nativeInner/Loader';
 const BANNER_IDENTIFIER = 'contact-us-banner';
 const SIDEBAR_IDENTIFIER = 'contact-us-sidebar';
 const NOT_FOUND_MESSAGE =
@@ -43,21 +44,23 @@ const ContactPage = props => {
         isBusy,
         isLoading,
         setFormApi,
-        response
+        response,
+        setAlertMsg,
+        alertMsg
     } = talonProps;
 
-    useEffect(() => {
-        if (response && response.status) {
-            addToast({
-                type: 'success',
-                message: formatMessage({
-                    id: 'contactPage.submitMessage',
-                    defaultMessage: 'Your message has been sent.'
-                }),
-                timeout: 5000
-            });
-        }
-    }, [addToast, formatMessage, response]);
+    // useEffect(() => {
+    //     if (response && response.status) {
+    //         addToast({
+    //             type: 'success',
+    //             message: formatMessage({
+    //                 id: 'contactPage.submitMessage',
+    //                 defaultMessage: 'Your message has been sent.'
+    //             }),
+    //             timeout: 5000
+    //         });
+    //     }
+    // }, [addToast, formatMessage, response]);
 
     // if (!isLoading && !isEnabled) {
     //     return (
@@ -84,12 +87,12 @@ const ContactPage = props => {
 
     const maybeLoadingIndicator = isBusy ? (
         <div className={classes.loadingContainer}>
-            <LoadingIndicator>
+            <Loader>
                 <FormattedMessage
                     id={'contactPage.loadingText'}
                     defaultMessage={'Sending'}
                 />
-            </LoadingIndicator>
+            </Loader>
         </div>
     ) : null;
 
@@ -122,6 +125,19 @@ const ContactPage = props => {
         id: 'contactPage.metaDescription',
         defaultMessage: 'Contact Us'
     });
+    let topInsets = 0;
+    let bottomInsets = 0;
+    try {
+        if (window.simicartRNinsets) {
+            const simicartRNinsets = JSON.parse(window.simicartRNinsets);
+            topInsets = parseInt(simicartRNinsets.top);
+            bottomInsets = parseInt(simicartRNinsets.bottom);
+        } else if (window.simpifyRNinsets) {
+            const simpifyRNinsets = JSON.parse(window.simpifyRNinsets);
+            topInsets = parseInt(simpifyRNinsets.top);
+            bottomInsets = parseInt(simpifyRNinsets.bottom);
+        }
+    } catch (err) {}
 
     return (
         <Fragment>
@@ -129,6 +145,16 @@ const ContactPage = props => {
             <Meta name="title" content={pageTitle} />
             <Meta name="description" content={metaDescription} />
             <article className={`${classes.root} container`} data-cy="ContactPage-root">
+            <AlertMessages
+                message={formatMessage({
+                    id: 'contactPage.submitMessage',
+                    defaultMessage: 'Your message has been sent.'
+                })}
+                setAlertMsg={setAlertMsg}
+                alertMsg={alertMsg}
+                status="success"
+                topInsets={topInsets}
+            />
                 {contactUsBanner}
                 <div className={classes.content}>
                     <div
