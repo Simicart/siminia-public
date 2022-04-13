@@ -7,9 +7,7 @@ const canPickMultiple = false;
 //TODO: find multiple checkbox component
 export const MultipleCheckbox = props => {
     const { item } = props;
-
-    const values = item['multiple_value'] || item['checkbox_value'] || [];
-
+    const values = item['multiple_value'] || item['checkbox_value'] || item['options'] || [];
     const { handleSelected, fieldName, getCurrentSelection } = useBaseInput({
         ...props,
         canPickMultiple: canPickMultiple

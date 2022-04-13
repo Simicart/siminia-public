@@ -3,6 +3,7 @@ import { MultipleCheckbox } from './MultipleCheckbox/MultipleCheckbox';
 import { Radio } from './Radio/Radio';
 import { Dropdown } from './Dropdown/Dropdown';
 const optionContentMap = {
+    multi : MultipleCheckbox,
     multiple: MultipleCheckbox,
     checkbox: MultipleCheckbox,
     radio: Radio,
@@ -12,9 +13,7 @@ const optionContentMap = {
 export const BundleContent = props => {
     const { classes } = props;
     const { item, itemType, useProductFullDetailProps } = props;
-
     const RenderComponent = optionContentMap[itemType];
-
     if (!RenderComponent) {
         return null;
     }
