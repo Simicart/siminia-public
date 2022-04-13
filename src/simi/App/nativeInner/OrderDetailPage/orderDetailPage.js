@@ -137,7 +137,6 @@ const OrderDetailPage = props => {
         : null;
     const grandTotal = customer.orders.items[0].total.base_grand_total.value;
     const mpRewardPoints = customer.orders.items[0].mp_reward_points;
-    console.log('haha', mpRewardPoints);
 
     const status = customer.orders.items[0].status;
 
@@ -157,8 +156,6 @@ const OrderDetailPage = props => {
             return '$';
         } else return null;
     };
-
-    console.log('name', listItem[0]);
 
     const renderTRTable = listItem => {
         let html = null;
@@ -640,13 +637,16 @@ const OrderDetailPage = props => {
                             {customer.orders.items[0].billing_address.street[0]}
                         </span>
                         <span style={{ display: 'flex' }}>
-                            <span style={{ marginRight: 5 }}>
-                                {formatMessage({
-                                    id: 'Delivery Time',
-                                    defaultMessage: 'Delivery Time'
-                                })}
-                                :{' '}
-                            </span>
+                            {customer.orders.items[0].mp_delivery_information
+                                .mp_delivery_time && (
+                                <span style={{ marginRight: 5 }}>
+                                    {formatMessage({
+                                        id: 'Delivery Time',
+                                        defaultMessage: 'Delivery Time'
+                                    })}
+                                    :{' '}
+                                </span>
+                            )}
                             {customer.orders.items[0].mp_delivery_information
                                 .mp_delivery_time ? (
                                 <span
@@ -750,8 +750,8 @@ const OrderDetailPage = props => {
                         {customer.orders.items[0].payment_methods[0].name}
                     </span>
                 </div>
-                <div className={classes.mbRewardPoints}>
-                    <div style={{fontSize: 16, fontWeight: '600'}}>
+                {(mpRewardPoints.earn || mpRewardPoints.spent) && <div className={classes.mbRewardPoints}>
+                    <div style={{ fontSize: 16, fontWeight: '600' }}>
                         {formatMessage({
                             id: 'Reward Points',
                             defaultMessage: 'Reward Points'
@@ -789,7 +789,7 @@ const OrderDetailPage = props => {
                             </div>
                         ) : null}
                     </div>
-                </div>
+                </div>}
 
                 <div
                     style={{ height: 55 + bottomInsets }}
