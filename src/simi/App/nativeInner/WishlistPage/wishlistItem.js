@@ -135,7 +135,6 @@ const WishlistItem = props => {
         setShare(!share);
     };
     const handleShareMobile = () => {
-        console.log("window.location.host",window.location);
         if (navigator.share) {
           navigator
             .share({
