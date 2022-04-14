@@ -135,12 +135,13 @@ const WishlistItem = props => {
         setShare(!share);
     };
     const handleShareMobile = () => {
+        console.log("window.location.host",window.location);
         if (navigator.share) {
           navigator
             .share({
               title: "My phone",
               text: "I shared this content via my mobile",
-              url: `${window.location.host}/${product.url_key}${product.url_suffix}`
+              url: `/${product.url_key}${product.url_suffix}`
             })
             .then(() => {
               console.log('Successfully shared');
