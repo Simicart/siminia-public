@@ -414,6 +414,19 @@
         line-height: 19px;
     }
 }
+
+.mbRewardPoints {
+   
+    padding: 15px;
+    background-color: #fff;
+    margin-top: 15px;
+    
+    .content {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
 .mbMyOrder {
     display: flex;
     flex-direction: column;

@@ -112,6 +112,9 @@
         text-align: left;
         padding-bottom: 55px;
     }
+    .root  > div:nth-child(2){
+        padding-top: 0;
+    }
     .wrapProductsList,.wrapSubCate{
         display: flex;
         flex-wrap: wrap;

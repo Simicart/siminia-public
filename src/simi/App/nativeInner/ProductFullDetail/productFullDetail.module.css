@@ -360,7 +360,7 @@
         line-height: 3rem;
         margin-top: 10px;
         position: fixed;
-        z-index: 3;
+        z-index: 7;
         width: 100%;
         /* padding-right: 15px; */
     }

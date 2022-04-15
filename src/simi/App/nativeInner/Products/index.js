@@ -37,7 +37,6 @@ const Products = props => {
         pageControl
     } = props;
     const { category, products } = data;
-    const { display_mode } = category;
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
     const isMobileSite = windowSize.innerWidth <= 768;
@@ -403,19 +402,14 @@ const Products = props => {
                 >
                     {renderLeftNavigation()}
                 </div>
-                {display_mode === 'PRODUCTS_AND_PAGE' ||
-                display_mode === 'PRODUCTS' ? (
-                    <div
-                        className={`${
-                            renderCarouselChildCate() ? 'marginTop' : ''
-                        } listing-product`}
-                        style={{ display: 'inline-block', width: '100%' }}
-                    >
-                        {renderList()}
-                    </div>
-                ) : (
-                    ''
-                )}
+                <div
+                    className={`${
+                        renderCarouselChildCate() ? 'marginTop' : ''
+                    } listing-product`}
+                    style={{ display: 'inline-block', width: '100%' }}
+                >
+                    {renderList()}
+                </div>
             </div>
             {showFilter ? <div className="bg-white" /> : ''}
         </article>

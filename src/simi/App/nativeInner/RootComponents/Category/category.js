@@ -11,7 +11,7 @@ import CategoryHeader from './categoryHeader';
 import SeoBasic from '../../../core/SeoBasic';
 import CanonicalBasic from '../../../core/SeoBasic/CanonicalBasic';
 import MarkupCategoryBasic from '../../../core/SeoBasic/Markup/Category';
-import NoProductsFound from 'src/simi/BaseComponents/Products/NoProductsFound';
+import NoProductsFound from '../../Products/NoProductsFound';
 import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent';
 import { useIntl } from 'react-intl';
 // import Seo from '../../Seo';

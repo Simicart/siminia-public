@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Trash2, User } from 'react-feather';
-import {FormattedMessage, useIntl} from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useToasts, useWindowSize } from '@magento/peregrine';
 import { useWishlistItem } from '../talons/WishlistPage/useWishlistItem';
 import AlertMessages from '../ProductFullDetail/AlertMessages';
@@ -15,10 +15,14 @@ import { BsFillShareFill } from 'react-icons/bs';
 import defaultClasses from './wishlistItem.module.css';
 import { Link } from 'react-router-dom';
 import { ConfirmPopup } from '../Cart/ConfirmPopup';
-import SocialShare from '../../../BaseComponents/SocialShare'
+import SocialShare from '../../../BaseComponents/SocialShare';
 const WishlistItem = props => {
     const { item } = props;
-    const { configurable_options: configurableOptions = [], product, __typename } = item;
+    const {
+        configurable_options: configurableOptions = [],
+        product,
+        __typename
+    } = item;
     const {
         name,
         price_range: priceRange,
@@ -96,37 +100,58 @@ const WishlistItem = props => {
         ? classes.root_disabled
         : classes.root;
 
-    const addToCart = ( __typename === 'SimpleWishlistItem' ? 
-        <button className={classes.addToCart} {...addToCartButtonProps}>
-            {!isMobileSite ? (
-                formatMessage({
-                    id: 'wishlistItem.addToCart',
-                    defaultMessage: 'Add to Cart'
-                })
-            ) : (
-                <FiShoppingCart />
-            )}
-        </button> : <button className={classes.addToCart}>
-            {!isMobileSite ? (
-                formatMessage({
-                    id: 'wishlistItem.addToCart',
-                    defaultMessage: 'Add to Cart'
-                })
-            ) : (
-                <Link to={`${product.url_key}${product.url_suffix}`}>
+    const addToCart =
+        __typename === 'SimpleWishlistItem' ? (
+            <button className={classes.addToCart} {...addToCartButtonProps}>
+                {!isMobileSite ? (
+                    formatMessage({
+                        id: 'wishlistItem.addToCart',
+                        defaultMessage: 'Add to Cart'
+                    })
+                ) : (
                     <FiShoppingCart />
-                </Link>
-            )}
-        </button>
-    );
+                )}
+            </button>
+        ) : (
+            <button className={classes.addToCart}>
+                {!isMobileSite ? (
+                    formatMessage({
+                        id: 'wishlistItem.addToCart',
+                        defaultMessage: 'Add to Cart'
+                    })
+                ) : (
+                    <Link to={`${product.url_key}${product.url_suffix}`}>
+                        <FiShoppingCart />
+                    </Link>
+                )}
+            </button>
+        );
     const successMsg = formatMessage({
         id: 'addCartSuccess',
         defaultMessage: `You added ${product.name} to your shopping cart`
-    })
-    const [share,setShare] = useState(false)
-    const handleShare = () =>{
+    });
+    const [share, setShare] = useState(false);
+    const handleShare = () => {
         setShare(!share);
-    }
+    };
+    const handleShareMobile = () => {
+        if (navigator.share) {
+          navigator
+            .share({
+              title: "My phone",
+              text: "I shared this content via my mobile",
+              url: `/${product.url_key}${product.url_suffix}`
+            })
+            .then(() => {
+              console.log('Successfully shared');
+            })
+            .catch(error => {
+              console.error('Something went wrong sharing the blog', error);
+            });
+        }else {
+            console.log("Web share is currently not supported on this browser. Please provide a callback");
+        }
+      };
     return (
         <div className={rootClass}>
             <AlertMessages
@@ -146,17 +171,18 @@ const WishlistItem = props => {
                     <div className={classes.close} />
                 ) : (
                     <ConfirmPopup
-                            trigger={
-                                <VscTrash size={25} />
-                            }
-                            content={<FormattedMessage
+                        trigger={<VscTrash size={25} />}
+                        content={
+                            <FormattedMessage
                                 id={'Delete Warning'}
-                                defaultMessage={'Are you sure about remove\n' +
-                                    ' this item from wish list?'}
+                                defaultMessage={
+                                    'Are you sure about remove\n' +
+                                    ' this item from wish list?'
+                                }
                             />
-                            }
-                            confirmCallback={handleRemoveProductFromWishlist}
-                        />
+                        }
+                        confirmCallback={handleRemoveProductFromWishlist}
+                    />
                 )}
             </button>
             <div className={classes.actionWrap}>
@@ -166,16 +192,26 @@ const WishlistItem = props => {
                 </div>
             </div>
             <div className={classes.wrapSocialShare}>
-                {share ? <SocialShare className={classes.socialShare} /> : '' }
-                <button onClick={handleShare} className={classes.share}>
-                    <BsFillShareFill />
-                </button>
+                {isMobileSite ? (
+                    <button onClick={handleShareMobile} className={classes.share}>
+                        <BsFillShareFill />
+                    </button>
+                ) : (
+                    <>
+                        {share ? (
+                            <SocialShare product={product} className={classes.socialShare} />
+                        ) : (
+                            ''
+                        )}
+                        <button onClick={handleShare} className={classes.share}>
+                            <BsFillShareFill />
+                        </button>
+                    </>
+                )}
                 {addToCart}
             </div>
-            
+
             {optionElements}
-            
-            
         </div>
     );
 };
