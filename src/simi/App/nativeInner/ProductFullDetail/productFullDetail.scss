@@ -321,7 +321,7 @@
         }
         .description-open {
             position: fixed;
-            z-index: 5;
+            z-index: 10;
             padding-top: 100px;
             left: 0;
             top: 0;
@@ -349,7 +349,7 @@
         }
         .description-close {
             position: fixed;
-            z-index: 5;
+            z-index: 10;
             padding-top: 100px;
             left: 100%;
             top: 0;
