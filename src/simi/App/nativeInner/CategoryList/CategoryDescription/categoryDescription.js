@@ -1,13 +1,15 @@
 import React from 'react';
 import { render } from 'react-dom';
 require('./categoryDescription.scss');
-import RichContent  from '@magento/venia-ui/lib/components/RichContent';
+import RichContent from '@magento/venia-ui/lib/components/RichContent';
 const CategoryDescription = props => {
     const childCate = props.childCate || {};
     const description =
         childCate && childCate.description ? childCate.description : '';
     const cms_block =
         childCate && childCate.cms_block ? childCate.cms_block : null;
+    const { display_mode } = childCate;
+
     const renderBlock = () => {
         if (cms_block) {
             return (
@@ -27,10 +29,16 @@ const CategoryDescription = props => {
     };
     return (
         <>
-            <div className={`${description ? 'wrapRichContent' : ''}`}>
-                <RichContent html={description} />
-            </div>
-            {renderBlock()}
+            {display_mode === 'PRODUCTS_AND_PAGE' || display_mode === 'PAGE' ? (
+                <div className={`${description ? 'wrapRichContent' : ''}`}>
+                    <RichContent html={description} />
+                </div>
+            ) : (
+                ''
+            )}
+            {display_mode === 'PRODUCTS_AND_PAGE' || display_mode === 'PAGE'
+                ? renderBlock()
+                : ''}
         </>
     );
 };

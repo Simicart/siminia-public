@@ -34,7 +34,7 @@ const Item = props => {
                 width={100}
                 resource={
                     configurableThumbnailSource === 'itself' &&
-                    configured_variant
+                    configured_variant && configured_variant.thumbnail && configured_variant.thumbnail.url
                         ? configured_variant.thumbnail.url
                         : product.thumbnail.url
                 }

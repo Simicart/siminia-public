@@ -79,7 +79,6 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product, history } = props;
-
     const talonProps = useProductFullDetail({ product });
     const {
         breadcrumbCategoryId,
@@ -104,9 +103,7 @@ const ProductFullDetail = props => {
         setAlertMsg,
         alertMsg
     } = talonProps;
-    const successMsg = `${productDetails.name} was added to shopping cart`;
-
-    
+    const successMsg = `${productDetails.name} was added to shopping cart`;    
 
     let History = useHistory();
     const [moreBtn, setMoreBtn] = useState(false);

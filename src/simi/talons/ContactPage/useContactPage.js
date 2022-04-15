@@ -1,4 +1,4 @@
-import { useCallback, useRef, useMemo } from 'react';
+import { useCallback, useRef, useMemo, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import DEFAULT_OPERATIONS from './contactUs.gql';
@@ -10,6 +10,8 @@ export default props => {
         getStoreConfigQuery,
         getContactPageCmsBlocksQuery
     } = mergeOperations(DEFAULT_OPERATIONS, operations);
+
+    const [alertMsg, setAlertMsg] = useState(-1);
 
     const formApiRef = useRef(null);
 
@@ -60,6 +62,7 @@ export default props => {
                 if (formApiRef.current) {
                     formApiRef.current.reset();
                 }
+                setAlertMsg(true);
             } catch (error) {
                 if (process.env.NODE_ENV !== 'production') {
                     console.error(error);
@@ -80,6 +83,8 @@ export default props => {
         isBusy: submitLoading,
         isLoading: configLoading && cmsBlocksLoading,
         setFormApi,
-        response: data && data.contactUs
+        response: data && data.contactUs,
+        setAlertMsg,
+        alertMsg
     };
 };

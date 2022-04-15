@@ -1,11 +1,18 @@
 .root {
     align-items: center;
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
-    height: 50vh;
+    height: auto;
     justify-content: center;
+    text-align: center;
 }
-
+.imgNoWishList{
+    width: 50%;
+    max-height: 350px;
+    object-fit: contain;
+    margin-left: 25%;
+    margin-bottom: 15px;
+}
 .title {
     font-size: 1rem;
     font-weight: 600;
@@ -13,10 +20,16 @@
 }
 @media (max-width: 768px) {
     .root {
-        /* height: 70vh; */
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: 50vh;
+        justify-content: center;
     }
     .imgNoWishList{
         max-width: 250px;
+        max-height: unset;
+        margin-left: 0;
     }
     .noWishList
     {
@@ -25,6 +38,8 @@
         font-weight: 400;
         letter-spacing: 0;
         line-height: 16px;
+        text-align: center;
+        overflow-wrap: anywhere;
     }
    
 }

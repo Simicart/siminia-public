@@ -11,6 +11,12 @@ import noFilters from '../Icon/noFilters.png';
 
 const NoProductsFound = props => {
     const { search } = props;
+    let result;
+    let position = search ? search.indexOf('&') : -1;
+    position == -1 && search
+        ? (result = search ? search.slice(3) : '')
+        : (result = search ? search.slice(3, position) : '');
+
     const classes = mergeClasses(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
 
@@ -34,7 +40,24 @@ const NoProductsFound = props => {
                     id: 'noProducts',
                     defaultMessage: 'There are no products matching '
                 })}
-                {search ? <span className={classes.search}>{`"${search}"`}</span> : ''}
+                {search ? (
+                    <>
+                        {position === -1 ? (
+                            <span
+                                className={classes.search}
+                            >{`"${result}"`}</span>
+                        ) : (
+                            <span className={classes.search}>
+                                {formatMessage({
+                                    id: 'noFilter',
+                                    defaultMessage: `"filter"`
+                                })}
+                            </span>
+                        )}
+                    </>
+                ) : (
+                    ''
+                )}
             </div>
         </div>
     );

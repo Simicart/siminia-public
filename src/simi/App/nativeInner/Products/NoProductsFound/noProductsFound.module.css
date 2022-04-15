@@ -38,6 +38,8 @@
         font-weight: 400;
         letter-spacing: 0;
         line-height: 16px;
+        text-align: center;
+        overflow-wrap: anywhere;
     }
     .search{
         font-weight: bold;

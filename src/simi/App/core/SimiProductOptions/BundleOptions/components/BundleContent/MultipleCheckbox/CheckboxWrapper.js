@@ -6,8 +6,7 @@ import Optionlabel from '../../../../CustomOption/components/OptionLabel/OptionL
 
 export const CheckboxWrapper = props => {
     const { item, handleSelected, getCurrentSelection } = props;
-    const checkboxKey = item.option_type_id;
-
+    const checkboxKey = item.option_type_id || item.id;
     const checked = getCurrentSelection(checkboxKey);
     const onClick = () => {
         handleSelected(checkboxKey);

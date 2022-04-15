@@ -47,6 +47,13 @@ const GET_ORDER_DETAIL = gql`
           }
         }
         total {
+          discounts {
+            amount {
+              currency
+              value
+            }
+            label
+          }
           base_grand_total {
             currency
             value

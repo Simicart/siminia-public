@@ -1,6 +1,6 @@
 .notificationContainer {
     position: fixed;
-    background: blue;
+    background: transparent;
     font-size: 0.9rem;
     color: white;
     width: 100%;
@@ -20,10 +20,12 @@
 
 .successContainer {
     background: #5FAF4B;
+    margin-top: 54px;
 }
 
 .failContainer {
     background: #FF5F59;
+    margin-top: 54px;
 }
 
 .iconContainer {

@@ -129,8 +129,12 @@ const OrderDetailPage = props => {
     // const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
 
     const { customer } = dataDetail;
+
     const listItem = customer.orders.items[0].items;
     const subTotal = customer.orders.items[0].total.subtotal.value;
+    const discount = customer.orders.items[0].total.discounts[0]
+        ? customer.orders.items[0].total.discounts[0].amount
+        : null;
     const grandTotal = customer.orders.items[0].total.base_grand_total.value;
     const mpRewardPoints = customer.orders.items[0].mp_reward_points;
 
@@ -153,15 +157,19 @@ const OrderDetailPage = props => {
         } else return null;
     };
 
-    console.log("name", listItem[0]);
-
     const renderTRTable = listItem => {
         let html = null;
         if (listItem) {
             html = listItem.map((item, index) => {
                 return (
                     <tr key={index}>
-                        <td><div  dangerouslySetInnerHTML={{ __html: item.product_name }} /></td>
+                        <td>
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: item.product_name
+                                }}
+                            />
+                        </td>
                         <td>{item.product_sku}</td>
                         <td>
                             {forMatCurrentValue(
@@ -212,7 +220,11 @@ const OrderDetailPage = props => {
                         >
                             <div className={classes.orderItemMbHeading}>
                                 {/* <span>{item.product_name}</span> */}
-                                <div  dangerouslySetInnerHTML={{ __html: item.product_name }} />
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: item.product_name
+                                    }}
+                                />
                             </div>
                             <div>
                                 <span>SKU: </span>
@@ -624,6 +636,48 @@ const OrderDetailPage = props => {
                             :{' '}
                             {customer.orders.items[0].billing_address.street[0]}
                         </span>
+                        <span style={{ display: 'flex' }}>
+                            {customer.orders.items[0].mp_delivery_information
+                                .mp_delivery_time && (
+                                <span style={{ marginRight: 5 }}>
+                                    {formatMessage({
+                                        id: 'Delivery Time',
+                                        defaultMessage: 'Delivery Time'
+                                    })}
+                                    :{' '}
+                                </span>
+                            )}
+                            {customer.orders.items[0].mp_delivery_information
+                                .mp_delivery_time ? (
+                                <span
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        alignItems: 'center'
+                                    }}
+                                    className={classes.infoItemContent}
+                                >
+                                    <span
+                                        style={{
+                                            fontWeight: 400,
+                                            marginRight: 5
+                                        }}
+                                    >
+                                        {customer.orders.items[0].mp_delivery_information.mp_delivery_date.slice(
+                                            0,
+                                            10
+                                        )}
+                                    </span>
+                                    <span>
+                                        {
+                                            customer.orders.items[0]
+                                                .mp_delivery_information
+                                                .mp_delivery_time
+                                        }
+                                    </span>
+                                </span>
+                            ) : null}
+                        </span>
                         {/* <span>
                                 {
                                     customer.orders.items[0].billing_address
@@ -696,6 +750,46 @@ const OrderDetailPage = props => {
                         {customer.orders.items[0].payment_methods[0].name}
                     </span>
                 </div>
+                {(mpRewardPoints.earn || mpRewardPoints.spent) && <div className={classes.mbRewardPoints}>
+                    <div style={{ fontSize: 16, fontWeight: '600' }}>
+                        {formatMessage({
+                            id: 'Reward Points',
+                            defaultMessage: 'Reward Points'
+                        })}
+                    </div>
+                    <div className={classes.content}>
+                        {mpRewardPoints.earn ? (
+                            <div>
+                                <span>
+                                    {formatMessage({
+                                        id: 'You earned',
+                                        defaultMessage: 'You earned'
+                                    })}
+                                    : {mpRewardPoints.earn}{' '}
+                                    {formatMessage({
+                                        id: 'points',
+                                        defaultMessage: 'points'
+                                    })}
+                                </span>
+                            </div>
+                        ) : null}
+                        {mpRewardPoints.spent ? (
+                            <div>
+                                <span>
+                                    {formatMessage({
+                                        id: 'You spent',
+                                        defaultMessage: 'You spent'
+                                    })}
+                                    : {mpRewardPoints.spent}{' '}
+                                    {formatMessage({
+                                        id: 'points',
+                                        defaultMessage: 'points'
+                                    })}
+                                </span>
+                            </div>
+                        ) : null}
+                    </div>
+                </div>}
 
                 <div
                     style={{ height: 55 + bottomInsets }}
@@ -748,6 +842,16 @@ const OrderDetailPage = props => {
                         )}
                         {customer.orders.items[0].total.total_tax.value}
                     </span>
+                    {discount ? (
+                        <span>
+                            {formatMessage({
+                                id: 'Discount',
+                                defaultMessage: 'Discount'
+                            })}
+                            : -{forMatCurrentValue(discount.currency)}
+                            {discount.value}
+                        </span>
+                    ) : null}
                     <div>
                         <span className={classes.child1}>
                             {formatMessage({

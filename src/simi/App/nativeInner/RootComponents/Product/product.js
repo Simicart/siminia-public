@@ -5,7 +5,7 @@ import { useProduct } from '@simicart/siminia/src/simi/talons/ProductFullDetail/
 
 import ErrorView from '@magento/venia-ui/lib/components/ErrorView';
 import { StoreTitle, Meta } from '@magento/venia-ui/lib/components/Head';
-import { ProductBuilderFullDetail } from '@simicart/siminia/src/simi/App/core/ProductFullDetail';
+import { ProductBuilderFullDetailUpperLower } from '@simicart/siminia/src/simi/App/core/ProductFullDetail';
 import ProductFullDetail from '../../ProductFullDetail';
 import { prepareProduct } from 'src/simi/Helper/Product';
 import mapProduct from '@magento/venia-ui/lib/util/mapProduct';
@@ -166,7 +166,7 @@ const Product = props => {
                 <StoreTitle>{product.name}</StoreTitle>
                 <Meta name="description" content={product.meta_description} />
                 {foudThepage || pageMaskedId ? (
-                    <ProductBuilderFullDetail
+                    <ProductBuilderFullDetailUpperLower
                         product={product}
                         pageData={foudThepage}
                         maskedId={pageMaskedId}

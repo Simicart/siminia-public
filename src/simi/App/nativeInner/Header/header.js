@@ -68,6 +68,9 @@ const Header = props => {
     //     pathname === '/sign-in'
     //         ? true
     //         : false;
+
+   
+
     const isHiddenHeader =
         (data && data.route && data.route.type === TYPE_PRODUCT) 
 

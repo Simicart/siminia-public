@@ -2,17 +2,27 @@ import React from 'react';
 import {
     EmailShareButton,
     FacebookShareButton,
-    PinterestShareButton,
+    TelegramShareButton,
     TwitterShareButton,
     EmailIcon,
     FacebookIcon,
-    PinterestIcon,
+    TelegramIcon,
     TwitterIcon
 } from 'react-share';
 import { useWindowSize } from '@magento/peregrine';
 
 const SocialShare = props => {
-    const shareProps = { url: window.location.href };
+    const url_key =
+        props && props.product && props.product.url_key
+            ? props.product.url_key
+            : '';
+    const url_suffix =
+        props && props.product && props.product.url_suffix
+            ? props.product.url_suffix
+            : '';
+    const shareProps = {
+        url: `${window.location.host}/${url_key}${url_suffix}`
+    };
     const windowSize = useWindowSize();
     const isMobileSite = windowSize.innerWidth <= 390;
     const size = isMobileSite ? 21 : 30;
@@ -27,9 +37,9 @@ const SocialShare = props => {
             <EmailShareButton {...shareProps}>
                 <EmailIcon size={size} round={true} />
             </EmailShareButton>
-            <PinterestShareButton {...shareProps}>
-                <PinterestIcon size={size} round={true} />
-            </PinterestShareButton>
+            <TelegramShareButton {...shareProps}>
+                <TelegramIcon size={size} round={true} />
+            </TelegramShareButton>
         </div>
     );
 };
