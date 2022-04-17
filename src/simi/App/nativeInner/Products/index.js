@@ -266,7 +266,7 @@ const Products = props => {
             topInsets = parseInt(simpifyRNinsets.top);
         }
     } catch (err) {}
-    const heightFixed = 55 + topInsets;
+    const heightFixed = 54 + topInsets;
 
     const dropdownRef = useRef(null);
     const handleClickOutside = e => {

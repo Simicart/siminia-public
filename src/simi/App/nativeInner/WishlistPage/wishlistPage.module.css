@@ -3,6 +3,9 @@
     /* padding: 2rem 3rem; */
     row-gap: 2rem;
 }
+.btnShare{
+    display: none;
+}
 
 
 .container {
@@ -106,5 +109,14 @@
         min-height: 100vh;
         background-color: #F2F2F3;
     }
-
+    .btnShare{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        right: 10px;
+        z-index: 5;
+        height: 55px;
+    }
 }
