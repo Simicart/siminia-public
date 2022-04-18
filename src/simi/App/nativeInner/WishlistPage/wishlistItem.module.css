@@ -49,7 +49,7 @@
 }
 
 .addToCart {
-    composes: root_highPriority from '@magento/venia-ui/lib/components/Button/button.module.css';
+    composes: root_highPriority from 'src/override/button.module.css';
     justify-self: left;
     margin-top: 0.25rem;
 }
@@ -62,10 +62,11 @@
 }
 
 .actionWrap {
-    display: flex;
-    align-items: flex-start;
+    display: unset;
 }
-
+.socialShare button{
+    padding-right: 10px!important;
+}
 .moreActions {
     align-items: center;
     background-color: rgb(var(--venia-global-color-gray-100));
