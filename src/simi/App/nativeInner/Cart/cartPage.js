@@ -55,6 +55,7 @@ const CartPage = props => {
         shouldShowLoadingIndicator,
         wishlistSuccessProps,
     } = talonProps;
+    
 
     const classes = useStyle(defaultClasses, defaultClasses_1, props.classes);
     const {formatMessage} = useIntl();
@@ -116,6 +117,7 @@ const CartPage = props => {
             makeNotification={makeNotification}
             summaryRef={summaryRef}
             setFirstProductLoad={setFirstProductLoad}
+            cartItems = {cartItems}
         />
     ) : (
         <h3>
