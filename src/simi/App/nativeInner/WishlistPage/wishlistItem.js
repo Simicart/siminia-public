@@ -74,9 +74,9 @@ const WishlistItem = props => {
             const optionString = `${optionLabel} : ${valueLabel}`;
 
             return (
-                <span className={classes.option} key={id}>
+                <div className={classes.option} key={id}>
                     {optionString}
-                </span>
+                </div>
             );
         });
     }, [classes.option, configurableOptions]);
@@ -136,22 +136,27 @@ const WishlistItem = props => {
     };
     const handleShareMobile = () => {
         if (navigator.share) {
-          navigator
-            .share({
-              title: "My phone",
-              text: "I shared this content via my mobile",
-              url: `/${product.url_key}${product.url_suffix}`
-            })
-            .then(() => {
-              console.log('Successfully shared');
-            })
-            .catch(error => {
-              console.error('Something went wrong sharing the blog', error);
-            });
-        }else {
-            console.log("Web share is currently not supported on this browser. Please provide a callback");
+            navigator
+                .share({
+                    title: 'My phone',
+                    text: 'I shared this content via my mobile',
+                    url: `/${product.url_key}${product.url_suffix}`
+                })
+                .then(() => {
+                    console.log('Successfully shared');
+                })
+                .catch(error => {
+                    console.error(
+                        'Something went wrong sharing the blog',
+                        error
+                    );
+                });
+        } else {
+            console.log(
+                'Web share is currently not supported on this browser. Please provide a callback'
+            );
         }
-      };
+    };
     return (
         <div className={rootClass}>
             <AlertMessages
@@ -190,28 +195,26 @@ const WishlistItem = props => {
                 <div className={classes.priceContainer}>
                     <Price currencyCode={currency} value={unitPrice} />
                 </div>
+                {optionElements}
             </div>
             <div className={classes.wrapSocialShare}>
                 {isMobileSite ? (
-                    <button onClick={handleShareMobile} className={classes.share}>
+                    <button
+                        onClick={handleShareMobile}
+                        className={classes.share}
+                    >
                         <BsFillShareFill />
                     </button>
                 ) : (
                     <>
-                        {share ? (
-                            <SocialShare product={product} className={classes.socialShare} />
-                        ) : (
-                            ''
-                        )}
-                        <button onClick={handleShare} className={classes.share}>
-                            <BsFillShareFill />
-                        </button>
+                        <SocialShare
+                            product={product}
+                            className={classes.socialShare}
+                        />
                     </>
                 )}
                 {addToCart}
             </div>
-
-            {optionElements}
         </div>
     );
 };
