@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Trash2 } from 'react-feather';
+import { VscTrash } from 'react-icons/vsc';
 import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { useProduct } from '../productHook';
@@ -315,8 +315,8 @@ const CartProduct = props => {
                         </div>
                         <ConfirmPopup
                             trigger={
-                                <Trash2
-                                    size={13}
+                                <VscTrash
+                                    size={30}
                                     className={classes.deleteIcon}
                                     color={configColor.icon_color}
                                 />

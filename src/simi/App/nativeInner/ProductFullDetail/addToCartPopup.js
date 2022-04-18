@@ -32,7 +32,7 @@ const AddToCartPopup = props => {
             {loading ? (
                 <Loader />
              ) : null}
-            <div className="modal" />
+            <div className="modal" onClick={() => setAddToCartPopup(false)} />
             <div
                 ref={ref}
                 className="form"

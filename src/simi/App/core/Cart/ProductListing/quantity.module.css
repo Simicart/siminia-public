@@ -17,6 +17,9 @@
 .root button:nth-child(2) {
     background-color: var(--venia-global-color-button);
 }
+.root button:last-child {
+    border: 1px solid #979797;
+}
 .root input {
     transition: all 0.2s ease-out;
 }
