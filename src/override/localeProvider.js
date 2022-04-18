@@ -5,7 +5,7 @@ import {
     toReactIntl
 } from '@magento/venia-ui/lib/util/formatLocale';
 import { gql, useQuery } from '@apollo/client';
-import GET_LOCALE from 'src/simi/queries/getStoreConfigData.gql';
+import GET_LOCALE from 'src/simi/queries/getStoreConfigDataWithSimi.gql';
 
 import { setStoreConfig } from 'src/simi/Redux/actions/simiactions';
 import { connect } from 'src/drivers';
