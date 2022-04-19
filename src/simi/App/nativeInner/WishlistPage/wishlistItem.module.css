@@ -133,14 +133,16 @@
     .addToCart {
         grid-area: addCart;
         /* composes: root_highPriority from '@magento/venia-ui/lib/components/Button/button.module.css'; */
-        height: 35px;
-        width: 58px;
         border-radius: 15px;
         background-color: var(--venia-global-color-button);
-        border-color: var(--venia-global-color-button);
-        border: none;
         min-height: unset;
         margin: 0;
+        box-sizing: border-box;
+        border: 1px solid var(--venia-global-color-button);;
+        height: 35px;
+        width: 70px;
+        min-width: unset;
+        color: #fff;
     }
     .wrapSocialShare{
         grid-area: share;
@@ -160,16 +162,18 @@
         padding-right: 5px!important;
     }
     .share{
+        composes: root_highPriority from 'src/override/button.module.css';
         grid-area: icon;
         box-sizing: border-box;
-        height: 35px;
-        width: 58px;
         border: 1px solid #C3BEBE;
-        border-radius: 15px;
-        background-color: #FFFFFF;
         margin-right: 5px;
-        
-        /* margin-left: 60%; */
+        height: 35px;
+        width: 70px;
+        border-radius: 15px;
+        min-height: unset;
+        min-width: unset;
+        background-color: #fff;
+        color: #000;
     }
     .share svg{
         margin-left: auto;
