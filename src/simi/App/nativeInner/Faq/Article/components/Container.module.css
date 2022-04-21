@@ -1,0 +1,84 @@
+.container {
+	font-size: 14.5px;
+	line-height: 1.5;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-weight: normal;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 55px;
+    color: rgba(0, 0, 0, 0.87);
+    box-sizing: border-box;
+}
+
+.section {
+	display: block;
+	width: 100%;
+	padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: inherit;
+}
+
+.contentContainer {
+	padding-right: 25px;
+    padding-left: 25px;
+    margin-bottom: 30px;
+}
+
+
+/*styling the article content*/
+div:not([class]) {
+    box-sizing: inherit;
+    display: block
+
+}
+
+ul:not([class]), ol:not([class]) {
+    box-sizing: inherit;
+    margin-top: 0rem;
+    margin-bottom: 2.5rem;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+ol:not([class]) {
+    list-style-type: decimal;
+}
+
+ul:not([class]) {
+    list-style-type: disc;
+}
+
+li:not([class]) {
+    box-sizing: inherit;
+}
+
+ul:not([class]) > li:not([class]), ol:not([class]) > li:not([class]) {
+    margin-top: 0rem;
+    margin-bottom: 0.7rem;
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+a:not([class]) {
+    text-decoration: none;
+    color: #039be5;
+    -webkit-tap-highlight-color: transparent;
+    background-color: transparent;
+}
+
+img {
+    max-width: 100%
+}
+
+h2:not([class]) {
+    font-size: 2.25rem;
+    line-height: 110%;
+    margin: 2.3733333333rem 0 1.424rem 0;
+    font-weight: 400;
+}

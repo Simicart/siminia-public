@@ -297,6 +297,37 @@ const CategoryList = props => {
         />
     );
 };
+
+const Faq = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "HomePage"*/ 'src/simi/App/nativeInner/Faq/HomePage')
+            }
+            {...props}
+        />
+    );
+};
+const FaqCategory = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "FaqCategory"*/ 'src/simi/App/nativeInner/Faq/Category')
+            }
+            {...props}
+        />
+    );
+};
+const Article = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "Article"*/ 'src/simi/App/nativeInner/Faq/Article')
+            }
+            {...props}
+        />
+    );
+};
 const Routes = props => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
@@ -395,6 +426,21 @@ const Routes = props => {
                     exact
                     path="/logout.html"
                     render={props => <Logout {...props} />}
+                />
+                <Route
+                    exact
+                    path="/faq.html"
+                    render={props => <Faq {...props} />}
+                />
+                <Route
+                    exact
+                    path="/faq/category/:categoryUrl?"
+                    render={props => <FaqCategory {...props} />}
+                />
+                <Route
+                    exact
+                    path="/faq/article/:articleUrl?"
+                    render={props => <Article {...props} />}
                 />
                 <Route
                     exact

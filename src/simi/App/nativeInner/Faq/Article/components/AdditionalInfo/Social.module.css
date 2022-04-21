@@ -1,0 +1,14 @@
+.container_social {
+	width: 70%;
+    margin: 0 auto;
+    max-width: 1280px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #cccccc;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
