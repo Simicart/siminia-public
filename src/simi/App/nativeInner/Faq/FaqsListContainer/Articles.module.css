@@ -17,7 +17,15 @@
     box-sizing: inherit;
     margin-top: 0rem;
 }
-
+.wrapIcon svg{
+    font-size: 1rem;
+    display: inline-block;
+    text-align: center;
+    margin-right: 1rem;
+    color: #ccc;
+    width: 0.75em;
+    overflow: visible;
+}
 .extend {
     font-weight: 600
 }

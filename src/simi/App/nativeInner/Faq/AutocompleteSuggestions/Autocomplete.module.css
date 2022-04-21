@@ -1,5 +1,5 @@
 .container {
-	top: 332.59px;
+	top: 425.59px;
     position: absolute;
     box-sizing: border-box;
     border: 1px solid #ddd;
@@ -39,10 +39,14 @@
 .selected {
 	background-color: #F0F0F0;
 }
-
+@media (max-width: 768px) {
+	.container {
+		top: 311.59px;
+	}
+}
 @media (max-width: 640px) {
 	.container {
-		top: 308.59px;
+		top: 310.59px;
 	}
 }
 
@@ -54,7 +58,7 @@
 
 @media (max-width: 360px) {
 	.container {
-		top: 373.59px;
+		top: 311.59px;
 	}
 }
 

@@ -10,7 +10,7 @@ export const useArticle = props => {
 	} = useQuery(GET_ARTICLE_BY_URL, {
     variables:{ urlKey: url_key }
   })
-
+  console.log("articleData",articleData)
 	let derivedErrorMessage;
    	if (articleError) {
        const errorTarget = articleError;

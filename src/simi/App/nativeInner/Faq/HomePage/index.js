@@ -1,7 +1,9 @@
 import React, { Fragment,useState } from 'react';
 import SearchBox from '../SearchBox/searchbox'
 import CategoriesList from '../FaqsListContainer/CategoriesList'
-import Loader from '../Loader/Loader'
+// import Loader from '../Loader/Loader'
+import Loader from '../../Loader'
+
 // import '@fortawesome/fontawesome-free/css/fontawesome.min.css'
 import { Helmet } from 'react-helmet';
 import { useHomePage } from '../../talons/Faq/useHomePage'
@@ -51,7 +53,7 @@ const FAQ = props => {
 	}
 	const reRender = true
 	return (
-		<Fragment>
+		<div className="container">
 			<Helmet>
                 <meta charSet="utf-8" />
                 <title>{title}</title>
@@ -68,7 +70,7 @@ const FAQ = props => {
 				searchInput={searchInput}
 				reRender={reRender}
 			/>
-		</Fragment>
+		</div>
 	)
 }
 

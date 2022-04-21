@@ -11,7 +11,14 @@
 	float: left;
     padding: 21px 10px 0 5px;
 }
-
+.wrapIcon{
+    display: inline-block;
+    font-size: inherit;
+    height: 1em;
+    overflow: visible;
+    vertical-align: -0.125em;
+    width: 1.125em;
+}
 .headerIcon {
 	color: #9e9e9e !important;
     line-height: inherit;
@@ -49,3 +56,8 @@ h3 {
 	box-sizing: inherit;
 }
 
+@media (max-width: 768px) {
+    .headerContent span{
+        padding-right: 5px;
+    }
+}

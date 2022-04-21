@@ -49,3 +49,9 @@ span {
     font-size: 0.9rem;
     box-sizing: inherit;
 }
+@media (max-width: 768px) {
+    .block{
+        padding: 0;
+        width: 100%!important;
+    }
+}

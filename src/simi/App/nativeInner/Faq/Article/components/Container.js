@@ -1,6 +1,7 @@
 import React from 'react'
 import defaultClasses from './Container.module.css'
 import Header from './Header.js'
+import RichContent from '@magento/venia-ui/lib/components/RichContent';
 
 const Container = props => {
 	const classes = defaultClasses
@@ -21,7 +22,8 @@ const Container = props => {
 						views={views}
 						positives={positives}
 					/>
-					<div dangerouslySetInnerHTML={{__html: article_content}} />
+					{/* <div dangerouslySetInnerHTML={{__html: article_content}} /> */}
+					<RichContent html={article_content} />
 				</div>
 			</div>
 		</div>

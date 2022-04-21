@@ -11,10 +11,13 @@ import {
     TelegramIcon,
     TwitterIcon
 } from 'react-share';
+import { useIntl } from 'react-intl';
 
 const Social = props => {
 	const classes = defaultClasses
 	// const url = window.location.href
+    const { formatMessage } = useIntl();
+
 	const shareProps = {
         url: window.location.href
     };
@@ -24,18 +27,51 @@ const Social = props => {
 			<Twitter link={url}/>
 			<Google link={url}/>
 			<Linkedin link={url}/> */}
-			<FacebookShareButton {...shareProps}>
-                <FacebookIcon size={21} round={true} />
+            <span className={classes.wrapFacebook}>
+            <FacebookShareButton  {...shareProps}>
+                <FacebookIcon size={30} round={false} />
+                <span className={classes.label}>
+                {formatMessage({
+                            id: 'facebook',
+                            defaultMessage: 'Facebook'
+                        })}
+                </span>
             </FacebookShareButton>
+            </span>
+            <span className={classes.wrapTwitter}>
             <TwitterShareButton {...shareProps}>
-                <TwitterIcon size={21} round={true} />
+                <TwitterIcon size={30} round={false} />
+                <span className={classes.label}>
+                {formatMessage({
+                            id: 'twitter',
+                            defaultMessage: 'Twitter'
+                        })}
+                </span>
             </TwitterShareButton>
+            </span>
+            <span className={classes.wrapEmail}>
             <EmailShareButton {...shareProps}>
-                <EmailIcon size={21} round={true} />
+                <EmailIcon size={30} round={false} />
+                <span className={classes.label}>
+                {formatMessage({
+                            id: 'email',
+                            defaultMessage: 'Email'
+                        })}
+                </span>
             </EmailShareButton>
+            </span>
+            <span className={classes.wrapTelegram}>
             <TelegramShareButton {...shareProps}>
-                <TelegramIcon size={21} round={true} />
+                <TelegramIcon size={30} round={false} />
+                <span className={classes.label}>
+                {formatMessage({
+                            id: 'telegram',
+                            defaultMessage: 'Telegram'
+                        })}
+                </span>
             </TelegramShareButton>
+            </span>
+            
 		</div>
 	)
 }

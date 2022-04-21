@@ -2,7 +2,9 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import SearchBox from '../SearchBox/searchbox.js';
-import Loader from '../Loader/Loader'
+// import Loader from '../Loader/Loader'
+import Loader from '../../Loader'
+
 import CategoriesList from '../FaqsListContainer/CategoriesList'
 import { useCategoryListUrl } from '../../talons/Faq/useCategoryListUrl'
 import { useCategoryList } from '../../talons/Faq/useCategoryList'
@@ -57,7 +59,7 @@ const Category = props => {
 	}
 	
 	return (
-		<Fragment>
+		<div className='container'>
 			<Helmet>
                 <meta charSet="utf-8" />
                 <title>{categories.length ? categories[0].name : ''} - Frequently Answer and Question</title>
@@ -72,7 +74,7 @@ const Category = props => {
 				categories={categories}
 				searchInput={searchInput}
 				reRender={reRender}/>
-		</Fragment>
+		</div>
 	)
 }
 

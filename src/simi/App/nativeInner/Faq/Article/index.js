@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Loader from '../Loader/Loader'
+// import Loader from '../Loader/Loader'
+import Loader from '../../Loader'
+
 import SearchBox from '../SearchBox/searchbox';
 import Container from './components/Container';
 import AdditionalInfo from './components/AdditionalInfo/AdditionalInfo'
@@ -141,7 +143,7 @@ const Article = props => {
 	const autocompleteWidth = `${inputWidth+2}px`;
 
 	return (
-		<div>
+		<div >
 			<Helmet>
                 <meta charSet="utf-8" />
                 <title>

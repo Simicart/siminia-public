@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import Loader from '../Loader/Loader';
+// import Loader from '../Loader/Loader';
 import defaultClasses from './searchbox.module.css';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faSearch } from '@fortawesome/free-solid-svg-icons'
@@ -7,7 +7,7 @@ import { useSearchBox } from '../../talons/Faq/useSearchBox';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import { Search as SearchIcon } from 'react-feather';
 import { FaSearch } from 'react-icons/fa';
-
+import Loader from '../../Loader'
 const SearchBox = forwardRef((props, ref) => {
     const classes = defaultClasses;
     const {
@@ -36,7 +36,7 @@ const SearchBox = forwardRef((props, ref) => {
                 <div className={classes.searchfield}>
                     {/* <FontAwesomeIcon className={classes.searchicon} icon={faSearch} /> */}
                     {/* <Icon src={SearchIcon} /> */}
-                    <span className={classes.searchicon}>
+                    <span onClick={onSearch} className={classes.searchicon}>
                         <FaSearch size={25} />
                     </span>
                     <input

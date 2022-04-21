@@ -1,6 +1,6 @@
 import React from 'react';
 import CategoryBlock from './CategoryBlock'
-import Loader from '../Loader/Loader'
+import Loader from '../../Loader'
 import defaultClasses from './CategoriesList.module.css'
 
 const CategoriesList = props => {
@@ -44,7 +44,7 @@ const CategoriesList = props => {
 
 	return (
 		<div className={classes.container}>
-			<Loader loading={loading}/>
+			{loading ? <Loader/> : ''}
 			<div className={classes.section}>
 				{categoryBlocks}
 			</div>
