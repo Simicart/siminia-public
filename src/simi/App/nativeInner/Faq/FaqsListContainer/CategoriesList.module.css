@@ -1,0 +1,33 @@
+.container {
+    position: relative;
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: Roboto;
+    font-weight: normal;
+    font-style: normal;
+    color: rgba(0, 0, 0, 0.87);
+    box-sizing: border-box;
+    display: block;
+}
+
+.section {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
+	background-color: #f2f2f3 !important;
+	margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    box-sizing: inherit;
+}
+@media (max-width: 768px) {
+    .section{
+        padding-left: 0;
+        padding-right: 15px;
+    }
+}

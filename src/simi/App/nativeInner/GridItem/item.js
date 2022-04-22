@@ -230,9 +230,12 @@ const Griditem = props => {
                         />
                     </div>
                 </div>
-                <div className={itemClasses['sold']}>
-                    {formatMessage({ id: 'sold', defaultMessage: '123 sold' })}
-                </div>
+
+                
+                {/* <div className={itemClasses['sold']}>
+                        {formatMessage({ id: 'sold',defaultMessage:'123 sold' })}
+                </div> */}
+
             </div>
             <div
                 className={`${itemClasses['product-grid-actions']} ${loading &&

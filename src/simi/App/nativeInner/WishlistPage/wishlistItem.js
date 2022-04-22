@@ -109,7 +109,7 @@ const WishlistItem = props => {
                         defaultMessage: 'Add to Cart'
                     })
                 ) : (
-                    <FiShoppingCart />
+                    <FiShoppingCart size={20}/>
                 )}
             </button>
         ) : (
@@ -121,7 +121,7 @@ const WishlistItem = props => {
                     })
                 ) : (
                     <Link to={`${product.url_key}${product.url_suffix}`}>
-                        <FiShoppingCart />
+                        <FiShoppingCart size={20} />
                     </Link>
                 )}
             </button>
@@ -203,7 +203,7 @@ const WishlistItem = props => {
                         onClick={handleShareMobile}
                         className={classes.share}
                     >
-                        <BsFillShareFill />
+                        <BsFillShareFill size={20}/>
                     </button>
                 ) : (
                     <>
