@@ -1,5 +1,6 @@
 .grouped-options {
     padding: 1rem;
+    
 
     .product-title {
         text-align: center;
@@ -16,4 +17,11 @@
         margin-top: 10px;
     }
 
+}
+@media (max-width: 768px) {
+    .grouped-options {
+        padding:0;
+        padding-top: 3rem;
+        padding-left: 1rem;
+    }
 }
