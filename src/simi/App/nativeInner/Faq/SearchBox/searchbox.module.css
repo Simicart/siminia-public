@@ -1,0 +1,125 @@
+.block {
+	display: block;
+	box-sizing: border-box;
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: Roboto;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.87);
+    margin-bottom: 50px;
+}
+.cardpanel {
+    background: #1abc9c;
+    transition: box-shadow .25s, -webkit-box-shadow .25s;
+    padding: 24px;
+    margin: 0.5rem 0 1rem 0;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.titleblock {
+    text-align: center;
+    color: #FFFFFF !important;
+    margin-bottom: 50px;
+}
+
+h1 {
+	font-size: 2.5rem;
+    line-height: 110%;
+    margin: 2.8rem 0 1.68rem 0;
+	display: block;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.searchfield {
+    width: 65%;
+    margin: auto;
+    position: relative;
+}
+
+.inputfield {
+    padding: 15px 10px 15px 50px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    height: auto;
+    margin: 0 0 10px 0;
+    display: block;
+    box-sizing: border-box;
+    box-shadow: none !important;
+    width: 100%;
+    font-size: 16px;
+}
+
+.inputfield:focus {
+    outline: none;
+}
+
+.searchaction {
+	box-sizing: inherit;
+	position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+	font-size: 15px;
+	line-height: 1.5;
+    font-family: Roboto;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.87);
+    font-style: normal;  
+    height: 100%;
+}
+
+.searchicon {
+    color: #9e9e9e !important;
+    line-height: inherit;
+    position: absolute;
+    font-size: 25px;
+    top: 24.54%;
+    left: 2%;
+    font-weight: 900;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    box-sizing: inherit;
+}
+
+.btn {
+	box-sizing: inherit;
+    background-color: #212121 !important;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+	user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    vertical-align: middle;
+    z-index: 1;
+	text-decoration: none;
+    color: #fff;
+    text-align: center;
+    letter-spacing: .5px;
+	border: none;
+    border-radius: 2px;
+    padding: 0 16px;
+    text-transform: uppercase;
+    height: 100%;
+    line-height: 48px !important;
+    font-weight: 600;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .searchaction{
+        display: none;
+    }
+    .searchfield{
+        width: 100%;
+    }
+    .searchicon{
+        padding: 0 10px;
+    }
+}
