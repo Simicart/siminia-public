@@ -4,7 +4,7 @@ import { Route, Switch, useLocation, useParams } from 'react-router-dom';
 //import MagentoRoute from '@magento/venia-ui/lib/components/MagentoRoute';
 import { useScrollTopOnChange } from '@magento/peregrine/lib/hooks/useScrollTopOnChange';
 import NoMatch, { endPoint } from '../simi/App/nativeInner/NoMatch';
-// import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
+import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import Loader from '../simi/App/nativeInner/Loader'
 import PageBuilderComponent from '../simi/App/core/TapitaPageBuilder/PageBuilderComponent';
 //import Login from 'src/simi/App/core/Customer/Login';
