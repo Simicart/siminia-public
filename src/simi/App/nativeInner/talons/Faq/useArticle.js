@@ -8,9 +8,9 @@ export const useArticle = props => {
 		loading: articleLoading,
 		error: articleError
 	} = useQuery(GET_ARTICLE_BY_URL, {
-    variables:{ urlKey: url_key }
+    variables:{ urlKey: url_key },
+    fetchPolicy:"no-cache"
   })
-  console.log("articleData",articleData)
 	let derivedErrorMessage;
    	if (articleError) {
        const errorTarget = articleError;

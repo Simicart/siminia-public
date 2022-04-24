@@ -8,7 +8,7 @@ export const useAddHelpful = props => {
 		loading: helpfulLoading,
 		error: helpfulError
 	} = useMutation(ADD_HELPFUL, {
-		variable: { isHelpful: isHelpful }
+		variable: { isHelpful: isHelpful },
+		fetchPolicy:"no-cache"
 	})
-	
 }

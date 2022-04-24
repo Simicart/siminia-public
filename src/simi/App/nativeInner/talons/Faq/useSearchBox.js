@@ -6,7 +6,7 @@ export const useSearchBox = props => {
 		data: searchboxData,
 		loading: searchboxLoading,
 		error: searchboxError
-	} = useQuery(GET_SEARCH_BOX)
+	} = useQuery(GET_SEARCH_BOX,{fetchPolicy:"no-cache"})
 
 	let derivedErrorMessage;
    	if (searchboxError) {

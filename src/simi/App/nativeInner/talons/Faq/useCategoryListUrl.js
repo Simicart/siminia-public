@@ -8,7 +8,8 @@ export const useCategoryListUrl = props => {
 		loading: categoryLoading,
 		error: categoryError
 	} = useQuery(GET_CATEGORY_LIST, {
-        variables:{ urlKey: url_key }
+        variables:{ urlKey: url_key },
+        fetchPolicy:"no-cache"
     })
 
 	let derivedErrorMessage;

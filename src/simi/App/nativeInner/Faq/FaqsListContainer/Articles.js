@@ -3,6 +3,7 @@ import defaultClasses from './Articles.module.css';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faFileAlt } from '@fortawesome/free-regular-svg-icons'
 // import { faAngleDoubleUp, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom';
 
 import Icon from '@magento/venia-ui/lib/components/Icon';
 // import { Search as SearchIcon } from 'react-feather';
@@ -20,14 +21,14 @@ const Articles = props => {
             <li key={article.article_id}>
                 <div className={classes.header}>
                     <span>
-                        <a href={`/faq/article/${article.url_key}`}>
+                        <Link to={`/faq/article/${article.url_key}`}>
                             {/* <FontAwesomeIcon className={classes.icon} icon={faFileAlt}/> */}
                             {/* <Icon src={SearchIcon} /> */}
                             <span className={classes.wrapIcon}>
                                 <FaFileAlt size={25} />
                             </span>
                             {article.name}
-                        </a>
+                        </Link>
                     </span>
                 </div>
             </li>
@@ -41,13 +42,13 @@ const Articles = props => {
                     <li key={article.article_id}>
                         <div className={classes.header}>
                             <span>
-                                <a href={`/faq/article/${article.url_key}`}>
+                                <Link to={`/faq/article/${article.url_key}`}>
                                     {/* <FontAwesomeIcon className={classes.icon} icon={faFileAlt}/> */}
                                     <span className={classes.wrapIcon}>
                                         <FaFileAlt />
                                     </span>
                                     {article.name}
-                                </a>
+                                </Link>
                             </span>
                         </div>
                     </li>
@@ -60,17 +61,17 @@ const Articles = props => {
                             <li key={article.article_id}>
                                 <div className={classes.header}>
                                     <span>
-                                        <a
-                                            href={`/faq/article/${
+                                        <Link
+                                            to={`/faq/article/${
                                                 article.url_key
                                             }`}
                                         >
                                             {/* <FontAwesomeIcon className={classes.icon} icon={faFileAlt}/> */}
                                             <span className={classes.wrapIcon}>
-                                                <FaFileAlt  />
+                                                <FaFileAlt />
                                             </span>
                                             {article.name}
-                                        </a>
+                                        </Link>
                                     </span>
                                 </div>
                             </li>

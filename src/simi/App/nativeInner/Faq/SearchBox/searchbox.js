@@ -16,7 +16,7 @@ const SearchBox = forwardRef((props, ref) => {
         derivedErrorMessage
     } = useSearchBox();
     const { onClick, onKeyDown, userInput, onChange, onSearch } = props;
-
+   
     if (!searchboxData || !searchboxData.MpMageplazaFaqsGetConfig) {
         return <Loader />;
     }
@@ -47,6 +47,9 @@ const SearchBox = forwardRef((props, ref) => {
                         value={userInput}
                         onChange={onChange}
                         ref={ref}
+                        onKeyPress={e => {
+                            if (e.key === 'Enter') onSearch();
+                        }}
                     />
                     <div className={classes.searchaction}>
                         <a

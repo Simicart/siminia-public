@@ -67,7 +67,7 @@ ul:not([class]) > li:not([class]), ol:not([class]) > li:not([class]) {
 
 a:not([class]) {
     text-decoration: none;
-    color: #039be5;
+    /* color: #039be5; */
     -webkit-tap-highlight-color: transparent;
     background-color: transparent;
 }

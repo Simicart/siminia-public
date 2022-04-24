@@ -6,7 +6,7 @@ export const useCategoryList = props => {
 		data: categoriesData,
 		loading: categoriesLoading,
 		error: categoriesError
-	} = useQuery(GET_CATEGORY_LIST)
+	} = useQuery(GET_CATEGORY_LIST,{ fetchPolicy: 'no-cache' })
 
 	let derivedErrorMessage;
  	if (categoriesError) {

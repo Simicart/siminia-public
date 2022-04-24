@@ -37,15 +37,22 @@ h4 {
 
 hr {
 	border-top: solid 2px #1abc9c;
-    width: 120px;
+    width: 100%;
     margin: 10px 0 0 0;
     box-sizing: content-box;
     height: 0;
     overflow: visible;
 }
-
+.wrapIcon{
+    display: inline-block;
+    font-size: inherit;
+    height: 1em;
+    overflow: visible;
+    vertical-align: -0.125em;
+    width: 1.125em;
+}
 span {
-	color: #757575 !important;
+	/* color: #fff !important; */
     font-size: 0.9rem;
     box-sizing: inherit;
 }
