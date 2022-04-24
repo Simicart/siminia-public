@@ -5,6 +5,46 @@ const productLabelEnabled =
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL) === 1;
+const callForPriceEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_CALL_FOR_PRICE &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_CALL_FOR_PRICE) === 1;
+
+export const CallForPriceFragment = callForPriceEnabled
+    ? gql`
+          fragment CallForPriceFragment on ProductInterface {
+              mp_callforprice_rule {
+                  rule_id
+                  name
+                  rule_content
+                  store_ids
+                  customer_group_ids
+                  action
+                  url_redirect
+                  quote_heading
+                  quote_description
+                  status
+                  show_fields
+                  required_fields
+                  conditions_serialized
+                  attribute_code
+                  button_label
+                  priority
+                  to_date
+                  created_at
+                  rule_description
+                  enable_terms
+                  url_terms
+                  from_date
+              }
+          }
+      `
+    : gql`
+    fragment CallForPriceFragment on ProductInterface {
+        sku
+    }
+`;
 
 export const ProductLabelFragment = productLabelEnabled
     ? gql`
@@ -70,6 +110,7 @@ export const getCateNoFilter = gql`
             sort: $sort
         ) {
             items {
+                ...CallForPriceFragment
                 ...ProductOfListFragment
                 ...ProductLabelFragment
             }
@@ -81,6 +122,7 @@ export const getCateNoFilter = gql`
     }
     ${ProductLabelFragment}
     ${CategoryFragment}
+    ${CallForPriceFragment}
     ${ProductOfListFragment}
 `;
 
