@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import {SimiPriceFragment} from "src/simi/queries/catalog_gql/catalogFragment.gql";
+import { SimiPriceFragment } from 'src/simi/queries/catalog_gql/catalogFragment.gql';
 
 const sizeChartEnabled =
     window.SMCONFIGS &&
@@ -23,6 +23,13 @@ const mageworxSeoEnabled =
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
+
+const callForPriceEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_CALL_FOR_PRICE &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_CALL_FOR_PRICE) === 1;
+
 export const ProductDetailsFragment = gql`
     fragment ProductDetailsFragment on ProductInterface {
         __typename
@@ -39,13 +46,44 @@ export const ProductDetailsFragment = gql`
         id
         uid
         ${
-            mageworxSeoEnabled ? `
+            callForPriceEnabled
+                ? `
+        mp_callforprice_rule {
+            rule_id
+            name
+            rule_content
+            store_ids
+            customer_group_ids
+            action
+            url_redirect
+            quote_heading
+            quote_description
+            status
+            show_fields
+            required_fields
+            conditions_serialized
+            attribute_code
+            button_label
+            priority
+            to_date
+            created_at
+            rule_description
+            enable_terms
+            url_terms
+            from_date
+        }
+        `
+                : ``
+        }
+        ${
+            mageworxSeoEnabled
+                ? `
             mageworx_canonical_url{
                 url
                 __typename
                 extraData
-            }` 
-            : ``
+            }`
+                : ``
         }
         ${
             sizeChartEnabled
@@ -84,11 +122,12 @@ export const ProductDetailsFragment = gql`
         `
                 : ``
         }
-        ${shopByBrandEnabled ? 
-            `mpbrand{
+        ${
+            shopByBrandEnabled
+                ? `mpbrand{
                 image
-            }` 
-            : ``
+            }`
+                : ``
         }
         media_gallery_entries {
             # id is deprecated and unused in our code, but lint rules require we
