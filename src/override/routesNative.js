@@ -328,6 +328,16 @@ const Article = props => {
         />
     );
 };
+const BlogHome = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BlogHome"*/ 'src/simi/App/nativeInner/Blog/home')
+            }
+            {...props}
+        />
+    );
+};
 const Routes = props => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
@@ -431,6 +441,11 @@ const Routes = props => {
                     exact
                     path="/faq.html"
                     render={props => <Faq {...props} />}
+                />
+                <Route
+                    exact
+                    path="/blog.html"
+                    render={props => <BlogHome {...props} />}
                 />
                 <Route
                     exact

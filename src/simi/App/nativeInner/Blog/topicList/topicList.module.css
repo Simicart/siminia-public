@@ -1,0 +1,20 @@
+.topicListRoot {
+    padding: 5px;
+    border-top: solid 1px #eaeaea;
+    margin-top: 15px;
+}
+.topicListHeader {
+    margin-top: 15px;
+    font-size: 20px;
+}
+.topicItems {
+    margin-top: 15px;
+    padding: 0 15px;
+}
+.topicItem {
+    display: block;
+    margin-bottom: 15px;
+}
+.topicItem:hover {
+    opacity: 0.8;
+}
