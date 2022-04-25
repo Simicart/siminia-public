@@ -207,6 +207,7 @@ const GET_STORE_CONFIG = gql`
                             footer_title1
                             footer_title2
                             footer_link
+                            footer_block
                         }
                         review {
                             catalog_review_active
