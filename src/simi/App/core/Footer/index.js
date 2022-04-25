@@ -106,11 +106,13 @@ const Footer = props => {
                     linkNodes[i].addEventListener('click', function(e) {
                         e.preventDefault()
                         const href = this.getAttribute('href');
-                        if(href.length > 0 && href[0] === '/') {
-                            history.push(href)
-                        } else {
-                            const target = this.getAttribute('target');
-                            window.open(href, target ? target : '_self')
+                        if(href) {
+                            if(href.length > 0 && href[0] === '/') {
+                                history.push(href)
+                            } else {
+                                const target = this.getAttribute('target');
+                                window.open(href, target ? target : '_self')
+                            }
                         }
                     })
                 }
