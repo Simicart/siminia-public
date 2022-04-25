@@ -11,67 +11,89 @@ import { isRequired } from '@magento/venia-ui/lib/util/formValidators';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
+import Loader from '../Loader'
+import AlertMessages from '../ProductFullDetail/AlertMessages'
 const CallForPrice = props => {
     const { data, wrapperPrice, item_id } = props;
+    
     const [isPopupOpen, setOpenPopup] = useState(false);
     const classes = useStyle(defaultClasses, props.classes);
 
-    
+    const [alertMsg, setAlertMsg] = useState(-1)    
 
-    const [mpCallForPriceRequest, { data: dataSubmit }] = useMutation(
+    const [mpCallForPriceRequest, { data: dataSubmit, loading }] = useMutation(
         SUBMIT_POPUP_FORM
     );
     const [{ isSignedIn }] = useUserContext();
-
-    const handleSubmitReview = formValue => {
+    const showFields = data && data.show_fields ?  data.show_fields.split(',') : null
+    const successMsg = `Request success !`;
+    const handleSubmitReview = async formValue => {
         const { email, note, name, phone } = formValue;
-        console.log(formValue);
-        mpCallForPriceRequest({
+        // console.log(formValue);
+        await mpCallForPriceRequest({
             variables: {
                 product_id: item_id,
                 store_ids: data.store_ids,
-                name,
-                phone,
-                email,
-                customer_note: note
+                name : showFields?.includes('name') ? name : "*",
+                phone: showFields?.includes('phone') ? phone : "*",
+                email: showFields?.includes('email') ? email : "*",
+                customer_note: showFields?.includes('customer_note') ? note : "*",
             }
         });
+        setAlertMsg(true)
+        setOpenPopup(false)
     };
+    let topInsets = 0;
+    let bottomInsets = 0;
+    try {
+        if (window.simicartRNinsets) {
+            const simicartRNinsets = JSON.parse(window.simicartRNinsets);
+            topInsets = parseInt(simicartRNinsets.top);
+            bottomInsets = parseInt(simicartRNinsets.bottom);
+        } else if (window.simpifyRNinsets) {
+            const simpifyRNinsets = JSON.parse(window.simpifyRNinsets);
+            topInsets = parseInt(simpifyRNinsets.top);
+            bottomInsets = parseInt(simpifyRNinsets.bottom);
+        }
+    } catch (err) {}
+
+
+    
 
     const form = (
         <Form onSubmit={handleSubmitReview}>
-            <Field required={true}>
+            {showFields?.includes('name') && <Field required={true}>
                 <TextInput
                     placeholder="name"
                     field="name"
                     type="text"
                     validate={isRequired}
                 />
-            </Field>
-            <Field required={true}>
+            </Field>}
+            {showFields?.includes('email') &&<Field required={true}>
                 <TextInput
                     placeholder="email"
                     field="email"
                     type="email"
                     validate={isRequired}
                 />
-            </Field>
-            <Field required={true}>
+            </Field>}
+            {showFields?.includes('phone') && <Field required={true}>
                 <TextInput
                     placeholder="phone"
                     field="phone"
                     type="phone"
                     validate={isRequired}
                 />
-            </Field>
-            <Field required={true}>
+            </Field>}
+            {showFields?.includes('customer_note') && <Field required={true}>
                 <TextInput
                     placeholder="Customer note"
                     field="note"
                     type="text"
                     validate={isRequired}
                 />
-            </Field>
+            </Field>}
             <div className={classes.submitBtnContainer}>
                 <button
                     style={{
@@ -182,8 +204,19 @@ const CallForPrice = props => {
             );
         } else return <>{wrapperPrice}</>;
     };
+    
 
-    return <div>{renderPriceWithCallForPrice(data)}</div>;
+    return <div>
+        {loading ? <Loader /> : null}
+        <AlertMessages
+                message={successMsg}
+                setAlertMsg={setAlertMsg}
+                alertMsg={alertMsg}
+                status="success"
+                topInsets={topInsets}
+            />
+        {renderPriceWithCallForPrice(data)}
+        </div>;
 };
 
 export default CallForPrice;

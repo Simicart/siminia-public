@@ -15,15 +15,7 @@ const FooterFixedBtn = props => {
     return (
         <>
             <div style={{ height: 55 + bottomInsets }} className="virtual" />
-            {isDisabled.action === 'hide_add_to_cart' ? (
-                <div
-                    style={{
-                        height: 55 + bottomInsets,
-                    }}
-                    className="isDisabled"
-                />
-            ) : null}
-            <div
+           {isDisabled.action !== 'hide_add_to_cart' ? <div
                 style={{ height: 55 + bottomInsets }}
                 className="main-footerFixedBtn"
             >
@@ -48,7 +40,7 @@ const FooterFixedBtn = props => {
                         BUY NOW
                     </li>
                 </ul>
-            </div>
+            </div> : null}
         </>
     );
 };
