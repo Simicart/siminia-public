@@ -1,6 +1,6 @@
 import React from 'react'
 import BreadCrumb from '../breadcrumb/index';
-import classes from '../home/home.css';
+import classes from '../home/home.module.css';
 import BlogListing from '../blogListing/index';
 import SearchBlog from '../searchBlog';
 import CateTree from '../cateTree';

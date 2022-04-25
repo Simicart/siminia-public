@@ -439,13 +439,13 @@ const Routes = props => {
                 />
                 <Route
                     exact
-                    path="/faq.html"
-                    render={props => <Faq {...props} />}
+                    path="/blog.html"
+                    render={props => <BlogHome {...props} />}
                 />
                 <Route
                     exact
-                    path="/blog.html"
-                    render={props => <BlogHome {...props} />}
+                    path="/faq.html"
+                    render={props => <Faq {...props} />}
                 />
                 <Route
                     exact
