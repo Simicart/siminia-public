@@ -338,6 +338,56 @@ const BlogHome = props => {
         />
     );
 };
+const BlogPost = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BlogPost"*/ 'src/simi/App/nativeInner/Blog/post/index.js')
+            }
+            {...props}
+        />
+    );
+};
+const BlogTag = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BlogTag"*/ 'src/simi/App/nativeInner/Blog/tag/index.js')
+            }
+            {...props}
+        />
+    );
+};
+const BlogTopic = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BlogTopic"*/ 'src/simi/App/nativeInner/Blog/topic/index.js')
+            }
+            {...props}
+        />
+    );
+};
+const BlogArchive = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BlogArchive"*/ 'src/simi/App/nativeInner/Blog/month/index.js')
+            }
+            {...props}
+        />
+    );
+};
+const BlogAuthor = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BlogAuthor"*/ 'src/simi/App/nativeInner/Blog/author/index.js')
+            }
+            {...props}
+        />
+    );
+};
 const Routes = props => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
@@ -441,6 +491,31 @@ const Routes = props => {
                     exact
                     path="/blog.html"
                     render={props => <BlogHome {...props} />}
+                />
+                <Route
+                    exact
+                    path="/blog/post/:postUrl?"
+                    render={props => <BlogPost {...props} />}
+                />
+                <Route
+                    exact
+                    path="/blog/tag/:tagUrl?"
+                    render={props => <BlogTag {...props} />}
+                />
+                <Route
+                    exact
+                    path="/blog/topic/:topicUrl?"
+                    render={props => <BlogTopic {...props} />}
+                />
+                <Route
+                    exact
+                    path="/blog/month/:monthUrl?"
+                    render={props => <BlogArchive {...props} />}
+                />
+                <Route
+                    exact
+                    path="/blog/author/:authorUrl?"
+                    render={props => <BlogAuthor {...props} />}
                 />
                 <Route
                     exact

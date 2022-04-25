@@ -12,7 +12,8 @@ export const usePost = props => {
             variables: {
                 url_key: postUrl.replace('.html', '')
             },
-            skip: !postUrl
+            skip: !postUrl,
+            fetchPolicy:"no-cache"
         }
     )
     return {

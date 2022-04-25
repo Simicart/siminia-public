@@ -11,7 +11,7 @@ const calendarIcon = <Icon src={CalendarIc} attrs={{ width: 13 }} />;
 const SimibarMonthlyListing = props => {
     const {
         data: archiveListData
-    } = useQuery(GET_BLOG_ARCHIVE)
+    } = useQuery(GET_BLOG_ARCHIVE,{fetchPolicy:"no-cache"})
 
     if (archiveListData && archiveListData.mpBlogMonthlyArchive && archiveListData.mpBlogMonthlyArchive.items) {
         const archiveItems = archiveListData.mpBlogMonthlyArchive.items;

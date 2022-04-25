@@ -1,6 +1,11 @@
 import gql from 'graphql-tag';
+const blogEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_BETTER_BLOG &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_BETTER_BLOG) === 1;
 
-const PageInfoFragment = gql`
+const PageInfoFragment = blogEnabled ? gql`
     fragment PageInfoFragment on PageInfo {
         pageSize
         currentPage
@@ -9,9 +14,9 @@ const PageInfoFragment = gql`
         startPage
         endPage
     }
-`
+` : '';
 
-const CategoryFragment = gql`
+const CategoryFragment = blogEnabled ? gql`
     fragment CategoryFragment on Category {
         category_id
         name
@@ -32,9 +37,9 @@ const CategoryFragment = gql`
         updated_at
         import_source
     }
-`
+` : '';
 
-const TagFragment = gql`
+const TagFragment = blogEnabled ?  gql`
     fragment TagFragment on Tag {
         tag_id
         name
@@ -50,9 +55,9 @@ const TagFragment = gql`
         updated_at
         import_source
     }
-`
+` : ''
 
-const TopicFragment = gql`
+const TopicFragment = blogEnabled ? gql`
     fragment TopicFragment on Topic {
         topic_id
         name
@@ -68,22 +73,28 @@ const TopicFragment = gql`
         updated_at
         import_source
     }
-`
+` : ''
 
-const ProductFragment = gql`
-    fragment ProductFragment on Product {
-        entity_id
-        attribute_set_id
-        type_id
-        sku
-        has_options
-        required_options
-        created_at
-        updated_at
-    }
-`
+const ProductFragment = blogEnabled ? gql`
+    fragment ProductFragment on Post {
+        products {
+          items {
+            attribute_set_id
+            created_at
+            entity_id
+            has_options
+            required_options
+            sku
+            type_id
+            updated_at
+          }
+          total_count
+        }
+      }
+` : ''
 
-const PostFragment = gql`
+
+const PostFragment = blogEnabled ? gql`
     fragment PostFragment on Post {
         post_id
         name
@@ -108,7 +119,7 @@ const PostFragment = gql`
         layout
         view_traffic
     }
-`
+` : ''
 
 export const GET_BLOG_POSTS = gql`
     query mpBlogPosts (
@@ -335,12 +346,7 @@ export const GET_BLOG_POST_BY_URL_KEY = gql`
                         ...TopicFragment
                     }
                 }
-                products {
-                    total_count
-                    items {
-                        ...ProductFragment
-                    }
-                }
+                ...ProductFragment
                 posts {
                     total_count
                     items {
