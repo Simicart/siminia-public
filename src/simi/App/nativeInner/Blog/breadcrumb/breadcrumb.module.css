@@ -1,0 +1,20 @@
+.breadCrumb {
+    margin-left: 1rem;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    height: 1.875rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 15px;
+}
+.breadCrumbLink {
+    padding: 0.25rem;
+    text-decoration: underline;
+}
+.breadCrumbSeparator {
+    padding: 0.25rem;
+}
+.breadCrumbText {
+    padding: 0.25rem;
+}
