@@ -1,5 +1,17 @@
 import { gql } from '@apollo/client';
 
+const deliveryTimeEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME) === 1;
+
+const rewardPointEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
+
 const GET_ORDER_DETAIL = gql`
     query GetOrderDetail($orderId: String!)  {
     customer {
@@ -25,17 +37,21 @@ const GET_ORDER_DETAIL = gql`
           company
           
         }
-        mp_delivery_information {
-          mp_delivery_date
-          mp_delivery_time
-          mp_house_security_code
-          mp_delivery_comment
-       }
-       mp_reward_points {
-        earn
-        spent
-        discount
-      }
+        ${deliveryTimeEnabled ? `
+          mp_delivery_information {
+            mp_delivery_date
+            mp_delivery_time
+            mp_house_security_code
+            mp_delivery_comment
+          }
+        ` : ''}
+        ${rewardPointEnabled ? ` 
+          mp_reward_points {
+            earn
+            spent
+            discount
+          }
+        ` : ''}
         items {
           product_name
           product_url_key
