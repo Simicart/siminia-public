@@ -24,9 +24,7 @@ const storage = new BrowserPersistence();
 
 const Post = props => {
     const { postUrl = "" } = useParams();
-    console.log("postUrl",postUrl)
     const talonProps = usePost({ postUrl });
-    console.log("talonProps",talonProps);
     const {
         resultData,
         resultLoading
