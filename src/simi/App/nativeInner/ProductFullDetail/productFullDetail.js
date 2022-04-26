@@ -21,6 +21,8 @@ import RichContent from '@magento/venia-ui/lib/components/RichContent/richConten
 import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductOptions';
 import defaultClasses from './productFullDetail.module.css';
 import SizeChart from './SizeChart';
+import { PriceAlertProductDetails } from './PriceAlertProductDetails';
+import { PopupAlert } from './PopupAlert/popupAlert';
 const WishlistButton = React.lazy(() =>
     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
 );
@@ -82,6 +84,7 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 const ProductFullDetail = props => {
     const { product, history } = props;
     const talonProps = useProductFullDetail({ product });
+    const { sku } = product;
     const {
         breadcrumbCategoryId,
         errorMessage,
@@ -105,6 +108,10 @@ const ProductFullDetail = props => {
         setAlertMsg,
         alertMsg
     } = talonProps;
+    const [message, setMessage] = useState(null);
+    const [messageType, setMessageType] = useState(null);
+    const [popupData, setPopUpData] = useState(null);
+    const [showPopup, setShowPopup] = useState(false);
     const successMsg = `${productDetails.name} was added to shopping cart`;
     const [{ isSignedIn }] = useUserContext();
     let History = useHistory();
@@ -386,8 +393,6 @@ const ProductFullDetail = props => {
         </div>
     );
 
-   
-
     const wrapperQuantity = (
         <div className="wrapperQuantity">
             <section
@@ -405,6 +410,22 @@ const ProductFullDetail = props => {
                     message={errors.get('quantity')}
                 />
             </section>
+            {/* {!isMobileSite ? ( */}
+                <div>
+                    <PriceAlertProductDetails
+                        sku={sku}
+                        setMessage={setMessage}
+                        setMessageType={setMessageType}
+                        setPopUpData={setPopUpData}
+                        setShowPopup={setShowPopup}
+                    />
+                    <PopupAlert
+                        popupData={popupData}
+                        showPopup={showPopup}
+                        setShowPopup={setShowPopup}
+                    />
+                </div>
+            {/* ) : null} */}
         </div>
     );
     const renderSizeChart = product.mp_sizeChart ? (
@@ -597,7 +618,6 @@ const ProductFullDetail = props => {
                             }}
                             errors={errors.get('form') || []}
                         />
-                       
 
                         {!isMobileSite ? (
                             <div className="wrapperOptions">
@@ -627,6 +647,7 @@ const ProductFullDetail = props => {
                             : !isMobileSite
                             ? wrapperQuantity
                             : null}
+
                         {!isMobileSite ? cartAction : null}
                         <div className={classes.wrapperDes}>
                             <section className={classes.description}>
@@ -708,26 +729,30 @@ const ProductFullDetail = props => {
                         )}
                     </Form>
                     {isMobileSite ? (
-                            <div className="productInfo">
-                                <div className="wrapperTitle">
-                                    <section className={classes.title}>
-                                        <h1 className={classes.productName}>
-                                            {/* {productDetails.name} */}
-                                            <div
-                                                dangerouslySetInnerHTML={{
-                                                    __html: productDetails.name
-                                                }}
-                                            />
-                                            <Pdetailsbrand product={product} />
-                                        </h1>
-                                    </section>
-                                </div>
-                                {/* {wrapperPrice} */}
-                                {/* {renderPriceWithCallForPrice(dataLocation)} */}
-                                <CallForPrice data = {dataLocation} wrapperPrice={wrapperPrice} item_id = {product.id} />
-                                {review}
+                        <div className="productInfo">
+                            <div className="wrapperTitle">
+                                <section className={classes.title}>
+                                    <h1 className={classes.productName}>
+                                        {/* {productDetails.name} */}
+                                        <div
+                                            dangerouslySetInnerHTML={{
+                                                __html: productDetails.name
+                                            }}
+                                        />
+                                        <Pdetailsbrand product={product} />
+                                    </h1>
+                                </section>
                             </div>
-                        ) : null}
+                            {/* {wrapperPrice} */}
+                            {/* {renderPriceWithCallForPrice(dataLocation)} */}
+                            <CallForPrice
+                                data={dataLocation}
+                                wrapperPrice={wrapperPrice}
+                                item_id={product.id}
+                            />
+                            {review}
+                        </div>
+                    ) : null}
                 </div>
                 {isMobileSite ? renderSizeChart : null}
                 {product.mp_sizeChart &&
