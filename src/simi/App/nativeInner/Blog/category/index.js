@@ -25,7 +25,8 @@ const Category = props => {
             variables: {
                 url_key: categoryUrl.replace('.html', '')
             },
-            skip: !categoryUrl
+            skip: !categoryUrl,
+            fetchPolicy:"no-cache"
         }
     )
     if (resultLoading)
