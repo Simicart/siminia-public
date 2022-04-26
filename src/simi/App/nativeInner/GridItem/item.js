@@ -241,7 +241,7 @@ const Griditem = props => {
                 className={`${itemClasses['product-grid-actions']} ${loading &&
                     itemClasses['action-loading']}`}
             >
-               {callForPriceRule.action !== "hide_add_to_cart" ? <button
+               {callForPriceRule?.action !== "hide_add_to_cart" ? <button
                     className={itemClasses['product-grid-addcartbtn']}
                     onClick={() => {
                         if (!loading && !productOutStock) handleAddCart(item);
