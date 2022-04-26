@@ -89,7 +89,7 @@ const Post = props => {
     const urlToComment = window.location.href;
 
     return (
-        <div className={classes.root}>
+        <div className={`${classes.root} container`}>
             <Title>{postData.meta_title ? postData.meta_title : postData.name}</Title>
             <Meta name="description" content={postData.meta_description} />
             <Meta name="keywords" content={postData.meta_keywords} />

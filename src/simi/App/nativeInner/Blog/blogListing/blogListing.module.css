@@ -5,7 +5,7 @@
 .blogpostItem {
     width: 100%;
     border: 1px solid #eee;
-    padding: 25px;
+    padding: 25px 0;
     margin-bottom: 20px;
     display: flex;
 }

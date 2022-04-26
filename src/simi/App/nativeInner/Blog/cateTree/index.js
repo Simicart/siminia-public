@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCateTree } from '../../talons/Blog/useCateTree'
-// import DropdownTreeSelect from 'react-dropdown-tree-select'
-// import 'react-dropdown-tree-select/dist/styles.css'
+import DropdownTreeSelect from 'react-dropdown-tree-select'
+import 'react-dropdown-tree-select/dist/styles.css'
 import classes from './cateTree.module.css'
 import { useHistory } from 'react-router-dom';
 // import { useHistory } from '@magento/venia-drivers';
@@ -16,7 +16,7 @@ const CateTree = props => {
     return (
         <div className={classes.catetreeRoot}>
             <div className={classes.catetreeHeader}>{`Categories`}</div>
-            {/* <DropdownTreeSelect
+            <DropdownTreeSelect
                 className={classes.dropdownSelect}
                 keepChildrenOnSearch={true}
                 showDropdown="always"
@@ -25,7 +25,7 @@ const CateTree = props => {
                     history.push(`/blog/category/${currentNode.url_key}.html`)
                 }}
                 keepDropdownActive={true}
-            /> */}
+            />
         </div>
     )
 }

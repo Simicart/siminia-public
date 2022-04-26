@@ -8,8 +8,10 @@ import { Link } from 'react-router-dom';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 // import { Search as SearchIcon } from 'react-feather';
 import { FaFileAlt, FaAngleDoubleDown, FaAngleDoubleUp } from 'react-icons/fa';
+import { useIntl } from 'react-intl';
 const Articles = props => {
     const classes = defaultClasses;
+    const { formatMessage } = useIntl();
     const { articles } = props;
     const [viewAll, setViewAll] = useState(false);
     const onClick = () => {
@@ -80,14 +82,22 @@ const Articles = props => {
                     <a className={classes.extend} onClick={onClick}>
                         {/* <FontAwesomeIcon className={classes.arrow} icon={faAngleDoubleUp}/> */}
                         <FaAngleDoubleUp />
-                        Show less
+                        
+                        {formatMessage({
+                                id: 'showLess',
+                                defaultMessage: ' Show less'
+                            })}
                     </a>
                 </Fragment>
             ) : (
                 <a className={classes.extend} onClick={onClick}>
                     {/* <FontAwesomeIcon className={classes.arrow} icon={faAngleDoubleDown}/> */}
                     <FaAngleDoubleDown />
-                    View all
+                   
+                    {formatMessage({
+                                id: 'viewAll',
+                                defaultMessage: ' View all'
+                            })}
                 </a>
             )}
         </ul>

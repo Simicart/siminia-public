@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet';
 import { useArticle } from '../../talons/Faq/useArticle';
 import { useCategoryList } from '../../talons/Faq/useCategoryList';
 import CategoryBlock from '../FaqsListContainer/CategoryBlock';
+import { useIntl } from 'react-intl';
 // import '@fortawesome/fontawesome-free/css/fontawesome.min.css'
 
 function useWindowDimensions() {
@@ -35,6 +36,8 @@ function useWindowDimensions() {
 
 const Article = props => {
     const { width, height } = useWindowDimensions();
+    const { formatMessage } = useIntl();
+
     const { articleUrl = '' } = useParams();
     const { articleData, articleLoading, derivedErrorMessage } = useArticle({
         url_key: articleUrl
@@ -176,8 +179,11 @@ const Article = props => {
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>
-                    {/* {data ? data.name : ''}  */}- Frequently Answer and
-                    Question
+                    {/* {data ? data.name : ''}  */}
+                    {formatMessage({
+                        id: 'answerAndQuestion',
+                        defaultMessage: '- Frequently Answer and Question'
+                    })}
                 </title>
             </Helmet>
             <SearchBox

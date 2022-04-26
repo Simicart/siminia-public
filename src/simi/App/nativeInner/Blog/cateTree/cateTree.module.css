@@ -21,6 +21,7 @@
     position: relative !important;
     width: 100%;
     border-top: none !important;
+    background-color: rgb(242, 242, 243)!important;
 }
 .dropdownSelect input {
     display: none;

@@ -18,6 +18,7 @@ const Category = props => {
     const { monthUrl = "" } = useParams();
 
     const dateData = monthUrl.replace('.html', '').replace(' ', '').split('-');
+    console.log("dateData",dateData)
     const {
         data: resultData,
         loading: resultLoading
@@ -27,9 +28,11 @@ const Category = props => {
                 monthly: parseInt(dateData[1]),
                 year: parseInt(dateData[0])
             },
-            skip: !monthUrl || !dateData || !dateData[0] || !dateData[1]
+            skip: !monthUrl || !dateData || !dateData[0] || !dateData[1],
+            fetchPolicy:"no-cache"
         }
     )
+    console.log("resultData",resultData);
     if (resultLoading)
         return <LoadingIndicator />
     if (!resultData || !resultData.mpBlogMonthlyArchive || !resultData.mpBlogMonthlyArchive.items || !resultData.mpBlogMonthlyArchive.items[0])

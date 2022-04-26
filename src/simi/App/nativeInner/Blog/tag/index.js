@@ -36,7 +36,7 @@ const Tag = props => {
     const tagData = resultData.mpBlogTags.items[0];
 
     return (
-        <div className={classes.mainCtn}>
+        <div className={`${classes.mainCtn} container`}>
             <Title>{tagData.meta_title ? tagData.meta_title : tagData.name}</Title>
             <Meta name="description" content={tagData.meta_description} />
             <Meta name="keywords" content={tagData.meta_keywords} />

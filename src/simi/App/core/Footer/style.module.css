@@ -181,6 +181,19 @@
 .pd-10-15 {
     padding: 10px 15px;
 }
+.root div[class*='guestForm-buttons'] {
+    padding: 1rem 0;
+}
+
+.footer-app div[class*='social-list'] > p > a > img {
+    display: inline;
+}
+
+.footer-app a {
+    text-decoration: none !important;
+}
+
+
 @media (min-width: 1200px) and (max-width: 1919px) {
     .newsletter__form > .email {
         width: 73%;

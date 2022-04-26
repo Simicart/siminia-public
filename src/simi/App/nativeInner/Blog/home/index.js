@@ -27,7 +27,7 @@ const Home = props => {
             titleName = simiBlogConfiguration.general.name
     }
     return (
-        <div className={classes.mainCtn}>
+        <div className={`${classes.mainCtn} container`}>
             <Title>{title}</Title>
             <Meta name="description" content={description} />
             <BreadCrumb items={

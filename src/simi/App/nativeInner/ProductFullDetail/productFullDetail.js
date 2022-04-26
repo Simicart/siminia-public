@@ -107,7 +107,6 @@ const ProductFullDetail = props => {
     } = talonProps;
     const successMsg = `${productDetails.name} was added to shopping cart`;
     const [{ isSignedIn }] = useUserContext();
-    console.log('product', product);
     let History = useHistory();
     const dataLocation = product.mp_callforprice_rule
         ? product.mp_callforprice_rule
