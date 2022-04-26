@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_HELPFUL } from '../../../../talons/Faq/Faq.gql';
 import * as Icon from 'react-feather';
 import defaultClasses from './Rating.module.css';
 import { useIntl } from 'react-intl';
+import CacheHelper from 'src/simi/Helper/CacheHelper';
 
 const Rating = props => {
     const { id, positives, negatives } = props;
@@ -39,6 +40,9 @@ const Rating = props => {
         !hasRatingData ? false : false || ratingData.display
     );
     const [isRated, { data }] = useMutation(ADD_HELPFUL);
+    useEffect(() => {
+        localStorage.removeItem(`article${id}`);
+    });
 
     const messageStyle = {
         background: !disable ? '#e5efe5' : '#fae5e5',
