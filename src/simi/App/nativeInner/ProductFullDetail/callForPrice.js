@@ -150,7 +150,8 @@ const CallForPrice = props => {
                             color: configColor.button_text_color,
                             borderRadius: '2px',
                             margin: '10px 0px',
-                            width: 'fit-content'
+                            width: 'fit-content',
+                            cursor: 'pointer'
                         }}
                         onClick={() => setOpenPopup(true)}
                     >

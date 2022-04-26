@@ -26,5 +26,15 @@
     background-color: #fff;
     /* max-height: 53%; */
     padding: 20px;
+    border-radius: 4px;
     
+}
+@media (min-width: 768px) {
+    .popup_form {
+        position: fixed;
+        width: 50%;
+        position: fixed;
+        width: 25%;
+        left: calc(50% - 12.5%);
+    }
 }
