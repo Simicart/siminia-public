@@ -24,7 +24,17 @@
     top: 32%;
     z-index: 8;
     background-color: #fff;
-    max-height: 53%;
+    /* max-height: 53%; */
     padding: 20px;
+    border-radius: 4px;
     
+}
+@media (min-width: 768px) {
+    .popup_form {
+        position: fixed;
+        width: 50%;
+        position: fixed;
+        width: 25%;
+        left: calc(50% - 12.5%);
+    }
 }
