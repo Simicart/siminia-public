@@ -338,6 +338,16 @@ const BlogHome = props => {
         />
     );
 };
+const BlogCategory = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BlogCategory"*/ 'src/simi/App/nativeInner/Blog/category')
+            }
+            {...props}
+        />
+    );
+};
 const BlogPost = props => {
     return (
         <LazyComponent
@@ -491,6 +501,11 @@ const Routes = props => {
                     exact
                     path="/blog.html"
                     render={props => <BlogHome {...props} />}
+                />
+                <Route
+                    exact
+                    path="/blog/category/:categoryUrl?"
+                    render={props => <BlogCategory {...props} />}
                 />
                 <Route
                     exact

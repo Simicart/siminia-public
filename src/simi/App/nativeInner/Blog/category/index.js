@@ -25,7 +25,8 @@ const Category = props => {
             variables: {
                 url_key: categoryUrl.replace('.html', '')
             },
-            skip: !categoryUrl
+            skip: !categoryUrl,
+            fetchPolicy:"no-cache"
         }
     )
     if (resultLoading)
@@ -36,7 +37,7 @@ const Category = props => {
     const cateData = resultData.mpBlogCategories.items[0];
 
     return (
-        <div className={classes.mainCtn}>
+        <div className={`${classes.mainCtn} container`}>
             <Title>{cateData.meta_title ? cateData.meta_title : cateData.name}</Title>
             <Meta name="description" content={cateData.meta_description} />
             <Meta name="keywords" content={cateData.meta_keywords} />

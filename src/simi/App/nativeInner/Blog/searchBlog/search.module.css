@@ -15,6 +15,7 @@
     border: none;
     margin-inline-start: 5px;
     width: 100%;
+    background-color: rgb(242, 242, 243);
 }
 .autocomplete {
     position: absolute;

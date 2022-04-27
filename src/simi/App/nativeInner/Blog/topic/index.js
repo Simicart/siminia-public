@@ -36,7 +36,7 @@ const Topic = props => {
     const topicData = resultData.mpBlogTopics.items[0];
 
     return (
-        <div className={classes.mainCtn}>
+        <div className={`${classes.mainCtn} container`}>
             <Title>{topicData.meta_title ? topicData.meta_title : topicData.name}</Title>
             <Meta name="description" content={topicData.meta_description} />
             <Meta name="keywords" content={topicData.meta_keywords} />

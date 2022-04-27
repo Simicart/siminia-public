@@ -24,7 +24,6 @@ export const useSidebarPosts = props => {
             sortBy: 'Popular',
             pageSize: number_mostview_posts
         },
-        fetchPolicy:"no-cache"
     });
 
     const {
@@ -35,7 +34,6 @@ export const useSidebarPosts = props => {
             sortBy: 'Latest',
             pageSize: number_recent_posts
         },
-        fetchPolicy:"no-cache"
     })
 
     return {
