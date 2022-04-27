@@ -40,9 +40,7 @@ const Rating = props => {
         !hasRatingData ? false : false || ratingData.display
     );
     const [isRated, { data }] = useMutation(ADD_HELPFUL);
-    useEffect(() => {
-        localStorage.removeItem(`article${id}`);
-    });
+   
 
     const messageStyle = {
         background: !disable ? '#e5efe5' : '#fae5e5',
