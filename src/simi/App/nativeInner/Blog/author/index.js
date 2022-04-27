@@ -17,7 +17,7 @@ const Topic = props => {
 
     if (authorName) {
         return (
-            <div className={classes.mainCtn}>
+            <div className={`${classes.mainCtn} container`}>
                 <Title>{authorName}</Title>
                 <BreadCrumb items={
                     [
