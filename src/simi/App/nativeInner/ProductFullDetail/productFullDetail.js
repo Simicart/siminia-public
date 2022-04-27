@@ -411,20 +411,20 @@ const ProductFullDetail = props => {
                 />
             </section>
             {/* {!isMobileSite ? ( */}
-                <div>
-                    <PriceAlertProductDetails
-                        sku={sku}
-                        setMessage={setMessage}
-                        setMessageType={setMessageType}
-                        setPopUpData={setPopUpData}
-                        setShowPopup={setShowPopup}
-                    />
-                    <PopupAlert
-                        popupData={popupData}
-                        showPopup={showPopup}
-                        setShowPopup={setShowPopup}
-                    />
-                </div>
+            <div>
+                <PriceAlertProductDetails
+                    sku={sku}
+                    setMessage={setMessage}
+                    setMessageType={setMessageType}
+                    setPopUpData={setPopUpData}
+                    setShowPopup={setShowPopup}
+                />
+                <PopupAlert
+                    popupData={popupData}
+                    showPopup={showPopup}
+                    setShowPopup={setShowPopup}
+                />
+            </div>
             {/* ) : null} */}
         </div>
     );

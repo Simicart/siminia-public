@@ -145,6 +145,16 @@ const ProductReviewPage = props => {
         />
     );
 };
+const ProductAlertPage = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "ProductReviewPage"*/ '/src/simi/App/nativeInner/ProductAlertPage/ProductAlertPage.js')
+            }
+            {...props}
+        />
+    );
+};
 //import WishlistPage from '@magento/venia-ui/lib/components/WishlistPage';
 const WishlistPage = props => {
     return (
@@ -583,6 +593,11 @@ const Routes = props => {
                     exact
                     path="/product-review"
                     render={props => <ProductReviewPage {...props} />}
+                />
+                <Route
+                    exact
+                    path="/product-alert"
+                    render={props => <ProductAlertPage {...props} />}
                 />
                 <Route
                     exact
