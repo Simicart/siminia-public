@@ -297,6 +297,16 @@ const CategoryList = props => {
         />
     );
 };
+const MyGiftCard = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "CategoryList"*/ 'src/simi/App/nativeInner/GiftCard/components/GiftCardDashboard')
+            }
+            {...props}
+        />
+    );
+};
 
 const Faq = props => {
     return (
@@ -501,6 +511,12 @@ const Routes = props => {
                     path="/reward-transactions"
                     render={props => <RewardTransactions {...props} />}
                 />
+                <Route
+                    exact
+                    path="/my-gift-cards"
+                    render={props => <MyGiftCard {...props} />}
+                />
+                
                 <Route
                     exact
                     path="/communications"
