@@ -1,16 +1,24 @@
-# siminia
-## 0. Prepare your magento site with:
+# Siminia - Magento 2 PWA Studio Theme by SimiCart
 
-- Magento version >= 2.4.3 && PWA studio 12
+Based on PWA Studio, our open-source PWA theme for Magento 2 is an easy way to transform your store into a headless storefront that is fast, engaging, and mobile-friendly.
 
-## 1. Clone pwa-studio
+![Siminia Theme](https://tapita.io/pb/pub/media/spb/usr/19/oti/1640680526209/siminia.png "Siminia Theme")
+
+## Installation
+
+### Requirements
+
+- Magento version >= 2.4.3
+- PWA Studio 12
+
+### 1. Clone pwa-studio
 ```
 git clone https://github.com/magento/pwa-studio/
 cd pwa-studio
 git checkout release/12.0
 ```
 
-## 2. Modify package.json at PWA studio root folder
+### 2. Modify `package.json` at PWA Studio root folder
 
 workspaces:
 ```
@@ -22,7 +30,7 @@ workspaces:
 
 ```
 
-scripts (modify the build script and add siminia scripts):
+scripts (modify the build script and add Siminia scripts):
 
 ```
   "scripts": {
@@ -33,7 +41,7 @@ scripts (modify the build script and add siminia scripts):
     ...
   },
 ```
-## 3. Clone siminia
+### 3. Clone Siminia
 ```
 cd  packages
 git clone https://github.com/Simicart/siminia-public siminia
@@ -43,7 +51,7 @@ cd ../..
 yarn install
 yarn run build
 ```
-## 4. Run watch/stage
+### 4. Run watch/stage
 To run watch
 ```
 yarn run watch:siminia
@@ -53,19 +61,31 @@ To run production
 NODE_ENV=production PORT=8080 yarn run stage:siminia
 ```
 
-## 5. Use your own backend magento
+### 5. Use your own Magento backend
 
-### Update configuration at packages/siminia/.env
+Update configuration at `packages/siminia/.env`
 
 ```
 MAGENTO_BACKEND_URL=https://your.magento.site.com/
 ```
 
-## 6. Use your own tapita PageBuilder credentials:
+### 6. (Optional) Connect your frontend with Tapita Page Builder
 
-Create your account at [Tapita](https://tapita.io/pagebuilder/)
+Create your free account at [Tapita](https://tapita.io/pagebuilder/register)
 
-Use integration token generated to fill in the file at: packages/siminia/src/simi/App/core/NoMatch/index.js
+When you first login, select Magento as backend and PWA Studio as frontend.
+
+Go to **Integration** tab and click **Generate Token**. Then, copy the generated *Integration Token* to use in the next step.
+
+Open the file `packages/siminia/src/simi/App/core/NoMatch/index.js` && `packages/siminia/src/simi/App/native-inner/main/src/simi/App/nativeInner/NoMatch/index.js` and change the value at this line to the Integration Token you got in previous step
 ```
 const integrationToken = 'your-token';
 ```
+
+## Learn more
+
+Demo: https://magento.pwa-commerce.com/
+
+YouTube guide: https://www.youtube.com/watch?v=4NBSq908zfw
+
+Magento PWA Development Service: https://www.simicart.com/magento-pwa-development/
