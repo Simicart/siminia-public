@@ -26,7 +26,8 @@ import {
     UserCheck,
     Gift,
     HelpCircle,
-    Pocket
+    Pocket, 
+    Bell
 } from 'react-feather';
 import { Link } from 'react-router-dom';
 import Icon from '@magento/venia-ui/lib/components/Icon';
@@ -40,7 +41,8 @@ const servicesList = [
     'Account Subcriptions',
     'Reward Points',
     'Contact Us',
-    'Saved Payments'
+    'Saved Payments',
+    'Product Alert'
 ];
 const signInRequired = [
     'Address Book',
@@ -48,7 +50,8 @@ const signInRequired = [
     'Wishlist',
     'Account Information',
     'Account Subcriptions',
-    'Reward Points'
+    'Reward Points',
+    'Product Alert'
 ];
 
 const MyAccountPage = props => {
@@ -65,7 +68,8 @@ const MyAccountPage = props => {
         <Icon className={classes.icon} size={22} src={UserCheck} />,
         <Icon className={classes.icon} size={22} src={Gift} />,
         <Icon className={classes.icon} size={22} src={Users} />,
-        <Icon className={classes.icon} size={22} src={Pocket} />
+        <Icon className={classes.icon} size={22} src={Pocket} />,
+        <Icon className={classes.icon} size={22} src={Bell} />
     ];
 
     const cleanCache = () => {

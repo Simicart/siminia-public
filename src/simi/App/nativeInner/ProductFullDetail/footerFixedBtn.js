@@ -3,33 +3,44 @@ import { BiMessageAltDetail } from 'react-icons/bi';
 require('./statusBar.scss');
 
 const FooterFixedBtn = props => {
-    const { addToCartPopup, setAddToCartPopup, typeBtn, setTypeBtn, bottomInsets } = props;
+    const {
+        addToCartPopup,
+        setAddToCartPopup,
+        typeBtn,
+        setTypeBtn,
+        bottomInsets,
+        isDisabled
+    } = props;
+
     return (
         <>
-        <div style={{height: 55+ bottomInsets}} className="virtual"/>
-        <div style={{ height: 55+ bottomInsets}}  className="main-footerFixedBtn">
-            <ul>
-                <li className="msg-icon">
-                    <BiMessageAltDetail />
-                </li>
-                <li
-                    onClick={() => {
-                        setAddToCartPopup(true);
-                        setTypeBtn('add to cart');
-                    }}
+            <div style={{ height: 55 + bottomInsets }} className="virtual" />
+           {isDisabled.action !== 'hide_add_to_cart' ? <div
+                style={{ height: 55 + bottomInsets }}
+                className="main-footerFixedBtn"
+            >
+                <ul>
+                    <li className="msg-icon">
+                        <BiMessageAltDetail />
+                    </li>
+                    <li
+                        onClick={() => {
+                            setAddToCartPopup(true);
+                            setTypeBtn('add to cart');
+                        }}
                     >
-                    ADD TO CART
-                </li>
-                <li
-                    onClick={() => {
-                        setAddToCartPopup(true);
-                        setTypeBtn('buy now');
-                    }}
+                        ADD TO CART
+                    </li>
+                    <li
+                        onClick={() => {
+                            setAddToCartPopup(true);
+                            setTypeBtn('buy now');
+                        }}
                     >
-                    BUY NOW
-                </li>
-            </ul>
-        </div>
+                        BUY NOW
+                    </li>
+                </ul>
+            </div> : null}
         </>
     );
 };

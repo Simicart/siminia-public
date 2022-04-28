@@ -1,4 +1,5 @@
 import React, { Fragment, Suspense, useRef, useState, useEffect } from 'react';
+import { useLocation } from 'react-router';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { arrayOf, bool, number, shape, string } from 'prop-types';
 import { Form } from 'informed';
@@ -20,6 +21,8 @@ import RichContent from '@magento/venia-ui/lib/components/RichContent/richConten
 import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductOptions';
 import defaultClasses from './productFullDetail.module.css';
 import SizeChart from './SizeChart';
+import { PriceAlertProductDetails } from './PriceAlertProductDetails';
+import { PopupAlert } from './PopupAlert/popupAlert';
 const WishlistButton = React.lazy(() =>
     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
 );
@@ -31,7 +34,7 @@ const SimiProductOptions = React.lazy(() =>
 );
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import { ProductDetailExtraProducts as ProductDetailExtraProductsMB } from './productDetailExtraProducts.js';
-import {ProductDetailExtraProducts} from '../../core/ProductFullDetail/productDetailExtraProducts'
+import { ProductDetailExtraProducts } from '../../core/ProductFullDetail/productDetailExtraProducts';
 import ProductReview from '@simicart/siminia/src/simi/App/nativeInner/ProductFullDetail/ProductReview';
 import ProductLabel from '@simicart/siminia/src/simi/App/core/ProductFullDetail/ProductLabel';
 import Pdetailsbrand from '@simicart/siminia/src/simi/App/core/ProductFullDetail/Pdetailsbrand';
@@ -48,13 +51,14 @@ import {
 import { FaChevronRight } from 'react-icons/fa';
 import { BiHelpCircle, BiHome } from 'react-icons/bi';
 // import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
-
+import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 import StatusBar from './statusBar';
 import FooterFixedBtn from './footerFixedBtn';
 import AddToCartPopup from './addToCartPopup';
+import CallForPrice from './callForPrice';
 require('./productFullDetail.scss');
 
 const mageworxSeoEnabled =
@@ -80,6 +84,7 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 const ProductFullDetail = props => {
     const { product, history } = props;
     const talonProps = useProductFullDetail({ product });
+    const { sku } = product;
     const {
         breadcrumbCategoryId,
         errorMessage,
@@ -103,9 +108,17 @@ const ProductFullDetail = props => {
         setAlertMsg,
         alertMsg
     } = talonProps;
-    const successMsg = `${productDetails.name} was added to shopping cart`;    
-
+    const [message, setMessage] = useState(null);
+    const [messageType, setMessageType] = useState(null);
+    const [popupData, setPopUpData] = useState(null);
+    const [showPopup, setShowPopup] = useState(false);
+    const successMsg = `${productDetails.name} was added to shopping cart`;
+    const [{ isSignedIn }] = useUserContext();
     let History = useHistory();
+    const dataLocation = product.mp_callforprice_rule
+        ? product.mp_callforprice_rule
+        : NULL;
+
     const [moreBtn, setMoreBtn] = useState(false);
     const storeConfig = Identify.getStoreConfig();
     const enabledReview =
@@ -238,7 +251,6 @@ const ProductFullDetail = props => {
             ]);
         }
     }
-    
 
     const cartCallToActionText = () => {
         if (typeBtn === 'add to cart') {
@@ -351,7 +363,10 @@ const ProductFullDetail = props => {
 
     const wrapperPrice = (
         <div className="wrapperPrice">
-            <span className="labelPrice" style={{color: configColor.price_color}}>
+            <span
+                className="labelPrice"
+                style={{ color: configColor.price_color }}
+            >
                 {!isMobileSite ? (
                     <FormattedMessage
                         id="productFullDetail.labelPrice"
@@ -359,7 +374,12 @@ const ProductFullDetail = props => {
                     />
                 ) : null}
             </span>
-            <span style={{color: configColor.price_color}} className={classes.productPrice}>{pricePiece}</span>
+            <span
+                style={{ color: configColor.price_color }}
+                className={classes.productPrice}
+            >
+                {pricePiece}
+            </span>
             {isOutOfStock ? (
                 <span className="outOfStock">
                     <FormattedMessage
@@ -390,6 +410,22 @@ const ProductFullDetail = props => {
                     message={errors.get('quantity')}
                 />
             </section>
+            {/* {!isMobileSite ? ( */}
+            <div>
+                <PriceAlertProductDetails
+                    sku={sku}
+                    setMessage={setMessage}
+                    setMessageType={setMessageType}
+                    setPopUpData={setPopUpData}
+                    setShowPopup={setShowPopup}
+                />
+                <PopupAlert
+                    popupData={popupData}
+                    showPopup={showPopup}
+                    setShowPopup={setShowPopup}
+                />
+            </div>
+            {/* ) : null} */}
         </div>
     );
     const renderSizeChart = product.mp_sizeChart ? (
@@ -425,11 +461,9 @@ const ProductFullDetail = props => {
         </div>
     );
 
-    
-
     return (
-        <div  className={isMobileSite ? 'main-product-detail-native' : null}>
-            <div style={{height:topInsets}}></div>
+        <div className={isMobileSite ? 'main-product-detail-native' : null}>
+            <div style={{ height: topInsets }} />
             <AlertMessages
                 message={successMsg}
                 setAlertMsg={setAlertMsg}
@@ -457,7 +491,14 @@ const ProductFullDetail = props => {
             ) : null}
 
             {/* <div className={'p-fulldetails-ctn container'}> */}
-            <div className={'p-fulldetails-ctn  ' } style={{backgroundColor: isMobileSite ? configColor.app_background : "#fff"}}>
+            <div
+                className={'p-fulldetails-ctn  '}
+                style={{
+                    backgroundColor: isMobileSite
+                        ? configColor.app_background
+                        : '#fff'
+                }}
+            >
                 {mageworxSeoEnabled ? (
                     <DataStructure
                         avg_rating={avg_rating}
@@ -565,7 +606,7 @@ const ProductFullDetail = props => {
                                         ? product.mp_label_data
                                         : null
                                 }
-                                topInsets = {topInsets}
+                                topInsets={topInsets}
                             />
                             {/* {isMobileSite ? <FooterFixedBtn /> : null} */}
                             {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
@@ -577,21 +618,6 @@ const ProductFullDetail = props => {
                             }}
                             errors={errors.get('form') || []}
                         />
-                        {isMobileSite ? (
-                            <div className="productInfo">
-                                <div className="wrapperTitle">
-                                    <section className={classes.title}>
-                                        <h1 className={classes.productName}>
-                                            {/* {productDetails.name} */}
-                                            <div  dangerouslySetInnerHTML={{ __html: productDetails.name }} />
-                                            <Pdetailsbrand product={product} />
-                                        </h1>
-                                    </section>
-                                </div>
-                                {wrapperPrice}
-                                {review}
-                            </div>
-                        ) : null}
 
                         {!isMobileSite ? (
                             <div className="wrapperOptions">
@@ -621,6 +647,7 @@ const ProductFullDetail = props => {
                             : !isMobileSite
                             ? wrapperQuantity
                             : null}
+
                         {!isMobileSite ? cartAction : null}
                         <div className={classes.wrapperDes}>
                             <section className={classes.description}>
@@ -648,9 +675,10 @@ const ProductFullDetail = props => {
 
                                         <div
                                             className={desStatus(descripttion)}
-                                            
                                         >
-                                            <div style={{height: topInsets}} />
+                                            <div
+                                                style={{ height: topInsets }}
+                                            />
                                             <div
                                                 className="des-title"
                                                 onClick={() =>
@@ -700,6 +728,31 @@ const ProductFullDetail = props => {
                             </div>
                         )}
                     </Form>
+                    {isMobileSite ? (
+                        <div className="productInfo">
+                            <div className="wrapperTitle">
+                                <section className={classes.title}>
+                                    <h1 className={classes.productName}>
+                                        {/* {productDetails.name} */}
+                                        <div
+                                            dangerouslySetInnerHTML={{
+                                                __html: productDetails.name
+                                            }}
+                                        />
+                                        <Pdetailsbrand product={product} />
+                                    </h1>
+                                </section>
+                            </div>
+                            {/* {wrapperPrice} */}
+                            {/* {renderPriceWithCallForPrice(dataLocation)} */}
+                            <CallForPrice
+                                data={dataLocation}
+                                wrapperPrice={wrapperPrice}
+                                item_id={product.id}
+                            />
+                            {review}
+                        </div>
+                    ) : null}
                 </div>
                 {isMobileSite ? renderSizeChart : null}
                 {product.mp_sizeChart &&
@@ -710,8 +763,13 @@ const ProductFullDetail = props => {
                         }
                     />
                 ) : null}
-                <ProductReview topInsets={topInsets} product={product} ref={productReview} />
-                    {isMobileSite ?  <ProductDetailExtraProductsMB
+                <ProductReview
+                    topInsets={topInsets}
+                    product={product}
+                    ref={productReview}
+                />
+                {isMobileSite ? (
+                    <ProductDetailExtraProductsMB
                         classes={classes}
                         products={relatedProducts}
                         history={history}
@@ -720,7 +778,9 @@ const ProductFullDetail = props => {
                             id="productFullDetail.relatedProducts"
                             defaultMessage="Related Product"
                         />
-                    </ProductDetailExtraProductsMB>:  <ProductDetailExtraProducts
+                    </ProductDetailExtraProductsMB>
+                ) : (
+                    <ProductDetailExtraProducts
                         classes={classes}
                         products={relatedProducts}
                         history={history}
@@ -729,10 +789,11 @@ const ProductFullDetail = props => {
                             id="productFullDetail.relatedProducts"
                             defaultMessage="Related Product"
                         />
-                    </ProductDetailExtraProducts>}
-                   
-                
-                    {isMobileSite ? <ProductDetailExtraProductsMB
+                    </ProductDetailExtraProducts>
+                )}
+
+                {isMobileSite ? (
+                    <ProductDetailExtraProductsMB
                         classes={classes}
                         products={upsellProducts}
                         history={history}
@@ -741,7 +802,9 @@ const ProductFullDetail = props => {
                             id="productFullDetail.upsellProduct"
                             defaultMessage="Upsell Product"
                         />
-                    </ProductDetailExtraProductsMB> : <ProductDetailExtraProducts
+                    </ProductDetailExtraProductsMB>
+                ) : (
+                    <ProductDetailExtraProducts
                         classes={classes}
                         products={upsellProducts}
                         history={history}
@@ -750,9 +813,11 @@ const ProductFullDetail = props => {
                             id="productFullDetail.upsellProduct"
                             defaultMessage="Upsell Product"
                         />
-                    </ProductDetailExtraProducts>}
-                
-                    {isMobileSite ? <ProductDetailExtraProductsMB
+                    </ProductDetailExtraProducts>
+                )}
+
+                {isMobileSite ? (
+                    <ProductDetailExtraProductsMB
                         classes={classes}
                         products={crosssellProducts}
                         history={history}
@@ -761,7 +826,9 @@ const ProductFullDetail = props => {
                             id="productFullDetail.crosssellProduct"
                             defaultMessage="Crosssell Product"
                         />
-                    </ProductDetailExtraProductsMB> : <ProductDetailExtraProducts
+                    </ProductDetailExtraProductsMB>
+                ) : (
+                    <ProductDetailExtraProducts
                         classes={classes}
                         products={crosssellProducts}
                         history={history}
@@ -770,8 +837,9 @@ const ProductFullDetail = props => {
                             id="productFullDetail.crosssellProduct"
                             defaultMessage="Crosssell Product"
                         />
-                    </ProductDetailExtraProducts>}
-                </div>
+                    </ProductDetailExtraProducts>
+                )}
+            </div>
             {isMobileSite ? (
                 <FooterFixedBtn
                     addToCartPopup={addToCartPopup}
@@ -779,6 +847,7 @@ const ProductFullDetail = props => {
                     typeBtn={typeBtn}
                     setTypeBtn={setTypeBtn}
                     bottomInsets={bottomInsets}
+                    isDisabled={dataLocation}
                 />
             ) : null}
         </div>

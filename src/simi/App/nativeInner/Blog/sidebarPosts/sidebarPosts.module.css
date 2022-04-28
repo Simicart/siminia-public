@@ -1,0 +1,61 @@
+.root {
+    margin-top: 15px;
+    border: 1px solid #cccccc;
+}
+.tabsHeaders {
+    display: block;
+}
+.tabsHeader {
+    display: inline-block;
+    width: 50%;
+    padding: 15px 5px;
+    min-height: 40px;
+    text-align: center;
+    cursor: pointer;
+    color: #333333;
+    background-color: white;
+}
+.tabsHeader:last-of-type {
+    border-left: 1px solid #cccccc;
+}
+.tabsHeader.inactive {
+    background-color: #f6f6f6;
+    color: #6d6d6d;
+    border-bottom: 1px solid #cccccc;
+}
+.tabContent {
+    padding: 15px;
+    background-color: rgb(242, 242, 243);
+}
+.tabContent.inactive {
+    display: none;
+}
+
+.sidebarPostItem {
+    width: 100%;
+    border-bottom: 1px solid #eee;
+    padding: 15px;
+    display: flex;
+}
+.sidebarPostItemImage {
+    overflow: hidden;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 50px;
+    margin-inline-end: 15px;
+    max-height: 50px;
+}
+.sidebarPostItemImage img {
+    width: 100%;
+}
+.sidebarPostItemInfo {
+    display: inline-block;
+}
+.sidebarPostItemName {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.sidebarPostItemDate {
+    font-size: 14px;
+}

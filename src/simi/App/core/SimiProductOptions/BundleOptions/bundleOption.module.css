@@ -3,6 +3,13 @@
     border-top: 1px solid #d8d8d8;
     margin-top: 1rem;
 }
+@media (max-width: 768px) {
+    .optionRoot {
+        border-top: none;
+        border-bottom: 1px solid #d8d8d8;
+
+    }
+}
 
 .optionItem {
 }

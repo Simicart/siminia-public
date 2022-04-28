@@ -1,0 +1,79 @@
+.container_social {
+	width: 70%;
+    margin: 0 auto;
+    max-width: 1280px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+.container_social button{
+    align-items: center;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: auto;
+    text-align: center;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    min-width: 10rem;
+    max-width: 100%;
+    min-height: 40px;
+    outline: none;
+    padding: calc(0.5rem + 1px) 1.5rem calc(0.5rem - 1px);
+    padding-top: 9px;
+    text-transform: uppercase;
+    transition-duration: 256ms;
+    transition-property: background-color, border-color, color;
+    transition-timing-function: var(--venia-global-anim-standard);
+    border-radius: 5px;
+    color: #fff!important;
+}
+.wrapFacebook, .wrapTwitter, .wrapEmail, .wrapTelegram{
+    border-radius: 5px;
+    transition: all 25ms ease-out 0s;
+    background-color: rgb(59, 89, 152);
+    border-color: rgb(59, 89, 152);
+    display: inline-block;
+    margin-right: 20px;
+}
+.wrapTwitter{
+    background-color: rgb(4, 171, 237);
+    border-color: rgb(4, 171, 237);
+}
+.wrapEmail{
+    background-color: rgb(127, 127, 127);
+    border-color: rgb(127, 127, 127);;
+}
+.wrapTelegram{
+    background-color: rgb(55, 174, 226);
+    border-color: rgb(55, 174, 226);
+}
+hr {
+    border: 0;
+    border-top: 1px solid #cccccc;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .container_social{
+       width: 100%;
+       padding-top: 0;
+       padding-bottom: 0;
+    }
+    .wrapFacebook, .wrapTwitter, .wrapEmail, .wrapTelegram{
+        border-radius: 0;
+    }
+    .container_social button{
+        min-width: unset;
+        min-height: unset;
+        height: 36px;
+        width: 36px;
+    }
+    .label{
+        display: none;
+    }
+}

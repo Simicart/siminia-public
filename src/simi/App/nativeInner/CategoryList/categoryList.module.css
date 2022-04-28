@@ -97,7 +97,8 @@
         padding-bottom: 111px;
     }
     .rightContent{
-        height: 100vh;
+        height: auto;
+        min-height: 100vh;
         padding-right: 15px;
         padding-left: 15px;
         background-color: #fff;

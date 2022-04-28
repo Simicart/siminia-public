@@ -50,7 +50,8 @@ export const ProductListingWithBrandSeparation = (props) => {
         setLoading,
         makeNotification,
         summaryRef,
-        setFirstProductLoad
+        setFirstProductLoad,
+        cartItems
     } = props;
 
     const talonProps = useProductListing({operations: DEFAULT_OPERATIONS});
@@ -58,7 +59,7 @@ export const ProductListingWithBrandSeparation = (props) => {
     const {
         activeEditItem,
         isLoading,
-        items,
+        // items,
         setActiveEditItem,
         wishlistConfig
     } = talonProps;
@@ -67,16 +68,16 @@ export const ProductListingWithBrandSeparation = (props) => {
 
     //TODO: wire this to actual data
     const segeratedItems = useMemo(() => ([
-            {items: [...items], name: 'A brand name', id: 1},
+            {cartItems: [...cartItems], name: 'A brand name', id: 1},
         ]),
-        [items]
+        [cartItems]
     )
 
     const hasOutOfStockProduct = useMemo(
-        () => items.some((product) => {
+        () => cartItems.some((product) => {
             return product.stockStatus === 'OUT_OF_STOCK'
         }),
-        [items]
+        [cartItems]
     )
 
     useEffect(() => {
@@ -95,10 +96,10 @@ export const ProductListingWithBrandSeparation = (props) => {
     ) : 100
 
     useEffect(() => {
-        if (!isLoading && items.length) {
+        if (!isLoading && cartItems.length) {
             setFirstProductLoad(false)
         }
-    }, [isLoading, items, setFirstProductLoad])
+    }, [isLoading, cartItems, setFirstProductLoad])
 
 
     if (isLoading) {
@@ -109,9 +110,9 @@ export const ProductListingWithBrandSeparation = (props) => {
         )
     }
 
-    if (items.length) {
+    if (cartItems.length) {
         const segregatedItemLists = segeratedItems.map(zone => {
-            if (!zone.items) {
+            if (!zone.cartItems) {
                 return null
             }
             return (
@@ -122,7 +123,7 @@ export const ProductListingWithBrandSeparation = (props) => {
                      }}
                 >
                     {hasVendor ? (<VendorIntro classes={classes} zone={zone}/>) : null}
-                    {zone.items.map(product => {
+                    {zone.cartItems.map(product => {
                         return (
                             <CartProduct
                                 item={product}

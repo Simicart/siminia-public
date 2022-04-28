@@ -24,6 +24,8 @@ import { useHistory } from 'react-router-dom';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToListButton';
 import ProductLabel from '../../../App/core/ProductFullDetail/ProductLabel';
+import { useUserContext } from '@magento/peregrine/lib/context/user';
+import CallForPrice from '../ProductFullDetail/callForPrice';
 // const AddToListButton = React.lazy(() =>
 //     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
 // );
@@ -40,6 +42,8 @@ const Griditem = props => {
     const handleLink = linkInput => {
         history.push(linkInput);
     };
+    const [{ isSignedIn }] = useUserContext();
+
     const itemClasses = mergeClasses(defaultClasses, classes);
     const {
         name,
@@ -52,18 +56,24 @@ const Griditem = props => {
         review_count,
         mp_label_data
     } = item;
-
+    
+    const callForPriceRule = item.mp_callforprice_rule;
+    
+    // console.log('itemee', callForPriceRule);
     const product_url = `/${url_key}${productUrlSuffix()}`;
     // const imageWidth = document.querySelector("#product-image-label").offsetWidth
 
     //if uncomment this - should comment out useDelayedTransition() at src/simi/app.js
     //saveDataToUrl(product_url, item);
 
+
+
     const location = {
         pathname: product_url,
         state: {
             product_id: id,
-            item_data: item
+            item_data: item,
+            callForPriceRule: callForPriceRule
         }
     };
     const { handleAddCart, handleAddCompare, loading, isPhone } = useGridItem({
@@ -82,7 +92,7 @@ const Griditem = props => {
         <div
             className={itemClasses['siminia-product-image']}
             style={{
-                borderColor: configColor.image_border_color,
+                borderColor: configColor.image_border_color
                 // backgroundColor: 'white'
             }}
         >
@@ -91,10 +101,9 @@ const Griditem = props => {
                     position: 'absolute',
                     top: 0,
                     bottom: 0,
-                    width: '100%',
-                    // padding: 1   
+                    width: '100%'
+                    // padding: 1
                 }}
-                
             >
                 <Link to={location}>
                     <Image
@@ -103,32 +112,36 @@ const Griditem = props => {
                         fallBackUrl={small_image}
                         className="product-image-label"
                     />
-                    <ProductLabel  productLabel = {mp_label_data ? mp_label_data : null} label_tyle="gallery"/>
+                    <ProductLabel
+                        productLabel={mp_label_data ? mp_label_data : null}
+                        label_tyle="gallery"
+                    />
                 </Link>
                 {productOutStock ? (
-                <div
-                    className={itemClasses.soldOut}>
-                    {formatMessage({ id: 'soldOut',defaultMessage:'Sold Out' })}
-                </div>
-            ) : (
-                ''
-            )}
+                    <div className={itemClasses.soldOut}>
+                        {formatMessage({
+                            id: 'soldOut',
+                            defaultMessage: 'Sold Out'
+                        })}
+                    </div>
+                ) : (
+                    ''
+                )}
 
                 {item.price && item.price.has_special_price ? (
-                <div
-                    className={itemClasses.discountBadge}
-                    style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
-                >
-                    {`-${item.price.discount_percent}%`}
-                </div>
-            ) : (
-                ''
-            )}
+                    <div
+                        className={itemClasses.discountBadge}
+                        style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
+                    >
+                        {`-${item.price.discount_percent}%`}
+                    </div>
+                ) : (
+                    ''
+                )}
             </div>
         </div>
     );
-   
-    
+
     return (
         <div
             className={` ${
@@ -186,7 +199,10 @@ const Griditem = props => {
                                 ? itemClasses['prices-layout-rtl']
                                 : ''
                         }`}
-                        style={{flexWrap: type_id === 'configurable' ? 'wrap' : 'nowrap'}}
+                        style={{
+                            flexWrap:
+                                type_id === 'configurable' ? 'wrap' : 'nowrap'
+                        }}
                         id={`price-${id}`}
                     >
                         {type_id === 'configurable' && (
@@ -196,22 +212,36 @@ const Griditem = props => {
                                 {formatMessage({ id: 'As low as' })}
                             </div>
                         )}
-                        <Price
+                        {/* <Price
                             prices={price}
                             type={type_id}
                             classes={itemClasses}
+                        /> */}
+                        <CallForPrice
+                            data={callForPriceRule}
+                            wrapperPrice={
+                                <Price
+                                    prices={price}
+                                    type={type_id}
+                                    classes={itemClasses}
+                                />
+                            }
+                            item_id = {item.id}
                         />
                     </div>
                 </div>
-                <div className={itemClasses['sold']}>
+
+                
+                {/* <div className={itemClasses['sold']}>
                         {formatMessage({ id: 'sold',defaultMessage:'123 sold' })}
-                </div>
+                </div> */}
+
             </div>
             <div
                 className={`${itemClasses['product-grid-actions']} ${loading &&
                     itemClasses['action-loading']}`}
             >
-                <button
+               {callForPriceRule?.action !== "hide_add_to_cart" ? <button
                     className={itemClasses['product-grid-addcartbtn']}
                     onClick={() => {
                         if (!loading && !productOutStock) handleAddCart(item);
@@ -224,7 +254,7 @@ const Griditem = props => {
                             ? 'Adding'
                             : 'Add To Cart'
                     })}
-                </button>
+                </button> : null}
                 <div className={itemClasses['product-grid-wishlistbtn']}>
                     <AddToListButton
                         icon={HeartIcon}

@@ -65,6 +65,11 @@ export const useAccountMenuItems = props => {
             name: 'Account Subcriptions',
             id: 'accountMenu.accountSubcriptionLink',
             url: '/account-subcriptions'
+        },
+        {
+            name: 'Product Alert',
+            id: 'accountMenu.productAlertLink',
+            url: '/product-alert'
         }
     ];
     const rewardItems = [

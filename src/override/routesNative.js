@@ -4,7 +4,7 @@ import { Route, Switch, useLocation, useParams } from 'react-router-dom';
 //import MagentoRoute from '@magento/venia-ui/lib/components/MagentoRoute';
 import { useScrollTopOnChange } from '@magento/peregrine/lib/hooks/useScrollTopOnChange';
 import NoMatch, { endPoint } from '../simi/App/nativeInner/NoMatch';
-// import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
+import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import Loader from '../simi/App/nativeInner/Loader'
 import PageBuilderComponent from '../simi/App/core/TapitaPageBuilder/PageBuilderComponent';
 //import Login from 'src/simi/App/core/Customer/Login';
@@ -140,6 +140,16 @@ const ProductReviewPage = props => {
         <LazyComponent
             component={() =>
                 import(/* webpackChunkName: "ProductReviewPage"*/ '/src/simi/App/nativeInner/ProductReviewPage')
+            }
+            {...props}
+        />
+    );
+};
+const ProductAlertPage = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "ProductReviewPage"*/ '/src/simi/App/nativeInner/ProductAlertPage/ProductAlertPage.js')
             }
             {...props}
         />
@@ -297,6 +307,107 @@ const CategoryList = props => {
         />
     );
 };
+
+const Faq = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "HomePage"*/ 'src/simi/App/nativeInner/Faq/HomePage')
+            }
+            {...props}
+        />
+    );
+};
+const FaqCategory = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "FaqCategory"*/ 'src/simi/App/nativeInner/Faq/Category')
+            }
+            {...props}
+        />
+    );
+};
+const Article = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "Article"*/ 'src/simi/App/nativeInner/Faq/Article')
+            }
+            {...props}
+        />
+    );
+};
+const BlogHome = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BlogHome"*/ 'src/simi/App/nativeInner/Blog/home')
+            }
+            {...props}
+        />
+    );
+};
+const BlogCategory = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BlogCategory"*/ 'src/simi/App/nativeInner/Blog/category')
+            }
+            {...props}
+        />
+    );
+};
+const BlogPost = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BlogPost"*/ 'src/simi/App/nativeInner/Blog/post/index.js')
+            }
+            {...props}
+        />
+    );
+};
+const BlogTag = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BlogTag"*/ 'src/simi/App/nativeInner/Blog/tag/index.js')
+            }
+            {...props}
+        />
+    );
+};
+const BlogTopic = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BlogTopic"*/ 'src/simi/App/nativeInner/Blog/topic/index.js')
+            }
+            {...props}
+        />
+    );
+};
+const BlogArchive = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BlogArchive"*/ 'src/simi/App/nativeInner/Blog/month/index.js')
+            }
+            {...props}
+        />
+    );
+};
+const BlogAuthor = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "BlogAuthor"*/ 'src/simi/App/nativeInner/Blog/author/index.js')
+            }
+            {...props}
+        />
+    );
+};
 const Routes = props => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
@@ -398,6 +509,56 @@ const Routes = props => {
                 />
                 <Route
                     exact
+                    path="/blog.html"
+                    render={props => <BlogHome {...props} />}
+                />
+                <Route
+                    exact
+                    path="/blog/category/:categoryUrl?"
+                    render={props => <BlogCategory {...props} />}
+                />
+                <Route
+                    exact
+                    path="/blog/post/:postUrl?"
+                    render={props => <BlogPost {...props} />}
+                />
+                <Route
+                    exact
+                    path="/blog/tag/:tagUrl?"
+                    render={props => <BlogTag {...props} />}
+                />
+                <Route
+                    exact
+                    path="/blog/topic/:topicUrl?"
+                    render={props => <BlogTopic {...props} />}
+                />
+                <Route
+                    exact
+                    path="/blog/month/:monthUrl?"
+                    render={props => <BlogArchive {...props} />}
+                />
+                <Route
+                    exact
+                    path="/blog/author/:authorUrl?"
+                    render={props => <BlogAuthor {...props} />}
+                />
+                <Route
+                    exact
+                    path="/faq.html"
+                    render={props => <Faq {...props} />}
+                />
+                <Route
+                    exact
+                    path="/faq/category/:categoryUrl?"
+                    render={props => <FaqCategory {...props} />}
+                />
+                <Route
+                    exact
+                    path="/faq/article/:articleUrl?"
+                    render={props => <Article {...props} />}
+                />
+                <Route
+                    exact
                     path="/customer/account/createPassword"
                     render={props => (
                         <LazyComponent
@@ -432,6 +593,11 @@ const Routes = props => {
                     exact
                     path="/product-review"
                     render={props => <ProductReviewPage {...props} />}
+                />
+                <Route
+                    exact
+                    path="/product-alert"
+                    render={props => <ProductAlertPage {...props} />}
                 />
                 <Route
                     exact

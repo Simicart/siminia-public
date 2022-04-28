@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { arrayOf, number, shape, string } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
@@ -12,6 +12,7 @@ import defaultClasses from './orderRow.module.css';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import DEFAULT_OPERATIONS from '../../core/OrderDetailPage/orderDetailPage.gql';
+import { showToastMessage } from 'src/simi/Helper/Message';
 
 const OrderRow = props => {
     const { order } = props;
@@ -48,6 +49,18 @@ const OrderRow = props => {
     const [reorderItem, { data, loading, error }] = useMutation(
         reorderItemMutation
     );
+    
+    useEffect(() => {
+        if(data && data.reorderItems && data.reorderItems.userInputErrors && data.reorderItems.userInputErrors.length > 0) {
+            let message = '';
+            data.reorderItems.userInputErrors.forEach(userInputError => {
+                message += userInputError.message + ', '
+            });
+            
+            if(message && message.length > 0) 
+                showToastMessage(message)
+        }
+    }, [data])
 
     const hasInvoice = !!invoices.length;
     const hasShipment = !!shipments.length;
