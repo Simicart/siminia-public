@@ -91,7 +91,7 @@ export const useProductAlertSubscription = (props) => {
     const setShowPopup = props ? props.setShowPopup : () => {
     }
 
-    const [{isSignedIn}, {}] = useUserContext();
+    const [{isSignedIn}] = useUserContext();
 
     // when log in while a message exist
     useEffect(() => {
