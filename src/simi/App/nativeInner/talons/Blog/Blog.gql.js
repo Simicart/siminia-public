@@ -378,22 +378,6 @@ export const GET_BLOG_ARCHIVE = gql`
     ${PostFragment}
 `;
 
-export const GET_BLOG_ARCHIVE_DETAILS = gql`
-    query mpBlogMonthlyArchive($monthly: Int!, $year: Int!) {
-        mpBlogMonthlyArchive(monthly: $monthly, year: $year) {
-            items {
-                label
-                quantity
-                items {
-                    ...PostFragment
-                }
-            }
-            total_count
-        }
-    }
-    ${PostFragment}
-`;
-
 export const GET_PRODUCTS_BY_SKUS = gql`
     query getProductsBySku($skus: [String], $pageSize: Int!) {
         products(filter: { sku: { in: $skus } }, pageSize: $pageSize) {

@@ -12,13 +12,14 @@ import { useParams } from 'react-router-dom';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 import { useQuery } from '@apollo/client';
 import {
-    GET_BLOG_ARCHIVE_DETAILS,
     GET_BLOG_ARCHIVE
 } from '../../talons/Blog/Blog.gql';
 import { Title, Meta } from '@magento/venia-ui/lib/components/Head';
+import { useIntl } from 'react-intl';
 
 const Category = props => {
     const { monthUrl = '' } = useParams();
+    const { formatMessage } = useIntl();
 
     const dateData = monthUrl
         .replace('.html', '')
@@ -55,7 +56,10 @@ const Category = props => {
         !resultData.mpBlogMonthlyArchive.items ||
         !resultData.mpBlogMonthlyArchive.items[0]
     )
-        return 'Cannot find item';
+    return formatMessage({
+        id: 'notFind',
+        defaultMessage: 'Cannot find item'
+    });
 
     let rsData;
     const handleData = () => {
@@ -66,31 +70,31 @@ const Category = props => {
                 .split(',');
             switch (resultMonthYear[0] ? resultMonthYear[0] : '') {
                 case 'January':
-                    resultMonthYear[0] = '1';
+                    resultMonthYear[0] = '01';
                     break;
                 case 'Febuary':
-                    resultMonthYear[0] = '2';
+                    resultMonthYear[0] = '02';
                     break;
                 case 'March':
-                    resultMonthYear[0] = '3';
+                    resultMonthYear[0] = '03';
                     break;
                 case 'April':
-                    resultMonthYear[0] = '4';
+                    resultMonthYear[0] = '04';
                     break;
                 case 'May':
-                    resultMonthYear[0] = '5';
+                    resultMonthYear[0] = '05';
                     break;
                 case 'June':
-                    resultMonthYear[0] = '6';
+                    resultMonthYear[0] = '06';
                     break;
                 case 'July':
-                    resultMonthYear[0] = '7';
+                    resultMonthYear[0] = '07';
                     break;
                 case 'August':
-                    resultMonthYear[0] = '8';
+                    resultMonthYear[0] = '08';
                     break;
                 case 'September':
-                    resultMonthYear[0] = '9';
+                    resultMonthYear[0] = '09';
                     break;
                 case 'October':
                     resultMonthYear[0] = '10';
@@ -115,16 +119,18 @@ const Category = props => {
     {
         handleData();
     }
-
-    const archiveData = rsData;
+    const archiveData = rsData ? rsData : {};
 
     return (
         <div className={`${classes.mainCtn} container`}>
-            <Title>{archiveData.label}</Title>
+            <Title>{archiveData ? archiveData.label : ''}</Title>
             <BreadCrumb
                 items={[
                     {
-                        label: 'Blog',
+                        label: formatMessage({
+                            id: 'blog',
+                            defaultMessage: 'Blog'
+                        }),
                         path: '/blog.html'
                     },
                     {
@@ -132,7 +138,7 @@ const Category = props => {
                     }
                 ]}
             />
-            <h1>{archiveData.label}</h1>
+            <h1>{archiveData ? archiveData.label : ''}</h1>
             <div className={classes.blogRoot}>
                 <div className={classes.blogListing}>
                     <BlogListing
