@@ -1,20 +1,26 @@
 import React from 'react';
-import classes from './tagList.module.css'
-import { GET_BLOG_TAGS } from '../../talons/Blog/Blog.gql'
+import classes from './tagList.module.css';
+import { GET_BLOG_TAGS } from '../../talons/Blog/Blog.gql';
 import { useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { Util } from '@magento/peregrine';
+import { useIntl } from 'react-intl';
 const { BrowserPersistence } = Util;
 const storage = new BrowserPersistence();
 
 const TagList = () => {
-    const {
-        data: tagListData
-    } = useQuery(GET_BLOG_TAGS,{fetchPolicy:"no-cache"})
+    const { data: tagListData } = useQuery(GET_BLOG_TAGS, {
+        fetchPolicy: 'no-cache'
+    });
+    const { formatMessage } = useIntl();
 
     const simiBlogConfiguration = storage.getItem('simiBlogConfiguration');
     let linkColor = '#1ABC9C';
-    if (simiBlogConfiguration && simiBlogConfiguration.general && simiBlogConfiguration.general.font_color) {
+    if (
+        simiBlogConfiguration &&
+        simiBlogConfiguration.general &&
+        simiBlogConfiguration.general.font_color
+    ) {
         linkColor = simiBlogConfiguration.general.font_color;
     }
 
@@ -24,38 +30,51 @@ const TagList = () => {
         let postNumber = 1;
         tagItems.map(tagItem => {
             try {
-                const itemPostNum = tagItem.posts.items.length;;
-                postNumber += parseInt(itemPostNum)
-            } catch (err) {
-
-            }
+                const itemPostNum = tagItem.posts.items.length;
+                postNumber += parseInt(itemPostNum);
+            } catch (err) {}
         });
         return (
             <div className={classes.tagListRoot}>
-                <style dangerouslySetInnerHTML={{
-                    __html: `
+                <style
+                    dangerouslySetInnerHTML={{
+                        __html: `
                     .${classes.tagItem}:hover { color: ${linkColor} }
-                `}} />
-                <div className={classes.tagListHeader}>{`Tags`}</div>
+                `
+                    }}
+                />
+                <div className={classes.tagListHeader}>
+                    {``}
+                    {formatMessage({
+                        id: 'tags',
+                        defaultMessage: 'Tags'
+                    })}
+                </div>
                 <div className={classes.tagItems}>
                     {tagItems.map(tagItem => {
                         let tagFontSize = 10;
                         try {
-                            tagFontSize = maxFontSize * parseInt(tagItem.posts.items.length) / postNumber;
-                            tagFontSize = (Math.ceil(tagFontSize) + 8);
-                        } catch (err) {
-
-                        }
+                            tagFontSize =
+                                (maxFontSize *
+                                    parseInt(tagItem.posts.items.length)) /
+                                postNumber;
+                            tagFontSize = Math.ceil(tagFontSize) + 8;
+                        } catch (err) {}
                         return (
-                            <Link className={classes.tagItem} to={`/blog/tag/${tagItem.url_key}.html`} style={{ fontSize: tagFontSize }} key={tagItem.name}>
+                            <Link
+                                className={classes.tagItem}
+                                to={`/blog/tag/${tagItem.url_key}.html`}
+                                style={{ fontSize: tagFontSize }}
+                                key={tagItem.name}
+                            >
                                 {tagItem.name}
                             </Link>
-                        )
+                        );
                     })}
                 </div>
             </div>
-        )
+        );
     }
-    return ''
-}
-export default TagList
+    return '';
+};
+export default TagList;

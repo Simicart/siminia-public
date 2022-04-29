@@ -13,9 +13,11 @@ import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator'
 import { useQuery } from '@apollo/client';
 import { GET_TAG_BY_URL_KEY } from '../../talons/Blog/Blog.gql';
 import { Title, Meta } from '@magento/venia-ui/lib/components/Head';
+import { useIntl } from 'react-intl';
 
 const Tag = props => {
     const { tagUrl = "" } = useParams();
+    const { formatMessage } = useIntl();
 
     const {
         data: resultData,
@@ -31,8 +33,10 @@ const Tag = props => {
     if (resultLoading)
         return <LoadingIndicator />
     if (!resultData || !resultData.mpBlogTags || !resultData.mpBlogTags.items || !resultData.mpBlogTags.items[0])
-        return 'Cannot find item';
-
+    return formatMessage({
+        id: 'notFind',
+        defaultMessage: 'Cannot find item'
+    });
     const tagData = resultData.mpBlogTags.items[0];
 
     return (
@@ -44,7 +48,10 @@ const Tag = props => {
             <BreadCrumb items={
                 [
                     {
-                        label: 'Blog',
+                        label: formatMessage({
+                            id: 'blog',
+                            defaultMessage: 'Blog'
+                        }),
                         path: '/blog.html'
                     },
                     {

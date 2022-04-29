@@ -10,9 +10,12 @@ import SidebarPosts from '../sidebarPosts';
 import SimibarMonthlyListing from '../simibarMonthlyListing';
 import { Title, Meta } from '@magento/venia-ui/lib/components/Head';
 import { useLocation } from "react-router-dom";
+import { useIntl } from 'react-intl';
 
 const Topic = props => {
     const location = useLocation();
+    const { formatMessage } = useIntl();
+
     const authorName = new URLSearchParams(location.search).get("author_name");
 
     if (authorName) {
@@ -22,11 +25,17 @@ const Topic = props => {
                 <BreadCrumb items={
                     [
                         {
-                            label: 'Blog',
+                            label: formatMessage({
+                                id: 'blog',
+                                defaultMessage: 'Blog'
+                            }),
                             path: '/blog.html'
                         },
                         {
-                            label: 'Author',
+                            label: formatMessage({
+                                id: 'Author',
+                                defaultMessage: 'Author'
+                            })
                         }
                     ]
                 }

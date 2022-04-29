@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import BlogPostInfo from '../blogPostInfo'
 import RichText from '@magento/venia-ui/lib/components/RichText'
+import { useIntl } from 'react-intl';
 
 const BlogListingItem = props => {
     const { classes, item, simiBlogConfiguration } = props;
+    const { formatMessage } = useIntl();
     const {
         name,
         url_key,
@@ -36,7 +38,10 @@ const BlogListingItem = props => {
                 </div>
                 <Link to={`/blog/post/${url_key}.html`}>
                     <div className={classes.readMore}>
-                        {'Read More'}
+                        {formatMessage({
+                                id: 'readMore',
+                                defaultMessage: 'Read More'
+                            })}
                     </div>
                 </Link>
             </div>
