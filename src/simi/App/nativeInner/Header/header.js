@@ -97,7 +97,8 @@ const Header = props => {
         '/reward-transactions',
         '/contact.html',
         '/account-setting',
-        '/checkout'
+        '/checkout',
+        '/product-alert'
     ];
 
     // const storeConfig = Identify.getStoreConfig();

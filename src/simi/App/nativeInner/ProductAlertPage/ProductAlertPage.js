@@ -1,11 +1,13 @@
-import React from "react";
-import {useProductAlertPage} from "./useProductAlertPage";
-import {AlertTable} from "./AlertTable";
-import {useGlobalLoading} from "./Loading/useGlobalLoading";
+import React from 'react';
+import { useProductAlertPage } from './useProductAlertPage';
+import { AlertTable } from './AlertTable';
+import { useGlobalLoading } from './Loading/useGlobalLoading';
+import LeftMenu from '../../core/LeftMenu';
+import defaultClasses from './productAlertPage.module.css';
+import { useStyle } from '@magento/venia-ui/lib/classify.js';
 
-const ProductAlertPage = (props) => {
-
-    const {Component: LoadingComponent, setLoading} = useGlobalLoading()
+const ProductAlertPage = props => {
+    const { Component: LoadingComponent, setLoading } = useGlobalLoading();
     const {
         customerData,
         reInitialize,
@@ -14,61 +16,131 @@ const ProductAlertPage = (props) => {
         loading
     } = useProductAlertPage({
         setLoading: setLoading
-    })
+    });
+    const classes = useStyle(defaultClasses);
+    const isMobileSite = window.innerWidth <= 768;
 
-    const stockData = customerData ? customerData.customer.mp_product_alert.out_of_stock : null
-    const priceData = customerData ? customerData.customer.mp_product_alert.product_price : null
+    const stockData = customerData
+        ? customerData.customer.mp_product_alert.out_of_stock
+        : null;
+    const priceData = customerData
+        ? customerData.customer.mp_product_alert.product_price
+        : null;
 
-    
-    return (
-        <div style={{
-            marginTop: 30,
-            marginBottom: 30,
-            marginLeft: 30,
-            marginRight: 30
-        }}>
-            <LoadingComponent/>
+    if (isMobileSite) {
+        return (
             <div>
-                <h2 style={{
-                    fontSize: 30,
-                }}>My Product Alerts</h2>
+                <LoadingComponent />
+
+                {!shouldShowPriceTable && !shouldShowStockTable && !loading && (
+                    <div
+                        style={{
+                            marginTop: 25
+                        }}
+                    >
+                        <h3>You currently have no subscription.</h3>
+                    </div>
+                )}
+                {shouldShowStockTable && (
+                    <div
+                        style={{
+                            marginTop: 40,
+                            marginBottom: 60
+                        }}
+                    >
+                        <AlertTable
+                            title={'Alert for Stock Change'}
+                            data={stockData}
+                            reInitialize={reInitialize}
+                            setLoading={setLoading}
+                            isMobileSite={isMobileSite}
+                        />
+                    </div>
+                )}
+
+                {shouldShowPriceTable && (
+                    <div
+                        style={{
+                            marginTop: 20,
+                            marginBottom: 20
+                        }}
+                    >
+                        <AlertTable
+                            title={'Alert for Price Change'}
+                            data={priceData}
+                            reInitialize={reInitialize}
+                            setLoading={setLoading}
+                            isMobileSite={isMobileSite}
+                        />
+                    </div>
+                )}
             </div>
+        );
+    }
 
-            {(!shouldShowPriceTable && !shouldShowStockTable && !loading) && (
-                <div style={{
-                    marginTop: 25
-                }}>
-                    <h3>You currently have no subscription.</h3>
-                </div>
-            )}
+    return (
+        <div className={`${classes.productAlert} container`}>
+            <div className={classes.wrapper}>
+                <LeftMenu label="Product Alert" />
+                <div className={classes.mainContent}>
+                    <LoadingComponent />
+                    <div>
+                        <h2
+                            style={{
+                                fontSize: 30
+                            }}
+                        >
+                            My Product Alerts
+                        </h2>
+                    </div>
 
-            {shouldShowStockTable && (
-                <div style={{
-                    marginTop: 40,
-                    marginBottom: 60,
-                }}>
-                    <AlertTable title={'Alert for Stock Change'}
+                    {!shouldShowPriceTable &&
+                        !shouldShowStockTable &&
+                        !loading && (
+                            <div
+                                style={{
+                                    marginTop: 25
+                                }}
+                            >
+                                <h3>You currently have no subscription.</h3>
+                            </div>
+                        )}
+
+                    {shouldShowStockTable && (
+                        <div
+                            style={{
+                                marginTop: 40,
+                                marginBottom: 60
+                            }}
+                        >
+                            <AlertTable
+                                title={'Alert for Stock Change'}
                                 data={stockData}
                                 reInitialize={reInitialize}
                                 setLoading={setLoading}
-                    />
-                </div>
-            )}
+                            />
+                        </div>
+                    )}
 
-            {shouldShowPriceTable && (
-                <div style={{
-                    marginTop: 20,
-                    marginBottom: 20,
-                }}>
-                    <AlertTable title={'Alert for Price Change'}
+                    {shouldShowPriceTable && (
+                        <div
+                            style={{
+                                marginTop: 20,
+                                marginBottom: 20
+                            }}
+                        >
+                            <AlertTable
+                                title={'Alert for Price Change'}
                                 data={priceData}
                                 reInitialize={reInitialize}
                                 setLoading={setLoading}
-                    />
+                            />
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default ProductAlertPage
+export default ProductAlertPage;

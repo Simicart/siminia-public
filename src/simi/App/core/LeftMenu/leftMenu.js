@@ -14,7 +14,8 @@ import {
     Star,
     CheckCircle,
     DollarSign,
-    Gift
+    Gift,
+    Bell
 } from "react-feather";
 import Icon from "@magento/venia-ui/lib/components/Icon";
 import { Link } from "react-router-dom";
@@ -38,6 +39,7 @@ const LeftMenu = (props) => {
         "Communications",
         "Account Information",
         "Account Subcriptions",
+        "Product Alert"
     ];
     const rewardMenuContent = ["Reward Points", "Reward Transactions"];
     let iconList = [
@@ -49,6 +51,7 @@ const LeftMenu = (props) => {
         <Icon className={classes.icon} size={22} src={Users} />,
         <Icon className={classes.icon} size={22} src={Info} />,        
         <Icon className={classes.icon} size={22} src={CheckCircle} />,
+        <Icon className={classes.icon} size={22} src={Bell} />,
     ];
     const rewardIconList = [        
         <Icon className={classes.icon} size={22} src={DollarSign} />,
