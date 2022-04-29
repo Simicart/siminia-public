@@ -93,7 +93,9 @@ const Item = props => {
                     width={100}
                     resource={
                         configurableThumbnailSource === 'itself' &&
-                        configured_variant
+                        configured_variant &&
+                        configured_variant.thumbnail &&
+                        configured_variant.thumbnail.url
                             ? configured_variant.thumbnail.url
                             : product.thumbnail.url
                     }
@@ -149,7 +151,7 @@ const Item = props => {
                 style={{ color: configColor.price_color }}
                 className={classes.price}
             >
-                {showExcludedTax ? (
+                {showExcludedTax || !item.prices.row_total_including_tax ? (
                     <Price
                         currencyCode={prices.price.currency}
                         value={prices.price.value}
