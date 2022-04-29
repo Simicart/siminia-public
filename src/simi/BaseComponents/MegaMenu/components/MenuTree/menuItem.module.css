@@ -1,0 +1,97 @@
+:root {
+  --am-mega-menu-submenu-text-color: var(--venia-global-color-text);
+  --am-mega-menu-submenu-bg-color: var(--venia-global-color-background);
+  --am-mega-menu-submenu-bg-image: var(--am-mega-menu-submenu-bg-color);
+  --am-mega-menu-text-hover-color: var(--venia-global-color-teal);
+  --am-mega-menu-submenu-text-hover-color: var(--venia-global-color-teal);
+}
+
+.root {
+  position: relative;
+}
+
+.topMenu.main {
+  padding: 0 0.5rem;
+}
+
+.topMenu.fullWidth {
+  position: static;
+}
+
+.subContainer {
+  display: none;
+}
+
+.topMenu.main:hover .subContainerMain:not(:empty) {
+  display: block;
+  z-index: 2;
+}
+
+.hamburger.main {
+  align-items: center;
+  border-bottom: 1px solid rgba(var(--am-mega-menu-text-color) / 0.2);
+  margin: 0 1.25rem;
+}
+
+.subContainerRoot {
+  display: none;
+}
+
+.subContainerMain {
+  padding-bottom: 1rem;
+  max-width: 100%;
+}
+
+.hamburger.open > .subContainerRoot:not(:empty) {
+  display: block;
+  padding-left: 1rem;
+}
+
+/*
+ * Desktop specific styles
+ */
+
+@media (min-width: 1025px) {
+  .subContainerMain {
+    --venia-global-color-text: var(--am-mega-menu-submenu-text-color);
+    position: absolute;
+    padding: 2rem;
+    border-radius: 1px;
+    box-shadow: 0 1px 6px rgb(var(--venia-global-color-gray-900) / 0.2);
+    max-width: initial;
+    color: rgb(var(--venia-global-color-text));
+    background-color: rgb(var(--am-mega-menu-submenu-bg-color));
+    background-image: var(--am-mega-menu-submenu-bg-image);
+    background-size: auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  .hamburger.main.open > .subContainerMain:not(:empty) {
+    display: block;
+    top: 0;
+    left: 100%;
+    width: max-content;
+    margin-left: 1.25rem;
+    max-width: calc(100vw - 24rem);
+  }
+
+  .fullWidth.hamburger.main.open > .subContainerMain {
+    width: 100vw;
+  }
+
+  .fullWidth > .subContainerMain {
+    left: 0;
+    right: 0;
+    width: 100vw;
+    max-width: var(--venia-global-maxWidth);
+    margin: 0 auto;
+  }
+
+  .autoWidth > .subContainerMain {
+    width: max-content;
+    max-width: 60vw;
+  }
+}

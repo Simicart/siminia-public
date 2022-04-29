@@ -1,0 +1,51 @@
+.root {
+  composes: section from '~@magento/venia-ui/lib/components/ProductFullDetail/productFullDetail.module.css';
+  margin: 0 4rem 2.5rem 4rem;
+  padding: 1.5rem 0;
+}
+
+.title {
+  composes: sectionTitle from '~@magento/venia-ui/lib/components/ProductFullDetail/productFullDetail.module.css';
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -1rem;
+}
+
+.product {
+  flex-basis: 100%;
+  padding: 1rem;
+}
+
+.images {
+  composes: images from '~@magento/venia-ui/lib/components/Gallery/item.module.css';
+}
+
+.imageContainer {
+  composes: imageContainer from '~@magento/venia-ui/lib/components/Gallery/item.module.css';
+}
+
+.image {
+  composes: image from '~@magento/venia-ui/lib/components/Gallery/item.module.css';
+}
+
+.name,
+.price {
+  composes: name from '~@magento/venia-ui/lib/components/Gallery/item.module.css';
+}
+
+.carousel {
+  composes: root from '~@magento/pagebuilder/lib/ContentTypes/Slider/slider.module.css';
+  padding: 1rem 0;
+}
+
+.carousel :global .slick-prev,
+.carousel :global .slick-next {
+  margin-top: -3.775rem;
+}
+
+.carousel .item {
+  width: auto;
+}

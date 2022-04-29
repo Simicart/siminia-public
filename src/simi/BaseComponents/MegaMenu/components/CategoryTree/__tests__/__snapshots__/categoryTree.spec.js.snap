@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders accordion template 1`] = `<AccordionTemplate />`;
+
+exports[`renders default template 1`] = `<DefaultTemplate />`;
+
+exports[`renders drill template 1`] = `<DrillDownTemplate />`;
+
+exports[`renders without data 1`] = `<DefaultTemplate />`;

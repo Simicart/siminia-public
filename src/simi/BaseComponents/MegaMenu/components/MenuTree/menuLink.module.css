@@ -1,0 +1,152 @@
+:root {
+  --am-mega-menu-label-color: #000;
+  --am-mega-menu-label-bg: #fff;
+  --am-mega-menu-active-color: var(--venia-global-color-text);
+  --am-mega-menu-item-bg-hover: var(--venia-global-color-background);
+}
+
+.root {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: rgb(var(--venia-global-color-text));
+}
+
+.toggle {
+  display: block;
+  transform: rotate(90deg);
+}
+
+.toggle_open {
+  composes: toggle;
+  transform: rotate(-90deg);
+}
+
+.toggle button {
+  width: 2rem;
+  height: 3.5rem;
+  outline: none;
+}
+
+.level1 {
+  --venia-global-color-text: var(--am-mega-menu-text-color);
+}
+
+.hamburger:not(.level1) {
+  --venia-global-color-text: var(--am-mega-menu-submenu-text-color);
+}
+
+.hamburger:not(.level1) .toggle svg {
+  width: 1rem;
+}
+
+a.menuLink {
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  width: 100%;
+  min-width: 0;
+  text-decoration: none !important;
+}
+
+.hamburger.level1 > .menuLink {
+  height: 3.5rem;
+  outline: none;
+}
+
+.hamburger:not(.level1) .menuLink {
+  padding: 0 0.3rem;
+}
+
+.title {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon {
+  display: block;
+  width: 1.25rem;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 0 0.5rem 0 0;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background-color: currentColor;
+}
+
+.label {
+  top: 0;
+  right: 0;
+  display: inline-block;
+  padding: 2px 3px;
+  min-width: 42px;
+  border-radius: 2px;
+  background: var(--am-mega-menu-label-bg);
+  color: var(--am-mega-menu-label-color);
+  text-align: center;
+  font-size: 9px;
+  line-height: normal;
+  transform: translateY(-50%);
+  margin-left: 0.2rem;
+}
+
+.active {
+  --venia-global-color-text: var(--am-mega-menu-active-color) !important;
+}
+
+/*
+ * Desktop specific styles
+ */
+
+@media (min-width: 1025px) {
+  .toggle {
+    display: none;
+    transform: none;
+  }
+
+  .toggle_open {
+    transform: rotate(180deg);
+  }
+
+  .hamburger.level1 > .toggle {
+    display: block;
+  }
+
+  .level2 > .menuLink {
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    white-space: normal;
+  }
+
+  .level2 .menuLink .title {
+    white-space: normal;
+  }
+
+  .hamburger:not(.level1) .menuLink:hover {
+    outline: 1px solid rgb(var(--am-mega-menu-text-hover-color));
+  }
+
+  .menuLink:hover {
+    color: rgb(var(--am-mega-menu-text-hover-color));
+    background-color: rgb(var(--am-mega-menu-item-bg-hover));
+    outline: 0.5rem solid rgb(var(--am-mega-menu-item-bg-hover));
+  }
+
+  .hamburger.level1:hover > .toggle,
+  .hamburger.level1:hover > .menuLink {
+    background-color: rgb(var(--am-mega-menu-item-bg-hover));
+  }
+
+  .level2 .menuLink:hover {
+    color: rgb(var(--am-mega-menu-submenu-text-hover-color));
+    background: none;
+    outline: none;
+  }
+}
