@@ -8,7 +8,7 @@ import { removeGiftCardFromList } from '../../talons/removeGiftCardFromList'
 import { addGiftCardToList } from '../../talons/addGiftCardToList'
 import { checkGiftCardCode } from '../../talons/checkGiftCardCode'
 import { SAVE_NOTIFICATIONS } from '../../talons/GiftCard.gql'
-// import Loading from '../loading.jpg'
+import { FormattedMessage, useIntl } from 'react-intl';
 import * as Icon from 'react-feather'
 import {fullPageLoadingIndicator} from '@magento/venia-ui/lib/components/LoadingIndicator';
 import { Title } from '@magento/venia-ui/lib/components/Head'
@@ -17,6 +17,7 @@ import LeftMenu from 'src/simi/App/core/LeftMenu'
 
 const GiftCardDashboard = props => {
 	const [gcCode, setGcCode] = useState('')
+	const { formatMessage } = useIntl();
 	const [isChecked, setIsChecked] = useState(false)
 	const [isCheckCodeMessageDisplayed, setIsCheckCodeMessageDisplayed] = useState(false)
 	const [isAddGcMsgDisplayed, setIsAddGcMsgDisplayed] = useState(false)
@@ -172,15 +173,15 @@ const GiftCardDashboard = props => {
 					<table>
 						<tbody>
 							<tr>
-								<td>Code</td>
+								<td>{formatMessage({ id: "Code", defaultMessage: 'Code' })}</td>
 								<td>{gcCode}</td>
 							</tr>
 							<tr>
-								<td>Active Balance</td>
+								<td>{formatMessage({ id: "Active Balance", defaultMessage: 'Active Balance' })}</td>
 								<td dangerouslySetInnerHTML={{__html: checkCodeData.mpGiftCardCheckCode.balance_formatted}}></td>
 							</tr>
 							<tr>
-								<td>Status</td>
+								<td>{formatMessage({ id: "Status", defaultMessage: 'Status' })}</td>
 								<td>{checkCodeData.mpGiftCardCheckCode.status_label}</td>
 							</tr>
 						</tbody>
@@ -272,13 +273,13 @@ const GiftCardDashboard = props => {
 	const currentBalanceBlock = (
 		<div className={classes['block-content']}> 
 			<div className={classes['box-information']}>
-				<div className={classes['box-title']}><strong>My current balance</strong></div>
+				<div className={classes['box-title']}><strong>{formatMessage({ id: "My current balance", defaultMessage: 'My current balance' })}</strong></div>
 				<div className={classes['box-content']}>
 					<Price currencyCode='USD' value={balance}/>
 				</div>
 			</div>
 			<div className={classes['box-information']}>
-				<div className={classes['box-title']}><strong>Check/Redeem Gift Card</strong><br/></div>
+				<div className={classes['box-title']}><strong>{formatMessage({ id: "Check/Redeem Gift Card", defaultMessage: 'Check/Redeem Gift Card' })}</strong><br/></div>
 				<div className={classes['gift-code-input-field']}>
 					<Icon.Gift className={classes['gift-icon']}/>
 					<input className={classes['check-code-field']} value={gcCode} onChange={onInputChange}/>
@@ -290,19 +291,19 @@ const GiftCardDashboard = props => {
 								className={classes['action-button']} 
 								type='button'
 								onClick={() => handleRedeemGiftCard(gcCode)}
-							>Redeem</button>
+							>{formatMessage({ id: "Redeem", defaultMessage: 'Redeem' })}</button>
 							<button 
 								className={classes['action-button']} 
 								type='button'
 								onClick={handleAddGiftCard}
-							>Add to list</button>
+							>{formatMessage({ id: "Add to list", defaultMessage: 'Add to list' })}</button>
 						</Fragment>
 						: 
 						<button 
 							className={classes['action-button']} 
 							type='button' 
 							onClick={onCheckCodeClick}
-						>Check</button>
+						>{formatMessage({ id: "Check", defaultMessage: 'Check' })}</button>
 					}
 				</div>
 				{checkCodeMessage}
@@ -332,17 +333,17 @@ const GiftCardDashboard = props => {
 								setActiveGCView(i)
 								setShowOverlay(true)
 							}}
-						><span>View</span></a>
+						><span>{formatMessage({ id: "View", defaultMessage: 'View' })}</span></a>
 						{ giftcard.can_redeem && 	
 							<a 
 								href={void(0)}
 								onClick={() => handleRedeemGiftCard(giftcard.code)}
-							><span>Redeem</span></a>
+							><span>{formatMessage({ id: "Redeem", defaultMessage: 'Redeem' })}</span></a>
 						}
 						<a 
 							href={void(0)}
 							onClick={() => handleRemoveGiftCard(giftcard.code)}
-						><span>Remove</span></a>
+						><span>{formatMessage({ id: "Remove", defaultMessage: 'Remove' })}</span></a>
 					</th>
 				</tr>
 				
@@ -368,15 +369,15 @@ const GiftCardDashboard = props => {
 							<table className={classes['table-gift-card-detail']}>
 								<tbody>
 									<tr>
-										<td>Balance</td>
+										<td>{formatMessage({ id: "Balance", defaultMessage: 'Balance' })}</td>
 										<td dangerouslySetInnerHTML={{__html: giftcard['balance_formatted']}}></td>
 									</tr>
 									<tr>
-										<td>Status</td>
+										<td>{formatMessage({ id: "Status", defaultMessage: 'Status' })}</td>
 										<td>{giftcard['status_label']}</td>
 									</tr>
 									<tr>
-										<td>Expired Date</td>
+										<td>{formatMessage({ id: "Expired Date", defaultMessage: 'Expired Date' })}</td>
 										<td>{giftcard['expired_at_formatted']}</td>
 									</tr>
 								</tbody>
@@ -384,15 +385,15 @@ const GiftCardDashboard = props => {
 						</div>
 					</div>
 					<div className={classes['block-history']}>
-						<div className={classes['block-title']}>History</div>
+						<div className={classes['block-title']}>{formatMessage({ id: "History", defaultMessage: 'History' })}</div>
 						<div className={classes['block-content']}>
 							<table>
 								<thead style={{borderBottom: '1px solid #cccccc'}}>
 									<tr>
-										<th>Date</th>
-										<th>Action</th>
-										<th>Amount</th>
-										<th>Status</th>
+										<th>{formatMessage({ id: "Date", defaultMessage: 'Date' })}</th>
+										<th>{formatMessage({ id: "Action", defaultMessage: 'Action' })}</th>
+										<th>{formatMessage({ id: "Amount", defaultMessage: 'Amount' })}</th>
+										<th>{formatMessage({ id: "Status", defaultMessage: 'Status' })}</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -493,7 +494,7 @@ const GiftCardDashboard = props => {
 
 	return (
 		<div className={`${classes.root} container`}>
-			<Title>{`My Gift Cards - ${STORE_NAME}`}</Title>
+			<Title>{`My Gift Cards`}</Title>
 			<div className={classes.wrapper}>
 				<LeftMenu label="My Gift Cards" />
 				<div>

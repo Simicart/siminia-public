@@ -21,6 +21,8 @@ import RichContent from '@magento/venia-ui/lib/components/RichContent/richConten
 import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductOptions';
 import defaultClasses from './productFullDetail.module.css';
 import SizeChart from './SizeChart';
+import GiftCardInformationForm from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GiftCardInformationForm'
+import { ADD_GIFT_CARD_TO_CART } from 'src/simi/App/nativeInner/GiftCard/talons/GiftCard.gql.js'
 const WishlistButton = React.lazy(() =>
     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
 );
@@ -50,6 +52,7 @@ import { FaChevronRight } from 'react-icons/fa';
 import { BiHelpCircle, BiHome } from 'react-icons/bi';
 // import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
+import { useGiftCard } from '../GiftCard/talons/useGiftCard';
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
@@ -57,6 +60,7 @@ import StatusBar from './statusBar';
 import FooterFixedBtn from './footerFixedBtn';
 import AddToCartPopup from './addToCartPopup';
 import CallForPrice from './callForPrice';
+
 require('./productFullDetail.scss');
 
 const mageworxSeoEnabled =
@@ -81,11 +85,18 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product, history } = props;
-    const talonProps = useProductFullDetail({ product });
+
+    const operations = {
+        addGiftCardProductToCartMutation: ADD_GIFT_CARD_TO_CART
+    }
+
+    const talonProps = useProductFullDetail({ product, operations });
+
     const {
         breadcrumbCategoryId,
         errorMessage,
         handleAddToCart,
+        handleAddGiftCardProductToCart,
         handleBuyNow,
         handleSelectionChange,
         isOutOfStock,
@@ -105,14 +116,23 @@ const ProductFullDetail = props => {
         setAlertMsg,
         alertMsg
     } = talonProps;
+
+    const {
+        gcPrice,
+        giftCardPreData,
+        giftCardData,
+		handleSaveGiftCardData,
+        handleSetGcPrice
+    } = useGiftCard({product})
+
     const successMsg = `${productDetails.name} was added to shopping cart`;
     const [{ isSignedIn }] = useUserContext();
-    console.log('product', product);
     let History = useHistory();
     const dataLocation = product.mp_callforprice_rule
         ? product.mp_callforprice_rule
         : NULL;
 
+    
     const [moreBtn, setMoreBtn] = useState(false);
     const storeConfig = Identify.getStoreConfig();
     const enabledReview =
@@ -495,7 +515,7 @@ const ProductFullDetail = props => {
 
                 {isMobileSite ? null : breadcrumbs}
                 <div className="wrapperForm ">
-                    <Form className={classes.root} onSubmit={handleAddToCart}>
+                    <Form className={classes.root} onSubmit={product.__typename === 'MpGiftCardProduct' ? handleAddGiftCardProductToCart : handleAddToCart}>
                         {!isMobileSite ? (
                             <div className="wrapperTitle">
                                 <section className={classes.title}>
@@ -604,6 +624,14 @@ const ProductFullDetail = props => {
                             <div className="wrapperOptions">
                                 <section className={classes.options}>
                                     {options}
+                                    {product.__typename === 'MpGiftCardProduct' 
+                                        && <GiftCardInformationForm 
+                                                product={product} 
+                                                giftCardPreData={giftCardPreData}
+                                                giftCardData={giftCardData} 
+                                                handleSaveGiftCardData={handleSaveGiftCardData} 
+                                                handleSetGcPrice={handleSetGcPrice}
+                                            />}
                                     {product.mp_sizeChart &&
                                     product.mp_sizeChart &&
                                     product.mp_sizeChart.display_type ==
@@ -617,7 +645,6 @@ const ProductFullDetail = props => {
                                             isMobileSite={isMobileSite}
                                         />
                                     ) : null}
-
                                     {!isMobileSite ? wrapperPrice : null}
                                 </section>
                             </div>

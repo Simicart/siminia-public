@@ -66,7 +66,7 @@ const LeftMenu = (props) => {
         <Icon className={classes.icon} size={22} src={DollarSign} />,
         <Icon className={classes.icon} size={22} src={Gift} />
     ];
-    const giftCardList = [        
+    const giftCardIconList = [        
         <Icon className={classes.icon} size={22} src={CreditCard} />,
     ];
     if (rewardPointEnabled) {
@@ -75,7 +75,7 @@ const LeftMenu = (props) => {
     }
     if (giftCardEnabled) {
         listMenuContent = listMenuContent.concat(giftCardContent);
-        iconList = iconList.concat(giftCardList);
+        iconList = iconList.concat(giftCardIconList);
     }
     const MenuItems = listMenuContent.map((item, index) => {
         const reformat = item.replace(/\s/g, "-");
