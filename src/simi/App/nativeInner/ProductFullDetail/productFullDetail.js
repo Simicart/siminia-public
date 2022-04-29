@@ -117,7 +117,7 @@ const ProductFullDetail = props => {
     let History = useHistory();
     const dataLocation = product.mp_callforprice_rule
         ? product.mp_callforprice_rule
-        : NULL;
+        : null;
 
     const [moreBtn, setMoreBtn] = useState(false);
     const storeConfig = Identify.getStoreConfig();
