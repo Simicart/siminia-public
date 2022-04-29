@@ -41,7 +41,7 @@ export const useBlogListing = props => {
             break;
         case 'get_post_by_date_time':
             variables.filter = {
-                created_at: {
+                publish_date: {
                     like: `%${filterValue}%`
                 }
             };
