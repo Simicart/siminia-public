@@ -7,10 +7,10 @@
   display: block;
   color: rgb(var(--venia-global-color-text));
   margin: 0;
+  background-color: #fff;
 }
 
 .topMenu.menu {
   display: flex;
   flex-wrap: wrap;
-  margin-left: 2rem;
-}
+  justify-content: center;}

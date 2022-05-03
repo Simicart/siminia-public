@@ -5,7 +5,6 @@ import MegaMenu from '@magento/venia-ui/lib/components/MegaMenu/megaMenu';
 
 const TopMenu = props => {
   const { menuTree, isEnabled } = useTopMenu();
-  console.log("menuTree",menuTree)
   if (!isEnabled) {
     return <MegaMenu />;
   }
