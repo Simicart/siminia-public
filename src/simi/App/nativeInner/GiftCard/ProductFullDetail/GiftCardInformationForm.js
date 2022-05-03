@@ -4,15 +4,28 @@ import {saveGiftCardData} from '../Helper'
 import { useStyle } from '@magento/venia-ui/lib/classify';
 
 const GiftCardInformationForm = props => {
-    const {product, giftCardData, giftCardPreData, handleSetGcPrice} = props
+    const {giftCardActions, giftCardData, giftCardProductData} = props
 
-    const {amounts} = giftCardPreData
-    const {
-        delivery,
-        message: gcMessage,
-        template: activeTemplate
-    } = giftCardData
     const classes = useStyle(defaultClasses, props.classes);
+
+    const {
+        activeAmount,
+        gcMessage,
+        delivery,
+        activeTemplate,
+    } = giftCardData
+
+    const {
+        setGcAmount,
+        setActiveAmount,
+        setGcPrice,
+        setGcMessage,
+        setGcFrom,
+        setGcTo,
+        setDelivery,
+        setEmail,
+        setPhone,
+    } = giftCardActions
 
     const {
         allow_amount_range,
@@ -21,9 +34,9 @@ const GiftCardInformationForm = props => {
         gift_card_type,
         price_rate,
         template,
-    } = product
+        amounts,
+    } = giftCardProductData
 
-    const [activeAmount, setActiveAmount] = useState(0)
     const currentTemplate = template ? template[activeTemplate] : null
     const hasFromAndToField = currentTemplate ? typeof JSON.parse(currentTemplate.design).from !== "undefined" : null
 
@@ -35,30 +48,33 @@ const GiftCardInformationForm = props => {
         else if (value.length == 0) return;
         else {
             if (value < min_amount) {
-                handleSaveGiftCardData('amount', min_amount)
-                handleSetGcPrice(min_amount*price_rate/100)
+                setGcAmount(min_amount)
+                setGcPrice(min_amount*price_rate/100)
                 e.target.value = min_amount
             } else if (value > max_amount) {
                 e.target.value = max_amount
-                handleSaveGiftCardData('amount', max_amount)
-                handleSetGcPrice(max_amount*price_rate/100)
+                setGcAmount(max_amount)
+                setGcPrice(max_amount*price_rate/100)
             } else {
-                handleSaveGiftCardData('amount', value)
-                handleSetGcPrice(value*price_rate/100)
+                setGcAmount(value)
+                setGcPrice(value*price_rate/100)
             }
         }
     }
     const onMessageChange = (e) => {
-        saveGiftCardData('message', e.target.value)
+        setGcMessage(e.target.value)
     }
     const onFromChange = (e) => {
-        saveGiftCardData('from', e.target.value)
+        setGcFrom(e.target.value)
     }
     const onToChange = (e) => {
-        saveGiftCardData('to', e.target.value)
+        setGcTo(e.target.value)
     }
     const onEmailChange = (e) => {
-        saveGiftCardData('email', e.target.value)
+        setEmail(e.target.value)
+    }
+    const onPhoneChange = (e) => {
+        setPhone(e.target.value)
     }
 
     return (
@@ -225,7 +241,6 @@ const GiftCardInformationForm = props => {
             </div>
         </div>
     )
-  
 }
 
 export default GiftCardInformationForm

@@ -118,11 +118,9 @@ const ProductFullDetail = props => {
     } = talonProps;
 
     const {
-        gcPrice,
-        giftCardPreData,
+        giftCardProductData,
         giftCardData,
-		handleSaveGiftCardData,
-        handleSetGcPrice
+        giftCardActions
     } = useGiftCard({product})
 
     const successMsg = `${productDetails.name} was added to shopping cart`;
@@ -545,7 +543,39 @@ const ProductFullDetail = props => {
                             ref={carouselImgSize}
                             className={classes.imageCarousel}
                         >
-                            {isMobileSite ? (
+                            { __typename === 'MpGiftCardProduct' ? (
+                                <div className={classes["giftcard-template-container"]} id="giftcard-template-container">
+                                <GiftCardPreview 
+                                    template={currentTemplate}
+                                    amount={gcAmount}
+                                    gcMessage={gcMessage}
+                                    activeImage={activeImage}
+                                    gcFrom={gcFrom}
+                                    gcTo={gcTo}
+                                    uploadedImages={uploadedImages}
+                                />
+                                <div className={classes['template-selections-container']}>
+                                    <div className={classes['block-title']}>
+                                        <span>Gift card design</span>
+                                    </div>
+                                    <SettingSelectButton 
+                                        templates={template} 
+                                        activeTemplate={activeTemplate} 
+                                        setActiveTemplate={setActiveTemplate}
+                                    /> 
+                                    <TemplateChooseImage 
+                                        canUpload={currentTemplate.canUpload}
+                                        images={currentTemplate.images}
+                                        activeImage={activeImage}
+                                        setActiveImage={setActiveImage}
+                                        uploadedImages={uploadedImages}
+                                        setUploadedImages={setUploadedImages}
+                                        uploadedImageUrls={uploadedImageUrls}
+                                        setUploadedImageUrls={setUploadedImageUrls}
+                                    />
+                                </div>
+                            </div>
+                            ) : isMobileSite ? (
                                 <div className={classes.headerBtn}>
                                     <button
                                         className={classes.backBtn}
@@ -626,11 +656,9 @@ const ProductFullDetail = props => {
                                     {options}
                                     {product.__typename === 'MpGiftCardProduct' 
                                         && <GiftCardInformationForm 
-                                                product={product} 
-                                                giftCardPreData={giftCardPreData}
-                                                giftCardData={giftCardData} 
-                                                handleSaveGiftCardData={handleSaveGiftCardData} 
-                                                handleSetGcPrice={handleSetGcPrice}
+                                                giftCardProductData={giftCardProductData}
+                                                giftCardData={giftCardData}
+                                                giftCardActions={giftCardActions}
                                             />}
                                     {product.mp_sizeChart &&
                                     product.mp_sizeChart &&

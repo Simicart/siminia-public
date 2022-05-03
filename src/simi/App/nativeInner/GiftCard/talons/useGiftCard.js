@@ -5,62 +5,96 @@ export const useGiftCard = props => {
     const {product} = props
 
     const {
+        __typename,
         allow_amount_range,
+        min_amount,
+        max_amount,
         gift_card_type,
         gift_card_amounts,
+        gift_code_pattern,
+        gift_product_template,
+        gift_message_available,
+        mpgiftcard_conditions,
+        can_redeem,
+        price_rate,
+        template
     } = product
     
     let amounts
     if(gift_card_amounts) amounts = JSON.parse(gift_card_amounts)
-
-    let delivery;
+    let deli;
     switch(gift_card_type) {
         case 1: 
-            delivery = 1
+            deli = 1
             break;
         case 2:
-            delivery = 3
+            deli = 3
             break;
         case 3:
-            delivery = 4
+            deli = 4
             break;
     }
 
-    let defaultGiftCardData = {
-        amount: gift_card_amounts ? amounts[0].amount : 0,
-        delivery,
-        email: null,
-        from: null,
-        to: null,
-        message: null,
-        image: null,
-        phone_number: null,
-        range_amount: Boolean(allow_amount_range),
-        template: 1 
-    }
-
-    const [giftCardData, setGiftCardData] = useState(defaultGiftCardData)
+    const [gcAmount, setGcAmount] = useState(gift_card_amounts ? amounts[0].amount : 0)
+    const [activeAmount, setActiveAmount] = useState(0)
+    const [activeImage, setActiveImage] = useState(0)
     const [gcPrice, setGcPrice] = useState(gift_card_amounts ? amounts[0].price : 0)
+    const [gcMessage, setGcMessage] = useState('')
+    const [gcFrom, setGcFrom] = useState(null)
+    const [gcTo, setGcTo] = useState(null)
+    const [delivery, setDelivery] = useState(deli)
+    const [activeTemplate, setActiveTemplate] = useState(0)
+    const [email, setEmail] = useState(null)
+    const [phone, setPhone] = useState(null)
+    const [uploadedImages, setUploadedImages] = useState([])
+    const [uploadedImageUrls, setUploadedImageUrls] = useState([])
 
-    const handleSaveGiftCardData = (attr, value) => {
-        const newGiftCardData = {...giftCardData}
-        newGiftCardData[attr] = value
-        setGiftCardData(newGiftCardData)
-    }
 
-    const handleSetGcPrice = (value) => {
-        setGcPrice(value)
-    }
-
-    const giftCardPreData = {
-        amounts
-    }
- 
 	return {
-        gcPrice,
-        giftCardPreData,
-        giftCardData,
-		handleSaveGiftCardData,
-        handleSetGcPrice
+        giftCardActions: {
+            setGcAmount,
+            setActiveAmount,
+            setActiveImage,
+            setGcPrice,
+            setGcMessage,
+            setGcFrom,
+            setGcTo,
+            setDelivery,
+            setActiveTemplate,
+            setEmail,
+            setPhone,
+            setUploadedImages,
+            setUploadedImageUrls
+        },
+        giftCardData: {
+            gcAmount,
+            activeAmount,
+            activeImage,
+            gcPrice,
+            gcMessage,
+            gcFrom,
+            gcTo,
+            delivery,
+            activeTemplate,
+            email,
+            phone,
+            uploadedImages,
+            uploadedImageUrls
+        },
+        giftCardProductData: {
+            __typename,
+            allow_amount_range,
+            min_amount,
+            max_amount,
+            gift_card_type,
+            gift_code_pattern,
+            gift_product_template,
+            gift_message_available,
+            mpgiftcard_conditions,
+            can_redeem,
+            price_rate,
+            template,
+            amounts,
+        }
 	}
 }

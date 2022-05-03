@@ -57,7 +57,8 @@
     "sass": "~1.43.4",
     "sass-loader": "^7.1.0",
     "simi-pagebuilder-react": "^1.4.0",
-    "universal-cookie": "^4.0.3"
+    "universal-cookie": "^4.0.3",
+    "react-resize-detector": "~7.0.0"
   },
   "devDependencies": {
     "@adobe/apollo-link-mutation-queue": "~1.0.2",
