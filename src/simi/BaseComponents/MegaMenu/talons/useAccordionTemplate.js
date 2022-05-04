@@ -5,7 +5,7 @@ import { buildTree } from '../utils';
 const CATEGORY_IDX = 'category-node-';
 
 export const useAccordionTemplate = () => {
-  const { allItems: items, isMobile } = useAmMegaMenuContext();
+  const { allItems: items, isMobile } = useAmMegaMenuContext() || {};
 
   const menuTree = useMemo(() => {
     if (!Array.isArray(items) || !items.length) {
