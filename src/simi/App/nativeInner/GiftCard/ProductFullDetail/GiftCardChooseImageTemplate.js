@@ -3,6 +3,7 @@ import defaultClasses from './giftCard.module.css'
 import { uploadGiftCardImage } from '../talons/uploadGiftCardImage'
 // import Loading from '../../loading.jpg'
 import { useResizeDetector } from 'react-resize-detector'
+import { useStyle } from '@magento/venia-ui/lib/classify';
 
 const GiftCardChooseImageTemplate = props => {
 	const {  giftCardActions, giftCardProductData, giftCardData } = props
@@ -40,9 +41,9 @@ const GiftCardChooseImageTemplate = props => {
 	  	uploadGcImageErrorMessage
     } = uploadGiftCardImage();
 
-    const currentTemplate = template ? template[activeTemplate] : null
-    const canUpload = currentTemplate.canUpload
-    const images = currentTemplate.images
+    const currentTemplate = template && template[activeTemplate]? template[activeTemplate] : {}
+    const canUpload = currentTemplate.canUpload || false
+    const images = currentTemplate.images || []
 
 	const initialTransDistance = (width-75)*0.5-5
 	const itemWidth = ((width+75)/2 - 20)/3

@@ -22,6 +22,9 @@ import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductO
 import defaultClasses from './productFullDetail.module.css';
 import SizeChart from './SizeChart';
 import GiftCardInformationForm from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GiftCardInformationForm'
+import GiftCardPreview from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GiftCardPreview'
+import GiftCardChooseImageTemplate from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GiftCardChooseImageTemplate'
+import SettingSelectButton from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GiftCardSettingSelectButton'
 import { ADD_GIFT_CARD_TO_CART } from 'src/simi/App/nativeInner/GiftCard/talons/GiftCard.gql.js'
 const WishlistButton = React.lazy(() =>
     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
@@ -543,16 +546,11 @@ const ProductFullDetail = props => {
                             ref={carouselImgSize}
                             className={classes.imageCarousel}
                         >
-                            { __typename === 'MpGiftCardProduct' ? (
+                            { product.__typename === 'MpGiftCardProduct' ? (
                                 <div className={classes["giftcard-template-container"]} id="giftcard-template-container">
                                 <GiftCardPreview 
-                                    template={currentTemplate}
-                                    amount={gcAmount}
-                                    gcMessage={gcMessage}
-                                    activeImage={activeImage}
-                                    gcFrom={gcFrom}
-                                    gcTo={gcTo}
-                                    uploadedImages={uploadedImages}
+                                    giftCardData={giftCardData}
+                                    giftCardProductData={giftCardProductData}
                                 />
                                 <div className={classes['template-selections-container']}>
                                     <div className={classes['block-title']}>
@@ -563,7 +561,7 @@ const ProductFullDetail = props => {
                                         giftCardData={giftCardData}
                                         giftCardActions={giftCardActions}
                                     /> 
-                                    <TemplateChooseImage 
+                                    <GiftCardChooseImageTemplate 
                                         giftCardProductData={giftCardProductData}
                                         giftCardData={giftCardData}
                                         giftCardActions={giftCardActions}
