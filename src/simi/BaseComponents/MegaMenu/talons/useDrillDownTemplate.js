@@ -13,8 +13,8 @@ export const useDrillDownTemplate = props => {
   const { getNavigationMenuQuery } = operations;
 
   const [runQuery, queryResult] = useLazyQuery(getNavigationMenuQuery, {
-    fetchPolicy: 'cache-and-network',
-    nextFetchPolicy: 'cache-first'
+    fetchPolicy: 'no-cache',
+    // nextFetchPolicy: 'cache-first'
   });
   const { data } = queryResult;
 
@@ -47,7 +47,9 @@ export const useDrillDownTemplate = props => {
     }
 
     const category = tree.get(categoryId);
-    const { subCategories, name } = category;
+    // const { subCategories, name } = category;
+    const subCategories = category && category.subCategories ? category.subCategories : ''
+    const name = category && category.name ? category.name : ''
 
     return [
       { ...category, name: `All ${name}`, subCategories: null },

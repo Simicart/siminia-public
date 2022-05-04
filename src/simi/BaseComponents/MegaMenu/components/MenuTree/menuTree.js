@@ -6,7 +6,6 @@ import defaultClasses from './menuTree.module.css';
 
 const MenuTree = props => {
   const { menuTree, view, classes: propsClasses, ...rest } = props;
-  console.log("props",props);
   const menu = useMemo(
     () =>
       Array.isArray(menuTree) && menuTree.length

@@ -14,13 +14,13 @@ export const useMegaMenu = (props = {}) => {
   const { getAmMegaMenuConfig, getAmMegaMenuItems } = operations;
 
   const { data: storeConfigData } = useQuery(getAmMegaMenuConfig, {
-    fetchPolicy: 'cache-and-network',
-    nextFetchPolicy: 'cache-first'
+    fetchPolicy: 'no-cache',
+    // nextFetchPolicy: 'cache-first'
   });
 
   const { loading, error, data } = useQuery(getAmMegaMenuItems, {
-    fetchPolicy: 'cache-and-network',
-    nextFetchPolicy: 'cache-first'
+    fetchPolicy: 'no-cache',
+    // nextFetchPolicy: 'cache-first'
   });
 
   const { amMegaMenuAll } = data || {};

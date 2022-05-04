@@ -17,7 +17,6 @@ const widthTypes = {
 
 const MenuItem = props => {
   const { level, width, view, id, status } = props;
-
   const {
     isMobile,
     isShowIcons,
