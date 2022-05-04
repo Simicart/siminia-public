@@ -558,20 +558,15 @@ const ProductFullDetail = props => {
                                     <div className={classes['block-title']}>
                                         <span>Gift card design</span>
                                     </div>
-                                    <SettingSelectButton 
-                                        templates={template} 
-                                        activeTemplate={activeTemplate} 
-                                        setActiveTemplate={setActiveTemplate}
+                                    <SettingSelectButton
+                                        giftCardProductData={giftCardProductData}
+                                        giftCardData={giftCardData}
+                                        giftCardActions={giftCardActions}
                                     /> 
                                     <TemplateChooseImage 
-                                        canUpload={currentTemplate.canUpload}
-                                        images={currentTemplate.images}
-                                        activeImage={activeImage}
-                                        setActiveImage={setActiveImage}
-                                        uploadedImages={uploadedImages}
-                                        setUploadedImages={setUploadedImages}
-                                        uploadedImageUrls={uploadedImageUrls}
-                                        setUploadedImageUrls={setUploadedImageUrls}
+                                        giftCardProductData={giftCardProductData}
+                                        giftCardData={giftCardData}
+                                        giftCardActions={giftCardActions}
                                     />
                                 </div>
                             </div>

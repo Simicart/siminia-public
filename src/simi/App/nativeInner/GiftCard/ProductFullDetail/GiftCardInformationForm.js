@@ -1,6 +1,5 @@
 import React, { useState, Fragment } from 'react'
 import defaultClasses from './giftCard.module.css'
-import {saveGiftCardData} from '../Helper'
 import { useStyle } from '@magento/venia-ui/lib/classify';
 
 const GiftCardInformationForm = props => {
