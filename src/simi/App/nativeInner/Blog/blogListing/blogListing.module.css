@@ -1,0 +1,94 @@
+.blogEmpty {
+    text-align: center;
+    padding-top: 20px;
+}
+.blogpostItem {
+    width: 100%;
+    border: 1px solid #eee;
+    padding: 25px 0;
+    margin-bottom: 20px;
+    display: flex;
+}
+.blogpostItemList {
+    width: 100%;
+}
+.blogpostItemGrid {
+    width: 45%;
+    display: inline-grid;
+    margin-inline-end: 20px;
+    flex-wrap: wrap;
+}
+.blogpostItem:hover {
+    box-shadow: 0px 5px 15px -5px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+.blogpostItem h2 {
+    margin-bottom: 10px;
+    font-weight: 300;
+    line-height: 1.1;
+    font-size: 22px;
+    margin-top: 0;
+}
+.blogpostItemCol1 {
+    max-height: 200px;
+    overflow: hidden;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 200px;
+    margin-inline-end: 15px;
+}
+.blogpostItemCol1 img {
+    width: 100%;
+}
+.blogpostItemCol2 {
+    display: inline-block;
+}
+@media (max-width: 767px) {
+    .blogpostItem {
+        flex-wrap: wrap;
+    }
+    .blogpostItemGrid {
+        width: 100%;
+    }
+    .blogpostItemCol1 {
+        flex-grow: unset;
+        flex-shrink: unset;
+        flex-basis: unset;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+.blogpostInfo {
+    font-size: 11px;
+}
+.calendarIcon,
+.authorIcon,
+.eyeIcon,
+.calendarData,
+.authorName {
+    margin-inline-end: 5px;
+    margin-inline-start: 5px;
+}
+.blogpostDescription {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    line-height: 22px;
+}
+.readMore {
+    margin-top: 15px;
+    line-height: 18px;
+    font-size: 17px;
+}
+.pageSize {
+    display: flex;
+    justify-content: flex-end;
+    line-height: 38px;
+}
+.pageSizeInput {
+    margin: 0 5px;
+}
+.pageSizeInput select {
+    padding: 5px;
+    background-color: #f2f2f3;
+}

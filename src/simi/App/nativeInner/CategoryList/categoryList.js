@@ -15,7 +15,7 @@ import { MdModelTraining } from 'react-icons/md';
 import { FcNews } from 'react-icons/fc';
 import { BsCartCheck } from 'react-icons/bs';
 import { logoUrl } from 'src/simi/Helper/Url';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import Loader from '../../nativeInner/Loader'
 const CategoryList = props => {
     const { id, title } = props;
@@ -38,10 +38,9 @@ const CategoryList = props => {
         <BsCartCheck size={30} />,
         <BsCartCheck size={30} />
     ];
-
-    const handleClickCate = (index, url) => {
+    const handleClickCate = (url) => {
         if (location.hash !== '#' + url) {
-            history.push(location.pathname + '#' + url);
+            setCateActive(url);
         }
     };
 
@@ -88,7 +87,7 @@ const CategoryList = props => {
                                     }
                                     key={index}
                                     onClick={() =>
-                                        handleClickCate(index, item.url_key)
+                                        handleClickCate( item.url_key)
                                     }
                                 >
                                     {/* <span className={classes.icon}>{listIcon[index]}</span> */}

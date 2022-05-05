@@ -1,0 +1,18 @@
+.productAlert {
+    padding: 2rem 0rem !important;
+}
+
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 20% auto;
+}
+.mainContent {
+    padding: 0 4rem;
+}
+@media (max-width: 960px) {
+    .wrapper {
+        display: grid;
+        grid-template-columns: auto;
+    }
+}

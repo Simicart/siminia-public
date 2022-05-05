@@ -277,7 +277,7 @@ const CartProduct = props => {
         <div>
             <span className={classes.price}>
                 <span className={classes.labelPrice} />
-                {showExcludedTax ? (
+                {showExcludedTax || !item.prices.row_total_including_tax ? (
                     <PriceWithColor currencyCode={currency} value={unitPrice} />
                 ) : (
                     <PriceWithColor

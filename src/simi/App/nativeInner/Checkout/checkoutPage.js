@@ -324,7 +324,7 @@ const CheckoutPage = props => {
         const priceAdjustmentsSection =
             checkoutStep === CHECKOUT_STEP.PAYMENT ? (
                 <div className={classes.price_adjustments_container}>
-                    <PriceAdjustments setPageIsUpdating={setIsUpdating} isMobile={isMobile} hideEstimateShipping={true}/>
+                    <PriceAdjustments setIsCartUpdating={setIsUpdating} isMobile={isMobile} hideEstimateShipping={true}/>
                 </div>
             ) : null;
 

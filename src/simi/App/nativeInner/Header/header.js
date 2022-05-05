@@ -7,7 +7,7 @@ import NavTrigger from './Component/navTrigger';
 import CartTrigger from './cartTrigger';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import { Link } from 'src/drivers';
-import MegaMenu from '@magento/venia-ui/lib/components/MegaMenu/megaMenu';
+import MegaMenu from 'src/simi/BaseComponents/MegaMenu/components/TopMenu';
 import MyAccount from './Component/MyAccount';
 import { useHistory, useLocation } from 'react-router-dom';
 import { logoUrl } from '../../../Helper/Url';
@@ -97,7 +97,8 @@ const Header = props => {
         '/reward-transactions',
         '/contact.html',
         '/account-setting',
-        '/checkout'
+        '/checkout',
+        '/product-alert'
     ];
 
     // const storeConfig = Identify.getStoreConfig();

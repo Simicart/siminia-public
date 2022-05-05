@@ -7,16 +7,19 @@ import { useSearchBox } from '../../talons/Faq/useSearchBox';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import { Search as SearchIcon } from 'react-feather';
 import { FaSearch } from 'react-icons/fa';
-import Loader from '../../Loader'
+import Loader from '../../Loader';
+import { useIntl } from 'react-intl';
+
 const SearchBox = forwardRef((props, ref) => {
     const classes = defaultClasses;
+    const { formatMessage } = useIntl();
     const {
         searchboxData,
         searchboxLoading,
         derivedErrorMessage
     } = useSearchBox();
     const { onClick, onKeyDown, userInput, onChange, onSearch } = props;
-   
+
     if (!searchboxData || !searchboxData.MpMageplazaFaqsGetConfig) {
         return <Loader />;
     }
@@ -57,7 +60,10 @@ const SearchBox = forwardRef((props, ref) => {
                             title="Search"
                             onClick={onSearch}
                         >
-                            Search
+                            {formatMessage({
+                                id: 'search',
+                                defaultMessage: 'Search'
+                            })}
                         </a>
                     </div>
                 </div>

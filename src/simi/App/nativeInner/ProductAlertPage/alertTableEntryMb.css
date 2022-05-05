@@ -1,0 +1,20 @@
+.alertEntryMb {
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 4px;
+    display:flex;
+    margin-bottom: 15px;
+}
+.right-content {
+    width: 100%;
+    padding-left:  15px;
+}
+.remove-btn {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    color: '#0058AC'
+}
+.remove-btn svg {
+    height: 18px;
+}

@@ -136,8 +136,8 @@ const OrderDetailPage = props => {
         ? customer.orders.items[0].total.discounts[0].amount
         : null;
     const grandTotal = customer.orders.items[0].total.base_grand_total.value;
-    const mpRewardPoints = customer.orders.items[0].mp_reward_points;
-
+    const mpRewardPoints = customer.orders.items[0].mp_reward_points || {};
+    const mpDeliveryInformation = customer.orders.items[0].mp_delivery_information || {}
     const status = customer.orders.items[0].status;
 
     const dateFormat = date => {
@@ -454,20 +454,18 @@ const OrderDetailPage = props => {
                             <span>
                                 {customer.orders.items[0].shipping_method}
                             </span>
-                            {customer.orders.items[0].mp_delivery_information
+                            {mpDeliveryInformation
                                 .mp_delivery_time ? (
                                 <div className={classes.infoItemContent}>
                                     <span>
-                                        {customer.orders.items[0].mp_delivery_information.mp_delivery_date.slice(
+                                        {mpDeliveryInformation.mp_delivery_date.slice(
                                             0,
                                             10
                                         )}
                                     </span>
                                     <span>
                                         {
-                                            customer.orders.items[0]
-                                                .mp_delivery_information
-                                                .mp_delivery_time
+                                            mpDeliveryInformation.mp_delivery_time
                                         }
                                     </span>
                                 </div>

@@ -227,7 +227,8 @@ const Product = props => {
                         className={classes.price}
                     >
                         <span className={classes.labelPrice} />
-                        {showExcludedTax ? (
+                        {showExcludedTax ||
+                        !item.prices.row_total_including_tax ? (
                             <Price currencyCode={currency} value={unitPrice} />
                         ) : (
                             <Price

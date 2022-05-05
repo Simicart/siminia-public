@@ -61,10 +61,10 @@ const Griditem = props => {
         gift_card_amounts,
         __typename
     } = item;
-    // console.log('itemee', item);
-
+    
     const callForPriceRule = item.mp_callforprice_rule;
-
+    
+    // console.log('itemee', callForPriceRule);
     const product_url = `/${url_key}${productUrlSuffix()}`;
     // const imageWidth = document.querySelector("#product-image-label").offsetWidth
 
@@ -285,7 +285,7 @@ const Griditem = props => {
                 className={`${itemClasses['product-grid-actions']} ${loading &&
                     itemClasses['action-loading']}`}
             >
-                <button
+               {callForPriceRule?.action !== "hide_add_to_cart" ? <button
                     className={itemClasses['product-grid-addcartbtn']}
                     onClick={() => {
                         if (!loading && !productOutStock) handleAddCart(item);
@@ -298,7 +298,7 @@ const Griditem = props => {
                             ? 'Adding'
                             : 'Add To Cart'
                     })}
-                </button>
+                </button> : null}
                 <div className={itemClasses['product-grid-wishlistbtn']}>
                     <AddToListButton
                         icon={HeartIcon}

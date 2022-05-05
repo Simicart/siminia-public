@@ -74,6 +74,8 @@
 }
 .root form[class*='couponCode-entryForm'] button {
     height: 47px;
+    background: var(--venia-global-color-button);
+    color: var(--venia-global-color-button-text);
 }
 /* end mass style update */
 

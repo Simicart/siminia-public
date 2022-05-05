@@ -34,7 +34,6 @@
 .defaultAddress {
     /* background-color: aqua; */
     padding: 1.25rem 1rem;
-    
 }
 .defaultAddressHeading {
     border-bottom: 2px solid rgb(var(--venia-global-color-gray-400));
@@ -42,12 +41,12 @@
     justify-content: space-between;
     padding: 10px 1rem;
     color: #444444;
-  font-family: Nunito;
-  font-size: 14px;
-  font-weight: bold;
-  letter-spacing: 0;
-  line-height: 14px;
-  background-color: #EDF4FA;
+    font-family: Nunito;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 14px;
+    background-color: #edf4fa;
 }
 
 .confirmDeleteButton {
@@ -112,7 +111,6 @@
     .root {
         border: none;
         padding: 0;
-       
     }
 
     .confirmDeleteContainer {
@@ -125,10 +123,10 @@
     }
     .defaultAddressWrapper {
         border: none;
-        box-shadow: 1px 1px 5px 0 rgba(0,0,0,0.25);
+        box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.25);
     }
     .defaultShipping {
-        background-color:red;
+        background-color: red;
     }
     .normalAddress {
         background-color: yellowgreen;
@@ -142,9 +140,9 @@
         margin-top: 0;
     }
     .actionContainer {
-        display:flex;
+        display: flex;
         flex-direction: column;
-        justify-content:end;
+        justify-content: flex-end;
         font-weight: 500;
     }
 }
