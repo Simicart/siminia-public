@@ -17,12 +17,10 @@ export const useMegaMenu = (props = {}) => {
     fetchPolicy: 'no-cache',
     // nextFetchPolicy: 'cache-first'
   });
-
   const { loading, error, data } = useQuery(getAmMegaMenuItems, {
     fetchPolicy: 'no-cache',
     // nextFetchPolicy: 'cache-first'
   });
-
   const { amMegaMenuAll } = data || {};
   const { items } = amMegaMenuAll || {};
 
