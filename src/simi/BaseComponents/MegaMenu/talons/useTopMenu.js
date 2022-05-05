@@ -10,10 +10,10 @@ export const useTopMenu = () => {
     config,
     isEnabledMegaMenu,
     isMobile
-  } = useAmMegaMenuContext();
+  } = useAmMegaMenuContext() || {};
 
   const menuTree = useMemo(() => {
-    const { ammegamenu_general_hamburger_enabled: isHamburger } = config;
+    const { ammegamenu_general_hamburger_enabled: isHamburger } = config || {};
 
     if (!Array.isArray(items) || !items.length) {
       return null;

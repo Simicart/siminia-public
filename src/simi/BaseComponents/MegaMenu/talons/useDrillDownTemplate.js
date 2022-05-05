@@ -7,7 +7,7 @@ import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 
 export const useDrillDownTemplate = props => {
   const { categoryId, updateCategories } = props;
-  const { allItems, config, isShowIcons } = useAmMegaMenuContext();
+  const { allItems, config, isShowIcons } = useAmMegaMenuContext() || {};
 
   const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
   const { getNavigationMenuQuery } = operations;
