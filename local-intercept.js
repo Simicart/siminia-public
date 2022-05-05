@@ -2,7 +2,7 @@ const moduleOverrideWebpackPlugin = require('./src/override/moduleOverrideWebpac
 const componentOverrideMapping = require('./src/override/componentOverrideMapping');
 
 const amSocialLoginIntercept = require('./src/simi/BaseComponents/SocialLogin/extend-intercept');
-// const amMegaMenuIntercept = require('./src/simi/BaseComponents/MegaMenu/extend-intercept');
+const amMegaMenuIntercept = require('./src/simi/BaseComponents/MegaMenu/extend-intercept');
 
 /* eslint-disable */
 /**
@@ -31,7 +31,7 @@ function localIntercept(targets) {
     });
 
     amSocialLoginIntercept(targets);
-    // amMegaMenuIntercept(targets);
+    amMegaMenuIntercept(targets);
 }
 
 module.exports = localIntercept;

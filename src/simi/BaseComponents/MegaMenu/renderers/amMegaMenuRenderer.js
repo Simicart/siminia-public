@@ -45,6 +45,7 @@ export default function amMegaMenuRenderer({
   };
 
   const content = ReactHtmlParser(html, options);
+  console.log("content",content)
   const isEmptyContent =
     !Array.isArray(content) || content.every(node => !node);
 

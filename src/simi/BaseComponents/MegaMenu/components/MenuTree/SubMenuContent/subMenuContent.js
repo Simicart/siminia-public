@@ -21,7 +21,6 @@ const SubMenuContent = props => {
     width_value,
     view
   } = props;
-
   const ref = useRef();
 
   const elementStyle = useMemo(() => {

@@ -7,7 +7,6 @@ import defaultClasses from './subCategories.module.css';
 
 const SubCategories = props => {
   const { items, level, column_count, view } = props;
-
   const subCategories = useMemo(() => {
     if (!Array.isArray(items) || !items.length) {
       return null;
