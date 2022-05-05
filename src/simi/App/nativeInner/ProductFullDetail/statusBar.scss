@@ -82,6 +82,12 @@
             background-color: var(--venia-global-color-button);
             color: var(--venia-global-color-button-text);
         }
+        li.callForPrice{
+            width: 100%;
+            > div{
+                width: 100%;
+            }
+        }
     }
 }
 .main-AddToCartPopup {
