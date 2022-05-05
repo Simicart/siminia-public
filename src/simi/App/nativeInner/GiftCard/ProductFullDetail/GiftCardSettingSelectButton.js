@@ -3,15 +3,12 @@ import defaultClasses from './giftCard.module.css'
 import { useStyle } from '@magento/venia-ui/lib/classify';
 
 const SettingSelectButton = props => {
-	const {giftCardData, giftCardActions, giftCardProductData} = props
-
-    const classes = useStyle(defaultClasses, props.classes);
+	const {giftCardData, giftCardActions, giftCardProductData, classes} = props
 
     const {
         template: templates
     } = giftCardProductData
 
-	console.log(giftCardProductData)
     const {
         activeTemplate
     } = giftCardData

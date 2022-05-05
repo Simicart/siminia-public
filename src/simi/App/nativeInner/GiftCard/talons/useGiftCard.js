@@ -1,11 +1,16 @@
-import { useQuery, useState, useCallback } from 'react';
-import { GET_GIFT_CARD_DASHBOARD_CONFIG } from './GiftCard.gql';
+import { useState, useCallback } from 'react';
+import { ADD_GIFT_CARD_TO_CART } from 'src/simi/App/nativeInner/GiftCard/talons/GiftCard.gql.js'
+import { useMutation, useQuery } from '@apollo/client';
+import { useCartContext } from '@magento/peregrine/lib/context/cart';
 
 export const useGiftCard = props => {
-    const {product} = props
+    const {product, setAlertMsg} = props
+
+    const [{ cartId }] = useCartContext();
 
     const {
         __typename,
+        sku,
         allow_amount_range,
         min_amount,
         max_amount,
@@ -49,6 +54,43 @@ export const useGiftCard = props => {
     const [uploadedImages, setUploadedImages] = useState([])
     const [uploadedImageUrls, setUploadedImageUrls] = useState([])
 
+    const [
+        addGiftCardToCart, 
+        {loading: isAddGiftCardProductLoading, error: errorAddGiftCardProductToCart}
+    ] = useMutation(ADD_GIFT_CARD_TO_CART);
+
+    const currentTemplate = template && template[activeTemplate] ? template[activeTemplate] : {}
+
+    const giftCardImage = currentTemplate && currentTemplate.images && currentTemplate.images.length ? 
+        activeImage < currentTemplate.images.length ?
+            currentTemplate.images[activeImage].file 
+            : uploadedImageUrls[activeImage - currentTemplate.images.length] : null
+
+    const handleAddGiftCardProductToCart = useCallback(async (formValues) => {
+
+        const { quantity } = formValues;
+
+        await addGiftCardToCart({ 
+            variables: {
+                cart_id: cartId,
+                quantity: quantity,
+                sku: sku,
+                amount: gcAmount,
+                delivery: delivery,
+                email: email,
+                from: gcFrom,
+                image: giftCardImage,
+                message: gcMessage,
+                phone_number: phone,
+                range_amount: Boolean(allow_amount_range),
+                template: activeTemplate + 1,
+                to: gcTo
+            } 
+        })
+        setAlertMsg(true)
+        return;
+    })
+
 
 	return {
         giftCardActions: {
@@ -79,7 +121,8 @@ export const useGiftCard = props => {
             email,
             phone,
             uploadedImages,
-            uploadedImageUrls
+            uploadedImageUrls,
+            currentTemplate
         },
         giftCardProductData: {
             __typename,
@@ -95,6 +138,8 @@ export const useGiftCard = props => {
             price_rate,
             template,
             amounts,
-        }
+        },
+        isAddGiftCardProductLoading,
+        handleAddGiftCardProductToCart,
 	}
 }

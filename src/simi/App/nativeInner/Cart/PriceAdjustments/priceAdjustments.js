@@ -20,6 +20,8 @@ const CouponCode = React.lazy(() => import('../CouponCode'));
 // );
 const ShippingMethods = React.lazy(() => import('./ShippingMethods'));
 
+const GiftCard = React.lazy(() => import('src/simi/App/nativeInner/GiftCard/Cart/GiftCardDiscount'))
+
 /**
  * PriceAdjustments is a child component of the CartPage component.
  * It renders the price adjustments forms for applying gift cards, coupons, and the shipping method.
@@ -38,7 +40,7 @@ const ShippingMethods = React.lazy(() => import('./ShippingMethods'));
  */
 
 const PriceAdjustments = (props) => {
-    const { makeNotification, setIsCartUpdating, hideEstimateShipping } = props
+    const { makeNotification, setIsCartUpdating, hideEstimateShipping, giftCardConfig, refetchCartPage } = props
 
     const classes = useStyle(defaultClasses, props.classes);
     const [{ cartId }] = useCartContext();
@@ -95,6 +97,12 @@ const PriceAdjustments = (props) => {
         window.SMCONFIGS.plugins &&
         window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
         parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
+
+    const giftCardEnabled =
+        window.SMCONFIGS &&
+        window.SMCONFIGS.plugins &&
+        window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD &&
+        parseInt(window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD) === 1;
 
     return (
         <div className={classes.root}>
@@ -233,7 +241,27 @@ const PriceAdjustments = (props) => {
                         </Suspense>
                     </Section>
                 ) : null}
-                <GiftCardSection setIsCartUpdating={setIsCartUpdating} />
+                {giftCardEnabled && giftCardConfig && <Section
+                    id={'gift-card'}
+                    title={formatMessage({
+                        id: 'Gift Card',
+                    })}
+                    classes={{
+                        root: classes.sectionRoot,
+                        title: classes.sectionTitle,
+                        title_wrapper: classes.title_wrapper,
+                        contents_container: classes.contents_container
+                    }}
+                >
+                    <Suspense fallback={<LoadingIndicator />}>
+                        <GiftCard 
+                            giftCardConfig={giftCardConfig}
+                            setIsCartUpdating={setIsCartUpdating}
+                            refetchCartPage={refetchCartPage}
+                        />
+                    </Suspense>
+                </Section>}
+                {/* <GiftCardSection setIsCartUpdating={setIsCartUpdating} /> */}
             </Accordion>
         </div>
     )

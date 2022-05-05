@@ -11,7 +11,7 @@ const GiftCardInformationForm = props => {
         activeAmount,
         gcMessage,
         delivery,
-        activeTemplate,
+        currentTemplate
     } = giftCardData
 
     const {
@@ -32,12 +32,10 @@ const GiftCardInformationForm = props => {
         max_amount,
         gift_card_type,
         price_rate,
-        template,
         amounts,
     } = giftCardProductData
 
-    const currentTemplate = template ? template[activeTemplate] : null
-    const hasFromAndToField = currentTemplate ? typeof JSON.parse(currentTemplate.design).from !== "undefined" : null
+    const hasFromAndToField = currentTemplate && Object.keys(currentTemplate).length > 0 ? typeof JSON.parse(currentTemplate.design).from !== "undefined" : null
 
     const onAmountBlur = (e) => {
         let value = e.target.value

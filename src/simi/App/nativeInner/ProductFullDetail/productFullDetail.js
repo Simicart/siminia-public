@@ -22,10 +22,7 @@ import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductO
 import defaultClasses from './productFullDetail.module.css';
 import SizeChart from './SizeChart';
 import GiftCardInformationForm from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GiftCardInformationForm'
-import GiftCardPreview from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GiftCardPreview'
-import GiftCardChooseImageTemplate from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GiftCardChooseImageTemplate'
-import SettingSelectButton from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GiftCardSettingSelectButton'
-import { ADD_GIFT_CARD_TO_CART } from 'src/simi/App/nativeInner/GiftCard/talons/GiftCard.gql.js'
+import GridCardTemplate from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GridCardTemplate'
 const WishlistButton = React.lazy(() =>
     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
 );
@@ -89,17 +86,12 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 const ProductFullDetail = props => {
     const { product, history } = props;
 
-    const operations = {
-        addGiftCardProductToCartMutation: ADD_GIFT_CARD_TO_CART
-    }
-
-    const talonProps = useProductFullDetail({ product, operations });
+    const talonProps = useProductFullDetail({ product });
 
     const {
         breadcrumbCategoryId,
         errorMessage,
         handleAddToCart,
-        handleAddGiftCardProductToCart,
         handleBuyNow,
         handleSelectionChange,
         isOutOfStock,
@@ -123,8 +115,10 @@ const ProductFullDetail = props => {
     const {
         giftCardProductData,
         giftCardData,
-        giftCardActions
-    } = useGiftCard({product})
+        giftCardActions,
+        isAddGiftCardProductLoading,
+        handleAddGiftCardProductToCart
+    } = useGiftCard({product, setAlertMsg})
 
     const successMsg = `${productDetails.name} was added to shopping cart`;
     const [{ isSignedIn }] = useUserContext();
@@ -174,11 +168,13 @@ const ProductFullDetail = props => {
     const { formatMessage } = useIntl();
     const productReview = useRef(null);
     const carouselImgSize = useRef(null);
-    const positionFooterFixed =
+    let positionFooterFixed =
         carouselImgSize && carouselImgSize.current
             ? (40 / carouselImgSize.current.clientHeight) * 100
             : 514;
 
+    console.log(positionFooterFixed)
+    if(product.__typename === 'MpGiftCardProduct') positionFooterFixed - 100
     const scrollToReview = () => {
         smoothScrollToView(document.querySelector('.reviewsContainer'));
     };
@@ -295,7 +291,7 @@ const ProductFullDetail = props => {
     };
 
     const cartActionContent = isSupportedProductType ? (
-        <Button disabled={isAddToCartDisabled} priority="high" type="submit">
+        <Button disabled={isAddToCartDisabled || isAddGiftCardProductLoading} priority="high" type="submit">
             {cartCallToActionText()}
         </Button>
     ) : (
@@ -325,7 +321,10 @@ const ProductFullDetail = props => {
         }
     } catch (err) {}
 
-    const pricePiece = switchExtraPriceForNormalPrice ? (
+    const pricePiece = product.__typename === 'MpGiftCardProduct' ? (
+        <Price currencyCode={productDetails.price.currency} value={giftCardData && giftCardData.gcPrice ? giftCardData.gcPrice : 0} />
+    ) : (
+        switchExtraPriceForNormalPrice ? (
         <Price currencyCode={extraPrice.currency} value={extraPrice.value} />
     ) : (
         <Price
@@ -334,7 +333,7 @@ const ProductFullDetail = props => {
             fromValue={productDetails.price.fromValue}
             toValue={productDetails.price.toValue}
         />
-    );
+    ));
     const { price } = product || {};
 
     const review =
@@ -439,7 +438,7 @@ const ProductFullDetail = props => {
     const cartAction = (
         <div
             className={
-                isAddToCartDisabled ? 'addCartDisabled' : 'wrapperActions'
+                isAddToCartDisabled || isAddGiftCardProductLoading ? 'addCartDisabled' : 'wrapperActions'
             }
         >
             <section className={classes.actions}>
@@ -461,6 +460,86 @@ const ProductFullDetail = props => {
             ) : null}
         </div>
     );
+    const productDetailCarousel = []
+    if(isMobileSite) {
+        productDetailCarousel.push(
+            <React.Fragment>
+                <div className={classes.headerBtn} key="element-mobile">
+                    <button
+                        className={classes.backBtn}
+                        onClick={() => History.goBack()}
+                    >
+                        <ArrowLeft />
+                    </button>
+
+                    <div className={classes.headerBtnRight}>
+                        <span className="cart-qty">
+                            {itemsQty}
+                        </span>
+                        <Link
+                            className="header-icon"
+                            to="/cart"
+                        >
+                            <ShoppingCart />
+                        </Link>
+                        <Suspense fallback={null}>
+                            <WishlistButton
+                                {...wishlistButtonProps}
+                            />
+                        </Suspense>{' '}
+                        <div
+                            onClick={() => setMoreBtn(!moreBtn)}
+                            className="header-icon"
+                        >
+                            <MoreVertical />
+                        </div>
+                        {moreBtn ? (
+                            <ul className="header-more">
+                                <li>
+                                    <BiHome />
+                                    <Link to="/">Home</Link>
+                                </li>
+                                <li>
+                                    <BiHelpCircle />
+                                    Help Center
+                                </li>
+                            </ul>
+                        ) : null}
+                    </div>
+                </div>
+                <StatusBar
+                    status={product.stock_status}
+                    position={positionFooterFixed}
+                />
+            </React.Fragment>
+        )
+    }
+    if(product.__typename === 'MpGiftCardProduct' && giftCardProductData.template && giftCardProductData.template.length > 0) {
+        productDetailCarousel.push(
+            <GridCardTemplate
+                key="grid-card-template"
+                giftCardProductData={giftCardProductData}
+                giftCardData={giftCardData}
+                giftCardActions={giftCardActions}
+            />
+        )
+    } else {
+        productDetailCarousel.push(
+            <Carousel
+                key="product-detail-carousel"
+                product={product}
+                optionSelections={optionSelections}
+                optionCodes={optionCodes}
+                labelData={
+                    product.mp_label_data &&
+                    product.mp_label_data.length > 0
+                        ? product.mp_label_data
+                        : null
+                }
+                topInsets={topInsets}
+            />
+        )
+    }
 
     return (
         <div className={isMobileSite ? 'main-product-detail-native' : null}>
@@ -546,91 +625,7 @@ const ProductFullDetail = props => {
                             ref={carouselImgSize}
                             className={classes.imageCarousel}
                         >
-                            { product.__typename === 'MpGiftCardProduct' ? (
-                                <div className={classes["giftcard-template-container"]} id="giftcard-template-container">
-                                <GiftCardPreview 
-                                    giftCardData={giftCardData}
-                                    giftCardProductData={giftCardProductData}
-                                />
-                                <div className={classes['template-selections-container']}>
-                                    <div className={classes['block-title']}>
-                                        <span>Gift card design</span>
-                                    </div>
-                                    <SettingSelectButton
-                                        giftCardProductData={giftCardProductData}
-                                        giftCardData={giftCardData}
-                                        giftCardActions={giftCardActions}
-                                    /> 
-                                    <GiftCardChooseImageTemplate 
-                                        giftCardProductData={giftCardProductData}
-                                        giftCardData={giftCardData}
-                                        giftCardActions={giftCardActions}
-                                    />
-                                </div>
-                            </div>
-                            ) : isMobileSite ? (
-                                <div className={classes.headerBtn}>
-                                    <button
-                                        className={classes.backBtn}
-                                        onClick={() => History.goBack()}
-                                    >
-                                        <ArrowLeft />
-                                    </button>
-
-                                    <div className={classes.headerBtnRight}>
-                                        <span className="cart-qty">
-                                            {itemsQty}
-                                        </span>
-                                        <Link
-                                            className="header-icon"
-                                            to="/cart"
-                                        >
-                                            <ShoppingCart />
-                                        </Link>
-                                        <Suspense fallback={null}>
-                                            <WishlistButton
-                                                {...wishlistButtonProps}
-                                            />
-                                        </Suspense>{' '}
-                                        <div
-                                            onClick={() => setMoreBtn(!moreBtn)}
-                                            className="header-icon"
-                                        >
-                                            <MoreVertical />
-                                        </div>
-                                        {moreBtn ? (
-                                            <ul className="header-more">
-                                                <li>
-                                                    <BiHome />
-                                                    <Link to="/">Home</Link>
-                                                </li>
-                                                <li>
-                                                    <BiHelpCircle />
-                                                    Help Center
-                                                </li>
-                                            </ul>
-                                        ) : null}
-                                    </div>
-                                </div>
-                            ) : null}
-                            {isMobileSite ? (
-                                <StatusBar
-                                    status={product.stock_status}
-                                    position={positionFooterFixed}
-                                />
-                            ) : null}
-                            <Carousel
-                                product={product}
-                                optionSelections={optionSelections}
-                                optionCodes={optionCodes}
-                                labelData={
-                                    product.mp_label_data &&
-                                    product.mp_label_data.length > 0
-                                        ? product.mp_label_data
-                                        : null
-                                }
-                                topInsets={topInsets}
-                            />
+                            {productDetailCarousel}
                             {/* {isMobileSite ? <FooterFixedBtn /> : null} */}
                             {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
                         </section>

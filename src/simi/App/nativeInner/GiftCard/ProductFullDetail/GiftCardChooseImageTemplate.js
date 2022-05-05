@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import defaultClasses from './giftCard.module.css'
 import { uploadGiftCardImage } from '../talons/uploadGiftCardImage'
-// import Loading from '../../loading.jpg'
+import Loading from '../images/loading.jpg'
 import { useResizeDetector } from 'react-resize-detector'
-import { useStyle } from '@magento/venia-ui/lib/classify';
 
 const GiftCardChooseImageTemplate = props => {
-	const {  giftCardActions, giftCardProductData, giftCardData } = props
+	const {  giftCardActions, giftCardData, classes } = props
 
     const {
         setActiveImage,
@@ -15,24 +13,18 @@ const GiftCardChooseImageTemplate = props => {
     } = giftCardActions
 
     const {
-        template,
-    } = giftCardProductData
-
-    const {
         activeImage,
-        activeTemplate,
         uploadedImages,
-        uploadedImageUrls
+        uploadedImageUrls,
+		currentTemplate
     } = giftCardData
-
-    const classes = useStyle(defaultClasses, props.classes);
 	
 	const { width, ref } = useResizeDetector()
 
 	const [translateOwlStage, setTranslateOwlStage] = useState(0);
 	const [disabledPrev, setDisabledPrev] = useState(true)
 	const [disabledNext, setDisabledNext] = useState(false);
-    const [uploadedImageUrl, setUploadedImageUrl] = useState()
+    // const [uploadedImageUrl, setUploadedImageUrl] = useState()
 
     const {
     	uploadGcImage,
@@ -41,7 +33,6 @@ const GiftCardChooseImageTemplate = props => {
 	  	uploadGcImageErrorMessage
     } = uploadGiftCardImage();
 
-    const currentTemplate = template && template[activeTemplate]? template[activeTemplate] : {}
     const canUpload = currentTemplate.canUpload || false
     const images = currentTemplate.images || []
 
@@ -178,8 +169,8 @@ const GiftCardChooseImageTemplate = props => {
 				<div className={classes['giftcard-template-upload']}>
 					<label>
 	                   	<span>Or upload your photo</span>
-	                    <div class="field-tooltip toggle">
-	                        <span className="field-tooltip-action" data-bind="mageInit: {'dropdown':{'activeClass': '_active'}}" aria-expanded="false" role="button" tabindex="0"></span>
+	                    <div className="field-tooltip toggle">
+	                        <span className="field-tooltip-action" data-bind="mageInit: {'dropdown':{'activeClass': '_active'}}" aria-expanded="false" role="button" tabIndex="0"></span>
 	                        {/*<div className="field-tooltip-content" data-bind="html: uploadTooltip">Acceptable formats are jpg, png and gif. Limit Image Size Upload (2MB)</div>*/}
 	                    </div>
 	                </label>

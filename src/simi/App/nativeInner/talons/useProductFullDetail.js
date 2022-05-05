@@ -223,11 +223,6 @@ export const useProductFullDetail = props => {
         { error: errorAddingProductToCart, loading: isAddProductLoading}
     ] = useMutation(operations.addProductToCartMutation);
 
-    const [
-        addGiftCardToCart, 
-        {loading: isAddGiftCardProductLoading, error: errorAddGiftCardProductToCart}
-    ] = useMutation(operations.addGiftCardProductToCartMutation);
-
     const urlKey = product.url_key;
 
     // have to query separately because query depth exceed in original query
@@ -600,14 +595,6 @@ export const useProductFullDetail = props => {
         ]
     );
 
-    const handleAddGiftCardProductToCart = useCallback(async formValues => {
-        const {variables} = formValues
-
-        await addGiftCardToCart({ variables })
-        setAlertMsg(true)
-        return;
-    })
-
     const goToCartPage = () => {
         window.location.pathname = '/cart';
     };
@@ -859,7 +846,6 @@ export const useProductFullDetail = props => {
         breadcrumbCategoryId,
         errorMessage: derivedErrorMessage,
         handleAddToCart,
-        handleAddGiftCardProductToCart,
         handleBuyNow,
         handleSelectionChange,
         isOutOfStock,
@@ -870,7 +856,6 @@ export const useProductFullDetail = props => {
             isAddProductLoading ||
             isAddDownloadableLoading ||
             isAddBundleLoading ||
-            isAddGiftCardProductLoading ||
             !isAllRequiredCustomFieldFilled ||
             !isAllRequiredDownloadableFieldFilled,
         isSupportedProductType,

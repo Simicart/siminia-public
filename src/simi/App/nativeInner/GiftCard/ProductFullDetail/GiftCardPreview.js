@@ -3,26 +3,20 @@ import defaultClasses from '../ProductFullDetail/giftCard.module.css'
 import { useStyle } from '@magento/venia-ui/lib/classify';
 
 const GiftCardPreview = props => {
-    const {giftCardData, giftCardProductData} = props
-
-    const classes = useStyle(defaultClasses, props.classes);
+    const {giftCardData, classes} = props
 
 	const {
+		gcAmount: amount,
         activeImage,
         gcMessage,
         gcFrom,
         gcTo,
         uploadedImages,
-        activeTemplate
+		currentTemplate
 	} = giftCardData
 
-    const {
-        template,
-    } = giftCardProductData
+    if(!currentTemplate || Object.keys(currentTemplate).length === 0) return null
 
-    const currentTemplate = template && template[activeTemplate] ? template[activeTemplate] : null
-
-    if(!currentTemplate) return null
 	const {
 		barcode,
 		code,
