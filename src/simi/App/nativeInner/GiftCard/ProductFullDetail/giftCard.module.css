@@ -372,3 +372,9 @@ input[type='file'] {
     margin-top: 15px;
     font-size: 38px;
 }
+
+@media screen and (max-width: 960px) {
+    .giftcard-field-label  {
+        width: 85px;
+    }
+}

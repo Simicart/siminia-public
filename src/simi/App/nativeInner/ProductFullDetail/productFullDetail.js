@@ -120,7 +120,8 @@ const ProductFullDetail = props => {
         giftCardData,
         giftCardActions,
         isAddGiftCardProductLoading,
-        handleAddGiftCardProductToCart
+        handleAddGiftCardProductToCart,
+        handleByNowGiftCardProduct
     } = useGiftCard({product, setAlertMsg})
 
     const [message, setMessage] = useState(null);
@@ -578,8 +579,8 @@ const ProductFullDetail = props => {
                     options={options}
                     wrapperQuantity={wrapperQuantity}
                     cartAction={cartAction}
-                    handleAddToCart={handleAddToCart}
-                    handleBuyNow={handleBuyNow}
+                    handleAddToCart={product.__typename === 'MpGiftCardProduct' ? handleAddGiftCardProductToCart : handleAddToCart}
+                    handleBuyNow={product.__typename === 'MpGiftCardProduct' ? handleByNowGiftCardProduct : handleBuyNow}
                     setAddToCartPopup={setAddToCartPopup}
                     typeBtn={typeBtn}
                     loading={isAddProductLoading}
@@ -588,6 +589,12 @@ const ProductFullDetail = props => {
                     productName={productDetails.name}
                     addToCartPopup={addToCartPopup}
                     bottomInsets={bottomInsets}
+                    giftCardForm={product.__typename === 'MpGiftCardProduct' 
+                        && <GiftCardInformationForm 
+                            giftCardProductData={giftCardProductData}
+                            giftCardData={giftCardData}
+                            giftCardActions={giftCardActions}
+                    />}
                 />
             ) : null}
 

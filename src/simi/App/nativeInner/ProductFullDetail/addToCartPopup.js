@@ -8,6 +8,7 @@ require('./statusBar.scss');
 const AddToCartPopup = props => {
     const {
         options,
+        giftCardForm,
         handleAddToCart,
         wrapperQuantity,
         cartAction,
@@ -50,6 +51,7 @@ const AddToCartPopup = props => {
                         onClick={() => setAddToCartPopup(false)}
                     />
                     {options}
+                    {giftCardForm}
                     {wrapperQuantity}
                     {cartAction}
                 </Form>

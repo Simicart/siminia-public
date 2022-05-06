@@ -91,6 +91,35 @@ export const useGiftCard = props => {
         return;
     })
 
+    const handleByNowGiftCardProduct = useCallback(async (formValues) => {
+
+        const { quantity } = formValues;
+
+        await addGiftCardToCart({ 
+            variables: {
+                cart_id: cartId,
+                quantity: quantity,
+                sku: sku,
+                amount: gcAmount,
+                delivery: delivery,
+                email: email,
+                from: gcFrom,
+                image: giftCardImage,
+                message: gcMessage,
+                phone_number: phone,
+                range_amount: Boolean(allow_amount_range),
+                template: activeTemplate + 1,
+                to: gcTo
+            } 
+        })
+        goToCartPage()
+        return;
+    })
+
+    const goToCartPage = () => {
+        window.location.pathname = '/cart';
+    };
+
 
 	return {
         giftCardActions: {
@@ -141,5 +170,6 @@ export const useGiftCard = props => {
         },
         isAddGiftCardProductLoading,
         handleAddGiftCardProductToCart,
+        handleByNowGiftCardProduct
 	}
 }
