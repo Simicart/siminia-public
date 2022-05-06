@@ -136,6 +136,8 @@ const ProductFullDetail = props => {
         : null;
 
     
+    const action =
+        dataLocation && dataLocation.action ? dataLocation.action : '';
     const [moreBtn, setMoreBtn] = useState(false);
     const storeConfig = Identify.getStoreConfig();
     const enabledReview =
@@ -383,37 +385,41 @@ const ProductFullDetail = props => {
             </div>
         );
 
-    const wrapperPrice = (
-        <div className="wrapperPrice">
-            <span
-                className="labelPrice"
-                style={{ color: configColor.price_color }}
-            >
-                {!isMobileSite ? (
-                    <FormattedMessage
-                        id="productFullDetail.labelPrice"
-                        defaultMessage="Per pack: "
-                    />
-                ) : null}
-            </span>
-            <span
-                style={{ color: configColor.price_color }}
-                className={classes.productPrice}
-            >
-                {pricePiece}
-            </span>
-            {isOutOfStock ? (
-                <span className="outOfStock">
-                    <FormattedMessage
-                        id="productFullDetail.outOfStoc"
-                        defaultMessage="Out of stock"
-                    />
+    const wrapperPrice =
+        (action === 'login_see_price' && isSignedIn) ||
+        action === 'redirect_url' ? (
+            <div className="wrapperPrice">
+                <span
+                    className="labelPrice"
+                    style={{ color: configColor.price_color }}
+                >
+                    {!isMobileSite ? (
+                        <FormattedMessage
+                            id="productFullDetail.labelPrice"
+                            defaultMessage="Per pack: "
+                        />
+                    ) : null}
                 </span>
-            ) : (
-                ''
-            )}
-        </div>
-    );
+                <span
+                    style={{ color: configColor.price_color }}
+                    className={classes.productPrice}
+                >
+                    {pricePiece}
+                </span>
+                {isOutOfStock ? (
+                    <span className="outOfStock">
+                        <FormattedMessage
+                            id="productFullDetail.outOfStoc"
+                            defaultMessage="Out of stock"
+                        />
+                    </span>
+                ) : (
+                    ''
+                )}
+            </div>
+        ) : (
+            ''
+        );
 
     const wrapperQuantity = (
         <div className="wrapperQuantity">
@@ -796,11 +802,7 @@ const ProductFullDetail = props => {
                             </div>
                             {/* {wrapperPrice} */}
                             {/* {renderPriceWithCallForPrice(dataLocation)} */}
-                            <CallForPrice
-                                data={dataLocation}
-                                wrapperPrice={wrapperPrice}
-                                item_id={product.id}
-                            />
+                            {wrapperPrice}
                             {review}
                         </div>
                     ) : null}
@@ -898,7 +900,9 @@ const ProductFullDetail = props => {
                     typeBtn={typeBtn}
                     setTypeBtn={setTypeBtn}
                     bottomInsets={bottomInsets}
-                    isDisabled={dataLocation}
+                    data={dataLocation}
+                    wrapperPrice={wrapperPrice}
+                    item_id={product.id}
                 />
             ) : null}
         </div>

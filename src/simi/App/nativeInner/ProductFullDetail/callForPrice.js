@@ -11,37 +11,38 @@ import { isRequired } from '@magento/venia-ui/lib/util/formValidators';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
-import Loader from '../Loader'
-import AlertMessages from '../ProductFullDetail/AlertMessages'
+import Loader from '../Loader';
+import AlertMessages from '../ProductFullDetail/AlertMessages';
 const CallForPrice = props => {
     const { data, wrapperPrice, item_id } = props;
-    
     const [isPopupOpen, setOpenPopup] = useState(false);
     const classes = useStyle(defaultClasses, props.classes);
 
-    const [alertMsg, setAlertMsg] = useState(-1)    
+    const [alertMsg, setAlertMsg] = useState(-1);
 
     const [mpCallForPriceRequest, { data: dataSubmit, loading }] = useMutation(
         SUBMIT_POPUP_FORM
     );
     const [{ isSignedIn }] = useUserContext();
-    const showFields = data && data.show_fields ?  data.show_fields.split(',') : null
+    const showFields =
+        data && data.show_fields ? data.show_fields.split(',') : null;
     const successMsg = `Request success !`;
     const handleSubmitReview = async formValue => {
         const { email, note, name, phone } = formValue;
-        // console.log(formValue);
         await mpCallForPriceRequest({
             variables: {
                 product_id: item_id,
                 store_ids: data.store_ids,
-                name : showFields?.includes('name') ? name : "*",
-                phone: showFields?.includes('phone') ? phone : "*",
-                email: showFields?.includes('email') ? email : "*",
-                customer_note: showFields?.includes('customer_note') ? note : "*",
+                name: showFields?.includes('name') ? name : '*',
+                phone: showFields?.includes('phone') ? phone : '*',
+                email: showFields?.includes('email') ? email : '*',
+                customer_note: showFields?.includes('customer_note')
+                    ? note
+                    : '*'
             }
         });
-        setAlertMsg(true)
-        setOpenPopup(false)
+        setAlertMsg(true);
+        setOpenPopup(false);
     };
     let topInsets = 0;
     let bottomInsets = 0;
@@ -57,43 +58,48 @@ const CallForPrice = props => {
         }
     } catch (err) {}
 
-
-    
-
     const form = (
         <Form onSubmit={handleSubmitReview}>
-            {showFields?.includes('name') && <Field required={true}>
-                <TextInput
-                    placeholder="name"
-                    field="name"
-                    type="text"
-                    validate={isRequired}
-                />
-            </Field>}
-            {showFields?.includes('email') &&<Field required={true}>
-                <TextInput
-                    placeholder="email"
-                    field="email"
-                    type="email"
-                    validate={isRequired}
-                />
-            </Field>}
-            {showFields?.includes('phone') && <Field required={true}>
-                <TextInput
-                    placeholder="phone"
-                    field="phone"
-                    type="phone"
-                    validate={isRequired}
-                />
-            </Field>}
-            {showFields?.includes('customer_note') && <Field required={true}>
-                <TextInput
-                    placeholder="Customer note"
-                    field="note"
-                    type="text"
-                    validate={isRequired}
-                />
-            </Field>}
+            {showFields?.includes('name') && (
+                <Field required={true}>
+                    <TextInput
+                        placeholder="name"
+                        field="name"
+                        type="text"
+                        validate={isRequired}
+                    />
+                </Field>
+            )}
+            {showFields?.includes('email') && (
+                <Field required={true}>
+                    <TextInput
+                        placeholder="email"
+                        field="email"
+                        type="email"
+                        validate={isRequired}
+                    />
+                </Field>
+            )}
+            {showFields?.includes('phone') && (
+                <Field required={true}>
+                    <TextInput
+                        placeholder="phone"
+                        field="phone"
+                        type="phone"
+                        validate={isRequired}
+                    />
+                </Field>
+            )}
+            {showFields?.includes('customer_note') && (
+                <Field required={true}>
+                    <TextInput
+                        placeholder="Customer note"
+                        field="note"
+                        type="text"
+                        validate={isRequired}
+                    />
+                </Field>
+            )}
             <div className={classes.submitBtnContainer}>
                 <button
                     style={{
@@ -125,9 +131,11 @@ const CallForPrice = props => {
                             backgroundColor: configColor.button_background,
                             padding: '5px 10px',
                             color: configColor.button_text_color,
-                            borderRadius: '2px',
-                            margin: '10px 0px',
-                            width: 'fit-content'
+                            borderRadius: '0px',
+                            margin: '0',
+                            width: '100%',
+                            cursor: 'pointer',
+                            textAlign: 'center'
                         }}
                     >
                         <Link to="/sign-in">
@@ -148,10 +156,11 @@ const CallForPrice = props => {
                             backgroundColor: configColor.button_background,
                             padding: '5px 10px',
                             color: configColor.button_text_color,
-                            borderRadius: '2px',
-                            margin: '10px 0px',
-                            width: 'fit-content',
-                            cursor: 'pointer'
+                            borderRadius: '0px',
+                            margin: '0',
+                            width: '100%',
+                            cursor: 'pointer',
+                            textAlign: 'center'
                         }}
                         onClick={() => setOpenPopup(true)}
                     >
@@ -182,42 +191,44 @@ const CallForPrice = props => {
             callForPriceRule.action === 'redirect_url'
         ) {
             const redirect = () => {
-                let url_redirect = callForPriceRule.url_redirect
+                let url_redirect = callForPriceRule.url_redirect;
                 if (url_redirect.includes('http'))
                     window.location.href = url_redirect;
-                else
-                    history.push(url_redirect)
-            }
+                else history.push(url_redirect);
+            };
             return (
                 <div
                     style={{
                         backgroundColor: configColor.button_background,
                         padding: '5px 10px',
                         color: configColor.button_text_color,
-                        borderRadius: '2px',
-                        margin: '10px 0px',
-                        width: 'fit-content'
+                        borderRadius: '0px',
+                        margin: '0',
+                        width: '100%',
+                        cursor: 'pointer',
+                        textAlign: 'center'
                     }}
                     onClick={() => redirect()}
                 >
-                   {callForPriceRule.button_label}
+                    {callForPriceRule.button_label}
                 </div>
             );
-        } else return <>{wrapperPrice}</>;
+        } else return '';
     };
-    
 
-    return <div>
-        {loading ? <Loader /> : null}
-        <AlertMessages
+    return (
+        <div>
+            {loading ? <Loader /> : null}
+            <AlertMessages
                 message={successMsg}
                 setAlertMsg={setAlertMsg}
                 alertMsg={alertMsg}
                 status="success"
                 topInsets={topInsets}
             />
-        {renderPriceWithCallForPrice(data)}
-        </div>;
+            {renderPriceWithCallForPrice(data)}
+        </div>
+    );
 };
 
 export default CallForPrice;
