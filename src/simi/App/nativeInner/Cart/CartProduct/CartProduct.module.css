@@ -41,6 +41,7 @@
 .optionLabel, .optionLabel > * {
     color: #C3BEBE;
     font-size: 0.7rem;
+    word-break: break-all;
 }
 
 .optionLabel:last-child {

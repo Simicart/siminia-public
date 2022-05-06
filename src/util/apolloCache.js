@@ -15,7 +15,8 @@ export const MagentoGraphQLTypes = {
     ProductInterface: 'ProductInterface',
     SimpleProduct: 'SimpleProduct',
     VirtualProduct: 'VirtualProduct',
-    SelectedConfigurableOption: 'SelectedConfigurableOption'
+    SelectedConfigurableOption: 'SelectedConfigurableOption',
+    MpGiftCardProduct: 'MpGiftCardProduct'
 };
 
 /**
@@ -44,6 +45,7 @@ export const cacheKeyFromType = object => {
         case MagentoGraphQLTypes.GroupedProduct:
         case MagentoGraphQLTypes.SimpleProduct:
         case MagentoGraphQLTypes.VirtualProduct:
+        case MagentoGraphQLTypes.MpGiftCardProduct:
             // Fallback to default handling if we don't have a url_key for the product (it won't be cached).
             return object.url_key
                 ? `${MagentoGraphQLTypes.ProductInterface}:${object.url_key}`

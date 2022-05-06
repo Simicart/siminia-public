@@ -30,6 +30,12 @@ const callForPriceEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_CALL_FOR_PRICE &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_CALL_FOR_PRICE) === 1;
 
+const giftCardEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD) === 1;
+
 export const ProductDetailsFragment = gql`
     fragment ProductDetailsFragment on ProductInterface {
         __typename
@@ -129,6 +135,34 @@ export const ProductDetailsFragment = gql`
             }`
                 : ``
         }
+        ... on MpGiftCardProduct {
+            allow_amount_range
+            gift_card_type
+            gift_card_amounts
+            gift_code_pattern
+            gift_product_template
+            gift_message_available
+            mpgiftcard_conditions
+            can_redeem
+            price_rate
+            min_amount
+            max_amount
+            template {
+                id
+                name
+                font
+                images {
+                    alt
+                    src
+                    file
+                }
+                title
+                design
+                card
+                canUpload
+            }
+        }
+
         media_gallery_entries {
             # id is deprecated and unused in our code, but lint rules require we
             # request it if available

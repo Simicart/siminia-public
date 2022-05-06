@@ -12,7 +12,7 @@ import { Quantity } from '../Quantity';
 
 import defaultClasses from '../../../core/Cart/ProductListing/product.module.css';
 import defaultClasses_1 from './CartProduct.module.css';
-import { CartPageFragment } from '@magento/peregrine/lib/talons/CartPage/cartPageFragments.gql.js';
+import { CartPageFragment } from 'src/simi/App/nativeInner/CartCore/cartPageFragments.gql.js';
 import { AvailableShippingMethodsCartFragment } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/ShippingMethods/shippingMethodsFragments.gql.js';
 import { ConfirmPopup } from '../ConfirmPopup';
 import { PriceWithColor } from '../PriceWithColor';
@@ -231,6 +231,26 @@ const CartProduct = props => {
                 </div>
             );
         });
+    }
+    if(item.giftcard_options && item.giftcard_options.length) {
+        const gcOptions = item.giftcard_options.slice(2, item.giftcard_options.length)
+        gcOptions.map((gcOption, index) => {
+            optionText.push(
+                <div key={index} className={classes.optionLabel}>
+                    <span
+                        dangerouslySetInnerHTML={{
+                            __html: gcOption.code
+                        }}
+                    />
+                    :
+                    <span
+                        dangerouslySetInnerHTML={{
+                            __html: gcOption.value
+                        }}
+                    />
+                </div>
+            );
+        })
     }
 
     if (item.links && item.links.length) {

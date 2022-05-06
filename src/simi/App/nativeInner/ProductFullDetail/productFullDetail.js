@@ -21,6 +21,8 @@ import RichContent from '@magento/venia-ui/lib/components/RichContent/richConten
 import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductOptions';
 import defaultClasses from './productFullDetail.module.css';
 import SizeChart from './SizeChart';
+import GiftCardInformationForm from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GiftCardInformationForm'
+import GridCardTemplate from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GridCardTemplate'
 import { PriceAlertProductDetails } from './PriceAlertProductDetails';
 import { PopupAlert } from './PopupAlert/popupAlert';
 const WishlistButton = React.lazy(() =>
@@ -52,6 +54,7 @@ import { FaChevronRight } from 'react-icons/fa';
 import { BiHelpCircle, BiHome } from 'react-icons/bi';
 // import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
+import { useGiftCard } from '../GiftCard/talons/useGiftCard';
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
@@ -59,6 +62,7 @@ import StatusBar from './statusBar';
 import FooterFixedBtn from './footerFixedBtn';
 import AddToCartPopup from './addToCartPopup';
 import CallForPrice from './callForPrice';
+
 require('./productFullDetail.scss');
 
 const mageworxSeoEnabled =
@@ -83,7 +87,9 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product, history } = props;
+
     const talonProps = useProductFullDetail({ product });
+
     const { sku } = product;
     const {
         breadcrumbCategoryId,
@@ -108,6 +114,16 @@ const ProductFullDetail = props => {
         setAlertMsg,
         alertMsg
     } = talonProps;
+
+    const {
+        giftCardProductData,
+        giftCardData,
+        giftCardActions,
+        isAddGiftCardProductLoading,
+        handleAddGiftCardProductToCart,
+        handleByNowGiftCardProduct
+    } = useGiftCard({product, setAlertMsg})
+
     const [message, setMessage] = useState(null);
     const [messageType, setMessageType] = useState(null);
     const [popupData, setPopUpData] = useState(null);
@@ -118,6 +134,8 @@ const ProductFullDetail = props => {
     const dataLocation = product.mp_callforprice_rule
         ? product.mp_callforprice_rule
         : null;
+
+    
     const action =
         dataLocation && dataLocation.action ? dataLocation.action : '';
     const [moreBtn, setMoreBtn] = useState(false);
@@ -160,11 +178,13 @@ const ProductFullDetail = props => {
     const { formatMessage } = useIntl();
     const productReview = useRef(null);
     const carouselImgSize = useRef(null);
-    const positionFooterFixed =
+    let positionFooterFixed =
         carouselImgSize && carouselImgSize.current
             ? (40 / carouselImgSize.current.clientHeight) * 100
             : 514;
 
+    console.log(positionFooterFixed)
+    if(product.__typename === 'MpGiftCardProduct') positionFooterFixed - 100
     const scrollToReview = () => {
         smoothScrollToView(document.querySelector('.reviewsContainer'));
     };
@@ -281,7 +301,7 @@ const ProductFullDetail = props => {
     };
 
     const cartActionContent = isSupportedProductType ? (
-        <Button disabled={isAddToCartDisabled} priority="high" type="submit">
+        <Button disabled={isAddToCartDisabled || isAddGiftCardProductLoading} priority="high" type="submit">
             {cartCallToActionText()}
         </Button>
     ) : (
@@ -311,7 +331,10 @@ const ProductFullDetail = props => {
         }
     } catch (err) {}
 
-    const pricePiece = switchExtraPriceForNormalPrice ? (
+    const pricePiece = product.__typename === 'MpGiftCardProduct' ? (
+        <Price currencyCode={productDetails.price.currency} value={giftCardData && giftCardData.gcPrice ? giftCardData.gcPrice : 0} />
+    ) : (
+        switchExtraPriceForNormalPrice ? (
         <Price currencyCode={extraPrice.currency} value={extraPrice.value} />
     ) : (
         <Price
@@ -320,7 +343,7 @@ const ProductFullDetail = props => {
             fromValue={productDetails.price.fromValue}
             toValue={productDetails.price.toValue}
         />
-    );
+    ));
     const { price } = product || {};
 
     const review =
@@ -443,7 +466,7 @@ const ProductFullDetail = props => {
     const cartAction = (
         <div
             className={
-                isAddToCartDisabled ? 'addCartDisabled' : 'wrapperActions'
+                isAddToCartDisabled || isAddGiftCardProductLoading ? 'addCartDisabled' : 'wrapperActions'
             }
         >
             <section className={classes.actions}>
@@ -465,6 +488,86 @@ const ProductFullDetail = props => {
             ) : null}
         </div>
     );
+    const productDetailCarousel = []
+    if(isMobileSite) {
+        productDetailCarousel.push(
+            <React.Fragment>
+                <div className={classes.headerBtn} key="element-mobile">
+                    <button
+                        className={classes.backBtn}
+                        onClick={() => History.goBack()}
+                    >
+                        <ArrowLeft />
+                    </button>
+
+                    <div className={classes.headerBtnRight}>
+                        <span className="cart-qty">
+                            {itemsQty}
+                        </span>
+                        <Link
+                            className="header-icon"
+                            to="/cart"
+                        >
+                            <ShoppingCart />
+                        </Link>
+                        <Suspense fallback={null}>
+                            <WishlistButton
+                                {...wishlistButtonProps}
+                            />
+                        </Suspense>{' '}
+                        <div
+                            onClick={() => setMoreBtn(!moreBtn)}
+                            className="header-icon"
+                        >
+                            <MoreVertical />
+                        </div>
+                        {moreBtn ? (
+                            <ul className="header-more">
+                                <li>
+                                    <BiHome />
+                                    <Link to="/">Home</Link>
+                                </li>
+                                <li>
+                                    <BiHelpCircle />
+                                    Help Center
+                                </li>
+                            </ul>
+                        ) : null}
+                    </div>
+                </div>
+                <StatusBar
+                    status={product.stock_status}
+                    position={positionFooterFixed}
+                />
+            </React.Fragment>
+        )
+    }
+    if(product.__typename === 'MpGiftCardProduct' && giftCardProductData.template && giftCardProductData.template.length > 0) {
+        productDetailCarousel.push(
+            <GridCardTemplate
+                key="grid-card-template"
+                giftCardProductData={giftCardProductData}
+                giftCardData={giftCardData}
+                giftCardActions={giftCardActions}
+            />
+        )
+    } else {
+        productDetailCarousel.push(
+            <Carousel
+                key="product-detail-carousel"
+                product={product}
+                optionSelections={optionSelections}
+                optionCodes={optionCodes}
+                labelData={
+                    product.mp_label_data &&
+                    product.mp_label_data.length > 0
+                        ? product.mp_label_data
+                        : null
+                }
+                topInsets={topInsets}
+            />
+        )
+    }
 
     return (
         <div className={isMobileSite ? 'main-product-detail-native' : null}>
@@ -482,8 +585,8 @@ const ProductFullDetail = props => {
                     options={options}
                     wrapperQuantity={wrapperQuantity}
                     cartAction={cartAction}
-                    handleAddToCart={handleAddToCart}
-                    handleBuyNow={handleBuyNow}
+                    handleAddToCart={product.__typename === 'MpGiftCardProduct' ? handleAddGiftCardProductToCart : handleAddToCart}
+                    handleBuyNow={product.__typename === 'MpGiftCardProduct' ? handleByNowGiftCardProduct : handleBuyNow}
                     setAddToCartPopup={setAddToCartPopup}
                     typeBtn={typeBtn}
                     loading={isAddProductLoading}
@@ -492,6 +595,12 @@ const ProductFullDetail = props => {
                     productName={productDetails.name}
                     addToCartPopup={addToCartPopup}
                     bottomInsets={bottomInsets}
+                    giftCardForm={product.__typename === 'MpGiftCardProduct' 
+                        && <GiftCardInformationForm 
+                            giftCardProductData={giftCardProductData}
+                            giftCardData={giftCardData}
+                            giftCardActions={giftCardActions}
+                    />}
                 />
             ) : null}
 
@@ -520,7 +629,7 @@ const ProductFullDetail = props => {
 
                 {isMobileSite ? null : breadcrumbs}
                 <div className="wrapperForm ">
-                    <Form className={classes.root} onSubmit={handleAddToCart}>
+                    <Form className={classes.root} onSubmit={product.__typename === 'MpGiftCardProduct' ? handleAddGiftCardProductToCart : handleAddToCart}>
                         {!isMobileSite ? (
                             <div className="wrapperTitle">
                                 <section className={classes.title}>
@@ -550,69 +659,7 @@ const ProductFullDetail = props => {
                             ref={carouselImgSize}
                             className={classes.imageCarousel}
                         >
-                            {isMobileSite ? (
-                                <div className={classes.headerBtn}>
-                                    <button
-                                        className={classes.backBtn}
-                                        onClick={() => History.goBack()}
-                                    >
-                                        <ArrowLeft />
-                                    </button>
-
-                                    <div className={classes.headerBtnRight}>
-                                        <span className="cart-qty">
-                                            {itemsQty}
-                                        </span>
-                                        <Link
-                                            className="header-icon"
-                                            to="/cart"
-                                        >
-                                            <ShoppingCart />
-                                        </Link>
-                                        <Suspense fallback={null}>
-                                            <WishlistButton
-                                                {...wishlistButtonProps}
-                                            />
-                                        </Suspense>{' '}
-                                        <div
-                                            onClick={() => setMoreBtn(!moreBtn)}
-                                            className="header-icon"
-                                        >
-                                            <MoreVertical />
-                                        </div>
-                                        {moreBtn ? (
-                                            <ul className="header-more">
-                                                <li>
-                                                    <BiHome />
-                                                    <Link to="/">Home</Link>
-                                                </li>
-                                                <li>
-                                                    <BiHelpCircle />
-                                                    Help Center
-                                                </li>
-                                            </ul>
-                                        ) : null}
-                                    </div>
-                                </div>
-                            ) : null}
-                            {isMobileSite ? (
-                                <StatusBar
-                                    status={product.stock_status}
-                                    position={positionFooterFixed}
-                                />
-                            ) : null}
-                            <Carousel
-                                product={product}
-                                optionSelections={optionSelections}
-                                optionCodes={optionCodes}
-                                labelData={
-                                    product.mp_label_data &&
-                                    product.mp_label_data.length > 0
-                                        ? product.mp_label_data
-                                        : null
-                                }
-                                topInsets={topInsets}
-                            />
+                            {productDetailCarousel}
                             {/* {isMobileSite ? <FooterFixedBtn /> : null} */}
                             {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
                         </section>
@@ -628,6 +675,12 @@ const ProductFullDetail = props => {
                             <div className="wrapperOptions">
                                 <section className={classes.options}>
                                     {options}
+                                    {product.__typename === 'MpGiftCardProduct' 
+                                        && <GiftCardInformationForm 
+                                                giftCardProductData={giftCardProductData}
+                                                giftCardData={giftCardData}
+                                                giftCardActions={giftCardActions}
+                                            />}
                                     {product.mp_sizeChart &&
                                     product.mp_sizeChart &&
                                     product.mp_sizeChart.display_type ==
@@ -641,7 +694,6 @@ const ProductFullDetail = props => {
                                             isMobileSite={isMobileSite}
                                         />
                                     ) : null}
-
                                     {!isMobileSite ? wrapperPrice : null}
                                 </section>
                             </div>
