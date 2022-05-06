@@ -1,5 +1,7 @@
+import { useUserContext } from '@magento/peregrine/lib/context/user';
 import React, { Fragment, Suspense, useRef, useState } from 'react';
 import { BiMessageAltDetail } from 'react-icons/bi';
+import CallForPrice from './callForPrice';
 require('./statusBar.scss');
 
 const FooterFixedBtn = props => {
@@ -9,13 +11,14 @@ const FooterFixedBtn = props => {
         typeBtn,
         setTypeBtn,
         bottomInsets,
-        isDisabled
+        data
     } = props;
-
+    const [{ isSignedIn }] = useUserContext();
+    const action = data && data.action ? data.action : '';
     return (
         <>
             <div style={{ height: 55 + bottomInsets }} className="virtual" />
-            {!isDisabled || isDisabled.action !== 'hide_add_to_cart' ? (
+            {action === "login_see_price" && isSignedIn ? (
                 <div
                     style={{ height: 55 + bottomInsets }}
                     className="main-footerFixedBtn"
@@ -42,7 +45,25 @@ const FooterFixedBtn = props => {
                         </li>
                     </ul>
                 </div>
-            ) : null}
+            ) : (
+                <div
+                    style={{ height: 55 + bottomInsets }}
+                    className="main-footerFixedBtn"
+                >
+                    <ul>
+                        <li className="msg-icon">
+                            {action !== "hide_add_to_cart" ? <BiMessageAltDetail /> : ''}
+                        </li>
+                        <li className="callForPrice">
+                            <CallForPrice
+                                data={props.data}
+                                wrapperPrice={props.wrapperPrice}
+                                item_id={props.item_id}
+                            />
+                        </li>
+                    </ul>
+                </div>
+            )}
         </>
     );
 };

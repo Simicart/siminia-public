@@ -65,8 +65,6 @@ const ProductLabel = props => {
                 const width = styles.label.width;
                 const height = styles.label.height;
                 // const rotateV = styleLabel > 0 ? 0 : height / 4;
-                console.log('hahaa', styleLabel);
-                console.log('bbba', listFrontSize, typeof LabelFrontSize);
 
                 const topCenterLeft = 340 - height;
 
