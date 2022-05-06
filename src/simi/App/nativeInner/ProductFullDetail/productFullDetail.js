@@ -363,7 +363,8 @@ const ProductFullDetail = props => {
         );
 
     const wrapperPrice =
-        action !== 'popup_quote_form' ? (
+        (action === 'login_see_price' && isSignedIn) ||
+        action === 'redirect_url' ? (
             <div className="wrapperPrice">
                 <span
                     className="labelPrice"
