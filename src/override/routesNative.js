@@ -418,6 +418,17 @@ const BlogAuthor = props => {
         />
     );
 };
+const StoreLocator = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "StoreLocator"*/ 'src/simi/App/nativeInner/StoreLocator/StoreFinder')
+            }
+            {...props}
+        />
+    );
+}
+
 const Routes = props => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
@@ -481,6 +492,11 @@ const Routes = props => {
                     exact
                     path="/checkout"
                     render={props => <Checkout {...props} />}
+                />
+                <Route
+                    exact
+                    path="/find-a-store.html"
+                    render={props => <StoreLocator {...props} />}
                 />
                 <Route
                     exact
