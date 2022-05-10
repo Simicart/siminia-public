@@ -64,8 +64,6 @@ const Griditem = props => {
     
     const callForPriceRule = item.mp_callforprice_rule;
 
-    console.log(callForPriceRule)
-    
     // console.log('itemee', callForPriceRule);
     const product_url = `/${url_key}${productUrlSuffix()}`;
     // const imageWidth = document.querySelector("#product-image-label").offsetWidth
@@ -119,8 +117,6 @@ const Griditem = props => {
         }
     }
 
-    console.log(priceComponent)
-  
     const location = {
         pathname: product_url,
         state: {
