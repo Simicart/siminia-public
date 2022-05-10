@@ -13,10 +13,14 @@ import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import Loader from '../Loader';
 import AlertMessages from '../ProductFullDetail/AlertMessages';
+import {isCallForPriceEnable} from 'src/simi/App/nativeInner/Helper/Module'
+
 const CallForPrice = props => {
     const { data, wrapperPrice, item_id } = props;
     const [isPopupOpen, setOpenPopup] = useState(false);
     const classes = useStyle(defaultClasses, props.classes);
+
+    const callForPriceEnabled = isCallForPriceEnable()
 
     const [alertMsg, setAlertMsg] = useState(-1);
 
@@ -226,7 +230,7 @@ const CallForPrice = props => {
                 status="success"
                 topInsets={topInsets}
             />
-            {renderPriceWithCallForPrice(data)}
+            {callForPriceEnabled ? renderPriceWithCallForPrice(data) : wrapperPrice}
         </div>
     );
 };

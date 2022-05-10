@@ -86,11 +86,10 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 };
 
 const ProductFullDetail = props => {
-    const { product, history } = props;
+    const { product } = props;
 
     const talonProps = useProductFullDetail({ product });
-
-    const { sku } = product;
+    
     const {
         breadcrumbCategoryId,
         errorMessage,
@@ -130,7 +129,7 @@ const ProductFullDetail = props => {
     const [showPopup, setShowPopup] = useState(false);
     const successMsg = `${productDetails.name} was added to shopping cart`;
     const [{ isSignedIn }] = useUserContext();
-    let History = useHistory();
+    let history = useHistory();
     const dataLocation = product.mp_callforprice_rule
         ? product.mp_callforprice_rule
         : null;
@@ -183,7 +182,6 @@ const ProductFullDetail = props => {
             ? (40 / carouselImgSize.current.clientHeight) * 100
             : 514;
 
-    console.log(positionFooterFixed)
     if(product.__typename === 'MpGiftCardProduct') positionFooterFixed - 100
     const scrollToReview = () => {
         smoothScrollToView(document.querySelector('.reviewsContainer'));
@@ -344,7 +342,7 @@ const ProductFullDetail = props => {
             toValue={productDetails.price.toValue}
         />
     ));
-    const { price } = product || {};
+    const { price, sku } = product || {};
 
     const review =
         product && product.review_count && product.rating_summary ? (
@@ -495,7 +493,7 @@ const ProductFullDetail = props => {
                 <div className={classes.headerBtn} key="element-mobile">
                     <button
                         className={classes.backBtn}
-                        onClick={() => History.goBack()}
+                        onClick={() => history.goBack()}
                     >
                         <ArrowLeft />
                     </button>

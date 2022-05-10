@@ -63,6 +63,8 @@ const Griditem = props => {
     } = item;
     
     const callForPriceRule = item.mp_callforprice_rule;
+
+    console.log(callForPriceRule)
     
     // console.log('itemee', callForPriceRule);
     const product_url = `/${url_key}${productUrlSuffix()}`;
@@ -84,7 +86,6 @@ const Griditem = props => {
             min_price = giftCardPrices[0]
             max_price = giftCardPrices[giftCardPrices.length - 1]
         }
-
       
         if (min_price != max_price) {
             priceComponent = (
@@ -117,6 +118,8 @@ const Griditem = props => {
             )
         }
     }
+
+    console.log(priceComponent)
   
     const location = {
         pathname: product_url,
