@@ -2,12 +2,6 @@ import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { md_hash } from '../untils/md_hash';
 
-
-   
-const DAYS_OF_WEEK = [
-    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
-]
-
 const storeLocationConfigQuery = gql`
     query {
         MpStoreLocatorConfig {
