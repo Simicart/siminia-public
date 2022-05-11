@@ -4,7 +4,7 @@ import MainSearchList from "../SearchList/MainList/MainSearchList";
 import {useSearchStoreByLocationAndRadius} from "../talons/useSearchStoreByLocationAndRadius";
 import LocationPin from "../GoogleMap/LocationPin";
 import { useWindowSize } from '@magento/peregrine';
-import StoreCardList from "../SearchList/MainList/Result/StoreCardList";
+import StoreCardList from "../SearchList/Result/StoreCardList";
 import FilterRadiusSidebar from "../SearchList/FilterRadius/FilterRadiusSidebar";
 import {LARGE, MEDIUM, UPPER_MEDIUM} from "../untils/breakpoints";
 import {convertToMeter} from "../untils/convertToMeter";
@@ -14,7 +14,6 @@ import SideMapToggle from "../GoogleMap/SideMapToggle";
 const StoreFindeBody = (props) => {
         const config = props ? props.config : null;
         const loading = props ? props.loading : null;
-        const classes = props ? props.classes : null;
         const handleChosenStore = props ? props.handleChosenStore : null;
         const cartId = props ? props.cartId : null;
 

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { useWindowSize } from '@magento/peregrine';
 import {LARGE, UPPER_MEDIUM} from "../../untils/breakpoints";
 

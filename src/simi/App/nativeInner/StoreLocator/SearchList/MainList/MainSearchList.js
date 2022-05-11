@@ -1,10 +1,10 @@
 import React, {useCallback, useState} from 'react';
-import {useSearch} from "../talons/useSearch";
+import {useSearch} from "../../talons/useSearch";
 import SearchItem from "./SearchItem";
 import {md_hash} from "../../untils/mdHash";
 
 import { useWindowSize } from '@magento/peregrine';
-import {LARGE} from "../../untils/breakpoints";
+import { LARGE } from "../../untils/breakpoints";
 
 const MainSearchList = (props) => {
     const query = props ? props.query : null;
