@@ -162,14 +162,6 @@ export const ProductOfListFragment = gql`
                 title
             }
         }
-
-        ... on MpGiftCardProduct {
-            allow_amount_range
-            gift_card_amounts
-            max_amount
-            min_amount
-            price_rate
-        }
     }
     ${SimiPriceFragment}
 `;
