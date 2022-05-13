@@ -81,10 +81,10 @@ const Griditem = props => {
                 giftCardPrices.push(price)
             })
             giftCardPrices.sort((a, b) => {return a-b})
-            min_price = giftCardPrices[0]
-            max_price = giftCardPrices[giftCardPrices.length - 1]
+            min_price = min_price > 0 && min_price < giftCardPrices[0] ? min_price : giftCardPrices[0]
+            max_price = max_price > 0 && max_price > giftCardPrices[giftCardPrices.length - 1] ? max_price : giftCardPrices[giftCardPrices.length - 1]
         }
-      
+
         if (min_price != max_price) {
             priceComponent = (
                 <div className={itemClasses['giftcard-prices-wrapper']}>

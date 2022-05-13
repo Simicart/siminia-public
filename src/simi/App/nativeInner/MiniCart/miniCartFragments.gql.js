@@ -41,6 +41,7 @@ export const RewardPointFragment = rewardPointEnabled
 export const MiniCartFragment = gql`
     fragment MiniCartFragment on Cart {
         id
+        is_virtual
         total_quantity
         ...ShippingSummaryFragment
         prices {

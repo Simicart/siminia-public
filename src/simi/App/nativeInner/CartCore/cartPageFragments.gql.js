@@ -8,6 +8,7 @@ import { AppliedCouponsFragment } from '@magento/peregrine/lib/talons/CartPage/P
 export const CartPageFragment = gql`
     fragment CartPageFragment on Cart {
         id
+        is_virtual
         total_quantity
         ...AppliedCouponsFragment
         ...GiftCardFragment
