@@ -10,7 +10,7 @@ const TopMenu = props => {
     if (!isEnabled) {
         return (
             <div className={classes['header-megamenu-ctn']}>
-                <MegaMenu classes={classes} />;
+                <MegaMenu classes={classes} />
             </div>
         );
     }
