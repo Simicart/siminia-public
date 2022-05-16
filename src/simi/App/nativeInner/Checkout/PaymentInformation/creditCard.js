@@ -1,24 +1,7 @@
-// import React from 'react';
-// import { mergeClasses } from '@magento/venia-ui/lib/classify';
-// import { shape, string } from 'prop-types';
-
-// import defaultClasses from './index.module.css';
-
-// const OfflinePayment = props => {
-//     const classes = mergeClasses(defaultClasses, props.classes);
-//     return <div className={classes.root}>offline</div>;
-// };
-
-// OfflinePayment.propTypes = {
-//     classes: shape({ root: string })
-// };
-// OfflinePayment.defaultProps = {};
-// export default OfflinePayment;
-
 import React, { useMemo, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { bool, func, shape, string } from 'prop-types';
-import { usePlainOffline } from './usePlainOffline';
+import { useCreditCard } from 'src/simi/App/nativeInner/talons/CheckoutPage/PaymentInformation/useCreditCard';
 
 import { isRequired } from '@magento/venia-ui/lib/util/formValidators';
 import Country from '@magento/venia-ui/lib/components/Country';
@@ -27,42 +10,66 @@ import Postcode from '@magento/venia-ui/lib/components/Postcode';
 import Checkbox from '@magento/venia-ui/lib/components/Checkbox';
 import Field from '@magento/venia-ui/lib/components/Field';
 import TextInput from '@magento/venia-ui/lib/components/TextInput';
+import BrainTreeDropin from '@magento/venia-ui/lib/components/CheckoutPage/PaymentInformation/brainTreeDropIn';
+import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 
-import defaultClasses from './index.module.css';
+import defaultClasses from '@magento/venia-ui/lib/components/CheckoutPage/PaymentInformation/creditCard.module.css';
 import FormError from '@magento/venia-ui/lib/components/FormError';
 
+const STEP_DESCRIPTIONS = [
+    { defaultMessage: 'Loading Payment', id: 'checkoutPage.step0' },
+    {
+        defaultMessage: 'Checking Credit Card Information',
+        id: 'checkoutPage.step1'
+    },
+    {
+        defaultMessage: 'Checking Credit Card Information',
+        id: 'checkoutPage.step2'
+    },
+    {
+        defaultMessage: 'Checking Credit Card Information',
+        id: 'checkoutPage.step3'
+    },
+    {
+        defaultMessage: 'Saved Credit Card Information Successfully',
+        id: 'checkoutPage.step4'
+    }
+];
 
 /**
  * The initial view for the Braintree payment method.
  */
-const PlainOffline = props => {
+const CreditCard = props => {
     const {
         classes: propClasses,
         onPaymentSuccess: onSuccess,
         onPaymentReady: onReady,
         onPaymentError: onError,
         resetShouldSubmit,
-        shouldSubmit,
-        paymentCode
+        shouldSubmit
     } = props;
     const { formatMessage } = useIntl();
 
     const classes = useStyle(defaultClasses, propClasses);
 
-    const talonProps = usePlainOffline({
+    const talonProps = useCreditCard({
         onSuccess,
         onReady,
         onError,
         shouldSubmit,
-        resetShouldSubmit,
-        paymentCode
+        resetShouldSubmit
     });
 
     const {
-        errors,
         isVirtual,
+        errors,
+        shouldRequestPaymentNonce,
+        onPaymentError,
+        onPaymentSuccess,
+        onPaymentReady,
         isBillingAddressSame,
+        isLoading,
         /**
          * `stepNumber` depicts the state of the process flow in credit card
          * payment flow.
@@ -75,10 +82,14 @@ const PlainOffline = props => {
          */
         stepNumber,
         initialValues,
-        shippingAddressCountry
+        shippingAddressCountry,
+        shouldTeardownDropin,
+        resetShouldTeardownDropin
     } = talonProps;
 
-    const creditCardComponentClassName = classes.credit_card_root;
+    const creditCardComponentClassName = isLoading
+        ? classes.credit_card_root_hidden
+        : classes.credit_card_root;
 
     const billingAddressFieldsClassName = isBillingAddressSame
         ? classes.billing_address_fields_root_hidden
@@ -126,16 +137,37 @@ const PlainOffline = props => {
         }
     }, []);
 
+    const stepTitle = STEP_DESCRIPTIONS[stepNumber].defaultMessage
+        ? formatMessage({
+              id: STEP_DESCRIPTIONS[stepNumber].id,
+              defaultMessage: STEP_DESCRIPTIONS[stepNumber].defaultMessage
+          })
+        : formatMessage({
+              id: 'checkoutPage.loadingPayment',
+              defaultMessage: 'Loading Payment'
+          });
+
+    const loadingIndicator = isLoading ? (
+        <LoadingIndicator>{stepTitle}</LoadingIndicator>
+    ) : null;
+
     return (
         <div className={classes.root}>
-            <div
-                className={creditCardComponentClassName}
-                style={{ paddingTop: 40 }}
-            >
+            <div className={creditCardComponentClassName}>
                 <FormError
                     classes={{ root: classes.formErrorContainer }}
                     errors={Array.from(errors.values())}
                 />
+                <div className={classes.dropin_root}>
+                    <BrainTreeDropin
+                        onError={onPaymentError}
+                        onReady={onPaymentReady}
+                        onSuccess={onPaymentSuccess}
+                        shouldRequestPaymentNonce={shouldRequestPaymentNonce}
+                        shouldTeardownDropin={shouldTeardownDropin}
+                        resetShouldTeardownDropin={resetShouldTeardownDropin}
+                    />
+                </div>
                 {!isVirtual && <div className={classes.address_check}>
                     <Checkbox
                         field="isBillingAddressSame"
@@ -264,8 +296,34 @@ const PlainOffline = props => {
                     </Field>
                 </div>
             </div>
+            {loadingIndicator}
         </div>
     );
 };
 
-export default PlainOffline;
+export default CreditCard;
+
+CreditCard.propTypes = {
+    classes: shape({
+        root: string,
+        dropin_root: string,
+        billing_address_fields_root: string,
+        first_name: string,
+        last_name: string,
+        city: string,
+        region: string,
+        postal_code: string,
+        phone_number: string,
+        country: string,
+        street1: string,
+        street2: string,
+        address_check: string,
+        credit_card_root: string,
+        credit_card_root_hidden: string
+    }),
+    shouldSubmit: bool.isRequired,
+    onPaymentSuccess: func,
+    onPaymentReady: func,
+    onPaymentError: func,
+    resetShouldSubmit: func.isRequired
+};

@@ -1,16 +1,23 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useFormState, useFormApi } from 'informed';
-import { useApolloClient, useQuery, useMutation } from '@apollo/client';
+import { useQuery, useApolloClient, useMutation } from '@apollo/client';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 
-import DEFAULT_OPERATIONS from './plainOffline.gql';
+import DEFAULT_OPERATIONS from './creditCard.gql';
 
 const getRegion = region => {
     return region.region_id || region.label || region.code;
 };
 
+/**
+ * Maps address response data from GET_BILLING_ADDRESS and GET_SHIPPING_ADDRESS
+ * queries to input names in the billing address form.
+ * {@link creditCard.gql.js}.
+ *
+ * @param {ShippingCartAddress|BillingCartAddress} rawAddressData query data
+ */
 export const mapAddressData = rawAddressData => {
     if (rawAddressData) {
         const {
@@ -40,14 +47,53 @@ export const mapAddressData = rawAddressData => {
     }
 };
 
-export const usePlainOffline = props => {
+/**
+ * Talon to handle Credit Card payment method.
+ *
+ * @param {Boolean} props.shouldSubmit boolean value which represents if a payment nonce request has been submitted
+ * @param {Function} props.onSuccess callback to invoke when the a payment nonce has been generated
+ * @param {Function} props.onReady callback to invoke when the braintree dropin component is ready
+ * @param {Function} props.onError callback to invoke when the braintree dropin component throws an error
+ * @param {Function} props.resetShouldSubmit callback to reset the shouldSubmit flag
+ * @param {DocumentNode} props.operations.getBillingAddressQuery query to fetch billing address from cache
+ * @param {DocumentNode} props.operations.getIsBillingAddressSameQuery query to fetch is billing address same checkbox value from cache
+ * @param {DocumentNode} props.operations.getPaymentNonceQuery query to fetch payment nonce saved in cache
+ * @param {DocumentNode} props.operations.setBillingAddressMutation mutation to update billing address on the cart
+ * @param {DocumentNode} props.operations.setCreditCardDetailsOnCartMutation mutation to update payment method and payment nonce on the cart
+ *
+ * @returns {
+ *   errors: Map<String, Error>,
+ *   shouldRequestPaymentNonce: Boolean,
+ *   onPaymentError: Function,
+ *   onPaymentSuccess: Function,
+ *   onPaymentReady: Function,
+ *   isBillingAddressSame: Boolean,
+ *   isLoading: Boolean,
+ *   stepNumber: Number,
+ *   initialValues: {
+ *      firstName: String,
+ *      lastName: String,
+ *      city: String,
+ *      postcode: String,
+ *      phoneNumber: String,
+ *      street1: String,
+ *      street2: String,
+ *      country: String,
+ *      state: String,
+ *      isBillingAddressSame: Boolean
+ *   },
+ *   shippingAddressCountry: String,
+ *   shouldTeardownDropin: Boolean,
+ *   resetShouldTeardownDropin: Function
+ * }
+ */
+export const useCreditCard = props => {
     const {
         onSuccess,
         onReady,
         onError,
         shouldSubmit,
-        resetShouldSubmit,
-        paymentCode
+        resetShouldSubmit
     } = props;
 
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
@@ -55,21 +101,28 @@ export const usePlainOffline = props => {
     const {
         getBillingAddressQuery,
         getIsBillingAddressSameQuery,
+        getPaymentNonceQuery,
         getShippingAddressQuery,
         setBillingAddressMutation,
-        setOfflinePaymentOnCartMutation
+        setCreditCardDetailsOnCartMutation
     } = operations;
 
     /**
      * Definitions
      */
 
+    const [isDropinLoading, setDropinLoading] = useState(true);
+    const [shouldRequestPaymentNonce, setShouldRequestPaymentNonce] = useState(
+        false
+    );
+    const [shouldTeardownDropin, setShouldTeardownDropin] = useState(false);
     /**
      * `stepNumber` depicts the state of the process flow in credit card
      * payment flow.
      *
      * `0` No call made yet
      * `1` Billing address mutation intiated
+     * `2` Braintree nonce requsted
      * `3` Payment information mutation intiated
      * `4` All mutations done
      */
@@ -79,6 +132,8 @@ export const usePlainOffline = props => {
     const formState = useFormState();
     const { validate: validateBillingAddressForm } = useFormApi();
     const [{ cartId }] = useCartContext();
+
+    const isLoading = isDropinLoading || (stepNumber >= 1 && stepNumber <= 3);
 
     const { data: billingAddressData } = useQuery(getBillingAddressQuery, {
         skip: !cartId,
@@ -92,7 +147,7 @@ export const usePlainOffline = props => {
         getIsBillingAddressSameQuery,
         { skip: !cartId, variables: { cartId } }
     );
-    console.log(isBillingAddressSameData)
+
     const [
         updateBillingAddress,
         {
@@ -109,9 +164,9 @@ export const usePlainOffline = props => {
             called: ccMutationCalled,
             loading: ccMutationLoading
         }
-    ] = useMutation(setOfflinePaymentOnCartMutation);
+    ] = useMutation(setCreditCardDetailsOnCartMutation);
 
-    const shippingAddressCountry = shippingAddressData && shippingAddressData.cart && shippingAddressData.cart.shippingAddress && shippingAddressData.cart.shippingAddress.length > 0
+    const shippingAddressCountry = shippingAddressData && shippingAddressData.cart && shippingAddressData.cart.shippingAddresses && shippingAddressData.cart.shippingAddresses.length > 0
         ? shippingAddressData.cart.shippingAddresses[0].country.code
         : DEFAULT_COUNTRY_CODE;
     const isBillingAddressSame = formState.values.isBillingAddressSame;
@@ -219,18 +274,107 @@ export const usePlainOffline = props => {
     }, [formState.values, updateBillingAddress, cartId]);
 
     /**
+     * This function sets the payment nonce details in the cache.
+     * We use cache because there is no way to save this information
+     * on the cart in the remote.
+     *
+     * We do not save the nonce code because it is a PII.
+     */
+    const setPaymentDetailsInCache = useCallback(
+        braintreeNonce => {
+            /**
+             * We dont save the nonce code due to PII,
+             * we only save the subset of details.
+             */
+            const { details, description, type } = braintreeNonce;
+            client.writeQuery({
+                query: getPaymentNonceQuery,
+                data: {
+                    cart: {
+                        __typename: 'Cart',
+                        id: cartId,
+                        paymentNonce: {
+                            details,
+                            description,
+                            type
+                        }
+                    }
+                }
+            });
+        },
+        [cartId, client, getPaymentNonceQuery]
+    );
+
+    /**
      * This function saves the nonce code from braintree
      * on the cart along with the payment method used in
      * this case `braintree`.
      */
-    const updatePaymentDetailsOnCart = useCallback(() => {
-        updateCCDetails({
-            variables: {
-                cartId,
-                paymentCode
+    const updateCCDetailsOnCart = useCallback(
+        braintreeNonce => {
+            const { nonce } = braintreeNonce;
+            updateCCDetails({
+                variables: {
+                    cartId,
+                    paymentMethod: 'braintree',
+                    paymentNonce: nonce
+                }
+            });
+        },
+        [updateCCDetails, cartId]
+    );
+
+    /**
+     * Function to be called by the braintree dropin when the
+     * nonce generation is successful.
+     */
+    const onPaymentSuccess = useCallback(
+        braintreeNonce => {
+            setPaymentDetailsInCache(braintreeNonce);
+            /**
+             * Updating payment braintreeNonce and selected payment method on cart.
+             */
+            updateCCDetailsOnCart(braintreeNonce);
+            setStepNumber(3);
+        },
+        [setPaymentDetailsInCache, updateCCDetailsOnCart]
+    );
+
+    /**
+     * Function to be called by the braintree dropin when the
+     * nonce generation is not successful.
+     */
+    const onPaymentError = useCallback(
+        error => {
+            setStepNumber(0);
+            setShouldRequestPaymentNonce(false);
+            resetShouldSubmit();
+            if (onError) {
+                onError(error);
             }
-        });
-    }, [updateCCDetails, cartId]);
+        },
+        [onError, resetShouldSubmit]
+    );
+
+    /**
+     * Function to be called by the braintree dropin when the
+     * credit card component has loaded successfully.
+     */
+    const onPaymentReady = useCallback(() => {
+        setDropinLoading(false);
+        setStepNumber(0);
+        if (onReady) {
+            onReady();
+        }
+    }, [onReady]);
+
+    /**
+     * Function to be called by braintree dropin when the payment
+     * teardown is done successfully before re creating the new dropin.
+     */
+    const resetShouldTeardownDropin = useCallback(() => {
+        setShouldTeardownDropin(false);
+    }, []);
 
     /**
      * Effects
@@ -277,6 +421,7 @@ export const usePlainOffline = props => {
             }
             setStepNumber(0);
             resetShouldSubmit();
+            setShouldRequestPaymentNonce(false);
         }
     }, [
         shouldSubmit,
@@ -308,7 +453,7 @@ export const usePlainOffline = props => {
                  * we can initiate the braintree nonce request
                  */
                 setStepNumber(2);
-                updatePaymentDetailsOnCart();
+                setShouldRequestPaymentNonce(true);
             }
 
             if (
@@ -327,6 +472,7 @@ export const usePlainOffline = props => {
             }
             setStepNumber(0);
             resetShouldSubmit();
+            setShouldRequestPaymentNonce(false);
         }
     }, [
         billingAddressMutationError,
@@ -341,6 +487,12 @@ export const usePlainOffline = props => {
      * Credit card save mutation has completed
      */
     useEffect(() => {
+        /**
+         * Saved billing address, payment method and payment nonce on cart.
+         *
+         * Time to call onSuccess.
+         */
+
         try {
             const ccMutationCompleted = ccMutationCalled && !ccMutationLoading;
 
@@ -357,7 +509,7 @@ export const usePlainOffline = props => {
                  * If credit card mutation failed, reset update button clicked so the
                  * user can click again and set `stepNumber` to 0.
                  */
-                throw new Error('Payment save mutation failed.');
+                throw new Error('Credit card nonce save mutation failed.');
             }
         } catch (err) {
             if (process.env.NODE_ENV !== 'production') {
@@ -365,11 +517,14 @@ export const usePlainOffline = props => {
             }
             setStepNumber(0);
             resetShouldSubmit();
+            setShouldRequestPaymentNonce(false);
+            setShouldTeardownDropin(true);
         }
     }, [
         ccMutationCalled,
         ccMutationLoading,
         onSuccess,
+        setShouldRequestPaymentNonce,
         resetShouldSubmit,
         ccMutationError
     ]);
@@ -378,7 +533,7 @@ export const usePlainOffline = props => {
         () =>
             new Map([
                 ['setBillingAddressMutation', billingAddressMutationError],
-                ['setOfflinePaymentOnCartMutation', ccMutationError]
+                ['setCreditCardDetailsOnCartMutation', ccMutationError]
             ]),
         [billingAddressMutationError, ccMutationError]
     );
@@ -386,10 +541,16 @@ export const usePlainOffline = props => {
     return {
         errors,
         isVirtual,
+        onPaymentError,
+        onPaymentSuccess,
+        onPaymentReady,
         isBillingAddressSame,
+        isLoading,
+        shouldRequestPaymentNonce,
         stepNumber,
         initialValues,
         shippingAddressCountry,
-        updatePaymentDetailsOnCart
+        shouldTeardownDropin,
+        resetShouldTeardownDropin
     };
 };

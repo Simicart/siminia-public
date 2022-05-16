@@ -99,7 +99,7 @@ const GiftCardChooseImageTemplate = props => {
         	let reader = new FileReader();
         	const name = e.target.files[0].name
         	reader.onload = (event) => {
-        		setUploadedImageUrl(event.target.result)
+        		// setUploadedImageUrl(event.target.result)
         		uploadGcImage({
         			variables: {
         				url: event.target.result,

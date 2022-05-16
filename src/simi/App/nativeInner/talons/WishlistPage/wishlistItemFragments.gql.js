@@ -1,9 +1,13 @@
 import { gql } from '@apollo/client';
+import { isGiftCardEnable } from 'src/simi/App/nativeInner/Helper/Module'
+
 const productLabelEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL) === 1;
+
+const giftCardEnabled = isGiftCardEnable()
 
 export const WishlistItemFragment = gql`
     fragment WishlistItemFragment on WishlistItemInterface {
@@ -66,6 +70,31 @@ export const WishlistItemFragment = gql`
                         }
                     }
                 }
+            }
+            ${
+                giftCardEnabled
+                    ? `
+                    ... on MpGiftCardProduct {
+                        information {
+                            amounts {
+                                record_id
+                                price
+                                amount
+                            }
+                            openAmount {
+                                min
+                                max
+                                rate
+                            }
+                        }
+                      
+                        max_amount
+                        min_amount
+                        price_rate
+                        allow_amount_range
+                    }      
+            `
+                    : ``
             }
         }
         ... on ConfigurableWishlistItem {

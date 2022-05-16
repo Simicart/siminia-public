@@ -1,14 +1,22 @@
 import { gql } from '@apollo/client';
 
-import { PriceSummaryFragment } from '@magento/peregrine/lib/talons/CartPage/PriceSummary/priceSummaryFragments.gql';
+import { PriceSummaryFragment } from '@magento/peregrine/lib/talons/CartPage/PriceSummary/priceSummaryFragments.gql.js';
 import { AvailablePaymentMethodsFragment } from '@magento/peregrine/lib/talons/CheckoutPage/PaymentInformation/paymentInformation.gql';
 
 export const GET_IS_BILLING_ADDRESS_SAME = gql`
     query getIsBillingAddressSame($cartId: String!) {
         cart(cart_id: $cartId) @client {
             id
-            is_virtual
             isBillingAddressSame
+        }
+    }
+`;
+
+export const GET_PAYMENT_NONCE = gql`
+    query getPaymentNonce($cartId: String!) {
+        cart(cart_id: $cartId) @client {
+            id
+            paymentNonce
         }
     }
 `;
@@ -119,10 +127,22 @@ export const SET_BILLING_ADDRESS = gql`
     ${AvailablePaymentMethodsFragment}
 `;
 
-export const SET_OFFLINE_PAYMENT_ON_CART = gql`
-    mutation setSelectedPaymentMethod($cartId: String!, $paymentCode: String!) {
+export const SET_CC_DETAILS_ON_CART = gql`
+    mutation setSelectedPaymentMethod(
+        $cartId: String!
+        $paymentNonce: String!
+    ) {
         setPaymentMethodOnCart(
-            input: { cart_id: $cartId, payment_method: { code: $paymentCode } }
+            input: {
+                cart_id: $cartId
+                payment_method: {
+                    code: "braintree"
+                    braintree: {
+                        payment_method_nonce: $paymentNonce
+                        is_active_payment_token_enabler: false
+                    }
+                }
+            }
         ) @connection(key: "setPaymentMethodOnCart") {
             cart {
                 id
@@ -138,7 +158,8 @@ export const SET_OFFLINE_PAYMENT_ON_CART = gql`
 export default {
     getBillingAddressQuery: GET_BILLING_ADDRESS,
     getIsBillingAddressSameQuery: GET_IS_BILLING_ADDRESS_SAME,
+    getPaymentNonceQuery: GET_PAYMENT_NONCE,
     getShippingAddressQuery: GET_SHIPPING_ADDRESS,
     setBillingAddressMutation: SET_BILLING_ADDRESS,
-    setOfflinePaymentOnCartMutation: SET_OFFLINE_PAYMENT_ON_CART
+    setCreditCardDetailsOnCartMutation: SET_CC_DETAILS_ON_CART
 };
