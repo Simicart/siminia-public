@@ -1,4 +1,3 @@
-import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import React from 'react';
 import Identify from 'src/simi/Helper/Identify';
 import { useStoreConfigData } from './talons/useStoreConfigData';
@@ -38,7 +37,7 @@ const Robots = props => {
         storeConfigData && storeConfigData.storeConfig
             ? storeConfigData.storeConfig.mageworx_seo
             : '';
-    
+
     let seo;
     try {
         seo = JSON.parse(mageworx_seo);
@@ -57,8 +56,8 @@ const Robots = props => {
 
     const actions = ['catalog_category_view', 'catalog_product_view'];
 
-    if (storeConfigLoading) return fullPageLoadingIndicator;
-    if (derivedErrorMessage) return <div>{derivedErrorMessage}</div>;
+    if (storeConfigLoading) return '';
+    if (derivedErrorMessage) return '';
     if (['CATEGORY', 'PRODUCT'].includes(props.pageType) && robotsConfig) {
         const metaRobots = document.querySelectorAll('meta[name=robots]');
         if (metaRobots.length && !props.isLogic) {
@@ -183,7 +182,7 @@ const Robots = props => {
             }
             return true;
         });
-    
+
     // Add meta header NOINDEX, FOLLOW for additional pages
     noindex_additional_pages &&
         noindex_additional_pages.every(page => {
@@ -228,9 +227,9 @@ const Robots = props => {
             });
         }
     }
-    if (props.isLogic) return content;  
+    if (props.isLogic) return content;
     if (!content) return null;
-   
+
     return <meta name="robots" content={content} />;
 };
 

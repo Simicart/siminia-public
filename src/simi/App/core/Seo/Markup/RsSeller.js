@@ -18,7 +18,7 @@ const RsSeller = props => {
         derivedErrorMessage
     } = useStoreConfigData();
     if (storeConfigLoading) return '';
-    if (derivedErrorMessage) return <div>{derivedErrorMessage}</div>;
+    if (derivedErrorMessage) return '';
 
     const mageworx_seo =
         storeConfigData && storeConfigData.storeConfig
