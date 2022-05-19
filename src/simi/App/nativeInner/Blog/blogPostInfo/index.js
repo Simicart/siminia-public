@@ -16,8 +16,10 @@ const authorIcon = <Icon src={AuthorIc} attrs={{ width: 11 }} />;
 const eyeIcon = <Icon src={EyeIc} attrs={{ width: 11 }} />;
 import { GET_BLOG_CONFIG } from '../../talons/Blog/Blog.gql';
 import { useQuery } from '@apollo/client';
+import { useIntl } from 'react-intl';
 const BlogPostInfo = props => {
     const { classes, item } = props;
+    const { formatMessage } = useIntl();
     const {
         publish_date,
         categories,
@@ -40,7 +42,7 @@ const BlogPostInfo = props => {
         configData.mpBlogConfigs.general.display_author
             ? configData.mpBlogConfigs.general.display_author
             : '';
-  
+
     return (
         <div className={classes.blogpostInfo}>
             <span className={classes.calendarIcon}>{calenderIcon}</span>
@@ -49,7 +51,10 @@ const BlogPostInfo = props => {
                 <React.Fragment>
                     |{' '}
                     <span className={classes.categoryData}>
-                        {`Post In`}{' '}
+                    {formatMessage({
+                                id: 'postIn',
+                                defaultMessage: 'Post In '
+                            })}
                         {categories.items.map((categoryItem, index) => (
                             <React.Fragment key={index}>
                                 <Link

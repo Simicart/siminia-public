@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`return correct tree first level 1`] = `
+Array [
+  Object {
+    "__typename": "MenuCategoryItem",
+    "id": 11,
+    "name": "Bottoms",
+    "parentId": null,
+    "parent_id": null,
+    "subCategories": Array [
+      Object {
+        "id": 12,
+        "name": "Pants & Shorts",
+        "parentId": 11,
+        "parent_id": 11,
+        "url": "venia-bottoms/venia-pants.html",
+      },
+    ],
+    "url": "venia-bottoms.html",
+  },
+]
+`;
+
+exports[`return correct tree second level 1`] = `
+Array [
+  Object {
+    "__typename": "MenuCategoryItem",
+    "id": 11,
+    "name": "All Bottoms",
+    "parentId": null,
+    "parent_id": null,
+    "subCategories": null,
+    "url": "venia-bottoms.html",
+  },
+  Object {
+    "id": 12,
+    "name": "Pants & Shorts",
+    "parentId": 11,
+    "parent_id": 11,
+    "url": "venia-bottoms/venia-pants.html",
+  },
+]
+`;

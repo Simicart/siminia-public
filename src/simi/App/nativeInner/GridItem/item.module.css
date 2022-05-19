@@ -199,6 +199,12 @@ Rate
     text-decoration: none;
 }
 
+.giftcard-prices {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 600;
+}
+
 @media (min-width: 1024px) {
     .siminia-product-grid-item:hover {
         background-color: white;

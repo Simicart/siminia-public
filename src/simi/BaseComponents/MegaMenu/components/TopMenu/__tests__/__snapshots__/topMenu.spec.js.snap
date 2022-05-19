@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with data 1`] = `
+<MenuTree
+  menuTree={
+    Array [
+      Object {
+        "__typename": "MenuCategoryItem",
+        "column_count": null,
+        "content": "{{child_categories_content}}",
+        "has_active": false,
+        "icon": "",
+        "id": "category-node-11",
+        "is_active": false,
+        "is_category": true,
+        "is_parent_active": true,
+        "label": null,
+        "label_background_color": null,
+        "label_text_color": null,
+        "name": "Bottoms",
+        "parent_id": null,
+        "status": null,
+        "subcategories_position": 0,
+        "submenu_type": 0,
+        "url": "venia-bottoms.html",
+        "width": null,
+        "width_value": null,
+      },
+      Object {
+        "__typename": "MenuCategoryItem",
+        "column_count": null,
+        "content": "{{child_categories_content}}",
+        "has_active": false,
+        "icon": "",
+        "id": "category-node-12",
+        "is_active": false,
+        "is_category": true,
+        "is_parent_active": true,
+        "label": null,
+        "label_background_color": null,
+        "label_text_color": null,
+        "name": "Pants & Shorts",
+        "parent_id": "category-node-11",
+        "status": null,
+        "subcategories_position": 0,
+        "submenu_type": 0,
+        "url": "venia-bottoms/venia-pants.html",
+        "width": null,
+        "width_value": null,
+      },
+    ]
+  }
+/>
+`;
+
+exports[`renders without data 1`] = `null`;

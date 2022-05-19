@@ -1,0 +1,277 @@
+.root {
+	margin-top: 20px;
+}
+
+.page-title {
+	margin-bottom: 50px;
+	font-size: 40px;
+	width: fit-content
+}
+
+.wrapper {
+	display: grid;
+    grid-template-columns: 20% auto;
+}
+
+.block-gift-card {
+	margin-bottom: 50px;
+}
+
+.block-content {
+	display: flex;
+}
+
+.box-information {
+	width: 50%;
+	display: inline-block;
+	padding: 0 10px;
+}
+
+.action-button {
+	background-image: none;
+    background: #1979c3;
+    border: 1px solid #1979c3;
+    border-radius: 3px;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    padding: 7px 15px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    margin-inline-start: 5px;
+    outline: none;
+}
+
+.action-button:hover {
+    background: #006bb4;
+    border: 1px solid #006bb4;
+    color: #ffffff;
+}
+
+.box-title {
+	margin-bottom: 10px;
+}
+
+.check-code-field {
+	display: inline-block;
+    background: #ffffff;
+    background-clip: padding-box;
+    border: 1px solid #c2c2c2;
+    border-radius: 1px;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    padding: 0 9px 0 35px;
+    vertical-align: baseline;
+    box-sizing: border-box;
+    width: 100%;
+    height: 34px;
+    outline: none;
+}
+
+.check-code-field:focus {
+	box-shadow: 0 0 3px 1px #00699d;
+}
+
+.message-container {
+	line-height: 25px;
+	font-size: 13px;
+	transition: max-height 0.35s ease-in-out;
+	overflow: hidden;
+}
+
+.message-success {
+	margin: 0 0 10px;
+    padding: 12px 20px 12px 45px;
+    display: block;
+    background: #e5efe5;
+    color: #006400;
+    position: relative;
+}
+
+.message-success td {
+	padding: unset !important;
+}
+
+.message-success td:nth-child(2n+1) {
+    width: 150px;
+}
+
+.message-error {
+	margin: 0 0 10px;
+    padding: 12px 20px 12px 45px;
+    display: block;
+    background: #fae5e5;
+    color: #e02b27;
+    position: relative;
+}
+
+.message-icon {
+	position: absolute;
+    left: 11.5px;
+}
+
+.action-buttons {
+	width: fit-content;
+	display: inline-flex;
+}
+
+.gift-code-input-field {
+	display: inline-block;
+}
+
+.gift-icon {
+	position: absolute;
+    margin: 7px 0px 0px 7px;
+	color: #c2c2c2;
+	height: 20px;
+	width: 20px;
+}
+
+.block-title {
+	font-size: 22px;
+	padding-bottom: 10px;
+	margin-bottom: 25px;
+	border-bottom: 1px solid #c6c6c6 
+}
+
+.block-gift-card table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+table > thead > tr > th, 
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 11px 10px;
+	text-align: left;
+}
+
+table tbody th {
+	font-weight: normal !important;
+}
+.block-gift-card > table tr,
+.block-content > table tbody tr {
+	border-bottom: 1px solid #cccccc
+}
+
+tbody tr:last-child {
+	border-bottom: none !important
+}
+
+.actions > a {
+	color: #006bb4;
+    text-decoration: none;
+}
+
+.actions > a:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.actions > a:active {
+    color: #ff5501;
+    text-decoration: underline;
+}
+
+.actions > a:not(:last-child):after {
+	border-left: 1px solid #a6a6a6;
+    content: '';
+    display: inline-block;
+    height: 14px;
+    margin: 0 10px;
+    vertical-align: -1px;
+}
+
+.notification-block {
+	padding-left: 25px;
+}
+
+.choice-field {
+	margin-bottom: 7px;
+}
+
+.choice-field > input {
+	margin: 2px 7px 0 0;
+}
+
+.overlay {
+	background-color: #373737;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: opacity 0.35s;
+}
+
+.modal-inner-wrap {
+	z-index: 901;
+	position: absolute;
+	display: block;
+	width: 75%;
+	background-color: #FFF;
+	margin: 5rem auto;
+	top: 0;
+	left: 12.5%;
+	transform: translateY(-1000px);
+	transition: transform 0.35s;
+    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.35);
+}
+
+.action-close {
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	outline: none;
+}
+
+.action-close > svg {
+	stroke-width: 1.1px;
+}
+
+.action-close:hover > svg {
+	stroke-width: 2px;
+}
+
+.modal-header {
+	padding: 30px 30px 12px;
+}
+
+.modal-header > h1 {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #cccccc
+}
+
+.modal-content {
+	padding: 0px 30px;
+}
+
+.gift-card-view-detail {
+	margin-inline-start: 50px;
+	margin-bottom: 20px;
+}
+
+.gift-card-view-detail > table tr  {
+	border-bottom: none
+}
+
+.table-gift-card-detail td:nth-child(2n+1) {
+    width: 150px;
+    font-weight: 600;
+} 
+
+.loading {
+    background: #fff;
+    opacity: 0.7;
+    z-index: 1;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading > img {
+    width: 80px;
+}

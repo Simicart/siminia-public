@@ -11,7 +11,14 @@ import LzL from 'src/simi/BaseComponents/LazyLoad';
 import './pagebuilder.css';
 
 const PageBuilderComponent = props => {
-    const { key, endPoint, maskedId, pageData, overRender, toPreview, layoutFilter=null } = props;
+    const {
+        endPoint,
+        maskedId,
+        pageData,
+        overRender,
+        toPreview,
+        layoutFilter = null
+    } = props;
     const history = useHistory();
     return (
         <PbComponent
@@ -32,7 +39,6 @@ const PageBuilderComponent = props => {
             )}
             CategoryScroll={CategoryScroll}
             Category={Category}
-            key={key}
             endPoint={endPoint}
             maskedId={maskedId}
             pageData={pageData}

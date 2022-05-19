@@ -26,6 +26,7 @@ import {
     UserCheck,
     Gift,
     HelpCircle,
+    CreditCard,
     Pocket, 
     Bell
 } from 'react-feather';
@@ -53,13 +54,23 @@ const signInRequired = [
     'Reward Points',
     'Product Alert'
 ];
+const giftCard = [
+    "My Gift Cards",
+];
 
 const MyAccountPage = props => {
     const classes = useStyle(defaultClasses, props.classes);
     const [{ isSignedIn }] = useUserContext();
     const { formatMessage } = useIntl();
     const orderSize = useRef();
-    const iconList = [
+    
+    const giftCardEnabled =
+        window.SMCONFIGS &&
+        window.SMCONFIGS.plugins &&
+        window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD &&
+        parseInt(window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD) === 1;
+
+    let iconList = [
         <Icon className={classes.icon} size={22} src={MapPin} />,
         <Icon className={classes.icon} size={22} src={Star} />,
         <Icon className={classes.icon} size={22} src={Heart} />,
@@ -71,6 +82,17 @@ const MyAccountPage = props => {
         <Icon className={classes.icon} size={22} src={Pocket} />,
         <Icon className={classes.icon} size={22} src={Bell} />
     ];
+
+    const giftCardIconList = [        
+        <Icon className={classes.icon} size={22} src={CreditCard} />,
+    ];
+
+    let mergeServicesList = [...servicesList]
+
+    if (giftCardEnabled) {
+        mergeServicesList = servicesList.concat(giftCard);
+        iconList = iconList.concat(giftCardIconList);
+    }
 
     const cleanCache = () => {
         CacheHelper.clearCaches();
@@ -157,7 +179,7 @@ const MyAccountPage = props => {
         // </div>
     );
 
-    const Services = servicesList.map((service, index) => {
+    const Services = mergeServicesList.map((service, index) => {
         const reformat =
             service !== 'Contact Us'
                 ? service.replace(/\s/g, '-')

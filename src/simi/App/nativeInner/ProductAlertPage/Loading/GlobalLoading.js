@@ -1,6 +1,6 @@
 import React from "react";
 import LoadingIndicator from "@magento/venia-ui/lib/components/LoadingIndicator/indicator";
-
+import Loader from '../../Loader'
 export const GlobalLoading = props => {
     const isLoading = (props ? (!!props.isLoading) : false)
 
@@ -21,7 +21,8 @@ export const GlobalLoading = props => {
             overflow: 'auto', /* Enable scroll if needed */
             backgroundColor: '#33333365', /* Fallback color */
         }}>
-            <LoadingIndicator global={true}/>
+            {/* <LoadingIndicator global={true}/> */}
+            <Loader />
         </div>
     )
 }

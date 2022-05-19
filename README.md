@@ -46,7 +46,6 @@ scripts (modify the build script and add Siminia scripts):
 cd  packages
 git clone https://github.com/Simicart/siminia-public siminia
 cd siminia
-git checkout 12.0/main
 cd ../..
 yarn install
 yarn run build
@@ -77,7 +76,7 @@ When you first login, select Magento as backend and PWA Studio as frontend.
 
 Go to **Integration** tab and click **Generate Token**. Then, copy the generated *Integration Token* to use in the next step.
 
-Open the file `packages/siminia/src/simi/App/core/NoMatch/index.js` && `packages/siminia/src/simi/App/native-inner/main/src/simi/App/nativeInner/NoMatch/index.js` and change the value at this line to the Integration Token you got in previous step
+Open the file `packages/siminia/src/simi/App/core/NoMatch/index.js` && `packages/siminia/src/simi/App/nativeInner/NoMatch/index.js` and change the value at this line to the Integration Token you got in previous step
 ```
 const integrationToken = 'your-token';
 ```

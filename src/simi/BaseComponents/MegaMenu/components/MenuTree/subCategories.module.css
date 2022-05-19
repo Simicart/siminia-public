@@ -1,0 +1,27 @@
+:root {
+  --am-mega-menu-columns-count: 4;
+}
+
+ul.root {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/*
+ * Desktop specific styles
+ */
+
+@media (min-width: 1025px) {
+  .level1 {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(var(--am-mega-menu-columns-count), auto);
+  }
+
+  .level2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
