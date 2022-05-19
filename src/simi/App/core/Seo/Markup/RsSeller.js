@@ -4,7 +4,6 @@ import Identify from 'src/simi/Helper/Identify';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { useStoreConfigData } from '../talons/useStoreConfigData';
-import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 
 /* 
 props: {
@@ -18,7 +17,7 @@ const RsSeller = props => {
         storeConfigLoading,
         derivedErrorMessage
     } = useStoreConfigData();
-    if (storeConfigLoading) return fullPageLoadingIndicator;
+    if (storeConfigLoading) return '';
     if (derivedErrorMessage) return <div>{derivedErrorMessage}</div>;
 
     const mageworx_seo =
