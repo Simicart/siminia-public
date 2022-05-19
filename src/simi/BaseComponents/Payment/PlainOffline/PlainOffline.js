@@ -61,6 +61,7 @@ const PlainOffline = props => {
 
     const {
         errors,
+        isVirtual,
         isBillingAddressSame,
         /**
          * `stepNumber` depicts the state of the process flow in credit card
@@ -135,7 +136,7 @@ const PlainOffline = props => {
                     classes={{ root: classes.formErrorContainer }}
                     errors={Array.from(errors.values())}
                 />
-                <div className={classes.address_check}>
+                {!isVirtual && <div className={classes.address_check}>
                     <Checkbox
                         field="isBillingAddressSame"
                         label={formatMessage({
@@ -145,7 +146,7 @@ const PlainOffline = props => {
                         })}
                         initialValue={initialValues.isBillingAddressSame}
                     />
-                </div>
+                </div>}
                 <div className={billingAddressFieldsClassName}>
                     <Field
                         id="firstName"

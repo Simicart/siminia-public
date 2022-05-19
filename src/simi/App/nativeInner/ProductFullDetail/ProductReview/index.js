@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle, forwardRef } from 'react';
+import React, { useState, useImperativeHandle, forwardRef, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { mergeClasses } from '@magento/venia-ui/lib/classify';
 import { useIntl } from 'react-intl';
@@ -24,9 +24,11 @@ const mageworxSeoEnabled =
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
 
 require('./productReview.scss');
+
 const ProductReview = forwardRef((props, ref) => {
     const { product, topInsets } = props;
     const history = useHistory();
+    const reviewPopupWrapperRef = useRef(null);
     const storeConfig = Identify.getStoreConfig();
     const enabledReview =
         storeConfig &&
@@ -64,6 +66,19 @@ const ProductReview = forwardRef((props, ref) => {
             togglePopup: togglePopup
         };
     });
+
+    const handleClickOutside = (event) => {
+        if (reviewPopupWrapperRef && reviewPopupWrapperRef.current && !reviewPopupWrapperRef.current.contains(event.target)) {
+            setIsOpen(false)
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+    }, [])
 
     const reviews =
         data && data.products.items[0] ? data.products.items[0].reviews : false;
@@ -130,7 +145,7 @@ const ProductReview = forwardRef((props, ref) => {
     const popupWriteReview = () => {
         let html = null;
         html = (
-            <div className={classes.mainPopup}>
+            <div className={classes.mainPopup} ref={reviewPopupWrapperRef}>
                 <div style={{height: topInsets}} />
                 <div className={classes.heading}>
                     <div className={classes.closeBtn}>

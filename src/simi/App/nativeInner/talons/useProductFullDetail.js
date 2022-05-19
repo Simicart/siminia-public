@@ -223,10 +223,6 @@ export const useProductFullDetail = props => {
         { error: errorAddingProductToCart, loading: isAddProductLoading}
     ] = useMutation(operations.addProductToCartMutation);
 
-    
-
-   
-
     const urlKey = product.url_key;
 
     // have to query separately because query depth exceed in original query
@@ -598,6 +594,7 @@ export const useProductFullDetail = props => {
             bundleOptions
         ]
     );
+
     const goToCartPage = () => {
         window.location.pathname = '/cart';
     };

@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correct tree 1`] = `
+<li
+  className="    "
+  style={
+    Object {
+      "--am-mega-menu-submenu-bg-color": undefined,
+      "--am-mega-menu-submenu-bg-image": undefined,
+      "--am-mega-menu-submenu-text-color": undefined,
+      "--am-mega-menu-text-hover-color": undefined,
+    }
+  }
+>
+  <MenuLink
+    isOpen={false}
+    isShowIcons={true}
+    level={1}
+    openCategoryIds={Set {}}
+  />
+  <SubMenuContent
+    classes={
+      Object {
+        "main": undefined,
+        "root": undefined,
+      }
+    }
+    isMobile={true}
+    level={1}
+    openCategoryIds={Set {}}
+  />
+</li>
+`;

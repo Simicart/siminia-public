@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correct tree 1`] = `
+<nav>
+  <ul>
+    <li>
+      <MenuLink
+        __typename="MenuCategoryItem"
+        classes={
+          Object {
+            "toggle": undefined,
+          }
+        }
+        id="category-node-11"
+        name="Bottoms"
+        onNavigate={[MockFunction onNavigate]}
+        parent_id={null}
+        toggleAction={[MockFunction setCategoryId]}
+        url="venia-bottoms.html"
+        view="hamburger"
+      />
+    </li>
+    <li>
+      <MenuLink
+        classes={
+          Object {
+            "toggle": undefined,
+          }
+        }
+        id="category-node-12"
+        name="Pants & Shorts"
+        onNavigate={[MockFunction onNavigate]}
+        parent_id="category-node-11"
+        toggleAction={[MockFunction setCategoryId]}
+        url="venia-bottoms/venia-pants.html"
+        view="hamburger"
+      />
+    </li>
+  </ul>
+</nav>
+`;
+
+exports[`renders without data 1`] = `null`;

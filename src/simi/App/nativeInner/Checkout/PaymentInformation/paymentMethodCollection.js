@@ -30,7 +30,7 @@ import {
     MyFatoorah
 } from 'src/simi/BaseComponents/Payment/PlainOffline';
 import { PaypalButtons } from 'src/simi/BaseComponents/Payment/PaypalButtons';
-import BrainTree from '@magento/venia-ui/lib/components/CheckoutPage/PaymentInformation/creditCard';
+import BrainTree from './creditCard';
 
 export default {
     braintree: BrainTree,

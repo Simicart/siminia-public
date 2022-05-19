@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correct tree 1`] = `
+<ul
+  className="  "
+  style={
+    Object {
+      "--am-mega-menu-columns-count": 4,
+    }
+  }
+>
+  <MenuItem
+    __typename="MenuCategoryItem"
+    id="category-node-11"
+    level={1}
+    name="Bottoms"
+    parent_id={null}
+    url="venia-bottoms.html"
+  />
+  <MenuItem
+    id="category-node-12"
+    level={1}
+    name="Pants & Shorts"
+    parent_id="category-node-11"
+    url="venia-bottoms/venia-pants.html"
+  />
+</ul>
+`;
+
+exports[`renders without data 1`] = `null`;

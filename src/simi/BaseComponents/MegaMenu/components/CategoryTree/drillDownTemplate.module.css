@@ -1,0 +1,17 @@
+.item {
+  composes: hamburger main from '../MenuTree/menuItem.module.css';
+}
+
+.toggle {
+  composes: toggle from '../MenuTree/menuLink.module.css';
+  transform: none;
+}
+
+.toggle svg {
+  width: initial !important;
+}
+
+.menuLink {
+  composes: menuLink from '../MenuTree/menuLink.module.css';
+  height: 3.5rem;
+}

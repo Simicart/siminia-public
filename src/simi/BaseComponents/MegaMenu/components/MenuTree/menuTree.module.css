@@ -1,0 +1,16 @@
+.root {
+  align-items: center;
+  align-self: center;
+  grid-column: 3 / 4;
+  grid-row: 1 / 1;
+  justify-content: center;
+  display: block;
+  color: rgb(var(--venia-global-color-text));
+  margin: 0;
+  background-color: #fff;
+}
+
+.topMenu.menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;}

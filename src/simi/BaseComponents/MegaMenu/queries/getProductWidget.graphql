@@ -1,0 +1,9 @@
+query geProductWidget($widgetId: Int!) {
+  amMegaMenuWidget(id: $widgetId) {
+    title
+    items {
+      id
+      name
+    }
+  }
+}

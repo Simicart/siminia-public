@@ -60,12 +60,12 @@ import PageBuilderComponent from '@simicart/siminia/src/simi/App/core/TapitaPage
 //store code
 import { BrowserPersistence } from '@magento/peregrine/lib/util';
 const storage = new BrowserPersistence();
+const storeCode = storage.getItem('store_view_code') || STORE_VIEW_CODE;
 
 const NoMatch = props => {
     const { location } = props;
     const pathname = location.pathname;
 
-    const storeCode = storage.getItem('store_view_code') || null;
     const pbFinderProps = usePbFinder({
         endPoint,
         integrationToken,

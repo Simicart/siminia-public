@@ -1,7 +1,7 @@
 import React, {Fragment, useCallback, useEffect, useRef, useState, Suspense} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Check} from 'react-feather';
-import {useCartPage} from '@magento/peregrine/lib/talons/CartPage/useCartPage';
+import {useCartPage} from 'src/simi/App/nativeInner/talons/CartPage/useCartPage';
 import {useStyle} from '@magento/venia-ui/lib/classify';
 import {useToasts} from '@magento/peregrine';
 import Icon from '@magento/venia-ui/lib/components/Icon';
@@ -46,6 +46,7 @@ const CartPage = props => {
     const talonProps = useCartPage();
     const {history} = props;
     const {
+        giftCardConfig,
         cartItems,
         hasItems,
         isCartUpdating,
@@ -54,6 +55,7 @@ const CartPage = props => {
         setIsCartUpdating: _setIsCartUpdating,
         shouldShowLoadingIndicator,
         wishlistSuccessProps,
+        refetchCartPage
     } = talonProps;
     
 
@@ -106,6 +108,8 @@ const CartPage = props => {
         return fullPageLoadingIndicator;
     }
 
+    console.log(cartItems)
+
     const productListing = hasItems ? (
         <ProductListingWithBrandSeparation
             onAddToWishlistSuccess={onAddToWishlistSuccess}
@@ -131,7 +135,10 @@ const CartPage = props => {
 
     const priceAdjustments = hasItems ? (
         <PriceAdjustments setIsCartUpdating={setIsCartUpdating}
-                          makeNotification={makeNotification}/>
+                          makeNotification={makeNotification}
+                          giftCardConfig={giftCardConfig} 
+                          refetchCartPage={refetchCartPage}
+        />
     ) : null;
 
     const priceSummary = hasItems ? (
@@ -250,7 +257,7 @@ const CartPage = props => {
     );
 };
 
-const CoreCartPage = React.lazy(() => import('src/simi/App/core/Cart'))
+const CoreCartPage = React.lazy(() => import('../CartCore'))
 
 const HOCartPage = props => {
     const windowSize = useWindowSize();

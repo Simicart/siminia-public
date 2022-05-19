@@ -1,0 +1,72 @@
+.root {
+  display: none;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.top {
+  flex-direction: column;
+}
+
+.sidebar {
+  width: 100%;
+  max-width: 50vw;
+  position: relative;
+  padding-right: 1rem;
+}
+
+.categories {
+  display: block;
+}
+
+.top > .categories {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.top > .categories > .categoriesItem {
+  margin-right: 1rem;
+}
+
+.hideCategories > .categories {
+  display: none;
+}
+
+.child {
+  display: block;
+}
+
+.left > .categories {
+  padding-right: 1rem;
+  margin-right: 1rem;
+}
+
+.left > .categories + .sidebar > .blockChild:before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 100%;
+  left: -1rem;
+  position: absolute;
+  background-color: rgba(var(--am-mega-menu-text-color) / 0.2);
+}
+
+.top > .categories + .sidebar > .blockChild {
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.top > .categories + .sidebar > .blockChild:before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  top: 1rem;
+  position: absolute;
+  background-color: rgba(var(--am-mega-menu-text-color) / 0.2);
+}

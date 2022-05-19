@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correct link 1`] = `
+<div
+  className="  "
+>
+  <mock-Link>
+    <span>
+      bottoms
+    </span>
+    <span
+      style={
+        Object {
+          "--am-mega-menu-label-bg": "#000",
+          "--am-mega-menu-label-color": "#fff",
+        }
+      }
+    >
+      Sale
+    </span>
+  </mock-Link>
+  <ToggleTrigger
+    action={[Function]}
+    isOpen={false}
+  />
+</div>
+`;
+
+exports[`renders without icon 1`] = `
+<div
+  className="  "
+>
+  <mock-Link>
+    <span>
+      bottoms
+    </span>
+    <span
+      style={
+        Object {
+          "--am-mega-menu-label-bg": "#000",
+          "--am-mega-menu-label-color": "#fff",
+        }
+      }
+    >
+      Sale
+    </span>
+  </mock-Link>
+  <ToggleTrigger
+    action={[Function]}
+    isOpen={false}
+  />
+</div>
+`;
+
+exports[`renders without label 1`] = `
+<div
+  className="  "
+>
+  <mock-Link>
+    <span>
+      bottoms
+    </span>
+  </mock-Link>
+  <ToggleTrigger
+    action={[Function]}
+    isOpen={false}
+  />
+</div>
+`;
+
+exports[`renders without toggle btn 1`] = `
+<div
+  className="  "
+>
+  <mock-Link>
+    <span>
+      bottoms
+    </span>
+    <span
+      style={
+        Object {
+          "--am-mega-menu-label-bg": "#000",
+          "--am-mega-menu-label-color": "#fff",
+        }
+      }
+    >
+      Sale
+    </span>
+  </mock-Link>
+</div>
+`;

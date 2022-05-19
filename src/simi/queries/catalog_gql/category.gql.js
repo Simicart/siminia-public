@@ -5,11 +5,18 @@ const productLabelEnabled =
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL) === 1;
+
 const callForPriceEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_CALL_FOR_PRICE &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_CALL_FOR_PRICE) === 1;
+
+const giftCardEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD) === 1;
 
 export const CallForPriceFragment = callForPriceEnabled
     ? gql`
@@ -80,6 +87,22 @@ export const ProductLabelFragment = productLabelEnabled
           }
       `;
 
+export const GiftCardFragment = giftCardEnabled 
+    ? gql`
+        fragment GiftCardFragment on MpGiftCardProduct {
+            allow_amount_range
+            gift_card_amounts
+            max_amount
+            min_amount
+            price_rate
+        }
+    `
+    : gql`
+        fragment GiftCardFragment on ProductInterface {
+            sku
+        }   
+`;
+
 export const getCateNoFilter = gql`
     query getCateNoFilter(
         $id: Int
@@ -113,6 +136,7 @@ export const getCateNoFilter = gql`
                 ...CallForPriceFragment
                 ...ProductOfListFragment
                 ...ProductLabelFragment
+                ...GiftCardFragment
             }
             page_info {
                 total_pages
@@ -123,6 +147,7 @@ export const getCateNoFilter = gql`
     ${ProductLabelFragment}
     ${CategoryFragment}
     ${CallForPriceFragment}
+    ${GiftCardFragment}
     ${ProductOfListFragment}
 `;
 

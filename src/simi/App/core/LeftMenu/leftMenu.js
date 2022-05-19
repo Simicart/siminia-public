@@ -15,6 +15,7 @@ import {
     CheckCircle,
     DollarSign,
     Gift,
+    CreditCard,
     Bell
 } from "react-feather";
 import Icon from "@magento/venia-ui/lib/components/Icon";
@@ -29,6 +30,11 @@ const LeftMenu = (props) => {
         window.SMCONFIGS.plugins &&
         window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
         parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
+    const giftCardEnabled =
+        window.SMCONFIGS &&
+        window.SMCONFIGS.plugins &&
+        window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD &&
+        parseInt(window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD) === 1;
 
     let listMenuContent = [
         "Order History",
@@ -41,7 +47,13 @@ const LeftMenu = (props) => {
         "Account Subcriptions",
         "Product Alert"
     ];
-    const rewardMenuContent = ["Reward Points", "Reward Transactions"];
+    const rewardMenuContent = [
+        "Reward Points",
+         "Reward Transactions"
+    ];
+    const giftCardContent = [
+        "My Gift Cards",
+    ];
     let iconList = [
         <Icon className={classes.icon} size={22} src={Trello} />,
         <Icon className={classes.icon} size={22} src={Heart} />,
@@ -57,11 +69,17 @@ const LeftMenu = (props) => {
         <Icon className={classes.icon} size={22} src={DollarSign} />,
         <Icon className={classes.icon} size={22} src={Gift} />
     ];
+    const giftCardIconList = [        
+        <Icon className={classes.icon} size={22} src={CreditCard} />,
+    ];
     if (rewardPointEnabled) {
         listMenuContent = listMenuContent.concat(rewardMenuContent);
         iconList = iconList.concat(rewardIconList);
     }
-
+    if (giftCardEnabled) {
+        listMenuContent = listMenuContent.concat(giftCardContent);
+        iconList = iconList.concat(giftCardIconList);
+    }
     const MenuItems = listMenuContent.map((item, index) => {
         const reformat = item.replace(/\s/g, "-");
         const urlText = reformat.toLowerCase();

@@ -1,0 +1,90 @@
+:root {
+  --am-mega-menu-root-bg: var(--venia-global-color-gray-50);
+  --am-mega-menu-toggle-color: var(--venia-global-color-text);
+  --am-mega-menu-text-color: var(--venia-global-color-text);
+  --am-mega-menu-toggle-display: grid;
+  --am-mega-menu-position: sticky;
+}
+
+.root {
+  background-color: rgb(var(--venia-global-color-gray-50));
+  box-shadow: 0 2px rgb(var(--venia-global-color-gray-100));
+  display: grid;
+  grid-auto-columns: 100%;
+  justify-items: center;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  --header-height: 5rem;
+  position: var(--am-mega-menu-position);
+}
+
+.open {
+  composes: root;
+}
+
+.closed {
+  composes: root;
+}
+
+.toolbar {
+  z-index: 3;
+  align-content: center;
+  align-items: center;
+  display: grid;
+  grid-template-areas: 'primary title secondary';
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 3rem;
+  justify-items: center;
+  max-width: var(--venia-global-maxWidth);
+  min-height: var(--venia-global-header-minHeight);
+  padding: 0 0.5rem;
+  width: 100%;
+}
+
+.primaryActions {
+  grid-area: primary;
+  justify-self: start;
+  grid-auto-flow: column;
+  align-items: center;
+  --venia-global-color-text: var(--am-mega-menu-toggle-color);
+  display: var(--am-mega-menu-toggle-display);
+}
+
+.secondaryActions {
+  composes: secondaryActions from '~@magento/venia-ui/lib/components/Header/header.module.css';
+}
+
+/*
+ * Desktop specific styles
+ */
+
+@media (min-width: 1024px) {
+  .root {
+    background-color: rgb(var(--am-mega-menu-root-bg));
+    background-image: var(--am-mega-menu-root-bg);
+  }
+
+  .open,
+  .closed {
+    composes: root;
+  }
+
+  .logoContainer {
+    grid-column: 2 / 2;
+  }
+
+  .primaryActions button {
+    --venia-global-color-text: var(--am-mega-menu-toggle-color);
+    display: inline-flex;
+  }
+
+  .toolbar {
+    grid-template-columns: auto auto 4fr 1fr;
+    justify-items: start;
+  }
+
+  .secondaryActions button {
+    --venia-global-color-text: var(--am-mega-menu-text-color);
+  }
+}

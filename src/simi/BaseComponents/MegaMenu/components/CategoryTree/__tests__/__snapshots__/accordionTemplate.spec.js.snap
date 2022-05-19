@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correct tree 1`] = `
+<MenuTree
+  menuTree={
+    Array [
+      Object {
+        "__typename": "MenuCategoryItem",
+        "id": "category-node-11",
+        "name": "Bottoms",
+        "parent_id": null,
+        "url": "venia-bottoms.html",
+      },
+      Object {
+        "id": "category-node-12",
+        "name": "Pants & Shorts",
+        "parent_id": "category-node-11",
+        "url": "venia-bottoms/venia-pants.html",
+      },
+    ]
+  }
+  view="hamburger"
+/>
+`;
+
+exports[`renders without data 1`] = `null`;

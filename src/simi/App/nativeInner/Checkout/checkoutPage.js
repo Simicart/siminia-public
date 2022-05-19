@@ -8,7 +8,7 @@ import { useWindowSize, useToasts } from '@magento/peregrine';
 import {
     CHECKOUT_STEP,
     useCheckoutPage
-} from '@magento/peregrine/lib/talons/CheckoutPage/useCheckoutPage';
+} from 'src/simi/App/nativeInner/talons/CheckoutPage/useCheckoutPage';
 
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Button from '@magento/venia-ui/lib/components/Button';
@@ -60,6 +60,7 @@ const CheckoutPage = props => {
          * Enum, one of:
          * SHIPPING_ADDRESS, SHIPPING_METHOD, PAYMENT, REVIEW
          */
+        isVirtual,
         activeContent,
         availablePaymentMethods,
         cartItems,
@@ -245,7 +246,7 @@ const CheckoutPage = props => {
         ) : null;
 
         const shippingMethodSection =
-            checkoutStep >= CHECKOUT_STEP.SHIPPING_METHOD ? (
+            checkoutStep >= CHECKOUT_STEP.SHIPPING_METHOD && !isVirtual ? (
                 <>
                     <ShippingMethod
                         pageIsUpdating={isUpdating}
@@ -463,7 +464,7 @@ const CheckoutPage = props => {
                     {!isMobile && <h1 className={classes.heading}>{headerText}</h1>}
                 </div>
                 {signInContainerElement}
-                <div className={classes.shipping_information_container}>
+                {!isVirtual && <div className={classes.shipping_information_container}>
                     <ScrollAnchor ref={shippingInformationRef}>
                         <ShippingInformation
                             onSave={setShippingInformationDone}
@@ -472,12 +473,12 @@ const CheckoutPage = props => {
                             isMobile={isMobile}
                         />
                     </ScrollAnchor>
-                </div>
-                <div className={classes.shipping_method_container}>
+                </div>}
+                {!isVirtual && <div className={classes.shipping_method_container}>
                     <ScrollAnchor ref={shippingMethodRef}>
                         {shippingMethodSection}
                     </ScrollAnchor>
-                </div>
+                </div>}
                 <div className={classes.payment_information_container}>
                     {paymentInformationSection}
                 </div>
