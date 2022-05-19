@@ -4,7 +4,6 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import Robots from './Robots';
 import { useStoreConfigData } from './talons/useStoreConfigData';
-import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 
 const Canonical = props => {
     const {
@@ -14,7 +13,9 @@ const Canonical = props => {
     } = useStoreConfigData();
 
     const mageworx_seo =
-        storeConfigData && storeConfigData.storeConfig && storeConfigData.storeConfig.mageworx_seo
+        storeConfigData &&
+        storeConfigData.storeConfig &&
+        storeConfigData.storeConfig.mageworx_seo
             ? storeConfigData.storeConfig.mageworx_seo
             : '';
     let seo;
@@ -101,9 +102,8 @@ const Canonical = props => {
         link += '/';
     }
 
-    if (storeConfigLoading) return fullPageLoadingIndicator;
-    if (derivedErrorMessage) return <div>{derivedErrorMessage}</div>;
-
+    if (storeConfigLoading) return '';
+    if (derivedErrorMessage) return '';
     if (!link) return null;
 
     return (

@@ -31,25 +31,25 @@ const ProductLabel = props => {
                 if (item.same != 0) {
                     src = item.label_template;
                     styles = JSON.parse(item.list_position);
-                    styleLabel = parseFloat(
-                        item.list_css.split('rotate(')[1].split('de')
-                    );
+                    styleLabel = item.list_css
+                        ? parseFloat(
+                              item.list_css.split('rotate(')[1].split('de')
+                          )
+                        : 0;
                     positionGrid = item.list_position_grid;
                     labelText = item.label;
                     listFrontSize = item.list_font_size;
                     LabelFrontSize = parseInt(item.label_font_size);
                 } else {
                     src = label_tyle ? item.list_template : item.label_template;
+                    const list_css = item.list_css || '';
+                    const label_css = item.label_css || '';
                     styles = label_tyle
                         ? JSON.parse(item.list_position)
                         : JSON.parse(item.label_position);
                     styleLabel = label_tyle
-                        ? parseFloat(
-                              item.list_css.split('rotate(')[1].split('de')
-                          )
-                        : parseFloat(
-                              item.label_css.split('rotate(')[1].split('de')
-                          );
+                        ? parseFloat(list_css.split('rotate(')[1].split('de'))
+                        : parseFloat(label_css.split('rotate(')[1].split('de'));
                     positionGrid = label_tyle
                         ? item.list_position_grid
                         : item.label_position_grid;
@@ -115,7 +115,7 @@ const ProductLabel = props => {
                             case 'tc':
                                 position = {
                                     top: 0,
-                                    left: `calc(50% - ${width/2}px)`,
+                                    left: `calc(50% - ${width / 2}px)`,
                                     zIndex: index + 2,
                                     height: height,
                                     width: width,
@@ -219,7 +219,7 @@ const ProductLabel = props => {
                                 positionText = {
                                     top: topTextDT,
                                     left: leftTextDT,
-                                    zIndex: index+3,
+                                    zIndex: index + 3,
                                     color: labelColor,
                                     fontSize: 17,
                                     transform: `rotate(${styleLabel}deg)`,
@@ -229,7 +229,7 @@ const ProductLabel = props => {
                             case 'bc':
                                 position = {
                                     top: `calc((100% - ${height}px - 20px))`,
-                                    left:  `calc(50% - ${height / 2}px)`,
+                                    left: `calc(50% - ${height / 2}px)`,
                                     zIndex: index + 2,
                                     height: height,
                                     width: width,
@@ -248,7 +248,7 @@ const ProductLabel = props => {
                             case 'br':
                                 position = {
                                     top: `calc((100% - ${height}px - 20px))`,
-                                    left:  `calc(100% - ${height}px)`,
+                                    left: `calc(100% - ${height}px)`,
                                     zIndex: index + 2,
                                     height: height,
                                     width: width,
@@ -289,7 +289,7 @@ const ProductLabel = props => {
                             case 'tc':
                                 position = {
                                     top: 0,
-                                    left: `calc(50% - ${width/2}px)`,
+                                    left: `calc(50% - ${width / 2}px)`,
                                     zIndex: index + 2,
                                     height: height,
                                     width: width,
@@ -393,7 +393,7 @@ const ProductLabel = props => {
                                 positionText = {
                                     top: topTextDT,
                                     left: leftTextDT,
-                                    zIndex: index+3,
+                                    zIndex: index + 3,
                                     color: labelColor,
                                     fontSize: 17,
                                     transform: `rotate(${styleLabel}deg)`,
@@ -403,7 +403,7 @@ const ProductLabel = props => {
                             case 'bc':
                                 position = {
                                     top: `calc((100% - ${height}px - 20px))`,
-                                    left:  `calc(50% - ${height / 2}px)`,
+                                    left: `calc(50% - ${height / 2}px)`,
                                     zIndex: index + 2,
                                     height: height,
                                     width: width,
@@ -422,7 +422,7 @@ const ProductLabel = props => {
                             case 'br':
                                 position = {
                                     top: `calc((100% - ${height}px - 20px))`,
-                                    left:  `calc(100% - ${height}px)`,
+                                    left: `calc(100% - ${height}px)`,
                                     zIndex: index + 2,
                                     height: height,
                                     width: width,

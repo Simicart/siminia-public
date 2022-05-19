@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { useStoreConfigData } from '../talons/useStoreConfigData';
-import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 
 /* 
 props: {
@@ -49,8 +48,8 @@ const Page = props => {
         htmlTag.setAttribute('prefix', 'og: http://ogp.me/ns#');
     }
 
-    if (storeConfigLoading) return fullPageLoadingIndicator;
-    if (derivedErrorMessage) return <div>{derivedErrorMessage}</div>;
+    if (storeConfigLoading) return '';
+    if (derivedErrorMessage) return '';
     if (page && page instanceof Object) {
         const {
             meta_description,
