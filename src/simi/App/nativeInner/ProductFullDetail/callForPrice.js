@@ -218,7 +218,7 @@ const CallForPrice = props => {
                     {callForPriceRule.button_label}
                 </div>
             );
-        } else return '';
+        } else return wrapperPrice;
     };
 
     return (
