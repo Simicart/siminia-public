@@ -12,9 +12,11 @@ import Card from './card';
 import defaultClasses from './shippingInformation.module.css';
 import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
 
-import Loader from 'src/simi/App/nativeInner/Loader'
+import Loader from 'src/simi/App/nativeInner/Loader';
 
-const EditModal = React.lazy(() => import('@magento/venia-ui/lib/components/CheckoutPage/ShippingInformation/editModal'));
+const EditModal = React.lazy(() =>
+    import('@magento/venia-ui/lib/components/CheckoutPage/ShippingInformation/editModal')
+);
 
 const ShippingInformation = props => {
     const {
@@ -46,10 +48,8 @@ const ShippingInformation = props => {
         : classes.root;
 
     if (isLoading) {
-        if(isMobile) {   
-            return (
-                <Loader />
-            );
+        if (isMobile) {
+            return <Loader />;
         }
 
         return (
@@ -59,14 +59,19 @@ const ShippingInformation = props => {
                     defaultMessage={'Fetching Shipping Information...'}
                 />
             </LoadingIndicator>
-        )
+        );
     }
-
-    console.log(classes.root_editModal)
 
     const editModal = !isSignedIn ? (
         <Suspense fallback={null}>
-            <EditModal onSuccess={onSuccess} shippingData={shippingData}  classes={{ root: classes.root_editModal, root_open: classes.root_editModal_open }} />
+            <EditModal
+                onSuccess={onSuccess}
+                shippingData={shippingData}
+                classes={{
+                    root: classes.root_editModal,
+                    root_open: classes.root_editModal_open
+                }}
+            />
         </Suspense>
     ) : null;
 

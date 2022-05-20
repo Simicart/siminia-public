@@ -18,7 +18,6 @@ import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import { useMutation } from '@apollo/client';
 import Loader from '../Loader';
 
-
 const AddressBookPage = props => {
     const talonProps = useAddressBookPage();
     const windowSize = useWindowSize();
@@ -59,7 +58,6 @@ const AddressBookPage = props => {
             topInsets = parseInt(simpifyRNinsets.top);
         }
     } catch (err) {}
-
 
     const { formatMessage } = useIntl();
     const classes = useStyle(defaultClasses, props.classes);
@@ -103,43 +101,39 @@ const AddressBookPage = props => {
             return 0;
         };
 
-        return (
-            Array.from(customerAddresses)
-                .sort(defaultToBeginning)
-                .map((addressEntry, index) => {
-                    const countryName = countryDisplayNameMap.get(
-                        addressEntry.country_code
-                    );
+        return Array.from(customerAddresses)
+            .sort(defaultToBeginning)
+            .map((addressEntry, index) => {
+                const countryName = countryDisplayNameMap.get(
+                    addressEntry.country_code
+                );
 
-                    
-                    const boundEdit = () => handleEditAddress(addressEntry);
-                    const boundDelete = () =>
-                        handleDeleteAddress(addressEntry.id);
-                    const isConfirmingDelete =
-                        confirmDeleteAddressId === addressEntry.id;
+                const boundEdit = () => handleEditAddress(addressEntry);
+                const boundDelete = () => handleDeleteAddress(addressEntry.id);
+                const isConfirmingDelete =
+                    confirmDeleteAddressId === addressEntry.id;
 
-                    return (
-                        <div className={classes.addAddressWrapper}>
-                            <AddressCard
-                                address={addressEntry}
-                                countryName={countryName}
-                                isConfirmingDelete={isConfirmingDelete}
-                                isDeletingCustomerAddress={
-                                    isDeletingCustomerAddress
-                                }
-                                key={addressEntry.id}
-                                onCancelDelete={handleCancelDeleteAddress}
-                                onConfirmDelete={handleConfirmDeleteAddress}
-                                onDelete={boundDelete}
-                                onEdit={boundEdit}
-                                setDefaultShipping={setDefault}
-                                indexAddress={index}
-                                isPhone={isPhone}
-                            />
-                        </div>
-                    );
-                })
-        );
+                return (
+                    <div className={classes.addAddressWrapper}>
+                        <AddressCard
+                            address={addressEntry}
+                            countryName={countryName}
+                            isConfirmingDelete={isConfirmingDelete}
+                            isDeletingCustomerAddress={
+                                isDeletingCustomerAddress
+                            }
+                            key={addressEntry.id}
+                            onCancelDelete={handleCancelDeleteAddress}
+                            onConfirmDelete={handleConfirmDeleteAddress}
+                            onDelete={boundDelete}
+                            onEdit={boundEdit}
+                            setDefaultShipping={setDefault}
+                            indexAddress={index}
+                            isPhone={isPhone}
+                        />
+                    </div>
+                );
+            });
     }, [
         confirmDeleteAddressId,
         countryDisplayNameMap,
@@ -152,7 +146,6 @@ const AddressBookPage = props => {
         isDefault,
         handleSetDefaultShipping
     ]);
-    console.log('hieubach', customerAddresses);
 
     if (isLoading) {
         return <Loader />;
@@ -191,7 +184,10 @@ const AddressBookPage = props => {
                                 />
                                 <span>
                                     {/* No address. Please accept your address */}
-                                    {formatMessage({id:'You have no item in your address book'})}
+                                    {formatMessage({
+                                        id:
+                                            'You have no item in your address book'
+                                    })}
                                 </span>
                             </div>
                         )}
@@ -206,14 +202,14 @@ const AddressBookPage = props => {
                     isOpen={isDialogOpen}
                     onCancel={handleCancelDialog}
                     onConfirm={handleConfirmDialog}
-                    topInsets ={topInsets}
+                    topInsets={topInsets}
                 />
             </div>
             {isPhone ? (
                 <div
                     onClick={handleAddAddress}
                     className={classes.addAddressMb}
-                    style={{height: 55+ bottomInsets}}
+                    style={{ height: 55 + bottomInsets }}
                 >
                     {formatMessage({
                         id: 'Add new address',

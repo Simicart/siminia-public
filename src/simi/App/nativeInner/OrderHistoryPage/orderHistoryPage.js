@@ -29,7 +29,6 @@ const errorIcon = (
 );
 
 const OrderHistoryPage = props => {
-    // console.log("paosdo",props.location);
     const [currentPage, setCurrentPage] = useState(1);
     const talonProps = useOrderHistoryPage(currentPage);
     const {

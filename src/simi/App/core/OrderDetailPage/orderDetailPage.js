@@ -70,16 +70,13 @@ const OrderDetailPage = props => {
             </div>
         );
     }
-    console.log('testtt', dataDetail);
 
     const { customer } = dataDetail;
     const listItem = customer.orders.items[0].items;
     const subTotal = customer.orders.items[0].total.subtotal.value;
     const grandTotal = customer.orders.items[0].total.base_grand_total.value;
     const mpRewardPoints = customer.orders.items[0].mp_reward_points;
-    console.log(mpRewardPoints);
     const status = customer.orders.items[0].status;
-    console.log('dataDetailaa', customer);
 
     const dateFormat = date => {
         const mystring = date;
@@ -91,8 +88,6 @@ const OrderDetailPage = props => {
         const arrayStrig = mystring.split(' ');
         return arrayStrig[1];
     };
-
-    // console.log("date",dateFormat(customer.orders.items[0].order_date ));
 
     const forMatCurrentValue = value => {
         if (value == 'USD') {
@@ -451,7 +446,6 @@ const OrderDetailPage = props => {
         );
         return html;
     };
-    // console.log('dataDetail', customer.orders.items[0].billing_address);
 
     if (width > 767) {
         return (

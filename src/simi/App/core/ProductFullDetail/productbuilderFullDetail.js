@@ -188,7 +188,6 @@ const ProductBuilderFullDetail = props => {
     }
 
     const pDetails = JSON.parse(JSON.stringify(product));
-    // console.log('pdetail', pDetails);
     const overRender = (item, itemProps, innerContent) => {
         if (!item || !itemProps || !productDetails) return false;
         const { type } = item;

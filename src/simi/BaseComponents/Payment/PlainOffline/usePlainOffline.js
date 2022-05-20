@@ -92,7 +92,7 @@ export const usePlainOffline = props => {
         getIsBillingAddressSameQuery,
         { skip: !cartId, variables: { cartId } }
     );
-    console.log(isBillingAddressSameData)
+
     const [
         updateBillingAddress,
         {
@@ -111,19 +111,28 @@ export const usePlainOffline = props => {
         }
     ] = useMutation(setOfflinePaymentOnCartMutation);
 
-    const shippingAddressCountry = shippingAddressData && shippingAddressData.cart && shippingAddressData.cart.shippingAddress && shippingAddressData.cart.shippingAddress.length > 0
-        ? shippingAddressData.cart.shippingAddresses[0].country.code
-        : DEFAULT_COUNTRY_CODE;
+    const shippingAddressCountry =
+        shippingAddressData &&
+        shippingAddressData.cart &&
+        shippingAddressData.cart.shippingAddress &&
+        shippingAddressData.cart.shippingAddress.length > 0
+            ? shippingAddressData.cart.shippingAddresses[0].country.code
+            : DEFAULT_COUNTRY_CODE;
     const isBillingAddressSame = formState.values.isBillingAddressSame;
 
     const isVirtual = useMemo(() => {
-        return (isBillingAddressSameData && isBillingAddressSameData.cart.is_virtual) || false;
-    }, [isBillingAddressSameData])
+        return (
+            (isBillingAddressSameData &&
+                isBillingAddressSameData.cart.is_virtual) ||
+            false
+        );
+    }, [isBillingAddressSameData]);
 
     const initialValues = useMemo(() => {
-        const isBillingAddressSame = isBillingAddressSameData && !isVirtual
-            ? isBillingAddressSameData.cart.isBillingAddressSame
-            : false;
+        const isBillingAddressSame =
+            isBillingAddressSameData && !isVirtual
+                ? isBillingAddressSameData.cart.isBillingAddressSame
+                : false;
 
         let billingAddress = {};
         /**

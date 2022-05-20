@@ -89,7 +89,6 @@ const OrderHistoryPageMb = props => {
         return null;
     };
 
-    console.log('orderrr', orders);
     return (
         <>
             <div className={classes.mbHeading}>

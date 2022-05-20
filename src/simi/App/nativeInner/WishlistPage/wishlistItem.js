@@ -82,47 +82,59 @@ const WishlistItem = props => {
         });
     }, [classes.option, configurableOptions]);
 
-    let price = <Price currencyCode={currency} value={unitPrice} />
-    if(__typename === 'MpGiftCardWishlistItem') {
-        const { information, min_amount, max_amount, price_rate } = product
-        if(information && information.amounts && information.amounts.length > 0) {
+    let price = <Price currencyCode={currency} value={unitPrice} />;
+    if (__typename === 'MpGiftCardWishlistItem') {
+        const { information, min_amount, max_amount, price_rate } = product;
+        if (
+            information &&
+            information.amounts &&
+            information.amounts.length > 0
+        ) {
+            let min_price = (min_amount * price_rate) / 100;
+            let max_price = (max_amount * price_rate) / 100;
 
-            let min_price = min_amount*price_rate/100
-            let max_price = max_amount*price_rate/100
-        
             let giftCardPrices = [];
-            if(information && information.amounts && information.amounts.length > 0) {
-                information.amounts.map(({price}) => {             
-                    giftCardPrices.push(price)
-                })
-                giftCardPrices.sort((a, b) => {return a-b})
-                min_price = min_price > 0 && min_price < giftCardPrices[0] ? min_price : giftCardPrices[0]
-                max_price = max_price > 0 && max_price > giftCardPrices[giftCardPrices.length - 1] ? max_price : giftCardPrices[giftCardPrices.length - 1]
+            if (
+                information &&
+                information.amounts &&
+                information.amounts.length > 0
+            ) {
+                information.amounts.map(({ price }) => {
+                    giftCardPrices.push(price);
+                });
+                giftCardPrices.sort((a, b) => {
+                    return a - b;
+                });
+                min_price =
+                    min_price > 0 && min_price < giftCardPrices[0]
+                        ? min_price
+                        : giftCardPrices[0];
+                max_price =
+                    max_price > 0 &&
+                    max_price > giftCardPrices[giftCardPrices.length - 1]
+                        ? max_price
+                        : giftCardPrices[giftCardPrices.length - 1];
             }
 
-            if(min_price !== max_price) {
+            if (min_price !== max_price) {
                 price = (
                     <div className={classes['giftcard-prices-wrapper']}>
-                        From: <span className={classes['giftcard-prices']}>
-                            <Price
-                                value={min_price}
-                                currencyCode={currency}
-                            />
+                        From:{' '}
+                        <span className={classes['giftcard-prices']}>
+                            <Price value={min_price} currencyCode={currency} />
                         </span>
-                        <br/>
-                        To: <span className={classes['giftcard-prices']}>
-                            <Price
-                                value={max_price}
-                                currencyCode={currency}
-                            />
+                        <br />
+                        To:{' '}
+                        <span className={classes['giftcard-prices']}>
+                            <Price value={max_price} currencyCode={currency} />
                         </span>
                     </div>
-                )
+                );
             } else {
-                price = <Price value={min_price} currencyCode={currency}/>
+                price = <Price value={min_price} currencyCode={currency} />;
             }
         }
-    } 
+    }
 
     const imageProps = {
         classes: {
@@ -152,7 +164,7 @@ const WishlistItem = props => {
                         defaultMessage: 'Add to Cart'
                     })
                 ) : (
-                    <FiShoppingCart size={20}/>
+                    <FiShoppingCart size={20} />
                 )}
             </button>
         ) : (
@@ -185,9 +197,7 @@ const WishlistItem = props => {
                     text: 'I shared this content via my mobile',
                     url: `/${product.url_key}${product.url_suffix}`
                 })
-                .then(() => {
-                    console.log('Successfully shared');
-                })
+                .then(() => {})
                 .catch(error => {
                     console.error(
                         'Something went wrong sharing the blog',
@@ -195,9 +205,6 @@ const WishlistItem = props => {
                     );
                 });
         } else {
-            console.log(
-                'Web share is currently not supported on this browser. Please provide a callback'
-            );
         }
     };
     return (
@@ -235,9 +242,7 @@ const WishlistItem = props => {
             </button>
             <div className={classes.actionWrap}>
                 <span className={classes.name}>{name}</span>{' '}
-                <div className={classes.priceContainer}>
-                    {price}
-                </div>
+                <div className={classes.priceContainer}>{price}</div>
                 {optionElements}
             </div>
             <div className={classes.wrapSocialShare}>
@@ -246,7 +251,7 @@ const WishlistItem = props => {
                         onClick={handleShareMobile}
                         className={classes.share}
                     >
-                        <BsFillShareFill size={20}/>
+                        <BsFillShareFill size={20} />
                     </button>
                 ) : (
                     <>

@@ -4,7 +4,7 @@ import { configColor } from 'src/simi/Config';
 import PropTypes from 'prop-types';
 import { mergeClasses } from 'src/classify';
 import Price from './Price';
-import { Price as CorePrice} from '@magento/peregrine';
+import { Price as CorePrice } from '@magento/peregrine';
 import { prepareProduct } from 'src/simi/Helper/Product';
 import { Link } from 'src/drivers';
 import LazyLoad from 'src/simi/BaseComponents/LazyLoad';
@@ -27,9 +27,7 @@ import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToList
 import ProductLabel from '../../../App/core/ProductFullDetail/ProductLabel';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import CallForPrice from '../ProductFullDetail/callForPrice';
-// const AddToListButton = React.lazy(() =>
-//     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
-// );
+
 const HeartIcon = <Icon size={20} src={Heart} />;
 
 const Griditem = props => {
@@ -61,48 +59,61 @@ const Griditem = props => {
         gift_card_amounts,
         __typename
     } = item;
-    
+
     const callForPriceRule = item.mp_callforprice_rule;
 
-    // console.log('itemee', callForPriceRule);
     const product_url = `/${url_key}${productUrlSuffix()}`;
     // const imageWidth = document.querySelector("#product-image-label").offsetWidth
 
     //if uncomment this - should comment out useDelayedTransition() at src/simi/app.js
     //saveDataToUrl(product_url, item);
-    let priceComponent = <Price prices={price} type={type_id} classes={itemClasses} />
-    if(__typename === 'MpGiftCardProduct') {
-        let min_price = item.min_amount*price_rate/100
-        let max_price = item.max_amount*price_rate/100
-    
+
+    let priceComponent = (
+        <Price prices={price} type={type_id} classes={itemClasses} />
+    );
+    if (__typename === 'MpGiftCardProduct') {
+        let min_price = (item.min_amount * price_rate) / 100;
+        let max_price = (item.max_amount * price_rate) / 100;
+
         let giftCardPrices = [];
-        if(!allow_amount_range && gift_card_amounts) {
-            JSON.parse(gift_card_amounts).map(({price}) => {
-                giftCardPrices.push(price)
-            })
-            giftCardPrices.sort((a, b) => {return a-b})
-            min_price = min_price > 0 && min_price < giftCardPrices[0] ? min_price : giftCardPrices[0]
-            max_price = max_price > 0 && max_price > giftCardPrices[giftCardPrices.length - 1] ? max_price : giftCardPrices[giftCardPrices.length - 1]
+        if (!allow_amount_range && gift_card_amounts) {
+            JSON.parse(gift_card_amounts).map(({ price }) => {
+                giftCardPrices.push(price);
+            });
+            giftCardPrices.sort((a, b) => {
+                return a - b;
+            });
+            min_price =
+                min_price > 0 && min_price < giftCardPrices[0]
+                    ? min_price
+                    : giftCardPrices[0];
+            max_price =
+                max_price > 0 &&
+                max_price > giftCardPrices[giftCardPrices.length - 1]
+                    ? max_price
+                    : giftCardPrices[giftCardPrices.length - 1];
         }
 
         if (min_price != max_price) {
             priceComponent = (
                 <div className={itemClasses['giftcard-prices-wrapper']}>
-                    From: <span className={itemClasses['giftcard-prices']}>
+                    From:{' '}
+                    <span className={itemClasses['giftcard-prices']}>
                         <CorePrice
                             value={min_price}
                             currencyCode={price.regularPrice.amount.currency}
                         />
                     </span>
-                    <br/>
-                    To: <span className={itemClasses['giftcard-prices']}>
+                    <br />
+                    To:{' '}
+                    <span className={itemClasses['giftcard-prices']}>
                         <CorePrice
                             value={max_price}
                             currencyCode={price.regularPrice.amount.currency}
                         />
                     </span>
                 </div>
-            )
+            );
         } else {
             priceComponent = (
                 <div className={itemClasses['giftcard-prices-wrapper']}>
@@ -113,7 +124,7 @@ const Griditem = props => {
                         />
                     </span>
                 </div>
-            )
+            );
         }
     }
 
@@ -261,43 +272,39 @@ const Griditem = props => {
                                 {formatMessage({ id: 'As low as' })}
                             </div>
                         )}
-                        {/* <Price
-                            prices={price}
-                            type={type_id}
-                            classes={itemClasses}
-                        /> */}
                         <CallForPrice
                             data={callForPriceRule}
                             wrapperPrice={priceComponent}
-                            item_id = {item.id}
+                            item_id={item.id}
                         />
                     </div>
                 </div>
 
-                
                 {/* <div className={itemClasses['sold']}>
                         {formatMessage({ id: 'sold',defaultMessage:'123 sold' })}
                 </div> */}
-
             </div>
             <div
                 className={`${itemClasses['product-grid-actions']} ${loading &&
                     itemClasses['action-loading']}`}
             >
-               {callForPriceRule?.action !== "hide_add_to_cart" ? <button
-                    className={itemClasses['product-grid-addcartbtn']}
-                    onClick={() => {
-                        if (!loading && !productOutStock) handleAddCart(item);
-                    }}
-                >
-                    {formatMessage({
-                        id: productOutStock
-                            ? 'Out of stock'
-                            : loading
-                            ? 'Adding'
-                            : 'Add To Cart'
-                    })}
-                </button> : null}
+                {callForPriceRule?.action !== 'hide_add_to_cart' ? (
+                    <button
+                        className={itemClasses['product-grid-addcartbtn']}
+                        onClick={() => {
+                            if (!loading && !productOutStock)
+                                handleAddCart(item);
+                        }}
+                    >
+                        {formatMessage({
+                            id: productOutStock
+                                ? 'Out of stock'
+                                : loading
+                                ? 'Adding'
+                                : 'Add To Cart'
+                        })}
+                    </button>
+                ) : null}
                 <div className={itemClasses['product-grid-wishlistbtn']}>
                     <AddToListButton
                         icon={HeartIcon}

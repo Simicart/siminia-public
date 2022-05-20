@@ -11,7 +11,6 @@ import LeftMenu from '../LeftMenu';
 import CreateWishlist from '@magento/venia-ui/lib/components/WishlistPage/createWishlist.js';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 
-
 const WishlistPage = props => {
     const talonProps = useWishlistPage();
     const {
@@ -30,13 +29,11 @@ const WishlistPage = props => {
     });
 
     const [{ cartId }] = useCartContext();
-    console.log("cartid", cartId);
-    
+
     const wishlistElements = useMemo(() => {
         if (wishlists.length === 0) {
             return <Wishlist />;
         }
-        console.log("hahaha", wishlists);
 
         return wishlists.map((wishlist, index) => (
             <Wishlist
@@ -51,7 +48,6 @@ const WishlistPage = props => {
     if (loading && !error) {
         return fullPageLoadingIndicator;
     }
-    
 
     let content;
     if (error) {
