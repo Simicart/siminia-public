@@ -6,30 +6,28 @@ const AmSocialLoginContext = createContext();
 const { Provider } = AmSocialLoginContext;
 
 const AmAdvancedReviewsProvider = props => {
-  const { children } = props;
+    const { children } = props;
 
-  const talonProps = useSocialLogin();
-  const { error, needRedirect, redirectUrl, handleErrors } = talonProps;
-  const { isBusy } = useSignInEvent({
-    needRedirect,
-    redirectUrl,
-    handleErrors
-  });
+    const talonProps = useSocialLogin();
+    const { error, needRedirect, redirectUrl, handleErrors } = talonProps;
+    const { isBusy } = useSignInEvent({
+        needRedirect,
+        redirectUrl,
+        handleErrors
+    });
 
-  if (error) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.error(error);
+    if (error) {
+        if (process.env.NODE_ENV !== 'production') {
+            console.error(error);
+        }
     }
 
-    console.log('Check if Amasty modules has been installed!');
-  }
+    const contextValue = {
+        ...talonProps,
+        isBusy
+    };
 
-  const contextValue = {
-    ...talonProps,
-    isBusy
-  };
-
-  return <Provider value={contextValue}>{children}</Provider>;
+    return <Provider value={contextValue}>{children}</Provider>;
 };
 
 export default AmAdvancedReviewsProvider;

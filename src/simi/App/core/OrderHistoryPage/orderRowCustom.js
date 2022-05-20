@@ -12,10 +12,9 @@ import OrderProgressBar from '@magento/venia-ui/lib/components/OrderHistoryPage/
 import OrderDetails from '@magento/venia-ui/lib/components/OrderHistoryPage/OrderDetails';
 import defaultClasses from '@magento/venia-ui/lib/components/OrderHistoryPage/orderRow.module.css';
 
-
 const OrderRowCustom = props => {
-    const {order} = props;
-    console.log("myorder", order);
+    const { order } = props;
+
     const { formatMessage } = useIntl();
     const {
         invoices,
@@ -62,9 +61,7 @@ const OrderRowCustom = props => {
         });
     }
 
-    return <h1>hihihihi</h1>
+    return <h1>hihihihi</h1>;
+};
 
-}
-
-
-export default OrderRowCustom
+export default OrderRowCustom;

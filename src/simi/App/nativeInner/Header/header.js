@@ -69,10 +69,8 @@ const Header = props => {
     //         ? true
     //         : false;
 
-   
-
     const isHiddenHeader =
-        (data && data.route && data.route.type === TYPE_PRODUCT) 
+        data && data.route && data.route.type === TYPE_PRODUCT;
 
     const isSimpleHeader =
         location && location.pathname && location.pathname === '/checkout';
@@ -117,10 +115,15 @@ const Header = props => {
 
     let headerHeight = isPhone ? 55 : 107;
     headerHeight += topInsets;
-    const myAccountHead = 80 + topInsets
+    const myAccountHead = 80 + topInsets;
 
-    // console.log("headerheidd", window.simicartRNinsets);
-    const headerStyle = { backgroundColor: configColor.key_color, height: headerHeight, display: 'flex',alignItems: 'flex-end', paddingBottom:16}
+    const headerStyle = {
+        backgroundColor: configColor.key_color,
+        height: headerHeight,
+        display: 'flex',
+        alignItems: 'flex-end',
+        paddingBottom: 16
+    };
 
     const { isSignedIn } = userData;
     const renderRightBar = () => {
@@ -205,20 +208,24 @@ const Header = props => {
                 className={`${classes['header-search']} ${
                     Identify.isRtl() ? classes['header-search-rtl'] : ''
                 }`}
-                style={{ backgroundColor: configColor.key_color,  height: headerHeight }}
+                style={{
+                    backgroundColor: configColor.key_color,
+                    height: headerHeight
+                }}
             >
-                <SearchForm itemsQty={itemsQty} history={history} topInsets={topInsets} />
+                <SearchForm
+                    itemsQty={itemsQty}
+                    history={history}
+                    topInsets={topInsets}
+                />
             </div>
         );
     };
 
-
     const renderHeader = type => {
         if (type === '/sign-in') {
             return (
-                <div
-                    className={classes.specHeader}
-                    style={headerStyle}                >
+                <div className={classes.specHeader} style={headerStyle}>
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -231,10 +238,7 @@ const Header = props => {
         }
         if (type === '/create-account') {
             return (
-                <div
-                    className={classes.specHeader}
-                    style={headerStyle}
-                >
+                <div className={classes.specHeader} style={headerStyle}>
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -247,10 +251,7 @@ const Header = props => {
         }
         if (type === '/forgot-password') {
             return (
-                <div
-                    className={classes.specHeader}
-                    style={headerStyle}
-                >
+                <div className={classes.specHeader} style={headerStyle}>
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -263,10 +264,7 @@ const Header = props => {
         }
         if (type === '/cart') {
             return (
-                <div
-                    className={classes.specHeader}
-                    style={headerStyle}
-                >
+                <div className={classes.specHeader} style={headerStyle}>
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -280,7 +278,16 @@ const Header = props => {
         }
         if (type === '/my-account') {
             return (
-                <div className={classes.myAccountHead} style={{ backgroundColor: configColor.key_color, height: myAccountHead, display: 'flex',alignItems: 'flex-end', paddingBottom:16}}>
+                <div
+                    className={classes.myAccountHead}
+                    style={{
+                        backgroundColor: configColor.key_color,
+                        height: myAccountHead,
+                        display: 'flex',
+                        alignItems: 'flex-end',
+                        paddingBottom: 16
+                    }}
+                >
                     <MyAccount classes={classes} userData={userData} />
                     <BiChevronRight />
                 </div>
@@ -289,10 +296,7 @@ const Header = props => {
 
         if (isOrderDetailPage) {
             return (
-                <div
-                    className={classes.specHeader}
-                    style={headerStyle}
-                >
+                <div className={classes.specHeader} style={headerStyle}>
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
@@ -332,8 +336,11 @@ const Header = props => {
     if (isPhone) {
         return (
             <React.Fragment>
-                {!isHiddenHeader  ? (
-                    <div className={classes.virtualHeader} style={{height:headerHeight }} />
+                {!isHiddenHeader ? (
+                    <div
+                        className={classes.virtualHeader}
+                        style={{ height: headerHeight }}
+                    />
                 ) : null}
 
                 {/* {!isSimpleHeader && !isHiddenHeader && renderSearchForm()}

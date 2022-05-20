@@ -29,9 +29,8 @@ const OrderRow = props => {
     } = order;
     const { grand_total: grandTotal } = total;
     const { currency, value: orderTotal } = grandTotal;
-    console.log('order', items);
     const orderId = order.number;
-     
+
     // Convert date to ISO-8601 format so Safari can also parse it
     const isoFormattedDate = orderDate.replace(' ', 'T');
     const formattedDate = new Date(isoFormattedDate).toLocaleDateString(
@@ -49,18 +48,22 @@ const OrderRow = props => {
     const [reorderItem, { data, loading, error }] = useMutation(
         reorderItemMutation
     );
-    
+
     useEffect(() => {
-        if(data && data.reorderItems && data.reorderItems.userInputErrors && data.reorderItems.userInputErrors.length > 0) {
+        if (
+            data &&
+            data.reorderItems &&
+            data.reorderItems.userInputErrors &&
+            data.reorderItems.userInputErrors.length > 0
+        ) {
             let message = '';
             data.reorderItems.userInputErrors.forEach(userInputError => {
-                message += userInputError.message + ', '
+                message += userInputError.message + ', ';
             });
-            
-            if(message && message.length > 0) 
-                showToastMessage(message)
+
+            if (message && message.length > 0) showToastMessage(message);
         }
-    }, [data])
+    }, [data]);
 
     const hasInvoice = !!invoices.length;
     const hasShipment = !!shipments.length;

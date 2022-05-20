@@ -5,24 +5,22 @@ const AmMegaMenuContext = createContext();
 const { Provider } = AmMegaMenuContext;
 
 const AmMegaMenuProvider = props => {
-  const { children } = props;
+    const { children } = props;
 
-  const talonProps = useMegaMenu();
-  const { error } = talonProps;
+    const talonProps = useMegaMenu();
+    const { error } = talonProps;
 
-  if (error) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.error(error);
+    if (error) {
+        if (process.env.NODE_ENV !== 'production') {
+            console.error(error);
+        }
     }
 
-    console.log('Check if Amasty modules has been installed!');
-  }
+    const contextValue = {
+        ...talonProps
+    };
 
-  const contextValue = {
-    ...talonProps
-  };
-
-  return <Provider value={contextValue}>{children}</Provider>;
+    return <Provider value={contextValue}>{children}</Provider>;
 };
 
 export default AmMegaMenuProvider;

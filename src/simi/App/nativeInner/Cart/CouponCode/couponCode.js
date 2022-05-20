@@ -1,17 +1,16 @@
-import React, {Fragment, useEffect} from 'react';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {useToasts} from '@magento/peregrine';
-import {deriveErrorMessage} from '@magento/peregrine/lib/util/deriveErrorMessage';
-import {useCouponCode} from '../couponCodeHook';
-import {useStyle} from '@magento/venia-ui/lib/classify';
-import {Form} from 'informed';
+import React, { Fragment, useEffect } from 'react';
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { useToasts } from '@magento/peregrine';
+import { deriveErrorMessage } from '@magento/peregrine/lib/util/deriveErrorMessage';
+import { useCouponCode } from '../couponCodeHook';
+import { useStyle } from '@magento/venia-ui/lib/classify';
+import { Form } from 'informed';
 import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
 import defaultClasses from './couponCode.module.css';
-import {RectButton} from "../RectButton";
-import {RemovableTextInput} from "../RemovableTextInput";
-import {bottomNotificationType} from "../bottomNotificationHook";
-import {ConfirmPopup} from "../ConfirmPopup";
-
+import { RectButton } from '../RectButton';
+import { RemovableTextInput } from '../RemovableTextInput';
+import { bottomNotificationType } from '../bottomNotificationHook';
+import { ConfirmPopup } from '../ConfirmPopup';
 
 /**
  * A child component of the PriceAdjustments component.
@@ -33,70 +32,71 @@ const messages = defineMessages({
     successApplyCoupon: {
         id: 'couponCode.successCouponApply',
         defaultMessage: `You have successfully applied coupon code "{code}"`,
-        description: 'Successfully apply a coupon to cart',
+        description: 'Successfully apply a coupon to cart'
     },
     successRemoveCoupon: {
         id: 'couponCode.successCouponRemove',
         defaultMessage: `You have successfully removed coupon code "{code}"`,
-        description: 'Successfully remove a coupon to cart',
+        description: 'Successfully remove a coupon to cart'
     },
     failureApplyCoupon: {
         id: 'couponCode.failCouponApply',
         defaultMessage: `Failed to apply coupon code "{code}"`,
-        description: 'Failed to apply a coupon to cart',
+        description: 'Failed to apply a coupon to cart'
     },
     failureRemoveCoupon: {
         id: 'couponCode.failCouponRemove',
         defaultMessage: `Failed to remove coupon code "{code}"`,
-        description: 'Failed to remove a coupon to cart',
-    },
-})
+        description: 'Failed to remove a coupon to cart'
+    }
+});
 
 const CouponCode = props => {
-    const {makeNotification, setIsCartUpdating} = props
+    const { makeNotification, setIsCartUpdating } = props;
     const classes = useStyle(defaultClasses, props.classes);
 
-    const {formatMessage} = useIntl();
+    const { formatMessage } = useIntl();
 
     const talonProps = useCouponCode({
         // setIsCartUpdating: props.setIsCartUpdating,
-        setIsCartUpdating: (x) => {
-            console.log(x)
-            props.setIsCartUpdating(x)
+        setIsCartUpdating: x => {
+            props.setIsCartUpdating(x);
         },
-        applyCouponCallback: (code) => makeNotification({
-            text: formatMessage(messages.successApplyCoupon, {
-                code: code
+        applyCouponCallback: code =>
+            makeNotification({
+                text: formatMessage(messages.successApplyCoupon, {
+                    code: code
+                }),
+                type: bottomNotificationType.SUCCESS
             }),
-            type: bottomNotificationType.SUCCESS
-        }),
-        removeCouponCallback: (code) => makeNotification({
-            text: formatMessage(messages.successRemoveCoupon, {
-                code: code
+        removeCouponCallback: code =>
+            makeNotification({
+                text: formatMessage(messages.successRemoveCoupon, {
+                    code: code
+                }),
+                type: bottomNotificationType.SUCCESS
             }),
-            type: bottomNotificationType.SUCCESS
-        }),
-        applyCouponErrorCallback: (code) => {
+        applyCouponErrorCallback: code => {
             setIsCartUpdating(false);
             makeNotification({
                 text: formatMessage(messages.failureApplyCoupon, {
                     code: code
                 }),
                 type: bottomNotificationType.FAIL
-            })
+            });
         },
-        removeCouponErrorCallback: (code) => {
+        removeCouponErrorCallback: code => {
             setIsCartUpdating(false);
             makeNotification({
                 text: formatMessage(messages.failureRemoveCoupon, {
                     code: code
                 }),
                 type: bottomNotificationType.FAIL
-            })
+            });
         }
     });
 
-    const [, {addToast}] = useToasts();
+    const [, { addToast }] = useToasts();
     const {
         applyingCoupon,
         data,
@@ -106,8 +106,7 @@ const CouponCode = props => {
         removingCoupon
     } = talonProps;
 
-
-    const error = [...errors.values()].find(x => !!x)
+    const error = [...errors.values()].find(x => !!x);
 
     useEffect(() => {
         if (error) {
@@ -115,10 +114,9 @@ const CouponCode = props => {
             makeNotification({
                 type: bottomNotificationType.FAIL,
                 text: error.message
-            })
+            });
         }
     }, [addToast, error, setIsCartUpdating]);
-
 
     if (!data) {
         return null;
@@ -138,33 +136,36 @@ const CouponCode = props => {
     }
 
     if (data.cart.applied_coupons) {
-        const codes = data.cart.applied_coupons.map(({code}) => {
+        const codes = data.cart.applied_coupons.map(({ code }) => {
             return (
                 <Fragment key={code}>
                     <span>{code}</span>
                     <ConfirmPopup
                         disabled={removingCoupon}
-                        trigger={<LinkButton
-                            className={classes.removeButton}
-                            disabled={removingCoupon}
-                        >
-                            <FormattedMessage
-                                id={'couponCode.removeButton'}
-                                defaultMessage={'Remove'}
-                            />
-                        </LinkButton>
+                        trigger={
+                            <LinkButton
+                                className={classes.removeButton}
+                                disabled={removingCoupon}
+                            >
+                                <FormattedMessage
+                                    id={'couponCode.removeButton'}
+                                    defaultMessage={'Remove'}
+                                />
+                            </LinkButton>
                         }
-                        content={<FormattedMessage
-                            id={'Delete Warning'}
-                            defaultMessage={'Are you sure about remove\n' +
-                                ' this coupon from the shopping cart?'}
-                        />
+                        content={
+                            <FormattedMessage
+                                id={'Delete Warning'}
+                                defaultMessage={
+                                    'Are you sure about remove\n' +
+                                    ' this coupon from the shopping cart?'
+                                }
+                            />
                         }
                         confirmCallback={() => {
                             handleRemoveCoupon(code);
                         }}
                     />
-
                 </Fragment>
             );
         });
@@ -181,7 +182,7 @@ const CouponCode = props => {
 
         return (
             <Form className={formClass} onSubmit={handleApplyCoupon}>
-                <RemovableTextInput classes={classes}/>
+                <RemovableTextInput classes={classes} />
                 <div className={classes.applyButtonContainer}>
                     <RectButton
                         disabled={applyingCoupon}

@@ -131,7 +131,6 @@ const Products = props => {
     const renderList = () => {
         const items = data ? data.products.items : null;
         if (!data) return <Loading />;
-        console.log("propsss",props)
         return (
             <React.Fragment>
                 <div className="product-list-top">

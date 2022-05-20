@@ -86,7 +86,6 @@ const AddressBookPage = props => {
         handleEditAddress,
         isDeletingCustomerAddress
     ]);
-    console.log("hieubach", customerAddresses);
 
     if (isLoading) {
         return fullPageLoadingIndicator;
@@ -130,20 +129,18 @@ const AddressBookPage = props => {
                         />
                     </span>
                 </LinkButton> */}
-                        {customerAddresses.length > 0 ? 
-                        addressBookElements : formatMessage(
-                            {
-                                id: 'wishlist.itemCountClosed',
-                                defaultMessage: `You have {count} {count, plural,
+                        {customerAddresses.length > 0
+                            ? addressBookElements
+                            : formatMessage(
+                                  {
+                                      id: 'wishlist.itemCountClosed',
+                                      defaultMessage: `You have {count} {count, plural,
                                   one {item}
                                   other {items}
                                 } in this list`
-                            },
-                            { count: customerAddresses.length }
-                        )
-                        }
-
-                        
+                                  },
+                                  { count: customerAddresses.length }
+                              )}
                     </div>
                 </div>
 
