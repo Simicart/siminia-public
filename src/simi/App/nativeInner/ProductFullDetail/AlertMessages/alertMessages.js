@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { BiCheckCircle, BiErrorCircle, BiError } from 'react-icons/bi';
-
 
 require('./styles.scss');
 
@@ -9,22 +8,14 @@ const AlertMessages = props => {
 
     useEffect(() => {
         const TimerId = setTimeout(() => {
-            if(alertMsg !== -1) {
-    
+            if (alertMsg !== -1) {
                 setAlertMsg(false);
             }
         }, 2000);
 
         return () => clearTimeout(TimerId);
+    }, [alertMsg, setAlertMsg]);
 
-    }, [alertMsg, setAlertMsg])
-    
-    // setTimeout(() => {
-    //     if(alertMsg !== -1) {
-
-    //         setAlertMsg(false);
-    //     }
-    // }, 2000);
     const handleSetClass = s => {
         if (s === -1) {
             return 'null';
@@ -32,20 +23,24 @@ const AlertMessages = props => {
             return 'close';
         } else return 'open';
     };
-    const handleRenderIcon = (status) => {
-        if (status == "success"){
-            return <BiCheckCircle />
-        } 
-        if (status == "error") {
-            return <BiErrorCircle />
+    const handleRenderIcon = status => {
+        if (status == 'success') {
+            return <BiCheckCircle />;
         }
-        if(status == "warning") {
-            return <BiError />
+        if (status == 'error') {
+            return <BiErrorCircle />;
         }
-    }
+        if (status == 'warning') {
+            return <BiError />;
+        }
+    };
 
     return (
-        <div className={`${topInsets === 0 ? 'main-alert' : 'main-alert-native'} ${handleSetClass(alertMsg)} ${status}`}>
+        <div
+            className={`${
+                topInsets === 0 ? 'main-alert' : 'main-alert-native'
+            } ${handleSetClass(alertMsg)} ${status}`}
+        >
             {handleRenderIcon(status)}
             <h1>{message}</h1>
         </div>

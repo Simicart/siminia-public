@@ -97,7 +97,6 @@ const Griditem = props => {
                     width: '100%',
                     padding: 1
                 }}
-                
             >
                 <Link to={location}>
                     <Image
@@ -106,24 +105,26 @@ const Griditem = props => {
                         fallBackUrl={small_image}
                         className="product-image-label"
                     />
-                    <ProductLabel  productLabel = {mp_label_data ? mp_label_data : null} label_tyle="gallery"/>
+                    <ProductLabel
+                        productLabel={mp_label_data ? mp_label_data : null}
+                        label_tyle="gallery"
+                    />
                 </Link>
                 {item.price && item.price.has_special_price ? (
-                <div
-                    className={itemClasses.discountBadge}
-                    style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
-                >
-                    {`-${item.price.discount_percent}%`}
-                </div>
-            ) : (
-                ''
-            )}
+                    <div
+                        className={itemClasses.discountBadge}
+                        style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
+                    >
+                        {`-${item.price.discount_percent}%`}
+                    </div>
+                ) : (
+                    ''
+                )}
             </div>
         </div>
     );
     const productOutStock = item.stock_status === 'OUT_OF_STOCK';
-    
-    
+
     return (
         <div
             className={` ${
@@ -191,7 +192,10 @@ const Griditem = props => {
                                 ? itemClasses['prices-layout-rtl']
                                 : ''
                         }`}
-                        style={{flexWrap: type_id === 'configurable' ? 'wrap' : 'nowrap'}}
+                        style={{
+                            flexWrap:
+                                type_id === 'configurable' ? 'wrap' : 'nowrap'
+                        }}
                         id={`price-${id}`}
                     >
                         {type_id === 'configurable' && (
