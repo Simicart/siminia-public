@@ -29,19 +29,17 @@ const ReviewItem = props => {
     );
     let reviewTextWidth;
     const reviewText = document.getElementById(`review + ${created_at}`);
-    useEffect(()=> {
-        if(reviewText){
+    useEffect(() => {
+        if (reviewText) {
             reviewTextWidth = reviewText.offsetWidth;
-            console.log(reviewTextWidth)
-            if(reviewTextWidth < MAX_WIDTH){
+            if (reviewTextWidth < MAX_WIDTH) {
                 setShowMoreCondition(true);
-            }
-            else{
-                setShowMoreCondition(false)
+            } else {
+                setShowMoreCondition(false);
             }
         }
     }, [reviewText]);
-    
+
     return (
         <div className={classes.container}>
             <Link to={itemLink} className={classes.imageContainer}>
@@ -75,20 +73,20 @@ const ReviewItem = props => {
                         onClick={viewMoreHandle}
                     >
                         {showMore ? (
-                        <div className={classes.viewDetails}>
-                            <FormattedMessage
-                                id={'reviewItem.viewDetails'}
-                                defaultMessage={'View Details'}
-                            />
-                        </div>
-                    ) : (
-                        <div className={classes.viewDetails}>
-                            <FormattedMessage
-                                id={'reviewItem.viewSummary'}
-                                defaultMessage={'View Summary'}
-                            />
-                        </div>
-                    )}
+                            <div className={classes.viewDetails}>
+                                <FormattedMessage
+                                    id={'reviewItem.viewDetails'}
+                                    defaultMessage={'View Details'}
+                                />
+                            </div>
+                        ) : (
+                            <div className={classes.viewDetails}>
+                                <FormattedMessage
+                                    id={'reviewItem.viewSummary'}
+                                    defaultMessage={'View Summary'}
+                                />
+                            </div>
+                        )}
                     </div>
                 ) : (
                     ''

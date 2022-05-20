@@ -109,7 +109,6 @@ const DeliveryDateTime = forwardRef((props, ref) => {
                 />
             </label>
         ) : null;
-    console.log('test', deliveryTime);
 
     const OptionDeliveryTime = isEnabledDeliveryTime
         ? deliveryTime.map((time, index) => {

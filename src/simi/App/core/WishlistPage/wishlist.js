@@ -33,7 +33,6 @@ const Wishlist = props => {
         isFetchingMore,
         handleLoadMore
     } = talonProps;
-   
 
     const classes = useStyle(defaultClasses, props.classes);
     const contentClass = isOpen ? classes.content : classes.content_hidden;
@@ -76,7 +75,6 @@ const Wishlist = props => {
             </div>
         ) : null;
 
-    console.log("haha", items);
     const contentMessageElement = itemsCount ? (
         <Fragment>
             <WishlistItems items={items} wishlistId={id} />

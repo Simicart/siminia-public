@@ -13,14 +13,16 @@ import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import Loader from '../Loader';
 import AlertMessages from '../ProductFullDetail/AlertMessages';
-import {isCallForPriceEnable} from 'src/simi/App/nativeInner/Helper/Module'
+import { isCallForPriceEnable } from 'src/simi/App/nativeInner/Helper/Module';
+import { useIntl } from 'react-intl';
 
 const CallForPrice = props => {
     const { data, wrapperPrice, item_id } = props;
     const [isPopupOpen, setOpenPopup] = useState(false);
     const classes = useStyle(defaultClasses, props.classes);
+    const { formatMessage } = useIntl();
 
-    const callForPriceEnabled = isCallForPriceEnable()
+    const callForPriceEnabled = isCallForPriceEnable();
 
     const [alertMsg, setAlertMsg] = useState(-1);
 
@@ -30,7 +32,6 @@ const CallForPrice = props => {
     const [{ isSignedIn }] = useUserContext();
     const showFields =
         data && data.show_fields ? data.show_fields.split(',') : null;
-    const successMsg = `Request success !`;
     const handleSubmitReview = async formValue => {
         const { email, note, name, phone } = formValue;
         await mpCallForPriceRequest({
@@ -224,13 +225,15 @@ const CallForPrice = props => {
         <div>
             {loading ? <Loader /> : null}
             <AlertMessages
-                message={successMsg}
+                message={formatMessage({ id: 'Request success' })}
                 setAlertMsg={setAlertMsg}
                 alertMsg={alertMsg}
                 status="success"
                 topInsets={topInsets}
             />
-            {callForPriceEnabled ? renderPriceWithCallForPrice(data) : wrapperPrice}
+            {callForPriceEnabled
+                ? renderPriceWithCallForPrice(data)
+                : wrapperPrice}
         </div>
     );
 };

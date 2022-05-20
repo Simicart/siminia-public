@@ -14,11 +14,6 @@ const SizeChart = props => {
         return null;
     }
     const styles = item.template_styles;
-    
-    // let sheet = document.createElement('style');
-    // sheet.innerHTML = styles;
-    // document.body.appendChild(sheet);
-    // console.log("stylesss", styles);
 
     const renderSizeChart = type => {
         let html = null;
@@ -54,7 +49,7 @@ const SizeChart = props => {
                     </button>
                 </div>
             );
-            return html
+            return html;
         }
         if (type === 'inline') {
             html = (
@@ -69,22 +64,23 @@ const SizeChart = props => {
                     </div>
                 </div>
             );
-            return html
+            return html;
         }
-        if (type ==="tab") {
-            html = <div className="tab-sizechart">
-            <div className="product-sizechart">
-                <div
-                    className="product-sizechart-table"
-                    dangerouslySetInnerHTML={{
-                        __html: item.rule_content
-                    }}
-                />
-            </div>
-        </div>
-        return html
+        if (type === 'tab') {
+            html = (
+                <div className="tab-sizechart">
+                    <div className="product-sizechart">
+                        <div
+                            className="product-sizechart-table"
+                            dangerouslySetInnerHTML={{
+                                __html: item.rule_content
+                            }}
+                        />
+                    </div>
+                </div>
+            );
+            return html;
         }
-        
     };
 
     return (

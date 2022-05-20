@@ -87,7 +87,7 @@ const WishlistPage = props => {
             </Fragment>
         );
     }
-    const handleShare = ()=>{
+    const handleShare = () => {
         if (navigator.share) {
             navigator
                 .share({
@@ -95,9 +95,7 @@ const WishlistPage = props => {
                     text: 'I shared this content via my mobile',
                     url: window.location.href
                 })
-                .then(() => {
-                    console.log('Successfully shared');
-                })
+                .then(() => {})
                 .catch(error => {
                     console.error(
                         'Something went wrong sharing the blog',
@@ -105,11 +103,8 @@ const WishlistPage = props => {
                     );
                 });
         } else {
-            console.log(
-                'Web share is currently not supported on this browser. Please provide a callback'
-            );
         }
-    }
+    };
     return (
         <div className={`${classes.root} ${!isMobileSite ? 'container' : ''}`}>
             <div className={classes.wrapper}>
@@ -141,7 +136,10 @@ const WishlistPage = props => {
                                 }
                             </button>
                         </div> */}
-                        <div onClick={()=>handleShare()} className={classes.btnShare}>
+                        <div
+                            onClick={() => handleShare()}
+                            className={classes.btnShare}
+                        >
                             <BsFillShareFill size={25} />
                         </div>
                         {content}
