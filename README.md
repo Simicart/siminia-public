@@ -2,7 +2,7 @@
 
 Based on PWA Studio, our open-source PWA theme for Magento 2 is an easy way to transform your store into a headless storefront that is fast, engaging, and mobile-friendly.
 
-![Siminia Theme](https://tapita.io/pb/pub/media/spb/usr/19/oti/1640680526209/siminia.png "Siminia Theme")
+![Siminia Theme](https://tapita.io/pb/pub/media/spb/usr/19/oti/1640680526209/siminia.png 'Siminia Theme')
 
 ## Installation
 
@@ -12,6 +12,7 @@ Based on PWA Studio, our open-source PWA theme for Magento 2 is an easy way to t
 - PWA Studio 12
 
 ### 1. Clone pwa-studio
+
 ```
 git clone https://github.com/magento/pwa-studio/
 cd pwa-studio
@@ -21,6 +22,7 @@ git checkout release/12.0
 ### 2. Modify `package.json` at PWA Studio root folder
 
 workspaces:
+
 ```
 
   "workspaces": [
@@ -41,7 +43,9 @@ scripts (modify the build script and add Siminia scripts):
     ...
   },
 ```
+
 ### 3. Clone Siminia
+
 ```
 cd  packages
 git clone https://github.com/Simicart/siminia-public siminia
@@ -50,12 +54,17 @@ cd ../..
 yarn install
 yarn run build
 ```
+
 ### 4. Run watch/stage
+
 To run watch
+
 ```
 yarn run watch:siminia
 ```
+
 To run production
+
 ```
 NODE_ENV=production PORT=8080 yarn run stage:siminia
 ```
@@ -74,11 +83,12 @@ Create your free account at [Tapita](https://tapita.io/pagebuilder/register)
 
 When you first login, select Magento as backend and PWA Studio as frontend.
 
-Go to **Integration** tab and click **Generate Token**. Then, copy the generated *Integration Token* to use in the next step.
+Go to **Integration** tab and click **Generate Token**. Then, copy the generated _Integration Token_ to use in the next step.
 
-Open the file `packages/siminia/src/simi/App/core/NoMatch/index.js` && `packages/siminia/src/simi/App/nativeInner/NoMatch/index.js` and change the value at this line to the Integration Token you got in previous step
+Open the file `packages/siminia/template.html` and change the value at this line to the Integration Token you got in previous step
+
 ```
-const integrationToken = 'your-token';
+var tapitaIntegrationToken = 'your-token';
 ```
 
 ## Learn more
