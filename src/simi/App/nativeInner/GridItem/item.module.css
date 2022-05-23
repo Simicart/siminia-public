@@ -281,9 +281,6 @@ Rate
         border-radius: 6px;
         padding: 3px
     }
-    .product-grid-actions {
-        display: none;
-    }
     .item-review-rate {
         display: none;
     }

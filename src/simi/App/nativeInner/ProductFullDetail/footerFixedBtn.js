@@ -2,7 +2,7 @@ import { useUserContext } from '@magento/peregrine/lib/context/user';
 import React, { Fragment, Suspense, useRef, useState } from 'react';
 import { BiMessageAltDetail } from 'react-icons/bi';
 import CallForPrice from './callForPrice';
-import {isCallForPriceEnable} from 'src/simi/App/nativeInner/Helper/Module'
+import { isCallForPriceEnable } from 'src/simi/App/nativeInner/Helper/Module';
 require('./statusBar.scss');
 
 const FooterFixedBtn = props => {
@@ -15,16 +15,19 @@ const FooterFixedBtn = props => {
         data
     } = props;
 
-    const callForPriceEnabled = isCallForPriceEnable()
+    const callForPriceEnabled = isCallForPriceEnable();
 
     const [{ isSignedIn }] = useUserContext();
     const action = data && data.action ? data.action : '';
 
-    if(callForPriceEnabled) {
+    if (callForPriceEnabled) {
         return (
             <>
-                <div style={{ height: 55 + bottomInsets }} className="virtual" />
-                {action === "login_see_price" && isSignedIn ? (
+                <div
+                    style={{ height: 55 + bottomInsets }}
+                    className="virtual"
+                />
+                {action === 'login_see_price' && isSignedIn ? (
                     <div
                         style={{ height: 55 + bottomInsets }}
                         className="main-footerFixedBtn"
@@ -58,7 +61,11 @@ const FooterFixedBtn = props => {
                     >
                         <ul>
                             <li className="msg-icon">
-                                {action !== "hide_add_to_cart" ? <BiMessageAltDetail /> : ''}
+                                {action === 'hide_add_to_cart' ? (
+                                    ''
+                                ) : (
+                                    <BiMessageAltDetail />
+                                )}
                             </li>
                             <li className="callForPrice">
                                 <CallForPrice
@@ -100,9 +107,8 @@ const FooterFixedBtn = props => {
                     </li>
                 </ul>
             </div>
-        )
+        );
     }
-    
 };
 
 export default FooterFixedBtn;
