@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import Loading from 'src/simi/BaseComponents/Loading';
 import { useQuery } from '@apollo/client';
 import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
+import { integrationToken } from '../../core/NoMatch';
+export { integrationToken };
+
 //import Page404 from './Page404';
 const Page404 = props => {
     return (
@@ -54,7 +57,6 @@ const TYPE_CMS_PAGE = 'CMS_PAGE';
 import { LazyComponent } from '../../../BaseComponents/LazyComponent/';
 import { usePbFinder } from 'simi-pagebuilder-react';
 export const endPoint = 'https://tapita.io/pb/graphql/';
-export const integrationToken = '149NbMq20jsTkleXftqn3hNh2Epj17TMV1641796505';
 import PageBuilderComponent from '@simicart/siminia/src/simi/App/core/TapitaPageBuilder/PageBuilderComponent';
 
 //store code
@@ -87,7 +89,6 @@ const NoMatch = props => {
         skip: !pathname || pathname === '/',
         fetchPolicy: 'cache-first'
     });
-   
 
     useEffect(() => {
         if (pathname) {
