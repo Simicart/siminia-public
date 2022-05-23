@@ -53,21 +53,22 @@
             plugins: {
                 'SM_ENABLE_CONNECTOR': 1, //https://github.com/Simicart/SimiCart-Magento2.x-GraphQl
                 'SM_ENABLE_META_PACKAGES': 1, //https://github.com/magento/magento2-pwa
-                'SM_ENABLE_PRODUCT_LABEL': 1,
-                'SM_ENABLE_SHOP_BY_BRAND': 1,
-                'SM_ENABLE_REWARD_POINTS': 1,
+                'SM_ENABLE_PRODUCT_LABEL': 0,
+                'SM_ENABLE_SHOP_BY_BRAND': 0,
+                'SM_ENABLE_REWARD_POINTS': 0,
                 'SM_ENABLE_REWARD_POINTS_PRO': 0,
-                'SM_ENABLE_DELIVERY_TIME': 1,
-                'SM_ENABLE_SIZE_CHART': 1,
+                'SM_ENABLE_DELIVERY_TIME': 0,
+                'SM_ENABLE_SIZE_CHART': 0,
                 'SM_ENABLE_SOCIAL_LOGIN': 0,
-                'SM_ENABLE_MAGEWORX_SEO': 1,
-                'SM_ENABLE_FAQS':1,
-                'SM_ENABLE_BETTER_BLOG':1,
-                'SM_ENABLE_CALL_FOR_PRICE' : 1,
-                'SM_ENABLE_MEGA_MENU' : 1,
-                'SM_ENABLE_GIFT_CARD': 1
+                'SM_ENABLE_MAGEWORX_SEO': 0,
+                'SM_ENABLE_FAQS': 0,
+                'SM_ENABLE_BETTER_BLOG': 0,
+                'SM_ENABLE_CALL_FOR_PRICE': 0,
+                'SM_ENABLE_MEGA_MENU': 0,
+                'SM_ENABLE_GIFT_CARD': 0
             }
         };
+        var tapitaIntegrationToken = '149NbMq20jsTkleXftqn3hNh2Epj17TMV1641796505';
     </script>
     <script
         src="https://www.simicart.com/appdashboard/rest/app_configs?source=<%= process.env.MAGENTO_BACKEND_URL %>&bear_token=Qg5xhysRKGQe2K01n2qg7KL8rKpO9GmZXsxf0Z6&pwa=1&js=1"></script>
@@ -160,6 +161,7 @@
         }
 
         @media (max-width: 1024px) {
+
             /* native style */
             a,
             input,
@@ -168,6 +170,7 @@
             div {
                 -webkit-tap-highlight-color: transparent;
             }
+
             div,
             span,
             p,

@@ -65,7 +65,9 @@ const TYPE_CMS_PAGE = 'CMS_PAGE';
 import { LazyComponent } from '../../../BaseComponents/LazyComponent/';
 import { usePbFinder } from 'simi-pagebuilder-react';
 export const endPoint = 'https://tapita.io/pb/graphql/';
-export const integrationToken = '149NbMq20jsTkleXftqn3hNh2Epj17TMV1641796505';
+export const integrationToken =
+    window.tapitaIntegrationToken ||
+    '149NbMq20jsTkleXftqn3hNh2Epj17TMV1641796505';
 
 import PageBuilderComponent from '../TapitaPageBuilder/PageBuilderComponent';
 
