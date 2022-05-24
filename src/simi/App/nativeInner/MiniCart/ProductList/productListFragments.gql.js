@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { GiftcartListingFragment } from '../../../nativeInner/CartCore/ProductListing/productListingFragments.gql.js';
 
 export const ProductListFragment = gql`
     fragment ProductListFragment on Cart {
@@ -69,7 +70,7 @@ export const ProductListFragment = gql`
                 }
             }
             ... on VirtualCartItem {
-                virtual_customizable_options : customizable_options {
+                virtual_customizable_options: customizable_options {
                     label
                     values {
                         label
@@ -78,7 +79,7 @@ export const ProductListFragment = gql`
                 }
             }
             ... on DownloadableCartItem {
-                downloadable_customizable_options : customizable_options {
+                downloadable_customizable_options: customizable_options {
                     label
                     values {
                         label
@@ -99,7 +100,7 @@ export const ProductListFragment = gql`
                 }
             }
             ... on BundleCartItem {
-                bundle_customizable_options : customizable_options {
+                bundle_customizable_options: customizable_options {
                     label
                     values {
                         label
@@ -115,15 +116,8 @@ export const ProductListFragment = gql`
                     }
                 }
             }
-            ... on MpGiftCardCartItem {
-                giftcard_options {
-                    item_id
-                    code
-                    option_id
-                    product_id
-                    value
-                }
-            }
+            ...GiftcartListingFragment
         }
     }
+    ${GiftcartListingFragment}
 `;
