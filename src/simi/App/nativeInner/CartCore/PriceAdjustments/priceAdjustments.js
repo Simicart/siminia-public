@@ -19,7 +19,9 @@ const CouponCode = React.lazy(() => import('./CouponCode'));
 // );
 const ShippingMethods = React.lazy(() => import('./ShippingMethods'));
 
-const GiftCard = React.lazy(() => import('src/simi/App/nativeInner/GiftCard/Cart/GiftCardDiscount'))
+const GiftCard = React.lazy(() =>
+    import('src/simi/App/nativeInner/GiftCard/Cart/GiftCardDiscount')
+);
 
 /**
  * PriceAdjustments is a child component of the CartPage component.
@@ -225,26 +227,32 @@ const PriceAdjustments = props => {
                             )}
                         </Suspense>
                     </Section>
-                ) : null}
+                ) : (
+                    <></>
+                )}
                 {/* <GiftCardSection setIsCartUpdating={setIsCartUpdating} /> */}
-                {giftCardEnabled && giftCardConfig && <Section
-                    id={'gift-card'}
-                    title={formatMessage({
-                        id: 'Gift Card',
-                    })}
-                    classes={{
-                        root: classes.sectionRoot,
-                        title: classes.sectionTitle
-                    }}
-                >
-                    <Suspense fallback={<LoadingIndicator />}>
-                        <GiftCard 
-                            giftCardConfig={giftCardConfig}
-                            setIsCartUpdating={setIsCartUpdating}
-                            refetchCartPage={refetchCartPage}
-                        />
-                    </Suspense>
-                </Section>}
+                {giftCardEnabled && giftCardConfig ? (
+                    <Section
+                        id={'gift-card'}
+                        title={formatMessage({
+                            id: 'Gift Card'
+                        })}
+                        classes={{
+                            root: classes.sectionRoot,
+                            title: classes.sectionTitle
+                        }}
+                    >
+                        <Suspense fallback={<LoadingIndicator />}>
+                            <GiftCard
+                                giftCardConfig={giftCardConfig}
+                                setIsCartUpdating={setIsCartUpdating}
+                                refetchCartPage={refetchCartPage}
+                            />
+                        </Suspense>
+                    </Section>
+                ) : (
+                    <></>
+                )}
                 {/* <Section
                     id={'gift_options'}
                     title={formatMessage({

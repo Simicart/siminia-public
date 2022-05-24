@@ -216,8 +216,14 @@ const PriceAdjustments = props => {
                             )}
                         </Suspense>
                     </Section>
-                ) : null}
-                <GiftCardSection setIsCartUpdating={setIsCartUpdating} />
+                ) : (
+                    <></>
+                )}
+                {rewardPointEnabled ? (
+                    <GiftCardSection setIsCartUpdating={setIsCartUpdating} />
+                ) : (
+                    <></>
+                )}
                 {/* <Section
                     id={'gift_options'}
                     title={formatMessage({
