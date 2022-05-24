@@ -1,11 +1,6 @@
 import gql from 'graphql-tag';
-const shopByBrandEnabled =
-    window.SMCONFIGS &&
-    window.SMCONFIGS.plugins &&
-    window.SMCONFIGS.plugins.SM_ENABLE_SHOP_BY_BRAND &&
-    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_SHOP_BY_BRAND) === 1;
 
-export const BrandFragment = shopByBrandEnabled ? gql`
+export const BrandFragment = gql`
     fragment BrandFragment on MageplazaBrands {
         brand_id
         attribute_id
@@ -25,7 +20,8 @@ export const BrandFragment = shopByBrandEnabled ? gql`
         meta_description
         product_quantity
     }
-`: '';
+`;
+
 export const GET_BRAND_INFO = gql`
     query getBrandProductDetailForProductPage($urlKey: String!) {
         products(filter: { url_key: { eq: $urlKey } }) {
@@ -38,7 +34,7 @@ export const GET_BRAND_INFO = gql`
         }
     }
 `;
-export const CategoryFragment = shopByBrandEnabled ?  gql`
+export const CategoryFragment = gql`
     fragment CategoryFragment on MageplazaBrandsCategories {
         cat_id
         status
@@ -56,7 +52,7 @@ export const CategoryFragment = shopByBrandEnabled ?  gql`
         }
     }
     ${BrandFragment}
-` : '';
+`;
 
 export const GET_BRANDS_LIST = gql`
     query mpbrand($pageSize: Int!, $currentPage: Int) {
@@ -204,11 +200,7 @@ export const GET_BRAND_PRODUCTS = gql`
             sort: $sort
         ) {
             items {
-                # id is always required, even if the fragment includes it.
                 id
-                # TODO: Once this issue is resolved we can use a
-                # GalleryItemFragment here:
-                # https://github.com/magento/magento2/issues/28584
                 ...ProductOfListFragment
                 name
                 mpbrand {
