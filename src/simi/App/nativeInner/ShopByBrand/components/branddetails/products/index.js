@@ -14,7 +14,7 @@ import {
     getFilterInput
 } from '@magento/peregrine/lib/talons/FilterModal/helpers';
 import { useCategoryContentSimiPagination } from 'src/simi/talons/Category/useCategoryContentSimiPagination';
-import GET_BRAND_PRODUCTS from '../../../queries/getBrandProducts.graphql';
+import {GET_BRAND_PRODUCTS} from '../../../talons/Brand.gql';
 import FILTER_INTROSPECTION from '../../../queries/filterIntrospectionQuery.graphql';
 import { LazyComponent } from '../../../../../../BaseComponents/LazyComponent';
 const ProductsContent = props => {
