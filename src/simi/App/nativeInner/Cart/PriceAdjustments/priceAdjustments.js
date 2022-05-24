@@ -241,7 +241,7 @@ const PriceAdjustments = (props) => {
                         </Suspense>
                     </Section>
                 ) : null}
-                {giftCardEnabled && giftCardConfig && <Section
+                {(giftCardEnabled && giftCardConfig) ? <Section
                     id={'gift-card'}
                     title={formatMessage({
                         id: 'Gift Card',
@@ -260,7 +260,7 @@ const PriceAdjustments = (props) => {
                             refetchCartPage={refetchCartPage}
                         />
                     </Suspense>
-                </Section>}
+                </Section> : null}
                 {/* <GiftCardSection setIsCartUpdating={setIsCartUpdating} /> */}
             </Accordion>
         </div>
