@@ -9,7 +9,11 @@ import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header
 import Identify from 'src/simi/Helper/Identify';
 import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
 import { useQuery } from '@apollo/client';
-
+const shopByBrandEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_SHOP_BY_BRAND &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_SHOP_BY_BRAND) === 1;
 import {
     BiHomeAlt,
     BiCategoryAlt,
@@ -24,15 +28,19 @@ const TYPE_PRODUCT = 'PRODUCT';
 
 const FooterNative = props => {
     const [{ isSignedIn }] = useUserContext();
-    const listMenuContent = ['Home', 'Category', 'Cart', 'Malls', 'Account'];
+    let listMenuContent = ['Home', 'Category', 'Cart', 'Account'];
+    console.log('shopByBrandEnabled', shopByBrandEnabled);
+    if (shopByBrandEnabled) {
+        listMenuContent = ['Home', 'Category', 'Cart', 'Malls', 'Account'];
+    }
     const listMenuUrl = ['', 'categories', 'cart', 'brands.html', 'my-account'];
     const [iconActive, setIconActive] = useState();
     const listIcon = [
-        <BiHomeAlt  />,
-        <BiCategoryAlt  />,
-        <BiCart  />,
-        <BiWallet  />,
-        <BiUser  />
+        <BiHomeAlt />,
+        <BiCategoryAlt />,
+        <BiCart />,
+        <BiWallet />,
+        <BiUser />
     ];
     const storeConfig = Identify.getStoreConfig();
 
@@ -49,7 +57,6 @@ const FooterNative = props => {
 
     const isPhone = windowSize.innerWidth <= 780;
 
-
     let bottomInsets = 0;
     try {
         if (window.simicartRNinsets) {
@@ -63,7 +70,6 @@ const FooterNative = props => {
 
     let bottomMenuHeight = isPhone ? 55 : 107;
     bottomMenuHeight += bottomInsets;
-
 
     const pathNameLength =
         location && location.pathname
@@ -98,8 +104,13 @@ const FooterNative = props => {
     const pathName =
         location && location.pathname ? location.pathname.split('/')[1] : null;
 
-    const bottomMenuStyle = { backgroundColor: configColor.key_color, height: bottomMenuHeight, display: 'flex',alignItems: 'start', paddingTop: 10}
-    
+    const bottomMenuStyle = {
+        backgroundColor: configColor.key_color,
+        height: bottomMenuHeight,
+        display: 'flex',
+        alignItems: 'start',
+        paddingTop: 10
+    };
 
     useEffect(() => {
         if (pathName === '') {
@@ -138,10 +149,17 @@ const FooterNative = props => {
                     iconActive === index ? classes.active : null
                 }`}
                 key={index}
-                
             >
                 {index === 2 ? (
-                    <span className={classes.cartQty}>{itemsQty}</span>
+                    <span
+                        className={
+                            shopByBrandEnabled
+                                ? classes.cartQty
+                                : classes.noMall
+                        }
+                    >
+                        {itemsQty}
+                    </span>
                 ) : null}
                 <span>{listIcon[index]}</span>
                 <span>{item}</span>
@@ -151,8 +169,13 @@ const FooterNative = props => {
 
     return (
         <div>
-            <div className={classes.virtualFooter} style={{height: bottomMenuHeight}} />
-            <div className={classes.mainFooter} style={bottomMenuStyle}>{MenuItems}</div>
+            <div
+                className={classes.virtualFooter}
+                style={{ height: bottomMenuHeight }}
+            />
+            <div className={classes.mainFooter} style={bottomMenuStyle}>
+                {MenuItems}
+            </div>
         </div>
     );
 };
