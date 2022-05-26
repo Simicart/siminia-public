@@ -29,7 +29,6 @@ const TYPE_PRODUCT = 'PRODUCT';
 const FooterNative = props => {
     const [{ isSignedIn }] = useUserContext();
     let listMenuContent = ['Home', 'Category', 'Cart', 'Account'];
-    console.log('shopByBrandEnabled', shopByBrandEnabled);
     if (shopByBrandEnabled) {
         listMenuContent = ['Home', 'Category', 'Cart', 'Malls', 'Account'];
     }
