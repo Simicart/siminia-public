@@ -54,6 +54,8 @@ const Main = props => {
             {mageworxSeoEnabled ? <RsSeller type="home" /> : ''}
             <Helmet>
                 {!!url && <link rel={'icon'} type="image/png" href={url} />}
+                {!!url && <link rel={'apple-touch-icon'} type="image/png" href={url} />}
+                {!!url && <link rel={'mask-icon'} type="image/png" href={url} />}
             </Helmet>
             {/* <StoreTitle /> comment out due to requesting extra query */}
             <main className={classes.root}>
