@@ -48,8 +48,20 @@ const Main = props => {
     //wont render if chose storeview before to avoid rtl issue
     if (!storeConfig && storeCode) return '';
 
-
-
+    let links = []
+    if(!!url) {
+        links = [
+            <link rel={'icon'} type="image/png" href={url} /> ,
+            <link rel={'apple-touch-icon'} type="image/png" href={url} />,
+            <link rel={'mask-icon'} type="image/png" href={url} />,
+        ]
+    } else {
+        links = [
+            <link rel="icon" type="image/x-icon" href="/static/icons/siminia_square_512.png" /> ,
+            <link rel="apple-touch-icon" href="/static/icons/siminia_square_512.png"/>,
+            <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png"/>,
+        ]
+    }
 
     try {
         const splashScreen = document.getElementById('splash-screen');
@@ -66,16 +78,7 @@ const Main = props => {
             )}
             {mageworxSeoEnabled ? <RsSeller type="home" /> : ''}
             <Helmet>
-                {!!url && <link rel={'icon'} type="image/png" href={url} />}
-                {!!url && <link rel={'apple-touch-icon'} type="image/png" href={url} />}
-                {!!url && <link rel={'mask-icon'} type="image/png" href={url} />}
-                {!url &&(
-                    <React.Fragment>
-                    <link rel="icon" type="image/x-icon" href="/static/icons/siminia_square_512.png" />
-                    <link rel="apple-touch-icon" href="/static/icons/siminia_square_512.png"/>
-                    <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png"/>
-                    </React.Fragment>
-                )}
+                {links}
             </Helmet>
             {/* <StoreTitle /> comment out due to requesting extra query */}
             <main style={{ backgroundColor: configColor.app_background}} className={classes.root}>
