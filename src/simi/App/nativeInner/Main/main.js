@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {Fragment, useEffect} from 'react';
 
 import Header from '../Header';
 import FooterNative from '../FooterNative'
@@ -48,8 +48,20 @@ const Main = props => {
     //wont render if chose storeview before to avoid rtl issue
     if (!storeConfig && storeCode) return '';
 
-    
-   
+    let links = []
+    if(!!url) {
+        links = [
+            <link rel={'icon'} type="image/png" href={url} /> ,
+            <link rel={'apple-touch-icon'} type="image/png" href={url} />,
+            <link rel={'mask-icon'} type="image/png" href={url} />,
+        ]
+    } else {
+        links = [
+            <link rel="icon" type="image/x-icon" href="/static/icons/siminia_square_512.png" /> ,
+            <link rel="apple-touch-icon" href="/static/icons/siminia_square_512.png"/>,
+            <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png"/>,
+        ]
+    }
 
     try {
         const splashScreen = document.getElementById('splash-screen');
@@ -66,7 +78,7 @@ const Main = props => {
             )}
             {mageworxSeoEnabled ? <RsSeller type="home" /> : ''}
             <Helmet>
-                {!!url && <link rel={'icon'} type="image/png" href={url} />}
+                {links}
             </Helmet>
             {/* <StoreTitle /> comment out due to requesting extra query */}
             <main style={{ backgroundColor: configColor.app_background}} className={classes.root}>
@@ -78,7 +90,7 @@ const Main = props => {
                     <LoadingComponent />
                 </div>
                 <Header storeConfig={storeConfig} />
-                
+
                 <div id="data-breadcrumb" className={classes.breadcrumb} />
                 <div id="siminia-main-page">{props.children}</div>
                 <FooterNative />

@@ -1,8 +1,14 @@
 import { useQuery } from '@apollo/client';
 import { GET_BRAND_INFO } from './Brand.gql';
 
-export const useBrandInfo = props => { 
-    const { url_key } = props
+const shopByBrandEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_SHOP_BY_BRAND &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_SHOP_BY_BRAND) === 1;
+
+export const useBrandInfo = props => {
+    const { url_key } = props;
     const {
         data: brandInfo,
         loading: brandInfoLoading,
@@ -11,6 +17,7 @@ export const useBrandInfo = props => {
         variables: {
             urlKey: url_key
         },
+        skip: !shopByBrandEnabled
     });
     let derivedErrorMessage;
     if (brandInfoError) {
@@ -31,5 +38,5 @@ export const useBrandInfo = props => {
         brandInfo,
         brandInfoLoading,
         derivedErrorMessage
-    }
-}
+    };
+};

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageBuilderComponent as PbComponent } from 'simi-pagebuilder-react';
+import { PageBuilderComponent as PbComponent } from 'tapita-pagebuilder-react';
 import { ProductScroll } from 'src/simi/App/core/TapitaPageBuilder/Products/scroll';
 import { CategoryScroll } from 'src/simi/App/core/TapitaPageBuilder/Category/scroll';
 import ProductList from 'src/simi/App/core/TapitaPageBuilder/Products/list';

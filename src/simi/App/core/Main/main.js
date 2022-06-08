@@ -54,6 +54,15 @@ const Main = props => {
             {mageworxSeoEnabled ? <RsSeller type="home" /> : ''}
             <Helmet>
                 {!!url && <link rel={'icon'} type="image/png" href={url} />}
+                {!!url && <link rel={'apple-touch-icon'} type="image/png" href={url} />}
+                {!!url && <link rel={'mask-icon'} type="image/png" href={url} />}
+                {!url &&(
+                    <React.Fragment>
+                        <link rel="icon" type="image/x-icon" href="/static/icons/siminia_square_512.png" />
+                        <link rel="apple-touch-icon" href="/static/icons/siminia_square_512.png"/>
+                        <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png"/>
+                    </React.Fragment>
+                )}
             </Helmet>
             {/* <StoreTitle /> comment out due to requesting extra query */}
             <main className={classes.root}>
