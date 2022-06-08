@@ -10,7 +10,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useProductFullDetail } from 'src/simi/talons/ProductFullDetail/useProductFullDetail';
 import ProductFullDetail from './productFullDetail';
 import PageBuilderComponent from '../TapitaPageBuilder/PageBuilderComponent';
-import { TreeDataProductDetailMarkerEnum } from 'simi-pagebuilder-react';
+import { TreeDataProductDetailMarkerEnum } from 'tapita-pagebuilder-react';
 import RichContent from '@magento/venia-ui/lib/components/RichContent/richContent';
 
 require('./productbuilderFullDetail.scss');

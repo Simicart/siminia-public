@@ -55,7 +55,7 @@ const TYPE_CMS_PAGE = 'CMS_PAGE';
 
 //pagebuilder import and creds
 import { LazyComponent } from '../../../BaseComponents/LazyComponent/';
-import { usePbFinder } from 'simi-pagebuilder-react';
+import { usePbFinder } from 'tapita-pagebuilder-react';
 export const endPoint = 'https://tapita.io/pb/graphql/';
 import PageBuilderComponent from '@simicart/siminia/src/simi/App/core/TapitaPageBuilder/PageBuilderComponent';
 
