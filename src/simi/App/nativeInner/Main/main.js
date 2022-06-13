@@ -51,15 +51,15 @@ const Main = props => {
     let links = []
     if(!!url) {
         links = [
-            <link rel={'icon'} type="image/png" href={url} /> ,
-            <link rel={'apple-touch-icon'} type="image/png" href={url} />,
-            <link rel={'mask-icon'} type="image/png" href={url} />,
+            <link key={1} rel={'icon'} type="image/png" href={url} /> ,
+            <link key={2} rel={'apple-touch-icon'} type="image/png" href={url} />,
+            <link key={3} rel={'mask-icon'} type="image/png" href={url} />,
         ]
     } else {
         links = [
-            <link rel="icon" type="image/x-icon" href="/static/icons/siminia_square_512.png" /> ,
-            <link rel="apple-touch-icon" href="/static/icons/siminia_square_512.png"/>,
-            <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png"/>,
+            <link key={1} rel="icon" type="image/x-icon" href="/static/icons/siminia_square_512.png" /> ,
+            <link key={2} rel="apple-touch-icon" href="/static/icons/siminia_square_512.png"/>,
+            <link key={3} rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png"/>,
         ]
     }
 

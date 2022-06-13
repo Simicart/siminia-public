@@ -6,19 +6,27 @@ import { WishlistPageFragment } from './wishlistFragment.gql';
 
 export const ADD_WISHLIST_ITEM_TO_CART = gql`
     mutation AddWishlistItemToCart(
-        $cartId: String!
-        $cartItem: CartItemInput!
+        $wishlistId: ID!
+        $wishlistItemIds: [ID!]
     ) {
-        addProductsToCart(cartId: $cartId, cartItems: [$cartItem]) {
-            cart {
+        addWishlistItemsToCart(
+            wishlistId: $wishlistId
+            wishlistItemIds: $wishlistItemIds
+        ) {
+            wishlist {
                 id
-                ...CartTriggerFragment
-                ...MiniCartFragment
+                ...WishlistPageFragment
+            }
+            status
+            add_wishlist_items_to_cart_user_errors {
+                message
+                code
+                wishlistId
+                wishlistItemId
             }
         }
     }
-    ${CartTriggerFragment}
-    ${MiniCartFragment}
+    ${WishlistPageFragment}
 `;
 
 export const REMOVE_PRODUCTS_FROM_WISHLIST = gql`

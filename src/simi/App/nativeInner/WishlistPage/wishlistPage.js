@@ -12,6 +12,7 @@ import CreateWishlist from '@magento/venia-ui/lib/components/WishlistPage/create
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { useWindowSize } from '@magento/peregrine';
 import Loader from '../Loader';
+import {getBottomInsets} from '../Helper/Native'
 
 const WishlistPage = props => {
     const talonProps = useWishlistPage();
@@ -105,6 +106,9 @@ const WishlistPage = props => {
         } else {
         }
     };
+
+    const bottomInsets = getBottomInsets()
+
     return (
         <div className={`${classes.root} ${!isMobileSite ? 'container' : ''}`}>
             <div className={classes.wrapper}>
@@ -137,6 +141,7 @@ const WishlistPage = props => {
                             </button>
                         </div> */}
                         <div
+                            style={{top: bottomInsets}}
                             onClick={() => handleShare()}
                             className={classes.btnShare}
                         >

@@ -62,6 +62,7 @@ import StatusBar from './statusBar';
 import FooterFixedBtn from './footerFixedBtn';
 import AddToCartPopup from './addToCartPopup';
 import CallForPrice from './callForPrice';
+import CustomAttributes from './CustomAttributes'
 
 require('./productFullDetail.scss');
 
@@ -814,6 +815,7 @@ const ProductFullDetail = props => {
                         }
                     />
                 ) : null}
+                {product.hasOwnProperty('custom_attributes') && product.custom_attributes.length > 0 && <CustomAttributes customAttributes={product.custom_attributes}/>}
                 <ProductReview
                     topInsets={topInsets}
                     product={product}

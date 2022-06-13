@@ -1,9 +1,10 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useMutation } from '@apollo/client';
+import { useMutation, useLazyQuery } from '@apollo/client';
 
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import defaultOperations from './wishlistItem.gql';
+import cartOperations from '../CartPage/cartPage.gql'
 
 const SUPPORTED_PRODUCT_TYPES = ['SimpleProduct', 'ConfigurableProduct'];
 
@@ -52,16 +53,28 @@ export const useWishlistItem = props => {
         [props.supportedProductTypes, productType]
     );
 
-    const operations = mergeOperations(defaultOperations, props.operations);
+    let operations = mergeOperations(defaultOperations, props.operations);
+    operations = mergeOperations(operations, cartOperations);
+
     const {
         addWishlistItemToCartMutation,
-        removeProductsFromWishlistMutation
+        removeProductsFromWishlistMutation,
+        getCartDetailsQuery
     } = operations;
 
     const [{ cartId }] = useCartContext();
 
     const [isRemovalInProgress, setIsRemovalInProgress] = useState(false);
     const [alertMsg, setAlertMsg] = useState(-1)
+
+    const [fetchCartDetails, { called, data, loading, refetch: refetchCartPage }] = useLazyQuery(
+        getCartDetailsQuery,
+        {
+            fetchPolicy: 'cache-and-network',
+            nextFetchPolicy: 'cache-first'
+        }
+    );
+
     const [
         removeProductFromWishlistError,
         setRemoveProductFromWishlistError
@@ -111,9 +124,36 @@ export const useWishlistItem = props => {
             loading: addWishlistItemToCartLoading
         }
     ] = useMutation(addWishlistItemToCartMutation, {
+        update: cache => {
+            // clean up for cache fav product on category page
+            cache.modify({
+                id: 'ROOT_QUERY',
+                fields: {
+                    customerWishlistProducts: cachedProducts =>
+                        cachedProducts.filter(
+                            productSku => productSku !== sku
+                        )
+                }
+            });
+
+            cache.modify({
+                id: `CustomerWishlist:${wishlistId}`,
+                fields: {
+                    items_v2: (cachedItems, { readField, Remove }) => {
+                        for (var i = 0; i < cachedItems.items.length; i++) {
+                            if (readField('id', item) === itemId) {
+                                return Remove;
+                            }
+                        }
+
+                        return cachedItems;
+                    }
+                }
+            });
+        },
         variables: {
-            cartId,
-            cartItem
+            wishlistId: wishlistId,
+            wishlistItemsId: [itemId]
         }
     });
 
@@ -155,21 +195,24 @@ export const useWishlistItem = props => {
     );
 
     const handleAddToCart = useCallback(async () => {
-        if (
-            configurableOptions.length === 0 ||
-            selectedConfigurableOptions.length === configurableOptions.length
-        ) {
+        // if (
+        //     configurableOptions.length === 0 ||
+        //     selectedConfigurableOptions.length === configurableOptions.length
+        // ) {
             try {
                 await addWishlistItemToCart();
+                await fetchCartDetails({ variables: { cartId } });
                 setAlertMsg(true)
             } catch (error) {
                 console.error(error);
             }
-        } else {
-            onOpenAddToCartDialog(item);
-        }
+        // } else {
+        //     onOpenAddToCartDialog(item);
+        // }
     }, [
+        cartId,
         addWishlistItemToCart,
+        fetchCartDetails,
         configurableOptions.length,
         item,
         onOpenAddToCartDialog,
