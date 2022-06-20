@@ -13,6 +13,11 @@
 }
 
 
+.product-detail-carousel .carousel-slider .slide > img {
+    min-height: 445px;
+    object-fit: contain;
+}
+
 .image-carousel {
     margin: 0 auto;
     min-width: 300px;

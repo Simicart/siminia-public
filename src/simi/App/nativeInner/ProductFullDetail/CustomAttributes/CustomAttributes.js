@@ -30,7 +30,7 @@ const CustomAttributes = props => {
                     }
                 }
      
-                if(selected_attribute_options && selected_attribute_options.attribute_option.length > 0) {
+                if(selected_attribute_options && selected_attribute_options.attribute_option && selected_attribute_options.attribute_option.length > 0) {
                     const optionValues = selected_attribute_options.attribute_option.map((option) => {
                         return option.label
                     })

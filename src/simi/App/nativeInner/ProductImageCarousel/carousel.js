@@ -187,8 +187,8 @@ const ProductImageCarousel = props => {
                         alt={'loading'}
                         style={
                             !isPhone
-                                ? { width: 240, height: 40, minHeight: 445, objectFit: 'contain' }
-                                : { width: 180, height: 30, minHeight: 445, objectFit: 'contain' }
+                                ? { width: 240, height: 40 }
+                                : { width: 180, height: 30 }
                         }
                     />
                     

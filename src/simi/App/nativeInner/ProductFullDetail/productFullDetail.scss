@@ -56,6 +56,12 @@
             }
         }
     }
+    .productDescription {
+        padding: 0 1.5rem;
+    }
+    .productDescription div[class*='richContent-root'] {
+        margin-top: 1.5rem;
+    }
     .wrapperOptions {
         section {
             div {

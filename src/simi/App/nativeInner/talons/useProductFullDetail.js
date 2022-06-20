@@ -188,6 +188,7 @@ export const useProductFullDetail = props => {
 
     const operations = mergeOperations(defaultOperations, props.operations);
     const [alertMsg, setAlertMsg] = useState(-1)
+    const [updatePrice, setUpdatePrice] = useState(null)
 
     const productType = product.__typename;
 
@@ -759,6 +760,25 @@ export const useProductFullDetail = props => {
         [optionSelections]
     );
 
+    const handleUpdateQuantity = useCallback((quantity) => {
+        const {price_tiers} = product
+        if(productType !== 'ConfigurableProduct' && price_tiers && Array.isArray(price_tiers) && price_tiers.length > 0) {
+            const findPriceTier = price_tiers.find((priceTier) => {
+                if(priceTier.quantity && priceTier.quantity >= parseInt(quantity)) {
+                    return true
+                }
+
+                return false
+            })
+
+            if(findPriceTier && findPriceTier.final_price && findPriceTier.final_price.value) {
+                setUpdatePrice(findPriceTier.final_price)
+            } else {
+                setUpdatePrice(null)
+            }
+        }
+    }, [product, productType])
+
     // original price + price of options
     const extraPrice = useMemo(
         () =>
@@ -781,10 +801,9 @@ export const useProductFullDetail = props => {
             groupedOptions
         ]
     );
-    const productPrice =
-        productType === 'BundleProduct'
-            ? getFromToBundlePrice({ product })
-            : extraPrice;
+
+    const productPrice = productType === 'BundleProduct'? getFromToBundlePrice({ product })
+            : updatePrice  ? updatePrice : extraPrice;
 
     const switchExtraPriceForNormalPrice = [
         'DownloadableProduct',
@@ -875,6 +894,7 @@ export const useProductFullDetail = props => {
         resetBundleOption,
         handleCustomOptionsChange,
         handleGroupedOptionsChange,
+        handleUpdateQuantity,
         getCurrentCustomValue,
         getCurrentBundleValue,
         optionSelections,
