@@ -24,11 +24,12 @@ import DEFAULT_OPERATIONS from '@magento/peregrine/lib/talons/RootComponents/Pro
  * @returns {Bool}      result.product - The product's details.
  */
 export const useProduct = props => {
-    const { mapProduct } = props;
+    const { mapProduct, sku } = props;
     const storeConfig = Identify.getStoreConfig();
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
-    const { getStoreConfigData, getProductDetailQuery } = operations;
+    const { getStoreConfigData, getProductDetailQuery, getProductDetailBySkuQuery } = operations;
     const { pathname } = useLocation();
+
     const [
         ,
         {
@@ -50,15 +51,25 @@ export const useProduct = props => {
     }, [storeConfigData]);
 
     const slug = pathname.split('/').pop();
-    const urlKey = productUrlSuffix ? slug.replace(productUrlSuffix, '') : slug;
 
-    const { error, loading, data } = useQuery(getProductDetailQuery, {
+    let urlKey = productUrlSuffix ? slug.replace(productUrlSuffix, '') : slug;
+
+    let query = getProductDetailQuery
+    let variables = {
+        urlKey
+    }
+    if(sku) {
+        query = getProductDetailBySkuQuery
+        variables = {
+            sku
+        }
+    }
+
+    const { error, loading, data } = useQuery(query, {
         fetchPolicy: 'cache-and-network',
         nextFetchPolicy: 'cache-first',
         skip: !storeConfigData,
-        variables: {
-            urlKey
-        }
+        variables
     });
 
     const isBackgroundLoading = !!data && loading;

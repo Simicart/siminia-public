@@ -28,7 +28,7 @@ export const useCategoryList = props => {
 
     const storeConfig = storeConfigData ? storeConfigData.storeConfig : null;
     const { loading, error, data } = useQuery(getCategoryListQuery, {
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'cache-and-network',
         nextFetchPolicy: 'cache-first',
         skip: !id,
         variables: {

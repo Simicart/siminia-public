@@ -62,7 +62,11 @@ const Griditem = props => {
 
     const callForPriceRule = item.mp_callforprice_rule;
 
-    const product_url = `/${url_key}${productUrlSuffix()}`;
+    let urlKey = url_key
+    if(url_key && typeof url_key === 'string') {
+        urlKey = urlKey.replace(/[^a-zA-Z0-9]/g,'-')
+    } 
+    const product_url = `/${urlKey}${productUrlSuffix()}`;
     // const imageWidth = document.querySelector("#product-image-label").offsetWidth
 
     //if uncomment this - should comment out useDelayedTransition() at src/simi/app.js

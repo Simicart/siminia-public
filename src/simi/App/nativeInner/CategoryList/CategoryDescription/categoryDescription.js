@@ -11,20 +11,20 @@ const CategoryDescription = props => {
     const { display_mode } = childCate;
 
     const renderBlock = () => {
-        if (cms_block) {
-            return (
-                <div className={`${description ? '' : 'paddingTop'} wrapBlock`}>
-                    <div className="titleBlock">{cms_block.title}</div>
-                    <div className="content">
-                        <div
-                            dangerouslySetInnerHTML={{
-                                __html: cms_block.content
-                            }}
-                        />
-                    </div>
-                </div>
-            );
-        }
+        // if (cms_block) {
+        //     return (
+        //         <div className={`${description ? '' : 'paddingTop'} wrapBlock`}>
+        //             <div className="titleBlock">{cms_block.title}</div>
+        //             <div className="content">
+        //                 <div
+        //                     dangerouslySetInnerHTML={{
+        //                         __html: cms_block.content
+        //                     }}
+        //                 />
+        //             </div>
+        //         </div>
+        //     );
+        // }
         return '';
     };
     return (
