@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Loading from 'src/simi/BaseComponents/Loading';
 import { useQuery } from '@apollo/client';
-import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
+import { RESOLVE_URL } from './magentoRoute.gql';
 import { integrationToken } from '../../core/NoMatch';
 export { integrationToken };
 

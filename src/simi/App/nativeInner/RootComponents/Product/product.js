@@ -29,7 +29,7 @@ const isMobileSite = window.innerWidth <= 450;
 
 const Product = props => {
     const { __typename: productType, pbFinderProps } = props;
-    console.log(props)
+ 
     const talonProps = useProduct({
         operations: DEFAULT_OPERATIONS,
         sku: props.sku || '',
