@@ -1,11 +1,11 @@
-import React, { Fragment, useEffect, useMemo } from 'react';
+import React, { Suspense, useEffect, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { string } from 'prop-types';
 import { useProduct } from '@simicart/siminia/src/simi/talons/ProductFullDetail/useProduct.js';
 
 import ErrorView from '@magento/venia-ui/lib/components/ErrorView';
 import { StoreTitle, Meta } from '@magento/venia-ui/lib/components/Head';
-import { ProductBuilderFullDetailUpperLower } from '@simicart/siminia/src/simi/App/core/ProductFullDetail';
+// import ProductBuilderFullDetailUpperLower from '@simicart/siminia/src/simi/App/core/ProductFullDetail';
 import ProductFullDetail from '../../ProductFullDetail';
 import { prepareProduct } from 'src/simi/Helper/Product';
 import mapProduct from '@magento/venia-ui/lib/util/mapProduct';
@@ -19,6 +19,8 @@ const storeCode = storage.getItem('store_view_code') || STORE_VIEW_CODE;
 import Seo from '@simicart/siminia/src/simi/App/core/Seo';
 
 const isMobileSite = window.innerWidth <= 450;
+
+const ProductBuilderFullDetailUpperLower = React.lazy('@simicart/siminia/src/simi/App/core/ProductFullDetail/productbuilderFullDetail.upperlower')
 /*
  * As of this writing, there is no single Product query type in the M2.3 schema.
  * The recommended solution is to use filter criteria on a Products query.
@@ -166,11 +168,14 @@ const Product = props => {
                 <StoreTitle>{product.name}</StoreTitle>
                 <Meta name="description" content={product.meta_description} />
                 {foudThepage || pageMaskedId ? (
-                    <ProductBuilderFullDetailUpperLower
-                        product={product}
-                        pageData={foudThepage}
-                        maskedId={pageMaskedId}
-                    />
+                    <Suspense fallback={null}>
+                        <ProductBuilderFullDetailUpperLower
+                            product={product}
+                            pageData={foudThepage}
+                            maskedId={pageMaskedId}
+                        />
+                    </Suspense>
+                
                 ) : (
                     <ProductFullDetail product={product} />
                 )}

@@ -221,7 +221,7 @@ export const useProductFullDetail = props => {
 
     const [
         addProductToCart,
-        { error: errorAddingProductToCart, loading: isAddProductLoading}
+        { error: errorAddingProductToCart, loading: isAddProductLoading, data: dataAddingProductToCart}
     ] = useMutation(operations.addProductToCartMutation);
 
     const urlKey = product.url_key;
@@ -831,6 +831,16 @@ export const useProductFullDetail = props => {
             errorAddingDownloadableProduct
         ]
     );
+
+    const userErrorsMessage = useMemo(() => {
+        const { addProductsToCart } = dataAddingProductToCart || {}
+        if(addProductsToCart && addProductsToCart.user_errors && addProductsToCart.user_errors.length > 0) {
+            return addProductsToCart.user_errors.map((user_error) => user_error.message)
+        }
+
+        return []
+
+    })
     
 
     const wishlistItemOptions = useMemo(() => {
@@ -864,6 +874,7 @@ export const useProductFullDetail = props => {
     return {
         breadcrumbCategoryId,
         errorMessage: derivedErrorMessage,
+        userErrorsMessage,
         handleAddToCart,
         handleBuyNow,
         handleSelectionChange,

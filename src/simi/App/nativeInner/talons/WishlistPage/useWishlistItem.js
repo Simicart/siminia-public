@@ -5,6 +5,8 @@ import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import defaultOperations from './wishlistItem.gql';
 import cartOperations from '../CartPage/cartPage.gql'
+import { useAwaitQuery } from '@magento/peregrine/lib/hooks/useAwaitQuery';
+import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 
 const SUPPORTED_PRODUCT_TYPES = ['SimpleProduct', 'ConfigurableProduct'];
 
@@ -59,21 +61,25 @@ export const useWishlistItem = props => {
     const {
         addWishlistItemToCartMutation,
         removeProductsFromWishlistMutation,
-        getCartDetailsQuery
+        getCartDetailsQuery,
+        createCartMutaion
     } = operations;
 
-    const [{ cartId }] = useCartContext();
+    const [{ cartId }, { getCartDetails }] = useCartContext();
+
+    const [fetchCartId] = useMutation(createCartMutaion);
+    const fetchCartDetails = useAwaitQuery(getCartDetailsQuery);
 
     const [isRemovalInProgress, setIsRemovalInProgress] = useState(false);
     const [alertMsg, setAlertMsg] = useState(-1)
 
-    const [fetchCartDetails, { called, data, loading, refetch: refetchCartPage }] = useLazyQuery(
-        getCartDetailsQuery,
-        {
-            fetchPolicy: 'cache-and-network',
-            nextFetchPolicy: 'cache-first'
-        }
-    );
+    // const [fetchCartDetails, { called, data, loading, refetch: refetchCartPage }] = useLazyQuery(
+    //     getCartDetailsQuery,
+    //     {
+    //         fetchPolicy: 'cache-and-network',
+    //         nextFetchPolicy: 'cache-first'
+    //     }
+    // );
 
     const [
         removeProductFromWishlistError,
@@ -136,24 +142,24 @@ export const useWishlistItem = props => {
                 }
             });
 
-            cache.modify({
-                id: `CustomerWishlist:${wishlistId}`,
-                fields: {
-                    items_v2: (cachedItems, { readField, Remove }) => {
-                        for (var i = 0; i < cachedItems.items.length; i++) {
-                            if (readField('id', item) === itemId) {
-                                return Remove;
-                            }
-                        }
+            // cache.modify({
+            //     id: `CustomerWishlist:${wishlistId}`,
+            //     fields: {
+            //         items_v2: (cachedItems, { readField, Remove }) => {
+            //             for (var i = 0; i < cachedItems.items.length; i++) {
+            //                 if (readField('id', item) === itemId) {
+            //                     return Remove;
+            //                 }
+            //             }
 
-                        return cachedItems;
-                    }
-                }
-            });
+            //             return cachedItems;
+            //         }
+            //     }
+            // });
         },
         variables: {
-            wishlistId: wishlistId,
-            wishlistItemsId: [itemId]
+            wishlistId: parseInt(wishlistId),
+            wishlistItemIds: [parseInt(itemId)]
         }
     });
 
@@ -201,7 +207,11 @@ export const useWishlistItem = props => {
         // ) {
             try {
                 await addWishlistItemToCart();
-                await fetchCartDetails({ variables: { cartId } });
+                // await fetchCartDetails({ variables: { cartId } });
+                await getCartDetails({
+                    fetchCartId,
+                    fetchCartDetails
+                });
                 setAlertMsg(true)
             } catch (error) {
                 console.error(error);
@@ -212,7 +222,10 @@ export const useWishlistItem = props => {
     }, [
         cartId,
         addWishlistItemToCart,
+        // fetchCartDetails,
+        getCartDetails,
         fetchCartDetails,
+        fetchCartId,
         configurableOptions.length,
         item,
         onOpenAddToCartDialog,

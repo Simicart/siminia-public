@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 import { CartTriggerFragment } from '@magento/peregrine/lib/talons/Header/cartTriggerFragments.gql';
 import { MiniCartFragment } from '@magento/peregrine/lib/talons/MiniCart/miniCartFragments.gql';
-import { WishlistPageFragment } from './wishlistFragment.gql';
+import { WishlistPageFragment, WishlistFragment } from './wishlistFragment.gql';
 
 export const ADD_WISHLIST_ITEM_TO_CART = gql`
     mutation AddWishlistItemToCart(
@@ -15,7 +15,7 @@ export const ADD_WISHLIST_ITEM_TO_CART = gql`
         ) {
             wishlist {
                 id
-                ...WishlistPageFragment
+                ...WishlistFragment
             }
             status
             add_wishlist_items_to_cart_user_errors {
@@ -26,7 +26,7 @@ export const ADD_WISHLIST_ITEM_TO_CART = gql`
             }
         }
     }
-    ${WishlistPageFragment}
+    ${WishlistFragment}
 `;
 
 export const REMOVE_PRODUCTS_FROM_WISHLIST = gql`

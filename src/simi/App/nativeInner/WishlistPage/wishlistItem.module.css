@@ -55,10 +55,10 @@
 }
 
 .deleteItem {
-    margin: 0 0.5rem 0 1rem;
+    /* margin: 0 0.5rem 0 1rem; */
     justify-self: right;
     position: absolute;
-    left: 0;
+    /* //left: 0; */
 }
 
 .actionWrap {
@@ -81,10 +81,10 @@
 }
 
 .close {
-    position: absolute;
+    /* position: absolute; */
     width: 32px;
     height: 32px;
-    left: -15px;
+    /* left: -15px; */
     opacity: 0.7;
     background-color: #F4F4F4;
     /* padding: 6px; */
