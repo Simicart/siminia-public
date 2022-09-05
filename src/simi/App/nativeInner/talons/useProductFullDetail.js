@@ -834,12 +834,16 @@ export const useProductFullDetail = props => {
 
     const userErrorsMessage = useMemo(() => {
         const { addProductsToCart } = dataAddingProductToCart || {}
-        if(addProductsToCart && addProductsToCart.user_errors && addProductsToCart.user_errors.length > 0) {
+        if(
+            addProductsToCart 
+            && addProductsToCart.user_errors 
+            && Array.isArray(addProductsToCart.user_errors) 
+            && addProductsToCart.user_errors.length > 0
+        ) {
             return addProductsToCart.user_errors.map((user_error) => user_error.message)
         }
 
         return []
-
     })
     
 

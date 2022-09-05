@@ -223,7 +223,6 @@ const ProductFullDetail = props => {
 
     // Fill a map with field/section -> error.
     const errors = new Map();
-    console.log(userErrorsMessage)
     if(Array.isArray(userErrorsMessage) && userErrorsMessage.length > 0) {
         userErrorsMessage.forEach(userErrorMessage => {
             errors.set('form', [
@@ -493,7 +492,6 @@ const ProductFullDetail = props => {
                         <WishlistButton {...wishlistButtonProps} />
                     </Suspense>
                 )}
-                {}
             </section>
             {!isMobileSite &&
             product.mp_sizeChart &&
