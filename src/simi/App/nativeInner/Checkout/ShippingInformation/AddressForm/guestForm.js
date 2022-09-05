@@ -149,7 +149,7 @@ const GuestForm = props => {
                         />
                     </Field>
                 </div>
-                <div className={classes.street1}>
+                {/* <div className={classes.street1}>
                     <Field
                         id="street1"
                         label={formatMessage({
@@ -160,7 +160,7 @@ const GuestForm = props => {
                     >
                         <TextInput field="street[1]" id="street1" />
                     </Field>
-                </div>
+                </div> */}
                 <div className={classes.city}>
                     <Field
                         id="city"

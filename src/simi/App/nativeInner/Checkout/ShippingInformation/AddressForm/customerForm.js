@@ -193,7 +193,7 @@ const CustomerForm = props => {
                         />
                     </Field>
                 </div>
-                <div className={classes.street1}>
+                {/* <div className={classes.street1}>
                     <Field
                         id="customer_street1"
                         label={formatMessage({
@@ -204,7 +204,7 @@ const CustomerForm = props => {
                     >
                         <TextInput field="street[1]" id="customer_street1" />
                     </Field>
-                </div>
+                </div> */}
                 <div className={classes.city}>
                     <Field
                         id="customer_city"
