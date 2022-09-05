@@ -7,7 +7,7 @@ import { useShippingInformation } from '@magento/peregrine/lib/talons/CheckoutPa
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
-import AddressForm from '@magento/venia-ui/lib/components/CheckoutPage/ShippingInformation/AddressForm';
+import AddressForm from './AddressForm';
 import Card from './card';
 import defaultClasses from './shippingInformation.module.css';
 import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
@@ -15,7 +15,7 @@ import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
 import Loader from 'src/simi/App/nativeInner/Loader';
 
 const EditModal = React.lazy(() =>
-    import('@magento/venia-ui/lib/components/CheckoutPage/ShippingInformation/editModal')
+    import('./editModal')
 );
 
 const ShippingInformation = props => {
