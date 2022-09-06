@@ -204,7 +204,7 @@ const PlainOffline = props => {
                             initialValue={initialValues.street1}
                         />
                     </Field>
-                    <Field
+                    {/* <Field
                         id="street2"
                         classes={fieldClasses.street2}
                         label={formatMessage({
@@ -218,7 +218,7 @@ const PlainOffline = props => {
                             field="street2"
                             initialValue={initialValues.street2}
                         />
-                    </Field>
+                    </Field> */}
                     <Field
                         id="city"
                         classes={fieldClasses.city}

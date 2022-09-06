@@ -67,7 +67,6 @@ export const SET_BILLING_ADDRESS = gql`
         $firstName: String!
         $lastName: String!
         $street1: String!
-        $street2: String
         $city: String!
         $region: String!
         $postcode: String!
@@ -81,7 +80,7 @@ export const SET_BILLING_ADDRESS = gql`
                     address: {
                         firstname: $firstName
                         lastname: $lastName
-                        street: [$street1, $street2]
+                        street: [$street1]
                         city: $city
                         region: $region
                         postcode: $postcode
