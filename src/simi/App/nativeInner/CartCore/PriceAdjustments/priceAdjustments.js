@@ -63,7 +63,7 @@ const PriceAdjustments = props => {
     const maxPoint = Math.floor(
         (pointSpending * subtotalVal) / moneySpending[0]
     );
-    const balance = customerRewardPoint.point_balance;
+    const balance = customerRewardPoint ? customerRewardPoint.point_balance : 0;
     let rewardPointSelected = 0;
     if (mpRewardSpent && mpRewardSpent.length > 0)
         rewardPointSelected = mpRewardSpent[0].value;
