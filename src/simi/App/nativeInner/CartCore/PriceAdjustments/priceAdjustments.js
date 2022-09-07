@@ -53,7 +53,7 @@ const PriceAdjustments = props => {
             return rewardData.code == 'mp_reward_spent';
         });
     const { customerRewardPoint } = useGetRewardPointData({ onCart: true });
-    const exchange_rate = customerRewardPoint.current_exchange_rates;
+    const exchange_rate = customerRewardPoint ? customerRewardPoint.current_exchange_rates : null
     const spending_rate = exchange_rate ? exchange_rate.spending_rate : '';
     const words = spending_rate ? spending_rate.split(' points') : '';
     const money = spending_rate ? spending_rate.split('for $') : '';

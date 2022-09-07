@@ -2,7 +2,7 @@ import React, { Suspense, useState } from 'react';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 import {useBottomNotification} from "src/simi/App/nativeInner/Cart/bottomNotificationHook";
 
-const CorePriceAdjustments = React.lazy(() => import('src/simi/App/core/Cart/PriceAdjustments'));
+const CorePriceAdjustments = React.lazy(() => import('src/simi/App/nativeInner/CartCore/PriceAdjustments'));
 
 const CartPriceAdjustments  = React.lazy(() => import('src/simi/App/nativeInner/Cart/PriceAdjustments'));
 
