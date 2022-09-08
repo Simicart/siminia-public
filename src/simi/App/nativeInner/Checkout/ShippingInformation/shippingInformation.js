@@ -7,7 +7,7 @@ import { useShippingInformation } from '@magento/peregrine/lib/talons/CheckoutPa
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
-import AddressForm from './AddressForm';
+import AddressForm from '@magento/venia-ui/lib/components/CheckoutPage/ShippingInformation/AddressForm';
 import Card from './card';
 import defaultClasses from './shippingInformation.module.css';
 import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
