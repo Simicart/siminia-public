@@ -15,7 +15,7 @@ import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
 import Loader from 'src/simi/App/nativeInner/Loader';
 
 const EditModal = React.lazy(() =>
-    import('./editModal')
+    import('@magento/venia-ui/lib/components/CheckoutPage/ShippingInformation/editModal')
 );
 
 const ShippingInformation = props => {
