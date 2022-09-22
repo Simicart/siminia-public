@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { cateUrlSuffix } from 'src/simi/Helper/Url';
 import { useStoreConfigData } from '../talons/useStoreConfigData';
+import { Meta } from '@magento/venia-ui/lib/components/Head';
 
 /* 
 props: {
@@ -67,7 +68,7 @@ const Category = props => {
         } = category;
         const urlSuffix = cateUrlSuffix();
         const urlBase = window.location.origin;
-        let category_url =
+        const category_url =
             (url_key && urlBase + '/' + url_key + urlSuffix) || '';
         const logoImage = urlBase + '/static/logo.png';
 
@@ -89,6 +90,16 @@ const Category = props => {
 
         return (
             <>
+                {meta_title_crop ? (
+                    <Meta name="title" content={meta_title_crop} />
+                ) : (
+                    ''
+                )}
+                {description_crop ? (
+                    <Meta name="description" content={description_crop} />
+                ) : (
+                    ''
+                )}
                 {og_enabled && (
                     <Helmet>
                         <meta property="og:type" content="website" />
