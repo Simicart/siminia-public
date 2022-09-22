@@ -62,6 +62,9 @@ import StatusBar from './statusBar';
 import FooterFixedBtn from './footerFixedBtn';
 import AddToCartPopup from './addToCartPopup';
 import CallForPrice from './callForPrice';
+import CustomAttributes from './CustomAttributes'
+import { isCallForPriceEnable } from '../Helper/Module'
+import PriceTiers from './PriceTiers';
 
 require('./productFullDetail.scss');
 
@@ -111,7 +114,8 @@ const ProductFullDetail = props => {
         relatedProducts,
         isAddProductLoading,
         setAlertMsg,
-        alertMsg
+        alertMsg,
+        handleUpdateQuantity
     } = talonProps;
 
     const {
@@ -129,12 +133,11 @@ const ProductFullDetail = props => {
     const [showPopup, setShowPopup] = useState(false);
     const successMsg = `${productDetails.name} was added to shopping cart`;
     const [{ isSignedIn }] = useUserContext();
-    let history = useHistory();
+    const history = useHistory();
     const dataLocation = product.mp_callforprice_rule
         ? product.mp_callforprice_rule
         : null;
 
-    
     const action =
         dataLocation && dataLocation.action ? dataLocation.action : '';
     const [moreBtn, setMoreBtn] = useState(false);
@@ -342,7 +345,7 @@ const ProductFullDetail = props => {
             toValue={productDetails.price.toValue}
         />
     ));
-    const { price, sku } = product || {};
+    const { price, sku, price_tiers } = product || {};
 
     const review =
         product && product.review_count && product.rating_summary ? (
@@ -383,9 +386,8 @@ const ProductFullDetail = props => {
             </div>
         );
 
-    const wrapperPrice =
-        (action === 'login_see_price' && isSignedIn) ||
-        action === 'redirect_url' ? (
+    let wrapperPrice = (
+        <React.Fragment>
             <div className="wrapperPrice">
                 <span
                     className="labelPrice"
@@ -404,6 +406,7 @@ const ProductFullDetail = props => {
                 >
                     {pricePiece}
                 </span>
+                
                 {isOutOfStock ? (
                     <span className="outOfStock">
                         <FormattedMessage
@@ -415,9 +418,17 @@ const ProductFullDetail = props => {
                     ''
                 )}
             </div>
-        ) : (
-            ''
-        );
+            {(price_tiers && Array.isArray(price_tiers) && price_tiers.length > 0) ? <PriceTiers priceTiers={price_tiers} price={price} /> : null}
+        </React.Fragment>
+    )
+
+    console.log('run-')
+
+    if(isCallForPriceEnable()) {
+        if(!(action === 'login_see_price' && isSignedIn) || action === 'redirect_url' ) {
+            wrapperPrice = null
+        }
+    }
 
     const wrapperQuantity = (
         <div className="wrapperQuantity">
@@ -432,6 +443,7 @@ const ProductFullDetail = props => {
                 </span>
                 <QuantityFields
                     classes={{ root: classes.quantityRoot }}
+                    onChange={handleUpdateQuantity} 
                     min={1}
                     message={errors.get('quantity')}
                 />
@@ -523,11 +535,19 @@ const ProductFullDetail = props => {
                             <ul className="header-more">
                                 <li>
                                     <BiHome />
-                                    <Link to="/">Home</Link>
+                                    <Link to="/">
+                                        <FormattedMessage
+                                            id={'Home'}
+                                            defaultMessage={'Home'}
+                                        />
+                                    </Link>
                                 </li>
                                 <li>
                                     <BiHelpCircle />
-                                    Help Center
+                                    <FormattedMessage
+                                        id={'Help Center'}
+                                        defaultMessage={'Help Center'}
+                                    />
                                 </li>
                             </ul>
                         ) : null}
@@ -604,7 +624,7 @@ const ProductFullDetail = props => {
 
             {/* <div className={'p-fulldetails-ctn container'}> */}
             <div
-                className={'p-fulldetails-ctn  '}
+                className={'p-fulldetails-ctn'}
                 style={{
                     backgroundColor: isMobileSite
                         ? configColor.app_background
@@ -643,10 +663,10 @@ const ProductFullDetail = props => {
                                 <section className={classes.details}>
                                     <span className={classes.detailsTitle}>
                                         <FormattedMessage
-                                            id={'global.labelSku'}
-                                            defaultMessage={'SKU: '}
+                                            id={'SKU'}
+                                            defaultMessage={'SKU'}
                                         />
-                                        {productDetails.sku}
+                                        {': ' + productDetails.sku}
                                     </span>
                                 </section>
                             </div>
@@ -668,6 +688,14 @@ const ProductFullDetail = props => {
                             }}
                             errors={errors.get('form') || []}
                         />
+
+                        {(!isMobileSite && product.short_description) ? (
+                            <div className="productDescription">
+                                <RichContent
+                                    html={product.short_description.html}
+                                />
+                            </div>
+                        ) : null}
 
                         {!isMobileSite ? (
                             <div className="wrapperOptions">
@@ -741,7 +769,14 @@ const ProductFullDetail = props => {
                                                 }
                                             >
                                                 <ArrowLeft />
-                                                <p>Description</p>
+                                                <p>
+                                                    <FormattedMessage
+                                                        id={
+                                                            'productFullDetail.productDescription'
+                                                        }
+                                                        defaultMessage={'Product Description'}
+                                                    />
+                                                </p>
                                             </div>
                                             <RichContent
                                                 html={
@@ -752,8 +787,7 @@ const ProductFullDetail = props => {
                                     </>
                                 )}
                             </section>
-                            {product.short_description !== '' &&
-                            isMobileSite ? (
+                            {product.short_description !== '' && isMobileSite ? (
                                 <div className="short-description">
                                     <RichContent
                                         html={product.short_description.html}
@@ -765,7 +799,7 @@ const ProductFullDetail = props => {
                             <section className={classes.details}>
                                 <span className={classes.detailsTitle}>
                                     <FormattedMessage
-                                        id={'global.sku'}
+                                        id={'SKU'}
                                         defaultMessage={'SKU'}
                                     />
                                 </span>
@@ -775,7 +809,7 @@ const ProductFullDetail = props => {
                             <div className="sku-details">
                                 <span className={classes.detailsTitle}>
                                     <FormattedMessage
-                                        id={'global.sku'}
+                                        id={'SKU'}
                                         defaultMessage={'SKU'}
                                     />
                                 </span>
@@ -814,6 +848,7 @@ const ProductFullDetail = props => {
                         }
                     />
                 ) : null}
+                {product.hasOwnProperty('custom_attributes') && product.custom_attributes.length > 0 && <CustomAttributes customAttributes={product.custom_attributes}/>}
                 <ProductReview
                     topInsets={topInsets}
                     product={product}

@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { cateUrlSuffix } from 'src/simi/Helper/Url';
+import { Meta } from '@magento/venia-ui/lib/components/Head';
 
 const Category = props => {
     const { category } = props;
@@ -22,16 +23,26 @@ const Category = props => {
         } = category;
         const urlSuffix = cateUrlSuffix();
         const urlBase = window.location.origin;
-        let category_url =
+        const category_url =
             (url_key && urlBase + '/' + url_key + urlSuffix) || '';
         const logoImage = urlBase + '/static/logo.png';
 
-        let description_crop = meta_description || description || '';
+        const description_crop = meta_description || description || '';
 
-        let meta_title_crop = meta_title || name || '';
+        const meta_title_crop = meta_title || name || '';
 
         return (
             <>
+                {meta_title_crop ? (
+                    <Meta name="title" content={meta_title_crop} />
+                ) : (
+                    ''
+                )}
+                {description_crop ? (
+                    <Meta name="description" content={description_crop} />
+                ) : (
+                    ''
+                )}
                 <Helmet>
                     <meta property="og:type" content="website" />
                     <meta property="og:title" content={meta_title_crop} />

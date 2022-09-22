@@ -56,7 +56,7 @@
     "rendertron-middleware": "~0.1.5",
     "sass": "~1.43.4",
     "sass-loader": "^7.1.0",
-    "tapita-pagebuilder-react": "^1.4.5",
+    "tapita-pagebuilder-react": "^1.4.8",
     "universal-cookie": "^4.0.3",
     "react-dropdown-tree-select": "^2.7.1",
     "react-resize-detector": "~7.0.0"

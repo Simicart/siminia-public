@@ -1,0 +1,38 @@
+.root {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgb(var(--venia-global-color-border));
+    background-color: #fff;
+}
+
+.root h3 {
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.root table {
+    margin-top: 1rem;
+}
+
+.root table th, .root table td {
+    text-align: left;
+    vertical-align: top;
+}
+
+.root table th {
+    padding: 5.5px 30px 10px 0;
+}
+
+.root table td {
+    padding: 5.5px 5px 10px 5px;
+}
+
+@media (max-width: 768px) {
+    .root {
+        padding: 20px 10px;
+    }
+
+    .root h3 {
+        font-size: 16px;
+        font-weight: 500;
+    }
+}

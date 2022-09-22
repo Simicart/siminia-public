@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { Meta } from '@magento/venia-ui/lib/components/Head';
 
 /* 
 props: {
@@ -28,23 +29,34 @@ const Page = props => {
             content
         } = page;
         const urlBase = window.location.origin;
-        let url = (url_key && urlBase + '/' + url_key) || '';
+        const url = (url_key && urlBase + '/' + url_key) || '';
         const logoImage = urlBase + '/static/logo.png';
 
         // Crop by config
-        let description_crop =
+        const description_crop =
             meta_description ||
             content_heading ||
             (content && content.replace(/(<([^>]+)>)/gi, '').trim()) ||
             '';
 
-        let meta_title_crop = meta_title || title || '';
+        const meta_title_crop = meta_title || title || '';
 
         return (
             <>
+                {meta_title_crop ? (
+                    <Meta name="title" content={meta_title_crop} />
+                ) : (
+                    ''
+                )}
+                {description_crop ? (
+                    <Meta name="description" content={description_crop} />
+                ) : (
+                    ''
+                )}
                 <Helmet>
                     <meta property="og:type" content="website" />
                     <meta property="og:title" content={meta_title_crop} />
+                    <meta property="title" content={meta_title_crop} />
                     <meta name="twitter:card" content="summary" />
                     <meta
                         property="og:description"

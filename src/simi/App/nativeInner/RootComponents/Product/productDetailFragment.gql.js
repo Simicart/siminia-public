@@ -36,6 +36,55 @@ const giftCardEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD) === 1;
 
+const metaPackageEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES) === 1;
+    
+export const ProductCustomAttributesFragment = metaPackageEnabled
+    ? gql`
+          fragment ProductCustomAttributesFragment on ProductInterface {
+              custom_attributes {
+                  selected_attribute_options {
+                      attribute_option {
+                          uid
+                          label
+                          is_default
+                      }
+                  }
+                  entered_attribute_value {
+                      value
+                  }
+                  attribute_metadata {
+                      uid
+                      code
+                      label
+                      attribute_labels {
+                          store_code
+                          label
+                      }
+                      data_type
+                      is_system
+                      entity_type
+                      ui_input {
+                          ui_input_type
+                          is_html_allowed
+                      }
+                      ... on ProductAttributeMetadata {
+                          used_in_components
+                      }
+                  }
+              }
+          }
+      `
+    : gql`
+          fragment ProductCustomAttributesFragment on ProductInterface {
+              id
+          }
+      `;
+
+
 export const ProductDetailsFragment = gql`
     fragment ProductDetailsFragment on ProductInterface {
         __typename
@@ -190,6 +239,7 @@ export const ProductDetailsFragment = gql`
         price {
             ...SimiPriceFragment    
         }
+        ...ProductCustomAttributesFragment
         sku
         small_image {
             url
@@ -336,6 +386,7 @@ export const ProductDetailsFragment = gql`
         }
     }
     ${SimiPriceFragment}
+    ${ProductCustomAttributesFragment}
 `;
 
 // might detach upsell_products and cross-sell for performance
