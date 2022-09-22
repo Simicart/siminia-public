@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { productUrlSuffix } from 'src/simi/Helper/Url';
+import { Meta } from '@magento/venia-ui/lib/components/Head';
 
 /* 
 props: {
@@ -11,7 +12,7 @@ props: {
 }
 */
 const Product = props => {
-    const { product, reviews, price: replacePrice } = props;
+    const { product, reviews, price: replacePrice, avg_rating } = props;
 
     let dataStructure = window.productDataStructure; // Init data
 
@@ -122,8 +123,8 @@ const Product = props => {
                 ...dataStructure,
                 aggregateRating: {
                     '@type': 'AggregateRating',
-                    ratingValue: rating_summary,
-                    bestRating:  100,
+                    ratingValue: avg_rating,
+                    bestRating: 100,
                     ratingCount: review_count
                 }
             };
@@ -140,18 +141,18 @@ const Product = props => {
         reviews &&
         reviews instanceof Array
     ) {
-        let _reviews = reviews.map(item => {
+        const _reviews = reviews.map(item => {
             return {
                 '@type': 'Review',
                 reviewRating: {
                     '@type': 'Rating',
-                    ratingValue: parseInt(item.avg_value)
+                    ratingValue: parseInt(item.average_rating)
                 },
                 author: {
                     '@type': 'Person',
                     name: item.nickname
                 },
-                reviewBody: item.detail
+                reviewBody: item.text
             };
         });
         if (_reviews.length) {
@@ -176,12 +177,25 @@ const Product = props => {
 
     if (product && product instanceof Object) {
         // Crop by config
-        let description_crop = productDesc || '';
+        const description_crop =
+            product && product.meta_description
+                ? product.meta_description
+                : productDesc || '';
 
-        let meta_title_crop = productName || '';
+        const meta_title_crop = productName || '';
 
         return (
             <>
+                {meta_title_crop ? (
+                    <Meta name="title" content={meta_title_crop} />
+                ) : (
+                    ''
+                )}
+                {description_crop ? (
+                    <Meta name="description" content={description_crop} />
+                ) : (
+                    ''
+                )}
                 <Helmet>
                     <meta property="og:type" content="og:product" />
                     <meta name="twitter:card" content="summary" />

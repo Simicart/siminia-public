@@ -4,9 +4,11 @@ import Footer from '../Footer';
 import Header from '../Header';
 import LoadingComponent from 'src/simi/BaseComponents/Loading';
 import classes from './main.module.css';
-import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
+import { Meta } from '@magento/venia-ui/lib/components/Head';
 import { BrowserPersistence } from '@magento/peregrine/lib/util';
 import LzL from 'src/simi/BaseComponents/LazyLoad';
+import RsHome from '../Seo/Markup/RsHome';
+import RsHomeBasic from '../SeoBasic/Markup/RsHome';
 import { configColor } from '../../../Config';
 const storage = new BrowserPersistence();
 import { Helmet } from 'react-helmet';
@@ -44,11 +46,65 @@ const Main = props => {
     }
     return (
         <React.Fragment>
+            {storeConfig &&
+            storeConfig['storeConfig'] &&
+            storeConfig['storeConfig'].default_title ? (
+                <Meta
+                    name="title"
+                    content={storeConfig['storeConfig'].default_title}
+                />
+            ) : (
+                ''
+            )}
+            {storeConfig &&
+            storeConfig['storeConfig'] &&
+            storeConfig['storeConfig'].default_description ? (
+                <Meta
+                    name="description"
+                    content={storeConfig['storeConfig'].default_description}
+                />
+            ) : (
+                ''
+            )}
+            {mageworxSeoEnabled ? (
+                <RsHome type="home" />
+            ) : (
+                <RsHomeBasic type="home" />
+            )}
+            {mageworxSeoEnabled ? <RsSeller type="home" /> : ''}
             <Helmet>
                 {!!url && <link rel={'icon'} type="image/png" href={url} />}
+                {!!url && (
+                    <link
+                        rel={'apple-touch-icon'}
+                        type="image/png"
+                        href={url}
+                    />
+                )}
+                {!!url && (
+                    <link rel={'mask-icon'} type="image/png" href={url} />
+                )}
+                {!url && (
+                    <React.Fragment>
+                        <link
+                            rel="icon"
+                            type="image/x-icon"
+                            href="/static/icons/siminia_square_512.png"
+                        />
+                        <link
+                            rel="apple-touch-icon"
+                            href="/static/icons/siminia_square_512.png"
+                        />
+                        <link
+                            rel="apple-touch-icon"
+                            sizes="180x180"
+                            href="/static/icons/apple-touch-icon.png"
+                        />
+                    </React.Fragment>
+                )}
             </Helmet>
             {/* <StoreTitle /> comment out due to requesting extra query */}
-            <main style={{backgroundColor: configColor.app_background}} className={classes.root}>
+            <main className={classes.root}>
                 <div
                     className="app-loading"
                     style={{ display: 'none' }}
