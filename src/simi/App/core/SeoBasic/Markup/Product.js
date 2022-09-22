@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { productUrlSuffix } from 'src/simi/Helper/Url';
+import { Meta } from '@magento/venia-ui/lib/components/Head';
 
 /* 
 props: {
@@ -140,7 +141,7 @@ const Product = props => {
         reviews &&
         reviews instanceof Array
     ) {
-        let _reviews = reviews.map(item => {
+        const _reviews = reviews.map(item => {
             return {
                 '@type': 'Review',
                 reviewRating: {
@@ -176,12 +177,25 @@ const Product = props => {
 
     if (product && product instanceof Object) {
         // Crop by config
-        let description_crop = productDesc || '';
+        const description_crop =
+            product && product.meta_description
+                ? product.meta_description
+                : productDesc || '';
 
-        let meta_title_crop = productName || '';
+        const meta_title_crop = productName || '';
 
         return (
             <>
+                {meta_title_crop ? (
+                    <Meta name="title" content={meta_title_crop} />
+                ) : (
+                    ''
+                )}
+                {description_crop ? (
+                    <Meta name="description" content={description_crop} />
+                ) : (
+                    ''
+                )}
                 <Helmet>
                     <meta property="og:type" content="og:product" />
                     <meta name="twitter:card" content="summary" />
