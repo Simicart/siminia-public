@@ -1,23 +1,20 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useFormState, useFormApi } from 'informed';
-import { useQuery, useApolloClient, useMutation } from '@apollo/client';
+import { useApolloClient, useQuery, useMutation } from '@apollo/client';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
-
+import Identify from 'src/simi/Helper/Identify';
+import { showToastMessage } from 'src/simi/Helper/Message';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
-
-import DEFAULT_OPERATIONS from './creditCard.gql';
+import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
+import DEFAULT_OPERATIONS from './stripeIntegration.gql';
+import { useIntl } from 'react-intl';
+import { showFogLoading, hideFogLoading } from 'src/simi/BaseComponents/Loading/GlobalLoading';
+import { useFieldState } from 'informed';
 
 const getRegion = region => {
     return region.region_id || region.label || region.code;
 };
 
-/**
- * Maps address response data from GET_BILLING_ADDRESS and GET_SHIPPING_ADDRESS
- * queries to input names in the billing address form.
- * {@link creditCard.gql.js}.
- *
- * @param {ShippingCartAddress|BillingCartAddress} rawAddressData query data
- */
 export const mapAddressData = rawAddressData => {
     if (rawAddressData) {
         const {
@@ -47,53 +44,18 @@ export const mapAddressData = rawAddressData => {
     }
 };
 
-/**
- * Talon to handle Credit Card payment method.
- *
- * @param {Boolean} props.shouldSubmit boolean value which represents if a payment nonce request has been submitted
- * @param {Function} props.onSuccess callback to invoke when the a payment nonce has been generated
- * @param {Function} props.onReady callback to invoke when the braintree dropin component is ready
- * @param {Function} props.onError callback to invoke when the braintree dropin component throws an error
- * @param {Function} props.resetShouldSubmit callback to reset the shouldSubmit flag
- * @param {DocumentNode} props.operations.getBillingAddressQuery query to fetch billing address from cache
- * @param {DocumentNode} props.operations.getIsBillingAddressSameQuery query to fetch is billing address same checkbox value from cache
- * @param {DocumentNode} props.operations.getPaymentNonceQuery query to fetch payment nonce saved in cache
- * @param {DocumentNode} props.operations.setBillingAddressMutation mutation to update billing address on the cart
- * @param {DocumentNode} props.operations.setCreditCardDetailsOnCartMutation mutation to update payment method and payment nonce on the cart
- *
- * @returns {
- *   errors: Map<String, Error>,
- *   shouldRequestPaymentNonce: Boolean,
- *   onPaymentError: Function,
- *   onPaymentSuccess: Function,
- *   onPaymentReady: Function,
- *   isBillingAddressSame: Boolean,
- *   isLoading: Boolean,
- *   stepNumber: Number,
- *   initialValues: {
- *      firstName: String,
- *      lastName: String,
- *      city: String,
- *      postcode: String,
- *      phoneNumber: String,
- *      street1: String,
- *      street2: String,
- *      country: String,
- *      state: String,
- *      isBillingAddressSame: Boolean
- *   },
- *   shippingAddressCountry: String,
- *   shouldTeardownDropin: Boolean,
- *   resetShouldTeardownDropin: Function
- * }
- */
-export const useCreditCard = props => {
+export const useStripeIntegration = props => {
+    const { formatMessage } = useIntl();
     const {
         onSuccess,
         onReady,
         onError,
         shouldSubmit,
-        resetShouldSubmit
+        resetShouldSubmit,
+        paymentCode,
+        placeOrderDisabled, // for stripe payment btn
+        handleProceedOrder, // for stripe payment btn
+        handleSavePaymentDone, // for stripe payment btn
     } = props;
 
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
@@ -101,28 +63,21 @@ export const useCreditCard = props => {
     const {
         getBillingAddressQuery,
         getIsBillingAddressSameQuery,
-        getPaymentNonceQuery,
         getShippingAddressQuery,
         setBillingAddressMutation,
-        setCreditCardDetailsOnCartMutation
+        setStripeIntegrationPayment
     } = operations;
 
     /**
      * Definitions
      */
 
-    const [isDropinLoading, setDropinLoading] = useState(true);
-    const [shouldRequestPaymentNonce, setShouldRequestPaymentNonce] = useState(
-        false
-    );
-    const [shouldTeardownDropin, setShouldTeardownDropin] = useState(false);
     /**
      * `stepNumber` depicts the state of the process flow in credit card
      * payment flow.
      *
      * `0` No call made yet
      * `1` Billing address mutation intiated
-     * `2` Braintree nonce requsted
      * `3` Payment information mutation intiated
      * `4` All mutations done
      */
@@ -133,7 +88,10 @@ export const useCreditCard = props => {
     const { validate: validateBillingAddressForm } = useFormApi();
     const [{ cartId }] = useCartContext();
 
-    const isLoading = isDropinLoading || (stepNumber >= 1 && stepNumber <= 3);
+    const [selectedCard, setSelectedCard] = useState(0);
+
+    const stripe = useStripe();
+    const elements = useElements();
 
     const { data: billingAddressData } = useQuery(getBillingAddressQuery, {
         skip: !cartId,
@@ -158,22 +116,30 @@ export const useCreditCard = props => {
     ] = useMutation(setBillingAddressMutation);
 
     const [
-        updateCCDetails,
+        setSelectedPaymentMethod,
         {
             error: ccMutationError,
             called: ccMutationCalled,
             loading: ccMutationLoading
         }
-    ] = useMutation(setCreditCardDetailsOnCartMutation);
+    ] = useMutation(setStripeIntegrationPayment);
 
-    const shippingAddressCountry = shippingAddressData && shippingAddressData.cart && shippingAddressData.cart.shippingAddresses && shippingAddressData.cart.shippingAddresses.length > 0
-        ? shippingAddressData.cart.shippingAddresses[0].country.code
-        : DEFAULT_COUNTRY_CODE;
+    const shippingAddressCountry =
+        shippingAddressData &&
+        shippingAddressData.cart &&
+        shippingAddressData.cart.shippingAddress &&
+        shippingAddressData.cart.shippingAddress.length > 0
+            ? shippingAddressData.cart.shippingAddresses[0].country.code
+            : DEFAULT_COUNTRY_CODE;
     const isBillingAddressSame = formState.values.isBillingAddressSame;
 
     const isVirtual = useMemo(() => {
-        return (isBillingAddressSameData && isBillingAddressSameData.cart.is_virtual) || false;
-    }, [isBillingAddressSameData])
+        return (
+            (isBillingAddressSameData &&
+                isBillingAddressSameData.cart.is_virtual) ||
+            false
+        );
+    }, [isBillingAddressSameData]);
 
     const initialValues = useMemo(() => {
         let isBillingAddressSame = false;
@@ -201,7 +167,7 @@ export const useCreditCard = props => {
         }
 
         return { isBillingAddressSame, ...billingAddress };
-    }, [isBillingAddressSameData, billingAddressData]);
+    }, [isBillingAddressSameData, billingAddressData, isVirtual]);
 
     /**
      * Helpers
@@ -212,7 +178,7 @@ export const useCreditCard = props => {
      * in cache for future use. We use cache because there
      * is no way to save this on the cart in remote.
      */
-    const setIsBillingAddressSameInCache = useCallback(() => {
+     const setIsBillingAddressSameInCache = useCallback(() => {
         client.writeQuery({
             query: getIsBillingAddressSameQuery,
             data: {
@@ -225,160 +191,145 @@ export const useCreditCard = props => {
         });
     }, [client, cartId, getIsBillingAddressSameQuery, isBillingAddressSame]);
 
-    /**
+        /**
      * This function sets the billing address on the cart using the
      * shipping address.
      */
-    const setShippingAddressAsBillingAddress = useCallback(() => {
-        const shippingAddress = shippingAddressData
-            ? mapAddressData(shippingAddressData.cart.shippingAddresses[0])
-            : {};
+         const setShippingAddressAsBillingAddress = useCallback(() => {
+            const shippingAddress = shippingAddressData
+                ? mapAddressData(shippingAddressData.cart.shippingAddresses[0])
+                : {};
+    
+            updateBillingAddress({
+                variables: {
+                    cartId,
+                    ...shippingAddress,
+                    sameAsShipping: true
+                }
+            });
+        }, [updateBillingAddress, shippingAddressData, cartId]);
 
-        updateBillingAddress({
-            variables: {
-                cartId,
-                ...shippingAddress,
-                sameAsShipping: true
-            }
-        });
-    }, [updateBillingAddress, shippingAddressData, cartId]);
-
-    /**
+        /**
      * This function sets the billing address on the cart using the
      * information from the form.
      */
-    const setBillingAddress = useCallback(() => {
-        const {
-            firstName,
-            lastName,
-            country,
-            street1,
-            street2,
-            city,
-            region,
-            postcode,
-            phoneNumber
-        } = formState.values;
-
-        updateBillingAddress({
-            variables: {
-                cartId,
+         const setBillingAddress = useCallback(() => {
+            const {
                 firstName,
                 lastName,
                 country,
                 street1,
-                street2: street2 || '',
+                street2,
                 city,
-                region: getRegion(region),
+                region,
                 postcode,
-                phoneNumber,
-                sameAsShipping: false
-            }
-        });
-    }, [formState.values, updateBillingAddress, cartId]);
-
-    /**
-     * This function sets the payment nonce details in the cache.
-     * We use cache because there is no way to save this information
-     * on the cart in the remote.
-     *
-     * We do not save the nonce code because it is a PII.
-     */
-    const setPaymentDetailsInCache = useCallback(
-        braintreeNonce => {
-            /**
-             * We dont save the nonce code due to PII,
-             * we only save the subset of details.
-             */
-            const { details, description, type } = braintreeNonce;
-            client.writeQuery({
-                query: getPaymentNonceQuery,
-                data: {
-                    cart: {
-                        __typename: 'Cart',
-                        id: cartId,
-                        paymentNonce: {
-                            details,
-                            description,
-                            type
-                        }
-                    }
+                phoneNumber
+            } = formState.values;
+    
+            updateBillingAddress({
+                variables: {
+                    cartId,
+                    firstName,
+                    lastName,
+                    country,
+                    street1,
+                    street2: street2 || '',
+                    city,
+                    region: getRegion(region),
+                    postcode,
+                    phoneNumber,
+                    sameAsShipping: false
                 }
             });
-        },
-        [cartId, client, getPaymentNonceQuery]
-    );
+        }, [formState.values, updateBillingAddress, cartId]);
+
+    const { value: saveNewCard } = useFieldState('stripe_save_new_card');
 
     /**
      * This function saves the nonce code from braintree
      * on the cart along with the payment method used in
      * this case `braintree`.
      */
-    const updateCCDetailsOnCart = useCallback(
-        braintreeNonce => {
-            const { nonce } = braintreeNonce;
-            updateCCDetails({
-                variables: {
-                    cartId,
-                    paymentMethod: 'braintree',
-                    paymentNonce: nonce
-                }
-            });
-        },
-        [updateCCDetails, cartId]
-    );
-
-    /**
-     * Function to be called by the braintree dropin when the
-     * nonce generation is successful.
-     */
-    const onPaymentSuccess = useCallback(
-        braintreeNonce => {
-            setPaymentDetailsInCache(braintreeNonce);
-            /**
-             * Updating payment braintreeNonce and selected payment method on cart.
-             */
-            updateCCDetailsOnCart(braintreeNonce);
-            setStepNumber(3);
-        },
-        [setPaymentDetailsInCache, updateCCDetailsOnCart]
-    );
-
-    /**
-     * Function to be called by the braintree dropin when the
-     * nonce generation is not successful.
-     */
-    const onPaymentError = useCallback(
-        error => {
-            setStepNumber(0);
-            setShouldRequestPaymentNonce(false);
+    const updatePaymentDetailsOnCart = useCallback(() => {
+        const stripeData = Identify.getDataFromStoreage(
+            Identify.SESSION_STOREAGE,
+            'simi_stripe_js_integration_customer_data'
+        );
+        if (!stripeData) {
+            showToastMessage(
+                formatMessage({
+                    id: 'Please fill in your card data and click "Use Card"',
+                    defaultMessage:
+                        'Please fill in your card data and click "Use Card"'
+                })
+            );
             resetShouldSubmit();
-            if (onError) {
-                onError(error);
-            }
-        },
-        [onError, resetShouldSubmit]
-    );
-
-    /**
-     * Function to be called by the braintree dropin when the
-     * credit card component has loaded successfully.
-     */
-    const onPaymentReady = useCallback(() => {
-        setDropinLoading(false);
-        setStepNumber(0);
-        if (onReady) {
-            onReady();
+            return;
         }
-    }, [onReady]);
+        setSelectedPaymentMethod({
+            variables: {
+                cartId,
+                paymentCode,
+                simiCcStripejsToken:
+                    stripeData.id +
+                    ':' +
+                    stripeData.card.brand +
+                    ':' +
+                    stripeData.card.last4,
+                simiCcSave: !!stripeData.saveNewCard,
+                simiCcSaved: stripeData.isSavedCard
+                    ? stripeData.id +
+                      ':' +
+                      stripeData.card.brand +
+                      ':' +
+                      stripeData.card.last4
+                    : false
+            }
+        });
+    }, [setSelectedPaymentMethod, cartId, paymentCode, resetShouldSubmit]); 
 
-    /**
-     * Function to be called by braintree dropin when the payment
-     * teardown is done successfully before re creating the new dropin.
-     */
-    const resetShouldTeardownDropin = useCallback(() => {
-        setShouldTeardownDropin(false);
-    }, []);
+    const handleSubmit = async event => {
+        // Block native form submission.
+        if (event)
+            event.preventDefault();
+        if (!stripe || !elements) {
+            return;
+        }
+        showFogLoading();
+
+        const { error, paymentMethod } = await stripe.createPaymentMethod({
+            type: 'card',
+            card: elements.getElement(CardElement),
+        });
+
+        if (error) {
+            hideFogLoading();
+            console.log('[error]', error);
+        } else {
+            console.log('[PaymentMethod]', paymentMethod);
+            if (paymentMethod && paymentMethod.card && paymentMethod.id) {
+                const stripeData = { ...paymentMethod };
+                stripeData.saveNewCard = saveNewCard ? true : false;
+                Identify.storeDataToStoreage(
+                    Identify.SESSION_STOREAGE,
+                    'simi_stripe_js_integration_customer_data',
+                    stripeData
+                );
+                await updatePaymentDetailsOnCart();
+                handleSavePaymentDone && handleSavePaymentDone();
+                handleProceedOrder && handleProceedOrder();
+            } else {
+                hideFogLoading();
+                if (onError) onError();
+                showToastMessage(
+                    formatMessage({
+                        id: 'Sorry, we cannot validate your card',
+                        defaultMessage: 'Sorry, we cannot validate your card'
+                    })
+                );
+            }
+        }
+    };
 
     /**
      * Effects
@@ -389,7 +340,7 @@ export const useCreditCard = props => {
      *
      * User has clicked the update button
      */
-    useEffect(() => {
+     useEffect(() => {
         try {
             if (shouldSubmit) {
                 /**
@@ -425,7 +376,6 @@ export const useCreditCard = props => {
             }
             setStepNumber(0);
             resetShouldSubmit();
-            setShouldRequestPaymentNonce(false);
         }
     }, [
         shouldSubmit,
@@ -443,7 +393,7 @@ export const useCreditCard = props => {
      *
      * Billing address mutation has completed
      */
-    useEffect(() => {
+     useEffect(() => {
         try {
             const billingAddressMutationCompleted =
                 billingAddressMutationCalled && !billingAddressMutationLoading;
@@ -457,7 +407,7 @@ export const useCreditCard = props => {
                  * we can initiate the braintree nonce request
                  */
                 setStepNumber(2);
-                setShouldRequestPaymentNonce(true);
+                handleSubmit();
             }
 
             if (
@@ -476,7 +426,6 @@ export const useCreditCard = props => {
             }
             setStepNumber(0);
             resetShouldSubmit();
-            setShouldRequestPaymentNonce(false);
         }
     }, [
         billingAddressMutationError,
@@ -490,13 +439,7 @@ export const useCreditCard = props => {
      *
      * Credit card save mutation has completed
      */
-    useEffect(() => {
-        /**
-         * Saved billing address, payment method and payment nonce on cart.
-         *
-         * Time to call onSuccess.
-         */
-
+     useEffect(() => {
         try {
             const ccMutationCompleted = ccMutationCalled && !ccMutationLoading;
 
@@ -513,7 +456,7 @@ export const useCreditCard = props => {
                  * If credit card mutation failed, reset update button clicked so the
                  * user can click again and set `stepNumber` to 0.
                  */
-                throw new Error('Credit card nonce save mutation failed.');
+                throw new Error('Payment save mutation failed.');
             }
         } catch (err) {
             if (process.env.NODE_ENV !== 'production') {
@@ -521,14 +464,11 @@ export const useCreditCard = props => {
             }
             setStepNumber(0);
             resetShouldSubmit();
-            setShouldRequestPaymentNonce(false);
-            setShouldTeardownDropin(true);
         }
     }, [
         ccMutationCalled,
         ccMutationLoading,
         onSuccess,
-        setShouldRequestPaymentNonce,
         resetShouldSubmit,
         ccMutationError
     ]);
@@ -537,7 +477,7 @@ export const useCreditCard = props => {
         () =>
             new Map([
                 ['setBillingAddressMutation', billingAddressMutationError],
-                ['setCreditCardDetailsOnCartMutation', ccMutationError]
+                ['setOfflinePaymentOnCartMutation', ccMutationError]
             ]),
         [billingAddressMutationError, ccMutationError]
     );
@@ -545,16 +485,11 @@ export const useCreditCard = props => {
     return {
         errors,
         isVirtual,
-        onPaymentError,
-        onPaymentSuccess,
-        onPaymentReady,
         isBillingAddressSame,
-        isLoading,
-        shouldRequestPaymentNonce,
         stepNumber,
         initialValues,
         shippingAddressCountry,
-        shouldTeardownDropin,
-        resetShouldTeardownDropin
+        updatePaymentDetailsOnCart,
+        ccMutationLoading
     };
 };

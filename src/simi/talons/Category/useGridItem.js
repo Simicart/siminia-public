@@ -100,23 +100,44 @@ export const useGridItem = props => {
                     (item.hasOwnProperty('options') && item.options === null))
             ) {
                 try {
-                    await addCart({
+                    const {data: addProductsToCartData} = await addCart({
                         variables: {
                             cartId,
                             product: [{ sku: item.sku, quantity }]
                         }
                     });
-                    addToast({
-                        type: 'info',
-                        icon: SuccessIc,
-                        message:
-                            item.name +
-                            ' ' +
-                            formatMessage({
-                                id: 'was added to your shopping cart'
-                            }),
-                        timeout: 3000
-                    });
+
+                    if(
+                        addProductsToCartData 
+                        && addProductsToCartData.addProductsToCart 
+                        && addProductsToCartData.addProductsToCart.user_errors 
+                        && Array.isArray(addProductsToCartData.addProductsToCart.user_errors) 
+                        && addProductsToCartData.addProductsToCart.user_errors.length > 0
+                    ) {
+                        const messages = addProductsToCartData.addProductsToCart.user_errors.map((user_error) => user_error.message)
+
+                        addToast({
+                            type: 'error',
+                            icon: ErrIc,
+                            message: messages.join(', '),
+                            timeout: 3000
+                        });
+
+                    } else {
+                        addToast({
+                            type: 'info',
+                            icon: SuccessIc,
+                            message:
+                                item.name +
+                                ' ' +
+                                formatMessage({
+                                    id: 'was added to your shopping cart'
+                                }),
+                            timeout: 3000
+                        });
+                    }
+
+                    
                 } catch (error) {
                     if (process.env.NODE_ENV !== 'production') {
                         console.error(error);

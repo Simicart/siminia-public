@@ -6,6 +6,7 @@ import defaultClasses from './menuTree.module.css';
 
 const MenuTree = props => {
   const { menuTree, view, classes: propsClasses, ...rest } = props;
+
   const menu = useMemo(
     () =>
       Array.isArray(menuTree) && menuTree.length
@@ -24,7 +25,7 @@ const MenuTree = props => {
   const menuClass = [classes.menu, classes[view]].join(' ');
 
   return (
-    <nav className={classes.root} role="navigation">
+    <nav id="menu-tree" className={classes.root} role="navigation">
       <ul className={menuClass}>{menu}</ul>
     </nav>
   );

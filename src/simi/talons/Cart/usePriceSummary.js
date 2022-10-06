@@ -53,6 +53,7 @@ export const usePriceSummary = (props = {}) => {
 
     const [{ isSignedIn }] = useUserContext();
     const [{ cartId }] = useCartContext();
+    console.log("cartId",cartId);
     const history = useHistory();
     // We don't want to display "Estimated" or the "Proceed" button in checkout.
     const match = useRouteMatch('/checkout');
@@ -81,8 +82,8 @@ export const usePriceSummary = (props = {}) => {
         }
     });
     const applyRuleData = useQuery(getRuleApply, {
-        fetchPolicy: 'cache-and-network',
-        nextFetchPolicy: 'cache-first',
+        fetchPolicy: 'no-cache',
+        // nextFetchPolicy: 'cache-first',
         skip:
             !isSignedIn ||
             !cartId ||
@@ -93,7 +94,6 @@ export const usePriceSummary = (props = {}) => {
             cartId
         }
     });
-
     const handleProceedToCheckout = useCallback(() => {
         history.push('/checkout');
     }, [history]);

@@ -8,9 +8,18 @@
   color: rgb(var(--venia-global-color-text));
   margin: 0;
   background-color: #fff;
+  height: 100%;
 }
 
 .topMenu.menu {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;}
+  justify-content: center;
+  height: 100%;
+}
+
+@media(max-width: 1023px) {
+  .root {
+    padding: 10px 20px;
+  }
+}

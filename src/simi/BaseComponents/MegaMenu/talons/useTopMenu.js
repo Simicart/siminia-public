@@ -11,6 +11,7 @@ export const useTopMenu = () => {
     isEnabledMegaMenu,
     isMobile
   } = useAmMegaMenuContext() || {};
+
   const menuTree = useMemo(() => {
     const { ammegamenu_general_hamburger_enabled: isHamburger } = config || {};
 

@@ -4,6 +4,7 @@ import { useUserContext } from '@magento/peregrine/lib/context/user';
 import {
     GET_CUSTOMER_REWARD_POINTS,
     GET_CUSTOMER_TRANSACTION,
+    GET_REWARD_POINTS_CONFIG,
     SET_REWARD_SUBSCRIBE_STATUS
 } from './rewardPoints.gql';
 import { deriveErrorMessage } from '@magento/peregrine/lib/util/deriveErrorMessage';
@@ -25,6 +26,17 @@ export const useGetRewardPointData = props => {
         fetchPolicy: 'cache-and-network',
         skip: !isSignedIn
     });
+
+
+    const {
+        data: rewardPointConfig,
+        loading: rewardPointConfigLoading,
+        error: rewardPointConfigError
+    } = useQuery(GET_REWARD_POINTS_CONFIG, {
+        fetchPolicy: 'cache-and-network'
+    });
+
+
     const { data: rewardTransactionData } = useQuery(GET_CUSTOMER_TRANSACTION, {
         variables: { pageSize: 100 },
         fetchPolicy: 'cache-and-network',
@@ -55,6 +67,7 @@ export const useGetRewardPointData = props => {
         customerEmail,
         customerRewardPoint,
         customerTransactions,
-        rewardTransactionData
+        rewardTransactionData,
+        rewardPointConfig
     };
 };

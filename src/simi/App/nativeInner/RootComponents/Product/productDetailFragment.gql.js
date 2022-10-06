@@ -163,16 +163,27 @@ export const ProductDetailsFragment = gql`
             productLabelEnabled
                 ? `
             mp_label_data {
-                list_position
-                list_position_grid
+                rule_id
+                priority
+                label_template
                 label_image
-                
+                label
                 label_font
                 label_font_size
                 label_color
-                label_template
-                priority
-                label
+                label_css
+                label_position
+                label_position_grid
+                same
+                list_template
+                list_image
+                list_label
+                list_font
+                list_font_size
+                list_css
+                list_position
+                list_position_grid
+                name
             }        
         `
                 : ``

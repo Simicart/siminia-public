@@ -90,12 +90,12 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product } = props;
-
     const talonProps = useProductFullDetail({ product });
     
     const {
         breadcrumbCategoryId,
         errorMessage,
+        userErrorsMessage,
         handleAddToCart,
         handleBuyNow,
         handleSelectionChange,
@@ -222,6 +222,13 @@ const ProductFullDetail = props => {
 
     // Fill a map with field/section -> error.
     const errors = new Map();
+    if(Array.isArray(userErrorsMessage) && userErrorsMessage.length > 0) {
+        userErrorsMessage.forEach(userErrorMessage => {
+            errors.set('form', [
+                new Error(userErrorMessage)
+            ]);
+        })
+    }
     if (errorMessage) {
         Object.keys(ERROR_MESSAGE_TO_FIELD_MAPPING).forEach(key => {
             if (errorMessage.includes(key)) {
@@ -421,8 +428,6 @@ const ProductFullDetail = props => {
             {(price_tiers && Array.isArray(price_tiers) && price_tiers.length > 0) ? <PriceTiers priceTiers={price_tiers} price={price} /> : null}
         </React.Fragment>
     )
-
-    console.log('run-')
 
     if(isCallForPriceEnable()) {
         if(!(action === 'login_see_price' && isSignedIn) || action === 'redirect_url' ) {
@@ -682,20 +687,14 @@ const ProductFullDetail = props => {
                             {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
                         </section>
 
-                        <FormError
-                            classes={{
-                                root: classes.formErrors
-                            }}
-                            errors={errors.get('form') || []}
-                        />
-
-                        {(!isMobileSite && product.short_description) ? (
-                            <div className="productDescription">
+                        <div className="productDescription">
+                            {(!isMobileSite && product.short_description) ? (    
                                 <RichContent
                                     html={product.short_description.html}
                                 />
-                            </div>
-                        ) : null}
+                            ) : null}
+                        </div>
+                        
 
                         {!isMobileSite ? (
                             <div className="wrapperOptions">
@@ -732,6 +731,17 @@ const ProductFullDetail = props => {
                             : null}
 
                         {!isMobileSite ? cartAction : null}
+
+                        <div className={classes.wrapperError}>
+                            <FormError
+                                classes={{
+                                    root: classes.formErrors
+                                }}
+                                errors={errors.get('form') || []}
+                            />
+                        </div>    
+                    
+
                         <div className={classes.wrapperDes}>
                             <section className={classes.description}>
                                 <span
@@ -797,13 +807,13 @@ const ProductFullDetail = props => {
                         </div>
                         {!isMobileSite ? (
                             <section className={classes.details}>
-                                <span className={classes.detailsTitle}>
+                                {/* <span className={classes.detailsTitle}>
                                     <FormattedMessage
                                         id={'SKU'}
                                         defaultMessage={'SKU'}
                                     />
                                 </span>
-                                <strong>{productDetails.sku}</strong>
+                                <strong>{productDetails.sku}</strong> */}
                             </section>
                         ) : (
                             <div className="sku-details">
