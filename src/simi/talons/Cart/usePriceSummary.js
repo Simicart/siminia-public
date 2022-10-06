@@ -53,7 +53,6 @@ export const usePriceSummary = (props = {}) => {
 
     const [{ isSignedIn }] = useUserContext();
     const [{ cartId }] = useCartContext();
-    console.log("cartId",cartId);
     const history = useHistory();
     // We don't want to display "Estimated" or the "Proceed" button in checkout.
     const match = useRouteMatch('/checkout');

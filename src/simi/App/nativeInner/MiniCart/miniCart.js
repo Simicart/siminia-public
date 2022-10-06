@@ -67,7 +67,6 @@ const MiniCart = React.forwardRef((props, ref) => {
         shipping,
         priceData
     } = flatData;
-    console.log('flatData', flatData);
 
     // const {
     //     data: rewardPointConfig,
@@ -78,8 +77,6 @@ const MiniCart = React.forwardRef((props, ref) => {
     // });
 
     const { rewardPointConfig, customerRewardPoint } = useGetRewardPointData();
-    console.log('customerRewardPoint', customerRewardPoint);
-    console.log('rewardPointConfig', rewardPointConfig);
     const pointBalance =
         customerRewardPoint && customerRewardPoint.point_balance
             ? customerRewardPoint.point_balance
@@ -90,7 +87,6 @@ const MiniCart = React.forwardRef((props, ref) => {
         rewardPointConfig.MpRewardConfig.general
             ? rewardPointConfig.MpRewardConfig.general.icon
             : '';
-    console.log('icon', icon);
 
     const classes = useStyle(defaultClasses, props.classes);
     const rootClass = isOpen ? classes.root_open : classes.root;

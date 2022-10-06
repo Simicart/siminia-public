@@ -69,7 +69,6 @@ const PriceSummary = props => {
         shipping,
         priceData
     } = flatData;
-    console.log("flatData",flatData);
     if (priceData && priceData.length > 1) {
         mpRewardDiscount = priceData[0];
         mpRewardSpent = priceData[1];

@@ -6,7 +6,6 @@ import { useTopMenu } from '../../talons/useTopMenu';
 
 const TopMenu = props => {
     const { menuTree, isEnabled } = useTopMenu();
-    console.log("isEnabled",isEnabled);
     if (!isEnabled) {
         // return (
         //     <div className={classes['header-megamenu-ctn']}>
