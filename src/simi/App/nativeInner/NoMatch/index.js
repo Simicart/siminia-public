@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Loading from 'src/simi/BaseComponents/Loading';
 import { useQuery } from '@apollo/client';
-import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
+import { RESOLVE_URL } from './magentoRoute.gql';
 import { integrationToken } from '../../core/NoMatch';
 export { integrationToken };
 
@@ -117,18 +117,18 @@ const NoMatch = props => {
     }
 
     if (data) {
-        if (data.route && data.route.type) {
-            const { type } = data.route;
+        if (data.urlResolver && data.urlResolver.type) {
+            const { type, entity_uid } = data.urlResolver;
             if (type === TYPE_PRODUCT)
                 return (
                     <Product
-                        {...{ ...props, ...data.route, ...{ pbFinderProps } }}
+                        {...{ ...props, ...data.urlResolver, ...{ pbFinderProps } }}
                     />
                 );
             else if (type === TYPE_CATEGORY)
-                return <Category {...{ ...props, ...data.route }} />;
+                return <Category {...{ ...props, ...data.urlResolver, id: atob(entity_uid) }} />;
             else if (type === TYPE_CMS_PAGE)
-                return <CMS {...{ ...props, ...data.route }} />;
+                return <CMS {...{ ...props, ...data.urlResolver }} />;
         } else {
             if (pbLoading || pathname !== pathToFind) {
                 return '';

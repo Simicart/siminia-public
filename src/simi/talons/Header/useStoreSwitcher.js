@@ -6,7 +6,7 @@ import { BrowserPersistence } from '@magento/peregrine/lib/util';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import DEFAULT_OPERATIONS from '@magento/peregrine/lib/talons/Header/storeSwitcher.gql';
 import Identify from 'src/simi/Helper/Identify';
-import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
+import { RESOLVE_URL } from '../../App/nativeInner/NoMatch/magentoRoute.gql';
 
 const storage = new BrowserPersistence();
 

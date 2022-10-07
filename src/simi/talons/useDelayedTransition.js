@@ -9,7 +9,7 @@ import { useAppContext } from '@magento/peregrine/lib/context/app';
 import { useRootComponents } from '@magento/peregrine/lib/context/rootComponents';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import { getComponentData } from '@magento/peregrine/lib/util/magentoRouteData';
-import DEFAULT_OPERATIONS from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
+import DEFAULT_OPERATIONS from '../App/nativeInner/NoMatch/magentoRoute.gql';
 import { getRootComponent } from '@magento/peregrine/lib/talons/MagentoRoute/helpers';
 
 const DELAY_MESSAGE_PREFIX = 'DELAY:';

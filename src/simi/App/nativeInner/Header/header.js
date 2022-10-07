@@ -19,7 +19,7 @@ import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useWindowSize } from '@magento/peregrine';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { isBot, isHeadlessChrome } from '../../../Helper/BotDetect';
-import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
+import { RESOLVE_URL } from '../NoMatch/magentoRoute.gql';
 import defaultClasses from './header.module.css';
 import { useQuery } from '@apollo/client';
 import { ArrowLeft } from 'react-feather';
@@ -63,14 +63,14 @@ const Header = props => {
         fetchPolicy: 'cache-first'
     });
 
-    // const isHiddenHeader =
-    //     (data && data.route && data.route.type === TYPE_PRODUCT) ||
-    //     pathname === '/sign-in'
-    //         ? true
-    //         : false;
-
     const isHiddenHeader =
-        data && data.route && data.route.type === TYPE_PRODUCT;
+        (data && data.route && data.route.type === TYPE_PRODUCT) ||
+        pathname === '/sign-in'
+            ? true
+            : false;
+
+    // const isHiddenHeader =
+    //     data && data.route && data.route.type === TYPE_PRODUCT;
 
     const isSimpleHeader =
         location && location.pathname && location.pathname === '/checkout';
@@ -395,7 +395,7 @@ const Header = props => {
                 ) : (
                     ''
                 )}
-                <PageLoadingIndicator
+                {/* <PageLoadingIndicator
                     absolute
                     classes={{
                         root_absolute: classes.pageLoadingIndRoot,
@@ -403,7 +403,7 @@ const Header = props => {
                         indicator_loading: classes.indicator_loading,
                         indicator_done: classes.indicator_done
                     }}
-                />
+                /> */}
             </header>
 
             <div id="id-message">

@@ -7,7 +7,7 @@ import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 import Identify from 'src/simi/Helper/Identify';
-import { RESOLVE_URL } from '@magento/peregrine/lib/talons/MagentoRoute/magentoRoute.gql';
+import { RESOLVE_URL } from '../NoMatch/magentoRoute.gql';
 import { useQuery } from '@apollo/client';
 
 const shopByBrandEnabled =
