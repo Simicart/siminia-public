@@ -77,7 +77,6 @@ const PriceAdjustments = props => {
     if (mpRewardSpent && mpRewardSpent.length > 0)
         rewardPointSelected = mpRewardSpent[0].value;
     const { setIsCartUpdating, giftCardConfig, refetchCartPage } = props;
-    console.log("giftCardConfig",giftCardConfig);
     const { formatMessage } = useIntl();
 
     const applyHandle = () => {

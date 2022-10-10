@@ -66,7 +66,6 @@ export const usePriceSummary = (props = {}) => {
             cartId
         }
     });
-    console.log("data",data);
     const [loadingPriceData] = useLazyQuery(getPriceSummaryQuery, {
         fetchPolicy: 'cache-and-network',
         nextFetchPolicy: 'cache-first',
