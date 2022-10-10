@@ -9,12 +9,15 @@ import {
 import { clearCartDataFromCache } from '@magento/peregrine/lib/Apollo/clearCartDataFromCache';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
-
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
-
 import DEFAULT_OPERATIONS from './checkoutPage.gql.js';
-
 import CheckoutError from '@magento/peregrine/lib/talons/CheckoutPage/CheckoutError';
+import { showToastMessage } from 'src/simi/Helper/Message';
+import Identify from 'src/simi/Helper/Identify';
+import { useStripe } from '@stripe/react-stripe-js'; //Simi stripe-js handling
+import { useIntl } from 'react-intl';
+import { showFogLoading, hideFogLoading } from 'src/simi/BaseComponents/Loading/GlobalLoading';
+import { useHistory } from 'react-router-dom';
 
 export const CHECKOUT_STEP = {
     SHIPPING_ADDRESS: 1,
@@ -88,9 +91,11 @@ export const useCheckoutPage = (props = {}) => {
     const [checkoutStep, setCheckoutStep] = useState(
         CHECKOUT_STEP.SHIPPING_ADDRESS
     );
+    const { formatMessage } = useIntl();
     const [{ isSignedIn }] = useUserContext();
     const [{ cartId }, { createCart, removeCart }] = useCartContext();
-
+    const stripe = useStripe();
+    const history = useHistory();
     const [fetchCartId] = useMutation(createCartMutation);
     const [
         placeOrder,
@@ -165,7 +170,103 @@ export const useCheckoutPage = (props = {}) => {
     }, []);
 
     const checkoutError = useMemo(() => {
+        async function simi2ndTimePlaceOrderAndCleanup() {
+            try {
+                Identify.storeDataToStoreage(
+                    Identify.LOCAL_STOREAGE,
+                    'simi_selected_payment_code',
+                    null
+                );
+
+                await placeOrder({
+                    variables: {
+                        cartId
+                    }
+                });
+                // Cleanup stale cart and customer info.
+                await removeCart();
+                await clearCartDataFromCache(apolloClient);
+
+                await createCart({
+                    fetchCartId
+                });
+
+                // Cleanup stale cart and customer info.
+                await removeCart();
+                await clearCartDataFromCache(apolloClient);
+                await createCart({
+                    fetchCartId
+                });
+                Identify.storeDataToStoreage(
+                    Identify.SESSION_STOREAGE,
+                    'simi_stripe_js_integration_customer_data',
+                    null
+                );
+                hideFogLoading();
+            } catch (err) {
+                hideFogLoading();
+                console.error(
+                    'An error occurred during when placing the order',
+                    err
+                );
+                setReviewOrderButtonClicked(false);
+                setCheckoutStep(CHECKOUT_STEP.PAYMENT);
+            }
+        }
+
         if (placeOrderError) {
+            console.log('run');
+            //Simi stripe-js handling
+            let pickedPaymentMethod;
+            try {
+                pickedPaymentMethod = Identify.getDataFromStoreage(
+                    Identify.LOCAL_STOREAGE,
+                    'simi_selected_payment_code'
+                );
+                if (pickedPaymentMethod && pickedPaymentMethod.code)
+                    pickedPaymentMethod = pickedPaymentMethod.code;
+            } catch (err) { }
+
+            console.log(pickedPaymentMethod)
+            console.log(placeOrderError)
+            if (
+                pickedPaymentMethod === 'stripe_payments' &&
+                placeOrderError.graphQLErrors
+            ) {
+                console.log('run')
+                const derivedErrorMessage = placeOrderError.graphQLErrors
+                    .map(({ message, debugMessage }) =>
+                        debugMessage ? debugMessage : message
+                    )
+                    .join(', ');
+                if (derivedErrorMessage.includes('Authentication Required')) {
+                    const paymentIntents = derivedErrorMessage
+                        .substring('Authentication Required: '.length)
+                        .split(',');
+                    if (paymentIntents && paymentIntents[0]) {
+                        stripe
+                            .confirmCardPayment(paymentIntents[0])
+                            .then(function (result) {
+                                if (result && result.paymentIntent) {
+                                    showFogLoading();
+                                    simi2ndTimePlaceOrderAndCleanup();
+                                } else {
+                                    showToastMessage(
+                                        formatMessage({
+                                            id:
+                                                'Sorry, we cannot validate your card',
+                                            defaultMessage:
+                                                'Sorry, we cannot validate your card'
+                                        })
+                                    );
+                                    history.push('/cart.html');
+                                }
+                            });
+                        return;
+                    }
+                }
+            }
+            //end stripe js handling
             return new CheckoutError(placeOrderError);
         }
     }, [placeOrderError]);

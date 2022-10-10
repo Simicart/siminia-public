@@ -215,8 +215,6 @@ Rate
         display: flex;
         justify-content: space-between;
         box-shadow: 0px 10px 12px -2px rgb(0 0 0 / 30%);
-        
-        
     }
 }
 @media (max-width: 1024px) {
@@ -309,6 +307,17 @@ Rate
     }
     .siminia-product-des {
         padding: 8px;
+    }
+}
+
+@media(max-width: 1023px) {
+    .product-grid-addcartbtn {
+        min-height: 30px;
+        font-size: 14px;
+    }
+
+    .product-grid-actions {
+        min-height: 40px;
     }
 }
 

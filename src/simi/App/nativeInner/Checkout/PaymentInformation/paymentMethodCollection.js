@@ -31,6 +31,7 @@ import {
 } from 'src/simi/BaseComponents/Payment/PlainOffline';
 import { PaypalButtons } from 'src/simi/BaseComponents/Payment/PaypalButtons';
 import BrainTree from './creditCard';
+import StripeIntegration from './StripeIntegration';
 
 export default {
     braintree: BrainTree,
@@ -38,5 +39,6 @@ export default {
     banktransfer: BankTransfer,
     cashondelivery: COD,
     myfatoorah_gateway: MyFatoorah,
+    stripe_payments: StripeIntegration,
     paypal_express: PaypalExpress //PaypalButtons
 };
