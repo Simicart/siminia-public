@@ -23,7 +23,7 @@ export const useGetRewardPointData = props => {
         loading: rewardPointLoading,
         error: rewardPointError
     } = useQuery(GET_CUSTOMER_REWARD_POINTS, {
-        fetchPolicy: 'cache-and-network',
+        fetchPolicy: 'no-cache',
         skip: !isSignedIn
     });
 

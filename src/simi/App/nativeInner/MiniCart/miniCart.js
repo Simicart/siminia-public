@@ -133,7 +133,7 @@ const MiniCart = React.forwardRef((props, ref) => {
                 />
             </span> */}
             <span className={priceClassName}>
-                {pointBalance ? (
+                {/* {pointBalance ? (
                     <span className={classes.labelSubtotal}>
                         <FormattedMessage
                             id={'priceSummary.rewardEarnTitle'}
@@ -148,7 +148,7 @@ const MiniCart = React.forwardRef((props, ref) => {
                             defaultMessage={`${pointBalance} point(s)`}
                         />
                     </span>
-                ) : null}
+                ) : null} */}
                 {mpRewardEarn ? (
                     <span className={classes.labelSubtotal}>
                         <span className={classes.wrapRewardEarnTitle}>

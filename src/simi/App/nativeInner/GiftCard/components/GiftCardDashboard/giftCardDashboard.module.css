@@ -238,6 +238,7 @@ tbody tr:last-child {
 
 .modal-header {
 	padding: 30px 30px 12px;
+	background-color: #fff;
 }
 
 .modal-header > h1 {
