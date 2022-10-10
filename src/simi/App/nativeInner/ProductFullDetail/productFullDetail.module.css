@@ -12,13 +12,13 @@
         grid-auto-flow: row;
         grid-template-areas:
             'images title'
-            'images errors'
             'images options'
             'images quantity'
             'images cart'
+            'images errors'
             'images .';
         grid-template-columns: 1.5625fr 1fr;
-        grid-template-rows: repeat(5, min-content) 1fr [fold];
+        grid-template-rows: repeat(7, min-content) 1fr [fold];
         padding: 0;
     }
 }
@@ -120,6 +120,7 @@
 .formErrors {
     composes: section;
     grid-area: errors;
+    border-bottom: none;
 }
 
 .quantity {
@@ -360,6 +361,7 @@
         line-height: 3rem;
         margin-top: 10px;
         position: fixed;
+        left: 0;
         z-index: 7;
         width: 100%;
         /* padding-right: 15px; */
