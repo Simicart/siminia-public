@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { resourceUrl, productUrlSuffix } from 'src/simi/Helper/Url';
 import { useStoreConfigData } from '../talons/useStoreConfigData';
+import { Meta } from '@magento/venia-ui/lib/components/Head';
 
 /* 
 props: {
@@ -251,7 +252,8 @@ const Product = props => {
         }
 
         if (use_multiple_offer && type_id === 'configurable') {
-            let offers = (dataStructure.offers && [dataStructure.offers]) || [];
+            const offers =
+                (dataStructure.offers && [dataStructure.offers]) || [];
             if (variants && variants.length) {
                 variants.map(variant => {
                     const {
@@ -265,7 +267,7 @@ const Product = props => {
                         !simple_warehouses.every(
                             ({ stock_quantity }) => stock_quantity < 0
                         );
-                    let _offer = {
+                    const _offer = {
                         '@type': 'Offer',
                         url:
                             (offerUrlKey &&
@@ -430,7 +432,7 @@ const Product = props => {
         reviews &&
         reviews instanceof Array
     ) {
-        let _reviews = reviews.map(item => {
+        const _reviews = reviews.map(item => {
             const value =
                 item &&
                 item.ratings_breakdown &&
@@ -477,7 +479,10 @@ const Product = props => {
 
     if (product && product instanceof Object) {
         // Crop by config
-        let description_crop = productDesc || '';
+        let description_crop =
+            product && product.meta_description
+                ? product.meta_description
+                : productDesc || '';
         if (crop_meta_description && max_description_length) {
             description_crop = description_crop.substr(
                 0,
@@ -491,9 +496,20 @@ const Product = props => {
                 parseInt(max_title_length)
             );
         }
+        console.log(product, description_crop);
 
         return (
             <>
+                {meta_title_crop ? (
+                    <Meta name="title" content={meta_title_crop} />
+                ) : (
+                    ''
+                )}
+                {description_crop ? (
+                    <Meta name="description" content={description_crop} />
+                ) : (
+                    ''
+                )}
                 {og_enabled && (
                     <Helmet>
                         <meta property="og:type" content="og:product" />

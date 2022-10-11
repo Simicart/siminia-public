@@ -221,7 +221,7 @@ Rate
     .product-grid-actions {
         display: flex;
         position: initial;
-        padding: 5px 0;
+        padding: 10px;
     }
 }
 /* rtl */

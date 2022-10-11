@@ -12,9 +12,9 @@ import './style.css';
 import { useWindowSize } from '@magento/peregrine';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import { useQuery } from '@apollo/client';
-import getUrlKey from '../../../../../src/util/getUrlKey'
-import DEFAULT_OPERATIONS from '../../core/ProductFullDetail/ProductLabel/productLabel.gql'
-import ImageLoading from './imageLoading'
+import getUrlKey from '../../../../../src/util/getUrlKey';
+import DEFAULT_OPERATIONS from '../../core/ProductFullDetail/ProductLabel/productLabel.gql';
+import ImageLoading from './imageLoading';
 const IMAGE_WIDTH = 640;
 
 /**
@@ -31,7 +31,13 @@ const IMAGE_WIDTH = 640;
  * @returns {React.Element} React carousel component that displays a product image
  */
 const ProductImageCarousel = props => {
-    const { optionSelections, product, optionCodes, topInsets } = props;
+    const {
+        optionSelections,
+        product,
+        optionCodes,
+        topInsets,
+        labelData
+    } = props;
     const { formatMessage } = useIntl();
     const lightbox = useRef(null);
     const [renderLightBox, setRenderLightBox] = useState(false);
@@ -43,14 +49,11 @@ const ProductImageCarousel = props => {
     const { getProductLabel } = operations;
     const [placeHoder, setPlaceholder] = useState(true);
     const { data, error, loading } = useQuery(getProductLabel, {
-        fetchPolicy: 'cache-and-network',
+        fetchPolicy: "no-cache",
         variables: {
             urlKey: getUrlKey()
         }
     });
-   
-   
-
     useEffect(() => {
         if (lightbox && lightbox.current && autoToggleLightBox !== false) {
             lightbox.current.showLightbox(autoToggleLightBox);
@@ -128,8 +131,7 @@ const ProductImageCarousel = props => {
                     getUrlBuffer() + '/media/catalog/product' + item.file
             };
         }, this);
-        return <ImageLightbox ref={lightbox} images={images} />
-    
+        return <ImageLightbox ref={lightbox} images={images} />;
     };
 
     const onChangeItemDefault = () => {};
@@ -157,7 +159,9 @@ const ProductImageCarousel = props => {
         />
     );
 
-    const imageWidth =document.querySelector(".product-detail-carousel") ? document.querySelector(".product-detail-carousel").offsetWidth : null
+    const imageWidth = document.querySelector('.product-detail-carousel')
+        ? document.querySelector('.product-detail-carousel').offsetWidth
+        : null;
 
     return (
         <div className="product-detail-carousel" id="product-detail-carousel">
@@ -180,7 +184,6 @@ const ProductImageCarousel = props => {
                 autoPlay={false}
                 thumbWidth={80}
             >
-               
                 {noImage ? (
                     <img
                         src={logoUrl()}
@@ -191,7 +194,6 @@ const ProductImageCarousel = props => {
                                 : { width: 180, height: 30 }
                         }
                     />
-                    
                 ) : (
                     carouselImages.map(function(item, index) {
                         const src = item.file
@@ -200,7 +202,7 @@ const ProductImageCarousel = props => {
                                   width: IMAGE_WIDTH
                               })
                             : logoUrl();
-                        
+
                         return (
                             <div
                                 key={item.file}
@@ -210,32 +212,49 @@ const ProductImageCarousel = props => {
                                 }}
                                 className="carousel-image-container"
                             >
-                                {placeHoder ? <ImageLoading height={445}  /> : null}
+                                {placeHoder ? (
+                                    <ImageLoading height={445} />
+                                ) : null}
                                 <img
                                     src={src}
                                     width={IMAGE_WIDTH}
                                     alt={item.url}
                                     style={{ objectFit: 'contain' }}
-                                    onLoad={()=> setPlaceholder(false)}
+                                    onLoad={() => setPlaceholder(false)}
                                 />
-
-                                
 
                                 {/* {index == 0 ? 
                                 <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} />
                             : null} */}
-
                             </div>
                         );
                     })
                 )}
             </Carousel>
-            
+
+            {/* <ProductLabel
+                productLabel={
+                    product.mp_label_data.length > 0
+                        ? product.mp_label_data
+                        : null
+                }
+            /> */}
+
             {/* <ProductLabel imageWidth={imageWidth} productLabel = {loading ? null : data.products.items[0].mp_label_data} /> */}
-            <ProductLabel imageWidth={imageWidth} productLabel = {data && data.products && data.products.items[0] && data.products.items[0].mp_label_data ? data.products.items[0].mp_label_data : null} />
+            <ProductLabel
+                imageWidth={imageWidth}
+                productLabel={
+                    // labelData
+                    data &&
+                    data.products &&
+                    data.products.items[0] &&
+                    data.products.items[0].mp_label_data
+                        ? data.products.items[0].mp_label_data
+                        : null
+                }
+            />
 
             {renderLightBox && renderImageLightboxBlock()}
-            
         </div>
     );
 };

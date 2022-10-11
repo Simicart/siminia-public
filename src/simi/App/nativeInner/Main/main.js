@@ -1,11 +1,11 @@
-import React, {Fragment, useEffect} from 'react';
+import React, { Fragment, useEffect } from 'react';
 
 import Header from '../Header';
-import FooterNative from '../FooterNative'
-import Footer from "@simicart/siminia/src/simi/App/core/Footer"
+import FooterNative from '../FooterNative';
+import Footer from '@simicart/siminia/src/simi/App/core/Footer';
 import LoadingComponent from 'src/simi/BaseComponents/Loading';
 import classes from './main.module.css';
-import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
+import { Meta } from '@magento/venia-ui/lib/components/Head';
 import { BrowserPersistence } from '@magento/peregrine/lib/util';
 import RsHome from '../../core/Seo/Markup/RsHome';
 import RsHomeBasic from '../../core/SeoBasic/Markup/RsHome';
@@ -48,19 +48,38 @@ const Main = props => {
     //wont render if chose storeview before to avoid rtl issue
     if (!storeConfig && storeCode) return '';
 
-    let links = []
-    if(!!url) {
+    let links = [];
+    if (url) {
         links = [
-            <link key={1} rel={'icon'} type="image/png" href={url} /> ,
-            <link key={2} rel={'apple-touch-icon'} type="image/png" href={url} />,
-            <link key={3} rel={'mask-icon'} type="image/png" href={url} />,
-        ]
+            <link key={1} rel={'icon'} type="image/png" href={url} />,
+            <link
+                key={2}
+                rel={'apple-touch-icon'}
+                type="image/png"
+                href={url}
+            />,
+            <link key={3} rel={'mask-icon'} type="image/png" href={url} />
+        ];
     } else {
         links = [
-            <link key={1} rel="icon" type="image/x-icon" href="/static/icons/siminia_square_512.png" /> ,
-            <link key={2} rel="apple-touch-icon" href="/static/icons/siminia_square_512.png"/>,
-            <link key={3} rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png"/>,
-        ]
+            <link
+                key={1}
+                rel="icon"
+                type="image/x-icon"
+                href="/static/icons/siminia_square_512.png"
+            />,
+            <link
+                key={2}
+                rel="apple-touch-icon"
+                href="/static/icons/siminia_square_512.png"
+            />,
+            <link
+                key={3}
+                rel="apple-touch-icon"
+                sizes="180x180"
+                href="/static/icons/apple-touch-icon.png"
+            />
+        ];
     }
 
     try {
@@ -71,17 +90,38 @@ const Main = props => {
     }
     return (
         <React.Fragment>
+            {storeConfig &&
+            storeConfig['storeConfig'] &&
+            storeConfig['storeConfig'].default_title ? (
+                <Meta
+                    name="title"
+                    content={storeConfig['storeConfig'].default_title}
+                />
+            ) : (
+                ''
+            )}
+            {storeConfig &&
+            storeConfig['storeConfig'] &&
+            storeConfig['storeConfig'].default_description ? (
+                <Meta
+                    name="description"
+                    content={storeConfig['storeConfig'].default_description}
+                />
+            ) : (
+                ''
+            )}
             {mageworxSeoEnabled ? (
                 <RsHome type="home" />
             ) : (
                 <RsHomeBasic type="home" />
             )}
             {mageworxSeoEnabled ? <RsSeller type="home" /> : ''}
-            <Helmet>
-                {links}
-            </Helmet>
+            <Helmet>{links}</Helmet>
             {/* <StoreTitle /> comment out due to requesting extra query */}
-            <main style={{ backgroundColor: configColor.app_background}} className={classes.root}>
+            <main
+                style={{ backgroundColor: configColor.app_background }}
+                className={classes.root}
+            >
                 <div
                     className="app-loading"
                     style={{ display: 'none' }}

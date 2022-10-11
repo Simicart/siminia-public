@@ -38,8 +38,11 @@ const MenuLink = props => {
     view,
     level,
     isOpen,
+    isTitle,
+    isMainTitle,
     isShowIcons,
-    onNavigate
+    onNavigate,
+    hideIcon
   } = props;
 
   const { pathname } = useLocation();
@@ -80,7 +83,7 @@ const MenuLink = props => {
     ) : null;
 
   const toggleBtn =
-    Array.isArray(subCategories) && subCategories.length ? (
+    Array.isArray(subCategories) && subCategories.length && !hideIcon ? (
       <ToggleTrigger
         classes={props.classes}
         action={() => toggleAction(id)}
@@ -97,20 +100,25 @@ const MenuLink = props => {
     ' '
   );
 
+  let menuLinkClass = classes.menuLink
+  if(isTitle) {
+    menuLinkClass = classes.menuLinkTitle
+  }
+  if(isMainTitle) {
+    menuLinkClass = classes.menuLinkRootTitle
+  }
+
   return (
     <div className={rootClass}>
       <LinkComponent
-        className={classes.menuLink}
+        className={menuLinkClass}
         onClick={handleNavigate}
         to={url}
       >
         {iconContent}
-
         <span className={classes.title}>{name}</span>
-
         {labelContent}
       </LinkComponent>
-
       {toggleBtn}
     </div>
   );

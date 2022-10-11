@@ -6,7 +6,8 @@ import Button from '@magento/venia-ui/lib/components/Button';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import defaultClasses from './priceSummary.module.css';
 import DiscountSummary from './discountSummary';
-import GiftCardSummary from '@magento/venia-ui/lib/components/CartPage/PriceSummary/giftCardSummary';
+import GiftCardSummary from './giftCardSummary';
+// import GiftCardSummary from '@magento/venia-ui/lib/components/CartPage/PriceSummary/giftCardSummary';
 import ShippingSummary from './shippingSummary';
 import TaxSummary from './taxSummary';
 import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
@@ -69,7 +70,6 @@ const PriceSummary = props => {
         shipping,
         priceData
     } = flatData;
-
     if (priceData && priceData.length > 1) {
         mpRewardDiscount = priceData[0];
         mpRewardSpent = priceData[1];
@@ -189,6 +189,7 @@ const PriceSummary = props => {
                         price: priceClass
                     }}
                     data={giftCards}
+                    currencyCode={subtotal.currency}
                 />
                 <TaxSummary
                     classes={{

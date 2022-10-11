@@ -13,18 +13,19 @@
 }
 
 .toggle {
-  display: block;
-  transform: rotate(90deg);
+  display: flex;
+  /* transform: rotate(90deg); */
 }
 
 .toggle_open {
   composes: toggle;
-  transform: rotate(-90deg);
+  transform: rotate(180deg);
+  /* transform: rotate(-90deg); */
 }
 
 .toggle button {
-  width: 2rem;
-  height: 3.5rem;
+  width: 1rem;
+  /* height: 3.5rem; */
   outline: none;
 }
 
@@ -40,8 +41,8 @@
   width: 1rem;
 }
 
-a.menuLink {
-  height: 2.5rem;
+.menuLink {
+  /* height: 2.5rem; */
   display: flex;
   align-items: center;
   white-space: nowrap;
@@ -50,8 +51,24 @@ a.menuLink {
   text-decoration: none !important;
 }
 
+.menuLinkTitle {
+  composes: menuLink;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: .01em;
+}
+
+.menuLinkRootTitle {
+  composes: menuLink;
+  text-transform: uppercase;
+  font-size: 20px;
+
+}
+
 .hamburger.level1 > .menuLink {
-  height: 3.5rem;
+  /* height: 3.5rem; */
   outline: none;
 }
 
@@ -100,18 +117,27 @@ a.menuLink {
   --venia-global-color-text: var(--am-mega-menu-active-color) !important;
 }
 
+.iconRoot {
+  fill: none;
+  stroke: #d0d0d0;
+  width: 12px;
+  height: 12px;
+}
 /*
  * Desktop specific styles
  */
 
 @media (min-width: 1025px) {
-  .toggle {
+  /* .toggle {
     display: none;
     transform: none;
-  }
+  } */
 
-  .toggle_open {
+  /* .toggle_open {
     transform: rotate(180deg);
+  } */
+  .menuLinkTitle {
+    margin-bottom: 16px;
   }
 
   .hamburger.level1 > .toggle {
@@ -119,8 +145,8 @@ a.menuLink {
   }
 
   .level2 > .menuLink {
-    font-weight: 700;
-    text-transform: uppercase;
+    /* font-weight: 700; */
+    /* text-transform: uppercase; */
     display: flex;
     white-space: normal;
   }
@@ -133,20 +159,20 @@ a.menuLink {
     outline: 1px solid rgb(var(--am-mega-menu-text-hover-color));
   }
 
-  .menuLink:hover {
+  /* .menuLink:hover {
     color: rgb(var(--am-mega-menu-text-hover-color));
     background-color: rgb(var(--am-mega-menu-item-bg-hover));
     outline: 0.5rem solid rgb(var(--am-mega-menu-item-bg-hover));
-  }
+  } */
 
-  .hamburger.level1:hover > .toggle,
+  /* .hamburger.level1:hover > .toggle,
   .hamburger.level1:hover > .menuLink {
     background-color: rgb(var(--am-mega-menu-item-bg-hover));
-  }
+  } */
 
-  .level2 .menuLink:hover {
+  /* .level2 .menuLink:hover {
     color: rgb(var(--am-mega-menu-submenu-text-hover-color));
     background: none;
     outline: none;
-  }
+  } */
 }

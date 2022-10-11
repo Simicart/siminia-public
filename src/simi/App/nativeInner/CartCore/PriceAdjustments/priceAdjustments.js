@@ -12,6 +12,7 @@ import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
 import { useGetRewardPointData } from '../../../../talons/RewardPoint/useGetRewardPointData';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { showFogLoading } from '../../../../BaseComponents/Loading/GlobalLoading';
+import { Form } from 'informed';
 
 const CouponCode = React.lazy(() => import('./CouponCode'));
 // const GiftOptions = React.lazy(() =>
@@ -44,7 +45,11 @@ const PriceAdjustments = props => {
     const [{ cartId }] = useCartContext();
     const [rewardPoint, setRewardPoint] = useState(0);
     const [enableWarningPoint, setEnalbleWarningPoint] = useState(false);
-    const { spendRewardPointHandle, flatData } = usePriceSummary();
+    const {
+        spendRewardPointHandle,
+        flatData,
+        applyRuleData
+    } = usePriceSummary();
     const { priceData, subtotal } = flatData;
     const subtotalVal = subtotal && subtotal.value ? subtotal.value : 0;
     const mpRewardSpent =
@@ -52,8 +57,12 @@ const PriceAdjustments = props => {
         priceData.filter(function(rewardData) {
             return rewardData.code == 'mp_reward_spent';
         });
+
     const { customerRewardPoint } = useGetRewardPointData({ onCart: true });
-    const exchange_rate = customerRewardPoint ? customerRewardPoint.current_exchange_rates : null
+
+    const exchange_rate = customerRewardPoint
+        ? customerRewardPoint.current_exchange_rates
+        : null;
     const spending_rate = exchange_rate ? exchange_rate.spending_rate : '';
     const words = spending_rate ? spending_rate.split(' points') : '';
     const money = spending_rate ? spending_rate.split('for $') : '';
@@ -67,9 +76,7 @@ const PriceAdjustments = props => {
     let rewardPointSelected = 0;
     if (mpRewardSpent && mpRewardSpent.length > 0)
         rewardPointSelected = mpRewardSpent[0].value;
-
     const { setIsCartUpdating, giftCardConfig, refetchCartPage } = props;
-
     const { formatMessage } = useIntl();
 
     const applyHandle = () => {
@@ -81,7 +88,7 @@ const PriceAdjustments = props => {
         } else {
             showFogLoading();
             if (rewardPoint > maxPoint) {
-                setRewardPoint(maxPoint);
+                setRewardPoint(maxPoint - 1);
             }
             spendRewardPointHandle({
                 variables: {
@@ -161,7 +168,7 @@ const PriceAdjustments = props => {
                                 />
                             </div>
                             {balance > 0 ? (
-                                <div>
+                                <Form onSubmit={applyHandle}>
                                     <input
                                         type="range"
                                         className={classes.slider}
@@ -197,7 +204,8 @@ const PriceAdjustments = props => {
                                     </div>
                                     <Button
                                         priority="high"
-                                        onClick={applyHandle}
+                                        // onClick={applyHandle}
+                                        type="submit"
                                     >
                                         <FormattedMessage
                                             id={'rewardPoint.applyButton'}
@@ -214,7 +222,7 @@ const PriceAdjustments = props => {
                                             />
                                         </div>
                                     ) : null}
-                                </div>
+                                </Form>
                             ) : (
                                 <div className={classes.message}>
                                     <FormattedMessage
