@@ -1,11 +1,12 @@
 import { useQuery } from '@apollo/client';
-import GET_MODULE_CONFIG from '@bsscommerce/force-login/src/queries/getModuleConfigQuery';
+import GET_MODULE_CONFIG from '@simicart/siminia/src/simi/BaseComponents/ForceLogin/queries/getModuleConfigQuery';
 
-export default props => {
-    const { data, loading, error } = useQuery(GET_MODULE_CONFIG);
+export default () => {
+    const forceLoginEnabled = parseInt(window?.SMCONFIGS?.plugins?.SM_ENABLE_FORCE_LOGIN) === 1;
+    const { data, loading, error } = useQuery(GET_MODULE_CONFIG, { skip: !forceLoginEnabled });
 
     return {
-        moduleConfig: data?.bssForceLoginConfig,
+        moduleConfig: data?.bssForceLoginConfig || {},
         loading,
         error: error && handleError(error)
     }

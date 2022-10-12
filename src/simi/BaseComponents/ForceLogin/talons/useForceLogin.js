@@ -1,8 +1,8 @@
-import {useMemo} from 'react';
+import { useMemo } from 'react';
 import useForceLoginConfig from "./useForceLoginConfig";
-import {useLocation} from "react-router-dom";
-import {useIntl} from 'react-intl';
-import {useUserContext} from '@magento/peregrine/lib/context/user';
+import { useLocation } from "react-router-dom";
+import { useIntl } from 'react-intl';
+import { useUserContext } from '@magento/peregrine/lib/context/user';
 
 import builtinIgnoreForceLoginRoutes from '../components/Routes/ignoreForceLoginRoutes';
 
@@ -18,26 +18,26 @@ const useForceLogin = props => {
     const SEARCH_RESULT_PAGE_ROUTE_PATH = '/search.html';
     const SEARCH_CART_ROUTE_PATH = '/cart';
     const SEARCH_CHECKOUT_ROUTE_PATH = '/checkout';
+    const CONTACT_ROUTE_PATH = 'contact.html';
 
     const { showAlert = false } = props || {};
     const { pathname } = useLocation();
     const { formatMessage } = useIntl();
-    const { moduleConfig = {}, error: bssError, loading: bssLoading } = useForceLoginConfig();
+    const { moduleConfig = {}, loading: bssLoading } = useForceLoginConfig();
     const [{ isSignedIn }] = useUserContext();
     const formatRoute = route => route.replace(/^\/+/, '').replace(/\/$/, '');
 
-    let hookReturn = {
+    const hookReturn = {
         isForceLogin: false,
         redirectTo: '/sign-in',
         redirectAfterLogin: 'default',
         bssLoading
     }
+    let redirectUrl;
+    if (moduleConfig['redirect_to'] === AFTER_LOGIN_REDIRECT_HOME) redirectUrl = '/';
+    if (moduleConfig['redirect_to'] === AFTER_LOGIN_REDIRECT_PREVIOUS) redirectUrl = pathname;
+    if (moduleConfig['redirect_to'] === AFTER_LOGIN_REDIRECT_CUSTOMURL) redirectUrl = moduleConfig['redirect_custom_url'];
 
-    const redirectUrl = useMemo(() => {
-        if (moduleConfig['redirect_to'] === AFTER_LOGIN_REDIRECT_HOME) return '/';
-        if (moduleConfig['redirect_to'] === AFTER_LOGIN_REDIRECT_PREVIOUS) return pathname;
-        if (moduleConfig['redirect_to'] === AFTER_LOGIN_REDIRECT_CUSTOMURL) return moduleConfig['redirect_custom_url'];
-    }, [moduleConfig?.redirect_to]);
     const alertMessage = useMemo(() => {
         if (showAlert) {
             return moduleConfig?.force_login_message ||
@@ -47,7 +47,7 @@ const useForceLogin = props => {
                 });
         }
         return false;
-    }, [showAlert, moduleConfig?.force_login_message]);
+    }, [showAlert, moduleConfig?.force_login_message, formatMessage]);
 
     const FLSpecificPages = useMemo(() => {
         try {
@@ -94,11 +94,12 @@ const useForceLogin = props => {
             });
         }
 
-        // Search Result page, cart, checkout page
-        let flSrp = pathname === SEARCH_RESULT_PAGE_ROUTE_PATH && moduleConfig?.force_login_search_result_page === true;
-        let flCartPage = pathname === SEARCH_CART_ROUTE_PATH && moduleConfig?.force_login_cart_page === true;
-        let flCheckoutPage = pathname === SEARCH_CHECKOUT_ROUTE_PATH && moduleConfig?.force_login_checkout_page === true;
-        if (flSrp || flCartPage || flCheckoutPage) {
+        // Search Result page, cart, checkout page, contact page
+        const flSrp = pathname === SEARCH_RESULT_PAGE_ROUTE_PATH && moduleConfig?.force_login_search_result_page === true;
+        const flCartPage = pathname === SEARCH_CART_ROUTE_PATH && moduleConfig?.force_login_cart_page === true;
+        const flCheckoutPage = pathname === SEARCH_CHECKOUT_ROUTE_PATH && moduleConfig?.force_login_checkout_page === true;
+        const flContactPage = pathname === CONTACT_ROUTE_PATH && moduleConfig?.force_login_contact_page === true
+        if (flSrp || flCartPage || flCheckoutPage || flContactPage) {
             forceLogin = true;
         }
 
