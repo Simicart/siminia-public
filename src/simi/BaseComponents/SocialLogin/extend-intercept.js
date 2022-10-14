@@ -44,7 +44,7 @@ module.exports = targets => {
 
     // Add Social login to native inner create account
     const NativeInnerCreateAccountComponent = targetables.reactComponent(
-        '@simicart/siminia/src/simi/App/nativeInner/Customer/CreateAccountPage/CreateAccount.js'
+        '@simicart/siminia/src/simi/App/nativeInner/Customer/CreateAccount/createAccount.js'
     );
 
     const InnerSocialLoginReg = NativeInnerCreateAccountComponent.addImport(

@@ -74,101 +74,107 @@ const CreateAccount = props => {
     );
 
     return (
-        <Form
-            data-cy="CreateAccount-form"
-            className={classes.root}
-            initialValues={initialValues}
-            onSubmit={handleSubmit}
-        >
-            <h2 data-cy="CreateAccount-title" className={classes.title}>
-                <FormattedMessage
-                    id={'createAccount.createAccountText'}
-                    defaultMessage={'Create an Account'}
-                />
-            </h2>
-            <FormError errors={Array.from(errors.values())} />
-            <Field
-                label={formatMessage({
-                    id: 'createAccount.firstNameText',
-                    defaultMessage: 'First Name'
-                })}
+        <React.Fragment>
+            <Form
+                data-cy="CreateAccount-form"
+                className={classes.root}
+                initialValues={initialValues}
+                onSubmit={handleSubmit}
             >
-                <TextInput
-                    field="customer.firstname"
-                    autoComplete="given-name"
-                    validate={isRequired}
-                    validateOnBlur
-                    mask={value => value && value.trim()}
-                    maskOnBlur={true}
-                    data-cy="customer-firstname"
-                />
-            </Field>
-            <Field
-                label={formatMessage({
-                    id: 'createAccount.lastNameText',
-                    defaultMessage: 'Last Name'
-                })}
-            >
-                <TextInput
-                    field="customer.lastname"
-                    autoComplete="family-name"
-                    validate={isRequired}
-                    validateOnBlur
-                    mask={value => value && value.trim()}
-                    maskOnBlur={true}
-                    data-cy="customer-lastname"
-                />
-            </Field>
-            <Field
-                label={formatMessage({
-                    id: 'createAccount.emailText',
-                    defaultMessage: 'Email'
-                })}
-            >
-                <TextInput
-                    field="customer.email"
-                    autoComplete="email"
-                    validate={isRequired}
-                    validateOnBlur
-                    mask={value => value && value.trim()}
-                    maskOnBlur={true}
-                    data-cy="customer-email"
-                />
-            </Field>
-            <Password
-                autoComplete="new-password"
-                fieldName="password"
-                isToggleButtonHidden={false}
-                label={formatMessage({
-                    id: 'createAccount.passwordText',
-                    defaultMessage: 'Password'
-                })}
-                validate={combine([
-                    isRequired,
-                    [hasLengthAtLeast, 8],
-                    validatePassword
-                ])}
-                validateOnBlur
-                mask={value => value && value.trim()}
-                maskOnBlur={true}
-                data-cy="password"
-            />
-            <div className={classes.subscribe}>
-                <Checkbox
-                    field="subscribe"
-                    id="subscribe"
+                <h2 data-cy="CreateAccount-title" className={classes.title}>
+                    <FormattedMessage
+                        id={'createAccount.createAccountText'}
+                        defaultMessage={'Create an Account'}
+                    />
+                </h2>
+                <FormError errors={Array.from(errors.values())} />
+                <Field
                     label={formatMessage({
-                        id: 'createAccount.subscribeText',
-                        defaultMessage: 'Subscribe to news and updates'
+                        id: 'createAccount.firstNameText',
+                        defaultMessage: 'First Name'
                     })}
+                >
+                    <TextInput
+                        field="customer.firstname"
+                        autoComplete="given-name"
+                        validate={isRequired}
+                        validateOnBlur
+                        mask={value => value && value.trim()}
+                        maskOnBlur={true}
+                        data-cy="customer-firstname"
+                    />
+                </Field>
+                <Field
+                    label={formatMessage({
+                        id: 'createAccount.lastNameText',
+                        defaultMessage: 'Last Name'
+                    })}
+                >
+                    <TextInput
+                        field="customer.lastname"
+                        autoComplete="family-name"
+                        validate={isRequired}
+                        validateOnBlur
+                        mask={value => value && value.trim()}
+                        maskOnBlur={true}
+                        data-cy="customer-lastname"
+                    />
+                </Field>
+                <Field
+                    label={formatMessage({
+                        id: 'createAccount.emailText',
+                        defaultMessage: 'Email'
+                    })}
+                >
+                    <TextInput
+                        field="customer.email"
+                        autoComplete="email"
+                        validate={isRequired}
+                        validateOnBlur
+                        mask={value => value && value.trim()}
+                        maskOnBlur={true}
+                        data-cy="customer-email"
+                    />
+                </Field>
+                <Password
+                    autoComplete="new-password"
+                    fieldName="password"
+                    isToggleButtonHidden={false}
+                    label={formatMessage({
+                        id: 'createAccount.passwordText',
+                        defaultMessage: 'Password'
+                    })}
+                    validate={combine([
+                        isRequired,
+                        [hasLengthAtLeast, 8],
+                        validatePassword
+                    ])}
+                    validateOnBlur
+                    mask={value => value && value.trim()}
+                    maskOnBlur={true}
+                    data-cy="password"
                 />
-            </div>
-            {metaPackagesEnabled ? <GoogleRecaptcha {...recaptchaWidgetProps} /> : ''}
-            <div className={classes.actions}>
-                {submitButton}
-                {cancelButton}
-            </div>
-        </Form>
+                <div className={classes.subscribe}>
+                    <Checkbox
+                        field="subscribe"
+                        id="subscribe"
+                        label={formatMessage({
+                            id: 'createAccount.subscribeText',
+                            defaultMessage: 'Subscribe to news and updates'
+                        })}
+                    />
+                </div>
+                {metaPackagesEnabled ? (
+                    <GoogleRecaptcha {...recaptchaWidgetProps} />
+                ) : (
+                    ''
+                )}
+                <div className={classes.actions}>
+                    {submitButton}
+                    {cancelButton}
+                </div>
+            </Form>
+        </React.Fragment>
     );
 };
 

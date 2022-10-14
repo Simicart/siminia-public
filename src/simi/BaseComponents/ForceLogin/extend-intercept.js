@@ -66,29 +66,17 @@ module.exports = targets => {
     // Create Account Page - disable create account page
     const CreateAccountPage = targetables.reactComponent("@simicart/siminia/src/simi/App/nativeInner/Customer/CreateAccountPage/createAccountPage.js");
     const useForceLoginConfigCreateAccountPage = CreateAccountPage.addImport("import useForceLoginConfig from '@simicart/siminia/src/simi/BaseComponents/ForceLogin/talons/useForceLoginConfig';");
-    const LazyComponentCreateAccountPage = CreateAccountPage.addImport("import { LazyComponent } from '@simicart/siminia/src/simi/BaseComponents/LazyComponent';");
     const LoadingCreateAccountPage = CreateAccountPage.addImport("import Loading from '@simicart/siminia/src/simi/BaseComponents/Loading';");
     CreateAccountPage.insertAfterSource(
         'const { formatMessage } = useIntl();',
         `
-    //import Page404 from '@simicart/siminia/src/simi/App/nativeInner/NoMatch/Page404';
-    const Page404 = props => {
-        return (
-            <${LazyComponentCreateAccountPage}
-                component={() =>
-                    import(/* webpackChunkName: "Page404"*/ '@simicart/siminia/src/simi/App/nativeInner/NoMatch/Page404')
-                }
-                {...props}
-            />
-        );
-    };
     const { moduleConfig: flModuleConfig, loading: bssFLLoading, error: bssFFError } = ${useForceLoginConfigCreateAccountPage}();
     if (bssFLLoading) {
         return <${LoadingCreateAccountPage} />;
     }
     if (!bssFLLoading && flModuleConfig && !bssFFError) {
         if (flModuleConfig.enable === true && flModuleConfig.disable_registration === true) {
-            return <Page404 />;
+            return "";
         }
     }
         `
@@ -100,11 +88,13 @@ module.exports = targets => {
     const useHistory = NoMatchRoute.addImport('import { useHistory } from "react-router-dom";')
     const useForceLoginConfig = NoMatchRoute.addImport("import useForceLoginConfig from '@simicart/siminia/src/simi/BaseComponents/ForceLogin/talons/useForceLoginConfig';")
     const useUserContext = NoMatchRoute.addImport("import { useUserContext } from '@magento/peregrine/lib/context/user';")
+    const useIntlImport = NoMatchRoute.addImport("import { useIntl } from 'react-intl';")
     NoMatchRoute.insertAfterSource(
         '}, [pathname, pageMaskedId, pathToFind, findPage]);',
         `
     const { replace } = ${useHistory}();
     const [{ isSignedIn }] = ${useUserContext}();
+    const { formatMessage } = ${useIntlImport}();
     const SIGN_IN_PATH = '/sign-in';
     const NO_FORCE_LOGIN = '0';
     const AFTER_LOGIN_REDIRECT_HOME = 'home';
