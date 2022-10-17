@@ -435,7 +435,7 @@ const ProductFullDetail = props => {
         }
     }
 
-    const wrapperQuantity = (
+    const wrapperQuantity = product.__typename !=='GroupedProduct' ?(
         <div className="wrapperQuantity">
             <section
                 className={!isMobileSite ? classes.quantity : 'mbQuantity'}
@@ -470,7 +470,7 @@ const ProductFullDetail = props => {
             </div>
             {/* ) : null} */}
         </div>
-    );
+    ) : '';
     const renderSizeChart = product.mp_sizeChart ? (
         <SizeChart
             sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null}

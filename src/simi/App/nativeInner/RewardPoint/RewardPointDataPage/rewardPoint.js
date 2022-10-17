@@ -16,7 +16,7 @@ import { Form } from 'informed';
 import Field from '@magento/venia-ui/lib/components/Field';
 import Checkbox from '@magento/venia-ui/lib/components/Checkbox';
 import AlertMessages from '../../ProductFullDetail/AlertMessages';
-import Loader from '../../Loader'
+import Loader from '../../Loader';
 
 const RewardPointDataPage = props => {
     const { formatMessage } = useIntl();
@@ -30,7 +30,9 @@ const RewardPointDataPage = props => {
     let history = useHistory();
     const windowSize = useWindowSize();
     const isMobileSite = windowSize.innerWidth <= 768;
-    const [alertMsg, setAlertMsg] = useState(-1)
+    const [, { addToast }] = useToasts();
+
+    const [alertMsg, setAlertMsg] = useState(-1);
 
     const handleViewAll = () => {
         history.push('/reward-transactions');
@@ -39,7 +41,17 @@ const RewardPointDataPage = props => {
         mpRewardPoints({
             variables: { isUpdate, isExpire }
         });
-        setAlertMsg(true)
+        {
+            isMobileSite
+                ? setAlertMsg(true)
+                : addToast({
+                      type: 'info',
+                      message: formatMessage({
+                          id: 'Thanks For Your Subscribe'
+                      }),
+                      timeout: 3000
+                  });
+        }
     };
     const [width, setWidth] = useState(window.innerWidth);
 
@@ -69,7 +81,7 @@ const RewardPointDataPage = props => {
         />
     );
     if (isLoadingWithoutData) {
-        return <Loader/>
+        return <Loader />;
     }
     let isUpdate = notification_update == 1 ? true : false;
     let isExpire = notification_expire == 1 ? true : false;
@@ -157,7 +169,7 @@ const RewardPointDataPage = props => {
     );
     return (
         <div className={`${classes.root} ${!isMobileSite ? 'container' : ''}`}>
-             <AlertMessages
+            <AlertMessages
                 message={formatMessage({
                     id: 'rewardPoint.preferencesText',
                     defaultMessage: 'Your preferences have been updated.'
@@ -175,9 +187,9 @@ const RewardPointDataPage = props => {
                     <div className={classes.rewardNotification}>
                         <div className={classes.emailTitle}>
                             {formatMessage({
-                                        id :'rewardPoint. emailNotification',
-                                        defaultMessage :' Email Notification'
-                                    })}
+                                id: 'rewardPoint. emailNotification',
+                                defaultMessage: ' Email Notification'
+                            })}
                         </div>
                         <Form className={classes.form} onSubmit={handleSave}>
                             <Checkbox
@@ -204,8 +216,8 @@ const RewardPointDataPage = props => {
                             <div className={classes.buttonsContainer}>
                                 <Button type="submit" priority="high">
                                     {formatMessage({
-                                        id :'rewardPoint.saveButton',
-                                        defaultMessage :'Save'
+                                        id: 'rewardPoint.saveButton',
+                                        defaultMessage: 'Save'
                                     })}
                                 </Button>
                             </div>

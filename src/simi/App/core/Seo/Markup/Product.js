@@ -496,7 +496,6 @@ const Product = props => {
                 parseInt(max_title_length)
             );
         }
-        console.log(product, description_crop);
 
         return (
             <>

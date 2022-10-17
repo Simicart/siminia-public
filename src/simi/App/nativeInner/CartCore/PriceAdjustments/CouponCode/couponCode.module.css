@@ -23,6 +23,7 @@
 }
 .entryFormError input {
     border-color: rgb(var(--venia-global-color-red-400));
+    height: 50px;
 }
 
 .entryFormError input:focus {

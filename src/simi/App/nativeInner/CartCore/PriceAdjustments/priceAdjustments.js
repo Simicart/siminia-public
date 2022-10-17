@@ -88,7 +88,7 @@ const PriceAdjustments = props => {
         } else {
             showFogLoading();
             if (rewardPoint > maxPoint) {
-                setRewardPoint(maxPoint - 1);
+                setRewardPoint(maxPoint);
             }
             spendRewardPointHandle({
                 variables: {

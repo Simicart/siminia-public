@@ -7,6 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    display: no;
 }
 
 .arrow-button {
@@ -19,6 +20,8 @@
     width: fit-content;
     height: fit-content;
     cursor: pointer;
+    /* transform: rotateZ(180deg); */
+    margin-inline-start: 1rem;
 }
 
 .arrow-button:hover {
@@ -26,7 +29,7 @@
 }
 
 .backward-arrow-button {
-    margin-right: 1rem;
+    margin-inline-end: 1rem;
 }
 
 .intro-title {

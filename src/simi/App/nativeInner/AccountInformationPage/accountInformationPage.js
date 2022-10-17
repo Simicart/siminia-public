@@ -101,7 +101,7 @@ const AccountInformationPage = props => {
                         isRequired,
                         [hasLengthAtLeast, 8],
                         validatePassword,
-                        [isEqualToField, 'newPassword']
+                        [isEqualToField, 'New Password']
                     ])}
                     isToggleButtonHidden={false}
                 />

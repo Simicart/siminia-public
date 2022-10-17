@@ -118,13 +118,26 @@ header {
     height: 45px;
     border-radius: 23px !important;
 }
+.header-search-form .search-icon svg {
+    margin-top: 0!important;
+}
+.header-search-form .search-icon{
+    position: absolute;
+    top: 0px;
+    inset-inline-end: 15px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+}
 @media (min-width: 780px) {
     .header-search-form .search-icon {
         /* display: inline-block; */
-        position: absolute;
+        /* position: absolute;
         right: 14px;
         top: 5px;
-        cursor: pointer;
+        cursor: pointer; */
     }
     .header-search {
         width: 100%;

@@ -13,7 +13,7 @@
 }
 
 .categories {
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .categoriesChild {
@@ -43,7 +43,7 @@
 
 @media(min-width: 1024px) {
     .autoWidth, .customWidth, .fullWidth {
-        padding: 30px 30px 30px 10px !important;
+        padding: 15px !important;
     }
 
     .columnView, .horizontal {
