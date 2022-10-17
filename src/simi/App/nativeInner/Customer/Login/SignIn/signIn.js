@@ -13,8 +13,10 @@ import defaultClasses from './signIn.module.css';
 import { GET_CART_DETAILS_QUERY } from './signIn.gql';
 import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
 import Password from '@magento/venia-ui/lib/components/Password';
-import FormError from '@magento/venia-ui/lib/components/FormError/formError';
+// import FormError from '@magento/venia-ui/lib/components/FormError/formError';
 import GoogleRecaptcha from '../../../GoogleReCaptcha';
+import FormError from '../formError';
+
 const metaPackagesEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&

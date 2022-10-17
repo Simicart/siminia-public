@@ -174,15 +174,23 @@ const SimiPagination = props => {
                 style={isRtl ? { marginRight: 'auto' } : { marginLeft: 'auto' }}
             >
                 {showInfoItem && (
-                    <span
-                        className="item-from-to"
-                        style={{ marginRight: 10, fontSize: 16 }}
-                    >
-                        {formatMessage({ id: 'Items %a - %b of %c' })
-                            .replace('%a', firstItem)
-                            .replace('%b', lastItem)
-                            .replace('%c', totalItem)}
-                    </span>
+                    // <span
+                    //     className="item-from-to"
+                    //     style={{ marginRight: 10, fontSize: 16 }}
+                    // >
+                    //     {formatMessage({ id: 'Items %a - %b of %c' })
+                    //         .replace('%a', firstItem)
+                    //         .replace('%b', lastItem)
+                    //         .replace('%c', totalItem)}
+                    // </span>
+
+                     <span className='wrapItemCount'>
+                     <span>{formatMessage({id:'Items'})}</span>
+                     <span className='itemCount'>{firstItem} - {lastItem} </span>
+                     <span>{formatMessage({id:'of'})}</span>
+                     <span className='itemCount'>{totalItem}</span>
+                  
+                 </span>
                 )}
                 {option_limit.length ? (
                     <React.Fragment>

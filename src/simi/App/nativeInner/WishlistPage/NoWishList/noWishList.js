@@ -21,7 +21,7 @@ const NoWishList = props => {
 
             <div className={classes.noWishList}>
                 {formatMessage({
-                    id: 'noWishList',
+                    id: 'There are no wishlist matching',
                     defaultMessage: 'There are no wishlist matching'
                 })}
             </div>

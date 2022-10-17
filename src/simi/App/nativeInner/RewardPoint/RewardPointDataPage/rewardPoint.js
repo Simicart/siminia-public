@@ -76,7 +76,7 @@ const RewardPointDataPage = props => {
     } = customerRewardPoint;
     const PAGE_TITLE = (
         <FormattedMessage
-            id={'rewardPoint.myPointReward'}
+            id={'My Points and Reward'}
             defaultMessage={'My Points and Reward'}
         />
     );
@@ -105,10 +105,28 @@ const RewardPointDataPage = props => {
 
                   let rewardStatus, expireDateString;
                   if (status == 1) {
-                      rewardStatus = 'Pending';
+                      rewardStatus =
+                      <>
+                      {formatMessage({
+                          id: 'Pending',
+                          defaultMessage: 'Pending'
+                      })}
+                  </>
                   } else if (transaction.status == 2) {
-                      rewardStatus = 'Completed';
-                  } else rewardStatus = 'Expired';
+                      rewardStatus = (
+                          <>
+                              {formatMessage({
+                                  id: 'Completed',
+                                  defaultMessage: 'Completed'
+                              })}
+                          </>
+                      );
+                  } else rewardStatus = <>
+                  {formatMessage({
+                      id: 'Expired',
+                      defaultMessage: 'Expired'
+                  })}
+              </>;
 
                   if (expireDateFormat == 'Invalid date') {
                       expireDateString = 'N/A';
@@ -128,16 +146,49 @@ const RewardPointDataPage = props => {
     const rewardPointDataContent = (
         <div className={classes.rewardPointData}>
             <div className={classes.block1}>
-                <div className={classes.point1}>{point_balance} points</div>
-                <span>Available Balance</span>
+                <div className={classes.point1}>
+                    {point_balance}
+                    {formatMessage({
+                        id: 'points',
+                        defaultMessage: 'points'
+                    })}
+                </div>
+                <span>
+                    {formatMessage({
+                        id: 'Available Balance',
+                        defaultMessage: 'Available Balance'
+                    })}
+                </span>
             </div>
             <div className={classes.block2}>
-                <div className={classes.point2}>{point_earned} points</div>
-                <span>Total Earned Points</span>
+                <div className={classes.point2}>
+                    {point_earned}{' '}
+                    {formatMessage({
+                        id: 'points',
+                        defaultMessage: 'points'
+                    })}
+                </div>
+                <span>
+                    {formatMessage({
+                        id: 'Total Earned Points',
+                        defaultMessage: 'Total Earned Points'
+                    })}
+                </span>
             </div>
             <div className={classes.block3}>
-                <div className={classes.point3}>{point_spent} points</div>
-                <span>Total Spent Points</span>
+                <div className={classes.point3}>
+                    {point_spent}{' '}
+                    {formatMessage({
+                        id: 'points',
+                        defaultMessage: 'points'
+                    })}
+                </div>
+                <span>
+                    {formatMessage({
+                        id: 'Total Spent Points',
+                        defaultMessage: 'Total Spent Points'
+                    })}
+                </span>
             </div>
         </div>
     );
@@ -145,14 +196,17 @@ const RewardPointDataPage = props => {
         <div className={classes.rewardPointTransaction}>
             <div className={classes.rewardTitle}>
                 <FormattedMessage
-                    id={'rewardPoint.recentTransaction'}
+                    id={'Recent Transaction'}
                     defaultMessage={'Recent Transaction'}
                 />{' '}
                 <LinkButton
                     onClick={handleViewAll}
                     className={classes.linkButton}
                 >
-                    View All
+                    {formatMessage({
+                        id: 'View all',
+                        defaultMessage: 'View All'
+                    })}
                 </LinkButton>
             </div>
             {transactions ? (
@@ -171,7 +225,7 @@ const RewardPointDataPage = props => {
         <div className={`${classes.root} ${!isMobileSite ? 'container' : ''}`}>
             <AlertMessages
                 message={formatMessage({
-                    id: 'rewardPoint.preferencesText',
+                    id: 'Your preferences have been updated.',
                     defaultMessage: 'Your preferences have been updated.'
                 })}
                 setAlertMsg={setAlertMsg}
@@ -187,7 +241,7 @@ const RewardPointDataPage = props => {
                     <div className={classes.rewardNotification}>
                         <div className={classes.emailTitle}>
                             {formatMessage({
-                                id: 'rewardPoint. emailNotification',
+                                id: 'Email Notification',
                                 defaultMessage: ' Email Notification'
                             })}
                         </div>
@@ -195,7 +249,7 @@ const RewardPointDataPage = props => {
                             <Checkbox
                                 field="update"
                                 label={formatMessage({
-                                    id: 'rewardPoint.update',
+                                    id: 'Subcribe to balance update',
                                     defaultMessage: 'Subcribe to balance update'
                                 })}
                                 onClick={() => {
@@ -205,7 +259,8 @@ const RewardPointDataPage = props => {
                             <Checkbox
                                 field="experationNotification"
                                 label={formatMessage({
-                                    id: 'rewardPoint.experationNotification"',
+                                    id:
+                                        'Subcribe to points experation notification',
                                     defaultMessage:
                                         'Subcribe to points experation notification'
                                 })}
@@ -216,7 +271,7 @@ const RewardPointDataPage = props => {
                             <div className={classes.buttonsContainer}>
                                 <Button type="submit" priority="high">
                                     {formatMessage({
-                                        id: 'rewardPoint.saveButton',
+                                        id: 'Save',
                                         defaultMessage: 'Save'
                                     })}
                                 </Button>

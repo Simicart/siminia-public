@@ -54,7 +54,12 @@
     display: block;
     min-width: 20rem;
 }
-
+.wrapItemCount{
+    display: flex;
+}
+.wrapItemCount span{
+    margin-inline-end: 5px;
+}
 @media (max-width: 768px) {
     .root {
         padding: 0;

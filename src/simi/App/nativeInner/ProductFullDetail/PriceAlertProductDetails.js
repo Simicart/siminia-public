@@ -1,6 +1,7 @@
 import React from "react";
 import {useProductAlertSubscription} from "../talons/useProductAlertSubscription";
 import Loader from "../Loader";
+import { useIntl } from "react-intl";
 
 
 const PriceAlertProductDetails = (props) => {
@@ -9,6 +10,7 @@ const PriceAlertProductDetails = (props) => {
     const setMessageType = props ? props.setMessageType : null
     const setPopUpData = props ? props.setPopUpData : null
     const setShowPopup = props ? props.setShowPopup : null
+    const { formatMessage } = useIntl();
 
 
     const {
@@ -40,10 +42,17 @@ const PriceAlertProductDetails = (props) => {
                         color: '#006bb4',
                         fontWeight: 400
                     }}
-                       title={'Notify me when the prices drops'}
+                       title=  {formatMessage({
+                        id: 'Notify me when the price drops',
+                        defaultMessage:'Notify me when the price drops'
+                    })}
                        onClick={addPriceDropNotificationSubscription}
                     >
-                        {'Notify me when the price drops'}
+                        {formatMessage({
+                        id: 'Notify me when the price drops',
+                        defaultMessage:'Notify me when the price drops'
+                    })}
+                        
                     </a>
 
                 </div>
@@ -62,7 +71,10 @@ const PriceAlertProductDetails = (props) => {
                        title={'Notify me when the prices drops'}
                        onClick={addStockNotificationSubscription}
                     >
-                        {'Notify me when this product is in stock'}
+                         {formatMessage({
+                        id: 'Notify me when the price drops',
+                        defaultMessage:'Notify me when the price drops'
+                    })}
                     </a>
                 </div>
             )}

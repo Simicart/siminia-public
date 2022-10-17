@@ -80,7 +80,7 @@ const AccountInformationPage = props => {
                 <Password
                     fieldName="newPassword"
                     label={formatMessage({
-                        id: 'accountInformationPage.newPassword',
+                        id: 'New Password',
                         defaultMessage: 'New Password'
                     })}
                     validate={combine([
@@ -94,7 +94,7 @@ const AccountInformationPage = props => {
                 <Password
                     fieldName="confirmPassword"
                     label={formatMessage({
-                        id: 'accountInformationPage.confirmPassword',
+                        id: 'Confirm New Password',
                         defaultMessage: 'Confirm New Password'
                     })}
                     validate={combine([
@@ -115,7 +115,7 @@ const AccountInformationPage = props => {
                 onClick={handleChangePassword}
             >
                 <FormattedMessage
-                    id={'accountInformationPage.changePassword'}
+                    id={'Change Password'}
                     defaultMessage={'Change Password'}
                 />
             </LinkButton>
@@ -123,11 +123,11 @@ const AccountInformationPage = props => {
     ) : null;
     const passwordLabel = shouldShowNewPassword
         ? formatMessage({
-              id: 'accountInformationPage.currentPassword',
+              id: 'Current Password',
               defaultMessage: 'Current Password'
           })
         : formatMessage({
-              id: 'accountInformationPage.password',
+              id: 'Password',
               defaultMessage: 'Password'
           });
     let pageContent = null;
@@ -139,7 +139,7 @@ const AccountInformationPage = props => {
             <React.Fragment>
                 <h2 className={classes.titleEdit}>
                     <FormattedMessage
-                        id={'accountInformationPage.titleEdit'}
+                        id={'Edit Account Information'}
                         defaultMessage={'Edit Account Information'}
                     />
                 </h2>
@@ -153,7 +153,7 @@ const AccountInformationPage = props => {
                             <h4 className={classes.titleH4}>
                                 <FormattedMessage
                                     id={
-                                        'accountInformationPage.titleAccountInfo'
+                                        'Account Information'
                                     }
                                     defaultMessage={'Account Information'}
                                 />
@@ -161,7 +161,7 @@ const AccountInformationPage = props => {
                             <div className={classes.inputContent}>
                                 <Field
                                     label={formatMessage({
-                                        id: 'accountInformationPage.labelFirstName',
+                                        id: 'First Name',
                                         defaultMessage: 'First Name *'
                                     })}
                                     required={true}
@@ -179,7 +179,7 @@ const AccountInformationPage = props => {
                             <div className={classes.inputContent}>
                                 <Field
                                     label={formatMessage({
-                                        id: 'accountInformationPage.labelLasttName',
+                                        id: 'Last Name',
                                         defaultMessage: 'Last Name *'
                                     })}
                                     required={true}
@@ -195,7 +195,7 @@ const AccountInformationPage = props => {
                             <div className={classes.inputContent}>
                                 <Field
                                     label={formatMessage({
-                                        id: 'accountInformationPage.labelEmail',
+                                        id: 'Email address',
                                         defaultMessage: 'Email address *'
                                     })}
                                     required={true}
@@ -227,7 +227,7 @@ const AccountInformationPage = props => {
                     {maybeChangePasswordButton}
                     <Colorbtn
                         text={formatMessage({
-                            id: 'accountInformationPage.save',
+                            id: 'save',
                             defaultMessage: 'SAVE'
                         })}
                         className={classes.saveProfile}
@@ -255,7 +255,7 @@ const AccountInformationPage = props => {
             <div style={{height:topInsets}}></div>
             <AlertMessages
                 message={formatMessage({
-                    id: 'accountInformationPage.save',
+                    id: 'You saved the account information.',
                     defaultMessage: 'You saved the account information.'
                 })}
                 setAlertMsg={setAlertMsg}
@@ -270,13 +270,13 @@ const AccountInformationPage = props => {
                     <div className={classes.containerSub}>
                         <StoreTitle>
                             {formatMessage({
-                                id: 'accountInformationPage.titleAccount',
+                                id: 'Account Information',
                                 defaultMessage: 'Account Information'
                             })}
                         </StoreTitle>
                         <h1 className={classes.heading}>
                             <FormattedMessage
-                                id={'accountInformationPage.accountInformation'}
+                                id={'Account Information'}
                                 defaultMessage={'Account Information'}
                             />
                         </h1>

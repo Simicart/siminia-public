@@ -71,7 +71,7 @@ button.saveProfile {
     font-weight: 600;
     letter-spacing: 0;
     line-height: 16px;
-    float: left;
+    /* float: left; */
 }
 .mainEditColumn h3{
     color: #333333;

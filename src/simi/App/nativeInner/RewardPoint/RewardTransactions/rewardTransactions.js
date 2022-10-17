@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import { useGetRewardPointData } from '../../../../talons/RewardPoint/useGetRewardPointData';
-import LeftMenu from '../../../core/LeftMenu'
+import LeftMenu from '../../../core/LeftMenu';
 import defaultClasses from './rewardTransaction.module.css';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 import moment from 'moment';
 import { useWindowSize } from '@magento/peregrine';
 
 const RewardTransaction = props => {
+    const { formatMessage } = useIntl();
+
     const classes = useStyle(defaultClasses);
     const talonProps = useGetRewardPointData();
     const { customerTransactions, isLoadingWithoutData } = talonProps;
@@ -29,7 +31,7 @@ const RewardTransaction = props => {
     if (isLoadingWithoutData) {
         return <LoadingIndicator />;
     }
-    
+
     const transactionRow =
         customerTransactions && customerTransactions.items
             ? customerTransactions.items.map(transaction => {
@@ -49,10 +51,32 @@ const RewardTransaction = props => {
 
                   let rewardStatus, expireDateString;
                   if (status == 1) {
-                      rewardStatus = 'Pending';
+                      rewardStatus = (
+                          <>
+                              {formatMessage({
+                                  id: 'Pending',
+                                  defaultMessage: 'Pending'
+                              })}
+                          </>
+                      );
                   } else if (transaction.status == 2) {
-                      rewardStatus = 'Completed';
-                  } else rewardStatus = 'Expired';
+                      rewardStatus = (
+                          <>
+                              {formatMessage({
+                                  id: 'Completed',
+                                  defaultMessage: 'Completed'
+                              })}
+                          </>
+                      );
+                  } else
+                      rewardStatus = (
+                          <>
+                              {formatMessage({
+                                  id: 'Expired',
+                                  defaultMessage: 'Expired'
+                              })}
+                          </>
+                      );
 
                   if (expireDateFormat == 'Invalid date') {
                       expireDateString = 'N/A';
@@ -76,16 +100,14 @@ const RewardTransaction = props => {
                 <div className={classes.wrapperContainer}>
                     <div className={classes.transactionTitle}>
                         <FormattedMessage
-                            id={'rewardPoint.transactionTitle'}
+                            id={'Reward Transactions'}
                             defaultMessage={'Reward Transactions'}
                         />
                     </div>
                     {customerTransactions ? (
                         <table>
                             <thead>
-                                <tr>
-                                    
-                                </tr>
+                                <tr />
                             </thead>
                             <tbody>{transactionRow}</tbody>
                         </table>

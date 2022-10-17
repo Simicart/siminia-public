@@ -396,8 +396,11 @@ const Header = props => {
                                     <span className={classes.priceSubtotal}>
                                         <FormattedMessage
                                             id={'priceSummary.rewardEarnValue'}
-                                            defaultMessage={`${pointBalance} point(s)`}
+                                            defaultMessage={`${pointBalance} `}
                                         />
+                                        <>
+                                        {formatMessage({ id: 'point(s)',defaultMessage:'point(s)' })}
+                                        </>
                                     </span>
                                 </Link>
                             ) : (

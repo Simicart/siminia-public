@@ -10,8 +10,11 @@
     width: 50%;
     max-height: 350px;
     object-fit: contain;
-    margin-left: 25%;
+    margin-inline-start: 0;
     margin-bottom: 15px;
+}
+.noWishList{
+    text-align: start;
 }
 .title {
     font-size: 1rem;

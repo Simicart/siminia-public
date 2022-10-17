@@ -51,7 +51,7 @@ export const ConfirmPopup = (props) => {
                                     cancelCallback ? cancelCallback() : null
                                     close();
                                 }}>
-                                <FormattedMessage id={'popup.cancel'} defaultMessage={'Cancel'}/>
+                                <FormattedMessage id={'Cancel'} defaultMessage={'Cancel'}/>
                             </RectOutlineButton>
 
                             <RectButton
@@ -60,7 +60,7 @@ export const ConfirmPopup = (props) => {
                                     confirmCallback ? confirmCallback() : null
                                     close();
                                 }}>
-                                <FormattedMessage id={'popup.ok'} defaultMessage={'OK'}/>
+                                <FormattedMessage id={'OK'} defaultMessage={'OK'}/>
                             </RectButton>
                         </div>
                     </div>
