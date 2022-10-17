@@ -54,7 +54,7 @@ const SignIn = props => {
         <div data-cy="SignIn-root" className={classes.root}>
             <span data-cy="SignIn-title" className={classes.title}>
                 <FormattedMessage
-                    id={'signIn.titleText'}
+                    id={'Sign-in to Your Account'}
                     defaultMessage={'Sign-in to Your Account'}
                 />
             </span>

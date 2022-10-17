@@ -29,6 +29,7 @@ import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talo
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 import { configColor } from '../../../../simi/Config';
 import { useGetRewardPointData } from '../../../talons/RewardPoint/useGetRewardPointData';
+import { useAppContext } from '@magento/peregrine/lib/context/app';
 // check if bot or headless chrome / wont get cart to avoid perf accection
 // can modify deeper on  peregrine/lib/context/cart.js:83 to avoid creating cart - db wasting - https://prnt.sc/2628k9h
 const isBotOrHeadless = isBot() || isHeadlessChrome();
@@ -226,6 +227,15 @@ const Header = props => {
                     height: headerHeight
                 }}
             >
+                {isPhone ? (
+                    <div className={classes.mobileMenuToggle}>
+                        <a onClick={() => toggleDrawer('nav')}>
+                            <i />
+                        </a>
+                    </div>
+                ) : (
+                    ''
+                )}
                 <SearchForm
                     itemsQty={itemsQty}
                     history={history}
@@ -345,6 +355,7 @@ const Header = props => {
             );
         } else return !isHiddenHeader && renderSearchForm();
     };
+    const [, { toggleDrawer }] = useAppContext();
 
     if (isPhone) {
         return (
@@ -373,7 +384,10 @@ const Header = props => {
                             <CurrencySwitcher />
 
                             {pointBalance && isSignedIn ? (
-                                <Link to={'/reward-points'} className={classes.wrapPoints}>
+                                <Link
+                                    to={'/reward-points'}
+                                    className={classes.wrapPoints}
+                                >
                                     <img
                                         style={{ height: '35px' }}
                                         alt="icon"
@@ -387,7 +401,7 @@ const Header = props => {
                                     </span>
                                 </Link>
                             ) : (
-                               ''
+                                ''
                             )}
                         </div>
                     ) : (

@@ -31,7 +31,14 @@
 .backward-arrow-button {
     margin-inline-end: 1rem;
 }
-
+.backward-arrow-button-rtl{
+    margin-inline-end: 1rem;
+    transform: rotateZ(180deg);
+}
+.forward-arrow-button-rtl{
+    margin-inline-end: 1rem;
+    transform: rotateZ(180deg);
+}
 .intro-title {
     font-weight: 600;
     font-size: 1.4rem;

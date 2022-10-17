@@ -46,7 +46,7 @@ export const defaultIfNull = (value, defaultVal) =>
 
 export const ProductDetailExtraProducts = props => {
     const { classes: _classes, products, history, children } = props;
-
+    console.log('Identify', Identify.isRtl());
     const containerRef = useRef(null);
     const { innerWidth } = useWindowSize();
 
@@ -117,7 +117,11 @@ export const ProductDetailExtraProducts = props => {
                     <HoveringButton
                         icon={ChevronLeft}
                         containerClass={[
-                            classes[Identify.isRtl() ? 'backward-arrow-button' : 'backward-arrow-button-rtl'],
+                            classes[
+                                !Identify.isRtl()
+                                    ? 'backward-arrow-button'
+                                    : 'backward-arrow-button-rtl'
+                            ],
                             classes['arrow-button']
                         ].join(' ')}
                         onClick={moveBackward}
@@ -125,7 +129,11 @@ export const ProductDetailExtraProducts = props => {
                     <HoveringButton
                         icon={ChevronRight}
                         containerClass={[
-                            classes[Identify.isRtl() ? 'forward-arrow-button' : 'forward-arrow-button-rtl'],
+                            classes[
+                                !Identify.isRtl()
+                                    ? 'forward-arrow-button'
+                                    : 'forward-arrow-button-rtl'
+                            ],
                             classes['arrow-button']
                         ].join(' ')}
                         onClick={moveForward}

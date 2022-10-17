@@ -10,25 +10,39 @@ const FormSubmissionSuccessful = props => {
     const { formatMessage } = useIntl();
     const classes = useStyle(defaultClasses, props.classes);
 
-    const textMessage = formatMessage(
-        {
-            id: 'formSubmissionSuccessful.textMessage',
-            defaultMessage:
-                'If there is an account associated with {email} you will receive an email with a link to change your password.'
-        },
-        { email }
-    );
+    // const textMessage = formatMessage(
+    //     {
+    //         id: 'formSubmissionSuccessful.textMessage',
+    //         defaultMessage:
+    //             'If there is an account associated with {email} you will receive an email with a link to change your password.'
+    //     },
+    //     { email }
+    // );
 
     return (
         <div className={classes.root}>
             <h2 className={classes.title}>
                 <FormattedMessage
-                    id={'formSubmissionSuccessful.recoverPasswordText'}
+                    id={'RECOVER PASSWORD'}
                     defaultMessage={'Recover Password'}
                 />
             </h2>
             <p className={classes.text} data-cy="formSubmissionSuccessful-text">
-                {textMessage}
+                {/* {textMessage} */}
+                {formatMessage({
+                    id: 'If there is an account associated with',
+                    defaultMessage: 'If there is an account associated with'
+                })}
+                {formatMessage({
+                    id: `${email}`,
+                    defaultMessage: `${email}`
+                })}
+                {formatMessage({
+                    id:
+                        'you will receive an email with a link to change your password.',
+                    defaultMessage:
+                        'you will receive an email with a link to change your password.`'
+                })}
             </p>
         </div>
     );
