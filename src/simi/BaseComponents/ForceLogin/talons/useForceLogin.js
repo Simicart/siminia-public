@@ -39,15 +39,11 @@ const useForceLogin = props => {
     if (moduleConfig['redirect_to'] === AFTER_LOGIN_REDIRECT_CUSTOMURL) redirectUrl = moduleConfig['redirect_custom_url'];
 
     const alertMessage = useMemo(() => {
-        if (showAlert) {
-            return moduleConfig?.force_login_message ||
-                formatMessage({
-                    id: 'forceLogin.requireLoginMessage',
-                    defaultMessage: "You need login to access this page"
-                });
+        if (showAlert && moduleConfig?.force_login_message) {
+            return moduleConfig?.force_login_message
         }
         return false;
-    }, [showAlert, moduleConfig?.force_login_message, formatMessage]);
+    }, [showAlert, moduleConfig?.force_login_message]);
 
     const FLSpecificPages = useMemo(() => {
         try {
