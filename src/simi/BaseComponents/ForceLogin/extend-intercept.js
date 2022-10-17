@@ -109,11 +109,7 @@ module.exports = targets => {
 
     let requireLogin = false;
     const alertMessage = ${useMemoNoMatchRoute}(() => {
-        return flModuleConfig?.force_login_message ||
-            formatMessage({
-                id: 'forceLogin.requireLoginMessage',
-                defaultMessage: "You need login to access this page"
-            });
+        return flModuleConfig?.force_login_message || false;
     }, [ flModuleConfig?.force_login_message ]);
 
     // perform a redirect if necesssary
