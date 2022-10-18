@@ -162,19 +162,20 @@ const PriceAdjustments = props => {
                     >
                         <Suspense fallback={<LoadingIndicator />}>
                             <div className={classes.userBalance}>
-                                <FormattedMessage
-                                    id={'rewardPoint.userBalance'}
-                                    defaultMessage={`You have`}
-                                />
-                                <>
-                                {balance}
-                                </>
-                                <>
+                                <span>
+                                    <FormattedMessage
+                                        id={'You have'}
+                                        defaultMessage={`You have`}
+                                    />
+                                </span>
+
+                                <span>{balance}</span>
+                                <span>
                                     {formatMessage({
                                         id: 'points',
                                         defaultMessage: 'points'
                                     })}
-                                </>
+                                </span>
                             </div>
                             {balance > 0 ? (
                                 <Form onSubmit={applyHandle}>
@@ -224,7 +225,9 @@ const PriceAdjustments = props => {
                                     {enableWarningPoint ? (
                                         <div className={classes.message}>
                                             <FormattedMessage
-                                                id={'The points are more than your balance'}
+                                                id={
+                                                    'The points are more than your balance'
+                                                }
                                                 defaultMessage={
                                                     'The points are more than your balance'
                                                 }
@@ -235,7 +238,9 @@ const PriceAdjustments = props => {
                             ) : (
                                 <div className={classes.message}>
                                     <FormattedMessage
-                                        id={'Please earn Reward Point to spend your points'}
+                                        id={
+                                            'Please earn Reward Point to spend your points'
+                                        }
                                         defaultMessage={
                                             'Please earn Reward Point to spend your points'
                                         }

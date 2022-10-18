@@ -62,7 +62,7 @@ const AddEditDialog = props => {
         defaultMessage: 'Street Address'
     });
     const street2Label = formatMessage({
-        id: 'global.streetAddress2',
+        id: 'Street Address 2',
         defaultMessage: 'Street Address 2'
     });
     const cityLabel = formatMessage({

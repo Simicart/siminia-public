@@ -2312,7 +2312,7 @@ var DASHBOARD_CONFIG = {
                     'Be the first to review this product':'كن أول من يراجع هذا المنتج',
                     'Required fileds are maked with *':'يتم إنشاء الحقول المطلوبة بـ *',
                     'Successfully saved':'تم الحفظ بنجاح',
-                    'Notify me when the pSUMMARYrice drops':'أبلغني عندما ينخفض ​​السعر',
+                    'Notify me when the price drops':'أبلغني عندما ينخفض ​​السعر',
                     'Buy now':'اشتري الآن',
                     'Upsell Product':'منتج Upsell',
                     'Crosssell Product':'منتج Crosssell',
@@ -2393,6 +2393,12 @@ var DASHBOARD_CONFIG = {
                     'Enter gift card code':'أدخل رمز بطاقة الهدايا',
                     'Use Gift Credit':'استخدم رصيد الهدية',
                     'Set gift card credit successfully.':'اضبط رصيد بطاقة الهدايا بنجاح.',
+                    'Street Address 2':'عنوان الشارع 2',
+                    'Your gift card was successfully applied.':'تم تطبيق بطاقة الهدية الخاصة بك بنجاح.',
+                    'Fetching Shipping Information...':'إحضار معلومات الشحن ...',
+                    '1. Shipping Information':'1. معلومات الشحن',
+                    'Change Shipping Information':'تغيير معلومات الشحن',
+                    'Fetching Payment Information':'إحضار معلومات الدفع'
                 }
             },
             currency_rate: {

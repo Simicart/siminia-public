@@ -39,6 +39,9 @@
     font-size: 0.875rem;
     line-height: 1.5rem;
 }
+.userBalance span{
+    margin-inline-end: 5px;
+}
 .pointSpend {
     margin: 1rem 0;
     display: flex;

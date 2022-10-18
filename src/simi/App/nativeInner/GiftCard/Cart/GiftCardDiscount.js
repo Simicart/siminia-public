@@ -165,13 +165,22 @@ const GiftCardDiscount = props => {
             {isSetCodeMsgDisplayed && !setCodeErrorMessage && !setCodeLoading && (
                 <div className={classes['message-success']}>
                     <Icon.Check className={classes['message-icon']} />
-                    Your gift card was successfully applied.
+                    
+                    {formatMessage({
+                                    id: 'Your gift card was successfully applied.',
+                                    defaultMessage: 'Your gift card was successfully applied.'
+                                })}
                 </div>
             )}
             {isSetCodeMsgDisplayed && setCodeErrorMessage && !setCodeLoading && (
                 <div className={classes['message-error']}>
                     <Icon.X className={classes['message-icon']} />
-                    {setCodeErrorMessage}
+                    {/* {setCodeErrorMessage} */}
+                    {formatMessage({
+                        id: 'The gift card code is not exits.',
+                        defaultMessage:
+                            `${setCodeErrorMessage}`
+                    })}
                 </div>
             )}
         </div>
@@ -183,7 +192,11 @@ const GiftCardDiscount = props => {
                 !removeCodeLoading && (
                     <div className={classes['message-success']}>
                         <Icon.Check className={classes['message-icon']} />
-                        Your gift card was successfully removed.
+                    
+                        {formatMessage({
+                                    id: 'Your gift card was successfully applied.',
+                                    defaultMessage: 'Your gift card was successfully applied.'
+                                })}
                     </div>
                 )}
             {isRemoveCodeMsgDisplayed &&
@@ -215,7 +228,12 @@ const GiftCardDiscount = props => {
                 !setCreditLoading && (
                     <div className={classes['message-error']}>
                         <Icon.X className={classes['message-icon']} />
-                        {setCreditErrorMessage}
+                        {/* {setCreditErrorMessage} */}
+                        {formatMessage({
+                        id: 'The gift card code is not exits.',
+                        defaultMessage:
+                            `${setCreditErrorMessage}`
+                    })}
                     </div>
                 )}
         </div>
