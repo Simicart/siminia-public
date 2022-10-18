@@ -54,7 +54,7 @@
 .menuLinkTitle {
   composes: menuLink;
   text-transform: uppercase;
-  font-size: 18px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: .01em;
@@ -63,7 +63,7 @@
 .menuLinkRootTitle {
   composes: menuLink;
   text-transform: uppercase;
-  font-size: 20px;
+  font-size: 15px;
 
 }
 
@@ -137,7 +137,7 @@
     transform: rotate(180deg);
   } */
   .menuLinkTitle {
-    margin-bottom: 16px;
+    margin-bottom: 0;
   }
 
   .hamburger.level1 > .toggle {

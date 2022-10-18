@@ -118,13 +118,26 @@ header {
     height: 45px;
     border-radius: 23px !important;
 }
+.header-search-form .search-icon svg {
+    margin-top: 0!important;
+}
+.header-search-form .search-icon{
+    position: absolute;
+    top: 0px;
+    inset-inline-end: 15px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+}
 @media (min-width: 780px) {
     .header-search-form .search-icon {
         /* display: inline-block; */
-        position: absolute;
+        /* position: absolute;
         right: 14px;
         top: 5px;
-        cursor: pointer;
+        cursor: pointer; */
     }
     .header-search {
         width: 100%;
@@ -256,6 +269,62 @@ body.fixed-scroll {
     transform: translateX(0%);
     z-index: 3;
 }
+
+.mobileMenuToggle {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    padding-inline-start: 15px;
+    position: absolute;
+    left: 0;
+}
+
+.mobileMenuToggle > a {
+    width: 24px;
+    height: 32px;
+    position: relative;
+    cursor: pointer;
+    color: #333333;
+}
+
+.mobileMenuToggle > a > i {
+    background-color: #333333;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 2px;
+    background-color: #333;
+    transition: all .3s cubic-bezier(.645,.045,.355,1);
+    font-size: 20px;
+    line-height: 32px;
+    display: block;
+}
+
+.mobileMenuToggle > a > i:before {
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #333;
+    content: "";
+    transition: all .3s cubic-bezier(.645,.045,.355,1);
+}
+
+.mobileMenuToggle > a > i:after {
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #333;
+    content: "";
+    transition: all .3s cubic-bezier(.645,.045,.355,1);
+}
+
+
+
 @media (max-width: 1023px) {
     .header-app-bar {
         min-height: 80px;

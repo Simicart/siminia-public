@@ -1,7 +1,7 @@
-import React, { useMemo, useEffect } from "react";
-import { useIntl, FormattedMessage } from "react-intl";
-import defaultClasses from "./leftMenu.module.css";
-import { useStyle } from "@magento/venia-ui/lib/classify.js";
+import React, { useMemo, useEffect } from 'react';
+import { useIntl, FormattedMessage } from 'react-intl';
+import defaultClasses from './leftMenu.module.css';
+import { useStyle } from '@magento/venia-ui/lib/classify.js';
 import {
     Trash2,
     User,
@@ -17,11 +17,11 @@ import {
     Gift,
     CreditCard,
     Bell
-} from "react-feather";
-import Icon from "@magento/venia-ui/lib/components/Icon";
-import { Link } from "react-router-dom";
+} from 'react-feather';
+import Icon from '@magento/venia-ui/lib/components/Icon';
+import { Link } from 'react-router-dom';
 
-const LeftMenu = (props) => {
+const LeftMenu = props => {
     const { label } = props;
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
@@ -37,22 +37,74 @@ const LeftMenu = (props) => {
         parseInt(window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD) === 1;
 
     let listMenuContent = [
-        "Order History",
-        "WishList",
-        "Address Book",
-        "Saved Payments",
-        "Product Review",
-        "Communications",
-        "Account Information",
-        "Account Subcriptions",
-        "Product Alert"
+        {
+            name: 'Order History',
+            id: 'Order History',
+            url: '/order-history'
+        },
+
+        {
+            name: 'Wishlist',
+            id: 'accountMenu.favoritesListsLink',
+            url: '/wishlist'
+        },
+        {
+            name: 'Address Book',
+            id: 'Address Book',
+            url: '/address-book'
+        },
+        {
+            name: 'Saved Payments',
+            id: 'Saved Payments',
+            url: '/saved-payments'
+        },
+
+        {
+            name: 'Product Review',
+            id: 'Product Review',
+            url: '/product-review'
+        },
+        {
+            name: 'Communications',
+            id: 'Communications',
+            url: '/communications'
+        },
+
+        {
+            name: 'Account Information',
+            id: 'Account Information',
+            url: '/account-information'
+        },
+        {
+            name: 'Account Subcriptions',
+            id: 'Account Subcriptions',
+            url: '/account-subcriptions'
+        },
+
+        {
+            name: 'Product Alert',
+            id: 'Product Alert',
+            url: '/product-alert'
+        }
     ];
     const rewardMenuContent = [
-        "Reward Points",
-         "Reward Transactions"
+        {
+            name: 'Reward Points',
+            id: 'Reward Points',
+            url: '/reward-points'
+        },
+        {
+            name: 'Reward Transactions',
+            id: 'Reward Transactions',
+            url: '/reward-transactions'
+        }
     ];
     const giftCardContent = [
-        "My Gift Cards",
+        {
+            name: 'My Gift Cards',
+            id: 'My Gift Cards',
+            url: '/my-gift-cards'
+        }
     ];
     let iconList = [
         <Icon className={classes.icon} size={22} src={Trello} />,
@@ -61,16 +113,16 @@ const LeftMenu = (props) => {
         <Icon className={classes.icon} size={22} src={Check} />,
         <Icon className={classes.icon} size={22} src={Star} />,
         <Icon className={classes.icon} size={22} src={Users} />,
-        <Icon className={classes.icon} size={22} src={Info} />,        
+        <Icon className={classes.icon} size={22} src={Info} />,
         <Icon className={classes.icon} size={22} src={CheckCircle} />,
-        <Icon className={classes.icon} size={22} src={Bell} />,
+        <Icon className={classes.icon} size={22} src={Bell} />
     ];
-    const rewardIconList = [        
+    const rewardIconList = [
         <Icon className={classes.icon} size={22} src={DollarSign} />,
         <Icon className={classes.icon} size={22} src={Gift} />
     ];
-    const giftCardIconList = [        
-        <Icon className={classes.icon} size={22} src={CreditCard} />,
+    const giftCardIconList = [
+        <Icon className={classes.icon} size={22} src={CreditCard} />
     ];
     if (rewardPointEnabled) {
         listMenuContent = listMenuContent.concat(rewardMenuContent);
@@ -81,7 +133,7 @@ const LeftMenu = (props) => {
         iconList = iconList.concat(giftCardIconList);
     }
     const MenuItems = listMenuContent.map((item, index) => {
-        const reformat = item.replace(/\s/g, "-");
+        const reformat = item.name.replace(/\s/g, '-');
         const urlText = reformat.toLowerCase();
 
         return (
@@ -90,7 +142,9 @@ const LeftMenu = (props) => {
                 className={label == item ? classes.activeItem : classes.item}
             >
                 {iconList[index]}
-                <Link to={`/${urlText}`}>{item}</Link>
+                <Link to={`/${urlText}`}>
+                    <FormattedMessage id={item.id} defaultMessage={item.name} />
+                </Link>
             </div>
         );
     });
@@ -101,8 +155,8 @@ const LeftMenu = (props) => {
             <div className={classes.logout}>
                 <Link to="/logout.html">
                     {formatMessage({
-                        id: "Log out",
-                        defaultMessage: "Log out",
+                        id: 'Log out',
+                        defaultMessage: 'Log out'
                     })}
                 </Link>
             </div>

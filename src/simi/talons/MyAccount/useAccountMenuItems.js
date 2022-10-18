@@ -43,44 +43,44 @@ export const useAccountMenuItems = props => {
         },
         {
             name: 'Saved Payments',
-            id: 'accountMenu.savedPaymentsLink',
+            id: 'Saved Payments',
             url: '/saved-payments'
         },
         {
             name: 'Product Review',
-            id: 'accountMenu.productReviewLink',
+            id: 'Product Review',
             url: '/product-review'
         },
         {
             name: 'Communications',
-            id: 'accountMenu.communicationsLink',
+            id:  'Communications',
             url: '/communications'
         },
         {
             name: 'Account Information',
-            id: 'accountMenu.accountInfoLink',
+            id: 'Account Information',
             url: '/account-information'
         },
         {
             name: 'Account Subcriptions',
-            id: 'accountMenu.accountSubcriptionLink',
+            id: 'Account Subcriptions',
             url: '/account-subcriptions'
         },
         {
             name: 'Product Alert',
-            id: 'accountMenu.productAlertLink',
+            id: 'Product Alert',
             url: '/product-alert'
         }
     ];
     const rewardItems = [
         {
             name: 'Reward Points',
-            id: 'rewardPoints.rewardPointsLink',
+            id: 'Reward Points',
             url: '/reward-points'
         },
         {
             name: 'Reward Transactions',
-            id: 'rewardTransactions.rewardTransactionsLink',
+            id: 'Reward Transactions',
             url: '/reward-transactions'
         }
     ];

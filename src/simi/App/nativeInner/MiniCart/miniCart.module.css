@@ -59,7 +59,7 @@
     max-height: 50rem;
     overflow: hidden;
     position: absolute;
-    right: 0;
+    inset-inline-end: 0;
     top: 0;
     transform: translate3d(0, -8px, 0);
     transition-duration: 192ms;

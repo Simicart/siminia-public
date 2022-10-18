@@ -41,25 +41,34 @@ const Wishlist = props => {
     const contentToggleIcon = <Icon src={contentToggleIconSrc} size={24} />;
 
     const itemsCountMessage =
-        itemsCount && isOpen
-            ? formatMessage(
-                  {
-                      id: 'wishlist.itemCountOpen',
-                      defaultMessage:
-                          'Showing {currentCount} of {count} items in this list'
-                  },
-                  { currentCount: items.length, count: itemsCount }
-              )
-            : formatMessage(
-                  {
-                      id: 'wishlist.itemCountClosed',
-                      defaultMessage: `You have {count} {count, plural,
+        itemsCount && isOpen ? (
+            <span className={classes.wrapItemCount}>
+                <span>{formatMessage({ id: 'Showing' })}</span>
+                <span>{items.length}</span>
+                <span>{formatMessage({ id: 'of' })}</span>
+                <span>{itemsCount}</span>
+                <span>{formatMessage({ id: 'items in this list' })}</span>
+                {/* {formatMessage(
+                    {
+                        id: 'wishlist.itemCountOpen',
+                        defaultMessage:
+                            'Showing {currentCount} of {count} items in this list'
+                    },
+                    { currentCount: items.length, count: itemsCount }
+                )} */}
+            </span>
+        ) : (
+            formatMessage(
+                {
+                    id: 'wishlist.itemCountClosed',
+                    defaultMessage: `You have {count} {count, plural,
                         one {item}
                         other {items}
                       } in this list`
-                  },
-                  { count: itemsCount }
-              );
+                },
+                { count: itemsCount }
+            )
+        );
     const loadMoreButton =
         items && items.length < itemsCount ? (
             <div>
@@ -82,7 +91,7 @@ const Wishlist = props => {
             {loadMoreButton}
         </Fragment>
     ) : (
-        <NoWishList/>
+        <NoWishList />
     );
 
     const wishlistName = name ? (

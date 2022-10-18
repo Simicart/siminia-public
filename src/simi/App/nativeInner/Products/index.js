@@ -358,7 +358,7 @@ const Products = props => {
                                 >
                                     <span className="label">
                                         {formatMessage({
-                                            id: 'sortBy',
+                                            id: 'sort by',
                                             defaultMessage: 'Sort by'
                                         })}
                                     </span>

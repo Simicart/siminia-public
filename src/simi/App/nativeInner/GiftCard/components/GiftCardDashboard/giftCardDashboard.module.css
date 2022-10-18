@@ -63,7 +63,7 @@
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
-    padding: 0 9px 0 35px;
+    padding: 0 30px 0 35px;
     vertical-align: baseline;
     box-sizing: border-box;
     width: 100%;
@@ -120,6 +120,7 @@
 
 .gift-code-input-field {
 	display: inline-block;
+	position: relative;
 }
 
 .gift-icon {

@@ -1,7 +1,10 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import { AlertTableEntry } from './AlertTableEntry';
 import AlertTableEntryMb from './AlertTableEntryMb';
 export const AlertTable = props => {
+    const { formatMessage } = useIntl();
+
     const title = props ? props.title : '';
     const data = props ? props.data : null;
     const reInitialize = props ? props.reInitialize : null;
@@ -18,7 +21,7 @@ export const AlertTable = props => {
                     marginBottom: 10
                 }}
             >
-                { !!title &&  (
+                {!!title && (
                     <h3
                         style={{
                             fontSize: 20,
@@ -42,19 +45,34 @@ export const AlertTable = props => {
                                 scope={'col'}
                                 style={{ padding: '11px 10px', minWidth: 250 }}
                             >
-                                Product Name
+                                {formatMessage({
+                                    id: 'Product Name',
+                                    defaultMessage: 'Product Name'
+                                })}
                             </th>
                             <th scope={'col'} style={{ padding: '11px 10px' }}>
-                                Alert Status
+                            {formatMessage({
+                                    id: 'Alert Status',
+                                    defaultMessage: 'Alert Status'
+                                })}
+                               
                             </th>
                             <th
                                 scope={'col'}
                                 style={{ padding: '11px 10px', minWidth: 250 }}
                             >
-                                Subscribed On
+                               
+                                {formatMessage({
+                                    id: 'Subscribed On',
+                                    defaultMessage: 'Subscribed On'
+                                })}
                             </th>
                             <th scope={'col'} style={{ padding: '11px 10px' }}>
-                                Action
+                                
+                                {formatMessage({
+                                    id: 'Action',
+                                    defaultMessage: 'Action'
+                                })}
                             </th>
                         </thead>
 
@@ -76,7 +94,7 @@ export const AlertTable = props => {
                 </div>
             ) : (
                 !!data && (
-                    <div style={{padding: '0px 10px'}}>
+                    <div style={{ padding: '0px 10px' }}>
                         {items.map(sub => {
                             return (
                                 <AlertTableEntryMb

@@ -44,7 +44,7 @@ const ForgotPassword = props => {
         <Fragment>
             <h2 data-cy="ForgotPassword-title" className={classes.title}>
                 <FormattedMessage
-                    id={'forgotPassword.recoverPasswordText'}
+                    id={'RECOVER PASSWORD'}
                     defaultMessage={'Recover Password'}
                 />
             </h2>

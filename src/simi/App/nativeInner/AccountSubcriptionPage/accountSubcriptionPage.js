@@ -29,7 +29,7 @@ const AccountSubcriptionPage = props => {
         addToast({
             type: 'info',
             message: formatMessage({
-                id: 'subcriptionPage.title',
+                id: 'Your preferences have been updated.',
                 defaultMessage: 'Your preferences have been updated.'
             }),
             timeout: 5000
@@ -53,11 +53,11 @@ const AccountSubcriptionPage = props => {
     } = talonProps;
 
     const alertText = formatMessage({
-        id: 'subcriptionPage.title',
+        id: 'Your preferences have been updated.',
         defaultMessage: 'Your preferences have been updated.'
     });
     const title = formatMessage({
-        id: 'subcriptionPage.title',
+        id: 'Account Subcription',
         defaultMessage: 'Account Subcriptions'
     });
 
@@ -84,19 +84,19 @@ const AccountSubcriptionPage = props => {
                         <StoreTitle>{title}</StoreTitle>
                         {!isPhone && <h1 className={classes.heading}>
                             <FormattedMessage
-                                id={'subcriptionPage.text'}
+                                id={'My Account'}
                                 defaultMessage={'My Account'}
                             />
                         </h1>}
                         <h2 className={classes.title}>
                             <FormattedMessage
-                                id={'subcriptionPage.titleEdit'}
+                                id={'Newsletter Subcription'}
                                 defaultMessage={'Newsletter Subcription'}
                             />
                         </h2>
                         <p className={classes.textSpan}>
                             <FormattedMessage
-                                id={'subcriptionPage.optInText'}
+                                id={'Subscription option'}
                                 defaultMessage={'Subscription option'}
                             />
                         </p>
@@ -109,7 +109,7 @@ const AccountSubcriptionPage = props => {
                             <Checkbox
                                 field="isSubscribed"
                                 label={formatMessage({
-                                    id: 'subcriptionPage.eNewsletterText',
+                                    id: 'General Subcription',
                                     defaultMessage: 'General Subcription'
                                 })}
                             />
@@ -122,11 +122,11 @@ const AccountSubcriptionPage = props => {
                                 >
                                     {isDisabled
                                     ? formatMessage({
-                                        id: 'subcriptionPage.savingText',
+                                        id: 'Saving',
                                         defaultMessage: 'Saving'
                                     })
                                     : formatMessage({
-                                        id: 'subcriptionPage.changesText',
+                                        id: 'Save changes',
                                         defaultMessage: 'Save Changes'
                                     })}
                                 </button>

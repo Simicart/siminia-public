@@ -86,7 +86,7 @@ const AddressBook = props => {
                 />
                 <span className={classes.addText}>
                     <FormattedMessage
-                        id={'addressBook.addNewAddresstext'}
+                        id={'Add New Address'}
                         defaultMessage={'Add New Address'}
                     />
                 </span>
@@ -137,7 +137,7 @@ const AddressBook = props => {
             <div className={rootClass}>
                 <h1 className={classes.headerText}>
                     <FormattedMessage
-                        id={'addressBook.headerText'}
+                        id={'Change Shipping Information'}
                         defaultMessage={'Change Shipping Information'}
                     />
                 </h1>

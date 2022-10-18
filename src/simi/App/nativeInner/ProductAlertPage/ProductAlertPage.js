@@ -5,9 +5,12 @@ import { useGlobalLoading } from './Loading/useGlobalLoading';
 import LeftMenu from '../../core/LeftMenu';
 import defaultClasses from './productAlertPage.module.css';
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
+import { useIntl } from 'react-intl';
 
 const ProductAlertPage = props => {
     const { Component: LoadingComponent, setLoading } = useGlobalLoading();
+    const { formatMessage } = useIntl();
+
     const {
         customerData,
         reInitialize,
@@ -38,7 +41,13 @@ const ProductAlertPage = props => {
                             marginTop: 25
                         }}
                     >
-                        <h3>You currently have no subscription.</h3>
+                        <h3>
+                            {formatMessage({
+                                id: 'You currently have no subscription.',
+                                defaultMessage:
+                                    'You currently have no subscription.'
+                            })}
+                        </h3>
                     </div>
                 )}
                 {shouldShowStockTable && (
@@ -49,7 +58,9 @@ const ProductAlertPage = props => {
                         }}
                     >
                         <AlertTable
-                            title={'Alert for Stock Change'}
+                            title={formatMessage({
+                                id: 'Alert for Stock Change'
+                            })}
                             data={stockData}
                             reInitialize={reInitialize}
                             setLoading={setLoading}
@@ -66,7 +77,9 @@ const ProductAlertPage = props => {
                         }}
                     >
                         <AlertTable
-                            title={'Alert for Price Change'}
+                            title={formatMessage({
+                                id: 'Alert for Price Change'
+                            })}
                             data={priceData}
                             reInitialize={reInitialize}
                             setLoading={setLoading}
@@ -90,7 +103,10 @@ const ProductAlertPage = props => {
                                 fontSize: 30
                             }}
                         >
-                            My Product Alerts
+                            {formatMessage({
+                                id: 'My Product Alerts',
+                                defaultMessage: 'My Product Alerts'
+                            })}
                         </h2>
                     </div>
 
@@ -102,7 +118,15 @@ const ProductAlertPage = props => {
                                     marginTop: 25
                                 }}
                             >
-                                <h3>You currently have no subscription.</h3>
+                                <h3>
+                                    {' '}
+                                    {formatMessage({
+                                        id:
+                                            'You currently have no subscription.',
+                                        defaultMessage:
+                                            'You currently have no subscription.'
+                                    })}
+                                </h3>
                             </div>
                         )}
 
@@ -114,7 +138,9 @@ const ProductAlertPage = props => {
                             }}
                         >
                             <AlertTable
-                                title={'Alert for Stock Change'}
+                                title={formatMessage({
+                                    id: 'Alert for Stock Change'
+                                })}
                                 data={stockData}
                                 reInitialize={reInitialize}
                                 setLoading={setLoading}
@@ -130,7 +156,9 @@ const ProductAlertPage = props => {
                             }}
                         >
                             <AlertTable
-                                title={'Alert for Price Change'}
+                                title={formatMessage({
+                                    id: 'Alert for Price Change'
+                                })}
                                 data={priceData}
                                 reInitialize={reInitialize}
                                 setLoading={setLoading}

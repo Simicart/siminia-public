@@ -139,7 +139,10 @@ const CouponCode = props => {
                         })}
                         mask={value => value && value.trim()}
                         maskOnBlur={true}
-                        message={errorMessage}
+                        message={errorMessage ? formatMessage({
+                            id: 'couponCodeErrorMessage',
+                            defaultMessage: `${errorMessage}`
+                        }) : ''}
                     />
                 </Field>
                 <Field>
@@ -149,7 +152,7 @@ const CouponCode = props => {
                         type={'submit'}
                     >
                         <FormattedMessage
-                            id={'couponCode.apply'}
+                            id={'Apply'}
                             defaultMessage={'Apply'}
                         />
                     </Button>

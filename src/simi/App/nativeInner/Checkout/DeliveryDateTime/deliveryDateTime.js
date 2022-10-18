@@ -31,10 +31,13 @@ const DeliveryDateTime = forwardRef((props, ref) => {
         fetchPolicy: 'cache-and-network'
     });
     const [startDate, setDate] = useState(new Date());
-    const [deliTime, setDeliTime] = useState(data && data.deliveryTime && data.deliveryTime.deliveryTime ?data.deliveryTime.deliveryTime[0] : '' );
+    const [deliTime, setDeliTime] = useState(
+        data && data.deliveryTime && data.deliveryTime.deliveryTime
+            ? data.deliveryTime.deliveryTime[0]
+            : ''
+    );
     const [houseSecurityCode, setHouseSecurityCode] = useState('');
     const [deliveryComment, setDeliveryComment] = useState('');
-
 
     const handleSubmit = () => {
         deliveryMutation({
@@ -144,7 +147,10 @@ const DeliveryDateTime = forwardRef((props, ref) => {
         return (
             <div className="deliveryTime-main">
                 <div className="header">
-                    {formatMessage({ id: 'Delivery Time' })}
+                    {formatMessage({
+                        id: 'Delivery time',
+                        defaultMessage: 'Delivery Time'
+                    })}
                 </div>
                 <DatePicker
                     selected={startDate}
@@ -171,7 +177,10 @@ const DeliveryDateTime = forwardRef((props, ref) => {
                     <ButtonLoader classes={'btn-updateTime'} />
                 ) : (
                     <button className="btn-updateTime" onClick={handleSubmit}>
-                        {formatMessage({ id: 'Update Delivery Time' })}
+                        {formatMessage({
+                            id: 'Update delivery time',
+                            defaultMessage: 'Update Delivery Time'
+                        })}
                     </button>
                 )}
             </div>

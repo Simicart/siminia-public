@@ -63,7 +63,7 @@ const Sortby = props => {
             { value: 'name', key: 'name', direction: 'desc', showDir: true },
         ];
     }
-    let sortByTitle = formatMessage({ id: 'Sort by' });
+    let sortByTitle = formatMessage({ id: 'sort by' });
     selections = orders.map((item) => {
         let itemCheck = '';
         let itemTitle = item.value;

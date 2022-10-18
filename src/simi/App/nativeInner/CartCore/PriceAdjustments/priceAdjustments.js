@@ -88,7 +88,7 @@ const PriceAdjustments = props => {
         } else {
             showFogLoading();
             if (rewardPoint > maxPoint) {
-                setRewardPoint(maxPoint - 1);
+                setRewardPoint(maxPoint);
             }
             spendRewardPointHandle({
                 variables: {
@@ -119,7 +119,7 @@ const PriceAdjustments = props => {
                 <Section
                     id={'shipping_method'}
                     title={formatMessage({
-                        id: 'priceAdjustments.shippingMethod',
+                        id: 'Estimate your shipping',
                         defaultMessage: 'Estimate your Shipping'
                     })}
                     classes={{
@@ -136,7 +136,7 @@ const PriceAdjustments = props => {
                 <Section
                     id={'coupon_code'}
                     title={formatMessage({
-                        id: 'priceAdjustments.couponCode',
+                        id: 'Enter coupon code',
                         defaultMessage: 'Enter Coupon Code'
                     })}
                     classes={{
@@ -152,7 +152,7 @@ const PriceAdjustments = props => {
                     <Section
                         id={'reward_points'}
                         title={formatMessage({
-                            id: 'priceAdjustments.rewardPoint',
+                            id: 'Reward Points',
                             defaultMessage: 'Reward Points'
                         })}
                         classes={{
@@ -162,10 +162,20 @@ const PriceAdjustments = props => {
                     >
                         <Suspense fallback={<LoadingIndicator />}>
                             <div className={classes.userBalance}>
-                                <FormattedMessage
-                                    id={'rewardPoint.userBalance'}
-                                    defaultMessage={`You have ${balance} points`}
-                                />
+                                <span>
+                                    <FormattedMessage
+                                        id={'You have'}
+                                        defaultMessage={`You have`}
+                                    />
+                                </span>
+
+                                <span>{balance}</span>
+                                <span>
+                                    {formatMessage({
+                                        id: 'points',
+                                        defaultMessage: 'points'
+                                    })}
+                                </span>
                             </div>
                             {balance > 0 ? (
                                 <Form onSubmit={applyHandle}>
@@ -185,7 +195,7 @@ const PriceAdjustments = props => {
                                     <div className={classes.pointSpend}>
                                         <span className={classes.message}>
                                             <FormattedMessage
-                                                id={'rewardPoint.textSpend'}
+                                                id={'You will spend'}
                                                 defaultMessage={
                                                     'You will spend'
                                                 }
@@ -208,14 +218,16 @@ const PriceAdjustments = props => {
                                         type="submit"
                                     >
                                         <FormattedMessage
-                                            id={'rewardPoint.applyButton'}
+                                            id={'Apply'}
                                             defaultMessage={'Apply'}
                                         />
                                     </Button>
                                     {enableWarningPoint ? (
                                         <div className={classes.message}>
                                             <FormattedMessage
-                                                id={'rewardPoint.warningPoint'}
+                                                id={
+                                                    'The points are more than your balance'
+                                                }
                                                 defaultMessage={
                                                     'The points are more than your balance'
                                                 }
@@ -226,7 +238,9 @@ const PriceAdjustments = props => {
                             ) : (
                                 <div className={classes.message}>
                                     <FormattedMessage
-                                        id={'rewardPoint.message'}
+                                        id={
+                                            'Please earn Reward Point to spend your points'
+                                        }
                                         defaultMessage={
                                             'Please earn Reward Point to spend your points'
                                         }

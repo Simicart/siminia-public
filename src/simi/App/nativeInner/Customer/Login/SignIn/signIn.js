@@ -13,8 +13,10 @@ import defaultClasses from './signIn.module.css';
 import { GET_CART_DETAILS_QUERY } from './signIn.gql';
 import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
 import Password from '@magento/venia-ui/lib/components/Password';
-import FormError from '@magento/venia-ui/lib/components/FormError/formError';
+// import FormError from '@magento/venia-ui/lib/components/FormError/formError';
 import GoogleRecaptcha from '../../../GoogleReCaptcha';
+import FormError from '../formError';
+
 const metaPackagesEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&
@@ -54,7 +56,7 @@ const SignIn = props => {
         <div data-cy="SignIn-root" className={classes.root}>
             <span data-cy="SignIn-title" className={classes.title}>
                 <FormattedMessage
-                    id={'signIn.titleText'}
+                    id={'Sign-in to Your Account'}
                     defaultMessage={'Sign-in to Your Account'}
                 />
             </span>

@@ -95,7 +95,7 @@ const AccountInformationPage = props => {
                     <React.Fragment>
                         <h4 className={classes.titleH4}>
                             <FormattedMessage
-                                id={'accountInformationPage.titleChangeEmail'}
+                                id={'Change Email'}
                                 defaultMessage={
                                     'Change Email'
                                 }
@@ -104,7 +104,7 @@ const AccountInformationPage = props => {
                         <div className={classes.inputContent}>
                             <Field
                                 label={formatMessage({
-                                    id: 'global.labelEmail',
+                                    id: 'email',
                                     defaultMessage: 'Email *'
                                 })}
                                 required={true}>
@@ -125,7 +125,7 @@ const AccountInformationPage = props => {
                         <Field
                             
                             label={formatMessage({
-                                id: 'global.labelCurrentPassword',
+                                id: 'Current Password',
                                 defaultMessage: 'Current password *'
                             })}
                             required={true}>
@@ -148,7 +148,7 @@ const AccountInformationPage = props => {
                     <React.Fragment>
                         <h4 className={classes.titleH4}>
                             <FormattedMessage
-                                id={'accountInformationPage.titleChangePassword'}
+                                id={'Change password'}
                                 defaultMessage={
                                     'Change Password'
                                 }
@@ -184,7 +184,7 @@ const AccountInformationPage = props => {
                         <Field
                             
                             label={formatMessage({
-                                id: 'global.labelNewPassword',
+                                id: 'New Password',
                                 defaultMessage: 'New password *'
                             })}
                             required={true}>
@@ -211,7 +211,7 @@ const AccountInformationPage = props => {
                         <Field
                             
                             label={formatMessage({
-                                id: 'global.labelConfirmNewPassword',
+                                id: 'Confirm New Password',
                                 defaultMessage: 'Confirm new password *'
                             })}
                             required={true}>

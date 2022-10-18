@@ -1,7 +1,10 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { shape, string } from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { AlertCircle as AlertCircleIcon, ArrowLeft as ArrowLeftIcon } from 'react-feather';
+import {
+    AlertCircle as AlertCircleIcon,
+    ArrowLeft as ArrowLeftIcon
+} from 'react-feather';
 import { Link, Redirect } from 'react-router-dom';
 
 import { useWindowSize, useToasts } from '@magento/peregrine';
@@ -36,9 +39,9 @@ import PriceAdjustments from './PriceAdjustments';
 
 import Identify from 'src/simi/Helper/Identify';
 import ButtonLoader from '../../../BaseComponents/ButtonLoader';
-import {configColor} from "../../../Config";
-import Image from "@magento/venia-ui/lib/components/Image";
-import {getBottomInsets} from 'src/simi/App/nativeInner/Helper/Native'
+import { configColor } from '../../../Config';
+import Image from '@magento/venia-ui/lib/components/Image';
+import { getBottomInsets } from 'src/simi/App/nativeInner/Helper/Native';
 
 const deliveryTimeEnabled =
     window.SMCONFIGS &&
@@ -122,22 +125,36 @@ const CheckoutPage = props => {
     }, [addToast, error, formatMessage, hasError]);
 
     useEffect(() => {
-        const svgSelector = document.querySelector('#siminia-text-header svg')
-        const titleSelector = document.querySelector('#siminia-text-header span')
-        switch(activeContent) {
+        const svgSelector = document.querySelector('#siminia-text-header svg');
+        const titleSelector = document.querySelector(
+            '#siminia-text-header span'
+        );
+        switch (activeContent) {
             case 'addressBook':
-                if(svgSelector) svgSelector.style.display = 'none'
-                if(titleSelector) titleSelector.innerHTML = formatMessage({ id: 'addressBook.headerText', defaultMessage: 'Change Shipping Information' })
-                break
+                if (svgSelector) svgSelector.style.display = 'none';
+                if (titleSelector)
+                    titleSelector.innerHTML = formatMessage({
+                        id: 'addressBook.headerText',
+                        defaultMessage: 'Change Shipping Information'
+                    });
+                break;
             case 'signIn':
-                if(svgSelector) svgSelector.style.display = 'none'
-                if(titleSelector) titleSelector.innerHTML = formatMessage({ id: "checkoutPage.guestSignIn.header", defaultMessage: 'Account Sign-in' })
-                break
-            default: 
-                if(svgSelector) svgSelector.style.display = 'flex'
-                if(titleSelector) titleSelector.innerHTML = formatMessage({ id: "checkoutPage.checkout", defaultMessage: 'Checkout' })
+                if (svgSelector) svgSelector.style.display = 'none';
+                if (titleSelector)
+                    titleSelector.innerHTML = formatMessage({
+                        id: 'checkoutPage.guestSignIn.header',
+                        defaultMessage: 'Account Sign-in'
+                    });
+                break;
+            default:
+                if (svgSelector) svgSelector.style.display = 'flex';
+                if (titleSelector)
+                    titleSelector.innerHTML = formatMessage({
+                        id: 'checkoutPage.checkout',
+                        defaultMessage: 'Checkout'
+                    });
         }
-    }, [activeContent])
+    }, [activeContent]);
 
     const classes = useStyle(defaultClasses, propClasses);
 
@@ -146,11 +163,10 @@ const CheckoutPage = props => {
 
     let checkoutContent;
 
-    const heading =
-        formatMessage({
-            id: 'checkoutPage.checkout',
-            defaultMessage: 'Checkout'
-        });
+    const heading = formatMessage({
+        id: 'checkoutPage.checkout',
+        defaultMessage: 'Checkout'
+    });
 
     if (orderNumber && orderDetailsData) {
         const selectedPaymentMethod = Identify.getDataFromStoreage(
@@ -195,32 +211,39 @@ const CheckoutPage = props => {
     } else if (isCartEmpty) {
         checkoutContent = (
             <div className={classes.empty_cart_container}>
-                {!isMobile && <div className={classes.heading_container}>
-                    <h1 className={classes.heading}>{heading}</h1>
-                </div>}
-                {isMobile && <Image src={require('../../../../../static/images/empty-cart.png')}
-                   alt={'no-cart'}
-                    className={classes.emptyImage}
-                />}
+                {!isMobile && (
+                    <div className={classes.heading_container}>
+                        <h1 className={classes.heading}>{heading}</h1>
+                    </div>
+                )}
+                {isMobile && (
+                    <Image
+                        src={require('../../../../../static/images/empty-cart.png')}
+                        alt={'no-cart'}
+                        className={classes.emptyImage}
+                    />
+                )}
                 <h3>
                     <FormattedMessage
                         id={'checkoutPage.emptyMessage'}
                         defaultMessage={'There are no items in your cart.'}
                     />
                 </h3>
-                {isMobile && <button 
-                    onClick={() => history.push('/')} 
-                    className={classes.emptyCartButton}
-                    style={{
-                        backgroundColor: configColor.button_background,
-                        color: configColor.button_text_color,
-                    }}
-                >
-                    <FormattedMessage
-                        id={'Continue Shopping'}
-                        defaultMessage={'Continue Shopping'}
-                    />
-                </button>}
+                {isMobile && (
+                    <button
+                        onClick={() => history.push('/')}
+                        className={classes.emptyCartButton}
+                        style={{
+                            backgroundColor: configColor.button_background,
+                            color: configColor.button_text_color
+                        }}
+                    >
+                        <FormattedMessage
+                            id={'Continue Shopping'}
+                            defaultMessage={'Continue Shopping'}
+                        />
+                    </button>
+                )}
             </div>
         );
     } else {
@@ -258,7 +281,7 @@ const CheckoutPage = props => {
                         <React.Fragment>
                             <div className="main-delivery">
                                 <label className="check-container">
-                                    {formatMessage({ id: 'Delivery Time' })}
+                                    {formatMessage({ id: 'Delivery time',defaultMessage:'Delivery Time' })}
                                     <input
                                         onClick={() => setOpenDeli(!openDeli)}
                                         type="checkbox"
@@ -325,11 +348,15 @@ const CheckoutPage = props => {
         const priceAdjustmentsSection =
             checkoutStep === CHECKOUT_STEP.PAYMENT ? (
                 <div className={classes.price_adjustments_container}>
-                    <PriceAdjustments setIsCartUpdating={setIsUpdating} isMobile={isMobile} hideEstimateShipping={true}/>
+                    <PriceAdjustments
+                        setIsCartUpdating={setIsUpdating}
+                        isMobile={isMobile}
+                        hideEstimateShipping={true}
+                    />
                 </div>
             ) : null;
 
-        const bottomInsets = getBottomInsets()
+        const bottomInsets = getBottomInsets();
 
         const reviewOrderButtonType =
             reviewOrderButtonClicked || isUpdating || !isPaymentAvailable ? (
@@ -347,7 +374,7 @@ const CheckoutPage = props => {
                     }
                 >
                     <FormattedMessage
-                        id={'checkoutPage.reviewOrder'}
+                        id={'Review order'}
                         defaultMessage={'Review Order'}
                     />
                 </Button>
@@ -366,35 +393,38 @@ const CheckoutPage = props => {
             ) : null;
 
         const placeOrderButton =
-            checkoutStep === CHECKOUT_STEP.REVIEW 
-            ? (isUpdating || placeOrderLoading || orderDetailsLoading) ? (
-                <ButtonLoader classes={classes.loader_button} />
-            ) :(
-                <Button
-                    onClick={e => {
-                        const selectedPaymentMethod = Identify.getDataFromStoreage(
-                            Identify.LOCAL_STOREAGE,
-                            'simi_selected_payment_code'
-                        );
+            checkoutStep === CHECKOUT_STEP.REVIEW ? (
+                isUpdating || placeOrderLoading || orderDetailsLoading ? (
+                    <ButtonLoader classes={classes.loader_button} />
+                ) : (
+                    <Button
+                        onClick={e => {
+                            const selectedPaymentMethod = Identify.getDataFromStoreage(
+                                Identify.LOCAL_STOREAGE,
+                                'simi_selected_payment_code'
+                            );
 
-                        if (selectedPaymentMethod === 'paypal_express') {
-                            history.push('/paypal_express.html');
-                            return;
+                            if (selectedPaymentMethod === 'paypal_express') {
+                                history.push('/paypal_express.html');
+                                return;
+                            }
+                            handlePlaceOrder(e);
+                        }}
+                        priority="high"
+                        className={classes.place_order_button}
+                        style={{ bottom: bottomInsets }}
+                        disabled={
+                            isUpdating ||
+                            placeOrderLoading ||
+                            orderDetailsLoading
                         }
-                        handlePlaceOrder(e);
-                    }}
-                    priority="high"
-                    className={classes.place_order_button}
-                    style={{ bottom: bottomInsets }}
-                    disabled={
-                        isUpdating || placeOrderLoading || orderDetailsLoading
-                    }
-                >
-                    <FormattedMessage
-                        id={'checkoutPage.placeOrder'}
-                        defaultMessage={'Place Order'}
-                    />
-                </Button>
+                    >
+                        <FormattedMessage
+                            id={'checkoutPage.placeOrder'}
+                            defaultMessage={'Place Order'}
+                        />
+                    </Button>
+                )
             ) : null;
 
         // If we're on mobile we should only render price summary in/after review.
@@ -461,24 +491,30 @@ const CheckoutPage = props => {
                         cartItems={cartItems}
                         message={stockStatusMessageElement}
                     />
-                    {!isMobile && <h1 className={classes.heading}>{headerText}</h1>}
+                    {!isMobile && (
+                        <h1 className={classes.heading}>{headerText}</h1>
+                    )}
                 </div>
                 {signInContainerElement}
-                {!isVirtual && <div className={classes.shipping_information_container}>
-                    <ScrollAnchor ref={shippingInformationRef}>
-                        <ShippingInformation
-                            onSave={setShippingInformationDone}
-                            onSuccess={scrollShippingInformationIntoView}
-                            toggleActiveContent={toggleAddressBookContent}
-                            isMobile={isMobile}
-                        />
-                    </ScrollAnchor>
-                </div>}
-                {!isVirtual && <div className={classes.shipping_method_container}>
-                    <ScrollAnchor ref={shippingMethodRef}>
-                        {shippingMethodSection}
-                    </ScrollAnchor>
-                </div>}
+                {!isVirtual && (
+                    <div className={classes.shipping_information_container}>
+                        <ScrollAnchor ref={shippingInformationRef}>
+                            <ShippingInformation
+                                onSave={setShippingInformationDone}
+                                onSuccess={scrollShippingInformationIntoView}
+                                toggleActiveContent={toggleAddressBookContent}
+                                isMobile={isMobile}
+                            />
+                        </ScrollAnchor>
+                    </div>
+                )}
+                {!isVirtual && (
+                    <div className={classes.shipping_method_container}>
+                        <ScrollAnchor ref={shippingMethodRef}>
+                            {shippingMethodSection}
+                        </ScrollAnchor>
+                    </div>
+                )}
                 <div className={classes.payment_information_container}>
                     {paymentInformationSection}
                 </div>
