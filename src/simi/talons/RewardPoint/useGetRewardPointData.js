@@ -4,6 +4,7 @@ import { useUserContext } from '@magento/peregrine/lib/context/user';
 import {
     GET_CUSTOMER_REWARD_POINTS,
     GET_CUSTOMER_TRANSACTION,
+    GET_REWARD_POINTS_CONFIG,
     SET_REWARD_SUBSCRIBE_STATUS
 } from './rewardPoints.gql';
 import { deriveErrorMessage } from '@magento/peregrine/lib/util/deriveErrorMessage';
@@ -22,15 +23,26 @@ export const useGetRewardPointData = props => {
         loading: rewardPointLoading,
         error: rewardPointError
     } = useQuery(GET_CUSTOMER_REWARD_POINTS, {
-        fetchPolicy: 'cache-and-network',
+        fetchPolicy: 'no-cache',
         skip: !isSignedIn
     });
+
+
+    const {
+        data: rewardPointConfig,
+        loading: rewardPointConfigLoading,
+        error: rewardPointConfigError
+    } = useQuery(GET_REWARD_POINTS_CONFIG, {
+        fetchPolicy: 'cache-and-network'
+    });
+
+
     const { data: rewardTransactionData } = useQuery(GET_CUSTOMER_TRANSACTION, {
         variables: { pageSize: 100 },
         fetchPolicy: 'cache-and-network',
         skip: !isSignedIn || (props && props.onCart)
     });
-    const [mpRewardPoints] = useMutation(SET_REWARD_SUBSCRIBE_STATUS);
+    const [mpRewardPoints,{loading : setSubcribeLoading}] = useMutation(SET_REWARD_SUBSCRIBE_STATUS);
     const customerRewardPoint = rewardPointData
         ? rewardPointData.customer.mp_reward
         : [];
@@ -46,15 +58,17 @@ export const useGetRewardPointData = props => {
     );
     useEffect(() => {
         setPageLoading(isBackgroundLoading);
-    }, [isBackgroundLoading, setPageLoading]);
+    }, [isBackgroundLoading, setPageLoading,setSubcribeLoading]);
     return {
         errorMessage: derivedErrorMessage,
         isBackgroundLoading,
         isLoadingWithoutData,
         mpRewardPoints,
+        setSubcribeLoading,
         customerEmail,
         customerRewardPoint,
         customerTransactions,
-        rewardTransactionData
+        rewardTransactionData,
+        rewardPointConfig
     };
 };

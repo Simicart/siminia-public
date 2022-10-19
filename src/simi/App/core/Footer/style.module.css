@@ -192,8 +192,13 @@
 .footer-app a {
     text-decoration: none !important;
 }
-
-
+.col-custom-20pr ul {
+    margin-top: 0 !important;
+    list-style-type: none !important;
+}
+div[class*='col-mobile-pd-0']{
+    max-width: 200px;
+}
 @media (min-width: 1200px) and (max-width: 1919px) {
     .newsletter__form > .email {
         width: 73%;

@@ -17,6 +17,7 @@ const WithoutContent = props => {
     elementRef,
     elementStyle
   } = props;
+
   const classes = mergeClasses(defaultClasses, props.classes);
 
   const subCategoriesMenu =

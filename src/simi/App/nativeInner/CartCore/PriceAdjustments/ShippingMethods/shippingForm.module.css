@@ -7,6 +7,10 @@
         'state zip'
         'submit submit';
 }
+.root div[class*='region-root-1Sr'] label[class*='field-label-ifR'],
+.root div[class*='postcode-root-26p'] label[class*='field-label-ifR'] {
+    min-height: 50px;
+}
 
 .formTitle {
     font-weight: 600;

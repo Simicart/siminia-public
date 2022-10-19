@@ -15,7 +15,6 @@ const ProductLabel = props => {
     const listlabel = [...productLabel].sort((a, b) =>
         a.priority > b.priority ? -1 : 1
     );
-
     return (
         <>
             {listlabel.map((item, index) => {
@@ -72,8 +71,8 @@ const ProductLabel = props => {
 
                 //-----------------------------------------
 
-                const topText = styleLabel > 0 ? '17%' : '20%';
-                const leftText = styleLabel > 0 ? '36%' : '4%';
+                const topText = styleLabel > 0 ? '17%' : '30%';
+                const leftText = styleLabel > 0 ? '36%' : '22%';
                 const topTextDT = styleLabel > 0 ? '22%' : '25%';
                 const leftTextDT = styleLabel > 0 ? '33%' : '13%';
                 const topTextMb = -6 + widthMb / 2 - 29;
@@ -209,7 +208,7 @@ const ProductLabel = props => {
                                 break;
                             case 'bl':
                                 position = {
-                                    top: `calc((100% - ${height}px - 20px))`,
+                                    top: `calc((100% - ${height}px - 120px))`,
                                     left: 0,
                                     zIndex: index + 2,
                                     height: height,
@@ -228,7 +227,7 @@ const ProductLabel = props => {
                                 break;
                             case 'bc':
                                 position = {
-                                    top: `calc((100% - ${height}px - 20px))`,
+                                    top: `calc((100% - ${height}px - 120px))`,
                                     left: `calc(50% - ${height / 2}px)`,
                                     zIndex: index + 2,
                                     height: height,
@@ -247,7 +246,7 @@ const ProductLabel = props => {
                                 break;
                             case 'br':
                                 position = {
-                                    top: `calc((100% - ${height}px - 20px))`,
+                                    top: `calc((100% - ${height}px - 120px))`,
                                     left: `calc(100% - ${height}px)`,
                                     zIndex: index + 2,
                                     height: height,
@@ -383,7 +382,7 @@ const ProductLabel = props => {
                                 break;
                             case 'bl':
                                 position = {
-                                    top: `calc((100% - ${height}px - 20px))`,
+                                    top: `calc((100% - ${height}px - 40px))`,
                                     left: 0,
                                     zIndex: index + 2,
                                     height: height,
@@ -402,7 +401,7 @@ const ProductLabel = props => {
                                 break;
                             case 'bc':
                                 position = {
-                                    top: `calc((100% - ${height}px - 20px))`,
+                                    top: `calc((100% - ${height}px - 40px))`,
                                     left: `calc(50% - ${height / 2}px)`,
                                     zIndex: index + 2,
                                     height: height,
@@ -421,7 +420,7 @@ const ProductLabel = props => {
                                 break;
                             case 'br':
                                 position = {
-                                    top: `calc((100% - ${height}px - 20px))`,
+                                    top: `calc((100% - ${height}px - 40px))`,
                                     left: `calc(100% - ${height}px)`,
                                     zIndex: index + 2,
                                     height: height,
@@ -687,12 +686,15 @@ const ProductLabel = props => {
                             <div style={positionText} className="productLabel">
                                 {labelText}
                             </div>
+                            <div className='wrapImg'>
                             <img
                                 className="label-image"
                                 src={src}
                                 alt="img-"
                                 style={position}
                             />
+                            </div>
+                           
                         </div>
                     </React.Fragment>
                 );

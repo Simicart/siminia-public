@@ -11,7 +11,7 @@ const OrderSummary = props => {
         <div className={classes.root}>
             <h1 className={classes.title}>
                 <FormattedMessage
-                    id={'checkoutPage.orderSummary'}
+                    id={'ORDER SUMMARY'}
                     defaultMessage={'Order Summary'}
                 />
             </h1>

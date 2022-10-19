@@ -104,6 +104,7 @@
         margin: 0;
         max-width: 800px;
         padding: 1.5rem 0;
+        position: relative;
     }
     .imageCarousel > div > div > div:nth-child(2) > div {
         margin-inline-start: 0px;

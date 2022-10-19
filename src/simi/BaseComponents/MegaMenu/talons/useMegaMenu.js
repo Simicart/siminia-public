@@ -105,6 +105,28 @@ export const useMegaMenu = (props = {}) => {
         [setOpenCategoryIds, isMobile, items]
     );
 
+    const toggleActionMobile = useCallback(
+        catId => {
+            setOpenCategoryIds(prevOpenCategoryIds => {
+                const nextOpenCategoryIds = new Set(prevOpenCategoryIds);
+                // const rootItems =
+                //     items &&
+                //     items
+                //         .filter(({ parent_id }) => !parent_id)
+                //         .map(({ id }) => id);
+
+                if (!prevOpenCategoryIds.has(catId)) {
+                    nextOpenCategoryIds.add(catId);
+                } else {
+                    nextOpenCategoryIds.delete(catId);
+                }
+
+                return nextOpenCategoryIds;
+            });
+        },
+        []
+    )
+
     return {
         loading,
         error,
@@ -116,6 +138,7 @@ export const useMegaMenu = (props = {}) => {
         allItems: items,
         amRootStyle,
         openCategoryIds,
-        toggleAction
+        toggleAction,
+        toggleActionMobile
     };
 };

@@ -176,9 +176,13 @@ export const useCreditCard = props => {
     }, [isBillingAddressSameData])
 
     const initialValues = useMemo(() => {
-        const isBillingAddressSame = isBillingAddressSameData && !isVirtual
-            ? isBillingAddressSameData.cart.isBillingAddressSame
-            : false;
+        let isBillingAddressSame = false;
+        if (!isVirtual) {
+            isBillingAddressSame = true;
+            if (isBillingAddressSameData)
+                isBillingAddressSame =
+                    isBillingAddressSameData.cart.isBillingAddressSame;
+        }
 
         let billingAddress = {};
         /**

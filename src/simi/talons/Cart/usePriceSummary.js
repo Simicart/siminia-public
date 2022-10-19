@@ -22,7 +22,7 @@ const flattenData = data => {
         subtotal: data.cart.prices.subtotal_excluding_tax,
         total: data.cart.prices.grand_total,
         discounts: data.cart.prices.discounts,
-        giftCards: data.cart.applied_gift_cards,
+        giftCards: data.cart.mp_giftcard_config,
         taxes: data.cart.prices.applied_taxes,
         shipping: data.cart.shipping_addresses,
         priceData: data.cart.prices.mp_reward_segments
@@ -81,8 +81,8 @@ export const usePriceSummary = (props = {}) => {
         }
     });
     const applyRuleData = useQuery(getRuleApply, {
-        fetchPolicy: 'cache-and-network',
-        nextFetchPolicy: 'cache-first',
+        fetchPolicy: 'no-cache',
+        // nextFetchPolicy: 'cache-first',
         skip:
             !isSignedIn ||
             !cartId ||
@@ -93,7 +93,6 @@ export const usePriceSummary = (props = {}) => {
             cartId
         }
     });
-
     const handleProceedToCheckout = useCallback(() => {
         history.push('/checkout');
     }, [history]);

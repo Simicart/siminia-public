@@ -90,11 +90,11 @@ const CommunicationsPage = props => {
                                 <Button disabled={isDisabled} type="submit" priority="high">
                                     {isDisabled
                                         ? formatMessage({
-                                            id: 'communicationsPage.savingText',
+                                            id: 'Saving',
                                             defaultMessage: 'Saving'
                                         })
                                         : formatMessage({
-                                            id: 'communicationsPage.changesText',
+                                            id: 'Save changes',
                                             defaultMessage: 'Save Changes'
                                         })}
                                 </Button>

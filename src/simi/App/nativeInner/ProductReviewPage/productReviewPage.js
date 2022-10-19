@@ -35,7 +35,7 @@ const ProductReviewPage = props => {
 
     const { formatMessage } = useIntl();
     const PAGE_TITLE = formatMessage({
-        id: 'productReviewPage.pageTitleText',
+        id: 'My Product Reviews',
         defaultMessage: 'My Product Reviews'
     });
     const reviewTotal = reviews.length ? (
@@ -43,7 +43,7 @@ const ProductReviewPage = props => {
             {' '}
             {reviews.length}
             <FormattedMessage
-                id={'productReviewPage.totalCount'}
+                id={'Reviews'}
                 defaultMessage={' Reviews'}
             />
         </span>
@@ -64,7 +64,7 @@ const ProductReviewPage = props => {
                 <div style={{textAlign: 'center'}}>
                     <h3>
                         <FormattedMessage
-                            id={'productReviewPage.emptyDataMessage'}
+                            id={"You don't have any reviews yet."}
                             defaultMessage={"You don't have any reviews yet."}
                         />
                     </h3>

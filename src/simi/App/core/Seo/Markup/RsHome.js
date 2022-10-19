@@ -19,7 +19,6 @@ const RsHome = props => {
     } = useStoreConfigData();
     if (storeConfigLoading) return '';
     if (derivedErrorMessage) return '';
-    console.log(storeConfigData)
 
     const mageworx_seo =
         storeConfigData && storeConfigData.storeConfig

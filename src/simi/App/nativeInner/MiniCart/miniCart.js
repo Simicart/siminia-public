@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import {
     Lock as LockIcon,
     AlertCircle as AlertCircleIcon
@@ -21,7 +21,9 @@ import TaxSummary from 'src/simi/App/core/Cart/PriceSummary/taxSummary';
 import ShippingSummary from 'src/simi/App/core/Cart/PriceSummary/shippingSummary';
 import GiftCardSummary from '@magento/venia-ui/lib/components/CartPage/PriceSummary/giftCardSummary';
 import { configColor } from 'src/simi/Config';
-
+import { useGetRewardPointData } from '../../../talons/RewardPoint/useGetRewardPointData';
+import { useQuery } from '@apollo/client';
+import { GET_REWARD_POINTS_CONFIG } from '../../../talons/RewardPoint/rewardPoints.gql';
 const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
 
 /**
@@ -33,6 +35,7 @@ const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
 const MiniCart = React.forwardRef((props, ref) => {
     const { isOpen, setIsOpen } = props;
 
+    const { formatMessage } = useIntl();
     // Prevent the page from scrolling in the background
     // when the MiniCart is open.
     useScrollLock(isOpen);
@@ -41,7 +44,7 @@ const MiniCart = React.forwardRef((props, ref) => {
         setIsOpen,
         operations
     });
-    
+
     const {
         closeMiniCart,
         errorMessage,
@@ -65,6 +68,27 @@ const MiniCart = React.forwardRef((props, ref) => {
         shipping,
         priceData
     } = flatData;
+
+    // const {
+    //     data: rewardPointConfig,
+    //     loading: rewardPointConfigLoading,
+    //     error: rewardPointConfigError
+    // } = useQuery(GET_REWARD_POINTS_CONFIG, {
+    //     fetchPolicy: 'cache-and-network'
+    // });
+
+    const { rewardPointConfig, customerRewardPoint } = useGetRewardPointData();
+    const pointBalance =
+        customerRewardPoint && customerRewardPoint.point_balance
+            ? customerRewardPoint.point_balance
+            : 0;
+    const icon =
+        rewardPointConfig &&
+        rewardPointConfig.MpRewardConfig &&
+        rewardPointConfig.MpRewardConfig.general
+            ? rewardPointConfig.MpRewardConfig.general.icon
+            : '';
+
     const classes = useStyle(defaultClasses, props.classes);
     const rootClass = isOpen ? classes.root_open : classes.root;
     const contentsClass = isOpen ? classes.contents_open : classes.contents;
@@ -74,6 +98,7 @@ const MiniCart = React.forwardRef((props, ref) => {
     const priceClassName = loading ? classes.price_loading : classes.price;
 
     const isCartEmpty = !(productList && productList.length);
+
     let mpRewardEarn, mpRewardDiscount, mpRewardSpent;
     if (priceData && priceData.length > 1) {
         mpRewardDiscount = priceData[0];
@@ -109,26 +134,58 @@ const MiniCart = React.forwardRef((props, ref) => {
                 />
             </span> */}
             <span className={priceClassName}>
-                {mpRewardEarn ? (
+                {/* {pointBalance ? (
                     <span className={classes.labelSubtotal}>
                         <FormattedMessage
                             id={'priceSummary.rewardEarnTitle'}
-                            defaultMessage={`${mpRewardEarn.title}`}
+                            defaultMessage={`You have `}
                         />
                     </span>
                 ) : null}
+                {pointBalance ? (
+                    <span className={classes.priceSubtotal}>
+                        <FormattedMessage
+                            id={'priceSummary.rewardEarnValue'}
+                            defaultMessage={`${pointBalance} point(s)`}
+                        />
+                    </span>
+                ) : null} */}
+                {mpRewardEarn ? (
+                    <span className={classes.labelSubtotal}>
+                        <span className={classes.wrapRewardEarnTitle}>
+                            <span>
+                                <FormattedMessage
+                                    id={'You will earn'}
+                                    defaultMessage={`${mpRewardEarn.title}`}
+                                />
+                            </span>
+                            <img
+                                style={{ height: '35px' }}
+                                alt="icon"
+                                src={icon}
+                            />
+                        </span>
+                    </span>
+                ) : null}
+
                 {mpRewardEarn ? (
                     <span className={classes.priceSubtotal}>
                         <FormattedMessage
                             id={'priceSummary.rewardEarnValue'}
-                            defaultMessage={`${mpRewardEarn.value} points`}
+                            defaultMessage={`${mpRewardEarn.value} `}
                         />
+                        <>
+                            {formatMessage({
+                                id: 'points',
+                                defaultMessage: 'points'
+                            })}
+                        </>
                     </span>
                 ) : null}
                 {mpRewardSpent ? (
                     <span className={classes.labelSubtotal}>
                         <FormattedMessage
-                            id={'priceSummary.rewardSpentTitle'}
+                            id={'You will spend'}
                             defaultMessage={`${mpRewardSpent.title}`}
                         />
                     </span>
@@ -137,13 +194,19 @@ const MiniCart = React.forwardRef((props, ref) => {
                     <span className={classes.priceSubtotal}>
                         <FormattedMessage
                             id={'priceSummary.rewardSpentValue'}
-                            defaultMessage={`${mpRewardSpent.value} points`}
+                            defaultMessage={`${mpRewardSpent.value}`}
                         />
+                        <>
+                            {formatMessage({
+                                id: 'points',
+                                defaultMessage: 'points'
+                            })}
+                        </>
                     </span>
                 ) : null}
                 <span className={classes.labelSubtotal}>
                     <FormattedMessage
-                        id={'miniCart.subtotal'}
+                        id={'Subtotal'}
                         defaultMessage={'Subtotal'}
                     />
                 </span>
@@ -156,7 +219,7 @@ const MiniCart = React.forwardRef((props, ref) => {
                 {mpRewardDiscount ? (
                     <span className={classes.labelSubtotal}>
                         <FormattedMessage
-                            id={'priceSummary.rewardDiscountTitle'}
+                            id={'Reward Points'}
                             defaultMessage={`${mpRewardDiscount.title}`}
                         />
                     </span>
@@ -201,7 +264,7 @@ const MiniCart = React.forwardRef((props, ref) => {
                 />
                 <span className={classes.labelGrandTotal}>
                     <FormattedMessage
-                        id={'miniCart.grandTotal'}
+                        id={'Grand Total'}
                         defaultMessage={'Grand Total'}
                     />
                 </span>
@@ -216,16 +279,15 @@ const MiniCart = React.forwardRef((props, ref) => {
         <div className={classes.emptyCart}>
             <div className={classes.emptyMessage}>
                 <FormattedMessage
-                    id={'miniCart.empty'}
+                    id={'Your cart is empty'}
                     defaultMessage={'YOUR CART IS EMPTY'}
                 />
                 <button className={classes.continue}>
                     <FormattedMessage
-                        id={'miniCart.continue'}
+                        id={'Continue Shopping'}
                         defaultMessage={'Continue Shopping'}
                     />
                 </button>
-                
             </div>
         </div>
     ) : (
@@ -233,7 +295,7 @@ const MiniCart = React.forwardRef((props, ref) => {
             <div className={classes.body}>
                 <div className={classes.title}>
                     <FormattedMessage
-                        id={'miniCart.title'}
+                        id={'SHOPPING CART'}
                         defaultMessage={'SHOPPING CART'}
                     />
                 </div>
@@ -255,7 +317,7 @@ const MiniCart = React.forwardRef((props, ref) => {
                     disabled={loading || isCartEmpty}
                 >
                     <FormattedMessage
-                        id={'miniCart.viewCart'}
+                        id={'View cart'}
                         defaultMessage={'View Cart'}
                     />
                 </Button>
@@ -266,7 +328,7 @@ const MiniCart = React.forwardRef((props, ref) => {
                     disabled={loading || isCartEmpty}
                 >
                     <FormattedMessage
-                        id={'miniCart.gotocheckout'}
+                        id={'go to checkout'}
                         defaultMessage={'GO TO CHECKOUT'}
                     />
                 </Button>

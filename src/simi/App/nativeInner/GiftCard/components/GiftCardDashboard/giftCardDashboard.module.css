@@ -63,7 +63,7 @@
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
-    padding: 0 9px 0 35px;
+    padding: 0 30px 0 35px;
     vertical-align: baseline;
     box-sizing: border-box;
     width: 100%;
@@ -120,6 +120,7 @@
 
 .gift-code-input-field {
 	display: inline-block;
+	position: relative;
 }
 
 .gift-icon {
@@ -238,6 +239,7 @@ tbody tr:last-child {
 
 .modal-header {
 	padding: 30px 30px 12px;
+	background-color: #fff;
 }
 
 .modal-header > h1 {
@@ -274,4 +276,19 @@ tbody tr:last-child {
 
 .loading > img {
     width: 80px;
+}
+.wrapperContent{
+	width: 80%;
+}
+@media(max-width:820px){
+	.wrapper{
+		grid-template-columns: unset
+	}
+	.action-button {
+		margin-inline-start: 0;
+		margin-top: 5px;
+	}
+	.wrapperContent{
+		width: 100%;
+	}
 }

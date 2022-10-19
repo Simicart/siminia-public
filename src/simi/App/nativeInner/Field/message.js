@@ -13,7 +13,6 @@ const Message = props => {
     const classes = useStyle(defaultClasses, propClasses);
     const className = error ? classes.root_error : classes.root;
     let translatedErrorMessage;
-
     if (error) {
         translatedErrorMessage = formatMessage(
             {
@@ -23,8 +22,16 @@ const Message = props => {
             { value: error.value }
         );
     }
-
-    return <p className={className}>{translatedErrorMessage || children}</p>;
+    return (
+        <p className={className}>
+            {translatedErrorMessage
+                ? formatMessage({
+                      id: `${translatedErrorMessage || children}`,
+                      defaultMessage: `${translatedErrorMessage || children}`
+                  })
+                : ''}
+        </p>
+    );
 };
 
 export default Message;

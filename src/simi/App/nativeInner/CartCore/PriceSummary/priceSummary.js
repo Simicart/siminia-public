@@ -6,7 +6,8 @@ import Button from '@magento/venia-ui/lib/components/Button';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import defaultClasses from './priceSummary.module.css';
 import DiscountSummary from './discountSummary';
-import GiftCardSummary from '@magento/venia-ui/lib/components/CartPage/PriceSummary/giftCardSummary';
+import GiftCardSummary from './giftCardSummary';
+// import GiftCardSummary from '@magento/venia-ui/lib/components/CartPage/PriceSummary/giftCardSummary';
 import ShippingSummary from './shippingSummary';
 import TaxSummary from './taxSummary';
 import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
@@ -48,7 +49,9 @@ const PriceSummary = props => {
             <div className={classes.root}>
                 <span className={classes.errorText}>
                     <FormattedMessage
-                        id={'priceSummary.errorText'}
+                        id={
+                            'Something went wrong. Please refresh and try again.'
+                        }
                         defaultMessage={
                             'Something went wrong. Please refresh and try again.'
                         }
@@ -69,7 +72,6 @@ const PriceSummary = props => {
         shipping,
         priceData
     } = flatData;
-
     if (priceData && priceData.length > 1) {
         mpRewardDiscount = priceData[0];
         mpRewardSpent = priceData[1];
@@ -84,11 +86,11 @@ const PriceSummary = props => {
 
     const totalPriceLabel = isCheckout
         ? formatMessage({
-              id: 'priceSummary.total',
+              id: 'Total',
               defaultMessage: 'Total'
           })
         : formatMessage({
-              id: 'priceSummary.estimatedTotal',
+              id: 'Estimated Total',
               defaultMessage: 'Estimated Total'
           });
 
@@ -110,16 +112,13 @@ const PriceSummary = props => {
     return (
         <div className={classes.root}>
             <span className={classes.title}>
-                <FormattedMessage
-                    id={'priceSummary.title'}
-                    defaultMessage={'Summary'}
-                />
+                <FormattedMessage id={'SUMMARY'} defaultMessage={'Summary'} />
             </span>
             <div className={classes.lineItems}>
                 {mpRewardEarn ? (
                     <span className={classes.lineItemLabel}>
                         <FormattedMessage
-                            id={'priceSummary.rewardEarnTitle'}
+                            id={'You will earn'}
                             defaultMessage={`${mpRewardEarn.title}`}
                         />
                     </span>
@@ -128,14 +127,20 @@ const PriceSummary = props => {
                     <span className={priceClass}>
                         <FormattedMessage
                             id={'priceSummary.rewardEarnValue'}
-                            defaultMessage={`${mpRewardEarn.value} points`}
+                            defaultMessage={`${mpRewardEarn.value}`}
                         />
+                        <>
+                            {formatMessage({
+                                id: 'points',
+                                defaultMessage: 'points'
+                            })}
+                        </>
                     </span>
                 ) : null}
                 {mpRewardSpent ? (
                     <span className={classes.lineItemLabel}>
                         <FormattedMessage
-                            id={'priceSummary.rewardSpentTitle'}
+                            id={'You will spend'}
                             defaultMessage={`${mpRewardSpent.title}`}
                         />
                     </span>
@@ -144,13 +149,19 @@ const PriceSummary = props => {
                     <span className={priceClass}>
                         <FormattedMessage
                             id={'priceSummary.rewardSpentValue'}
-                            defaultMessage={`${mpRewardSpent.value} points`}
+                            defaultMessage={`${mpRewardSpent.value}`}
                         />
+                          <>
+                            {formatMessage({
+                                id: 'points',
+                                defaultMessage: 'points'
+                            })}
+                        </>
                     </span>
                 ) : null}
                 <span className={classes.lineItemLabel}>
                     <FormattedMessage
-                        id={'priceSummary.lineItemLabel'}
+                        id={'Subtotal'}
                         defaultMessage={'Subtotal'}
                     />
                 </span>
@@ -163,7 +174,7 @@ const PriceSummary = props => {
                 {mpRewardDiscount ? (
                     <span className={classes.lineItemLabel}>
                         <FormattedMessage
-                            id={'priceSummary.rewardDiscountTitle'}
+                            id={'Reward Points'}
                             defaultMessage={`${mpRewardDiscount.title}`}
                         />
                     </span>
@@ -189,6 +200,7 @@ const PriceSummary = props => {
                         price: priceClass
                     }}
                     data={giftCards}
+                    currencyCode={subtotal.currency}
                 />
                 <TaxSummary
                     classes={{
@@ -207,7 +219,10 @@ const PriceSummary = props => {
                     isCheckout={isCheckout}
                 />
                 <span className={classes.totalLabel}>{totalPriceLabel}</span>
-                <span style={{color: configColor.price_color}}  className={totalPriceClass}>
+                <span
+                    style={{ color: configColor.price_color }}
+                    className={totalPriceClass}
+                >
                     <Price value={total.value} currencyCode={total.currency} />
                 </span>
             </div>

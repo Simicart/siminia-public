@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight } from 'react-feather';
 import { mergeClasses } from '@magento/venia-ui/lib/classify';
 import defaultClass from './ProductDetailExtraProducts.module.css';
 import { useWindowSize } from '@magento/peregrine/lib/hooks/useWindowSize';
+import Identify from 'src/simi/Helper/Identify';
 
 export const checkElementVisible = elem => {
     const rect = elem.getBoundingClientRect();
@@ -45,7 +46,7 @@ export const defaultIfNull = (value, defaultVal) =>
 
 export const ProductDetailExtraProducts = props => {
     const { classes: _classes, products, history, children } = props;
-
+    console.log('Identify', Identify.isRtl());
     const containerRef = useRef(null);
     const { innerWidth } = useWindowSize();
 
@@ -116,7 +117,11 @@ export const ProductDetailExtraProducts = props => {
                     <HoveringButton
                         icon={ChevronLeft}
                         containerClass={[
-                            classes['backward-arrow-button'],
+                            classes[
+                                !Identify.isRtl()
+                                    ? 'backward-arrow-button'
+                                    : 'backward-arrow-button-rtl'
+                            ],
                             classes['arrow-button']
                         ].join(' ')}
                         onClick={moveBackward}
@@ -124,7 +129,11 @@ export const ProductDetailExtraProducts = props => {
                     <HoveringButton
                         icon={ChevronRight}
                         containerClass={[
-                            classes['forward-arrow-button'],
+                            classes[
+                                !Identify.isRtl()
+                                    ? 'forward-arrow-button'
+                                    : 'forward-arrow-button-rtl'
+                            ],
                             classes['arrow-button']
                         ].join(' ')}
                         onClick={moveForward}

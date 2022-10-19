@@ -15,7 +15,8 @@ import { useStyle } from '@magento/venia-ui/lib/classify';
 import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
 import Button from '@magento/venia-ui/lib/components/Button';
 import Carousel from '../ProductImageCarousel';
-import FormError from '@magento/venia-ui/lib/components/FormError';
+// import FormError from '@magento/venia-ui/lib/components/FormError';
+import FormError from '../Customer/Login/formError';
 import { QuantityFields } from '@simicart/siminia/src/simi/App/core/Cart/ProductListing/quantity.js';
 import RichContent from '@magento/venia-ui/lib/components/RichContent/richContent';
 import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductOptions';
@@ -90,12 +91,12 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product } = props;
-
     const talonProps = useProductFullDetail({ product });
     
     const {
         breadcrumbCategoryId,
         errorMessage,
+        userErrorsMessage,
         handleAddToCart,
         handleBuyNow,
         handleSelectionChange,
@@ -222,6 +223,13 @@ const ProductFullDetail = props => {
 
     // Fill a map with field/section -> error.
     const errors = new Map();
+    if(Array.isArray(userErrorsMessage) && userErrorsMessage.length > 0) {
+        userErrorsMessage.forEach(userErrorMessage => {
+            errors.set('form', [
+                new Error(userErrorMessage)
+            ]);
+        })
+    }
     if (errorMessage) {
         Object.keys(ERROR_MESSAGE_TO_FIELD_MAPPING).forEach(key => {
             if (errorMessage.includes(key)) {
@@ -290,7 +298,7 @@ const ProductFullDetail = props => {
         } else
             return !isOutOfStock ? (
                 <FormattedMessage
-                    id="productFullDetail.buyNow"
+                    id="Buy now"
                     defaultMessage="Buy Now"
                 />
             ) : (
@@ -380,7 +388,7 @@ const ProductFullDetail = props => {
                 className={classes.noReview}
             >
                 <FormattedMessage
-                    id="productFullDetail.noReview"
+                    id="Be the first to review this product"
                     defaultMessage="Be the first to review this product"
                 />
             </div>
@@ -395,7 +403,7 @@ const ProductFullDetail = props => {
                 >
                     {!isMobileSite ? (
                         <FormattedMessage
-                            id="productFullDetail.labelPrice"
+                            id="Per pack:"
                             defaultMessage="Per pack: "
                         />
                     ) : null}
@@ -422,22 +430,20 @@ const ProductFullDetail = props => {
         </React.Fragment>
     )
 
-    console.log('run-')
-
     if(isCallForPriceEnable()) {
         if(!(action === 'login_see_price' && isSignedIn) || action === 'redirect_url' ) {
             wrapperPrice = null
         }
     }
 
-    const wrapperQuantity = (
+    const wrapperQuantity = product.__typename !=='GroupedProduct' ?(
         <div className="wrapperQuantity">
             <section
                 className={!isMobileSite ? classes.quantity : 'mbQuantity'}
             >
                 <span className={classes.quantityTitle}>
                     <FormattedMessage
-                        id={'productFullDetail.quantity'}
+                        id={'Quantity'}
                         defaultMessage={'Quantity: '}
                     />
                 </span>
@@ -465,7 +471,7 @@ const ProductFullDetail = props => {
             </div>
             {/* ) : null} */}
         </div>
-    );
+    ) : '';
     const renderSizeChart = product.mp_sizeChart ? (
         <SizeChart
             sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null}
@@ -682,20 +688,14 @@ const ProductFullDetail = props => {
                             {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
                         </section>
 
-                        <FormError
-                            classes={{
-                                root: classes.formErrors
-                            }}
-                            errors={errors.get('form') || []}
-                        />
-
-                        {(!isMobileSite && product.short_description) ? (
-                            <div className="productDescription">
+                        <div className="productDescription">
+                            {(!isMobileSite && product.short_description) ? (    
                                 <RichContent
                                     html={product.short_description.html}
                                 />
-                            </div>
-                        ) : null}
+                            ) : null}
+                        </div>
+                        
 
                         {!isMobileSite ? (
                             <div className="wrapperOptions">
@@ -732,6 +732,17 @@ const ProductFullDetail = props => {
                             : null}
 
                         {!isMobileSite ? cartAction : null}
+
+                        <div className={classes.wrapperError}>
+                            <FormError
+                                classes={{
+                                    root: classes.formErrors
+                                }}
+                                errors={errors.get('form') || []}
+                            />
+                        </div>    
+                    
+
                         <div className={classes.wrapperDes}>
                             <section className={classes.description}>
                                 <span
@@ -797,13 +808,13 @@ const ProductFullDetail = props => {
                         </div>
                         {!isMobileSite ? (
                             <section className={classes.details}>
-                                <span className={classes.detailsTitle}>
+                                {/* <span className={classes.detailsTitle}>
                                     <FormattedMessage
                                         id={'SKU'}
                                         defaultMessage={'SKU'}
                                     />
                                 </span>
-                                <strong>{productDetails.sku}</strong>
+                                <strong>{productDetails.sku}</strong> */}
                             </section>
                         ) : (
                             <div className="sku-details">
@@ -861,7 +872,7 @@ const ProductFullDetail = props => {
                         history={history}
                     >
                         <FormattedMessage
-                            id="productFullDetail.relatedProducts"
+                            id="Related Products"
                             defaultMessage="Related Product"
                         />
                     </ProductDetailExtraProductsMB>
@@ -872,8 +883,8 @@ const ProductFullDetail = props => {
                         history={history}
                     >
                         <FormattedMessage
-                            id="productFullDetail.relatedProducts"
-                            defaultMessage="Related Product"
+                            id="Related Products"
+                            defaultMessage="Related Products"
                         />
                     </ProductDetailExtraProducts>
                 )}
@@ -885,7 +896,7 @@ const ProductFullDetail = props => {
                         history={history}
                     >
                         <FormattedMessage
-                            id="productFullDetail.upsellProduct"
+                            id="Upsell Product"
                             defaultMessage="Upsell Product"
                         />
                     </ProductDetailExtraProductsMB>
@@ -896,7 +907,7 @@ const ProductFullDetail = props => {
                         history={history}
                     >
                         <FormattedMessage
-                            id="productFullDetail.upsellProduct"
+                            id="Upsell Product"
                             defaultMessage="Upsell Product"
                         />
                     </ProductDetailExtraProducts>
@@ -909,7 +920,7 @@ const ProductFullDetail = props => {
                         history={history}
                     >
                         <FormattedMessage
-                            id="productFullDetail.crosssellProduct"
+                            id="Crosssell Product"
                             defaultMessage="Crosssell Product"
                         />
                     </ProductDetailExtraProductsMB>
@@ -920,7 +931,7 @@ const ProductFullDetail = props => {
                         history={history}
                     >
                         <FormattedMessage
-                            id="productFullDetail.crosssellProduct"
+                            id="Crosssell Product"
                             defaultMessage="Crosssell Product"
                         />
                     </ProductDetailExtraProducts>

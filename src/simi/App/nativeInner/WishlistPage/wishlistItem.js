@@ -16,6 +16,7 @@ import defaultClasses from './wishlistItem.module.css';
 import { Link } from 'react-router-dom';
 import { ConfirmPopup } from '../Cart/ConfirmPopup';
 import SocialShare from '../../../BaseComponents/SocialShare';
+import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 
 const WishlistItem = props => {
     const { item } = props;
@@ -33,7 +34,7 @@ const WishlistItem = props => {
     const { final_price: finalPrice } = maximumPrice;
     const { currency, value: unitPrice } = finalPrice;
 
-    const talonProps = useWishlistItem(props);
+    const talonProps = useWishlistItem({...props, operations: { createCartMutaion: CREATE_CART_MUTATION }});
     const {
         addToCartButtonProps,
         handleRemoveProductFromWishlist,
@@ -53,7 +54,7 @@ const WishlistItem = props => {
             addToast({
                 type: 'error',
                 message: formatMessage({
-                    id: 'wishlistItem.addToCartError',
+                    id: 'Something went wrong. Please refresh and try again.',
                     defaultMessage:
                         'Something went wrong. Please refresh and try again.'
                 }),
@@ -147,7 +148,7 @@ const WishlistItem = props => {
     };
 
     const removeProductAriaLabel = formatMessage({
-        id: 'wishlistItem.removeAriaLabel',
+        id: 'Remove Product from wishlist',
         defaultMessage: 'Remove Product from wishlist'
     });
 
@@ -222,23 +223,22 @@ const WishlistItem = props => {
                 className={classes.deleteItem}
                 aria-label={removeProductAriaLabel}
             >
-                {!isMobileSite ? (
+                {/* {!isMobileSite ? (
                     <div className={classes.close} />
-                ) : (
+                ) : ( */}
                     <ConfirmPopup
-                        trigger={<VscTrash size={25} />}
+                        trigger={isMobileSite ? <VscTrash size={25} /> : <div className={classes.close} />}
                         content={
                             <FormattedMessage
-                                id={'Delete Warning'}
+                                id={'Are you sure about remove this item from wish list?'}
                                 defaultMessage={
-                                    'Are you sure about remove\n' +
-                                    ' this item from wish list?'
+                                    'Are you sure about remove this item from wish list?'
                                 }
                             />
                         }
                         confirmCallback={handleRemoveProductFromWishlist}
                     />
-                )}
+                {/* )} */}
             </button>
             <div className={classes.actionWrap}>
                 <span className={classes.name}>{name}</span>{' '}

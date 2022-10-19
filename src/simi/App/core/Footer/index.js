@@ -12,13 +12,15 @@ import Instagram from 'src/simi/BaseComponents/Icon/Instagram';
 import { useWindowSize } from '@magento/peregrine';
 import { useIntl } from 'react-intl';
 import RichContent from '@magento/venia-ui/lib/components/RichContent';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import { logoUrl } from '../../../Helper/Url';
+import CmsBlockGroup from '@magento/venia-ui/lib/components/CmsBlock/cmsBlock';
 
 const Footer = props => {
     const { classes, history } = props;
     const { formatMessage } = useIntl();
     const windowSize = useWindowSize();
-    const storeConfig = Identify.getStoreConfig()
+    const storeConfig = Identify.getStoreConfig();
     const isPhone = windowSize.innerWidth < 1024;
     const pagec1 = 1;
     const pagep2 = 2;
@@ -49,7 +51,6 @@ const Footer = props => {
             title: 'Contact us'
         }
     ];
-
     const pagePolicies = [
         {
             id: 1,
@@ -86,43 +87,52 @@ const Footer = props => {
         return <ul>{result}</ul>;
     };
 
-    let showBlockFooter = false
-    if(
-        storeConfig 
-        && storeConfig.simiStoreConfig 
-        && storeConfig.simiStoreConfig.config 
-        && storeConfig.simiStoreConfig.config.catalog 
-        && storeConfig.simiStoreConfig.config.catalog.frontend
-        && storeConfig.simiStoreConfig.config.catalog.frontend.footer_block
+    let showBlockFooter = false;
+    if (
+        storeConfig &&
+        storeConfig.simiStoreConfig &&
+        storeConfig.simiStoreConfig.config &&
+        storeConfig.simiStoreConfig.config.catalog &&
+        storeConfig.simiStoreConfig.config.catalog.frontend &&
+        storeConfig.simiStoreConfig.config.catalog.frontend.footer_block
     ) {
-        showBlockFooter = true
+        showBlockFooter = true;
     }
 
     useEffect(() => {
-        if(showBlockFooter) {
-            const linkNodes = document.querySelectorAll('#footer a')
-            for(let i = 0; i < linkNodes.length; i++) {
-                if(linkNodes[i]) {
+        if (showBlockFooter) {
+            const linkNodes = document.querySelectorAll('#footer a');
+            for (let i = 0; i < linkNodes.length; i++) {
+                if (linkNodes[i]) {
                     linkNodes[i].addEventListener('click', function(e) {
-                        e.preventDefault()
+                        e.preventDefault();
                         const href = this.getAttribute('href');
-                        if(href) {
-                            if(href.length > 0 && href[0] === '/') {
-                                history.push(href)
+                        if (href) {
+                            if (href.length > 0 && href[0] === '/') {
+                                history.push(href);
                             } else {
                                 const target = this.getAttribute('target');
-                                window.open(href, target ? target : '_self')
+                                window.open(href, target ? target : '_self');
                             }
                         }
-                    })
+                    });
                 }
-            }   
+            }
         }
-    }, [showBlockFooter])
-    
-    if(showBlockFooter) {
-        return <div id="footer" className={classes['footer-app']}><RichContent html={storeConfig.simiStoreConfig.config.catalog.frontend.footer_block} /></div>
-    }
+    }, [showBlockFooter]);
+
+    // if (showBlockFooter) {
+    //     return (
+    //         <div id="footer" className={classes['footer-app']}>
+    //             <RichContent
+    //                 html={
+    //                     storeConfig.simiStoreConfig.config.catalog.frontend
+    //                         .footer_block
+    //                 }
+    //             />
+    //         </div>
+    //     );
+    // }
 
     return (
         <div className={classes['footer-app']}>
@@ -131,106 +141,63 @@ const Footer = props => {
                 <div className={`container ${classes['col-mobile-pd-0']}`}>
                     <div className={`row ${classes['app--flex']}`}>
                         <div
+                            style={{ width: '20%' }}
+                            className={`${
+                                classes['col-custom-20pr']
+                            } hidden-xs`}
+                        >
+                            <img
+                                style={{ maxHeight: '80px', maxWidth: '120px' }}
+                                alt="logo"
+                                src={logoUrl()}
+                            />
+                            {/* <Copyright isPhone={isPhone} classes={classes} /> */}
+                            {/* <img alt="payment" src={payment} /> */}
+                        </div>
+                        <div
+                            style={{ width: '15%' }}
                             className={`${classes['col-custom-20pr']} ${
                                 classes['col-mobile-pd-0']
                             }`}
                         >
-                            <span className={classes['footer--custom_title']}>
-                                {formatMessage({ id: 'Customer Services' })}
-                            </span>
-                            {listPages(pageCustomerServices)}
+                            {Identify.isRtl() ? (
+                                <CmsBlockGroup identifiers="footer-customer-rtl" />
+                            ) : (
+                                <CmsBlockGroup identifiers="footer-customer" />
+                            )}
                         </div>
                         <div
+                            style={{ width: '15%' }}
                             className={`${classes['col-custom-20pr']} ${
                                 classes['col-mobile-pd-0']
                             }`}
                         >
-                            <span className={classes['footer--custom_title']}>
-                                {formatMessage({ id: 'Our policies"' })}
-                            </span>
-                            {listPages(pagePolicies)}
+                            {Identify.isRtl() ? (
+                                <CmsBlockGroup identifiers="footer-policies-rtl" />
+                            ) : (
+                                <CmsBlockGroup identifiers="footer-policies" />
+                            )}
                         </div>
+
                         <div
+                            style={{ width: '40%', marginInlineStart: '100px' }}
                             className={`${
                                 classes['col-custom-20pr']
-                            } hidden-xs`}
-                        />
-                        <div
-                            className={`${
-                                classes['col-custom-20pr']
-                            } hidden-xs`}
-                        />
-                        <div
-                            className={`${
-                                classes['col-custom-20pr']
-                            } text-right`}
+                            } text-right ${classes['footer-address']}`}
                         >
-                            <span className={classes['footer--custom_title']}>
-                                {formatMessage({ id: 'Get in touch today on' })}
-                            </span>
-                            <ul className={classes['list-contact']}>
-                                <li>
-                                    <a href={`tel:842466517968`}>
-                                        84 - 24 - 6651 - 7968
-                                    </a>
-                                </li>
-                                <li>
-                                    {/* <a href={`mailto:Support@simicart.com `}>Support@simicart.com</a> */}
-                                </li>
-                            </ul>
-                            <span
-                                className={classes['footer--custom_title']}
-                                style={{
-                                    display: 'block',
-                                    marginTop: '40px'
-                                }}
-                            >
-                                {formatMessage({ id: 'Connect' })}
-                            </span>
-                            <div className={classes['social__md-block']}>
-                                <a
-                                    href="https://www.facebook.com/simicart"
-                                    target="__blank"
-                                >
-                                    <Facebook
-                                        className={classes['facebook-icon']}
-                                        style={{
-                                            width: '50px',
-                                            height: '50px'
-                                        }}
-                                    />
-                                </a>
-                                <a
-                                    href="https://twitter.com/SimiCart"
-                                    target="__blank"
-                                >
-                                    <Twitter
-                                        className={classes['twitter-icon']}
-                                        style={{
-                                            width: '50px',
-                                            height: '50px'
-                                        }}
-                                    />
-                                </a>
-                                <a
-                                    href="https://www.instagram.com/simicart.official/"
-                                    target="__blank"
-                                >
-                                    <Instagram
-                                        className={classes['instagram-icon']}
-                                        style={{
-                                            width: '50px',
-                                            height: '50px'
-                                        }}
-                                    />
-                                </a>
+                            <CmsBlockGroup identifiers="footer-address" />
+                            <div className={classes.wrapSocial}>
+                                <CmsBlockGroup identifiers="footer-social" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <Copyright isPhone={isPhone} classes={classes} />
+            {/* <Copyright isPhone={isPhone} classes={classes} /> */}
         </div>
     );
 };
-export default compose(withRouter, classify(defaultStyle))(Footer);
+export default compose(
+    withRouter,
+    classify(defaultStyle)
+)(Footer);

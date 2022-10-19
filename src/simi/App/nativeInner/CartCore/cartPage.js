@@ -73,7 +73,7 @@ const CartPage = props => {
     ) : (
         <h3>
             <FormattedMessage
-                id={'cartPage.noItems'}
+                id={'You have no items in your shopping cart.'}
                 defaultMessage={'You have no items in your shopping cart.'}
             />
         </h3>
@@ -90,8 +90,8 @@ const CartPage = props => {
     const totalQuantity = cartItems.length ? (
         <span> {cartItems.reduce((total,item) => { return total += item.quantity},0)}  
             <FormattedMessage
-            id={'cartPage.itemsCount'}
-            defaultMessage={' Item(s)'}
+            id={'Item(s)'}
+            defaultMessage={'Item(s)'}
             /> 
         </span>
     ) : null;    
@@ -106,7 +106,7 @@ const CartPage = props => {
             <div className={classes.heading_container}>
                 <h1 className={classes.heading}>
                     <FormattedMessage
-                        id={'cartPage.headingCart'}
+                        id={'SHOPPING CART'}
                         defaultMessage={'Shopping Cart'}
                     />
                 </h1>

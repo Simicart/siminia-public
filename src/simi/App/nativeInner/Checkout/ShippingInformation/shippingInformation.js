@@ -55,7 +55,7 @@ const ShippingInformation = props => {
         return (
             <LoadingIndicator classes={{ root: classes.loading }}>
                 <FormattedMessage
-                    id={'shippingInformation.loading'}
+                    id={'Fetching Shipping Information...'}
                     defaultMessage={'Fetching Shipping Information...'}
                 />
             </LoadingIndicator>
@@ -80,7 +80,7 @@ const ShippingInformation = props => {
             <div className={classes.cardHeader}>
                 <h5 className={classes.cardTitle}>
                     <FormattedMessage
-                        id={'shippingInformation.cardTitle'}
+                        id={'SHIPPING INFORMATION'}
                         defaultMessage={'Shipping Information'}
                     />
                 </h5>
@@ -95,7 +95,7 @@ const ShippingInformation = props => {
                     />
                     <span className={classes.editText}>
                         <FormattedMessage
-                            id={'global.editButton'}
+                            id={'Edit'}
                             defaultMessage={'Edit'}
                         />
                     </span>
@@ -108,7 +108,7 @@ const ShippingInformation = props => {
         <Fragment>
             <h3 className={classes.editTitle}>
                 <FormattedMessage
-                    id={'shippingInformation.editTitle'}
+                    id={'1. Shipping Information'}
                     defaultMessage={'1. Shipping Information'}
                 />
             </h3>

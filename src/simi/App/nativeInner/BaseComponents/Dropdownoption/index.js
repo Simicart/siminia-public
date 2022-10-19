@@ -26,7 +26,7 @@ const Dropdownoption = props => {
             >
                 <div className="dropdown-title">
                     {formatMessage({
-                        id: 'sortBy',
+                        id: 'sort by',
                         defaultMessage: 'Sort by'
                     })}
                 </div>
