@@ -4,7 +4,9 @@ import { func, shape, string } from 'prop-types';
 
 import { useForgotPassword } from '../../../../talons/ForgotPassword/useForgotPassword';
 
-import FormErrors from '@magento/venia-ui/lib/components/FormError';
+// import FormErrors from '@magento/venia-ui/lib/components/FormError';
+ import FormErrors from '../Login/formError';
+
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import ForgotPasswordForm from './ForgotPasswordForm';
 import FormSubmissionSuccessful from './FormSubmissionSuccessful';

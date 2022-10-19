@@ -64,8 +64,8 @@ const ItemsReview = props => {
                         {totalQuantity}
                     </span>
                     <FormattedMessage
-                        id={'checkoutPage.itemsInYourOrder'}
-                        defaultMessage={' items in your order'}
+                        id={'items in your order'}
+                        defaultMessage={'items in your order'}
                     />
                 </div>
                 {items}
