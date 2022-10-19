@@ -139,7 +139,6 @@ const OrderDetailPage = props => {
     const mpRewardPoints = customer.orders.items[0].mp_reward_points || {};
     const mpDeliveryInformation =
         customer.orders.items[0].mp_delivery_information || {};
-    console.log('mpDeliveryInformation', mpDeliveryInformation);
     const status = customer.orders.items[0].status;
 
     const dateFormat = date => {

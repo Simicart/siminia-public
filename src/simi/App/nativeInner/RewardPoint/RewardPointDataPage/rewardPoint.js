@@ -30,7 +30,6 @@ const RewardPointDataPage = props => {
         setSubcribeLoading
     } = talonProps;
 
-    console.log('setSubcribeLoading', setSubcribeLoading);
 
     let history = useHistory();
     const windowSize = useWindowSize();
@@ -80,7 +79,6 @@ const RewardPointDataPage = props => {
         notification_expire,
         transactions
     } = customerRewardPoint;
-    console.log("transactions",transactions);
     const PAGE_TITLE = (
         <FormattedMessage
             id={'My Points and Reward'}
