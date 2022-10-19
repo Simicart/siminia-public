@@ -106,7 +106,7 @@ const ShippingMethod = props => {
                             disabled={pageIsUpdating || isLoading}
                         >
                             <FormattedMessage
-                                id={'shippingMethod.continueToNextStep'}
+                                id={'Continue to payment information'}
                                 defaultMessage={
                                     'Continue to Payment Information'
                                 }

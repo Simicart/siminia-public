@@ -276,7 +276,7 @@ body.fixed-scroll {
     width: 30%;
     padding-inline-start: 15px;
     position: absolute;
-    left: 0;
+    inset-inline-start: 0;
 }
 
 .mobileMenuToggle > a {

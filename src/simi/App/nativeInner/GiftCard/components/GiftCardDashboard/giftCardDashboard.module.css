@@ -277,3 +277,18 @@ tbody tr:last-child {
 .loading > img {
     width: 80px;
 }
+.wrapperContent{
+	width: 80%;
+}
+@media(max-width:820px){
+	.wrapper{
+		grid-template-columns: unset
+	}
+	.action-button {
+		margin-inline-start: 0;
+		margin-top: 5px;
+	}
+	.wrapperContent{
+		width: 100%;
+	}
+}

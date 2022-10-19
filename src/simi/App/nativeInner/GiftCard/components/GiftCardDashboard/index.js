@@ -102,7 +102,6 @@ const GiftCardDashboard = props => {
         giftCardLists,
         transactions
     } = gcDashboardData.mpGiftCardDashboardConfig;
-
     giftCardLists.map(giftcard => {
         initialCodesArray.push(giftcard['hidden_code']);
     });
@@ -487,7 +486,7 @@ const GiftCardDashboard = props => {
                     transform:
                         activeGCView == i
                             ? 'translateY(0)'
-                            : 'translateY(-1000px)'
+                            : 'translateY(-1500px)'
                 }}
             >
                 <header className={classes['modal-header']}>
@@ -633,16 +632,28 @@ const GiftCardDashboard = props => {
             <thead>
                 <tr>
                     <th scope="col" className="col code">
-                        Code
+                        {formatMessage({
+                            id: 'Code',
+                            defaultMessage: 'Code'
+                        })}
                     </th>
                     <th scope="col" className="col balance">
-                        Balance
+                        {formatMessage({
+                            id: 'Balance',
+                            defaultMessage: 'Balance'
+                        })}
                     </th>
                     <th scope="col" className="col status">
-                        Status
+                        {formatMessage({
+                            id: 'Status',
+                            defaultMessage: 'Status'
+                        })}
                     </th>
                     <th scope="col" className="col expired_at">
-                        Expired Date
+                        {formatMessage({
+                            id: 'Expired Date',
+                            defaultMessage: 'Expired Date'
+                        })}
                     </th>
                     <th scope="col" className="col actions">
                         &nbsp;
@@ -765,11 +776,10 @@ const GiftCardDashboard = props => {
                     className={classes['label']}
                     htmlFor="credit-notification"
                 >
-					 {formatMessage({
+                    {formatMessage({
                         id: 'Update Balance Notification',
                         defaultMessage: 'Update Balance Notification'
                     })}
-                    
                 </label>
             </div>
         </div>
@@ -787,8 +797,8 @@ const GiftCardDashboard = props => {
                 <LeftMenu label="My Gift Cards" />
                 <div>
                     <div
+                        className={classes.wrapperContent}
                         style={{
-                            width: '80%',
                             margin: 'auto',
                             outline: 'none'
                         }}
@@ -797,11 +807,10 @@ const GiftCardDashboard = props => {
                     >
                         <div className={classes['page-title-wrapper']}>
                             <h1 className={classes['page-title']}>
-                               
-								{formatMessage({
-                            id: 'My Gift Cards',
-                            defaultMessage: 'My Gift Cards'
-                        })}
+                                {formatMessage({
+                                    id: 'My Gift Cards',
+                                    defaultMessage: 'My Gift Cards'
+                                })}
                             </h1>
                         </div>
                         {addGcMessage}

@@ -137,7 +137,9 @@ const OrderDetailPage = props => {
         : null;
     const grandTotal = customer.orders.items[0].total.base_grand_total.value;
     const mpRewardPoints = customer.orders.items[0].mp_reward_points || {};
-    const mpDeliveryInformation = customer.orders.items[0].mp_delivery_information || {}
+    const mpDeliveryInformation =
+        customer.orders.items[0].mp_delivery_information || {};
+    console.log('mpDeliveryInformation', mpDeliveryInformation);
     const status = customer.orders.items[0].status;
 
     const dateFormat = date => {
@@ -454,8 +456,7 @@ const OrderDetailPage = props => {
                             <span>
                                 {customer.orders.items[0].shipping_method}
                             </span>
-                            {mpDeliveryInformation
-                                .mp_delivery_time ? (
+                            {mpDeliveryInformation.mp_delivery_time ? (
                                 <div className={classes.infoItemContent}>
                                     <span>
                                         {mpDeliveryInformation.mp_delivery_date.slice(
@@ -464,9 +465,10 @@ const OrderDetailPage = props => {
                                         )}
                                     </span>
                                     <span>
-                                        {
-                                            mpDeliveryInformation.mp_delivery_time
-                                        }
+                                        {mpDeliveryInformation.mp_delivery_time ===
+                                        'Select time'
+                                            ? ''
+                                            : mpDeliveryInformation.mp_delivery_time}
                                     </span>
                                 </div>
                             ) : null}
@@ -635,45 +637,48 @@ const OrderDetailPage = props => {
                             {customer.orders.items[0].billing_address.street[0]}
                         </span>
                         <span style={{ display: 'flex' }}>
-                            {customer.orders.items.length > 0 && customer.orders.items[0].mp_delivery_information && customer.orders.items[0].mp_delivery_information.mp_delivery_time && (
-                                <React.Fragment>
-                                    <span style={{ marginRight: 5 }}>
-                                        {formatMessage({
-                                            id: 'Delivery Time',
-                                            defaultMessage: 'Delivery Time'
-                                        })}
-                                        :{' '}
-                                    </span>
-                                     <span
-                                        style={{
-                                            display: 'flex',
-                                            flexDirection: 'row',
-                                            alignItems: 'center'
-                                        }}
-                                        className={classes.infoItemContent}
-                                    >
+                            {customer.orders.items.length > 0 &&
+                                customer.orders.items[0]
+                                    .mp_delivery_information &&
+                                customer.orders.items[0].mp_delivery_information
+                                    .mp_delivery_time && (
+                                    <React.Fragment>
+                                        <span style={{ marginRight: 5 }}>
+                                            {formatMessage({
+                                                id: 'Delivery Time',
+                                                defaultMessage: 'Delivery Time'
+                                            })}
+                                            :{' '}
+                                        </span>
                                         <span
                                             style={{
-                                                fontWeight: 400,
-                                                marginRight: 5
+                                                display: 'flex',
+                                                flexDirection: 'row',
+                                                alignItems: 'center'
                                             }}
+                                            className={classes.infoItemContent}
                                         >
-                                            {customer.orders.items[0].mp_delivery_information.mp_delivery_date.slice(
-                                                0,
-                                                10
-                                            )}
+                                            <span
+                                                style={{
+                                                    fontWeight: 400,
+                                                    marginRight: 5
+                                                }}
+                                            >
+                                                {customer.orders.items[0].mp_delivery_information.mp_delivery_date.slice(
+                                                    0,
+                                                    10
+                                                )}
+                                            </span>
+                                            <span>
+                                                {
+                                                    customer.orders.items[0]
+                                                        .mp_delivery_information
+                                                        .mp_delivery_time
+                                                }
+                                            </span>
                                         </span>
-                                        <span>
-                                            {
-                                                customer.orders.items[0]
-                                                    .mp_delivery_information
-                                                    .mp_delivery_time
-                                            }
-                                        </span>
-                                    </span>
-                                </React.Fragment>
-                         
-                            )}
+                                    </React.Fragment>
+                                )}
                         </span>
                         {/* <span>
                                 {
@@ -747,46 +752,48 @@ const OrderDetailPage = props => {
                         {customer.orders.items[0].payment_methods[0].name}
                     </span>
                 </div>
-                {(mpRewardPoints.earn || mpRewardPoints.spent) && <div className={classes.mbRewardPoints}>
-                    <div style={{ fontSize: 16, fontWeight: '600' }}>
-                        {formatMessage({
-                            id: 'Reward Points',
-                            defaultMessage: 'Reward Points'
-                        })}
+                {(mpRewardPoints.earn || mpRewardPoints.spent) && (
+                    <div className={classes.mbRewardPoints}>
+                        <div style={{ fontSize: 16, fontWeight: '600' }}>
+                            {formatMessage({
+                                id: 'Reward Points',
+                                defaultMessage: 'Reward Points'
+                            })}
+                        </div>
+                        <div className={classes.content}>
+                            {mpRewardPoints.earn ? (
+                                <div>
+                                    <span>
+                                        {formatMessage({
+                                            id: 'You earned',
+                                            defaultMessage: 'You earned'
+                                        })}
+                                        : {mpRewardPoints.earn}{' '}
+                                        {formatMessage({
+                                            id: 'points',
+                                            defaultMessage: 'points'
+                                        })}
+                                    </span>
+                                </div>
+                            ) : null}
+                            {mpRewardPoints.spent ? (
+                                <div>
+                                    <span>
+                                        {formatMessage({
+                                            id: 'You spent',
+                                            defaultMessage: 'You spent'
+                                        })}
+                                        : {mpRewardPoints.spent}{' '}
+                                        {formatMessage({
+                                            id: 'points',
+                                            defaultMessage: 'points'
+                                        })}
+                                    </span>
+                                </div>
+                            ) : null}
+                        </div>
                     </div>
-                    <div className={classes.content}>
-                        {mpRewardPoints.earn ? (
-                            <div>
-                                <span>
-                                    {formatMessage({
-                                        id: 'You earned',
-                                        defaultMessage: 'You earned'
-                                    })}
-                                    : {mpRewardPoints.earn}{' '}
-                                    {formatMessage({
-                                        id: 'points',
-                                        defaultMessage: 'points'
-                                    })}
-                                </span>
-                            </div>
-                        ) : null}
-                        {mpRewardPoints.spent ? (
-                            <div>
-                                <span>
-                                    {formatMessage({
-                                        id: 'You spent',
-                                        defaultMessage: 'You spent'
-                                    })}
-                                    : {mpRewardPoints.spent}{' '}
-                                    {formatMessage({
-                                        id: 'points',
-                                        defaultMessage: 'points'
-                                    })}
-                                </span>
-                            </div>
-                        ) : null}
-                    </div>
-                </div>}
+                )}
 
                 <div
                     style={{ height: 55 + bottomInsets }}

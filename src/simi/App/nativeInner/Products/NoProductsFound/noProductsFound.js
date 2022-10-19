@@ -37,7 +37,7 @@ const NoProductsFound = props => {
             )}
             <div className={classes.noProducts}>
                 {formatMessage({
-                    id: 'noProducts',
+                    id: 'There are no products matching',
                     defaultMessage: 'There are no products matching '
                 })}
                 {search ? (
