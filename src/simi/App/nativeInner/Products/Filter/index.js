@@ -286,7 +286,7 @@ const Filter = props => {
         ) : (
             <div className='noFilters'>
                 {formatMessage({
-                        id: 'noFilters',
+                        id: `Sorry! We couldn't find any filters`,
                         defaultMessage:
                             `Sorry! We couldn't find any filters`
                     })}

@@ -42,7 +42,7 @@ export const useGetRewardPointData = props => {
         fetchPolicy: 'cache-and-network',
         skip: !isSignedIn || (props && props.onCart)
     });
-    const [mpRewardPoints] = useMutation(SET_REWARD_SUBSCRIBE_STATUS);
+    const [mpRewardPoints,{loading : setSubcribeLoading}] = useMutation(SET_REWARD_SUBSCRIBE_STATUS);
     const customerRewardPoint = rewardPointData
         ? rewardPointData.customer.mp_reward
         : [];
@@ -58,12 +58,13 @@ export const useGetRewardPointData = props => {
     );
     useEffect(() => {
         setPageLoading(isBackgroundLoading);
-    }, [isBackgroundLoading, setPageLoading]);
+    }, [isBackgroundLoading, setPageLoading,setSubcribeLoading]);
     return {
         errorMessage: derivedErrorMessage,
         isBackgroundLoading,
         isLoadingWithoutData,
         mpRewardPoints,
+        setSubcribeLoading,
         customerEmail,
         customerRewardPoint,
         customerTransactions,

@@ -15,7 +15,8 @@ import { useStyle } from '@magento/venia-ui/lib/classify';
 import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
 import Button from '@magento/venia-ui/lib/components/Button';
 import Carousel from '../ProductImageCarousel';
-import FormError from '@magento/venia-ui/lib/components/FormError';
+// import FormError from '@magento/venia-ui/lib/components/FormError';
+import FormError from '../Customer/Login/formError';
 import { QuantityFields } from '@simicart/siminia/src/simi/App/core/Cart/ProductListing/quantity.js';
 import RichContent from '@magento/venia-ui/lib/components/RichContent/richContent';
 import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductOptions';
@@ -402,7 +403,7 @@ const ProductFullDetail = props => {
                 >
                     {!isMobileSite ? (
                         <FormattedMessage
-                            id="productFullDetail.labelPrice"
+                            id="Per pack:"
                             defaultMessage="Per pack: "
                         />
                     ) : null}
@@ -871,7 +872,7 @@ const ProductFullDetail = props => {
                         history={history}
                     >
                         <FormattedMessage
-                            id="Related Product"
+                            id="Related Products"
                             defaultMessage="Related Product"
                         />
                     </ProductDetailExtraProductsMB>
@@ -882,8 +883,8 @@ const ProductFullDetail = props => {
                         history={history}
                     >
                         <FormattedMessage
-                            id="Related Product"
-                            defaultMessage="Related Product"
+                            id="Related Products"
+                            defaultMessage="Related Products"
                         />
                     </ProductDetailExtraProducts>
                 )}

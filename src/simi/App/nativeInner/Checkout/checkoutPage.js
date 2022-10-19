@@ -251,7 +251,7 @@ const CheckoutPage = props => {
             <div className={classes.signInContainer}>
                 <span className={classes.signInLabel}>
                     <FormattedMessage
-                        id={'checkoutPage.signInLabel'}
+                        id={'Sign in for Express Checkout'}
                         defaultMessage={'Sign in for Express Checkout'}
                     />
                 </span>
@@ -300,7 +300,7 @@ const CheckoutPage = props => {
             ) : (
                 <h3 className={classes.shipping_method_heading}>
                     <FormattedMessage
-                        id={'checkoutPage.shippingMethodStep'}
+                        id={'2. Shipping Method'}
                         defaultMessage={'2. Shipping Method'}
                     />
                 </h3>
@@ -339,7 +339,7 @@ const CheckoutPage = props => {
             ) : (
                 <h3 className={classes.payment_information_heading}>
                     <FormattedMessage
-                        id={'checkoutPage.paymentInformationStep'}
+                        id={'3. Payment Information'}
                         defaultMessage={'3. Payment Information'}
                     />
                 </h3>
@@ -442,12 +442,12 @@ const CheckoutPage = props => {
 
         if (isGuestCheckout) {
             headerText = formatMessage({
-                id: 'checkoutPage.guestCheckout',
+                id: 'Guest Checkout',
                 defaultMessage: 'Guest Checkout'
             });
         } else if (customer.default_shipping) {
             headerText = formatMessage({
-                id: 'checkoutPage.reviewAndPlaceOrder',
+                id: 'Review and Place Order',
                 defaultMessage: 'Review and Place Order'
             });
         } else {
@@ -472,7 +472,7 @@ const CheckoutPage = props => {
                 />
                 <Link className={classes.cartLink} to={'/cart'}>
                     <FormattedMessage
-                        id={'checkoutPage.returnToCart'}
+                        id={'Return to Cart'}
                         defaultMessage={'Return to Cart'}
                     />
                 </Link>

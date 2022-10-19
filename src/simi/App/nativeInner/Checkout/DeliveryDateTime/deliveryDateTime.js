@@ -168,12 +168,17 @@ const DeliveryDateTime = forwardRef((props, ref) => {
                     id="deliveryTime"
                     placeholder="Please"
                 >
-                    <option>Select time</option>
+                    <option>
+                        {formatMessage({
+                            id: 'Select time',
+                            defaultMessage: 'Select time'
+                        })}
+                    </option>
                     {OptionDeliveryTime}
                 </select>
                 {HouseSecurityCode}
                 {DeliveryComment}
-                {mutationLoading ? (
+                {/* {mutationLoading ? (
                     <ButtonLoader classes={'btn-updateTime'} />
                 ) : (
                     <button className="btn-updateTime" onClick={handleSubmit}>
@@ -182,7 +187,7 @@ const DeliveryDateTime = forwardRef((props, ref) => {
                             defaultMessage: 'Update Delivery Time'
                         })}
                     </button>
-                )}
+                )} */}
             </div>
         );
     }

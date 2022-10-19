@@ -17,6 +17,7 @@ import Field from '@magento/venia-ui/lib/components/Field';
 import Checkbox from '@magento/venia-ui/lib/components/Checkbox';
 import AlertMessages from '../../ProductFullDetail/AlertMessages';
 import Loader from '../../Loader';
+import Identify from 'src/simi/Helper/Identify'
 
 const RewardPointDataPage = props => {
     const { formatMessage } = useIntl();
@@ -25,8 +26,12 @@ const RewardPointDataPage = props => {
     const {
         isLoadingWithoutData,
         customerRewardPoint,
-        mpRewardPoints
+        mpRewardPoints,
+        setSubcribeLoading
     } = talonProps;
+
+    console.log('setSubcribeLoading', setSubcribeLoading);
+
     let history = useHistory();
     const windowSize = useWindowSize();
     const isMobileSite = windowSize.innerWidth <= 768;
@@ -52,6 +57,7 @@ const RewardPointDataPage = props => {
                       timeout: 3000
                   });
         }
+        history.push('/reward-points');
     };
     const [width, setWidth] = useState(window.innerWidth);
 
@@ -74,17 +80,21 @@ const RewardPointDataPage = props => {
         notification_expire,
         transactions
     } = customerRewardPoint;
+    console.log("transactions",transactions);
     const PAGE_TITLE = (
         <FormattedMessage
             id={'My Points and Reward'}
             defaultMessage={'My Points and Reward'}
         />
     );
-    if (isLoadingWithoutData) {
-        return <Loader />;
-    }
-    let isUpdate = notification_update == 1 ? true : false;
-    let isExpire = notification_expire == 1 ? true : false;
+    let isUpdate;
+    let isExpire;
+    if (notification_update == 1) {
+        isUpdate = true;
+    } else isUpdate = false;
+    if (notification_expire == 1) {
+        isExpire = true;
+    } else isExpire = false;
 
     const transactionRow =
         transactions && transactions.items
@@ -105,13 +115,14 @@ const RewardPointDataPage = props => {
 
                   let rewardStatus, expireDateString;
                   if (status == 1) {
-                      rewardStatus =
-                      <>
-                      {formatMessage({
-                          id: 'Pending',
-                          defaultMessage: 'Pending'
-                      })}
-                  </>
+                      rewardStatus = (
+                          <>
+                              {formatMessage({
+                                  id: 'Pending',
+                                  defaultMessage: 'Pending'
+                              })}
+                          </>
+                      );
                   } else if (transaction.status == 2) {
                       rewardStatus = (
                           <>
@@ -121,24 +132,27 @@ const RewardPointDataPage = props => {
                               })}
                           </>
                       );
-                  } else rewardStatus = <>
-                  {formatMessage({
-                      id: 'Expired',
-                      defaultMessage: 'Expired'
-                  })}
-              </>;
+                  } else
+                      rewardStatus = (
+                          <>
+                              {formatMessage({
+                                  id: 'Expired',
+                                  defaultMessage: 'Expired'
+                              })}
+                          </>
+                      );
 
                   if (expireDateFormat == 'Invalid date') {
                       expireDateString = 'N/A';
                   } else expireDateString = expireDateFormat;
                   return (
                       <tr className={classes.title}>
-                          <td>{transaction_id}</td>
-                          <td>{dateFormat}</td>
-                          <td>{comment}</td>
-                          <td>{point_amount}</td>
-                          <td>{rewardStatus}</td>
-                          <td>{expireDateString}</td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{transaction_id}</td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{dateFormat}</td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{comment}</td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{point_amount}</td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{rewardStatus}</td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{expireDateString}</td>
                       </tr>
                   );
               })
@@ -221,6 +235,9 @@ const RewardPointDataPage = props => {
             ) : null}
         </div>
     );
+    if (isLoadingWithoutData || setSubcribeLoading) {
+        return <Loader />;
+    }
     return (
         <div className={`${classes.root} ${!isMobileSite ? 'container' : ''}`}>
             <AlertMessages
@@ -247,6 +264,7 @@ const RewardPointDataPage = props => {
                         </div>
                         <Form className={classes.form} onSubmit={handleSave}>
                             <Checkbox
+                                initialValue={isUpdate}
                                 field="update"
                                 label={formatMessage({
                                     id: 'Subcribe to balance update',
@@ -257,6 +275,8 @@ const RewardPointDataPage = props => {
                                 }}
                             />
                             <Checkbox
+                                initialValue={isExpire}
+                                checked={true}
                                 field="experationNotification"
                                 label={formatMessage({
                                     id:
