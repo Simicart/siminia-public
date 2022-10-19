@@ -5,11 +5,13 @@ import { mergeClasses } from 'src/classify';
 import SuggestedCategories from './suggestedCategories';
 import SuggestedProducts from './suggestedProducts';
 import defaultClasses from './suggestions.module.css';
+import { useIntl } from 'react-intl';
 
 const Suggestions = props => {
     const { products, searchValue, setVisible, visible } = props;
     const { filters, items } = products;
     const classes = mergeClasses(defaultClasses, props.classes);
+    const { formatMessage } = useIntl();
 
     const onNavigate = useCallback(() => {
         setVisible(false);
@@ -32,7 +34,12 @@ const Suggestions = props => {
                 value={searchValue}
             />
             <h2 className={classes.heading}>
-                <span>{'Product Suggestions'}</span>
+                <span>
+                    {formatMessage({
+                        id: 'PRODUCT SUGGESTIONS',
+                        defaultMessage: 'Product Suggestions'
+                    })}
+                </span>
             </h2>
             <SuggestedProducts onNavigate={onNavigate} products={items} />
         </Fragment>

@@ -2297,7 +2297,7 @@ var DASHBOARD_CONFIG = {
                     'Search for a product':'ابحث عن منتج',
                     'No results were found.':'لا توجد نتائج.',
                     'PRODUCT SUGGESTIONS':'اقتراحات المنتج',
-                    'Fetching results':'إحضار النتائج',
+                    'Fetching results...':'إحضار النتائج ...',
                     'There are no products matching':'لا توجد منتجات مطابقة',
                     'point(s)':'نقاط)',
                     'continue shopping':'مواصلة التسوق',
