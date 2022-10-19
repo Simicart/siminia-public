@@ -79,7 +79,10 @@ const OrderHistoryPageMb = props => {
                                 : classes.statusBtn
                         }
                     >
-                        {s}
+                        {formatMessage({
+                            id: `${s}`,
+                            defaultMessage: `${s}`
+                        })}
                     </button>
                     {s === status ? (
                         <div
@@ -106,26 +109,40 @@ const OrderHistoryPageMb = props => {
                     <Link to={`/order-history/${item.number}`}>
                         <div key={index} className={classes.orderItem}>
                             <div className={classes.orderItemHead}>
-                                <span>Order ID {item.number}</span>
+                                {formatMessage({
+                                    id: 'Order ID',
+                                    defaultMessage: 'Order ID'
+                                })}
+                                <span>{item.number}</span>
                             </div>
                             <div className={classes.date}>
                                 <span>
                                     {formatMessage({
-                                        id: 'Data',
-                                        defaultMessage: 'Date'
+                                        id: 'Date:',
+                                        defaultMessage: 'Date:'
                                     })}
                                 </span>
-                                <span>: {item.order_date}</span>
+                                <span>{item.order_date}</span>
                             </div>
                             <div className={classes.total}>
-                                <span>Order Total: </span>
+                                <span>
+                                    {formatMessage({
+                                        id: 'Order Total:',
+                                        defaultMessage: 'Order Total:'
+                                    })}
+                                </span>
                                 {forMatCurrentValue(
                                     item.items[0].product_sale_price.currency
                                 )}
                                 {item.total.grand_total.value}
                             </div>
                             <div className={classes.status}>
-                                <span>Status: </span>
+                                <span>
+                                    {formatMessage({
+                                        id: 'Status:',
+                                        defaultMessage: 'Status:'
+                                    })}{' '}
+                                </span>
                                 <span>{item.status}</span>
                             </div>
                         </div>
@@ -159,7 +176,13 @@ const OrderHistoryPageMb = props => {
                             alt="no order"
                             style={{ marginBottom: 15, marginTop: 70 }}
                         />
-                        <p>There is no order with this status</p>
+                        <p>
+                            {formatMessage({
+                                id: 'There is no order with this status',
+                                defaultMessage:
+                                    'There is no order with this status'
+                            })}
+                        </p>
                     </div>
                 ) : null}
             </div>

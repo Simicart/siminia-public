@@ -25,11 +25,14 @@ import {
 } from 'react-icons/bi';
 import { config } from 'process';
 import { configColor } from '../../../Config';
+import { useIntl } from 'react-intl';
 
 const TYPE_PRODUCT = 'PRODUCT';
 
 const FooterNative = props => {
     const [{ isSignedIn }] = useUserContext();
+    const { formatMessage } = useIntl();
+
     const listMenuContent = ['Home', 'Category', 'Cart', 'Malls', 'Account'];
     const listMenuUrl = ['', 'categories', 'cart', 'brands.html', 'my-account'];
     const [iconActive, setIconActive] = useState();
@@ -153,7 +156,12 @@ const FooterNative = props => {
                     <span className={classes.cartQty}>{itemsQty}</span>
                 ) : null}
                 <span>{listIcon[index]}</span>
-                <span>{item}</span>
+                <span>
+                    {formatMessage({
+                        id: `${item}`,
+                        defaultMessage: `${item}`
+                    })}
+                </span>
             </Link>
         );
     });

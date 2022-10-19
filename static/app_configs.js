@@ -2421,6 +2421,23 @@ var DASHBOARD_CONFIG = {
                     'Default':'تقصير',
                     'global.addButton':'يضيف',
                     "Sorry! We couldn't find any filters":'آسف! لم نتمكن من العثور على أي مرشحات',
+                    'Account subcriptions':'اشتراكات الحساب',
+                    'Product review':'تقييم المنتج',
+                    'Address book':'دليل العناوين',
+                    'Account information':'معلومات الحساب',
+                    'Account setting':'إعدادات الحساب',
+                    'Account Setting':'إعدادات الحساب',
+                    'Saved payments':'المدفوعات المحفوظة',
+                    'Reward points':'نقاط مكافأة',
+                    'Product alert':'تنبيه المنتج',
+                    'Order history':'تاريخ الطلب',
+                    'Order Details':'تفاصيل الطلب',
+                    'There is no order with this status':'لا يوجد ترتيب بهذه الحالة',
+                    'Date:':'تاريخ:',
+                    'Order Total:':'الطلب الكلي:',
+                    'Status:':'حالة:',
+                    'Order ID':'رقم التعريف الخاص بالطلب'
+                    
                 }
             },
             currency_rate: {
