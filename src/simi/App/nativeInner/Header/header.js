@@ -252,7 +252,7 @@ const Header = props => {
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
-                            id="signIn.signInText"
+                            id="Sign In"
                             defaultMessage="Sign In"
                         />
                     </span>
@@ -278,7 +278,7 @@ const Header = props => {
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
-                            id="navHeader.forgotPasswordText"
+                            id="Forgot Password"
                             defaultMessage="Forgot Password"
                         />
                     </span>
@@ -291,7 +291,7 @@ const Header = props => {
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
-                            id="cartPage.titlle"
+                            id="SHOPPING CART"
                             defaultMessage="Shopping Cart"
                         />{' '}
                         ({itemsQty})
@@ -323,7 +323,7 @@ const Header = props => {
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
-                            id="navHeader.OrderDetails"
+                            id="Order Details"
                             defaultMessage="Order Details"
                         />
                     </span>
@@ -331,6 +331,16 @@ const Header = props => {
             );
         }
         if (myProfile.includes(type)) {
+            const name =
+                type
+                    .split('/')[1]
+                    .replace('-', ' ')
+                    .charAt(0)
+                    .toUpperCase() +
+                type
+                    .split('/')[1]
+                    .replace('-', ' ')
+                    .slice(1);
             return (
                 <div
                     className={classes.specHeader}
@@ -340,16 +350,11 @@ const Header = props => {
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         {type !== '/contact.html'
-                            ? type
-                                  .split('/')[1]
-                                  .replace('-', ' ')
-                                  .charAt(0)
-                                  .toUpperCase() +
-                              type
-                                  .split('/')[1]
-                                  .replace('-', ' ')
-                                  .slice(1)
-                            : 'Contact Us'}
+                            ? formatMessage({ id: name, defaultMessage: name })
+                            : formatMessage({
+                                  id: 'Contact Us',
+                                  defaultMessage: 'Contact Us'
+                              })}
                     </span>
                 </div>
             );
@@ -399,7 +404,10 @@ const Header = props => {
                                             defaultMessage={`${pointBalance} `}
                                         />
                                         <>
-                                        {formatMessage({ id: 'point(s)',defaultMessage:'point(s)' })}
+                                            {formatMessage({
+                                                id: 'point(s)',
+                                                defaultMessage: 'point(s)'
+                                            })}
                                         </>
                                     </span>
                                 </Link>

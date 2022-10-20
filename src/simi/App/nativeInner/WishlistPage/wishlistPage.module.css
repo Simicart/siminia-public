@@ -115,7 +115,7 @@
         justify-content: center;
         position: fixed;
         top: 0;
-        right: 10px;
+        inset-inline-end: 10px;
         z-index: 5;
         height: 55px;
     }

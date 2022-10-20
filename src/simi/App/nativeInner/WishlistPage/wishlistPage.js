@@ -13,6 +13,8 @@ import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { useWindowSize } from '@magento/peregrine';
 import Loader from '../Loader';
 import {getBottomInsets} from '../Helper/Native'
+import { useUserContext } from '@magento/peregrine/lib/context/user';
+import { Redirect } from 'react-router-dom';
 
 const WishlistPage = props => {
     const talonProps = useWishlistPage();
@@ -22,7 +24,10 @@ const WishlistPage = props => {
         shouldRenderVisibilityToggle,
         wishlists
     } = talonProps;
-
+    const [{ isSignedIn }] = useUserContext();
+    if(!isSignedIn){
+       return <Redirect to={'/sign-in'} />
+    }
     const { formatMessage } = useIntl();
     const error = errors.get('getCustomerWishlistQuery');
 

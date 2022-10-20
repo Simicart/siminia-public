@@ -134,7 +134,7 @@ const PriceAdjustments = (props) => {
                 <Section
                     id={'coupon_code'}
                     title={formatMessage({
-                        id: 'priceAdjustments.couponCode',
+                        id: 'Enter coupon code',
                         defaultMessage: 'Enter Coupon Code'
                     })}
                     classes={{
