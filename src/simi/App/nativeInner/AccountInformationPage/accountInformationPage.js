@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense, useState } from 'react';
+import React, { Fragment, Suspense, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Form } from 'informed';
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
@@ -36,12 +36,27 @@ import Password from '../Password';
 import Loader from '../Loader';
 import AlertMessages from '../ProductFullDetail/AlertMessages';
 import AccountInformationPageOperations from './accountInformationPage.gql.js';
+import { useUserContext } from '@magento/peregrine/lib/context/user';
+import { useHistory } from 'react-router-dom';
 const AccountInformationPage = props => {
     
     const talonProps = useAccountInformationPage({
         ...AccountInformationPageOperations
     });
     
+    const [{ isSignedIn }] = useUserContext();
+    const history = useHistory();
+    const signedInRedirectUrl = '/sign-in';
+    useEffect(() => {
+        if (isSignedIn) {
+            return true;
+        } else {
+            history.push(signedInRedirectUrl);
+        }
+    }, [history, isSignedIn, signedInRedirectUrl]);
+
+
+
 
     const classes = useStyle(defaultClasses, props.classes);
     const {

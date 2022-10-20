@@ -117,12 +117,12 @@ const ContactPage = props => {
     ) : null;
 
     const pageTitle = formatMessage({
-        id: 'contactPage.title',
+        id: 'Contact Us',
         defaultMessage: 'Contact Us'
     });
 
     const metaDescription = formatMessage({
-        id: 'contactPage.metaDescription',
+        id: 'Contact Us',
         defaultMessage: 'Contact Us'
     });
     let topInsets = 0;
@@ -164,7 +164,7 @@ const ContactPage = props => {
                         {maybeLoadingIndicator}
                         <h1 className={classes.title}>
                             <FormattedMessage
-                                id={'contactPage.titleText'}
+                                id={'Contact Us'}
                                 defaultMessage={'Contact Us'}
                             />
                         </h1>
@@ -172,7 +172,7 @@ const ContactPage = props => {
                         <div className={classes.writeUs}>
                             <p className={classes.subtitle}>
                                 <FormattedMessage
-                                    id={'contact.writeUs'}
+                                    id={'Write Us'}
                                     defaultMessage={`Write Us`}
                                 />
                             </p>
@@ -180,9 +180,8 @@ const ContactPage = props => {
                        
                         <p className={classes.subtitle}>
                             <FormattedMessage
-                                id={'contact.infoText'}
-                                defaultMessage={`Jot us a note and we’ll get back to you as quickly as possible.
-                                `}
+                                id={"Jot us a note and we’ll get back to you as quickly as possible."}
+                                defaultMessage={`Jot us a note and we’ll get back to you as quickly as possible.`}
                             />
                         </p>
                         <FormError
@@ -231,7 +230,7 @@ const ContactPage = props => {
                             <Field
                                 id="contact-telephone"
                                 label={formatMessage({
-                                    id: 'contactPage.telephone',
+                                    id: 'Phone number',
                                     defaultMessage: 'Phone Number'
                                 })}
                                 optional={true}
@@ -250,7 +249,7 @@ const ContactPage = props => {
                             <Field
                                 id="contact-comment"
                                 label={formatMessage({
-                                    id: 'contactPage.comment',
+                                    id: 'Message',
                                     defaultMessage: 'Message'
                                 })}
                             >
@@ -260,7 +259,7 @@ const ContactPage = props => {
                                     id="contact-comment"
                                     validate={isRequired}
                                     placeholder={formatMessage({
-                                        id: 'contactPage.commentPlaceholder',
+                                        id: "Tell us what's on your mind",
                                         defaultMessage: `Tell us what's on your mind`
                                     })}
                                     data-cy="comment"
@@ -274,7 +273,7 @@ const ContactPage = props => {
                                     data-cy="submit"
                                 >
                                     <FormattedMessage
-                                        id={'contactPage.submit'}
+                                        id={'Send'}
                                         defaultMessage={'Send'}
                                     />
                                 </Button>

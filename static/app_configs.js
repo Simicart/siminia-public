@@ -2436,8 +2436,11 @@ var DASHBOARD_CONFIG = {
                     'Date:':'تاريخ:',
                     'Order Total:':'الطلب الكلي:',
                     'Status:':'حالة:',
-                    'Order ID':'رقم التعريف الخاص بالطلب'
-                    
+                    'Order ID':'رقم التعريف الخاص بالطلب',
+                    'Write Us':'اكتب لنا',
+                    'Jot us a note and we’ll get back to you as quickly as possible.':'قم بتدوين ملاحظة وسنقوم بالرد عليك في أسرع وقت ممكن.',
+                    "Tell us what's on your mind":'أخبرنا بما يدور في ذهنك',
+                    'Send':'إرسال',
                 }
             },
             currency_rate: {

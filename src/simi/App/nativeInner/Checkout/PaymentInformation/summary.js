@@ -42,7 +42,7 @@ const Summary = props => {
                 <div className={classes.heading_container}>
                     <h5 className={classes.heading}>
                         <FormattedMessage
-                            id={'checkoutPage.paymentInformation'}
+                            id={'PAYMENT INFORMATION'}
                             defaultMessage={'Payment Information'}
                         />
                     </h5>
