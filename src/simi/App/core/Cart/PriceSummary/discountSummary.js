@@ -45,7 +45,7 @@ const DiscountSummary = props => {
         <Fragment>
             <span className={classes.lineItemLabel}>
                 <FormattedMessage
-                    id={'discountSummary.lineItemLabel'}
+                    id={'Discounts applied'}
                     defaultMessage={'Discounts applied'}
                 />
             </span>

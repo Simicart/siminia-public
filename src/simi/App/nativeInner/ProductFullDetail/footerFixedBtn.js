@@ -3,6 +3,7 @@ import React, { Fragment, Suspense, useRef, useState } from 'react';
 import { BiMessageAltDetail } from 'react-icons/bi';
 import CallForPrice from './callForPrice';
 import { isCallForPriceEnable } from 'src/simi/App/nativeInner/Helper/Module';
+import { useIntl } from 'react-intl';
 require('./statusBar.scss');
 
 const FooterFixedBtn = props => {
@@ -14,6 +15,7 @@ const FooterFixedBtn = props => {
         bottomInsets,
         data
     } = props;
+    const { formatMessage } = useIntl();
 
     const callForPriceEnabled = isCallForPriceEnable();
 
@@ -42,7 +44,10 @@ const FooterFixedBtn = props => {
                                     setTypeBtn('add to cart');
                                 }}
                             >
-                                ADD TO CART
+                                {formatMessage({
+                                    id: 'Add to Cart',
+                                    default: 'ADD TO CART'
+                                })}
                             </li>
                             <li
                                 onClick={() => {
@@ -50,7 +55,10 @@ const FooterFixedBtn = props => {
                                     setTypeBtn('buy now');
                                 }}
                             >
-                                BUY NOW
+                                {formatMessage({
+                                    id: 'Buy now',
+                                    default: 'BUY NOW'
+                                })}
                             </li>
                         </ul>
                     </div>
@@ -95,7 +103,10 @@ const FooterFixedBtn = props => {
                             setTypeBtn('add to cart');
                         }}
                     >
-                        ADD TO CART
+                        {formatMessage({
+                            id: 'Add to Cart',
+                            default: 'ADD TO CART'
+                        })}
                     </li>
                     <li
                         onClick={() => {
@@ -103,7 +114,10 @@ const FooterFixedBtn = props => {
                             setTypeBtn('buy now');
                         }}
                     >
-                        BUY NOW
+                        {formatMessage({
+                            id: 'Buy now',
+                            default: 'BUY NOW'
+                        })}
                     </li>
                 </ul>
             </div>

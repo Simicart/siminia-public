@@ -110,7 +110,7 @@
 
 .message-icon {
     position: absolute;
-    inset-inline-start: 11.5px;
+    inset-inline-end: 11.5px;
 }
 
 .action-buttons {

@@ -108,7 +108,7 @@ const AccountInformationPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "AccountInformationPage"*/ '/src/simi/App/nativeInner/AccountInformationPage')
+                import(/* webpackChunkName: "AccountInformationPage"*/ '/src/simi/App/core/AccountInformationPage')
             }
             {...props}
         />

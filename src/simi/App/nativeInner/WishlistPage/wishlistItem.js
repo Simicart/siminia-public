@@ -25,10 +25,13 @@ const WishlistItem = props => {
         product,
         __typename
     } = item;
+    console.log("product",product);
     const {
         name,
         price_range: priceRange,
-        stock_status: stockStatus
+        stock_status: stockStatus,
+        review_count,
+        rating_summary,
     } = product;
     const { maximum_price: maximumPrice } = priceRange;
     const { final_price: finalPrice } = maximumPrice;
@@ -245,7 +248,7 @@ const WishlistItem = props => {
                 <div className={classes.priceContainer}>{price}</div>
                 {optionElements}
             </div>
-            <div className={classes.wrapSocialShare}>
+            {/* <div className={classes.wrapSocialShare}>
                 {isMobileSite ? (
                     <button
                         onClick={handleShareMobile}
@@ -262,7 +265,7 @@ const WishlistItem = props => {
                     </>
                 )}
                 {addToCart}
-            </div>
+            </div> */}
         </div>
     );
 };

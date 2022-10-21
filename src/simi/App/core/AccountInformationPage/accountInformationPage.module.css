@@ -10,16 +10,15 @@
     }
 }
 
-.rowEditProfile{
+.rowEditProfile {
     display: flex;
-
 }
 .container {
     display: flex;
     justify-content: center;
     /* flex-direction: column; */
 }
-@media (min-width: 376px) and (max-width:745px) {
+@media (min-width: 376px) and (max-width: 745px) {
     .container {
         display: block;
         justify-content: center;
@@ -40,24 +39,29 @@
 .radioCheckbox {
     margin-top: 44px;
 }
-.radioCheckbox label{
+.radioCheckbox label {
     margin-bottom: 16px;
 }
-.radioCheckbox label span:nth-child(1){
+.radioCheckbox label span:nth-child(1) {
     color: #111111;
     font-size: 14px;
     letter-spacing: 0;
     line-height: 14px;
     text-align: justify;
     font-weight: unset;
+    color: #000000;
+    font-family: 'Helvetica Neue';
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 16px;
 }
-
 
 .titleH4 {
     color: #444444;
     font-size: 14px;
     letter-spacing: 0;
     line-height: 18px;
+    display: none;
 }
 button.saveProfile {
     margin-top: 34px;
@@ -71,9 +75,15 @@ button.saveProfile {
     font-weight: 600;
     letter-spacing: 0;
     line-height: 16px;
-    float: left;
+    /* float: left; */
+
+    font-family: 'Helvetica Neue';
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
 }
-.mainEditColumn h3{
+.mainEditColumn h3 {
     color: #333333;
     font-size: 18px;
     font-weight: bold;
@@ -81,37 +91,56 @@ button.saveProfile {
     line-height: 18px;
     margin-bottom: 20px;
 }
-.inputContent > div > label{
+.inputContent > div > label {
     font-size: 14px;
     letter-spacing: 0;
     line-height: 15px;
     font-weight: unset;
-}
-.inputContent > div > span > span > input{
-    border: 1px solid #828282!important;
-    border-radius: 4px!important;
-    color: #444444;
+    font-family: 'Helvetica Neue';
     font-size: 14px;
     letter-spacing: 0;
     line-height: 16px;
 }
+.inputContent > div > span > span > input {
+    /* border: 1px solid #828282!important; */
+    border-radius: 4px !important;
+    color: #444444;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 16px;
+    border: 1px solid #e8e8e8;
+    background-color: #ffffff;
+}
 .heading {
     /* justify-self: center; */
-    font-family: poppins;
+    /* font-family: poppins;
     font-weight: var(--venia-global-fontWeight-bold);
     font-size: 24px;
     font-weight: 500;
     letter-spacing: 0;
-    line-height: 14px;
+    line-height: 14px; */
+
+    color: #333132;
+    font-family: 'Helvetica Neue';
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 25px;
     padding-top: 20px;
     margin-bottom: 30px;
 }
-.titleEdit{
-    color: #333333;   
+.titleEdit {
+    /* color: #333333;   
     font-size: 18px;
     font-weight: bold;
     letter-spacing: 0;
-    line-height: 18px;
+    line-height: 18px; */
+    color: #333132;
+    font-family: 'Helvetica Neue';
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
     margin-top: 35px;
     margin-bottom: 20px;
 }
@@ -172,7 +201,7 @@ button.saveProfile {
     }
 }
 @media (max-width: 767px) {
-    .wrapper{
+    .wrapper {
         padding: 0px;
         margin-top: 0px;
     }
@@ -183,7 +212,7 @@ button.saveProfile {
     .titleH4 {
         margin-bottom: 15px;
     }
-    .titleEdit{
+    .titleEdit {
         font-size: 14px;
         line-height: 14px;
     }
@@ -199,9 +228,9 @@ button.saveProfile {
         display: block;
     }
     .rowEditProfile .alternativeEditColumn {
-            margin-left: 0;
-            margin-top: 17px;
-            width: 100%;
+        margin-left: 0;
+        margin-top: 17px;
+        width: 100%;
     }
     .rowEditProfile .alternativeEditColumn:active {
         margin-top: 40px;

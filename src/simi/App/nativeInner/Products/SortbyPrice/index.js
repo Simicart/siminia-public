@@ -52,7 +52,7 @@ const SortbyPrice = props => {
             <div className="wrap-top">
                 <span className="label" onClick={() => clickSortByPrice()}>
                     {formatMessage({
-                        id: 'sortByPrice',
+                        id: 'Price',
                         defaultMessage: 'Price'
                     })}
                 </span>

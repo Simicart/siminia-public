@@ -73,8 +73,8 @@ const CartPage = props => {
     ) : (
         <h3>
             <FormattedMessage
-                id={'You have no items in your shopping cart.'}
-                defaultMessage={'You have no items in your shopping cart.'}
+                id={'There are no items in your cart.'}
+                defaultMessage={'There are no items in your cart.'}
             />
         </h3>
     );

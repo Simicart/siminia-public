@@ -5,17 +5,22 @@
     /* padding: 0 20px; */
 }
 .logout {
-    height: 50px;
+    /* height: 50px;
     background-color: var(--venia-global-color-button);
-    text-align: center;
-
+    text-align: center; */
+    display: grid;
+    grid-template-columns: max-content min-content;
+    gap: 10px;
+    margin-bottom: 20px;
+    cursor: pointer;
 }
 .logout a {
-    line-height: 50px;
-    font-size: 14px;
-  font-weight: 600;
+  color: #333132;
+  font-family: "Helvetica Neue";
+  font-size: 16px;
+  font-weight: bold;
   letter-spacing: 0;
-  color: var(--venia-global-color-button-text);
+  line-height: 19px;
   
 }
 
@@ -23,6 +28,8 @@
     padding: 15px;
     border-bottom: 1px solid rgb(235, 229, 229);
     display: flex;
+    background-color: #DCDCDC;
+    margin-bottom: 10px;
 }
 .icon {
     margin-right: 15px;
@@ -32,9 +39,32 @@
     font-weight: bold;
     padding: 15px;
     border-bottom: 1px solid rgb(235, 229, 229);
-    border-left: 4px solid #FBD339;
+    /* border-left: 4px solid #FBD339; */
     display: flex;
+    color: #FFFFFF;
+    font-family: "Helvetica Neue";
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
+    background-color: #333132;
+    margin-bottom: 10px;
 
+}
+.welcome{
+    height: 108px;
+    background-color: #F69435;
+    color: #FFFFFF;
+    font-family: "Helvetica Neue";
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 20px;
+    margin-bottom: 20px;
 }
 @media screen and (max-width: 960px) {
     .wrapper {

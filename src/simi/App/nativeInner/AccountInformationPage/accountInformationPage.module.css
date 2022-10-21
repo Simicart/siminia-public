@@ -10,16 +10,15 @@
     }
 }
 
-.rowEditProfile{
+.rowEditProfile {
     display: flex;
-
 }
 .container {
     display: flex;
     justify-content: center;
     /* flex-direction: column; */
 }
-@media (min-width: 376px) and (max-width:745px) {
+@media (min-width: 376px) and (max-width: 745px) {
     .container {
         display: block;
         justify-content: center;
@@ -40,10 +39,10 @@
 .radioCheckbox {
     margin-top: 44px;
 }
-.radioCheckbox label{
+.radioCheckbox label {
     margin-bottom: 16px;
 }
-.radioCheckbox label span:nth-child(1){
+.radioCheckbox label span:nth-child(1) {
     color: #111111;
     font-size: 14px;
     letter-spacing: 0;
@@ -52,12 +51,12 @@
     font-weight: unset;
 }
 
-
 .titleH4 {
     color: #444444;
     font-size: 14px;
     letter-spacing: 0;
     line-height: 18px;
+    display: none;
 }
 button.saveProfile {
     margin-top: 34px;
@@ -73,7 +72,7 @@ button.saveProfile {
     line-height: 16px;
     /* float: left; */
 }
-.mainEditColumn h3{
+.mainEditColumn h3 {
     color: #333333;
     font-size: 18px;
     font-weight: bold;
@@ -81,15 +80,15 @@ button.saveProfile {
     line-height: 18px;
     margin-bottom: 20px;
 }
-.inputContent > div > label{
+.inputContent > div > label {
     font-size: 14px;
     letter-spacing: 0;
     line-height: 15px;
     font-weight: unset;
 }
-.inputContent > div > span > span > input{
-    border: 1px solid #828282!important;
-    border-radius: 4px!important;
+.inputContent > div > span > span > input {
+    border: 1px solid #828282 !important;
+    border-radius: 4px !important;
     color: #444444;
     font-size: 14px;
     letter-spacing: 0;
@@ -97,21 +96,34 @@ button.saveProfile {
 }
 .heading {
     /* justify-self: center; */
-    font-family: poppins;
+    /* font-family: poppins;
     font-weight: var(--venia-global-fontWeight-bold);
     font-size: 24px;
     font-weight: 500;
     letter-spacing: 0;
-    line-height: 14px;
+    line-height: 14px; */
     padding-top: 20px;
     margin-bottom: 30px;
+
+    color: #333132;
+    font-family: 'Helvetica Neue';
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 25px;
 }
-.titleEdit{
-    color: #333333;   
+.titleEdit {
+    /* color: #333333;
     font-size: 18px;
     font-weight: bold;
     letter-spacing: 0;
-    line-height: 18px;
+    line-height: 18px; */
+    color: #333132;
+  font-family: "Helvetica Neue";
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 19px;
     margin-top: 35px;
     margin-bottom: 20px;
 }
@@ -183,10 +195,10 @@ button.saveProfile {
         composes: root from '@magento/venia-ui/lib/components/LinkButton/linkButton.module.css';
         padding: 0;
     }
-    .heading{
+    .heading {
         display: none;
     }
-    .wrapper{
+    .wrapper {
         padding: 0px;
         margin-top: 0px;
     }
@@ -198,7 +210,7 @@ button.saveProfile {
         margin-bottom: 15px;
         display: none;
     }
-    .titleEdit{
+    .titleEdit {
         display: none;
     }
     .containerSub {
@@ -207,27 +219,26 @@ button.saveProfile {
     .radioCheckbox {
         display: none;
     }
-    .inputContent{
+    .inputContent {
         margin-bottom: 10px;
     }
-    .inputContent > div > label{
+    .inputContent > div > label {
         font-size: 14px;
         font-weight: unset;
         font-size: 14px;
         letter-spacing: 0;
         line-height: 16px;
     }
-    .inputContent > div > span > span > input{
-        border: none!important;
+    .inputContent > div > span > span > input {
+        border: none !important;
         border-bottom: 1px solid #b9b9ba !important;
         padding: 0;
-        background: none!important;
-        border-radius: 0px!important;
+        background: none !important;
+        border-radius: 0px !important;
     }
     .inputContent > div > span > span {
         height: 1rem;
     }
-
 
     button.saveProfile {
         margin-top: 7px;
@@ -241,9 +252,9 @@ button.saveProfile {
         display: block;
     }
     .rowEditProfile .alternativeEditColumn {
-            margin-left: 0;
-            margin-top: 17px;
-            width: 100%;
+        margin-left: 0;
+        margin-top: 17px;
+        width: 100%;
     }
     .rowEditProfile .alternativeEditColumn:active {
         margin-top: 40px;

@@ -16,12 +16,20 @@ import {
     DollarSign,
     Gift,
     CreditCard,
-    Bell
+    Bell,
+    LogOut
 } from 'react-feather';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import { Link } from 'react-router-dom';
+import { useUserContext } from '@magento/peregrine/lib/context/user';
 
 const LeftMenu = props => {
+    const [userData] = useUserContext();
+
+    const {
+        currentUser: { firstname, lastname }
+    } = userData;
+    
     const { label } = props;
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
@@ -135,13 +143,12 @@ const LeftMenu = props => {
     const MenuItems = listMenuContent.map((item, index) => {
         const reformat = item.name.replace(/\s/g, '-');
         const urlText = reformat.toLowerCase();
-
         return (
             <div
                 key={index}
-                className={label == item ? classes.activeItem : classes.item}
+                className={label == item.name ? classes.activeItem : classes.item}
             >
-                {iconList[index]}
+                {/* {iconList[index]} */}
                 <Link to={`/${urlText}`}>
                     <FormattedMessage id={item.id} defaultMessage={item.name} />
                 </Link>
@@ -151,7 +158,15 @@ const LeftMenu = props => {
 
     return (
         <div className={classes.wrapper}>
-            {MenuItems}
+            <div className={classes.welcome}>
+                <span>
+                    {formatMessage({
+                        id: 'Welcome,',
+                        defaultMessage: 'Welcome,'
+                    })}
+                </span>
+                <span>{firstname}{' '}{lastname}</span>
+            </div>
             <div className={classes.logout}>
                 <Link to="/logout.html">
                     {formatMessage({
@@ -159,7 +174,9 @@ const LeftMenu = props => {
                         defaultMessage: 'Log out'
                     })}
                 </Link>
+                <Icon className={classes.icon} size={22} src={LogOut} />
             </div>
+            {MenuItems}
         </div>
     );
 };

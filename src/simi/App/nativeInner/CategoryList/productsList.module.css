@@ -23,7 +23,9 @@
 .image_empty {
     composes: image;
 }
-
+.childCateName{
+    margin-inline-start: 5px;
+}
 .name {
     display: block;
     color: #4F4F4F;

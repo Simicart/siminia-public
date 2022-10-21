@@ -90,11 +90,11 @@ export const PriceSummary = props => {
 
     const totalPriceLabel = isCheckout
         ? formatMessage({
-            id: 'priceSummary.total',
+            id: 'Total',
             defaultMessage: 'Total'
         })
         : formatMessage({
-            id: 'priceSummary.grandTotal',
+            id: 'Grand Total',
             defaultMessage: 'Grand Total'
         });
 
@@ -104,7 +104,7 @@ export const PriceSummary = props => {
         <div className={classes.checkoutButton_container}  style={{bottom: bottomInsets}}>
             {!isMobile && <span className={classes.totalPricePiece}>
                 <FormattedMessage
-                    id={'cart.total'}
+                    id={'Total'}
                     defaultMessage={'Total'}
                 />
                 <span>: </span>
@@ -128,7 +128,7 @@ export const PriceSummary = props => {
                         />
                     </span>
                     <span><FormattedMessage
-                        id={'priceSummary.checkout'}
+                        id={'CHECKOUT'}
                         defaultMessage={'Checkout'}
                     /></span>
                 </span>
@@ -143,7 +143,7 @@ export const PriceSummary = props => {
                     {mpRewardEarn ? (
                         <span className={classes.lineItemLabel}>
                             <FormattedMessage
-                                id={'priceSummary.rewardEarnTitle'}
+                                 id={'You will earn'}
                                 defaultMessage={`${mpRewardEarn.title}`}
                             />
                         </span>
@@ -152,14 +152,20 @@ export const PriceSummary = props => {
                         <span className={priceClass}>
                             <FormattedMessage
                                 id={'priceSummary.rewardEarnValue'}
-                                defaultMessage={`${mpRewardEarn.value} points`}
+                                defaultMessage={`${mpRewardEarn.value}`}
                             />
+                             <>
+                            {formatMessage({
+                                id: 'points',
+                                defaultMessage: 'points'
+                            })}
+                        </>
                         </span>
                     ) : null}
                     {mpRewardSpent ? (
                         <span className={classes.lineItemLabel}>
                             <FormattedMessage
-                                id={'priceSummary.rewardSpentTitle'}
+                              id={'You will spend'}
                                 defaultMessage={`${mpRewardSpent.title}`}
                             />
                         </span>
@@ -168,13 +174,19 @@ export const PriceSummary = props => {
                         <span className={priceClass}>
                             <FormattedMessage
                                 id={'priceSummary.rewardSpentValue'}
-                                defaultMessage={`${mpRewardSpent.value} points`}
+                                defaultMessage={`${mpRewardSpent.value}`}
                             />
+                              <>
+                            {formatMessage({
+                                id: 'points',
+                                defaultMessage: 'points'
+                            })}
+                        </>
                         </span>
                     ) : null}
                     <span className={classes.lineItemLabel}>
                         <FormattedMessage
-                            id={'priceSummary.lineItemLabel'}
+                            id={'Subtotal'}
                             defaultMessage={'Subtotal'}
                         />
                     </span>
@@ -187,7 +199,7 @@ export const PriceSummary = props => {
                     {mpRewardDiscount ? (
                         <span className={classes.lineItemLabel}>
                             <FormattedMessage
-                                id={'priceSummary.rewardDiscountTitle'}
+                                 id={'Reward Points'}
                                 defaultMessage={`${mpRewardDiscount.title}`}
                             />
                         </span>

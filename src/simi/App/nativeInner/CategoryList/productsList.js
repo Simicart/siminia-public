@@ -110,9 +110,14 @@ const ProductsList = props => {
                         >
                             <span className={classes.title}>
                                 {formatMessage({
-                                    id: 'productList',
-                                    defaultMessage: `View All ${childCate.name}`
+                                    id: `View all`,
+                                    defaultMessage: `View All`
                                 })}
+                                <span className={classes.childCateName}>
+                                    {formatMessage({
+                                        id: `${childCate.name}`
+                                    })}
+                                </span>
                             </span>
                             <span className={classes.icon}>
                                 <RiArrowRightSLine size={20} />
@@ -125,23 +130,23 @@ const ProductsList = props => {
             ) : (
                 ''
             )}
-            {(display_mode === 'PRODUCTS_AND_PAGE' ||
-            display_mode === 'PRODUCTS') ? (
+            {display_mode === 'PRODUCTS_AND_PAGE' ||
+            display_mode === 'PRODUCTS' ? (
                 <div className={classes.wrapProductsList}>
                     {renderProductsList()}
                 </div>
             ) : (
                 ''
             )}
-            {(display_mode === 'PRODUCTS_AND_PAGE' ||
-            display_mode === 'PRODUCTS') ? (
+            {display_mode === 'PRODUCTS_AND_PAGE' ||
+            display_mode === 'PRODUCTS' ? (
                 <div className={classes.subCategory}>
                     {child.length === 0 ? (
                         ''
                     ) : (
                         <div className={classes.titleSubCate}>
                             {formatMessage({
-                                id: 'titleSubCategory',
+                                id: 'Sub categories',
                                 defaultMessage: 'Sub categories'
                             })}
                         </div>

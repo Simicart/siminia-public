@@ -12,7 +12,7 @@ import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
 import { useGetRewardPointData } from '../../../../talons/RewardPoint/useGetRewardPointData';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { showFogLoading } from '../../../../BaseComponents/Loading/GlobalLoading';
-import {configColor} from "../../../../Config";
+import { configColor } from '../../../../Config';
 
 const CouponCode = React.lazy(() => import('../CouponCode'));
 // const GiftOptions = React.lazy(() =>
@@ -20,7 +20,9 @@ const CouponCode = React.lazy(() => import('../CouponCode'));
 // );
 const ShippingMethods = React.lazy(() => import('./ShippingMethods'));
 
-const GiftCard = React.lazy(() => import('src/simi/App/nativeInner/GiftCard/Cart/GiftCardDiscount'))
+const GiftCard = React.lazy(() =>
+    import('src/simi/App/nativeInner/GiftCard/Cart/GiftCardDiscount')
+);
 
 /**
  * PriceAdjustments is a child component of the CartPage component.
@@ -39,8 +41,14 @@ const GiftCard = React.lazy(() => import('src/simi/App/nativeInner/GiftCard/Cart
  * import PriceAdjustments from '@magento/venia-ui/lib/components/CartPage/PriceAdjustments'
  */
 
-const PriceAdjustments = (props) => {
-    const { makeNotification, setIsCartUpdating, hideEstimateShipping, giftCardConfig, refetchCartPage } = props
+const PriceAdjustments = props => {
+    const {
+        makeNotification,
+        setIsCartUpdating,
+        hideEstimateShipping,
+        giftCardConfig,
+        refetchCartPage
+    } = props;
 
     const classes = useStyle(defaultClasses, props.classes);
     const [{ cartId }] = useCartContext();
@@ -55,7 +63,9 @@ const PriceAdjustments = (props) => {
             return rewardData.code == 'mp_reward_spent';
         });
     const { customerRewardPoint } = useGetRewardPointData({ onCart: true });
-    const exchange_rate = customerRewardPoint ? customerRewardPoint.current_exchange_rates : null
+    const exchange_rate = customerRewardPoint
+        ? customerRewardPoint.current_exchange_rates
+        : null;
     const spending_rate = exchange_rate ? exchange_rate.spending_rate : '';
     const words = spending_rate ? spending_rate.split(' points') : '';
     const money = spending_rate ? spending_rate.split('for $') : '';
@@ -106,31 +116,35 @@ const PriceAdjustments = (props) => {
 
     return (
         <div className={classes.root}>
-            <Accordion 
+            <Accordion
                 classes={{
                     root: classes.accordRoot
                 }}
                 canOpenMultiple={true}
             >
-                {!hideEstimateShipping && <Section
-                    id={'shipping_method'}
-                    title={formatMessage({
-                        id: 'priceAdjustments.shippingMethod',
-                        defaultMessage: 'Estimate your Shipping'
-                    })}
-                    classes={{
-                        root: classes.sectionRoot,
-                        title: classes.sectionTitle,
-                        title_wrapper: classes.title_wrapper,
-                        contents_container: classes.contents_container
-                    }}
-                >
-                    <Suspense fallback={<LoadingIndicator />}>
-                        <ShippingMethods
-                            setIsCartUpdating={(update) => setIsCartUpdating(update, false)}
-                        />
-                    </Suspense>
-                </Section>}
+                {!hideEstimateShipping && (
+                    <Section
+                        id={'shipping_method'}
+                        title={formatMessage({
+                            id: 'Estimate your shipping',
+                            defaultMessage: 'Estimate your Shipping'
+                        })}
+                        classes={{
+                            root: classes.sectionRoot,
+                            title: classes.sectionTitle,
+                            title_wrapper: classes.title_wrapper,
+                            contents_container: classes.contents_container
+                        }}
+                    >
+                        <Suspense fallback={<LoadingIndicator />}>
+                            <ShippingMethods
+                                setIsCartUpdating={update =>
+                                    setIsCartUpdating(update, false)
+                                }
+                            />
+                        </Suspense>
+                    </Section>
+                )}
                 <Section
                     id={'coupon_code'}
                     title={formatMessage({
@@ -145,14 +159,17 @@ const PriceAdjustments = (props) => {
                     }}
                 >
                     <Suspense fallback={<LoadingIndicator />}>
-                        <CouponCode setIsCartUpdating={setIsCartUpdating} makeNotification={makeNotification} />
+                        <CouponCode
+                            setIsCartUpdating={setIsCartUpdating}
+                            makeNotification={makeNotification}
+                        />
                     </Suspense>
                 </Section>
                 {rewardPointEnabled && balance ? (
                     <Section
                         id={'reward_points'}
                         title={formatMessage({
-                            id: 'priceAdjustments.rewardPoint',
+                            id: 'Reward points',
                             defaultMessage: 'Reward Points'
                         })}
                         classes={{
@@ -165,9 +182,18 @@ const PriceAdjustments = (props) => {
                         <Suspense fallback={<LoadingIndicator />}>
                             <div className={classes.userBalance}>
                                 <FormattedMessage
-                                    id={'rewardPoint.userBalance'}
-                                    defaultMessage={`You have ${balance || 0} points`}
+                                    id={'You have'}
+                                    defaultMessage={`You have`}
                                 />
+                                {' '}
+                                {balance || 0}
+                                {' '}
+                                <>
+                                    {formatMessage({
+                                        id: 'points',
+                                        defaultMessage: 'points'
+                                    })}
+                                </>
                             </div>
                             {balance > 0 ? (
                                 <div className={classes.rewardPointRoot}>
@@ -187,7 +213,7 @@ const PriceAdjustments = (props) => {
                                     <div className={classes.pointSpend}>
                                         <span className={classes.message}>
                                             <FormattedMessage
-                                                id={'rewardPoint.textSpend'}
+                                                id={'You will spend'}
                                                 defaultMessage={
                                                     'You will spend'
                                                 }
@@ -208,12 +234,13 @@ const PriceAdjustments = (props) => {
                                         priority="high"
                                         onClick={applyHandle}
                                         style={{
-                                            backgroundColor: configColor.button_background,
-                                            color: configColor.button_text_color,
+                                            backgroundColor:
+                                                configColor.button_background,
+                                            color: configColor.button_text_color
                                         }}
                                     >
                                         <FormattedMessage
-                                            id={'rewardPoint.applyButton'}
+                                            id={'Apply'}
                                             defaultMessage={'Apply'}
                                         />
                                     </Button>
@@ -241,34 +268,36 @@ const PriceAdjustments = (props) => {
                         </Suspense>
                     </Section>
                 ) : null}
-                {(giftCardEnabled && giftCardConfig) ? <Section
-                    id={'gift-card'}
-                    title={formatMessage({
-                        id: 'Gift Card',
-                    })}
-                    classes={{
-                        root: classes.sectionRoot,
-                        title: classes.sectionTitle,
-                        title_wrapper: classes.title_wrapper,
-                        contents_container: classes.contents_container
-                    }}
-                >
-                    <Suspense fallback={<LoadingIndicator />}>
-                        <GiftCard 
-                            giftCardConfig={giftCardConfig}
-                            setIsCartUpdating={setIsCartUpdating}
-                            refetchCartPage={refetchCartPage}
-                        />
-                    </Suspense>
-                </Section> : null}
+                {giftCardEnabled && giftCardConfig ? (
+                    <Section
+                        id={'gift-card'}
+                        title={formatMessage({
+                            id: 'Gift Card'
+                        })}
+                        classes={{
+                            root: classes.sectionRoot,
+                            title: classes.sectionTitle,
+                            title_wrapper: classes.title_wrapper,
+                            contents_container: classes.contents_container
+                        }}
+                    >
+                        <Suspense fallback={<LoadingIndicator />}>
+                            <GiftCard
+                                giftCardConfig={giftCardConfig}
+                                setIsCartUpdating={setIsCartUpdating}
+                                refetchCartPage={refetchCartPage}
+                            />
+                        </Suspense>
+                    </Section>
+                ) : null}
                 {/* <GiftCardSection setIsCartUpdating={setIsCartUpdating} /> */}
             </Accordion>
         </div>
-    )
+    );
 };
 
 PriceAdjustments.defaultProps = {
     hideEstimateShipping: false
-}
+};
 
-export default PriceAdjustments
+export default PriceAdjustments;
