@@ -42,7 +42,7 @@ const AddressBookPage = props => {
         isDialogOpen,
         isLoading
     } = talonProps;
-
+    console.log('customerAddresses', customerAddresses);
     const [isDefault, setDefault] = useState();
 
     let bottomInsets = 0;
@@ -159,23 +159,34 @@ const AddressBookPage = props => {
                 <div className={classes.addressbookContent}>
                     <div className={classes.content}>
                         {!isPhone ? (
-                            <h1 className={classes.heading}>{PAGE_TITLE}</h1>
-                        ) : null}
-                        {!isPhone ? (
-                            <div
-                                onClick={handleAddAddress}
-                                className={classes.addAddress}
-                            >
-                                <div className={classes.addAddressBtn}>
-                                    {formatMessage({
-                                        id: 'Add new address',
-                                        defaultMessage: 'Add new address'
-                                    }).toUpperCase()}
+                            <div className={classes.wrapHeading}>
+                                <h1 className={classes.heading}>
+                                    {PAGE_TITLE}
+                                </h1>
+                                <div
+                                    onClick={handleAddAddress}
+                                    className={classes.addAddress}
+                                >
+                                    <div className={classes.addAddressBtn}>
+                                        {formatMessage({
+                                            id: 'Add new address',
+                                            defaultMessage: 'Add new address'
+                                        }).toUpperCase()}
+                                    </div>
                                 </div>
                             </div>
                         ) : null}
+
+                        <h2 className={classes.defaultAddress}>
+                            {formatMessage({
+                                id: 'Default Address',
+                                defaultMessage: 'Default Address'
+                            })}
+                        </h2>
                         {customerAddresses.length > 0 ? (
-                            addressBookElements
+                            <div className={classes.wrapAddresCard}>
+                                {addressBookElements}
+                            </div>
                         ) : (
                             <div className={classes.noAddress}>
                                 <img
