@@ -25,11 +25,11 @@ const ShippingSummary = props => {
 
     const shippingLabel = isCheckout
         ? formatMessage({
-              id: 'shippingSummary.shipping',
+              id: 'Shipping',
               defaultMessage: 'Shipping'
           })
         : formatMessage({
-              id: 'shippingSummary.estimatedShipping',
+              id: 'Estimated Shipping',
               defaultMessage: 'Estimated Shipping'
           });
 

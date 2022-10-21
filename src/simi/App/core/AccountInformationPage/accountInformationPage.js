@@ -109,10 +109,10 @@ const AccountInformationPage = props => {
                                 })}
                                 required={true}>
                                 <TextInput
-                                    placeholder={formatMessage({
-                                        id: 'global.inputEmail',
-                                        defaultMessage: 'Email'
-                                    })}
+                                    // placeholder={formatMessage({
+                                    //     id: 'global.inputEmail',
+                                    //     defaultMessage: 'Email'
+                                    // })}
                                     field="email"
                                     type="email"
                                     autoComplete="email"
@@ -130,10 +130,10 @@ const AccountInformationPage = props => {
                             })}
                             required={true}>
                             <TextInput
-                                placeholder={formatMessage({
-                                    id: 'global.inputCurrentPassword',
-                                    defaultMessage: 'Current Password'
-                                })}
+                                // placeholder={formatMessage({
+                                //     id: 'global.inputCurrentPassword',
+                                //     defaultMessage: 'Current Password'
+                                // })}
                                 field="password"
                                 type="password"
                                 validate={isRequired}
@@ -163,10 +163,10 @@ const AccountInformationPage = props => {
                             })}
                             required={true}>
                             <TextInput
-                                placeholder={formatMessage({
-                                    id: 'global.inputCurrentPassword2',
-                                    defaultMessage: 'Current Password'
-                                })}
+                                // placeholder={formatMessage({
+                                //     id: 'global.inputCurrentPassword2',
+                                //     defaultMessage: 'Current Password'
+                                // })}
                                 field="current_password"
                                 type="password"
                                 
@@ -189,10 +189,10 @@ const AccountInformationPage = props => {
                             })}
                             required={true}>
                             <TextInput
-                                placeholder={formatMessage({
-                                    id: 'global.inputNewPassword',
-                                    defaultMessage: 'New password'
-                                })}
+                                // placeholder={formatMessage({
+                                //     id: 'global.inputNewPassword',
+                                //     defaultMessage: 'New password'
+                                // })}
                                 field="new_password"
                                 type="password"
                                 validate={combine([
@@ -216,10 +216,10 @@ const AccountInformationPage = props => {
                             })}
                             required={true}>
                             <TextInput
-                                placeholder={formatMessage({
-                                    id: 'global.inputConfirmNewPassword',
-                                    defaultMessage: 'Confirm new password'
-                                })}
+                                // placeholder={formatMessage({
+                                //     id: 'global.inputConfirmNewPassword',
+                                //     defaultMessage: 'Confirm new password'
+                                // })}
                                 field="confirm_password"
                                 type="password"
                                 validate={combine([
@@ -274,10 +274,10 @@ const AccountInformationPage = props => {
                                 >
                                 
                                     <TextInput
-                                        placeholder={formatMessage({
-                                            id: 'global.inputFirstName',
-                                            defaultMessage: 'First name'
-                                        })}
+                                        // placeholder={formatMessage({
+                                        //     id: 'global.inputFirstName',
+                                        //     defaultMessage: 'First name'
+                                        // })}
                                         autoComplete="given-name"
                                         field="firstname"
                                         validate={isRequired}
@@ -293,10 +293,10 @@ const AccountInformationPage = props => {
                                        required={true} 
                                       >
                                     <TextInput
-                                         placeholder={formatMessage({
-                                            id: 'global.inputLastName',
-                                            defaultMessage: 'Last name'
-                                        })}
+                                        //  placeholder={formatMessage({
+                                        //     id: 'global.inputLastName',
+                                        //     defaultMessage: 'Last name'
+                                        // })}
                                         autoComplete="family-name"
                                         field="lastname"
                                         validate={isRequired}

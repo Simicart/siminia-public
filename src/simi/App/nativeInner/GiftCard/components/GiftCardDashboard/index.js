@@ -235,7 +235,10 @@ const GiftCardDashboard = props => {
                 checkCodeData.mpGiftCardCheckCode.status_label != 'Active') && (
                 <div className={classes['message-error']}>
                     <Icon.X className={classes['message-icon']} />
-                    {checkCodeErrorMessage}
+                    {formatMessage({
+                        id: `${checkCodeErrorMessage}`,
+                        defaultMessage: `${checkCodeErrorMessage}`
+                    })}
                 </div>
             )}
         </div>
@@ -255,7 +258,10 @@ const GiftCardDashboard = props => {
             {addGcErrorMessage && !addGcLoading && (
                 <div className={classes['message-error']}>
                     <Icon.X className={classes['message-icon']} />
-                    {addGcErrorMessage}
+                    {formatMessage({
+                        id: `${addGcErrorMessage}`,
+                        defaultMessage: `${addGcErrorMessage}`
+                    })}
                 </div>
             )}
         </div>
@@ -275,7 +281,10 @@ const GiftCardDashboard = props => {
             {redeemErrorMessage && !addGcLoading && (
                 <div className={classes['message-error']}>
                     <Icon.X className={classes['message-icon']} />
-                    {redeemErrorMessage}
+                    {formatMessage({
+                        id: `${redeemErrorMessage}`,
+                        defaultMessage: `${redeemErrorMessage}`
+                    })}
                 </div>
             )}
         </div>
@@ -295,7 +304,10 @@ const GiftCardDashboard = props => {
             {removeGcErrorMessage && !removeGcLoading && (
                 <div className={classes['message-error']}>
                     <Icon.X className={classes['message-icon']} />
-                    {removeGcMessage}
+                    {formatMessage({
+                        id: `${removeGcMessage}`,
+                        defaultMessage: `${removeGcMessage}`
+                    })}
                 </div>
             )}
         </div>
@@ -315,7 +327,10 @@ const GiftCardDashboard = props => {
             {saveNotificationsError && !saveNotificationsLoading && (
                 <div className={classes['message-error']}>
                     <Icon.X className={classes['message-icon']} />
-                    {saveNotificationsError}
+                    {formatMessage({
+                        id: `${saveNotificationsError}`,
+                        defaultMessage: `${saveNotificationsError}`
+                    })}
                 </div>
             )}
         </div>

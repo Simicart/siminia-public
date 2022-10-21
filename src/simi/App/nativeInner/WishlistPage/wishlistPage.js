@@ -1,6 +1,7 @@
 import React, { Fragment, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useWishlistPage } from '@magento/peregrine/lib/talons/WishlistPage/useWishlistPage';
+// import { useWishlistPage } from '@magento/peregrine/lib/talons/WishlistPage/useWishlistPage';
+import { useWishlistPage } from '../talons/WishlistPage/useWishlistPage';
 import { deriveErrorMessage } from '@magento/peregrine/lib/util/deriveErrorMessage';
 import { BsFillShareFill } from 'react-icons/bs';
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
@@ -123,8 +124,8 @@ const WishlistPage = props => {
                         <h1 className={classes.heading}>
                             <FormattedMessage
                                 values={{ count: wishlists.length }}
-                                id={'Favorites Lists'}
-                                defaultMessage={'Favorites Lists'}
+                                id={'Favorites'}
+                                defaultMessage={'Favorites'}
                             />
                         </h1>
                         {/* <div className={classes.btncontainer}>

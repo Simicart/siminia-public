@@ -82,12 +82,12 @@ const AccountSubcriptionPage = props => {
                 <div className={classes.container}>
                     <div className={classes.containerSub}>
                         <StoreTitle>{title}</StoreTitle>
-                        {!isPhone && <h1 className={classes.heading}>
+                        {/* {!isPhone && <h1 className={classes.heading}>
                             <FormattedMessage
                                 id={'My Account'}
                                 defaultMessage={'My Account'}
                             />
-                        </h1>}
+                        </h1>} */}
                         <h2 className={classes.title}>
                             <FormattedMessage
                                 id={'Newsletter Subcription'}

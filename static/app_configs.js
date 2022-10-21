@@ -2441,6 +2441,14 @@ var DASHBOARD_CONFIG = {
                     'Jot us a note and we’ll get back to you as quickly as possible.':'قم بتدوين ملاحظة وسنقوم بالرد عليك في أسرع وقت ممكن.',
                     "Tell us what's on your mind":'أخبرنا بما يدور في ذهنك',
                     'Send':'إرسال',
+                    'Product Description':'وصف المنتج',
+                    'Ready to Ship':'على استعداد للسفينة',
+                    'Fast Dispatch':'إيفاد سريع',
+                    'Discounts applied':'تم تطبيق الخصومات',
+                    'You have':'عندك',
+                    'Failed to apply coupon code':'فشل تطبيق رمز القسيمة',
+                    'There are no items in your cart.':'لا توجد أي عناصر في سلة التسوق الخاصة بك.',
+                    'Sub categories':'الفئات الفرعية'
                 }
             },
             currency_rate: {

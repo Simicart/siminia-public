@@ -8,6 +8,7 @@ import AddToCartDialog from '@magento/venia-ui/lib/components/AddToCartDialog';
 
 const WishlistItems = props => {
     const { items, wishlistId } = props;
+    console.log("items",items);
     const talonProps = useWishlistItems();
     const {
         activeAddToCartItem,
