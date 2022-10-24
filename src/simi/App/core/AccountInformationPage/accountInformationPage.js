@@ -105,7 +105,7 @@ const AccountInformationPage = props => {
                             <Field
                                 label={formatMessage({
                                     id: 'email',
-                                    defaultMessage: 'Email *'
+                                    defaultMessage: 'Email'
                                 })}
                                 required={true}>
                                 <TextInput
@@ -126,7 +126,7 @@ const AccountInformationPage = props => {
                             
                             label={formatMessage({
                                 id: 'Current Password',
-                                defaultMessage: 'Current password *'
+                                defaultMessage: 'Current password'
                             })}
                             required={true}>
                             <TextInput
@@ -158,8 +158,8 @@ const AccountInformationPage = props => {
                         <Field
                             
                             label={formatMessage({
-                                id: 'global.labelCurrentPassword2',
-                                defaultMessage: 'Current password *'
+                                id: 'Current Password',
+                                defaultMessage: 'Current password'
                             })}
                             required={true}>
                             <TextInput
@@ -185,7 +185,7 @@ const AccountInformationPage = props => {
                             
                             label={formatMessage({
                                 id: 'New Password',
-                                defaultMessage: 'New password *'
+                                defaultMessage: 'New password'
                             })}
                             required={true}>
                             <TextInput
@@ -212,7 +212,7 @@ const AccountInformationPage = props => {
                             
                             label={formatMessage({
                                 id: 'Confirm New Password',
-                                defaultMessage: 'Confirm new password *'
+                                defaultMessage: 'Confirm new password'
                             })}
                             required={true}>
                             <TextInput
@@ -248,7 +248,7 @@ const AccountInformationPage = props => {
             <React.Fragment>
                 <h2 className={classes.titleEdit}>
                     <FormattedMessage
-                        id={'accountInformationPage.titleEdit'}
+                        id={'Edit Account Information'}
                         defaultMessage={'Edit Account Information'}
                     />
                 </h2>
@@ -267,8 +267,8 @@ const AccountInformationPage = props => {
                             <div className={classes.inputContent}>
                                 <Field
                                     label={formatMessage({
-                                        id: 'global.labelFirstName',
-                                        defaultMessage: 'First Name' + ' *'
+                                        id: 'First Name',
+                                        defaultMessage: 'First Name'
                                     })}
                                     required={true}
                                 >
@@ -287,8 +287,8 @@ const AccountInformationPage = props => {
                             </div>
                             <div className={classes.inputContent}>
                                 <Field label={formatMessage({
-                                        id: 'global.labelLasttName',
-                                        defaultMessage: 'Last Name *'
+                                        id: 'Last Name',
+                                        defaultMessage: 'Last Name'
                                     })}
                                        required={true} 
                                       >
@@ -333,7 +333,7 @@ const AccountInformationPage = props => {
                                     
                                     defaultChecked={isActiveForm === 'email' ? true : false} 
                                     title={formatMessage({
-                                        id: 'global.checkboxChangeEmail',
+                                        id: 'Change Email',
                                         defaultMessage: 'Change Email'
                                     })} 
                                     onClick={() => handleActiveForm(isActiveForm === 'email' ? false : 'email')} />
@@ -342,7 +342,7 @@ const AccountInformationPage = props => {
                                     
                                     defaultChecked={isActiveForm === 'password' ? true : false} 
                                     title={formatMessage({
-                                        id: 'global.checkboxChangePassword',
+                                        id: 'Change password',
                                         defaultMessage: 'Change Password'
                                     })} 
                                     onClick={() => handleActiveForm(isActiveForm === 'password' ? false : 'password')} />

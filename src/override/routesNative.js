@@ -135,6 +135,16 @@ const AddressBookPage = props => {
         />
     );
 };
+const AddNewAddress = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "AddressBookPage"*/ '/src/simi/App/nativeInner/AddressBookPage/AddNewAddress')
+            }
+            {...props}
+        />
+    );
+};
 const ProductReviewPage = props => {
     return (
         <LazyComponent
@@ -583,6 +593,11 @@ const Routes = props => {
                     exact
                     path="/address-book"
                     render={props => <AddressBookPage {...props} />}
+                />
+                 <Route
+                    exact
+                    path="/new-address"
+                    render={props => <AddNewAddress {...props} />}
                 />
                 <Route
                     exact

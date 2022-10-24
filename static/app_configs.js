@@ -2209,6 +2209,7 @@ var DASHBOARD_CONFIG = {
                     'Product Alert':'تنبيه المنتج',
                     'Reward Points':'نقاط مكافأة',
                     'Reward Transactions':'معاملات المكافأة',
+                    'Reward transactions':'معاملات المكافأة',
                     'My Gift Cards':'بطاقات الهدايا الخاصة بي',
                     'There are no wishlist matching':'لا توجد مطابقة لقائمة الرغبات',
                     'Favorites Lists':'قوائم المفضلة',
@@ -2448,7 +2449,20 @@ var DASHBOARD_CONFIG = {
                     'You have':'عندك',
                     'Failed to apply coupon code':'فشل تطبيق رمز القسيمة',
                     'There are no items in your cart.':'لا توجد أي عناصر في سلة التسوق الخاصة بك.',
-                    'Sub categories':'الفئات الفرعية'
+                    'Sub categories':'الفئات الفرعية',
+                    'checkoutPage.showAllItems':'اعرض كل العناصر',
+                    'Default Address':'العنوان الافتراضي',
+                    'Additional Address Entries':'إدخالات العناوين الإضافية',
+                    'You have no item in your address book':'ليس لديك أي عنصر في دفتر العناوين الخاص بك',
+                    'No default billing/shipping address selected.':'لم يتم تحديد عنوان فوترة / شحن افتراضي.',
+                    'Change Billing Address':'تغيير عنوان الفواتير',
+                    'Change Shipping Address':'تغيير عنوان الشحن',
+                    'Change Billing & Shipping Address':'تغيير عنوان الفواتير والشحن',
+                    'Use as my default shipping address':'استخدم كعنوان الشحن الافتراضي الخاص بي',
+                    'Use as my default billing address':'استخدم كعنوان الفاتورة الافتراضي الخاص بي',
+                    'Add New Address':'أضف عنوان جديد',
+                    'Favorites':'المفضلة',
+                   
                 }
             },
             currency_rate: {

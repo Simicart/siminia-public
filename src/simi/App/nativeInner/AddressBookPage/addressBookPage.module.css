@@ -5,8 +5,8 @@
     min-width: 80%;
 }
 .addressbookContent {
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    justify-content: center; */
 }
 
 .heading {
@@ -64,6 +64,15 @@
     letter-spacing: 0;
     line-height: 19px;
     margin-bottom: 15px;
+    grid-column: 1 / span 2;
+}
+.noDefault{
+    color: #333132;
+    font-family: 'Helvetica Neue';
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: 14px;
+    font-weight: 500;
 }
 @media (max-width: 777px) {
     .wrapper {

@@ -35,7 +35,8 @@ const AddressCard = props => {
         postcode,
         region: { region },
         street,
-        telephone
+        telephone,
+        company
     } = address;
     console.log('address', address);
     const { formatMessage } = useIntl();
@@ -128,12 +129,17 @@ const AddressCard = props => {
                     ) : null}
                     <span className={classes.name}>{nameString}</span>
                     {streetRows}
-                    <span className={classes.additionalAddress}>
-                        {additionalAddressString}
-                    </span>
+                    {company ? (
+                        <span className={classes.company}>{company}</span>
+                    ) : (
+                        ''
+                    )}
                     <span className={classes.country}>
                         {countryName || country_code}
                     </span>
+
+                    <span className={classes.postcode}>{postcode}</span>
+
                     <span className={classes.telephone}>
                         <FormattedMessage
                             id="addressBookPage.telephone"
@@ -146,14 +152,14 @@ const AddressCard = props => {
                                 classes={{ root: classes.editButton }}
                                 onClick={onEdit}
                             >
-                                {default_billing
+                                {default_billing && !default_shipping
                                     ? formatMessage({
                                           id: 'Change Billing Address',
                                           defaultMessage:
                                               'Change Billing Address'
                                       })
                                     : ''}
-                                {default_shipping
+                                {default_shipping && !default_billing
                                     ? formatMessage({
                                           id: 'Change Shipping Address',
                                           defaultMessage:
@@ -164,6 +170,14 @@ const AddressCard = props => {
                                     ? formatMessage({
                                           id: 'Edit Address',
                                           defaultMessage: 'Edit Address'
+                                      })
+                                    : ''}
+                                {default_billing && default_shipping
+                                    ? formatMessage({
+                                          id:
+                                              'Change Billing & Shipping Address',
+                                          defaultMessage:
+                                              'Change Billing & Shipping Address'
                                       })
                                     : ''}
 

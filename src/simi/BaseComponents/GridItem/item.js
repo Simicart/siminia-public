@@ -213,7 +213,7 @@ const Griditem = props => {
                     </div>
                 </div>
             </div>
-            <div
+            {/* <div
                 className={`${itemClasses['product-grid-actions']} ${loading &&
                     itemClasses['action-loading']}`}
             >
@@ -244,7 +244,7 @@ const Griditem = props => {
                         }}
                     />
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
