@@ -4,7 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useToasts, useWindowSize } from '@magento/peregrine';
 import { useWishlistItem } from '../talons/WishlistPage/useWishlistItem';
 import AlertMessages from '../ProductFullDetail/AlertMessages';
-
+import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import Image from '@magento/venia-ui/lib/components/Image';
@@ -25,19 +25,25 @@ const WishlistItem = props => {
         product,
         __typename
     } = item;
-    console.log("product",product);
+    console.log('product', product);
     const {
         name,
         price_range: priceRange,
         stock_status: stockStatus,
         review_count,
         rating_summary,
+        type_id,
+        small_image,
+        mp_label_data
     } = product;
     const { maximum_price: maximumPrice } = priceRange;
     const { final_price: finalPrice } = maximumPrice;
     const { currency, value: unitPrice } = finalPrice;
 
-    const talonProps = useWishlistItem({...props, operations: { createCartMutaion: CREATE_CART_MUTATION }});
+    const talonProps = useWishlistItem({
+        ...props,
+        operations: { createCartMutaion: CREATE_CART_MUTATION }
+    });
     const {
         addToCartButtonProps,
         handleRemoveProductFromWishlist,
@@ -229,21 +235,37 @@ const WishlistItem = props => {
                 {/* {!isMobileSite ? (
                     <div className={classes.close} />
                 ) : ( */}
-                    <ConfirmPopup
-                        trigger={isMobileSite ? <VscTrash size={25} /> : <div className={classes.close} />}
-                        content={
-                            <FormattedMessage
-                                id={'Are you sure about remove this item from wish list?'}
-                                defaultMessage={
-                                    'Are you sure about remove this item from wish list?'
-                                }
-                            />
-                        }
-                        confirmCallback={handleRemoveProductFromWishlist}
-                    />
+                <ConfirmPopup
+                    trigger={<VscTrash size={25} />}
+                    content={
+                        <FormattedMessage
+                            id={
+                                'Are you sure about remove this item from wish list?'
+                            }
+                            defaultMessage={
+                                'Are you sure about remove this item from wish list?'
+                            }
+                        />
+                    }
+                    confirmCallback={handleRemoveProductFromWishlist}
+                />
                 {/* )} */}
             </button>
             <div className={classes.actionWrap}>
+                {review_count ? (
+                    <div className={classes.itemReviewRate}>
+                        <StaticRate rate={rating_summary} classes={classes} />
+                        <span className={classes.itemReviewCount}>
+                            ({review_count}{' '}
+                            {review_count
+                                ? formatMessage({ id: 'Reviews' })
+                                : formatMessage({ id: 'Review' })}
+                            )
+                        </span>
+                    </div>
+                ) : (
+                    ''
+                )}
                 <span className={classes.name}>{name}</span>{' '}
                 <div className={classes.priceContainer}>{price}</div>
                 {optionElements}

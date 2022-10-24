@@ -1,7 +1,10 @@
 .root {
     display: grid;
     grid-gap: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    /* grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); */
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid #000000;
+    padding-bottom: 60px;
 }
 
 @media (max-width: 480px) {

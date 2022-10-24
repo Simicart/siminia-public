@@ -84,4 +84,13 @@ tr {
 	td:nth-of-type(4):before { content: "Amount"; font-weight: bold;}
 	td:nth-of-type(5):before { content: "Status"; font-weight: bold;}
 	td:nth-of-type(6):before { content: "Expire Date"; font-weight: bold;}
+
+    .tdRTL:nth-of-type(1):before { content: "عملية"; font-weight: bold;}
+    .tdRTL:nth-of-type(2):before { content: "تاريخ"; font-weight: bold;}
+	.tdRTL:nth-of-type(3):before { content: "تعليق"; font-weight: bold;}
+	.tdRTL:nth-of-type(4):before { content: "مقدار"; font-weight: bold;}
+	.tdRTL:nth-of-type(5):before { content: "حالة"; font-weight: bold;}
+	.tdRTL:nth-of-type(6):before { content: "تاريخ انتهاء الصلاحية"; font-weight: bold;}
+    
+
 }

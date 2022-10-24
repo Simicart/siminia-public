@@ -1,31 +1,40 @@
 .root {
-    display: grid;
-    gap: 0.5rem 1.5rem;
-    grid-template-columns: 1fr;
+    padding-top: 0;
+    /* max-width: var(--venia-global-maxWidth); */
+    margin: 0 auto;
+    min-width: 80%;
 }
-div[class*='dialog-dialog-2xq']
-    div[class*='dialog-header-1L6']
-    span[class*='dialog-headerText-1OU'] {
+.wrapper {
+    display: grid;
+    grid-template-columns: 20% auto;
+    padding: 2rem 15px;
+    /* margin-top: 30px; */
+    gap: 30px;
+}
+.heading {
     color: #333132;
     font-family: 'Helvetica Neue';
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 0;
     line-height: 25px;
+    margin-bottom: 15px;
+    margin-top: 8px;
 }
-.root {
+.addNewAddressContent {
+    /* display: flex;
+    justify-content: center; */
 }
-
 .formContent {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: 30px;
+    column-gap: 140px;
 }
 .info {
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-bottom: 19px;
-    column-gap: 30px;
+    column-gap: 140px;
 }
 .infoTitle {
     color: #333132;
@@ -121,50 +130,4 @@ label[class*='field-label-ifR'] {
 }
 .street1 div[class*='field-root-F1M']:last-child {
     margin-top: 15px;
-}
-button[class*='dialog-cancelButton-1a0'] {
-    height: 48px;
-    width: 122px;
-    color: #333132;
-    font-family: 'Helvetica Neue';
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 0;
-    line-height: 19px;
-    background-color: #fff;
-    margin-top: 30px;
-    border-radius: 0;
-    border: 1px solid #333132;
-}
-button[class*='dialog-confirmButton-RWl'] {
-    height: 48px;
-    width: 122px;
-    color: #ffffff;
-    font-family: 'Helvetica Neue';
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 0;
-    line-height: 19px;
-    background-color: #333132;
-    margin-top: 30px;
-    border-radius: 0;
-    border: 1px solid #333132;
-}
-/*
- *  Desktop-specific styles.
- */
-@media (min-width: 961px) {
-    .root {
-        /* grid-template-columns: 1fr 1fr; */
-    }
-
-    .fullWidthField {
-        grid-column-end: span 2;
-    }
-
-    .lastname,
-    .country,
-    .default_address_check {
-        composes: fullWidthField;
-    }
 }

@@ -40,7 +40,7 @@
 }
 .root_rtl {
     composes: root;
-    left: unset;
+    left: 0;
     right: 0;
     transition-duration: 0ms;
 }

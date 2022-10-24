@@ -14,11 +14,32 @@
 }
 
 .name {
-    font-size: var(--venia-typography-detail-XL-fontSize);
-    font-weight: var(--venia-global-fontWeight-semibold);
-    height: 40px;
+    color: #000000;
+    font-family: "Helvetica Neue";
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 18px;
+    font-weight: 400;
 }
 
+.itemReviewRate {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+.itemReviewRate > div:first-of-type {
+    margin-bottom: 5px;
+    margin-inline-end: 5px;
+}
+.itemReviewCount {
+    display: inline-block;
+    color: #555555;
+    font-family: 'Helvetica Neue';
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 16px;
+}
 .detail {
     color: rgb(var(--venia-global-color-text-alt));
     font-size: var(--venia-typography-detail-L-fontSize);
@@ -35,6 +56,12 @@
 
 .priceContainer {
     font-size: var(--venia-typography-detail-XL-fontSize);
+    color: #000000;
+    font-family: 'Helvetica Neue';
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
 }
 
 .image {
@@ -56,7 +83,9 @@
 
 .deleteItem {
     /* margin: 0 0.5rem 0 1rem; */
-    justify-self: right;
+    /* justify-self: right; */
+    inset-inline-start: 8px;
+    bottom: 95px;
     position: absolute;
     /* //left: 0; */
 }
@@ -64,8 +93,8 @@
 .actionWrap {
     display: unset;
 }
-.socialShare button{
-    padding-right: 10px!important;
+.socialShare button {
+    padding-right: 10px !important;
 }
 .moreActions {
     align-items: center;
@@ -86,14 +115,15 @@
     height: 32px;
     /* left: -15px; */
     opacity: 0.7;
-    background-color: #F4F4F4;
+    background-color: #f4f4f4;
     /* padding: 6px; */
     border-radius: 50%;
-  }
-  .close:hover {
+}
+.close:hover {
     opacity: 1;
-  }
-  .close:before, .close:after {
+}
+.close:before,
+.close:after {
     position: absolute;
     left: 15px;
     content: ' ';
@@ -101,14 +131,13 @@
     width: 2px;
     top: 6px;
     background-color: #333;
-  }
-  .close:before {
+}
+.close:before {
     transform: rotate(45deg);
-  }
-  .close:after {
+}
+.close:after {
     transform: rotate(-45deg);
-  }
-
+}
 
 @media (max-width: 480px) {
     .addToCart {
@@ -116,18 +145,19 @@
     }
 }
 
-@media (max-width:768px){
+@media (max-width: 768px) {
     .root {
-        grid-template-areas: 'image product delete'
-                             'image share share';
+        grid-template-areas:
+            'image product delete'
+            'image share share';
         grid-template-columns: 1fr 3fr 1fr;
         column-gap: 0.5rem;
-        row-gap: 0; 
+        row-gap: 0;
         border-radius: 8px;
-        background-color: #FFFFFF;
+        background-color: #ffffff;
         padding: 4px;
     }
-    .socialShare{
+    .socialShare {
         grid-area: share;
     }
     .addToCart {
@@ -138,34 +168,34 @@
         min-height: unset;
         margin: 0;
         box-sizing: border-box;
-        border: 1px solid var(--venia-global-color-button);;
+        border: 1px solid var(--venia-global-color-button);
         height: 35px;
         width: 70px;
         min-width: unset;
         color: #fff;
     }
-    .wrapSocialShare{
+    .wrapSocialShare {
         grid-area: share;
         display: grid;
         grid-template-areas: 'social icon addCart';
-        grid-template-columns:  1fr min-content min-content;
+        grid-template-columns: 1fr min-content min-content;
         align-items: center;
         flex-direction: column;
         height: 100%;
         justify-content: center;
     }
-    .socialShare{
+    .socialShare {
         grid-area: social;
         transition-delay: all 3s;
     }
-    .socialShare button{
-        padding-right: 5px!important;
+    .socialShare button {
+        padding-right: 5px !important;
     }
-    .share{
+    .share {
         composes: root_highPriority from 'src/override/button.module.css';
         grid-area: icon;
         box-sizing: border-box;
-        border: 1px solid #C3BEBE;
+        border: 1px solid #c3bebe;
         margin-right: 5px;
         height: 35px;
         width: 70px;
@@ -175,7 +205,7 @@
         background-color: #fff;
         color: #000;
     }
-    .share svg{
+    .share svg {
         margin-left: auto;
         margin-right: auto;
     }
@@ -184,28 +214,28 @@
         margin: 0;
         margin-left: 30px;
     }
-    .wrapImage{
+    .wrapImage {
         grid-area: image;
     }
     .actionWrap {
         grid-area: product;
         display: unset;
     }
-    .wrapImage > div{
+    .wrapImage > div {
         height: 101px;
         width: 101px;
     }
-    .wrapImage > div > img{
+    .wrapImage > div > img {
         border-radius: 8px;
     }
-    .name{
-        color: #4F4F4F;
+    .name {
+        color: #4f4f4f;
         font-family: Roboto;
         font-size: 13px;
         letter-spacing: 0;
         line-height: 15px;
     }
-    .priceContainer{
+    .priceContainer {
         color: #150826;
         font-family: Roboto;
         font-size: 16px;

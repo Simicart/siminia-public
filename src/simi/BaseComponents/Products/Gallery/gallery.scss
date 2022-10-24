@@ -5,7 +5,8 @@
         'items';
     grid-template-columns: 1fr;
     line-height: 1;
-
+    border-bottom: 1px solid #000000;
+    padding-bottom: 60px;
     .gallery-items {
         display: grid;
         grid-area: items;

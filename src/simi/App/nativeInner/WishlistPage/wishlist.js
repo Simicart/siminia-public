@@ -13,6 +13,8 @@ import defaultClasses from './wishlist.module.css';
 import ActionMenu from '@magento/venia-ui/lib/components/WishlistPage/actionMenu';
 import NoWishList from './NoWishList';
 import Gallery from '../../../BaseComponents/Products/Gallery';
+import Pagination from '@magento/venia-ui/lib/components/Pagination';
+
 // import Gallery from '.././../nativeInner/Products/Gallery';
 
 /**
@@ -36,14 +38,14 @@ const Wishlist = props => {
         isFetchingMore,
         handleLoadMore
     } = talonProps;
-    console.log("items",items);
+    console.log('items', items);
     let productList = [];
-    if(items){
-        for(let i = 0; i < items.length;i++){
-            productList.push(items[i].product)
+    if (items) {
+        for (let i = 0; i < items.length; i++) {
+            productList.push(items[i].product);
         }
     }
-    console.log("productList",productList);
+    console.log('productList', productList);
     const classes = useStyle(defaultClasses, props.classes);
     const contentClass = isOpen ? classes.content : classes.content_hidden;
     const contentToggleIconSrc = isOpen ? ChevronUp : ChevronDown;
@@ -96,9 +98,9 @@ const Wishlist = props => {
 
     const contentMessageElement = itemsCount ? (
         <Fragment>
-            {/* <WishlistItems items={items} wishlistId={id} /> */}
-            <Gallery items={productList} history={history} />
-            {loadMoreButton}
+            <WishlistItems items={items} wishlistId={id} />
+            {/* <Gallery items={productList} history={history} /> */}
+            {/* {loadMoreButton} */}
         </Fragment>
     ) : (
         <NoWishList />
@@ -164,7 +166,30 @@ const Wishlist = props => {
                 </div>
                 {buttonsContainer}
             </div>
-            <div className={contentClass}>{contentMessageElement}</div>
+            <div className={contentClass}>
+                {contentMessageElement}
+                <div className={classes.pageSize}>
+                    <span>
+                        {formatMessage({
+                            id: 'Show',
+                            defaultMessage: 'Show'
+                        })}
+                    </span>
+                    <span className={classes.pageSizeInput}>
+                        <select>
+                            <option value="4">4</option>
+                            <option value="8">8</option>
+                            <option value="12">12</option>
+                        </select>
+                    </span>
+                    <span>
+                        {formatMessage({
+                            id: 'per page',
+                            defaultMessage: 'per page'
+                        })}
+                    </span>
+                </div>
+            </div>
         </div>
     );
 };

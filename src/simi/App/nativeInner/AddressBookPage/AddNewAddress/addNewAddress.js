@@ -1,49 +1,53 @@
-import React from 'react';
-import { bool, func, object, shape, string } from 'prop-types';
-import { useIntl } from 'react-intl';
-
+import React, { useMemo, useState, useEffect } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import defaultClasses from './addNewAddress.module.css';
+import Loader from '../../Loader';
 import { useStyle } from '@magento/venia-ui/lib/classify';
-import { isRequired } from '@magento/venia-ui/lib/util/formValidators';
-
-import Checkbox from '@magento/venia-ui/lib/components/Checkbox';
-import Country from '../Country';
-import Dialog from '../Dialog';
+import LeftMenu from '../../../core/LeftMenu';
+import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
+import FormError from '../../Customer/Login/formError';
+import { Form } from 'informed';
 import Field from '@magento/venia-ui/lib/components/Field';
-import FormError from '@magento/venia-ui/lib/components/FormError';
-import Postcode from '@magento/venia-ui/lib/components/Postcode';
-import Region from '@magento/venia-ui/lib/components/Region';
 import TextInput from '@magento/venia-ui/lib/components/TextInput';
-import defaultClasses from './addEditDialog.module.css';
+import { isRequired } from '@magento/venia-ui/lib/util/formValidators';
+import Country from '../../Country';
+import Region from '@magento/venia-ui/lib/components/Region';
+import Postcode from '@magento/venia-ui/lib/components/Postcode';
+import Checkbox from '@magento/venia-ui/lib/components/Checkbox';
+import { useWindowSize } from '@magento/peregrine';
+import Button from '@magento/venia-ui/lib/components/Button';
+import { useAddressBookPage } from '../../talons/AddressBookPage/useAddressBookPage';
 
-const AddEditDialog = props => {
+const AddNewAddress = props => {
+    const talonProps = useAddressBookPage();
     const {
+        confirmDeleteAddressId,
+        countryDisplayNameMap,
+        customerAddresses,
         formErrors,
         formProps,
-        isBusy,
-        isEditMode,
-        isOpen,
-        onCancel,
-        onConfirm,
-        topInsets
-    } = props;
-
-    const { formatMessage } = useIntl();
-
+        handleAddAddress,
+        handleCancelDeleteAddress,
+        handleCancelDialog,
+        handleConfirmDeleteAddress,
+        handleConfirmDialog,
+        handleDeleteAddress,
+        handleEditAddress,
+        isDeletingCustomerAddress,
+        isDialogBusy,
+        isDialogEditMode,
+        isDialogOpen,
+        isLoading
+    } = talonProps;
     const classes = useStyle(defaultClasses, props.classes);
+    const { formatMessage } = useIntl();
+    const windowSize = useWindowSize();
+    const isPhone = windowSize.innerWidth <= 768;
 
-    let formatTitleArgs;
-    if (isEditMode) {
-        formatTitleArgs = {
-            id: 'addressBookPage.editDialogTitle',
-            defaultMessage: 'Edit Address'
-        };
-    } else {
-        formatTitleArgs = {
-            id: 'addressBookPage.addDialogTitle',
-            defaultMessage: 'New Address'
-        };
-    }
-    const title = formatMessage(formatTitleArgs);
+    const PAGE_TITLE = formatMessage({
+        id: 'Add New Address',
+        defaultMessage: 'Add New Address'
+    });
 
     const firstNameLabel = formatMessage({
         id: 'global.firstName',
@@ -82,43 +86,18 @@ const AddEditDialog = props => {
         defaultMessage: 'Use as my default shipping address'
     });
 
-
     const defaultBillingCheckLabel = formatMessage({
         id: 'Use as my default billing address',
         defaultMessage: 'Use as my default billing address'
     });
 
-    return (
-        <Dialog
-            confirmTranslationId={'global.save'}
-            confirmText="Save"
-            formProps={formProps}
-            isOpen={isOpen}
-            onCancel={onCancel}
-            onConfirm={onConfirm}
-            shouldDisableAllButtons={isBusy}
-            title={title}
-            topInsets={topInsets}
-        >
+    const form = (
+        <Form onSubmit={handleConfirmDialog} className={classes.form}>
             <FormError
                 classes={{ root: classes.errorContainer }}
                 errors={Array.from(formErrors.values())}
             />
             <div className={classes.root}>
-                <div className={classes.info}>
-                    <span className={classes.infoTitle}>
-                        {formatMessage({
-                            id: 'Contact Information',
-                            defaultMessage: 'Contact Information'
-                        })}
-                    </span>
-                    <span className={classes.infoTitle}>
-                        {formatMessage({
-                            id: 'Address',
-                            defaultMessage: 'Address'
-                        })}
-                    </span>
-                </div>
                 <div className={classes.formContent}>
                     <div className={classes.infoContact}>
                         <div className={classes.firstname}>
@@ -192,40 +171,62 @@ const AddEditDialog = props => {
                                 label={defaultAddressCheckLabel}
                             />
                         </div>
-                        {/* <button className={classes.save} type="submit">
+                        <button className={classes.save} type="submit">
                             {formatMessage({
                                 id: 'Save',
                                 defaultMessage: 'Save'
                             })}
-                        </button> */}
+                        </button>
+                    </div>
+                </div>
+
+                {/* <div className={classes.region}>
+                    <Region
+                        countryCodeField={'country_code'}
+                        fieldInput={'region[region]'}
+                        fieldSelect={'region[region_id]'}
+                        optionValueKey="id"
+                        validate={isRequired}
+                    />
+                </div> */}
+            </div>
+        </Form>
+    );
+    return (
+        <div className={`${classes.root} container`}>
+            <div className={classes.wrapper}>
+                <LeftMenu label="Address Book" />
+                <StoreTitle>{PAGE_TITLE}</StoreTitle>
+                <div className={classes.addNewAddressContent}>
+                    <div className={classes.content}>
+                        {!isPhone ? (
+                            <div className={classes.wrapHeading}>
+                                <h1 className={classes.heading}>
+                                    {PAGE_TITLE}
+                                </h1>
+                                <div className={classes.info}>
+                                    <span className={classes.infoTitle}>
+                                        {formatMessage({
+                                            id: 'Contact Information',
+                                            defaultMessage:
+                                                'Contact Information'
+                                        })}
+                                    </span>
+                                    <span className={classes.infoTitle}>
+                                        {formatMessage({
+                                            id: 'Address',
+                                            defaultMessage: 'Address'
+                                        })}
+                                    </span>
+                                </div>
+                            </div>
+                        ) : null}
+                        {form}
                     </div>
                 </div>
             </div>
-        </Dialog>
+        </div>
     );
 };
 
-export default AddEditDialog;
-
-AddEditDialog.propTypes = {
-    classes: shape({
-        root: string,
-        city: string,
-        country: string,
-        default_address_check: string,
-        errorContainer: string,
-        firstname: string,
-        lastname: string,
-        middlename: string,
-        postcode: string,
-        region: string,
-        street1: string,
-        street2: string,
-        telephone: string
-    }),
-    formErrors: object,
-    isEditMode: bool,
-    isOpen: bool,
-    onCancel: func,
-    onConfirm: func
-};
+export default AddNewAddress;
