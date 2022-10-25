@@ -2464,7 +2464,9 @@ var DASHBOARD_CONFIG = {
                     'Favorites':'المفضلة',
                     'Your order is:':'طلبك هو:',
                     'You have placed an order successfully!':'لقد قدمت طلبًا بنجاح!',
-                    'Thank you for updating your email preferences. Your preferences have now been updated.':'شكرا لك على تحديث تفضيلات البريد الإلكتروني الخاص بك. تم الآن تحديث تفضيلاتك.'
+                    'Thank you for updating your email preferences. Your preferences have now been updated.':'شكرا لك على تحديث تفضيلات البريد الإلكتروني الخاص بك. تم الآن تحديث تفضيلاتك.',
+                    'Default Shipping Address':'عنوان الشحن الافتراضي',
+                    'Default Billing Address':'عنوان الفواتير الافتراضي'
                 }
             },
             currency_rate: {
