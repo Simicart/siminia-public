@@ -20,7 +20,6 @@ export const AlertTableEntry = props => {
         product_url,
         sku
     } = product_data ? product_data : {}
-
     const {removeSubscription} = useAlertTableEntry({
         id: subscriber_id,
         reInitialize: reInitialize,
@@ -46,7 +45,7 @@ export const AlertTableEntry = props => {
                 textAlign: "center",
                 color: '#006bb4'
             }}>
-                <a href={product_url}>
+                <a href={product_url.slice(34)}>
                     {name}
                 </a>
             </td>
@@ -57,7 +56,7 @@ export const AlertTableEntry = props => {
                 alignItems: "center",
                 textAlign: "center"
             }}>
-                <a href={product_url}>
+                <a href={product_url.slice(34)}>
                     <img src={product_image_url} width={120} style={{
                         marginLeft: "auto",
                         marginRight: "auto",

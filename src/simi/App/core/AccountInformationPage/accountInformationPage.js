@@ -15,7 +15,9 @@ import LeftMenu from '../LeftMenu';
 import CUSTOMER_UPDATE from 'src/simi/queries/customerUpdate.graphql';
 import CUSTOMER_PASSWORD_UPDATE from 'src/simi/queries/customerPasswordUpdate.graphql';
 import GET_CUSTOMER_QUERY from 'src/simi/queries/getCustomer.graphql';
-import { useAccountInformationPage } from '../../../talons/MyAccount/useAccountInformationPage';
+// import { useAccountInformationPage } from '../../../talons/MyAccount/useAccountInformationPage';
+import { useAccountInformationPage } from './talons/useAccountInformationPage';
+
 import { randomString } from '../TapitaPageBuilder/CarefreeHorizontalScroll/randomString';
 import { showToastMessage } from 'src/simi/Helper/Message';
 import {

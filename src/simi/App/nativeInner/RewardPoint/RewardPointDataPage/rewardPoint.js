@@ -17,7 +17,7 @@ import Field from '@magento/venia-ui/lib/components/Field';
 import Checkbox from '@magento/venia-ui/lib/components/Checkbox';
 import AlertMessages from '../../ProductFullDetail/AlertMessages';
 import Loader from '../../Loader';
-import Identify from 'src/simi/Helper/Identify'
+import Identify from 'src/simi/Helper/Identify';
 
 const RewardPointDataPage = props => {
     const { formatMessage } = useIntl();
@@ -29,7 +29,6 @@ const RewardPointDataPage = props => {
         mpRewardPoints,
         setSubcribeLoading
     } = talonProps;
-
 
     let history = useHistory();
     const windowSize = useWindowSize();
@@ -51,7 +50,10 @@ const RewardPointDataPage = props => {
                 : addToast({
                       type: 'info',
                       message: formatMessage({
-                          id: 'Thanks For Your Subscribe'
+                          id:
+                              'Thank you for updating your email preferences. Your preferences have now been updated.',
+                          defaultMessage:
+                              'Thank you for updating your email preferences. Your preferences have now been updated.'
                       }),
                       timeout: 3000
                   });
@@ -145,12 +147,24 @@ const RewardPointDataPage = props => {
                   } else expireDateString = expireDateFormat;
                   return (
                       <tr className={classes.title}>
-                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{transaction_id}</td>
-                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{dateFormat}</td>
-                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{comment}</td>
-                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{point_amount}</td>
-                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{rewardStatus}</td>
-                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{expireDateString}</td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>
+                              {transaction_id}
+                          </td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>
+                              {dateFormat}
+                          </td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>
+                              {comment}
+                          </td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>
+                              {point_amount}
+                          </td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>
+                              {rewardStatus}
+                          </td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>
+                              {expireDateString}
+                          </td>
                       </tr>
                   );
               })

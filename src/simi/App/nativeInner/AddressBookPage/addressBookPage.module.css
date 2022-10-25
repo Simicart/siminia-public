@@ -52,7 +52,7 @@
 .wrapper {
     display: grid;
     grid-template-columns: 20% auto;
-    padding: 2rem 15px;
+    padding: 2rem 0px;
     /* margin-top: 30px; */
     gap: 30px;
 }

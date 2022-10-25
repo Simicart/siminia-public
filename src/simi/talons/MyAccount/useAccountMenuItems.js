@@ -32,8 +32,8 @@ export const useAccountMenuItems = props => {
         //     url: ''
         // },
         {
-            name: 'Favorites Lists',
-            id: 'accountMenu.favoritesListsLink',
+            name: 'WishList',
+            id: 'WishList',
             url: '/wishlist'
         },
         {
@@ -41,21 +41,21 @@ export const useAccountMenuItems = props => {
             id: 'accountMenu.addressBookLink',
             url: '/address-book'
         },
-        {
-            name: 'Saved Payments',
-            id: 'Saved Payments',
-            url: '/saved-payments'
-        },
-        {
-            name: 'Product Review',
-            id: 'Product Review',
-            url: '/product-review'
-        },
-        {
-            name: 'Communications',
-            id:  'Communications',
-            url: '/communications'
-        },
+        // {
+        //     name: 'Saved Payments',
+        //     id: 'Saved Payments',
+        //     url: '/saved-payments'
+        // },
+        // {
+        //     name: 'Product Review',
+        //     id: 'Product Review',
+        //     url: '/product-review'
+        // },
+        // {
+        //     name: 'Communications',
+        //     id:  'Communications',
+        //     url: '/communications'
+        // },
         {
             name: 'Account Information',
             id: 'Account Information',

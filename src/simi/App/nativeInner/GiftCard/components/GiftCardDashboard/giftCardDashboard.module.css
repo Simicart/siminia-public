@@ -11,6 +11,7 @@
 .wrapper {
     display: grid;
     grid-template-columns: 20% auto;
+    gap: 30px;
 }
 
 .block-gift-card {
@@ -278,7 +279,7 @@ tbody tr:last-child {
     width: 80px;
 }
 .wrapperContent {
-    width: 80%;
+    width: 100%;
 }
 @media (max-width: 820px) {
     .wrapper {

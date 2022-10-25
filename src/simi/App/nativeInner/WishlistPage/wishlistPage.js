@@ -13,7 +13,7 @@ import CreateWishlist from '@magento/venia-ui/lib/components/WishlistPage/create
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { useWindowSize } from '@magento/peregrine';
 import Loader from '../Loader';
-import {getBottomInsets} from '../Helper/Native'
+import { getBottomInsets } from '../Helper/Native';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { Redirect } from 'react-router-dom';
 
@@ -26,8 +26,8 @@ const WishlistPage = props => {
         wishlists
     } = talonProps;
     const [{ isSignedIn }] = useUserContext();
-    if(!isSignedIn){
-       return <Redirect to={'/sign-in'} />
+    if (!isSignedIn) {
+        return <Redirect to={'/sign-in'} />;
     }
     const { formatMessage } = useIntl();
     const error = errors.get('getCustomerWishlistQuery');
@@ -58,7 +58,7 @@ const WishlistPage = props => {
     }, [shouldRenderVisibilityToggle, wishlists]);
 
     if (loading && !error) {
-        return <Loader />;
+        return ''
     }
 
     let content;
@@ -94,26 +94,6 @@ const WishlistPage = props => {
             </Fragment>
         );
     }
-    const handleShare = () => {
-        if (navigator.share) {
-            navigator
-                .share({
-                    title: 'My phone',
-                    text: 'I shared this content via my mobile',
-                    url: window.location.href
-                })
-                .then(() => {})
-                .catch(error => {
-                    console.error(
-                        'Something went wrong sharing the blog',
-                        error
-                    );
-                });
-        } else {
-        }
-    };
-
-    const bottomInsets = getBottomInsets()
 
     return (
         <div className={`${classes.root} ${!isMobileSite ? 'container' : ''}`}>
@@ -123,36 +103,10 @@ const WishlistPage = props => {
                     <div className={classes.containerSub}>
                         <h1 className={classes.heading}>
                             <FormattedMessage
-                                values={{ count: wishlists.length }}
                                 id={'Favorites'}
                                 defaultMessage={'Favorites'}
                             />
                         </h1>
-                        {/* <div className={classes.btncontainer}>
-                            <button>
-                                {
-                                   formatMessage({
-                                    id: 'Add all to cart',
-                                    defaultMessage: 'Add all to cart'
-                                })
-                                }
-                            </button>
-                            <button>
-                            {
-                                   formatMessage({
-                                    id: 'Detele all',
-                                    defaultMessage: 'Delete all'
-                                })
-                                }
-                            </button>
-                        </div> */}
-                        <div
-                            style={{top: bottomInsets}}
-                            onClick={() => handleShare()}
-                            className={classes.btnShare}
-                        >
-                            <BsFillShareFill size={25} />
-                        </div>
                         {content}
                     </div>
                 </div>

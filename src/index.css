@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 body {
-    font-family: 'Roboto', sans-serif;    
+    /* font-family: 'Roboto', sans-serif;     */
+    font-family: 'Helvetica Neue';
     font-size: 14px;
     line-height: 1.5;
 }

@@ -225,69 +225,52 @@ const WishlistItem = props => {
                 alertMsg={alertMsg}
                 status="success"
             />
-            <div className={classes.wrapImage}>
-                <Image {...imageProps} />
-            </div>
-            <button
-                className={classes.deleteItem}
-                aria-label={removeProductAriaLabel}
-            >
-                {/* {!isMobileSite ? (
-                    <div className={classes.close} />
-                ) : ( */}
-                <ConfirmPopup
-                    trigger={<VscTrash size={25} />}
-                    content={
-                        <FormattedMessage
-                            id={
-                                'Are you sure about remove this item from wish list?'
-                            }
-                            defaultMessage={
-                                'Are you sure about remove this item from wish list?'
-                            }
-                        />
-                    }
-                    confirmCallback={handleRemoveProductFromWishlist}
-                />
-                {/* )} */}
-            </button>
-            <div className={classes.actionWrap}>
-                {review_count ? (
-                    <div className={classes.itemReviewRate}>
-                        <StaticRate rate={rating_summary} classes={classes} />
-                        <span className={classes.itemReviewCount}>
-                            ({review_count}{' '}
-                            {review_count
-                                ? formatMessage({ id: 'Reviews' })
-                                : formatMessage({ id: 'Review' })}
-                            )
-                        </span>
-                    </div>
-                ) : (
-                    ''
-                )}
-                <span className={classes.name}>{name}</span>{' '}
-                <div className={classes.priceContainer}>{price}</div>
-                {optionElements}
-            </div>
-            {/* <div className={classes.wrapSocialShare}>
-                {isMobileSite ? (
-                    <button
-                        onClick={handleShareMobile}
-                        className={classes.share}
-                    >
-                        <BsFillShareFill size={20} />
-                    </button>
-                ) : (
-                    <>
-                        <SocialShare
-                            product={product}
-                            className={classes.socialShare}
-                        />
-                    </>
-                )}
-                {addToCart}
-            </div> */}
+            <Link to={`${product.url_key}${product.url_suffix}`} className={classes.wrapper}>
+                <div className={classes.wrapImage}>
+                    <Image {...imageProps} />
+                </div>
+                <button
+                    className={classes.deleteItem}
+                    aria-label={removeProductAriaLabel}
+                >
+                    <ConfirmPopup
+                        trigger={<VscTrash size={25} />}
+                        content={
+                            <FormattedMessage
+                                id={
+                                    'Are you sure about remove this item from wish list?'
+                                }
+                                defaultMessage={
+                                    'Are you sure about remove this item from wish list?'
+                                }
+                            />
+                        }
+                        confirmCallback={handleRemoveProductFromWishlist}
+                    />
+                </button>
+                <div className={classes.actionWrap}>
+                    {review_count ? (
+                        <div className={classes.itemReviewRate}>
+                            <StaticRate
+                                rate={rating_summary}
+                                classes={classes}
+                            />
+                            <span className={classes.itemReviewCount}>
+                                ({review_count}{' '}
+                                {review_count
+                                    ? formatMessage({ id: 'Reviews' })
+                                    : formatMessage({ id: 'Review' })}
+                                )
+                            </span>
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                    <span className={classes.name}>{name}</span>{' '}
+                    <div className={classes.priceContainer}>{price}</div>
+                    {optionElements}
+                </div>
+            </Link>
         </div>
     );
 };

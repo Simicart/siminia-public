@@ -13,8 +13,6 @@ const SignInPage = props => {
     const { signInProps } = useSignInPage(props);
     const { formatMessage } = useIntl();
     
-    
-
     return (
         <div className={classes.root}>
             <StoreTitle>

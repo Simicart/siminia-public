@@ -19,6 +19,7 @@ import OrderRow from './orderRow';
 import OrderHistoryPageMb from './orderHistoryPageMb';
 import { Redirect } from 'react-router-dom';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
+import Loader from '../Loader';
 
 const PAGE_SIZE = 10;
 const errorIcon = (
@@ -103,7 +104,7 @@ const OrderHistoryPage = props => {
 
     const pageContents = useMemo(() => {
         if (isLoadingWithoutData) {
-            return <LoadingIndicator />;
+            return ''
         } else if (!isBackgroundLoading && searchText && !orders.length) {
             return (
                 <h3 className={classes.emptyHistoryMessage}>

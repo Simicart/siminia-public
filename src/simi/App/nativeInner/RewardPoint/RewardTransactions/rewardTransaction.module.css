@@ -6,6 +6,7 @@
 .wrapper {
     display: grid;
     grid-template-columns: 20% auto;
+    gap: 30px;
 }
 @media (max-width: 960px) {
     .wrapper {
@@ -29,8 +30,8 @@ tr {
     height: 50px;
 }
 .wrapperContainer {
-    padding: 2rem 3rem;
-    text-align: center;
+    /* padding: 2rem 3rem; */
+    text-align: start;
 }
 .transactionTitle {
     font-size: 20px;
