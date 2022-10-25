@@ -114,7 +114,7 @@ const AddressCard = props => {
                     {default_billing ? (
                         <span className={classes.defaultBilling}>
                             {formatMessage({
-                                id: 'Default Billing Addresst',
+                                id: 'Default Billing Address',
                                 defaultMessage: 'Default Billing Address'
                             })}
                         </span>
@@ -123,7 +123,7 @@ const AddressCard = props => {
                         <span className={classes.defaultShipping}>
                             {formatMessage({
                                 id: 'Default Shipping Address',
-                                defaultMessage: ''
+                                defaultMessage: 'Default Shipping Address'
                             })}
                         </span>
                     ) : null}
