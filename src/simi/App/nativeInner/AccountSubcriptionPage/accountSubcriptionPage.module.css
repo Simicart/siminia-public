@@ -6,6 +6,7 @@
 .wrapper {
     display: grid;
     grid-template-columns: 20% auto;
+    gap: 30px;
 }
 @media (max-width: 960px) {
     .wrapper {
@@ -14,8 +15,8 @@
     }
 }
 .container {
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    justify-content: center; */
 }
 @media (min-width: 376px) and (max-width: 745px) {
     .container {

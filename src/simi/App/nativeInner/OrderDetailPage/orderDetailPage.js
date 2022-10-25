@@ -742,7 +742,7 @@ const OrderDetailPage = props => {
                 <div className={classes.mbPayment}>
                     <div>
                         {formatMessage({
-                            id: 'Payment method',
+                            id: 'Payment Method',
                             defaultMessage: 'Payment Method'
                         })}
                     </div>

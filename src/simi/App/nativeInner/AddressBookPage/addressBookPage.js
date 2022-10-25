@@ -333,7 +333,7 @@ const AddressBookPage = props => {
                                     {PAGE_TITLE}
                                 </h1>
                                 <div
-                                    onClick={handleAddAddress}
+                                    // onClick={handleAddAddress}
                                     className={classes.addAddress}
                                 >
                                     <Link

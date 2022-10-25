@@ -52,8 +52,8 @@ const LeftMenu = props => {
         },
 
         {
-            name: 'Wishlist',
-            id: 'accountMenu.favoritesListsLink',
+            name: 'WishList',
+            id: 'WishList',
             url: '/wishlist'
         },
         {
@@ -61,22 +61,22 @@ const LeftMenu = props => {
             id: 'Address Book',
             url: '/address-book'
         },
-        {
-            name: 'Saved Payments',
-            id: 'Saved Payments',
-            url: '/saved-payments'
-        },
+        // {
+        //     name: 'Saved Payments',
+        //     id: 'Saved Payments',
+        //     url: '/saved-payments'
+        // },
 
-        {
-            name: 'Product Review',
-            id: 'Product Review',
-            url: '/product-review'
-        },
-        {
-            name: 'Communications',
-            id: 'Communications',
-            url: '/communications'
-        },
+        // {
+        //     name: 'Product Review',
+        //     id: 'Product Review',
+        //     url: '/product-review'
+        // },
+        // {
+        //     name: 'Communications',
+        //     id: 'Communications',
+        //     url: '/communications'
+        // },
 
         {
             name: 'Account Information',

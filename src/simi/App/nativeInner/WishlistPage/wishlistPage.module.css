@@ -8,8 +8,8 @@
 }
 
 .container {
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    justify-content: center; */
     /* flex-direction: column; */
 }
 @media (min-width: 376px) and (max-width: 745px) {
@@ -20,7 +20,7 @@
     }
 }
 .containerSub {
-    min-width: 80%;
+    /* min-width: 80%; */
 }
 
 .btncontainer {

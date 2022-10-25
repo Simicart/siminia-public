@@ -1,14 +1,17 @@
 .productAlert {
-    padding: 2rem 0rem !important;
+    /* padding: 2rem 0rem !important; */
+    display: grid;
+    padding: 2rem 3rem;
 }
 
 
 .wrapper {
     display: grid;
     grid-template-columns: 20% auto;
+    grid-gap: 30px;
 }
 .mainContent {
-    padding: 0 4rem;
+    /* padding: 0 4rem; */
 }
 @media (max-width: 960px) {
     .wrapper {

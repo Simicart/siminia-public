@@ -14,6 +14,7 @@ import ActionMenu from '@magento/venia-ui/lib/components/WishlistPage/actionMenu
 import NoWishList from './NoWishList';
 import Gallery from '../../../BaseComponents/Products/Gallery';
 import Pagination from '@magento/venia-ui/lib/components/Pagination';
+import Loader from '../Loader';
 
 // import Gallery from '.././../nativeInner/Products/Gallery';
 
@@ -38,14 +39,12 @@ const Wishlist = props => {
         isFetchingMore,
         handleLoadMore
     } = talonProps;
-    console.log('items', items);
     let productList = [];
     if (items) {
         for (let i = 0; i < items.length; i++) {
             productList.push(items[i].product);
         }
     }
-    console.log('productList', productList);
     const classes = useStyle(defaultClasses, props.classes);
     const contentClass = isOpen ? classes.content : classes.content_hidden;
     const contentToggleIconSrc = isOpen ? ChevronUp : ChevronDown;
@@ -135,7 +134,7 @@ const Wishlist = props => {
                         />
                     </div>
                 </div>
-                <LoadingIndicator />
+                <Loader />
             </div>
         );
     }

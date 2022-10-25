@@ -16,7 +16,7 @@ import Password from '@magento/venia-ui/lib/components/Password';
 // import FormError from '@magento/venia-ui/lib/components/FormError/formError';
 import GoogleRecaptcha from '../../../GoogleReCaptcha';
 import FormError from '../formError';
-
+import Loader from '../../../Loader';
 const metaPackagesEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&
@@ -51,7 +51,9 @@ const SignIn = props => {
     const forgotPasswordClasses = {
         root: classes.forgotPasswordButton
     };
-
+    if (isBusy) {
+        return <Loader />;
+    }
     return (
         <div data-cy="SignIn-root" className={classes.root}>
             <span data-cy="SignIn-title" className={classes.title}>
@@ -107,7 +109,11 @@ const SignIn = props => {
                         />
                     </LinkButton>
                 </div>
-                {metaPackagesEnabled ? <GoogleRecaptcha {...recaptchaWidgetProps} /> : '' }
+                {metaPackagesEnabled ? (
+                    <GoogleRecaptcha {...recaptchaWidgetProps} />
+                ) : (
+                    ''
+                )}
                 <div className={classes.buttonsContainer}>
                     <Button
                         priority="high"

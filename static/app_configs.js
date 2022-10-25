@@ -2462,7 +2462,9 @@ var DASHBOARD_CONFIG = {
                     'Use as my default billing address':'استخدم كعنوان الفاتورة الافتراضي الخاص بي',
                     'Add New Address':'أضف عنوان جديد',
                     'Favorites':'المفضلة',
-                   
+                    'Your order is:':'طلبك هو:',
+                    'You have placed an order successfully!':'لقد قدمت طلبًا بنجاح!',
+                    'Thank you for updating your email preferences. Your preferences have now been updated.':'شكرا لك على تحديث تفضيلات البريد الإلكتروني الخاص بك. تم الآن تحديث تفضيلاتك.'
                 }
             },
             currency_rate: {
