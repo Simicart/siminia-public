@@ -36,7 +36,6 @@
     color: #ffffff;
     cursor: pointer;
     display: inline-block;
-    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 600;
     padding: 7px 15px;
     box-sizing: border-box;
@@ -61,7 +60,6 @@
     background-clip: padding-box;
     border: 1px solid #c2c2c2;
     border-radius: 1px;
-    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
     padding: 0 30px 0 35px;

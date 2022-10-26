@@ -143,7 +143,9 @@ export const useAddressBookPage = (props = {}) => {
     }, []);
 
 
-
+    const goToAddressBookPage = () => {
+        window.location.pathname = '/address-book';
+    };
     const handleConfirmDialog = useCallback(
         async formValues => {
             if (isDialogEditMode) {
@@ -163,9 +165,7 @@ export const useAddressBookPage = (props = {}) => {
                         awaitRefetchQueries: true
                        
                     });
-                    setIsDialogOpen(false);
-                    
-                   
+                    setIsDialogOpen(false);                   
                 } catch {
                     // Make sure any errors from the mutations are displayed.
                     setDisplayError(true);
@@ -192,6 +192,7 @@ export const useAddressBookPage = (props = {}) => {
                     });
 
                     setIsDialogOpen(false);
+                    goToAddressBookPage()
                 } catch {
                     // Make sure any errors from the mutations are displayed.
                     setDisplayError(true);

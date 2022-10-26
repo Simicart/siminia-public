@@ -43,7 +43,6 @@
     justify-content: space-between;
     padding: 10px 1rem;
     color: #444444;
-    font-family: Nunito;
     font-size: 14px;
     font-weight: bold;
     letter-spacing: 0;
@@ -65,7 +64,6 @@
 .defaultBilling,
 .defaultShipping {
     color: #333132;
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
@@ -79,7 +77,6 @@
 }
 .contentContainer span {
     color: #333132;
-    font-family: 'Helvetica Neue';
     font-size: 14px;
     letter-spacing: 0;
     line-height: 16px;
@@ -94,7 +91,6 @@
 }
 .actionContainer button span {
     color: #f69435;
-    font-family: 'Helvetica Neue';
     font-size: 14px;
     letter-spacing: 0;
     line-height: 16px;
@@ -108,7 +104,6 @@
     /* border-radius: 0.375rem; */
     font-size: 0.75rem;
     font-weight: 600;
-    font-family: poppins;
     /* padding-bottom: 20px ; */
 }
 

@@ -1,4 +1,3 @@
-
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -15,21 +14,24 @@
     cursor: pointer;
 }
 .logout a {
-  color: #333132;
-  font-family: "Helvetica Neue";
-  font-size: 16px;
-  font-weight: bold;
-  letter-spacing: 0;
-  line-height: 19px;
-  
+    color: #333132;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
 }
 
 .item {
     padding: 15px;
     border-bottom: 1px solid rgb(235, 229, 229);
     display: flex;
-    background-color: #DCDCDC;
+    background-color: #dcdcdc;
     margin-bottom: 10px;
+    color: #333132;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 19px;
 }
 .icon {
     margin-right: 15px;
@@ -41,21 +43,18 @@
     border-bottom: 1px solid rgb(235, 229, 229);
     /* border-left: 4px solid #FBD339; */
     display: flex;
-    color: #FFFFFF;
-    font-family: "Helvetica Neue";
+    color: #ffffff;
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
     line-height: 19px;
     background-color: #333132;
     margin-bottom: 10px;
-
 }
-.welcome{
+.welcome {
     height: 108px;
-    background-color: #F69435;
-    color: #FFFFFF;
-    font-family: "Helvetica Neue";
+    background-color: #f69435;
+    color: #ffffff;
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 0;

@@ -7,13 +7,12 @@
 .wrapper {
     display: grid;
     grid-template-columns: 20% auto;
-    padding: 2rem 15px;
+    padding: 2rem 0px;
     /* margin-top: 30px; */
     gap: 30px;
 }
 .heading {
     color: #333132;
-    font-family: 'Helvetica Neue';
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 0;
@@ -38,7 +37,6 @@
 }
 .infoTitle {
     color: #333132;
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
@@ -51,7 +49,6 @@
 
 label[class*='field-label-ifR'] {
     color: #000000;
-    font-family: 'Helvetica Neue';
     font-size: 14px !important;
     letter-spacing: 0;
     font-weight: unset !important;
@@ -60,7 +57,6 @@ label[class*='field-label-ifR'] {
 .default_address_check,
 .default_address_check2 {
     color: #000000;
-    font-family: 'Helvetica Neue';
     font-size: 14px !important;
     letter-spacing: 0;
     font-weight: unset !important;
@@ -96,7 +92,6 @@ label[class*='field-label-ifR'] {
     height: 48px;
     width: 122px;
     color: #ffffff;
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
@@ -109,7 +104,6 @@ label[class*='field-label-ifR'] {
 .form select {
     min-height: 48px;
     color: #000000;
-    font-family: 'Helvetica Neue';
     font-size: 14px;
     letter-spacing: 0;
     line-height: 16px;
