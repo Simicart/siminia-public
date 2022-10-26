@@ -2,7 +2,7 @@
     padding-top: 0;
     /* max-width: var(--venia-global-maxWidth); */
     margin: 0 auto;
-    min-width: 80%;
+    /* min-width: 80%; */
 }
 .addressbookContent {
     /* display: flex;
@@ -16,7 +16,6 @@
     padding-top: 8px;
     /* margin-left: 20%; */
     color: #333132;
-    font-family: 'Helvetica Neue';
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 0;
@@ -42,7 +41,6 @@
     cursor: pointer;
 
     color: #ffffff;
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
@@ -58,7 +56,6 @@
 }
 .defaultAddress {
     color: #333132;
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
@@ -68,7 +65,6 @@
 }
 .noDefault{
     color: #333132;
-    font-family: 'Helvetica Neue';
     font-size: 18px;
     letter-spacing: 0;
     line-height: 14px;

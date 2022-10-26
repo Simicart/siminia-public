@@ -30,7 +30,6 @@
 }
 .heading {
     /* justify-self: center; */
-    font-family: poppins;
     font-weight: var(--venia-global-fontWeight-bold);
     font-size: 24px;
     font-weight: 500;
@@ -45,7 +44,6 @@
     font-weight: var(--venia-global-fontWeight-bold); */
     margin-bottom: 15px;
     color: #333132;
-    font-family: 'Helvetica Neue';
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 0;
@@ -57,7 +55,6 @@
     font-size: 1rem;
     margin-bottom: 20px;
     color: #333132;
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
@@ -65,7 +62,6 @@
 }
 .form label[class*='checkbox-root-RLX'] span[class*='checkbox-label-3Wk'] {
     color: #000000;
-    font-family: 'Helvetica Neue';
     font-size: 14px;
     letter-spacing: 0;
     line-height: 16px;
@@ -84,7 +80,6 @@
     height: 48px;
     width: 185px;
     color: #ffffff;
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;

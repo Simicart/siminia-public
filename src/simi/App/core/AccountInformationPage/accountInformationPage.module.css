@@ -51,7 +51,6 @@
     text-align: justify;
     font-weight: unset;
     color: #000000;
-    font-family: 'Helvetica Neue';
     font-size: 14px;
     letter-spacing: 0;
     line-height: 16px;
@@ -78,7 +77,6 @@ button.saveProfile {
     line-height: 16px;
     /* float: left; */
 
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
@@ -97,7 +95,6 @@ button.saveProfile {
     letter-spacing: 0;
     line-height: 15px;
     font-weight: unset;
-    font-family: 'Helvetica Neue';
     font-size: 14px;
     letter-spacing: 0;
     line-height: 16px;
@@ -129,7 +126,6 @@ button.saveProfile {
     line-height: 14px; */
 
     color: #333132;
-    font-family: 'Helvetica Neue';
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 0;
@@ -144,7 +140,6 @@ button.saveProfile {
     letter-spacing: 0;
     line-height: 18px; */
     color: #333132;
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;

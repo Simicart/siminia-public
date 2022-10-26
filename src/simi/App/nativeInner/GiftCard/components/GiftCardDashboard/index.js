@@ -14,6 +14,7 @@ import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/Loadi
 import { Title } from '@magento/venia-ui/lib/components/Head';
 import { Price } from '@magento/peregrine';
 import LeftMenu from 'src/simi/App/core/LeftMenu';
+import Loader from '../../../Loader';
 
 const GiftCardDashboard = props => {
     const [gcCode, setGcCode] = useState('');
@@ -92,7 +93,7 @@ const GiftCardDashboard = props => {
     }, [gcDashboardLoading]);
 
     if (!gcDashboardData || !gcDashboardData.mpGiftCardDashboardConfig) {
-        return fullPageLoadingIndicator;
+        return <Loader/>;
     }
 
     const {

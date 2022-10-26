@@ -8,6 +8,7 @@ import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator'
 import moment from 'moment';
 import { useWindowSize } from '@magento/peregrine';
 import Identify from 'src/simi/Helper/Identify'
+import Loader from '../../Loader';
 
 const RewardTransaction = props => {
     const { formatMessage } = useIntl();
@@ -30,7 +31,7 @@ const RewardTransaction = props => {
     }, []);
 
     if (isLoadingWithoutData) {
-        return <LoadingIndicator />;
+        return <Loader />;
     }
 
     const transactionRow =

@@ -40,7 +40,7 @@
 }
 .viewOrder {
     color: #0058AC;
-    font-family: poppins;
+    /* font-family: poppins; */
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0;
@@ -158,7 +158,7 @@
 }
 .btn {
     color: #0058AC;
-    font-family: poppins;
+    /* font-family: poppins; */
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0;
@@ -167,7 +167,7 @@
 }
 .btnDis {
     color: #888b8f;
-    font-family: poppins;
+    /* font-family: poppins; */
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0;

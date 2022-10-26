@@ -119,7 +119,7 @@ const Main = props => {
             <Helmet>{links}</Helmet>
             {/* <StoreTitle /> comment out due to requesting extra query */}
             <main
-                style={{ backgroundColor: configColor.app_background }}
+                // style={{ backgroundColor: configColor.app_background }}
                 className={classes.root}
             >
                 <div

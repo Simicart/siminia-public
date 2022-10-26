@@ -7,7 +7,6 @@ div[class*='dialog-dialog-2xq']
     div[class*='dialog-header-1L6']
     span[class*='dialog-headerText-1OU'] {
     color: #333132;
-    font-family: 'Helvetica Neue';
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 0;
@@ -29,7 +28,6 @@ div[class*='dialog-dialog-2xq']
 }
 .infoTitle {
     color: #333132;
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
@@ -42,7 +40,6 @@ div[class*='dialog-dialog-2xq']
 
 label[class*='field-label-ifR'] {
     color: #000000;
-    font-family: 'Helvetica Neue';
     font-size: 14px !important;
     letter-spacing: 0;
     font-weight: unset !important;
@@ -51,7 +48,6 @@ label[class*='field-label-ifR'] {
 .default_address_check,
 .default_address_check2 {
     color: #000000;
-    font-family: 'Helvetica Neue';
     font-size: 14px !important;
     letter-spacing: 0;
     font-weight: unset !important;
@@ -87,7 +83,6 @@ label[class*='field-label-ifR'] {
     height: 48px;
     width: 122px;
     color: #ffffff;
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
@@ -100,7 +95,6 @@ label[class*='field-label-ifR'] {
 .form select {
     min-height: 48px;
     color: #000000;
-    font-family: 'Helvetica Neue';
     font-size: 14px;
     letter-spacing: 0;
     line-height: 16px;
@@ -126,7 +120,6 @@ button[class*='dialog-cancelButton-1a0'] {
     height: 48px;
     width: 122px;
     color: #333132;
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
@@ -140,7 +133,6 @@ button[class*='dialog-confirmButton-RWl'] {
     height: 48px;
     width: 122px;
     color: #ffffff;
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
