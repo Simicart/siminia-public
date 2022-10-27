@@ -8,11 +8,13 @@ import {
 import { useSimiPagination } from 'src/simi/talons/Pagination/useSimiPagination';
 let sortByData = null;
 let filterData = null;
+import { GET_BRANDS_LIST } from '../../App/nativeInner/ShopByBrand/talons/Brand.gql';
 
 import {
     getCateNoFilter,
     getFilterFromCate
 } from 'src/simi/queries/catalog_gql/category.gql'; //'src/simi/queries/catalog_gql/simiCategory.gql';
+import { useQuery } from '@apollo/client';
 
 // use pagination follow site magento default ( change both page and pagesize)
 export const useCategoryContentSimiPagination = props => {
@@ -99,6 +101,20 @@ export const useCategoryContentSimiPagination = props => {
         getProductsByCategory({ variables });
         getFilterByCategory({ variables });
     }
+
+
+    const {
+        data: brandsData,
+        loading: brandsLoading,
+        error: brandsError
+    } = useQuery(GET_BRANDS_LIST, {
+        variables: {
+            pageSize: 199,
+            currentPage: 1,
+        },
+        fetchPolicy:"cache-and-network"
+    });
+
 
     useEffect(() => {
         if (categoryId) {
@@ -210,6 +226,7 @@ export const useCategoryContentSimiPagination = props => {
         sortByData,
         appliedFilter,
         cateEmpty,
-        pageControl
+        pageControl,
+        brandsData
     };
 };

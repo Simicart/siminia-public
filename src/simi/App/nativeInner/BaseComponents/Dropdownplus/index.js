@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'react-feather';
+import { ChevronDown, ChevronUp, Plus, Minus } from 'react-feather';
 import Addic from 'src/simi/BaseComponents/Icon/Add';
 import Minusic from 'src/simi/BaseComponents/Icon/Minus';
 require('./index.scss');
@@ -28,7 +28,7 @@ const Dropdownplus = props => {
                         display: showing ? 'none' : 'block'
                     }}
                 >
-                    <ChevronDown size={22} />
+                    <Plus size={22} />
                 </div>
                 <div
                     className={classes['dropdownplus-title-minus-ic']}
@@ -36,7 +36,7 @@ const Dropdownplus = props => {
                         display: showing ? 'block' : 'none'
                     }}
                 >
-                   <ChevronUp size={22} /> 
+                   <Minus size={22} /> 
                 </div>
             </div>
             <div

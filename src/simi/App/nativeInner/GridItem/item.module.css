@@ -14,16 +14,17 @@
 }
 .siminia-product-des .product-name {
     width: 100%;
-    font-size: 16px;
     margin-bottom: 10px;
     margin-bottom: 8px;
     text-align: start;
-    font-weight: 500;
     text-overflow: ellipsis;
     overflow: hidden;
-    line-height: 22px;
     max-height: 44px;
     cursor: pointer;
+    color: #000000;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 18px;
 }
 
 .siminia-product-des .price {
@@ -48,12 +49,12 @@
         padding: 0;
     }
 }
-.soldOut{
+.soldOut {
     position: absolute;
     padding: 15px 20px;
     opacity: 0.6;
     border-radius: 8px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     color: #150826;
     font-size: 14px;
     font-weight: bold;
@@ -131,8 +132,10 @@ Rate
 }
 .item-review-count {
     display: inline-block;
+    color: #555555;
     font-size: 14px;
-    line-height: 15px;
+    letter-spacing: 0;
+    line-height: 16px;
 }
 
 .special-price .sale_off {
@@ -230,22 +233,22 @@ Rate
 }
 
 @media (min-width: 769px) {
-    .sold{
+    .sold {
         display: none;
     }
 }
 @media (max-width: 768px) {
-    .discountBadge{
+    .discountBadge {
         height: 20px;
         width: 49px;
         border-radius: 3px;
-        background-color: #FF5F59;
+        background-color: #ff5f59;
         font-size: 12px;
         font-weight: 500;
         letter-spacing: 0;
         line-height: 14px;
         padding: 3px 8px;
-        top:unset;
+        top: unset;
         bottom: 0px;
     }
     /* .sold{
@@ -262,7 +265,7 @@ Rate
         /* width: 100%; */
         max-width: -webkit-fill-available;
         border-radius: 8px;
-        background-color: #FFFFFF;
+        background-color: #ffffff;
     }
     .siminia-product-image {
         height: 186px;
@@ -273,21 +276,21 @@ Rate
     }
     .siminia-product-image img {
         /* max-width: 186px;*/
-        max-height: 186px; 
+        max-height: 186px;
         width: 100%;
         height: auto;
         border-radius: 6px;
-        padding: 3px
+        padding: 3px;
     }
     .item-review-rate {
         display: none;
     }
-    
+
     .siminia-product-des .product-name {
         margin-bottom: 0px;
         /* height: 33px; */
         width: 176px;
-        color: #4F4F4F;
+        color: #4f4f4f;
         font-family: Roboto;
         font-size: 13px;
         letter-spacing: 0;
@@ -296,7 +299,7 @@ Rate
     .configurable-aslowas {
         display: none;
     }
-    .prices-layout > div:nth-child(2) > div > div > span > span{
+    .prices-layout > div:nth-child(2) > div > div > span > span {
         height: 19px;
         width: 61px;
         font-family: Roboto;
@@ -310,7 +313,7 @@ Rate
     }
 }
 
-@media(max-width: 1023px) {
+@media (max-width: 1023px) {
     .product-grid-addcartbtn {
         min-height: 30px;
         font-size: 14px;
