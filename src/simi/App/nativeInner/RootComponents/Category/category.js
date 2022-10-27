@@ -47,7 +47,7 @@ const Category = props => {
         parameter1: 'page',
         parameter2: 'product_list_limit',
         initialTotalPages: 1,
-        defaultInitialPageSize: 299,
+        defaultInitialPageSize: 12,
         defaultInitialPage: 1
     });
 
@@ -58,7 +58,8 @@ const Category = props => {
         pageSize,
         sortByData,
         appliedFilter,
-        pageControl
+        pageControl,
+        brandsData
     } = talonProps;
     if (error) return <div>{formatMessage({ id: 'Data Fetch Error' })}</div>;
 
@@ -116,7 +117,7 @@ const Category = props => {
                     </>
                 )}
 
-                {!isMobileSite && breadcrumb && breadcrumb.length ? (
+                {/* {!isMobileSite && breadcrumb && breadcrumb.length ? (
                     <div
                         style={{
                             paddingTop: '1.5rem',
@@ -127,7 +128,7 @@ const Category = props => {
                     </div>
                 ) : (
                     ''
-                )}
+                )} */}
                 {TitleHelper.renderMetaHeader({
                     title: category.meta_title
                         ? category.meta_title
@@ -176,6 +177,7 @@ const Category = props => {
                             loading={loading}
                             loadStyle={loadStyle}
                             pageControl={pageControl}
+                            brandsData={brandsData}
                         />
                     </div>
                 )}

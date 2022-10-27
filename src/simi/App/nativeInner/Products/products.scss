@@ -1,21 +1,16 @@
 .products-root {
     .title {
-        font-size: 1.5rem;
-        font-weight: 400;
-        margin: 0 0 1.5rem;
-        padding: 0 0.25rem 6px;
-        margin-top: 15px;
-        display: none;
+        margin-top: 60px;
+        margin-bottom: 40px;
     }
 
     .categoryTitle {
-        color: black;
-        font-size: 30px;
-        font-weight: 300;
-        line-height: 41px;
-        font-weight: 600;
-        text-align: start;
-        display: none;
+        text-align: center;
+        color: #000000;
+        font-size: 24px;
+        font-weight: bold;
+        letter-spacing: 0;
+        line-height: 29px;
     }
     .wrapCategoryDesription {
         padding: 0 10px;
@@ -35,24 +30,85 @@
             display: flex;
             justify-content: space-between;
             padding-bottom: 10px;
-            border-bottom: solid 1px #d3d3d3;
+            border-bottom: solid 1px #000000;
             margin-bottom: 29px;
+            align-items: flex-end;
             .category-title {
                 display: none;
             }
         }
         .items-count {
             font-weight: 400;
-            font-size: 14px;
-            line-height: 19px;
             white-space: nowrap;
             margin-top: 11px;
             height: 22px;
+            color: #555555;
+            font-size: 13px;
+            letter-spacing: 0;
+            line-height: 15px;
         }
         .left-navigation {
             display: inline-block;
             margin-inline-end: 28px;
             margin-bottom: 15px;
+            .brands {
+                margin-top: 20px;
+                box-sizing: border-box;
+                height: auto;
+                border: 1px solid #dcdcdc;
+                background-color: #ffffff;
+                .brand-heading {
+                    display: flex;
+                    padding: 0 20px;
+                    justify-content: space-between;
+                    margin-top: 20px;
+                    .brand-title {
+                        color: #555555;
+                        text-transform: uppercase;
+                        font-size: 16px;
+                        font-weight: bold;
+                        letter-spacing: 0;
+                        line-height: 19px;
+                    }
+                    .view-all {
+                        display: flex;
+                        align-items: center;
+                        span {
+                            color: #000000;
+                            font-size: 14px;
+                            font-weight: bold;
+                            letter-spacing: 0;
+                            line-height: 17px;
+                        }
+                        a{
+                            color: #000000;
+                            font-size: 14px;
+                            font-weight: bold;
+                            letter-spacing: 0;
+                            line-height: 17px;
+                        }
+                        .arrow-right {
+                            font-size: 20px;
+                        }
+                    }
+                }
+                .brands-list {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    padding: 0 20px;
+                    margin-top: 20px;
+                    row-gap: 20px;
+                    column-gap: 15px;
+                    margin-bottom: 35px;
+                    div {
+                        border: 1px solid #e6e6e6;
+                        background-color: #ffffff;
+                        img {
+                            padding: 5px;
+                        }
+                    }
+                }
+            }
             @media (max-width: 1023px) {
                 width: 100%;
                 margin: 0;
@@ -72,12 +128,28 @@
             // Sort by
             .top-sort-by {
                 position: relative;
-                min-width: 217px;
+                width: 152px;
                 margin-bottom: 15px;
                 .sort-by-select {
                     display: flex;
                     margin-top: 14px;
                     min-height: 30px;
+                    .dropdownoption {
+                        .dropdownoption-inner {
+                            margin-top: 10px;
+                            margin-bottom: 2px;
+                            box-sizing: border-box;
+                            width: 152px;
+                            border: 1px solid #dcdcdc;
+                            background-color: #ffffff;
+                            position: absolute;
+                            inset-inline-start: 0;
+                            box-shadow: 0 2px 15px 0 #828282bd;
+                            border: none;
+                            background-color: white;
+                            padding: 7px 16px;
+                        }
+                    }
                     @media (max-width: 1023px) {
                         min-height: 45px;
                         top: 8px;
@@ -91,6 +163,11 @@
                         background-color: #e0e0e0;
                         font-weight: 400;
                         border-color: transparent;
+                        box-sizing: border-box;
+                        height: 40px;
+                        width: 152px;
+                        border: 1px solid #dcdcdc;
+                        background-color: #ffffff;
                         &.showing {
                             -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
                                 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -142,6 +219,31 @@
     */
     .product-grid-pagination {
         margin-top: 40px;
+        .list-items {
+            .config-page {
+                ul {
+                    display: none !important;
+                }
+                .items-per-page {
+                    .items-per-page-select {
+                        font-weight: bold;
+                    }
+                    .wrapItemCount {
+                        margin-inline-end: 10px;
+                        span {
+                            margin-inline-end: 5px;
+                        }
+                        .itemCount {
+                            color: #000000;
+                            font-size: 14px;
+                            font-weight: bold;
+                            letter-spacing: 0;
+                            line-height: 17px;
+                        }
+                    }
+                }
+            }
+        }
         .items-per-page {
             .item-from-to {
                 @media (max-width: 1023px) {

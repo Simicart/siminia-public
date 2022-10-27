@@ -191,7 +191,7 @@ class Pagination extends React.Component {
                         {lastItem} <FormattedMessage id={'of'} /> {totalItem}
                     </span>
                 )}
-                <span style={{ fontWeight: 600, fontSize: 16 }}>
+                <span style={{ fontSize: 16 }}>
                     <FormattedMessage id={'Show'} />
                 </span>
                 <span

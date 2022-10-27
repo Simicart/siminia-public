@@ -6,7 +6,7 @@ import memoize from 'memoize-one';
 import { useWindowSize } from '@magento/peregrine';
 import { randomString } from 'src/simi/Helper/String';
 import { useIntl } from 'react-intl';
-import { CheckSquare, Square } from 'react-feather';
+import { CheckSquare, Square,CheckCircle, Check } from 'react-feather';
 import Button from '@magento/venia-ui/lib/components/Button/button';
 import { smoothScrollToView } from 'src/simi/Helper/Behavior';
 
@@ -18,7 +18,7 @@ const dropDownPlusClasses = {
     'dropdownplus-inner': 'dropdownplus-inner'
 };
 
-const checkedIcon = <CheckSquare />;
+const checkedIcon = <Check />;
 const uncheckedIcon = <Square />;
 
 const Filter = props => {
@@ -91,7 +91,7 @@ const Filter = props => {
                                     {checkedIcon}
                                 </span>
                                 <span className="filter-item-unchecked">
-                                    {uncheckedIcon}
+                                    {/* {uncheckedIcon} */}
                                 </span>
                                 <span className="filter-item-text-ctn">
                                     {name}
@@ -277,9 +277,9 @@ const Filter = props => {
                 {renderFilterItems()}
                 <div className="reset-done-filter">
                     <Button className="btnDone" onClick={() => applyFilter()} priority="high">
-                        {formatMessage({ id: 'Done' })}
+                        {formatMessage({ id: 'Apply' })}
                     </Button>
-                    {renderClearButton()}
+                    {/* {renderClearButton()} */}
                 </div>
                 
             </div>

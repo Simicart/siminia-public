@@ -116,8 +116,8 @@ const Simple = props => {
     }
     return (
         <div className={`${classes['product-prices']} product-prices`}>
-            {price}
             {price_label}
+            {price}
             {special_price_label}
             {price_excluding_tax}
             {price_including_tax}

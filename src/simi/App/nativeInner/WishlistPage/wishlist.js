@@ -97,7 +97,7 @@ const Wishlist = props => {
 
     const contentMessageElement = itemsCount ? (
         <Fragment>
-            <WishlistItems items={items} wishlistId={id} />
+            <WishlistItems itemsCount={itemsCount} items={items} wishlistId={id} />
             {/* <Gallery items={productList} history={history} /> */}
             {/* {loadMoreButton} */}
         </Fragment>
@@ -156,6 +156,7 @@ const Wishlist = props => {
         </div>
     ) : null;
 
+
     return (
         <div className={classes.root}>
             <div className={classes.header}>
@@ -167,27 +168,6 @@ const Wishlist = props => {
             </div>
             <div className={contentClass}>
                 {contentMessageElement}
-                <div className={classes.pageSize}>
-                    <span>
-                        {formatMessage({
-                            id: 'Show',
-                            defaultMessage: 'Show'
-                        })}
-                    </span>
-                    <span className={classes.pageSizeInput}>
-                        <select>
-                            <option value="4">4</option>
-                            <option value="8">8</option>
-                            <option value="12">12</option>
-                        </select>
-                    </span>
-                    <span>
-                        {formatMessage({
-                            id: 'per page',
-                            defaultMessage: 'per page'
-                        })}
-                    </span>
-                </div>
             </div>
         </div>
     );

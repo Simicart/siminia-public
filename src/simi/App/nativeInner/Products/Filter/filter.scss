@@ -1,18 +1,27 @@
 .left-navigation {
     .filter-products {
-        .reset-done-filter{
-            display: grid;
+        .reset-done-filter {
+            // display: grid;
             grid-template-columns: auto auto;
-            grid-template-areas: "reset done";
+            grid-template-areas: 'reset done';
             justify-content: space-evenly;
             background: unset;
+            display: flex;
+            margin-top: 12px;
+            justify-content: center;
             .btnDone {
-                grid-area: done;
-                height: auto;
-                padding: 10px 20px;
-                background-color: var(--venia-global-color-button);
-                color: var(--venia-global-color-button-text);
-                >span{
+                // grid-area: done;
+                // height: auto;
+                // padding: 10px 20px;
+                // background-color: var(--venia-global-color-button);
+                // color: var(--venia-global-color-button-text);
+                box-sizing: border-box;
+                height: 48px;
+                width: 123px;
+                border: 1px solid #000000;
+                border-radius: 24px;
+                background-color: #ffffff;
+                > span {
                     font-size: 16px;
                     font-weight: 500;
                     letter-spacing: 0;
@@ -24,8 +33,8 @@
                 box-sizing: border-box;
                 height: auto;
                 padding: 10px 20px;
-                background-color: #ededed;   
-                .action-clear{
+                background-color: #ededed;
+                .action-clear {
                     color: #000;
                     font-size: 16px;
                     font-weight: 500;
@@ -38,7 +47,8 @@
             }
         }
         padding: 20px 18px;
-        background-color: #f4f4f4;
+        border: 1px solid #dcdcdc;
+        background-color: #ffffff;
         .title {
             text-transform: uppercase;
             color: #2d2d2d;
@@ -65,11 +75,14 @@
                 padding-bottom: 5px;
             }
             .dropdownplus-title {
-                font-size: 18px;
-                font-weight: 600;
                 display: flex;
                 justify-content: space-between;
-                line-height: 24px;
+
+                color: #000000;
+                font-size: 16px;
+                font-weight: 500;
+                letter-spacing: 0;
+                line-height: 19px;
                 svg {
                     width: 20px !important;
                     height: 20px !important;
@@ -77,7 +90,7 @@
             }
             &:hover .dropdownplus-title {
                 cursor: pointer;
-                color: #0058ac;
+                // color: #0058ac;
             }
             .dropdownplus-title-minus-ic {
                 width: 25px;
@@ -90,7 +103,7 @@
         }
 
         .dropdownplus:not(:last-child) {
-            border-bottom: 1px solid #d3d3d3;
+            border-bottom: 1px solid #dcdcdc;
         }
 
         .filter-item {
@@ -107,11 +120,30 @@
             .filter-item-checked {
                 display: none;
             }
+            .filter-item-unchecked {
+                box-sizing: border-box;
+                height: 24px;
+                width: 24px;
+                border: 1px solid #2d2e30;
+                background-color: #ffffff;
+                margin-inline-end: 16px;
+            }
             input[type='checkbox']:checked ~ .filter-item-unchecked {
                 display: none;
             }
             input[type='checkbox']:checked ~ .filter-item-checked {
-                display: block;
+                display: flex;
+                height: 24px;
+                width: 24px;
+                background-color: #333132;
+                justify-content: center;
+                align-items: center;
+                margin-inline-end: 16px;
+                svg {
+                    height: 30px;
+                    width: 13px;
+                    color: #ffffff;
+                }
             }
             .filter-item-text-ctn {
                 font-size: 14px;
@@ -126,7 +158,7 @@
                 }
             }
             &:hover .filter-item-text-ctn {
-                color: #0058ac;
+                // color: #0058ac;
             }
         }
         .clear-filter {
@@ -184,13 +216,13 @@
 
 @media (max-width: 480px) {
     .left-navigation {
-        .siminia-phone-filter{
+        .siminia-phone-filter {
             border: none;
             margin-top: 0px;
             padding: 0px;
             min-height: 100%;
             position: relative;
-            .noFilters{
+            .noFilters {
                 position: absolute;
                 z-index: 1;
                 font-size: 1rem;
@@ -203,16 +235,16 @@
                 justify-content: center;
                 padding: 0 10px;
             }
-            > div{
+            > div {
                 justify-content: flex-end;
             }
-            .filter-products{
-                >div {
+            .filter-products {
+                > div {
                     padding: 40px 10px;
                 }
                 padding: 0;
                 .filter-item {
-                    .filter-item-text-ctn{
+                    .filter-item-text-ctn {
                         color: #150826;
                         font-size: 14px;
                         letter-spacing: 0;
@@ -223,8 +255,8 @@
                     }
                 }
                 .dropdownplus {
-                    border-bottom: 1px solid #F2F2F3;
-                    padding:5px;
+                    border-bottom: 1px solid #f2f2f3;
+                    padding: 5px;
                     margin-bottom: 20px;
                     .dropdownplus-title {
                         color: #150826;
@@ -234,29 +266,40 @@
                         line-height: 19px;
                     }
                 }
-                .reset-done-filter{
+                .reset-done-filter {
                     position: sticky;
                     bottom: 0px;
                     left: 0;
                     z-index: 1;
                     margin-top: 100%;
-                    display: grid;
+                    // display: grid;
                     grid-template-columns: auto auto;
-                    grid-template-areas: "reset done";
+                    grid-template-areas: 'reset done';
                     justify-content: space-evenly;
                     background: white;
                     padding-bottom: 35px;
+                    display: flex;
+                    justify-content: center;
                     .btnDone {
-                        grid-area: done;
-                        height: auto;
-                        padding: 10px 20px;
-                        background-color: var(--venia-global-color-button);
-                        color: var(--venia-global-color-button-text);
-                        >span{
+                        // grid-area: done;
+                        // height: auto;
+                        // padding: 10px 20px;
+                        // background-color: var(--venia-global-color-button);
+                        // color: var(--venia-global-color-button-text);
+
+                        box-sizing: border-box;
+                        height: 48px;
+                        width: 123px;
+                        border: 1px solid #000000;
+                        border-radius: 24px;
+                        background-color: #ffffff;
+
+                        > span {
                             font-size: 16px;
                             font-weight: 500;
                             letter-spacing: 0;
                             line-height: 19px;
+                            font-weight: bold;
                         }
                     }
                     .btnReset {
@@ -264,8 +307,8 @@
                         box-sizing: border-box;
                         height: auto;
                         padding: 10px 20px;
-                        background-color: #ededed;   
-                        .action-clear{
+                        background-color: #ededed;
+                        .action-clear {
                             color: #000;
                             font-size: 16px;
                             font-weight: 500;
@@ -278,6 +321,6 @@
                     }
                 }
             }
-        }   
+        }
     }
 }

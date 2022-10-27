@@ -225,10 +225,34 @@ const WishlistItem = props => {
                 alertMsg={alertMsg}
                 status="success"
             />
-            <Link to={`${product.url_key}${product.url_suffix}`} className={classes.wrapper}>
-                <div className={classes.wrapImage}>
-                    <Image {...imageProps} />
-                </div>
+            <div className={classes.wrapper}>
+                <Link to={`${product.url_key}${product.url_suffix}`}>
+                    <div className={classes.wrapImage}>
+                        <Image {...imageProps} />
+                    </div>
+                    <div className={classes.actionWrap}>
+                        {review_count ? (
+                            <div className={classes.itemReviewRate}>
+                                <StaticRate
+                                    rate={rating_summary}
+                                    classes={classes}
+                                />
+                                <span className={classes.itemReviewCount}>
+                                    ({review_count}{' '}
+                                    {review_count
+                                        ? formatMessage({ id: 'Reviews' })
+                                        : formatMessage({ id: 'Review' })}
+                                    )
+                                </span>
+                            </div>
+                        ) : (
+                            ''
+                        )}
+                        <span className={classes.name}>{name}</span>{' '}
+                        <div className={classes.priceContainer}>{price}</div>
+                        {optionElements}
+                    </div>
+                </Link>
                 <button
                     className={classes.deleteItem}
                     aria-label={removeProductAriaLabel}
@@ -248,29 +272,7 @@ const WishlistItem = props => {
                         confirmCallback={handleRemoveProductFromWishlist}
                     />
                 </button>
-                <div className={classes.actionWrap}>
-                    {review_count ? (
-                        <div className={classes.itemReviewRate}>
-                            <StaticRate
-                                rate={rating_summary}
-                                classes={classes}
-                            />
-                            <span className={classes.itemReviewCount}>
-                                ({review_count}{' '}
-                                {review_count
-                                    ? formatMessage({ id: 'Reviews' })
-                                    : formatMessage({ id: 'Review' })}
-                                )
-                            </span>
-                        </div>
-                    ) : (
-                        ''
-                    )}
-                    <span className={classes.name}>{name}</span>{' '}
-                    <div className={classes.priceContainer}>{price}</div>
-                    {optionElements}
-                </div>
-            </Link>
+            </div>
         </div>
     );
 };

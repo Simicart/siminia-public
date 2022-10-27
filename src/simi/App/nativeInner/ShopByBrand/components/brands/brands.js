@@ -28,6 +28,7 @@ const Brands = props => {
         brandSearchResult,
         brandConfiguration
     } = useBrands({ categoryId });
+   
     const classes = defaultClasses;
     const { formatMessage } = useIntl();
     const color =
@@ -180,7 +181,7 @@ const Brands = props => {
         brandListItems = [];
         let currentChar = '';
         brandsList.map((item, index) => {
-            console.log('item', item);
+          
             if (
                 showAlphabet &&
                 (!currentChar ||
