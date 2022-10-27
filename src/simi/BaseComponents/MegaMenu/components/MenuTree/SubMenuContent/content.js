@@ -68,34 +68,11 @@ const Content = props => {
         isContentAvailable = false;
     } else if (content === '{{child_categories_content}}') {
         isContentAvailable = false;
-    } else {
-        let newContent = [];
-        let parser = new DOMParser();
-        let parsedHtml = parser.parseFromString(content, 'text/html');
-        let divTags = parsedHtml.getElementsByTagName('div');
-        if (typeof divTags === 'object' && divTags.length > 0) {
-            for (let i in divTags) {
-                const divTag = divTags[i];
-                if (divTag && divTag.textContent) {
-                    const word = divTag.textContent.trim();
-                    if (word && word !== '{{child_categories_content}}') {
-                        newContent.push(divTag.outerHTML);
-                    }
-                }
-            }
-        }
-        if (newContent.length > 0) {
-            newContent.join('');
-            content = newContent;
-        } else {
-            isContentAvailable = false;
-        }
     }
 
     const itemContent = isContentAvailable ? (
         <div
             className={classes.block}
-            // style={{ display: id === activeId ? 'block' : 'none' }}
         >
             <RichContent html={content} hideCategories />
         </div>
