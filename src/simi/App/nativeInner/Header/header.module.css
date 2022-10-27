@@ -18,6 +18,7 @@
 .switchersContainer button[class*='trigger'] {
     color: white;
 }
+
 .switchers {
     display: grid;
     grid-auto-flow: column;
@@ -329,7 +330,7 @@ body.fixed-scroll {
 }
 
 @media (min-width: 1440px) {
-    .header-app-bar {
+    .header-app-bar, .switchers {
         width: 1210px !important;
     }
 }

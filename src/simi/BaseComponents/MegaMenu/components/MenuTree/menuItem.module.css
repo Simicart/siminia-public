@@ -15,6 +15,14 @@
   display: flex;
 }
 
+.topMenu:hover {
+  background-color: rgb(var(--am-mega-menu-main-menu-background-hover-color));
+}
+
+.topMenu:hover a[class*='menuLink-menuLinkRootTitle'] {
+  color: rgb(var(--am-mega-menu-main-menu-text-hover-color));
+}
+
 /* .topMenu.fullWidth {
   position: static;
 } */

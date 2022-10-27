@@ -23,8 +23,6 @@ const StoreSwitcher = props => {
         handleTriggerClick
     } = useStoreSwitcher();
 
-    console.log(currentLocale)
-
     const classes = useStyle(defaultClasses, props.classes);
     const menuClassName = storeMenuIsOpen ? classes.menu_open : classes.menu;
 

@@ -29,6 +29,7 @@ export const useTopMenu = () => {
   const isEnabled = !isMobile && isEnabledMegaMenu;
 
   return {
+    config,
     menuTree,
     isEnabled
   };

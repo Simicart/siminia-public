@@ -43,7 +43,7 @@
 
 @media(min-width: 1024px) {
     .autoWidth, .customWidth, .fullWidth {
-        padding: 15px !important;
+        padding: 20px !important;
     }
 
     .columnView, .horizontal {
