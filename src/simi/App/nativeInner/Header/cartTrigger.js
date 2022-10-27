@@ -15,6 +15,7 @@ import { useIntl } from 'react-intl';
 const MiniCart = React.lazy(() => import('src/simi/App/nativeInner/MiniCart'));
 
 let miniCartOpenOnce = false;
+
 const Trigger = props => {
     const { storeConfig, classes: propClasses } = props;
     const classes = useStyle(defaultClasses, propClasses);
@@ -62,8 +63,8 @@ const Trigger = props => {
             >
                 <Basket
                     style={{
-                        width: 35,
-                        height: 35,
+                        width: 30,
+                        height: 30,
                         display: 'block',
                         margin: 0
                     }}
