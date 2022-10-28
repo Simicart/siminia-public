@@ -148,9 +148,14 @@ Rate
     font-size: 14px;
     line-height: 24px;
     display: flex;
+    align-items: center;
 }
 .configurable-aslowas {
     margin-inline-end: 5px;
+    color: #555555;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 16px;
 }
 .incl-tax-label {
     margin-left: 8px;
