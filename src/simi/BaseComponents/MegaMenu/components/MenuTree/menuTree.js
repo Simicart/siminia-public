@@ -26,14 +26,14 @@ const MenuTree = props => {
     ammegamenu_color_main_menu_background_hover,
     ammegamenu_color_main_menu_text,
     ammegamenu_color_main_menu_text_hover
-  } = config;
+  } = config || {};
 
   const style = {
     '--am-mega-menu-main-menu-background-color': ammegamenu_color_main_menu_background,
     '--am-mega-menu-main-menu-background-hover-color': ammegamenu_color_main_menu_background_hover,
     '--am-mega-menu-main-menu-text-color': ammegamenu_color_main_menu_text,
     '--am-mega-menu-main-menu-text-hover-color': ammegamenu_color_main_menu_text_hover,
-}
+  }
 
   const classes = mergeClasses(defaultClasses, propsClasses);
   const menuClass = [classes.menu, classes[view]].join(' ');

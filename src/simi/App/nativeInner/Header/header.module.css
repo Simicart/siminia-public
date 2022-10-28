@@ -321,11 +321,17 @@ body.fixed-scroll {
 
 @media(min-width: 1024px) {
     .right-bar {
-        width: 65%;
+        width: 100%;
     }
 
     .header-logo {
         width: 30%;
+    }
+}
+
+@media(min-width: 1200px) {
+    .right-bar {
+        width: 65%;
     }
 }
 
