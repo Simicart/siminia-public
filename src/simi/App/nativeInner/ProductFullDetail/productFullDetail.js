@@ -432,7 +432,12 @@ const ProductFullDetail = props => {
                         />
                     </span>
                 ) : (
-                    ''
+                    <span className="outOfStock">
+                        <FormattedMessage
+                            id="In stock"
+                            defaultMessage="In stock"
+                        />
+                    </span>
                 )}
             </div>
             {price_tiers &&
@@ -523,6 +528,11 @@ const ProductFullDetail = props => {
                     }
                 />
             ) : null}
+            <div className="productDescription">
+                {!isMobileSite && product.short_description ? (
+                    <RichContent html={product.short_description.html} />
+                ) : null}
+            </div>
         </div>
     );
     const productDetailCarousel = [];
@@ -679,7 +689,7 @@ const ProductFullDetail = props => {
                     />
                 )}
 
-                {isMobileSite ? null : breadcrumbs}
+                {/* {isMobileSite ? null : breadcrumbs} */}
                 <div className="wrapperForm ">
                     <Form
                         className={classes.root}
@@ -694,21 +704,8 @@ const ProductFullDetail = props => {
                                 <section className={classes.title}>
                                     <h1 className={classes.productName}>
                                         {productDetails.name}
-                                        <Pdetailsbrand product={product} />
+                                        {/* <Pdetailsbrand product={product} /> */}
                                     </h1>
-                                </section>
-                            </div>
-                        ) : null}
-                        {!isMobileSite ? (
-                            <div className="wrapperSku">
-                                <section className={classes.details}>
-                                    <span className={classes.detailsTitle}>
-                                        <FormattedMessage
-                                            id={'SKU'}
-                                            defaultMessage={'SKU'}
-                                        />
-                                        {': ' + productDetails.sku}
-                                    </span>
                                 </section>
                             </div>
                         ) : null}
@@ -723,17 +720,10 @@ const ProductFullDetail = props => {
                             {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
                         </section>
 
-                        <div className="productDescription">
-                            {!isMobileSite && product.short_description ? (
-                                <RichContent
-                                    html={product.short_description.html}
-                                />
-                            ) : null}
-                        </div>
-
                         {!isMobileSite ? (
                             <div className="wrapperOptions">
                                 <section className={classes.options}>
+                                    {!isMobileSite ? wrapperPrice : null}
                                     {options}
                                     {product.__typename ===
                                         'MpGiftCardProduct' && (
@@ -758,7 +748,6 @@ const ProductFullDetail = props => {
                                             isMobileSite={isMobileSite}
                                         />
                                     ) : null}
-                                    {!isMobileSite ? wrapperPrice : null}
                                 </section>
                             </div>
                         ) : null}
@@ -779,6 +768,20 @@ const ProductFullDetail = props => {
                                 errors={errors.get('form') || []}
                             />
                         </div>
+
+                        {!isMobileSite ? (
+                            <div className="wrapperSku">
+                                <section className={classes.details}>
+                                    <span className={classes.detailsTitle}>
+                                        <FormattedMessage
+                                            id={'SKU'}
+                                            defaultMessage={'SKU'}
+                                        />
+                                        {': ' + productDetails.sku}
+                                    </span>
+                                </section>
+                            </div>
+                        ) : null}
 
                         <div className={classes.wrapperDes}>
                             <section className={classes.description}>
@@ -877,7 +880,7 @@ const ProductFullDetail = props => {
                                                 __html: productDetails.name
                                             }}
                                         />
-                                        <Pdetailsbrand product={product} />
+                                        {/* <Pdetailsbrand product={product} /> */}
                                     </h1>
                                 </section>
                             </div>

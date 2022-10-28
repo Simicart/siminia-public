@@ -17,7 +17,8 @@
             'images cart'
             'images errors'
             'images .';
-        grid-template-columns: 1.5625fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 60px;
         grid-template-rows: repeat(7, min-content) 1fr [fold];
         padding: 0;
     }
@@ -105,8 +106,8 @@
 @media (min-width: 1024px) {
     .imageCarousel {
         margin: 0;
-        max-width: 800px;
-        padding: 1.5rem 0;
+        max-width: 600px;
+        /* padding: 1.5rem 0; */
     }
     .imageCarousel > div > div > div:nth-child(2) > div {
         margin-inline-start: 0px;
@@ -221,7 +222,7 @@
     border: none;
 }
 .quantityRoot button:nth-child(2) {
-    background-color:  var(--venia-global-color-button);
+    background-color: var(--venia-global-color-button);
 }
 .quantityRoot input {
     transition: all 0.2s ease-out;

@@ -269,7 +269,7 @@ const Griditem = props => {
                             <div
                                 className={itemClasses['configurable-aslowas']}
                             >
-                                {formatMessage({ id: 'As low as' })}
+                                {formatMessage({ id: 'As low as:' })}
                             </div>
                         )}
                         <CallForPrice

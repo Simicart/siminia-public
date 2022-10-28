@@ -9,7 +9,7 @@ const Grouped = props => {
 
     if (prices.show_ex_in_price && prices.show_ex_in_price === 1) {
         product_from_label = (
-            <div>
+            <div className='from'>
                 <FormattedMessage id={'From'} /> {' : '}
             </div>
         );
@@ -29,7 +29,7 @@ const Grouped = props => {
         );
     } else {
         product_from_label = (
-            <div>
+            <div className='from'>
                 <FormattedMessage id={'From'} />
                 {' : '}
                 {formatPrice(prices.minimalPrice.amount.value)}

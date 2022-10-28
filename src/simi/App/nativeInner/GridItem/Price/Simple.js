@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 const Simple = props => {
     const { classes, prices, type, formatPrice } = props;
+    console.log('prices', prices);
     ////simple, configurable ....
     let price_label = <div />;
     let special_price_label = <div />;
@@ -47,7 +48,11 @@ const Simple = props => {
             );
         } else {
             price = (
-                <div className="price-value">
+                <div
+                    className={`price-value ${
+                        prices && prices.has_special_price ? 'regularPrice' : ''
+                    }`}
+                >
                     {formatPrice(
                         prices.minimalPrice.amount.value,
                         prices.minimalPrice.amount.currency
@@ -105,7 +110,11 @@ const Simple = props => {
             );
         } else {
             price = (
-                <div className="price-value">
+                <div
+                    className={`price-value ${
+                        prices && prices.has_special_price ? 'regularPrice' : ''
+                    }`}
+                >
                     {formatPrice(
                         prices.minimalPrice.amount.value,
                         prices.minimalPrice.amount.currency
