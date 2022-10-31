@@ -16,7 +16,6 @@ const Tile = props => {
         onClick,
         label: labelTitle
     } = props;
-    console.log('labelTitle', labelTitle);
     const talonProps = useTile({
         onClick,
         value_index

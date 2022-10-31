@@ -10,7 +10,7 @@ const useProductReview = props => {
 
     const { getAllReviews, createProductReview } = operations;
     const { data, error, loading } = useQuery(getAllReviews, {
-        fetchPolicy: 'cache-and-network',
+        fetchPolicy: 'network-only',
         skip: !enabledReview,
         variables: {
             sku: product.sku

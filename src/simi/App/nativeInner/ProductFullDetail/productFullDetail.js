@@ -467,31 +467,28 @@ const ProductFullDetail = props => {
         }
     }
 
-    const wrapperQuantity =
-        product.__typename !== 'GroupedProduct' ? (
-            <div className="wrapperQuantity">
-                <section
-                    className={!isMobileSite ? classes.quantity : 'mbQuantity'}
-                >
-                    {/* <span className={classes.quantityTitle}>
+    const wrapperQuantity = (
+        <div className="wrapperQuantity">
+            <section
+                className={!isMobileSite ? classes.quantity : 'mbQuantity'}
+            >
+                {/* <span className={classes.quantityTitle}>
                         <FormattedMessage
                             id={'Quantity'}
                             defaultMessage={'Quantity: '}
                         />
                     </span> */}
-                    <QuantityFields
-                        classes={{ root: classes.quantityRoot }}
-                        onChange={handleUpdateQuantity}
-                        min={1}
-                        message={errors.get('quantity')}
-                    />
-                </section>
-                {/* {!isMobileSite ? ( */}
-                {/* ) : null} */}
-            </div>
-        ) : (
-            ''
-        );
+                <QuantityFields
+                    classes={{ root: classes.quantityRoot }}
+                    onChange={handleUpdateQuantity}
+                    min={1}
+                    message={errors.get('quantity')}
+                />
+            </section>
+            {/* {!isMobileSite ? ( */}
+            {/* ) : null} */}
+        </div>
+    );
     const renderSizeChart = product.mp_sizeChart ? (
         <SizeChart
             sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null}
@@ -697,7 +694,15 @@ const ProductFullDetail = props => {
 
                         {!isMobileSite ? (
                             <div className="wrapperOptions">
-                                <section className={classes.options}>
+                                <section
+                                    className={`${classes.options} ${
+                                        product.__typename ===
+                                            'GroupedProduct' ||
+                                        product.__typename === 'BundleProduct'
+                                            ? 'groupOptions'
+                                            : ''
+                                    }`}
+                                >
                                     {!isMobileSite ? wrapperPrice : null}
                                     <div className="optionsSizeChart">
                                         {options}
@@ -742,7 +747,14 @@ const ProductFullDetail = props => {
                             </div>
                         ) : null}
 
-                        <div className="quantityCartAction">
+                        <div
+                            className={`${
+                                product.__typename === 'GroupedProduct' ||
+                                product.__typename === 'BundleProduct'
+                                    ? 'groupCartAction'
+                                    : ''
+                            } quantityCartAction`}
+                        >
                             {product.items
                                 ? ''
                                 : !isMobileSite
@@ -807,15 +819,16 @@ const ProductFullDetail = props => {
                                     id={'Share:'}
                                     defaultMessage={'Share:'}
                                 />
-                                <SocialShare product={product}  />
+                                <SocialShare product={product} />
                             </div>
+
                             <div className="shopByBrand">
                                 <FormattedMessage
                                     id={'Shop by brand:'}
                                     defaultMessage={'Shop by brand:'}
                                 />
                                 <div>
-                                     <Pdetailsbrand product={product} />
+                                    <Pdetailsbrand product={product} />
                                 </div>
                             </div>
                             <div className="wrapperPriceAlertProductDetails">

@@ -47,7 +47,6 @@ const Filter = props => {
             if (item.filter_items !== null) {
                 options = item.filter_items.map(
                     function(optionItem) {
-                        console.log("optionItem",optionItem);
                         const name = (
                             <span className="filter-item-text">
                                 <span
