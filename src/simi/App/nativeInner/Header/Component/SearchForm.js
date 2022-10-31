@@ -4,16 +4,16 @@ import Search from 'src/simi/BaseComponents/Icon/Search';
 import defaultClasses from '../header.module.css';
 import { mergeClasses } from 'src/classify';
 import { useIntl } from 'react-intl';
-import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
-import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
-import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
+// import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
+// import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
+// import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 import { BiShoppingBag, BiX, BiArrowBack } from 'react-icons/bi';
 import { ArrowLeft } from 'react-feather';
 import { useWindowSize } from '@magento/peregrine';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { logoUrl } from 'src/simi/Helper/Url';
-import {configColor} from '../../../../../simi/Config'
-import {HiOutlineMicrophone} from 'react-icons/hi'
+import { configColor } from '../../../../../simi/Config'
+import { HiOutlineMicrophone } from 'react-icons/hi'
 require('./search.scss');
 
 const SearchAutoComplete = React.lazy(() =>
@@ -107,10 +107,11 @@ const SearchForm = props => {
                             >
                                 <Search
                                     style={{
-                                        width: 25,
-                                        height: 25,
+                                        width: 20,
+                                        height: 20,
                                         display: 'inline-block'
                                     }}
+                                    color={'#333333'}
                                 />
                             </span>
                             <input
@@ -123,7 +124,7 @@ const SearchForm = props => {
                                 }}
                                 onBlur={() => handleBlur()}
                                 placeholder={formatMessage({
-                                    id: 'search your product'
+                                    id: 'What are you looking for?'
                                 })}
                                 onChange={() => handleSearchField()}
                                 onKeyPress={e => {

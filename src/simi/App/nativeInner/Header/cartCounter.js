@@ -18,7 +18,7 @@ class CartCounter extends Component {
         return counter > 0 ? (
             <span
                 className={classes.root}
-                style={Identify.isRtl() ? { left: 18 } : { right: 18 }}
+                style={Identify.isRtl() ? { left: 5 } : { right: 5 }}
             >
                 {counter}
             </span>

@@ -29,8 +29,12 @@
 }
 
 .categoriesMain > li {
-    padding: 5px 0 5px 10px;
+    padding: 10px 0 5px 10px;
     position: relative;
+}
+
+.categoriesMain > li:first-child {
+    padding-top: 20px;
 }
 
 .categoriesChild > li {
@@ -43,11 +47,15 @@
 
 @media(min-width: 1024px) {
     .autoWidth, .customWidth, .fullWidth {
-        padding: 15px !important;
+        padding: 20px !important;
     }
 
     .columnView, .horizontal {
         display: grid;
+    }
+
+    .categoriesMain > li:first-child {
+        padding-top: 0;
     }
 
     .categoriesMain > li {

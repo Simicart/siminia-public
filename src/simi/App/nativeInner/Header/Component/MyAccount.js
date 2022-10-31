@@ -74,7 +74,7 @@ const MyAccount = props => {
                 >
                     {!isPhone ? (
                         <User
-                            style={{ width: 35, height: 35, display: 'block' }}
+                            style={{ width: 30, height: 30, display: 'block' }}
                         />
                     ) : isSignedIn ? (
                         <span className={classes.accountLetter}>

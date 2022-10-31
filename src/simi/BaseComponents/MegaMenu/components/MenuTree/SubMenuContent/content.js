@@ -68,6 +68,8 @@ const Content = props => {
         isContentAvailable = false;
     } else if (content === '{{child_categories_content}}') {
         isContentAvailable = false;
+    } else if (content.indexOf('{{child_categories_content}}') !== -1) {
+        isContentAvailable = false;
     }
 
     const itemContent = isContentAvailable ? (
