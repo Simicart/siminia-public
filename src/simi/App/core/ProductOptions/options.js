@@ -6,7 +6,6 @@ import { useOptions } from '@magento/peregrine/lib/talons/ProductOptions/useOpti
 
 const Options = props => {
     const { classes, onSelectionChange, options, selectedValues = [] } = props;
-
     const talonProps = useOptions({
         onSelectionChange,
         selectedValues

@@ -1,6 +1,14 @@
 .main-sizechart {
+    cursor: pointer;
+    margin-top: 9px;
     padding: 0.5rem 1.5rem;
-
+    .btnSizeChart {
+        color: #555555;
+        font-size: 14px;
+        letter-spacing: 0;
+        line-height: 16px;
+        text-decoration: underline;
+    }
     .overlay {
         position: fixed;
         display: none;
@@ -61,7 +69,7 @@
         display: flex;
         justify-content: space-between;
         background-color: #fff;
-        margin:15px 0;
+        margin: 15px 0;
         .product-sizechart {
             position: fixed;
             z-index: 10;
@@ -73,14 +81,18 @@
             overflow: auto;
             background-color: #fff;
             padding: 15px;
-            animation: Open .6s;
+            animation: Open 0.6s;
         }
         .sizeChart-btn {
             width: 100%;
         }
         @keyframes Open {
-            from {left: 100%;}
-            to {left: 0%;}
+            from {
+                left: 100%;
+            }
+            to {
+                left: 0%;
+            }
         }
     }
 }

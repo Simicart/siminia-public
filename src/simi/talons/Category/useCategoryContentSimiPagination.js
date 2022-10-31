@@ -13,7 +13,9 @@ import { GET_BRANDS_LIST } from '../../App/nativeInner/ShopByBrand/talons/Brand.
 import {
     getCateNoFilter,
     getFilterFromCate
-} from 'src/simi/queries/catalog_gql/category.gql'; //'src/simi/queries/catalog_gql/simiCategory.gql';
+} from 
+// 'src/simi/queries/catalog_gql/category.gql'; 
+'src/simi/queries/catalog_gql/simiCategory.gql';
 import { useQuery } from '@apollo/client';
 
 // use pagination follow site magento default ( change both page and pagesize)
@@ -185,7 +187,6 @@ export const useCategoryContentSimiPagination = props => {
         // The product isn't in the cache and we don't have a response from GraphQL yet.
         return productsData;
     }, [oriProductsData, oriFilterData]);
-
     const pageControl = {
         startPage,
         endPage,

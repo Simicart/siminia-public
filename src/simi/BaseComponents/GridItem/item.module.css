@@ -23,7 +23,6 @@
     max-height: 44px;
     cursor: pointer;
     color: #000000;
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     letter-spacing: 0;
     line-height: 18px;
@@ -119,7 +118,6 @@ Rate
 .item-review-count {
     display: inline-block;
     color: #555555;
-    font-family: 'Helvetica Neue';
     font-size: 14px;
     letter-spacing: 0;
     line-height: 16px;
@@ -136,7 +134,6 @@ Rate
     line-height: 24px; */
     display: flex;
     color: #000000;
-    font-family: 'Helvetica Neue';
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
