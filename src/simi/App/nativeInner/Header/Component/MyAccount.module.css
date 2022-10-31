@@ -1,6 +1,5 @@
 .accountMenuRoot {
     --content-width: 27.5rem;
-
     height: 0;
     overflow: visible;
     left: -100vw;

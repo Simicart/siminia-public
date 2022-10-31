@@ -5,7 +5,7 @@ import { useTopMenu } from '../../talons/useTopMenu';
 // import classes from '../../../../App/nativeInner/Header/header.module.css';
 
 const TopMenu = props => {
-    const { menuTree, isEnabled } = useTopMenu();
+    const { menuTree, isEnabled, config } = useTopMenu();
     if (!isEnabled) {
         // return (
         //     <div className={classes['header-megamenu-ctn']}>
@@ -15,7 +15,7 @@ const TopMenu = props => {
         return null
     }
 
-    return <MenuTree {...props} menuTree={menuTree} />;
+    return <MenuTree {...props} config={config} menuTree={menuTree} />;
 };
 
 export default TopMenu;

@@ -18,6 +18,7 @@
 .switchersContainer button[class*='trigger'] {
     color: white;
 }
+
 .switchers {
     display: grid;
     grid-auto-flow: column;
@@ -111,12 +112,10 @@ header {
 }
 .header-search-form input {
     width: 100%;
-    padding-inline-start: 20px;
-    padding-inline-end: 16px;
     border: transparent;
     background-color: #f4f4f4;
-    height: 45px;
-    border-radius: 23px !important;
+    padding: 9px 16px;
+    height: 34px;
 }
 .header-search-form .search-icon svg {
     margin-top: 0!important;
@@ -132,16 +131,9 @@ header {
     justify-content: center;
 }
 @media (min-width: 780px) {
-    .header-search-form .search-icon {
-        /* display: inline-block; */
-        /* position: absolute;
-        right: 14px;
-        top: 5px;
-        cursor: pointer; */
-    }
     .header-search {
         width: 100%;
-        max-width: 748px;
+        max-width: 495px;
         height: auto !important; 
     }
 }
@@ -157,6 +149,7 @@ header {
 .right-bar {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     z-index: 0;
 }
 .right-bar-item {
@@ -164,15 +157,18 @@ header {
     font-size: 12px;
     cursor: pointer;
     z-index: 50;
-    margin-inline-start: 35px;
+    margin-inline-start: 30px;
 }
-.right-bar-item > div,
+.right-bar-item:first-child {
+    margin-inline-start: 0;
+}
+/* .right-bar-item > div,
 .right-bar-item > a {
     display: flex;
     justify-content: flex-start;
-}
+} */
 .item-icon {
-    margin-inline-end: 9px;
+    /* margin-inline-end: 9px; */
     position: relative;
 }
 .right-bar-item a:hover {
@@ -183,16 +179,16 @@ header {
     opacity: 0.6;
 }
 .right-bar-item .item-text {
-    font-size: 16px;
-    line-height: 22px;
-    font-weight: 400;
-    color: #111111 !important;
+    font-size: 14px;
+    line-height: 16px;
+    color: #333333;
     white-space: nowrap;
     padding-top: 7px;
     max-width: 150px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
+    text-align: center;
 }
 .right-bar-item aside a,
 .right-bar-item aside button {
@@ -323,7 +319,27 @@ body.fixed-scroll {
     transition: all .3s cubic-bezier(.645,.045,.355,1);
 }
 
+@media(min-width: 1024px) {
+    .right-bar {
+        width: 100%;
+    }
 
+    .header-logo {
+        width: 30%;
+    }
+}
+
+@media(min-width: 1200px) {
+    .right-bar {
+        width: 65%;
+    }
+}
+
+@media (min-width: 1440px) {
+    .header-app-bar, .switchers {
+        width: 1210px !important;
+    }
+}
 
 @media (max-width: 1023px) {
     .header-app-bar {
@@ -362,6 +378,7 @@ body.fixed-scroll {
         display: none;
     }
 }
+
 @media (max-width: 780px) {
     .header-search {
         margin: 0;
