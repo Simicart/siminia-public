@@ -66,6 +66,7 @@ import CallForPrice from './callForPrice';
 import CustomAttributes from './CustomAttributes';
 import { isCallForPriceEnable } from '../Helper/Module';
 import PriceTiers from './PriceTiers';
+import SocialShare from '../../../BaseComponents/SocialShare';
 
 require('./productFullDetail.scss');
 
@@ -295,7 +296,10 @@ const ProductFullDetail = props => {
             );
         } else
             return !isOutOfStock ? (
-                <FormattedMessage id="Buy now" defaultMessage="Buy Now" />
+                <FormattedMessage
+                    id="productFullDetail.addItemToCart"
+                    defaultMessage="Add to Cart"
+                />
             ) : (
                 <FormattedMessage
                     id="productFullDetail.itemOutOfStock"
@@ -389,6 +393,12 @@ const ProductFullDetail = props => {
                             : formatMessage({ id: 'Review' })}
                         )
                     </span>
+                    <span className="submitReview">
+                        {formatMessage({
+                            id: 'Submit Review',
+                            defaultMessage: 'Submit Review'
+                        })}
+                    </span>
                 </section>
             </div>
         ) : (
@@ -406,7 +416,7 @@ const ProductFullDetail = props => {
     let wrapperPrice = (
         <React.Fragment>
             <div className="wrapperPrice">
-                <span
+                {/* <span
                     className="labelPrice"
                     style={{ color: configColor.price_color }}
                 >
@@ -416,7 +426,7 @@ const ProductFullDetail = props => {
                             defaultMessage="Per pack: "
                         />
                     ) : null}
-                </span>
+                </span> */}
                 <span
                     style={{ color: configColor.price_color }}
                     className={classes.productPrice}
@@ -432,7 +442,7 @@ const ProductFullDetail = props => {
                         />
                     </span>
                 ) : (
-                    <span className="outOfStock">
+                    <span className="inStock">
                         <FormattedMessage
                             id="In stock"
                             defaultMessage="In stock"
@@ -463,12 +473,12 @@ const ProductFullDetail = props => {
                 <section
                     className={!isMobileSite ? classes.quantity : 'mbQuantity'}
                 >
-                    <span className={classes.quantityTitle}>
+                    {/* <span className={classes.quantityTitle}>
                         <FormattedMessage
                             id={'Quantity'}
                             defaultMessage={'Quantity: '}
                         />
-                    </span>
+                    </span> */}
                     <QuantityFields
                         classes={{ root: classes.quantityRoot }}
                         onChange={handleUpdateQuantity}
@@ -477,20 +487,6 @@ const ProductFullDetail = props => {
                     />
                 </section>
                 {/* {!isMobileSite ? ( */}
-                <div>
-                    <PriceAlertProductDetails
-                        sku={sku}
-                        setMessage={setMessage}
-                        setMessageType={setMessageType}
-                        setPopUpData={setPopUpData}
-                        setShowPopup={setShowPopup}
-                    />
-                    <PopupAlert
-                        popupData={popupData}
-                        showPopup={showPopup}
-                        setShowPopup={setShowPopup}
-                    />
-                </div>
                 {/* ) : null} */}
             </div>
         ) : (
@@ -511,28 +507,7 @@ const ProductFullDetail = props => {
                     : 'wrapperActions'
             }
         >
-            <section className={classes.actions}>
-                {cartActionContent}
-                {isMobileSite ? null : (
-                    <Suspense fallback={null}>
-                        <WishlistButton {...wishlistButtonProps} />
-                    </Suspense>
-                )}
-            </section>
-            {!isMobileSite &&
-            product.mp_sizeChart &&
-            product.mp_sizeChart.display_type == 'inline' ? (
-                <SizeChart
-                    sizeChart={
-                        product.mp_sizeChart ? product.mp_sizeChart : null
-                    }
-                />
-            ) : null}
-            <div className="productDescription">
-                {!isMobileSite && product.short_description ? (
-                    <RichContent html={product.short_description.html} />
-                ) : null}
-            </div>
+            <section className={classes.actions}>{cartActionContent}</section>
         </div>
     );
     const productDetailCarousel = [];
@@ -724,7 +699,22 @@ const ProductFullDetail = props => {
                             <div className="wrapperOptions">
                                 <section className={classes.options}>
                                     {!isMobileSite ? wrapperPrice : null}
-                                    {options}
+                                    <div className="optionsSizeChart">
+                                        {options}
+                                        {!isMobileSite &&
+                                        product.mp_sizeChart &&
+                                        product.mp_sizeChart.display_type ==
+                                            'inline' ? (
+                                            <SizeChart
+                                                sizeChart={
+                                                    product.mp_sizeChart
+                                                        ? product.mp_sizeChart
+                                                        : null
+                                                }
+                                            />
+                                        ) : null}
+                                    </div>
+
                                     {product.__typename ===
                                         'MpGiftCardProduct' && (
                                         <GiftCardInformationForm
@@ -752,14 +742,43 @@ const ProductFullDetail = props => {
                             </div>
                         ) : null}
 
-                        {product.items
-                            ? ''
-                            : !isMobileSite
-                            ? wrapperQuantity
-                            : null}
+                        <div className="quantityCartAction">
+                            {product.items
+                                ? ''
+                                : !isMobileSite
+                                ? wrapperQuantity
+                                : null}
 
-                        {!isMobileSite ? cartAction : null}
+                            {!isMobileSite ? cartAction : null}
+                        </div>
 
+                        <div className="wrapperWishlist">
+                            {isMobileSite ? null : (
+                                <Suspense fallback={null}>
+                                    <div className="btnWishlist">
+                                        <WishlistButton
+                                            {...wishlistButtonProps}
+                                        />
+                                        <span>
+                                            <FormattedMessage
+                                                id={'Add to Favourites'}
+                                                defaultMessage={
+                                                    'Add to Favourites'
+                                                }
+                                            />
+                                        </span>
+                                    </div>
+                                </Suspense>
+                            )}
+                        </div>
+
+                        <div className="productDescription">
+                            {!isMobileSite && product.short_description ? (
+                                <RichContent
+                                    html={product.short_description.html}
+                                />
+                            ) : null}
+                        </div>
                         <div className={classes.wrapperError}>
                             <FormError
                                 classes={{
@@ -769,19 +788,51 @@ const ProductFullDetail = props => {
                             />
                         </div>
 
-                        {!isMobileSite ? (
-                            <div className="wrapperSku">
-                                <section className={classes.details}>
-                                    <span className={classes.detailsTitle}>
-                                        <FormattedMessage
-                                            id={'SKU'}
-                                            defaultMessage={'SKU'}
-                                        />
-                                        {': ' + productDetails.sku}
-                                    </span>
-                                </section>
+                        <div className="sku-share-shop-by-brand">
+                            {!isMobileSite ? (
+                                <div className="wrapperSku">
+                                    <section className={classes.details}>
+                                        <span className={classes.detailsTitle}>
+                                            <FormattedMessage
+                                                id={'SKU'}
+                                                defaultMessage={'SKU'}
+                                            />
+                                            {': ' + productDetails.sku}
+                                        </span>
+                                    </section>
+                                </div>
+                            ) : null}
+                            <div className="socialShare">
+                                <FormattedMessage
+                                    id={'Share:'}
+                                    defaultMessage={'Share:'}
+                                />
+                                <SocialShare product={product}  />
                             </div>
-                        ) : null}
+                            <div className="shopByBrand">
+                                <FormattedMessage
+                                    id={'Shop by brand:'}
+                                    defaultMessage={'Shop by brand:'}
+                                />
+                                <div>
+                                     <Pdetailsbrand product={product} />
+                                </div>
+                            </div>
+                            <div className="wrapperPriceAlertProductDetails">
+                                <PriceAlertProductDetails
+                                    sku={sku}
+                                    setMessage={setMessage}
+                                    setMessageType={setMessageType}
+                                    setPopUpData={setPopUpData}
+                                    setShowPopup={setShowPopup}
+                                />
+                                <PopupAlert
+                                    popupData={popupData}
+                                    showPopup={showPopup}
+                                    setShowPopup={setShowPopup}
+                                />
+                            </div>
+                        </div>
 
                         <div className={classes.wrapperDes}>
                             <section className={classes.description}>
@@ -848,15 +899,16 @@ const ProductFullDetail = props => {
                             ) : null}
                         </div>
                         {!isMobileSite ? (
-                            <section className={classes.details}>
-                                {/* <span className={classes.detailsTitle}>
-                                    <FormattedMessage
-                                        id={'SKU'}
-                                        defaultMessage={'SKU'}
-                                    />
-                                </span>
-                                <strong>{productDetails.sku}</strong> */}
-                            </section>
+                            // <section className={classes.details}>
+                            //     <span className={classes.detailsTitle}>
+                            //         <FormattedMessage
+                            //             id={'SKU'}
+                            //             defaultMessage={'SKU'}
+                            //         />
+                            //     </span>
+                            //     <strong>{productDetails.sku}</strong>
+                            // </section>
+                            ''
                         ) : (
                             <div className="sku-details">
                                 <span className={classes.detailsTitle}>

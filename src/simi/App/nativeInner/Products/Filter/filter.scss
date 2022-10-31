@@ -153,8 +153,10 @@
                 font-weight: 400;
                 .filter-item-count {
                     margin-inline-start: 5px;
-                    color: #888;
+                    color: #f69435;
                     font-size: 13px;
+                    letter-spacing: 0;
+                    line-height: 15px;
                 }
             }
             &:hover .filter-item-text-ctn {
