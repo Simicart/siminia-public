@@ -176,7 +176,7 @@ export const BundleOptions = props => {
                 <div
                     key={item.option_id}
                     className={classes.optionItem}
-                    style={{margin: '1rem 1.5rem'}}
+                    // style={{margin: '1rem 1.5rem'}}
                 >
                     <div
                         className={classes.optionTitle}
@@ -203,7 +203,7 @@ export const BundleOptions = props => {
                                 className={`bundle-option-qty ${item.type}`}
                                 data-name={item.option_id}
                                 style={{
-                                    marginLeft: '25px',
+                                    marginBottom: '20px',
                                     fontWeight: 600
                                 }}
                             >

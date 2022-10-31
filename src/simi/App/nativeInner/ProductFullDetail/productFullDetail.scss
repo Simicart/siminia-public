@@ -24,6 +24,9 @@
             }
         }
     }
+    .groupCartAction {
+        margin-inline-start: 1.5rem;
+    }
     .quantityCartAction {
         display: grid;
         grid-template-columns: max-content 1fr;
@@ -136,12 +139,12 @@
         section {
             div {
                 > span {
-                    letter-spacing: 0;
                     color: #000000;
-                    font-size: 16px;
-                    font-weight: bold;
                     letter-spacing: 0;
-                    line-height: 19px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    letter-spacing: 0;
+                    line-height: 17px;
                 }
                 dl {
                     color: #111111;
@@ -154,6 +157,14 @@
             div.downloadable-option {
                 margin: 0 1.5rem;
                 padding: 1rem 0 !important;
+            }
+        }
+        .groupOptions {
+            .main-sizechart {
+                margin-top: 0;
+                grid-column: 1 span / 2;
+                display: flex;
+                justify-content: flex-end;
             }
         }
         .wrapperPrice {

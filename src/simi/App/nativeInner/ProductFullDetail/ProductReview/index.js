@@ -1,4 +1,10 @@
-import React, { useState, useImperativeHandle, forwardRef, useRef, useEffect } from 'react';
+import React, {
+    useState,
+    useImperativeHandle,
+    forwardRef,
+    useRef,
+    useEffect
+} from 'react';
 import { useHistory } from 'react-router-dom';
 import { mergeClasses } from '@magento/venia-ui/lib/classify';
 import { useIntl } from 'react-intl';
@@ -67,18 +73,22 @@ const ProductReview = forwardRef((props, ref) => {
         };
     });
 
-    const handleClickOutside = (event) => {
-        if (reviewPopupWrapperRef && reviewPopupWrapperRef.current && !reviewPopupWrapperRef.current.contains(event.target)) {
-            setIsOpen(false)
+    const handleClickOutside = event => {
+        if (
+            reviewPopupWrapperRef &&
+            reviewPopupWrapperRef.current &&
+            !reviewPopupWrapperRef.current.contains(event.target)
+        ) {
+            setIsOpen(false);
         }
-    }
+    };
 
     useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener('mousedown', handleClickOutside);
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        }
-    }, [])
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const reviews =
         data && data.products.items[0] ? data.products.items[0].reviews : false;
@@ -146,7 +156,7 @@ const ProductReview = forwardRef((props, ref) => {
         let html = null;
         html = (
             <div className={classes.mainPopup} ref={reviewPopupWrapperRef}>
-                <div style={{height: topInsets}} />
+                <div style={{ height: topInsets }} />
                 <div className={classes.heading}>
                     <div className={classes.closeBtn}>
                         <button onClick={togglePopup}>
@@ -220,6 +230,94 @@ const ProductReview = forwardRef((props, ref) => {
                                     : formatMessage({
                                           id: 'Submit Review'
                                       }).toUpperCase()}
+                            </button>
+                        </div>
+                    </Form>
+                </div>
+            </div>
+        );
+        return html;
+    };
+    const handleWriteReview = () => {
+        let html = null;
+        html = (
+            <div
+                className={'mainWriteReview'}
+                // ref={reviewPopupWrapperRef}
+            >
+                <div style={{ height: topInsets }} />
+                <div className="yourRating">
+                    {formatMessage({
+                        id: 'Your rating',
+                        defaultMessage: 'Your rating'
+                    })}
+                </div>
+                <div className="fieldsContainer">
+                    {data && data.productReviewRatingsMetadata ? (
+                        <ProductRating
+                            productReviewRatingsMetadata={
+                                data.productReviewRatingsMetadata
+                            }
+                            {...{ setRatingVal, ratingVal, classes }}
+                        />
+                    ) : (
+                        ''
+                    )}
+                    <Form className='form' onSubmit={handleSubmitReview} id="form-write-review">
+                        <Field
+                            label={formatMessage({
+                                id: 'Nick name',
+                                defaultMessage: 'Nick name'
+                            })}
+                            required={true}
+                        >
+                            <TextInput
+                                field="nickname"
+                                type="text"
+                                validate={isRequired}
+                            />
+                        </Field>
+                        <Field
+                            label={formatMessage({
+                                id: 'Title',
+                                defaultMessage: 'Title'
+                            })}
+                            required={true}
+                        >
+                            <TextInput
+                                field="summary"
+                                type="text"
+                                validate={isRequired}
+                            />
+                        </Field>
+                        <div className='details'>
+                        <Field
+                            label={formatMessage({
+                                id: 'Details',
+                                defaultMessage: 'Details'
+                            })}
+                            required={true}
+                        >
+                            <TextInput
+                                field="text"
+                                type="text"
+                                validate={isRequired}
+                            />
+                        </Field>
+                        </div>
+                        
+                        <div className={classes.submitBtnContainer}>
+                            <button
+                                className={classes.submitReviewBtn}
+                                type="submit"
+                            >
+                                {submitReviewLoading
+                                    ? formatMessage({
+                                          id: 'Loading'
+                                      })
+                                    : formatMessage({
+                                          id: 'Submit'
+                                      })}
                             </button>
                         </div>
                     </Form>
@@ -339,41 +437,39 @@ const ProductReview = forwardRef((props, ref) => {
                 return (
                     <div key={index} className="review-item">
                         <div className="review-item-head">
-                            <div className="summary">
-                                {item.summary}
-                            </div>
-                            <div>
-                                <span>{dateFormat(item.created_at)}</span>
-                                <span>.</span>
-                                <span>{item.nickname}</span>
-                            </div>
-                            
+                            <div className="summary">{item.summary}</div>
                         </div>
                         {/* <div className="summary">
                             {item.summary.toUpperCase()}
                         </div> */}
                         {item &&
-                            item.ratings_breakdown &&
-                            item.ratings_breakdown[0] ? (
-                                <div className="rating-star">
-                                    <StaticRate
-                                        rate={
-                                            parseInt(
-                                                item.ratings_breakdown[0].value
-                                            ) * 20
-                                        }
-                                        classes={{
-                                            'static-rate':
-                                                classes['static-rate']
-                                        }}
-                                        backgroundColor={ !isMobileSite ? 
-                                            configColor.content_color : '#ffc500'
-                                        }
-                                    />
+                        item.ratings_breakdown &&
+                        item.ratings_breakdown[0] ? (
+                            <div className="rating-star">
+                                <StaticRate
+                                    rate={
+                                        parseInt(
+                                            item.ratings_breakdown[0].value
+                                        ) * 20
+                                    }
+                                    classes={{
+                                        'static-rate': classes['static-rate']
+                                    }}
+                                    backgroundColor={
+                                        !isMobileSite
+                                            ? configColor.content_color
+                                            : '#ffc500'
+                                    }
+                                />
+                                <div className="createdAt">
+                                    <span>{dateFormat(item.created_at)}</span>
+                                    <span>|</span>
+                                    <span>{item.nickname}</span>
                                 </div>
-                            ) : (
-                                ''
-                            )}
+                            </div>
+                        ) : (
+                            ''
+                        )}
                         <div className="review-text">{item.text}</div>
                     </div>
                 );
@@ -383,14 +479,15 @@ const ProductReview = forwardRef((props, ref) => {
     };
     const items = (reviews && reviews.items) || [];
     const classes = mergeClasses(props.classes, defaultClasses);
-    return reviews && reviews.items && reviews.items.length != 0 ? (
-        <div className="reviewsContainer">
-            {mageworxSeoEnabled ? (
-                <DataStructure reviews={items} />
-            ) : (
-                <DataStructureBasic reviews={items} />
-            )}
-            <div className="reviewBtn">
+    return reviews && reviews.items ? (
+        <div className="wrapperReviews">
+            <div className="reviewsContainer">
+                {mageworxSeoEnabled ? (
+                    <DataStructure reviews={items} />
+                ) : (
+                    <DataStructureBasic reviews={items} />
+                )}
+                {/* <div className="reviewBtn">
                 <span className="QtyReivew">
                     {reviews.items.length}{' '}
                     {formatMessage({
@@ -413,37 +510,56 @@ const ProductReview = forwardRef((props, ref) => {
                         defaultMessage: 'Add Your Review'
                     })}
                 </button>
-            </div>
-            <div className="reviewItems">
-                <div className="reviewRatingBlock">{reviewRating()}</div>
-                <div className="reviewList">
-                    {renderReviews(reviews)}
-                    {showItem * 3 < reviews.items.length && (
-                        <div className="btnShowMore">
-                            <button
-                                onClick={() => {
-                                    setShowItem(showItem + 1);
-                                }}
-                            >
-                                {formatMessage({
-                                    id: 'Show more',
-                                    defaultMessage: 'Show more'
-                                })}
-                            </button>
-                        </div>
-                    )}
+            </div> */}
+                <div className="reviewItems">
+                    <div className="title">
+                        {formatMessage({
+                            id: 'Customer Reviews',
+                            defaultMessage: 'Customer Reviews'
+                        })}
+                    </div>
+                    {/* <div className="reviewRatingBlock">{reviewRating()}</div> */}
+                    <div className="reviewList">
+                        {renderReviews(reviews)}
+                        {showItem * 3 < reviews.items.length && (
+                            <div className="btnShowMore">
+                                <button
+                                    onClick={() => {
+                                        setShowItem(showItem + 1);
+                                    }}
+                                >
+                                    {formatMessage({
+                                        id: 'Show more',
+                                        defaultMessage: 'Show more'
+                                    })}
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
-            <div
-                className={isOpen ? classes.overlayActive : classes.overlayNone}
-            >
-                {isOpen ? popupWriteReview() : null}
+            <div className="yourReviewing">
+                <div className="reviewing">
+                    <span>
+                        {formatMessage({
+                            id: "You're reviewing:",
+                            defaultMessage: "You're reviewing:"
+                        })}
+                    </span>
+
+                    <span className="productName">
+                        {formatMessage({
+                            id: 'productName',
+                            defaultMessage: `${product.name}`
+                        })}
+                    </span>
+                </div>
+
+                <div className="writeReview">{handleWriteReview()}</div>
             </div>
         </div>
     ) : (
-        <div className={isOpen ? classes.overlayActive : classes.overlayNone}>
-            {isOpen ? popupWriteReview() : null}
-        </div>
+        ''
     );
 });
 export default ProductReview;

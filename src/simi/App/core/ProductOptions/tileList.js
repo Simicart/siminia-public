@@ -7,7 +7,6 @@ import defaultClasses from './tileList.module.css';
 
 const TileList = props => {
     const { getItemKey, selectedValue = {}, items, onSelectionChange, label } = props;
-    console.log("props",props);
     const classes = useStyle(defaultClasses, props.classes);
 
     const tiles = useMemo(

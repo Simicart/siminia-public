@@ -1,6 +1,6 @@
 .optionRoot {
     font-size: 0.8rem;
-    border-top: 1px solid #d8d8d8;
+    /* border-top: 1px solid #d8d8d8; */
     margin-top: 1rem;
 }
 @media (max-width: 768px) {
@@ -11,7 +11,10 @@
     }
 }
 
+
 .optionItem {
+    margin: 1rem 1.5rem;
+    border-bottom: 1px solid #d8d8d8;
 }
 
 .optionTitle {

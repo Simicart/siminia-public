@@ -18,20 +18,21 @@ export const GroupedOptions = (props) => {
         <div className="row">
             <div className={'product-title'}>
                 <FormattedMessage
-                    id="groupedOptions.product"
-                    defaultMessage="Product"
+                    id="Product Name"
+                    defaultMessage="Product Name"
                 />
             </div>
-            <div className={'product-title'} style={{paddingRight: 20}}>
+            <div className={'product-title'}>
                 <FormattedMessage
-                    id="groupedOptions.qty"
-                    defaultMessage="Qty"
+                    id="Quantity"
+                    defaultMessage="Quantity"
                 />
             </div>
         </div>
     );
     const itemsHTML = items.map(function (item, index) {
         const {product, qty} = item;
+        
         const {price_range, id} = product
         const handleChange = (qty) => {
             handleGroupedOptionsChange(id, qty)
@@ -50,10 +51,10 @@ export const GroupedOptions = (props) => {
                             key={id}
                             value={qty}
                             inputStyle={{
-                                margin: '0 15px',
                                 borderRadius: 0,
-                                border: 'solid #eaeaea 1px',
-                                maxWidth: 50,
+                                border: 'solid #E8E8E8 1px',
+                                height:'40',
+                                width:'80px',
                                 textAlign: "center"
                             }}
                             onChange={(qty => handleChange(qty) || null)}
