@@ -151,6 +151,10 @@
                 line-height: 19px;
                 padding-top: 3px;
                 font-weight: 400;
+                .filter-item-text{
+                    display: flex;
+                    align-items: center;
+                }
                 .filter-item-count {
                     margin-inline-start: 5px;
                     color: #f69435;
