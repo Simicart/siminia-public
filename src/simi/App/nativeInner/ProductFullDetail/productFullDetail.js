@@ -92,6 +92,7 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product } = props;
+    console.log("ProductFullDetail-product",product)
     const talonProps = useProductFullDetail({ product });
 
     const {
@@ -119,7 +120,6 @@ const ProductFullDetail = props => {
         alertMsg,
         handleUpdateQuantity
     } = talonProps;
-
     const {
         giftCardProductData,
         giftCardData,
@@ -189,7 +189,7 @@ const ProductFullDetail = props => {
 
     if (product.__typename === 'MpGiftCardProduct') positionFooterFixed - 100;
     const scrollToReview = () => {
-        smoothScrollToView(document.querySelector('.reviewsContainer'));
+        smoothScrollToView(document.querySelector('.wrapperReviews'));
     };
     const desStatus = status => {
         if (status === -1) {
@@ -343,6 +343,26 @@ const ProductFullDetail = props => {
         }
     } catch (err) {}
 
+    const specialPrice =
+        product && product.price && product.price.has_special_price ? (
+            <div className="wrapperSpecialPrice">
+                <span className="specialPrice">
+                    <Price
+                        currencyCode={productDetails.price.currency}
+                        value={product.price.regularPrice.amount.value}
+                    />
+                </span>
+                <span className="regularPrice">
+                    <Price
+                        currencyCode={productDetails.price.currency}
+                        value={product.price.maximalPrice.amount.value}
+                    />
+                </span>
+            </div>
+        ) : (
+            ''
+        );
+
     const pricePiece =
         product.__typename === 'MpGiftCardProduct' ? (
             <Price
@@ -367,7 +387,6 @@ const ProductFullDetail = props => {
             />
         );
     const { price, sku, price_tiers } = product || {};
-
     const review =
         product && product.review_count && product.rating_summary ? (
             <div className="wrapperReviewSum">
@@ -376,6 +395,7 @@ const ProductFullDetail = props => {
                     className={classes.reviewSum}
                 >
                     <StaticRate
+                        size={25}
                         backgroundColor={
                             !isMobileSite
                                 ? configColor.content_color
@@ -402,10 +422,7 @@ const ProductFullDetail = props => {
                 </section>
             </div>
         ) : (
-            <div
-                onClick={() => productReview.current.togglePopup()}
-                className={classes.noReview}
-            >
+            <div onClick={() => scrollToReview()} className={classes.noReview}>
                 <FormattedMessage
                     id="Be the first to review this product"
                     defaultMessage="Be the first to review this product"
@@ -431,7 +448,9 @@ const ProductFullDetail = props => {
                     style={{ color: configColor.price_color }}
                     className={classes.productPrice}
                 >
-                    {pricePiece}
+                    {product && product.price && product.price.has_special_price
+                        ? specialPrice
+                        : pricePiece}
                 </span>
 
                 {isOutOfStock ? (
@@ -805,11 +824,14 @@ const ProductFullDetail = props => {
                                 <div className="wrapperSku">
                                     <section className={classes.details}>
                                         <span className={classes.detailsTitle}>
-                                            <FormattedMessage
-                                                id={'SKU'}
-                                                defaultMessage={'SKU'}
-                                            />
-                                            {': ' + productDetails.sku}
+                                            <span>
+                                                <FormattedMessage
+                                                    id={'SKU:'}
+                                                    defaultMessage={'SKU:'}
+                                                />
+                                            </span>
+
+                                            <span>{productDetails.sku}</span>
                                         </span>
                                     </section>
                                 </div>
@@ -854,8 +876,8 @@ const ProductFullDetail = props => {
                                     className="descriptionTitle"
                                 >
                                     <FormattedMessage
-                                        id={'Product Description'}
-                                        defaultMessage={'Product Description'}
+                                        id={'Description'}
+                                        defaultMessage={'Description'}
                                     />
                                 </span>
 
@@ -884,11 +906,9 @@ const ProductFullDetail = props => {
                                                 <ArrowLeft />
                                                 <p>
                                                     <FormattedMessage
-                                                        id={
-                                                            'Product Description'
-                                                        }
+                                                        id={'Description'}
                                                         defaultMessage={
-                                                            'Product Description'
+                                                            'Description'
                                                         }
                                                     />
                                                 </p>

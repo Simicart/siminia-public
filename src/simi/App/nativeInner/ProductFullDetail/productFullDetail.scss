@@ -116,8 +116,8 @@
                 margin-inline-start: 15px;
             }
             span {
-                color: #444444;
-                font-size: 12px;
+                color: #555555;
+                font-size: 14px;
                 letter-spacing: 0;
                 line-height: 16px;
             }
@@ -141,10 +141,10 @@
                 > span {
                     color: #000000;
                     letter-spacing: 0;
-                    font-size: 14px;
-                    font-weight: 500;
+                    font-size: 20px;
+                    font-weight: bold;
                     letter-spacing: 0;
-                    line-height: 17px;
+                    line-height: 25px;
                 }
                 dl {
                     color: #111111;
@@ -176,6 +176,25 @@
             grid-column: 1 / span 2;
             align-items: center;
             border-bottom: 1px solid #d8d8d8;
+            .wrapperSpecialPrice {
+                display: flex;
+                align-items: center;
+                .specialPrice {
+                    color: #555555;
+                    font-size: 18px;
+                    letter-spacing: 0;
+                    line-height: 22px;
+                    text-decoration-line: line-through;
+                }
+                .regularPrice {
+                    margin-inline-start: 10px;
+                    color: #d40000;
+                    font-size: 20px;
+                    font-weight: bold;
+                    letter-spacing: 0;
+                    line-height: 25px;
+                }
+            }
             .labelPrice {
                 color: #111111;
                 font-size: 14px;
