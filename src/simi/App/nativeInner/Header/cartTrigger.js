@@ -3,7 +3,7 @@ import { connect } from 'src/drivers';
 
 import CartCounter from './cartCounter';
 
-import Basket from 'src/simi/BaseComponents/Icon/Basket';
+import ShoppingCart from 'src/simi/App/nativeInner/Icon/ShoppingCart'
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
 import defaultClasses from './cartTrigger.module.css';
 import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
@@ -61,9 +61,9 @@ const Trigger = props => {
                 style={{ display: 'flex', justifyContent: 'center' }}
                 ref={miniCartTriggerRef}
             >
-                <Basket
+                <ShoppingCart
                     style={{
-                        width: 30,
+                        width: 20,
                         height: 30,
                         display: 'block',
                         margin: 0
