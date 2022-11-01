@@ -188,6 +188,7 @@ const Products = props => {
             </div>
         );
     }
+    console.log('categorycategory', category);
     const renderList = () => {
         const items = data ? data.products.items : null;
         if (!data) return <Loading />;
@@ -273,6 +274,7 @@ const Products = props => {
                     pathname: '/' + cate.url_path + cateUrlSuffix(),
                     cateId: cate.id
                 };
+                console.log('location', location);
                 return (
                     <li key={cate.id}>
                         <Link to={location}>
@@ -458,7 +460,7 @@ const Products = props => {
                 </div>
                 <div
                     className={`${
-                        renderCarouselChildCate() ? 'marginTop' : ''
+                        category && category.children.length === 0 ? 'marginTop' : ''
                     } listing-product`}
                     style={{ display: 'inline-block', width: '100%' }}
                 >

@@ -164,7 +164,7 @@ const Category = props => {
                     <div
                         className={`${
                             category.image ? '' : 'wrapProductsListing'
-                        }`}
+                        } ${isMobileSite ? 'wrapProductsListing' : ''}`}
                     >
                         <Products
                             type={'category'}

@@ -339,8 +339,11 @@
         h1.title {
             display: none;
         }
+        .marginTop{
+            margin-top: 15px!important;
+        }
         .listing-product {
-            margin-top: 70px;
+            margin-top: 50px;
             .product-list-top {
                 padding-bottom: 0px;
                 border-bottom: none;
@@ -348,7 +351,6 @@
                 display: grid;
                 grid-template-areas: 'title itemCount';
                 grid-template-columns: 1fr min-content;
-                margin-top: 0px;
                 .category-title {
                     display: unset;
                     grid-area: title;
@@ -367,9 +369,9 @@
                 }
             }
         }
-        .marginTop {
-            margin-top: 50px;
-        }
+        // .marginTop {
+        //     margin-top: 50px;
+        // }
         .sortby-filter {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
