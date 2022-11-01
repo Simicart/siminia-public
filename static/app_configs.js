@@ -2469,6 +2469,10 @@ var DASHBOARD_CONFIG = {
                     'Default Billing Address':'عنوان الفواتير الافتراضي',
                     'All brand':'جميع العلامات التجارية',
                     'All by Brand':'كل ذلك حسب العلامة التجارية',
+                    "Guest customers aren't allowed to add product reviews.":'لا يُسمح للعملاء الضيوف بإضافة مراجعات المنتج.',
+                    "Shop by brand:":'تسوق وفق الماركة:',
+                    'Share:':'يشارك:',
+                    'Add to Favourites':'أضف إلى المفضلة'
                 }
             },
             currency_rate: {

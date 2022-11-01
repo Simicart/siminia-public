@@ -24,7 +24,10 @@ const useProductReview = props => {
             addToast({
                 type: 'error',
                 message: formatMessage({
-                    id: 'Request Failed'
+                    id:
+                        "Guest customers aren't allowed to add product reviews.",
+                    defaultMessage:
+                        "Guest customers aren't allowed to add product reviews."
                 }),
                 timeout: 3000
             });

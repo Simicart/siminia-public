@@ -46,7 +46,6 @@ export const defaultIfNull = (value, defaultVal) =>
 
 export const ProductDetailExtraProducts = props => {
     const { classes: _classes, products, history, children } = props;
-    console.log('Identify', Identify.isRtl());
     const containerRef = useRef(null);
     const { innerWidth } = useWindowSize();
 

@@ -202,8 +202,9 @@
     }
 }
 .rating {
-    display: flex;
-    align-items: flex-end;
+    display: grid;
+    grid-template-columns: 120px max-content;
+    margin-bottom: 10px;
 }
 .ratingName {
     color: #111111;
