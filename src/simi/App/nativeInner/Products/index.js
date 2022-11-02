@@ -107,7 +107,11 @@ const Products = props => {
                             defaultMessage: `Shop By Brand`
                         })}
                     </span>
-                    <span className="view-all">
+                    <span
+                        className={`${
+                            Identify.isRtl() ? 'view-all-rtl' : 'view-all'
+                        }`}
+                    >
                         <Link to={'/brands.html'}>
                             {formatMessage({
                                 id: 'View All',
@@ -460,7 +464,9 @@ const Products = props => {
                 </div>
                 <div
                     className={`${
-                        category && category.children.length === 0 ? 'marginTop' : ''
+                        category && category.children.length === 0
+                            ? 'marginTop'
+                            : ''
                     } listing-product`}
                     style={{ display: 'inline-block', width: '100%' }}
                 >

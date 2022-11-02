@@ -70,6 +70,15 @@
                         letter-spacing: 0;
                         line-height: 19px;
                     }
+                    .view-all-rtl{
+                        display: flex;
+                        align-items: center;
+                        .arrow-right{
+                            svg{
+                                transform: rotateZ(180deg);
+                            }
+                        }
+                    }
                     .view-all {
                         display: flex;
                         align-items: center;

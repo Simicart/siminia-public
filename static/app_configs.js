@@ -2472,7 +2472,9 @@ var DASHBOARD_CONFIG = {
                     "Guest customers aren't allowed to add product reviews.":'لا يُسمح للعملاء الضيوف بإضافة مراجعات المنتج.',
                     "Shop by brand:":'تسوق وفق الماركة:',
                     'Share:':'يشارك:',
-                    'Add to Favourites':'أضف إلى المفضلة'
+                    'Add to Favourites':'أضف إلى المفضلة',
+                    'Shop By Brand':'تسوق وفق الماركة',
+                    'View All':'مشاهدة الكل'
                 }
             },
             currency_rate: {

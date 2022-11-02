@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import {FormattedMessage, useIntl} from 'react-intl';
-import {Qty} from 'src/simi/BaseComponents/Input';
-import {BundleContent} from './components/BundleContent/BundleContent';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { Qty } from 'src/simi/BaseComponents/Input';
+import { BundleContent } from './components/BundleContent/BundleContent';
 import defaultClasses from './bundleOption.module.css';
-import {useStyle} from 'src/classify';
+import { useStyle } from 'src/classify';
 import Optionlabel from '../CustomOption/components/OptionLabel/OptionLabel';
-import {OptionSummary} from "../SharedOptionComponent/OptionSummary/OptionSummary";
+import { OptionSummary } from '../SharedOptionComponent/OptionSummary/OptionSummary';
 
 const PRODUCT_BUNDLE_OPTION_QUERY = gql`
     query getBundleOptionForProductDetails($sku: String!) {
@@ -62,8 +62,12 @@ const PRODUCT_BUNDLE_OPTION_QUERY = gql`
 export const BundleOptions = props => {
     const product = props.product;
     const useProductFullDetailProps = props.useProductFullDetailProps;
-    const {handleBundleChangeQty, extraPrice, resetBundleOption} = useProductFullDetailProps;
-    const {bundleOptions} = useProductFullDetailProps;
+    const {
+        handleBundleChangeQty,
+        extraPrice,
+        resetBundleOption
+    } = useProductFullDetailProps;
+    const { bundleOptions } = useProductFullDetailProps;
     const classes = useStyle(defaultClasses, props.classes);
 
     const { data: optionData } = useQuery(PRODUCT_BUNDLE_OPTION_QUERY, {
@@ -72,7 +76,6 @@ export const BundleOptions = props => {
         },
         skip: !product || !product.sku
     });
-    
 
     const items =
         optionData &&
@@ -85,19 +88,19 @@ export const BundleOptions = props => {
 
     useEffect(() => {
         return () => {
-            resetBundleOption()
-        }
-    }, [])
+            resetBundleOption();
+        };
+    }, []);
 
     if (!(!!items && items.length > 0)) {
         return null;
     }
-    const {quantity, option_value} = bundleOptions;
+    const { quantity, option_value } = bundleOptions;
     let htmlSummary = null;
     let optionList = [];
     optionList = Object.entries(option_value).map(option => {
         const dataFound = items.find(
-            ({option_id}) => Number(option_id) === Number(option[0])
+            ({ option_id }) => Number(option_id) === Number(option[0])
         );
         let dataQuantity;
         for (const property in quantity) {
@@ -107,13 +110,13 @@ export const BundleOptions = props => {
         }
 
         if (dataFound) {
-            const {options} = dataFound;
-            const optFound = options.find(({id}) => id === Number(option[1]));
+            const { options } = dataFound;
+            const optFound = options.find(({ id }) => id === Number(option[1]));
             if (!optFound) return null;
             return (
                 <div key={optFound.id} className={classes.summaryItem}>
                     <div
-                        style={{fontWeight: '700'}}
+                        style={{ fontWeight: '700' }}
                         className={classes.summaryItemTitle}
                     >
                         {dataFound.title}
@@ -151,15 +154,18 @@ export const BundleOptions = props => {
 
     const bundleSummary = (
         <OptionSummary
-            isVisible={Object.getOwnPropertyNames(bundleOptions.option_value).length > 0}
+            isVisible={
+                Object.getOwnPropertyNames(bundleOptions.option_value).length >
+                0
+            }
             classes={classes}
             price={extraPrice}
         >
             {bundleList}
         </OptionSummary>
-    )
+    );
 
-    const bundleOption = items.map(function (item, index) {
+    const bundleOption = items.map(function(item, index) {
         let labelReq = '';
         if (item.required) {
             labelReq = '*';
@@ -180,11 +186,11 @@ export const BundleOptions = props => {
                 >
                     <div
                         className={classes.optionTitle}
-                        style={{fontSize: '18px', height: 30}}
+                        style={{ fontSize: '18px', height: 30 }}
                     >
                         <span className={classes.optionTitleSpan}>
                             {item.title}{' '}
-                            <span style={{marginLeft: '5px', color: 'red'}}>
+                            <span style={{ marginLeft: '5px', color: 'red' }}>
                                 {labelReq}
                             </span>
                         </span>
@@ -223,10 +229,11 @@ export const BundleOptions = props => {
                                     inputStyle={{
                                         margin: '0 15px',
                                         borderRadius: 0,
-                                        border: 'solid #eaeaea 1px',
-                                        maxWidth: 50,
+                                        border: 'solid #E8E8E8 1px',
                                         color: 'black',
-                                        textAlign: 'center'
+                                        textAlign: 'center',
+                                        height: '40px',
+                                        width: '80px'
                                     }}
                                     onChange={qty => handleChange(qty) || null}
                                 />
