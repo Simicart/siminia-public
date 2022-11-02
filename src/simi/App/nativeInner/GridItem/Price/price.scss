@@ -1,7 +1,8 @@
 .griditem-price-ctn {
     .product-prices {
-        display: flex;
+        // display: flex;
         .regularPrice {
+            display: inline-block;
             .price {
                 color: #d40000;
                 font-size: 16px;
@@ -20,6 +21,7 @@
     }
     .regular-price {
         margin-inline-end: 10px;
+        display: inline-block;
         .price {
             font-weight: unset;
             color: #555555;
