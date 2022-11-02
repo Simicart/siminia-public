@@ -112,8 +112,8 @@ header {
 }
 .header-search-form input {
     width: 100%;
-    border: transparent;
-    background-color: #f4f4f4;
+    border: 1px solid #E8E8E8;
+    background-color: #FFFFFF;
     padding: 9px 16px;
     height: 34px;
 }
