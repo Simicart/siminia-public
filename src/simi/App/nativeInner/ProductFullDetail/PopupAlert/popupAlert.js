@@ -12,7 +12,6 @@ export const PopupAlert = (props) => {
 
     const {width} = useWindowDimensions()
 
-
     if (!popupData || !isVisible) {
         return (
             <div/>

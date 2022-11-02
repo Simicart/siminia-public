@@ -92,7 +92,6 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product } = props;
-    console.log("ProductFullDetail-product",product)
     const talonProps = useProductFullDetail({ product });
 
     const {

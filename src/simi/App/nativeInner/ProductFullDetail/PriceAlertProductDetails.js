@@ -25,7 +25,6 @@ const PriceAlertProductDetails = props => {
         setPopUpData: setPopUpData,
         setShowPopup: setShowPopup
     });
-
     return (
         <>
             {shouldShowPriceSubscription && (
