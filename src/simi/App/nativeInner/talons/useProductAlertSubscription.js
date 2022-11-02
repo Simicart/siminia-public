@@ -171,6 +171,16 @@ export const useProductAlertSubscription = props => {
             return addPriceDropNotificationSignedIn()
                 .then(data => {
                     // console.warn(JSON.stringify(data, null, 2))
+                    addToast({
+                        type: 'info',
+                        message: formatMessage({
+                            id:
+                                'Congratulations! You will receive a notification email when this product has just changed the price.',
+                            defaultMessage:
+                                'Congratulations! You will receive a notification email when this product has just changed the price.'
+                        }),
+                        timeout: 3000
+                    });
                     setMessage(
                         priceAlertData.MpProductAlertsConfigs.price_alert
                             .subscribed_text
@@ -180,8 +190,15 @@ export const useProductAlertSubscription = props => {
                 })
                 .catch(err => {
                     // console.warn(JSON.stringify(err, null, 2))
-                    setMessage('You have already subscribed.');
-                    setMessageType('Failure');
+                    addToast({
+                        type: 'info',
+                        message: formatMessage({
+                            id: 'You have already subscribed.'
+                        }),
+                        timeout: 3000
+                    });
+                    // setMessage('You have already subscribed.');
+                    // setMessageType('Failure');
                     setGlobalLoading(false);
                 });
         } else if (priceAlertData) {
@@ -215,8 +232,14 @@ export const useProductAlertSubscription = props => {
                         })
                         .catch(err => {
                             // console.warn(JSON.stringify(err, null, 2))
-                            setMessage('You have already subscribed.');
-                            setMessageType('Failure');
+                            addToast({
+                                type: 'info',
+                                message: formatMessage({
+                                    id: 'You have already subscribed.'
+                                }),
+                                timeout: 3000
+                            });
+                            // setMessageType('Failure');
                             setGlobalLoading(false);
                         });
                 }
@@ -233,17 +256,34 @@ export const useProductAlertSubscription = props => {
             return addStockSubscriptionSignIn()
                 .then(data => {
                     // console.warn(JSON.stringify(data, null, 2))
-                    setMessage(
-                        priceAlertData.MpProductAlertsConfigs.stock_alert
-                            .subscribed_text
-                    );
-                    setMessageType('Success');
+                    addToast({
+                        type: 'info',
+                        message: formatMessage({
+                            id:
+                                'Congratulations! You will receive a notification email when this product has just come back to stock.',
+                            defaultMessage:
+                                'Congratulations! You will receive a notification email when this product has just come back to stock.'
+                        }),
+
+                        timeout: 3000
+                    });
+                    // setMessage(
+                    //     priceAlertData.MpProductAlertsConfigs.stock_alert
+                    //         .subscribed_text
+                    // );
+                    // setMessageType('Success');
                     setGlobalLoading(false);
                 })
                 .catch(err => {
                     // console.warn(JSON.stringify(err, null, 2))
-                    setMessage('You have already subscribed.');
-                    setMessageType('Failure');
+                    addToast({
+                        type: 'info',
+                        message: formatMessage({
+                            id: 'You have already subscribed.'
+                        }),
+                        timeout: 3000
+                    });
+                    // setMessageType('Failure');
                     setGlobalLoading(false);
                 });
         } else if (priceAlertData) {
@@ -266,8 +306,14 @@ export const useProductAlertSubscription = props => {
                         })
                         .catch(err => {
                             // console.warn(JSON.stringify(err, null, 2))
-                            setMessage('You have already subscribed.');
-                            setMessageType('Failure');
+                            addToast({
+                                type: 'info',
+                                message: formatMessage({
+                                    id: 'You have already subscribed.'
+                                }),
+                                timeout: 3000
+                            });
+                            // setMessageType('Failure');
                             setGlobalLoading(false);
                         });
                 }

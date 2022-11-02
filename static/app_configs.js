@@ -2474,7 +2474,10 @@ var DASHBOARD_CONFIG = {
                     'Share:':'يشارك:',
                     'Add to Favourites':'أضف إلى المفضلة',
                     'Shop By Brand':'تسوق وفق الماركة',
-                    'View All':'مشاهدة الكل'
+                    'View All':'مشاهدة الكل',
+                    'You have already subscribed.':'لقد قمت بالاشتراك بالفعل.',
+                    'Congratulations! You will receive a notification email when this product has just changed the price.':'تهانينا! ستتلقى إشعارًا عبر البريد الإلكتروني عندما يغير هذا المنتج السعر للتو.',
+                    'Congratulations! You will receive a notification email when this product has just come back to stock.':'تهانينا! ستتلقى إشعارًا عبر البريد الإلكتروني عندما يعود هذا المنتج إلى المخزون.'
                 }
             },
             currency_rate: {
