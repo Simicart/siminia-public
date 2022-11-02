@@ -1,5 +1,5 @@
 import React from 'react';
-import RadioGroup from '@magento/venia-ui/lib/components/RadioGroup';
+import RadioGroup from './RadioGroup';
 import { getFieldName } from '../../../utils/getFieldName';
 import { useBaseInput } from '../../../utils/useBaseInput';
 import defaultClass from './Radio.module.css';
