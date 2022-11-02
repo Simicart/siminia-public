@@ -109,6 +109,12 @@ label[class*='field-label-ifR'] {
 .country {
     margin-bottom: 20px;
 }
+.telephone div[class*='field-root-F1M'] input[class*='textInput-input-xbR field-input-1gu'],
+.postcode div[class*='postcode-root-26p'] input[class*='textInput-input-xbR field-input-1gu'] {
+    border-color: rgb(223, 225, 226);
+    border-width: 1px;
+    border-radius: 0;
+}
 
 .street1 div[class*='field-root-F1M']:last-child label {
     display: none;

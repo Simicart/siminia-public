@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 
 const BundlePrice = props => {
     const { classes, prices, type, formatPrice } = props;
-
     let product_from_label = <div />;
     let from_price_excluding_tax = <div />;
     let from_price_including_tax = <div />;

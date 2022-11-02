@@ -148,6 +148,7 @@ const AddEditDialog = props => {
                         <div className={classes.telephone}>
                             <Field id="telephone" label={telephoneLabel}>
                                 <TextInput
+                                    type="tel"
                                     field="telephone"
                                     validate={isRequired}
                                 />
@@ -172,7 +173,7 @@ const AddEditDialog = props => {
                             </Field>
                         </div>
                         <div className={classes.postcode}>
-                            <Postcode validate={isRequired} />
+                            <Postcode type="tel" validate={isRequired} />
                         </div>
                         <div className={classes.country}>
                             <Country

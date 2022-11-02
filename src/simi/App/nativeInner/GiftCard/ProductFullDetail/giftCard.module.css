@@ -1,3 +1,7 @@
+.wrapper-gift-card{
+    margin-top: 16px;
+    grid-column: 1 / span 2;
+}
 .giftcard-information {
     min-height: 33px;
     margin-bottom: 8px;
