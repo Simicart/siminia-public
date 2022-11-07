@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { Trash2 as TrashIcon, Edit2 as EditIcon } from 'react-feather';
 import { useMutation, useQuery } from '@apollo/client';
@@ -28,14 +28,18 @@ const AddressCard = props => {
         city,
         country_code,
         default_shipping,
+        default_billing,
         firstname,
         middlename = '',
         lastname,
         postcode,
         region: { region },
         street,
-        telephone
+        telephone,
+        company
     } = address;
+    console.log('address', address);
+    const { formatMessage } = useIntl();
 
     const classes = useStyle(defaultClasses, propClasses);
     const confirmDeleteButtonClasses = {
@@ -72,8 +76,6 @@ const AddressCard = props => {
             <Icon classes={{ icon: null }} size={16} src={TrashIcon} />
         </LinkButton>
     ) : null;
-   
-    
 
     const maybeConfirmingDeleteOverlay = isConfirmingDelete ? (
         <div className={classes.confirmDeleteContainer}>
@@ -107,39 +109,89 @@ const AddressCard = props => {
 
     return (
         <div>
-            <div  className={classes.root}>
+            <div className={classes.root}>
                 <div onClick={onEdit} className={classes.contentContainer}>
+                    {default_billing ? (
+                        <span className={classes.defaultBilling}>
+                            {formatMessage({
+                                id: 'Default Billing Address',
+                                defaultMessage: 'Default Billing Address'
+                            })}
+                        </span>
+                    ) : null}
+                    {default_shipping ? (
+                        <span className={classes.defaultShipping}>
+                            {formatMessage({
+                                id: 'Default Shipping Address',
+                                defaultMessage: 'Default Shipping Address'
+                            })}
+                        </span>
+                    ) : null}
                     <span className={classes.name}>{nameString}</span>
                     {streetRows}
-                    <span className={classes.additionalAddress}>
-                        {additionalAddressString}
-                    </span>
+                    {company ? (
+                        <span className={classes.company}>{company}</span>
+                    ) : (
+                        ''
+                    )}
                     <span className={classes.country}>
                         {countryName || country_code}
                     </span>
+
+                    <span className={classes.postcode}>{postcode}</span>
+
                     <span className={classes.telephone}>
                         <FormattedMessage
                             id="addressBookPage.telephone"
                             values={{ telephone }}
                         />
                     </span>
-                </div>
+                    <div className={classes.actionContainer}>
+                        {!isPhone && (
+                            <LinkButton
+                                classes={{ root: classes.editButton }}
+                                onClick={onEdit}
+                            >
+                                {default_billing && !default_shipping
+                                    ? formatMessage({
+                                          id: 'Change Billing Address',
+                                          defaultMessage:
+                                              'Change Billing Address'
+                                      })
+                                    : ''}
+                                {default_shipping && !default_billing
+                                    ? formatMessage({
+                                          id: 'Change Shipping Address',
+                                          defaultMessage:
+                                              'Change Shipping Address'
+                                      })
+                                    : ''}
+                                {!default_billing && !default_shipping
+                                    ? formatMessage({
+                                          id: 'Edit Address',
+                                          defaultMessage: 'Edit Address'
+                                      })
+                                    : ''}
+                                {default_billing && default_shipping
+                                    ? formatMessage({
+                                          id:
+                                              'Change Billing & Shipping Address',
+                                          defaultMessage:
+                                              'Change Billing & Shipping Address'
+                                      })
+                                    : ''}
 
-                <div className={classes.actionContainer}>
-                    {!isPhone && <LinkButton
-                        classes={{ root: classes.editButton }}
-                        onClick={onEdit}
-                    >
-                        <Icon
+                                {/* <Icon
                             classes={{ icon: null }}
                             size={16}
                             src={EditIcon}
-                        />
-                    </LinkButton>}
-                    {isPhone && defaultBadge ? "Is default" : null}
+                        /> */}
+                            </LinkButton>
+                        )}
 
-                    {deleteButtonElement}
-                    {maybeConfirmingDeleteOverlay}
+                        {/* {deleteButtonElement}
+                        {maybeConfirmingDeleteOverlay} */}
+                    </div>
                 </div>
             </div>
         </div>

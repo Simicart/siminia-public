@@ -13,9 +13,9 @@ const Tile = props => {
         hasFocus,
         isSelected,
         item: { label, value_index, swatch_data },
-        onClick
+        onClick,
+        label: labelTitle
     } = props;
-    
     const talonProps = useTile({
         onClick,
         value_index
@@ -33,16 +33,28 @@ const Tile = props => {
 
     return (
         <button
-            className={className}
+            className={`${className} ${isSelected ? classes.active : ''} ${
+                labelTitle === 'Size' ? classes.size : ''
+            } `}
             onClick={handleClick}
             title={label}
             type="button"
             style={{
-                borderRadius: '1px',
                 backgroundColor: isHex ? swatch_data.value : '#f2f2f2'
             }}
         >
-            <span>{!isHex && label}</span>
+            <div
+                className={`${
+                    labelTitle === 'Size'
+                        ? classes.wrapperSize
+                        : classes.wrapper
+                }`}
+                style={{
+                    backgroundColor: isHex ? swatch_data.value : '#f2f2f2'
+                }}
+            >
+                <span>{!isHex && label}</span>
+            </div>
         </button>
     );
 };

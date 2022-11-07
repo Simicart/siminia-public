@@ -1,0 +1,127 @@
+.root {
+    padding-top: 0;
+    /* max-width: var(--venia-global-maxWidth); */
+    margin: 0 auto;
+    min-width: 80%;
+}
+.wrapper {
+    display: grid;
+    grid-template-columns: 20% auto;
+    padding: 2rem 0px;
+    /* margin-top: 30px; */
+    gap: 30px;
+}
+.heading {
+    color: #333132;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 25px;
+    margin-bottom: 15px;
+    margin-top: 8px;
+}
+.addNewAddressContent {
+    /* display: flex;
+    justify-content: center; */
+}
+.formContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 140px;
+}
+.info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 19px;
+    column-gap: 140px;
+}
+.infoTitle {
+    color: #333132;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
+}
+.infoContact {
+}
+.infoAddress {
+}
+
+label[class*='field-label-ifR'] {
+    color: #000000;
+    font-size: 14px !important;
+    letter-spacing: 0;
+    font-weight: unset !important;
+    line-height: 16px;
+}
+.default_address_check,
+.default_address_check2 {
+    color: #000000;
+    font-size: 14px !important;
+    letter-spacing: 0;
+    font-weight: unset !important;
+    line-height: 16px;
+}
+
+.country
+    div[class*='country-root-3pZ']
+    label[class*='field-label-ifR']::before {
+    content: '*';
+    position: absolute;
+    inset-inline-end: -10px;
+    color: red;
+}
+.firstname div[class*='field-root-F1M'] label[class*='field-label-ifR']::before,
+.lastname div[class*='field-root-F1M'] label[class*='field-label-ifR']::before {
+    content: '*';
+    position: absolute;
+    inset-inline-end: 0px;
+    color: red;
+}
+.firstname div[class*='field-root-F1M'] label[class*='field-label-ifR'],
+.lastname div[class*='field-root-F1M'] label[class*='field-label-ifR'] {
+    position: relative;
+    max-width: 80px;
+}
+.country div[class*='country-root-3pZ'] label[class*='field-label-ifR'] {
+    position: relative;
+    display: inline-block;
+}
+
+.save {
+    height: 48px;
+    width: 122px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
+    background-color: #333132;
+    margin-top: 30px;
+}
+
+.form input,
+.form select {
+    min-height: 48px;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 16px;
+}
+.firstname,
+.lastname,
+.company,
+.telephone,
+.street1,
+.city,
+.postcode,
+.country {
+    margin-bottom: 20px;
+}
+
+.street1 div[class*='field-root-F1M']:last-child label {
+    display: none;
+}
+.street1 div[class*='field-root-F1M']:last-child {
+    margin-top: 15px;
+}

@@ -17,7 +17,8 @@
             'images cart'
             'images errors'
             'images .';
-        grid-template-columns: 1.5625fr 1fr;
+        grid-template-columns: 1fr max-content;
+        column-gap: 60px;
         grid-template-rows: repeat(7, min-content) 1fr [fold];
         padding: 0;
     }
@@ -55,6 +56,7 @@
     padding: 0.2rem 1.5rem;
     display: flex;
     cursor: pointer;
+    align-items: center;
 }
 
 .noReview {
@@ -74,7 +76,8 @@
 
 @media (min-width: 1024px) {
     .title {
-        padding: 1.5rem;
+        padding: 0 1.5rem;
+        margin-bottom: 8px;
     }
 
     .reviewSum {
@@ -105,8 +108,8 @@
 @media (min-width: 1024px) {
     .imageCarousel {
         margin: 0;
-        max-width: 800px;
-        padding: 1.5rem 0;
+        max-width: 600px;
+        /* padding: 1.5rem 0; */
     }
     .imageCarousel > div > div > div:nth-child(2) > div {
         margin-inline-start: 0px;
@@ -115,6 +118,8 @@
 
 .options {
     grid-area: options;
+    display: grid;
+    grid-template-columns: 1fr max-content;
 }
 
 .formErrors {
@@ -165,6 +170,11 @@
         margin: 0;
         /* padding-left: 1.5rem; */
         padding-right: 1.5rem;
+
+        color: #000000;
+        font-size: 14px;
+        letter-spacing: 0;
+        line-height: 24px;
     }
 }
 
@@ -206,7 +216,7 @@
     --stroke: var(--venia-global-color-gray-600);
     text-align: center;
     display: grid;
-    grid-template-columns: 1fr 4rem 1fr;
+    /* grid-template-columns: 1fr 4rem 1fr; */
     grid-column-gap: 0rem;
     align-items: center;
     justify-items: center;
@@ -219,9 +229,10 @@
     width: 45px;
     background-color: #f4f4f4;
     border: none;
+    display: none;
 }
 .quantityRoot button:nth-child(2) {
-    background-color:  var(--venia-global-color-button);
+    background-color: var(--venia-global-color-button);
 }
 .quantityRoot input {
     transition: all 0.2s ease-out;
@@ -235,18 +246,21 @@
 }
 .quantityRoot > span {
     box-sizing: border-box;
-    height: 45px;
-    width: 45px;
-    border: 1px solid #979797;
+    /* height: 48px; */
+    width: 110px;
+    /* border: 1px solid #e8e8e8; */
     background-color: #ffffff;
 }
 .quantityRoot > span > span > input {
     background-color: #ffffff !important;
-    color: #111111;
+    height: 48px;
+    /* width: 110px; */
+    color: #000000;
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0;
-    line-height: 22px;
+    line-height: 19px;
+    border: 1px solid #e8e8e8 !important;
 }
 
 .unavailableContainer {
@@ -306,7 +320,9 @@
 .product-grid-actions {
     display: none;
 }
-
+.wrapperDes {
+    grid-column: 1 / span 2;
+}
 @media (min-width: 1024px) {
     .siminia-product-grid-item:hover {
         background-color: white;

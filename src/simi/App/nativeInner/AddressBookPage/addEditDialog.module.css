@@ -3,13 +3,157 @@
     gap: 0.5rem 1.5rem;
     grid-template-columns: 1fr;
 }
+div[class*='dialog-dialog-2xq']
+    div[class*='dialog-header-1L6']
+    span[class*='dialog-headerText-1OU'] {
+    color: #333132;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 25px;
+}
+.root {
+}
 
+.formContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 30px;
+}
+.info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 19px;
+    column-gap: 30px;
+}
+.infoTitle {
+    color: #333132;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
+}
+.infoContact {
+}
+.infoAddress {
+}
+
+label[class*='field-label-ifR'] {
+    color: #000000;
+    font-size: 14px !important;
+    letter-spacing: 0;
+    font-weight: unset !important;
+    line-height: 16px;
+}
+.default_address_check,
+.default_address_check2 {
+    color: #000000;
+    font-size: 14px !important;
+    letter-spacing: 0;
+    font-weight: unset !important;
+    line-height: 16px;
+}
+
+.country
+    div[class*='country-root-3pZ']
+    label[class*='field-label-ifR']::before {
+    content: '*';
+    position: absolute;
+    inset-inline-end: -10px;
+    color: red;
+}
+.firstname div[class*='field-root-F1M'] label[class*='field-label-ifR']::before,
+.lastname div[class*='field-root-F1M'] label[class*='field-label-ifR']::before {
+    content: '*';
+    position: absolute;
+    inset-inline-end: 0px;
+    color: red;
+}
+.firstname div[class*='field-root-F1M'] label[class*='field-label-ifR'],
+.lastname div[class*='field-root-F1M'] label[class*='field-label-ifR'] {
+    position: relative;
+    max-width: 80px;
+}
+.country div[class*='country-root-3pZ'] label[class*='field-label-ifR'] {
+    position: relative;
+    display: inline-block;
+}
+
+.save {
+    height: 48px;
+    width: 122px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
+    background-color: #333132;
+    margin-top: 30px;
+}
+
+.form input,
+.form select {
+    min-height: 48px;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 16px;
+}
+.firstname,
+.lastname,
+.company,
+.telephone,
+.street1,
+.city,
+.postcode,
+.country {
+    margin-bottom: 20px;
+}
+.telephone div[class*='field-root-F1M'] input[class*='textInput-input-xbR field-input-1gu'],
+.postcode div[class*='postcode-root-26p'] input[class*='textInput-input-xbR field-input-1gu'] {
+    border-color: rgb(223, 225, 226);
+    border-width: 1px;
+    border-radius: 0;
+}
+
+.street1 div[class*='field-root-F1M']:last-child label {
+    display: none;
+}
+.street1 div[class*='field-root-F1M']:last-child {
+    margin-top: 15px;
+}
+button[class*='dialog-cancelButton-1a0'] {
+    height: 48px;
+    width: 122px;
+    color: #333132;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
+    background-color: #fff;
+    margin-top: 30px;
+    border-radius: 0;
+    border: 1px solid #333132;
+}
+button[class*='dialog-confirmButton-RWl'] {
+    height: 48px;
+    width: 122px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
+    background-color: #333132;
+    margin-top: 30px;
+    border-radius: 0;
+    border: 1px solid #333132;
+}
 /*
  *  Desktop-specific styles.
  */
 @media (min-width: 961px) {
     .root {
-        grid-template-columns: 1fr 1fr;
+        /* grid-template-columns: 1fr 1fr; */
     }
 
     .fullWidthField {

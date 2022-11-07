@@ -1,21 +1,21 @@
 .root {
     position: absolute;
-    min-width: 20px;
-    height: 20px;
+    min-width: 16px;
+    height: 16px;
     background: var(--venia-global-color-button);
     color: var(--venia-global-color-button-text);
     border-radius: 10px;
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-left: 4px;
+    padding-right: 4px;
     z-index: 5;
-    font-size: 12px;
-    line-height: 15px;
+    font-size: 10px;
+    line-height: 12px;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
     -ms-flex-pack: center;
     justify-content: center;
-    top: -3px;
+    top: 0;
     text-align: center;
 }

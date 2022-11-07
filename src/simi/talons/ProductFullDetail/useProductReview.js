@@ -10,7 +10,7 @@ const useProductReview = props => {
 
     const { getAllReviews, createProductReview } = operations;
     const { data, error, loading } = useQuery(getAllReviews, {
-        fetchPolicy: 'cache-and-network',
+        fetchPolicy: 'network-only',
         skip: !enabledReview,
         variables: {
             sku: product.sku
@@ -24,7 +24,10 @@ const useProductReview = props => {
             addToast({
                 type: 'error',
                 message: formatMessage({
-                    id: 'Request Failed'
+                    id:
+                        "Guest customers aren't allowed to add product reviews.",
+                    defaultMessage:
+                        "Guest customers aren't allowed to add product reviews."
                 }),
                 timeout: 3000
             });

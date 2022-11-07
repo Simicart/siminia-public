@@ -44,7 +44,7 @@ const SizeChart = props => {
                         ) : (
                             <div className="overlay" />
                         )}
-                        <button onClick={() => setOpen(true)}>
+                        <button className='btnSizeChart' onClick={() => setOpen(true)}>
                             {formatMessage({
                                 id: 'Size Chart',
                                 defaultMessage: 'Size Chart'

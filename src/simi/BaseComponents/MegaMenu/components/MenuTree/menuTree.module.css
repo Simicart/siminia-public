@@ -5,9 +5,9 @@
   grid-row: 1 / 1;
   justify-content: center;
   display: block;
-  color: rgb(var(--venia-global-color-text));
+  color: rgb(var(--am-mega-menu-main-menu-text-color));
   margin: 0;
-  background-color: #fff;
+  background-color: rgb(var(--am-mega-menu-main-menu-background-color));
   height: 100%;
 }
 
@@ -21,5 +21,7 @@
 @media(max-width: 1023px) {
   .root {
     padding: 10px 20px;
+    color: rgb(var(--venia-global-color-text));
+    background-color: #fff
   }
 }

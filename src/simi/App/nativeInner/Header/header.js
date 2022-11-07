@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import Identify from 'src/simi/Helper/Identify';
 import WishList from 'src/simi/BaseComponents/Icon/WishList';
-import MenuIcon from 'src/simi/BaseComponents/Icon/Menu';
+// import MenuIcon from 'src/simi/BaseComponents/Icon/Menu';
 import ToastMessage from 'src/simi/BaseComponents/Message/ToastMessage';
-import NavTrigger from './Component/navTrigger';
+// import NavTrigger from './Component/navTrigger';
 import CartTrigger from './cartTrigger';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import { Link } from 'src/drivers';
@@ -12,7 +12,7 @@ import MyAccount from './Component/MyAccount';
 import { useHistory, useLocation } from 'react-router-dom';
 import { logoUrl } from '../../../Helper/Url';
 import SearchForm from './Component/SearchForm';
-import StoreSwitcher from '@magento/venia-ui/lib/components/Header/storeSwitcher';
+import StoreSwitcher from './storeSwitcher';
 import CurrencySwitcher from '@magento/venia-ui/lib/components/Header/currencySwitcher';
 import PageLoadingIndicator from '@magento/venia-ui/lib/components/PageLoadingIndicator';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
@@ -140,14 +140,16 @@ const Header = props => {
     };
 
     const { isSignedIn } = userData;
+
     const renderRightBar = () => {
         return (
             <div
-                className={`${classes['right-bar']} ${
-                    Identify.isRtl() ? 'right-bar-rtl' : ''
-                }`}
+                className={`${classes['right-bar']} ${Identify.isRtl() ? 'right-bar-rtl' : ''}`}
                 style={{ height: headerHeight }}
             >
+                <div className={classes['right-bar-item']}>
+                    <StoreSwitcher />
+                </div>
                 <div className={classes['right-bar-item']} id="my-account">
                     <MyAccount classes={classes} userData={userData} />
                 </div>
@@ -162,8 +164,8 @@ const Header = props => {
                         >
                             <WishList
                                 style={{
-                                    width: 35,
-                                    height: 35,
+                                    width: 30,
+                                    height: 30,
                                     display: 'block'
                                 }}
                             />
@@ -252,7 +254,7 @@ const Header = props => {
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
-                            id="signIn.signInText"
+                            id="Sign In"
                             defaultMessage="Sign In"
                         />
                     </span>
@@ -278,7 +280,7 @@ const Header = props => {
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
-                            id="navHeader.forgotPasswordText"
+                            id="Forgot Password"
                             defaultMessage="Forgot Password"
                         />
                     </span>
@@ -291,7 +293,7 @@ const Header = props => {
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
-                            id="cartPage.titlle"
+                            id="SHOPPING CART"
                             defaultMessage="Shopping Cart"
                         />{' '}
                         ({itemsQty})
@@ -323,7 +325,7 @@ const Header = props => {
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         <FormattedMessage
-                            id="navHeader.OrderDetails"
+                            id="Order Details"
                             defaultMessage="Order Details"
                         />
                     </span>
@@ -331,6 +333,16 @@ const Header = props => {
             );
         }
         if (myProfile.includes(type)) {
+            const name =
+                type
+                    .split('/')[1]
+                    .replace('-', ' ')
+                    .charAt(0)
+                    .toUpperCase() +
+                type
+                    .split('/')[1]
+                    .replace('-', ' ')
+                    .slice(1);
             return (
                 <div
                     className={classes.specHeader}
@@ -340,16 +352,11 @@ const Header = props => {
                     <ArrowLeft onClick={() => history.goBack()} />
                     <span>
                         {type !== '/contact.html'
-                            ? type
-                                  .split('/')[1]
-                                  .replace('-', ' ')
-                                  .charAt(0)
-                                  .toUpperCase() +
-                              type
-                                  .split('/')[1]
-                                  .replace('-', ' ')
-                                  .slice(1)
-                            : 'Contact Us'}
+                            ? formatMessage({ id: name, defaultMessage: name })
+                            : formatMessage({
+                                  id: 'Contact Us',
+                                  defaultMessage: 'Contact Us'
+                              })}
                     </span>
                 </div>
             );
@@ -380,9 +387,7 @@ const Header = props => {
                 <div className={classes.switchersContainer}>
                     {storeConfig ? (
                         <div className={`${classes.switchers} container`}>
-                            <StoreSwitcher />
                             <CurrencySwitcher />
-
                             {pointBalance && isSignedIn ? (
                                 <Link
                                     to={'/reward-points'}
@@ -399,7 +404,10 @@ const Header = props => {
                                             defaultMessage={`${pointBalance} `}
                                         />
                                         <>
-                                        {formatMessage({ id: 'point(s)',defaultMessage:'point(s)' })}
+                                            {formatMessage({
+                                                id: 'point(s)',
+                                                defaultMessage: 'point(s)'
+                                            })}
                                         </>
                                     </span>
                                 </Link>

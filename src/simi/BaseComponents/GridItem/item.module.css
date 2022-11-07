@@ -14,16 +14,18 @@
 }
 .siminia-product-des .product-name {
     width: 100%;
-    font-size: 16px;
     margin-bottom: 10px;
     margin-bottom: 8px;
     text-align: start;
     font-weight: 500;
     text-overflow: ellipsis;
     overflow: hidden;
-    line-height: 22px;
     max-height: 44px;
     cursor: pointer;
+    color: #000000;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 18px;
 }
 
 .siminia-product-des .price {
@@ -115,8 +117,10 @@ Rate
 }
 .item-review-count {
     display: inline-block;
+    color: #555555;
     font-size: 14px;
-    line-height: 15px;
+    letter-spacing: 0;
+    line-height: 16px;
 }
 
 .special-price .sale_off {
@@ -126,9 +130,15 @@ Rate
     margin-left: 8px !important;
 }
 .prices-layout {
-    font-size: 14px;
-    line-height: 24px;
+    /* font-size: 14px;
+    line-height: 24px; */
     display: flex;
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
+    align-items: center;
 }
 .configurable-aslowas {
     margin-inline-end: 5px;

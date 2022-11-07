@@ -1,14 +1,19 @@
 .root {
     margin: 0 1.5rem;
-    padding: 1rem 0;
+    margin-bottom: 20px;
 }
 
 .root:not(:last-of-type) {
-    border-bottom: 1px solid rgb(var(--venia-global-color-border));
+    border-bottom: 0;
 }
-
+.root:first-child{
+    margin-top: 20px;
+}
+.root:last-child{
+    margin-bottom: 30px;
+}
 .title {
-    font-size: 0.9rem;
+    font-size: 16px!important;
     font-weight: 600;
     line-height: 1.5;
     margin-bottom: 0.4rem;

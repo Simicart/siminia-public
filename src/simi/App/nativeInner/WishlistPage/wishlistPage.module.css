@@ -3,17 +3,16 @@
     /* padding: 2rem 3rem; */
     row-gap: 2rem;
 }
-.btnShare{
+.btnShare {
     display: none;
 }
 
-
 .container {
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    justify-content: center; */
     /* flex-direction: column; */
 }
-@media (min-width: 376px) and (max-width:745px) {
+@media (min-width: 376px) and (max-width: 745px) {
     .container {
         display: block;
         justify-content: center;
@@ -21,7 +20,7 @@
     }
 }
 .containerSub {
-    min-width: 80%;
+    /* min-width: 80%; */
 }
 
 .btncontainer {
@@ -30,26 +29,24 @@
     margin-bottom: 10px;
 }
 .btncontainer > button:nth-child(1) {
-    color: #FFFFFF;
+    color: #ffffff;
     font-family: poppins;
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0;
     line-height: 22px;
     padding: 10px 20px;
-    background-color: #0058AC;
-
+    background-color: #0058ac;
 }
 .btncontainer > button:nth-child(2) {
-    color: #FFFFFF;
+    color: #ffffff;
     font-family: poppins;
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0;
     line-height: 22px;
     padding: 10px 20px;
-    background-color: #E02020;
-
+    background-color: #e02020;
 }
 
 .heading {
@@ -62,14 +59,19 @@
     line-height: 14px;
     padding-top: 20px;
     margin-bottom: 30px;
+    color: #333132;
+    font-family: 'Helvetica Neue';
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 25px;
 }
 @media screen and (min-width: 959px) {
-    
     .wrapper {
         display: grid;
         grid-template-columns: 20% auto;
+        grid-gap: 30px;
     }
-   
 }
 
 .errorContainer {
@@ -99,7 +101,7 @@
 }
 
 @media (max-width: 768px) {
-    .heading{
+    .heading {
         display: none;
     }
     .root {
@@ -107,15 +109,15 @@
         padding-right: 0;
         row-gap: 0;
         min-height: 100vh;
-        background-color: #F2F2F3;
+        background-color: #f2f2f3;
     }
-    .btnShare{
+    .btnShare {
         display: flex;
         flex-direction: column;
         justify-content: center;
         position: fixed;
         top: 0;
-        right: 10px;
+        inset-inline-end: 10px;
         z-index: 5;
         height: 55px;
     }

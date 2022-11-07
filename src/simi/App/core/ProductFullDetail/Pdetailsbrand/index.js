@@ -35,8 +35,8 @@ const Pdetailsbrand = props => {
              <Link to={resourceUrl(`/brands/${mpbrand.url_key}.html`)} className={classes.pdetailsBrandInfo}>
                 <div style={{
                         backgroundImage: `url("${mpbrand.image}")`,
-                        width:  50,
-                        height: 50
+                        width:  71,
+                        height: 30
                     }}
                     className={classes.pdetailsBrandImage}>
                 </div>

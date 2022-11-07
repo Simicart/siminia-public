@@ -22,8 +22,8 @@ import RichContent from '@magento/venia-ui/lib/components/RichContent/richConten
 import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductOptions';
 import defaultClasses from './productFullDetail.module.css';
 import SizeChart from './SizeChart';
-import GiftCardInformationForm from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GiftCardInformationForm'
-import GridCardTemplate from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GridCardTemplate'
+import GiftCardInformationForm from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GiftCardInformationForm';
+import GridCardTemplate from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GridCardTemplate';
 import { PriceAlertProductDetails } from './PriceAlertProductDetails';
 import { PopupAlert } from './PopupAlert/popupAlert';
 const WishlistButton = React.lazy(() =>
@@ -63,9 +63,10 @@ import StatusBar from './statusBar';
 import FooterFixedBtn from './footerFixedBtn';
 import AddToCartPopup from './addToCartPopup';
 import CallForPrice from './callForPrice';
-import CustomAttributes from './CustomAttributes'
-import { isCallForPriceEnable } from '../Helper/Module'
+import CustomAttributes from './CustomAttributes';
+import { isCallForPriceEnable } from '../Helper/Module';
 import PriceTiers from './PriceTiers';
+import SocialShare from '../../../BaseComponents/SocialShare';
 
 require('./productFullDetail.scss');
 
@@ -92,7 +93,7 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 const ProductFullDetail = props => {
     const { product } = props;
     const talonProps = useProductFullDetail({ product });
-    
+
     const {
         breadcrumbCategoryId,
         errorMessage,
@@ -118,7 +119,6 @@ const ProductFullDetail = props => {
         alertMsg,
         handleUpdateQuantity
     } = talonProps;
-
     const {
         giftCardProductData,
         giftCardData,
@@ -126,7 +126,7 @@ const ProductFullDetail = props => {
         isAddGiftCardProductLoading,
         handleAddGiftCardProductToCart,
         handleByNowGiftCardProduct
-    } = useGiftCard({product, setAlertMsg})
+    } = useGiftCard({ product, setAlertMsg });
 
     const [message, setMessage] = useState(null);
     const [messageType, setMessageType] = useState(null);
@@ -186,9 +186,9 @@ const ProductFullDetail = props => {
             ? (40 / carouselImgSize.current.clientHeight) * 100
             : 514;
 
-    if(product.__typename === 'MpGiftCardProduct') positionFooterFixed - 100
+    if (product.__typename === 'MpGiftCardProduct') positionFooterFixed - 100;
     const scrollToReview = () => {
-        smoothScrollToView(document.querySelector('.reviewsContainer'));
+        smoothScrollToView(document.querySelector('.wrapperReviews'));
     };
     const desStatus = status => {
         if (status === -1) {
@@ -223,12 +223,10 @@ const ProductFullDetail = props => {
 
     // Fill a map with field/section -> error.
     const errors = new Map();
-    if(Array.isArray(userErrorsMessage) && userErrorsMessage.length > 0) {
+    if (Array.isArray(userErrorsMessage) && userErrorsMessage.length > 0) {
         userErrorsMessage.forEach(userErrorMessage => {
-            errors.set('form', [
-                new Error(userErrorMessage)
-            ]);
-        })
+            errors.set('form', [new Error(userErrorMessage)]);
+        });
     }
     if (errorMessage) {
         Object.keys(ERROR_MESSAGE_TO_FIELD_MAPPING).forEach(key => {
@@ -298,8 +296,8 @@ const ProductFullDetail = props => {
         } else
             return !isOutOfStock ? (
                 <FormattedMessage
-                    id="Buy now"
-                    defaultMessage="Buy Now"
+                    id="productFullDetail.addItemToCart"
+                    defaultMessage="Add to Cart"
                 />
             ) : (
                 <FormattedMessage
@@ -310,7 +308,11 @@ const ProductFullDetail = props => {
     };
 
     const cartActionContent = isSupportedProductType ? (
-        <Button disabled={isAddToCartDisabled || isAddGiftCardProductLoading} priority="high" type="submit">
+        <Button
+            disabled={isAddToCartDisabled || isAddGiftCardProductLoading}
+            priority="high"
+            type="submit"
+        >
             {cartCallToActionText()}
         </Button>
     ) : (
@@ -340,21 +342,50 @@ const ProductFullDetail = props => {
         }
     } catch (err) {}
 
-    const pricePiece = product.__typename === 'MpGiftCardProduct' ? (
-        <Price currencyCode={productDetails.price.currency} value={giftCardData && giftCardData.gcPrice ? giftCardData.gcPrice : 0} />
-    ) : (
-        switchExtraPriceForNormalPrice ? (
-        <Price currencyCode={extraPrice.currency} value={extraPrice.value} />
-    ) : (
-        <Price
-            currencyCode={productDetails.price.currency}
-            value={productDetails.price.value}
-            fromValue={productDetails.price.fromValue}
-            toValue={productDetails.price.toValue}
-        />
-    ));
-    const { price, sku, price_tiers } = product || {};
+    const specialPrice =
+        product && product.price && product.price.has_special_price ? (
+            <div className="wrapperSpecialPrice">
+                <span className="specialPrice">
+                    <Price
+                        currencyCode={productDetails.price.currency}
+                        value={product.price.regularPrice.amount.value}
+                    />
+                </span>
+                <span className="regularPrice">
+                    <Price
+                        currencyCode={productDetails.price.currency}
+                        value={product.price.maximalPrice.amount.value}
+                    />
+                </span>
+            </div>
+        ) : (
+            ''
+        );
 
+    const pricePiece =
+        product.__typename === 'MpGiftCardProduct' ? (
+            <Price
+                currencyCode={productDetails.price.currency}
+                value={
+                    giftCardData && giftCardData.gcPrice
+                        ? giftCardData.gcPrice
+                        : 0
+                }
+            />
+        ) : switchExtraPriceForNormalPrice ? (
+            <Price
+                currencyCode={extraPrice.currency}
+                value={extraPrice.value}
+            />
+        ) : (
+            <Price
+                currencyCode={productDetails.price.currency}
+                value={productDetails.price.value}
+                fromValue={productDetails.price.fromValue}
+                toValue={productDetails.price.toValue}
+            />
+        );
+    const { price, sku, price_tiers } = product || {};
     const review =
         product && product.review_count && product.rating_summary ? (
             <div className="wrapperReviewSum">
@@ -363,6 +394,7 @@ const ProductFullDetail = props => {
                     className={classes.reviewSum}
                 >
                     <StaticRate
+                        size={25}
                         backgroundColor={
                             !isMobileSite
                                 ? configColor.content_color
@@ -380,13 +412,16 @@ const ProductFullDetail = props => {
                             : formatMessage({ id: 'Review' })}
                         )
                     </span>
+                    <span className="submitReview">
+                        {formatMessage({
+                            id: 'Submit Review',
+                            defaultMessage: 'Submit Review'
+                        })}
+                    </span>
                 </section>
             </div>
         ) : (
-            <div
-                onClick={() => productReview.current.togglePopup()}
-                className={classes.noReview}
-            >
+            <div onClick={() => scrollToReview()} className={classes.noReview}>
                 <FormattedMessage
                     id="Be the first to review this product"
                     defaultMessage="Be the first to review this product"
@@ -397,7 +432,7 @@ const ProductFullDetail = props => {
     let wrapperPrice = (
         <React.Fragment>
             <div className="wrapperPrice">
-                <span
+                {/* <span
                     className="labelPrice"
                     style={{ color: configColor.price_color }}
                 >
@@ -407,14 +442,16 @@ const ProductFullDetail = props => {
                             defaultMessage="Per pack: "
                         />
                     ) : null}
-                </span>
+                </span> */}
                 <span
                     style={{ color: configColor.price_color }}
                     className={classes.productPrice}
                 >
-                    {pricePiece}
+                    {product && product.price && product.price.has_special_price
+                        ? specialPrice
+                        : pricePiece}
                 </span>
-                
+
                 {isOutOfStock ? (
                     <span className="outOfStock">
                         <FormattedMessage
@@ -423,55 +460,53 @@ const ProductFullDetail = props => {
                         />
                     </span>
                 ) : (
-                    ''
+                    <span className="inStock">
+                        <FormattedMessage
+                            id="In stock"
+                            defaultMessage="In stock"
+                        />
+                    </span>
                 )}
             </div>
-            {(price_tiers && Array.isArray(price_tiers) && price_tiers.length > 0) ? <PriceTiers priceTiers={price_tiers} price={price} /> : null}
+            {price_tiers &&
+            Array.isArray(price_tiers) &&
+            price_tiers.length > 0 ? (
+                <PriceTiers priceTiers={price_tiers} price={price} />
+            ) : null}
         </React.Fragment>
-    )
+    );
 
-    if(isCallForPriceEnable()) {
-        if(!(action === 'login_see_price' && isSignedIn) || action === 'redirect_url' ) {
-            wrapperPrice = null
+    if (isCallForPriceEnable()) {
+        if (
+            !(action === 'login_see_price' && isSignedIn) ||
+            action === 'redirect_url'
+        ) {
+            wrapperPrice = null;
         }
     }
 
-    const wrapperQuantity = product.__typename !=='GroupedProduct' ?(
+    const wrapperQuantity = (
         <div className="wrapperQuantity">
             <section
                 className={!isMobileSite ? classes.quantity : 'mbQuantity'}
             >
-                <span className={classes.quantityTitle}>
-                    <FormattedMessage
-                        id={'Quantity'}
-                        defaultMessage={'Quantity: '}
-                    />
-                </span>
+                {/* <span className={classes.quantityTitle}>
+                        <FormattedMessage
+                            id={'Quantity'}
+                            defaultMessage={'Quantity: '}
+                        />
+                    </span> */}
                 <QuantityFields
                     classes={{ root: classes.quantityRoot }}
-                    onChange={handleUpdateQuantity} 
+                    onChange={handleUpdateQuantity}
                     min={1}
                     message={errors.get('quantity')}
                 />
             </section>
             {/* {!isMobileSite ? ( */}
-            <div>
-                <PriceAlertProductDetails
-                    sku={sku}
-                    setMessage={setMessage}
-                    setMessageType={setMessageType}
-                    setPopUpData={setPopUpData}
-                    setShowPopup={setShowPopup}
-                />
-                <PopupAlert
-                    popupData={popupData}
-                    showPopup={showPopup}
-                    setShowPopup={setShowPopup}
-                />
-            </div>
             {/* ) : null} */}
         </div>
-    ) : '';
+    );
     const renderSizeChart = product.mp_sizeChart ? (
         <SizeChart
             sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null}
@@ -482,30 +517,16 @@ const ProductFullDetail = props => {
     const cartAction = (
         <div
             className={
-                isAddToCartDisabled || isAddGiftCardProductLoading ? 'addCartDisabled' : 'wrapperActions'
+                isAddToCartDisabled || isAddGiftCardProductLoading
+                    ? 'addCartDisabled'
+                    : 'wrapperActions'
             }
         >
-            <section className={classes.actions}>
-                {cartActionContent}
-                {isMobileSite ? null : (
-                    <Suspense fallback={null}>
-                        <WishlistButton {...wishlistButtonProps} />
-                    </Suspense>
-                )}
-            </section>
-            {!isMobileSite &&
-            product.mp_sizeChart &&
-            product.mp_sizeChart.display_type == 'inline' ? (
-                <SizeChart
-                    sizeChart={
-                        product.mp_sizeChart ? product.mp_sizeChart : null
-                    }
-                />
-            ) : null}
+            <section className={classes.actions}>{cartActionContent}</section>
         </div>
     );
-    const productDetailCarousel = []
-    if(isMobileSite) {
+    const productDetailCarousel = [];
+    if (isMobileSite) {
         productDetailCarousel.push(
             <React.Fragment>
                 <div className={classes.headerBtn} key="element-mobile">
@@ -517,19 +538,12 @@ const ProductFullDetail = props => {
                     </button>
 
                     <div className={classes.headerBtnRight}>
-                        <span className="cart-qty">
-                            {itemsQty}
-                        </span>
-                        <Link
-                            className="header-icon"
-                            to="/cart"
-                        >
+                        <span className="cart-qty">{itemsQty}</span>
+                        <Link className="header-icon" to="/cart">
                             <ShoppingCart />
                         </Link>
                         <Suspense fallback={null}>
-                            <WishlistButton
-                                {...wishlistButtonProps}
-                            />
+                            <WishlistButton {...wishlistButtonProps} />
                         </Suspense>{' '}
                         <div
                             onClick={() => setMoreBtn(!moreBtn)}
@@ -564,9 +578,13 @@ const ProductFullDetail = props => {
                     position={positionFooterFixed}
                 />
             </React.Fragment>
-        )
+        );
     }
-    if(product.__typename === 'MpGiftCardProduct' && giftCardProductData.template && giftCardProductData.template.length > 0) {
+    if (
+        product.__typename === 'MpGiftCardProduct' &&
+        giftCardProductData.template &&
+        giftCardProductData.template.length > 0
+    ) {
         productDetailCarousel.push(
             <GridCardTemplate
                 key="grid-card-template"
@@ -574,7 +592,7 @@ const ProductFullDetail = props => {
                 giftCardData={giftCardData}
                 giftCardActions={giftCardActions}
             />
-        )
+        );
     } else {
         productDetailCarousel.push(
             <Carousel
@@ -583,14 +601,13 @@ const ProductFullDetail = props => {
                 optionSelections={optionSelections}
                 optionCodes={optionCodes}
                 labelData={
-                    product.mp_label_data &&
-                    product.mp_label_data.length > 0
+                    product.mp_label_data && product.mp_label_data.length > 0
                         ? product.mp_label_data
                         : null
                 }
                 topInsets={topInsets}
             />
-        )
+        );
     }
 
     return (
@@ -609,8 +626,16 @@ const ProductFullDetail = props => {
                     options={options}
                     wrapperQuantity={wrapperQuantity}
                     cartAction={cartAction}
-                    handleAddToCart={product.__typename === 'MpGiftCardProduct' ? handleAddGiftCardProductToCart : handleAddToCart}
-                    handleBuyNow={product.__typename === 'MpGiftCardProduct' ? handleByNowGiftCardProduct : handleBuyNow}
+                    handleAddToCart={
+                        product.__typename === 'MpGiftCardProduct'
+                            ? handleAddGiftCardProductToCart
+                            : handleAddToCart
+                    }
+                    handleBuyNow={
+                        product.__typename === 'MpGiftCardProduct'
+                            ? handleByNowGiftCardProduct
+                            : handleBuyNow
+                    }
                     setAddToCartPopup={setAddToCartPopup}
                     typeBtn={typeBtn}
                     loading={isAddProductLoading}
@@ -619,12 +644,15 @@ const ProductFullDetail = props => {
                     productName={productDetails.name}
                     addToCartPopup={addToCartPopup}
                     bottomInsets={bottomInsets}
-                    giftCardForm={product.__typename === 'MpGiftCardProduct' 
-                        && <GiftCardInformationForm 
-                            giftCardProductData={giftCardProductData}
-                            giftCardData={giftCardData}
-                            giftCardActions={giftCardActions}
-                    />}
+                    giftCardForm={
+                        product.__typename === 'MpGiftCardProduct' && (
+                            <GiftCardInformationForm
+                                giftCardProductData={giftCardProductData}
+                                giftCardData={giftCardData}
+                                giftCardActions={giftCardActions}
+                            />
+                        )
+                    }
                 />
             ) : null}
 
@@ -651,29 +679,23 @@ const ProductFullDetail = props => {
                     />
                 )}
 
-                {isMobileSite ? null : breadcrumbs}
+                {/* {isMobileSite ? null : breadcrumbs} */}
                 <div className="wrapperForm ">
-                    <Form className={classes.root} onSubmit={product.__typename === 'MpGiftCardProduct' ? handleAddGiftCardProductToCart : handleAddToCart}>
+                    <Form
+                        className={classes.root}
+                        onSubmit={
+                            product.__typename === 'MpGiftCardProduct'
+                                ? handleAddGiftCardProductToCart
+                                : handleAddToCart
+                        }
+                    >
                         {!isMobileSite ? (
                             <div className="wrapperTitle">
                                 <section className={classes.title}>
                                     <h1 className={classes.productName}>
                                         {productDetails.name}
-                                        <Pdetailsbrand product={product} />
+                                        {/* <Pdetailsbrand product={product} /> */}
                                     </h1>
-                                </section>
-                            </div>
-                        ) : null}
-                        {!isMobileSite ? (
-                            <div className="wrapperSku">
-                                <section className={classes.details}>
-                                    <span className={classes.detailsTitle}>
-                                        <FormattedMessage
-                                            id={'SKU'}
-                                            defaultMessage={'SKU'}
-                                        />
-                                        {': ' + productDetails.sku}
-                                    </span>
                                 </section>
                             </div>
                         ) : null}
@@ -688,25 +710,44 @@ const ProductFullDetail = props => {
                             {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
                         </section>
 
-                        <div className="productDescription">
-                            {(!isMobileSite && product.short_description) ? (    
-                                <RichContent
-                                    html={product.short_description.html}
-                                />
-                            ) : null}
-                        </div>
-                        
-
                         {!isMobileSite ? (
                             <div className="wrapperOptions">
-                                <section className={classes.options}>
-                                    {options}
-                                    {product.__typename === 'MpGiftCardProduct' 
-                                        && <GiftCardInformationForm 
-                                                giftCardProductData={giftCardProductData}
-                                                giftCardData={giftCardData}
-                                                giftCardActions={giftCardActions}
-                                            />}
+                                <section
+                                    className={`${classes.options} ${
+                                        product.__typename ===
+                                            'GroupedProduct' ||
+                                        product.__typename === 'BundleProduct'
+                                            ? 'groupOptions'
+                                            : ''
+                                    }`}
+                                >
+                                    {!isMobileSite ? wrapperPrice : null}
+                                    <div className="optionsSizeChart">
+                                        {options}
+                                        {!isMobileSite &&
+                                        product.mp_sizeChart &&
+                                        product.mp_sizeChart.display_type ==
+                                            'inline' ? (
+                                            <SizeChart
+                                                sizeChart={
+                                                    product.mp_sizeChart
+                                                        ? product.mp_sizeChart
+                                                        : null
+                                                }
+                                            />
+                                        ) : null}
+                                    </div>
+
+                                    {product.__typename ===
+                                        'MpGiftCardProduct' && (
+                                        <GiftCardInformationForm
+                                            giftCardProductData={
+                                                giftCardProductData
+                                            }
+                                            giftCardData={giftCardData}
+                                            giftCardActions={giftCardActions}
+                                        />
+                                    )}
                                     {product.mp_sizeChart &&
                                     product.mp_sizeChart &&
                                     product.mp_sizeChart.display_type ==
@@ -720,19 +761,54 @@ const ProductFullDetail = props => {
                                             isMobileSite={isMobileSite}
                                         />
                                     ) : null}
-                                    {!isMobileSite ? wrapperPrice : null}
                                 </section>
                             </div>
                         ) : null}
 
-                        {product.items
-                            ? ''
-                            : !isMobileSite
-                            ? wrapperQuantity
-                            : null}
+                        <div
+                            className={`${
+                                product.__typename === 'GroupedProduct' ||
+                                product.__typename === 'BundleProduct'
+                                    ? 'groupCartAction'
+                                    : ''
+                            } quantityCartAction`}
+                        >
+                            {product.items
+                                ? ''
+                                : !isMobileSite
+                                ? wrapperQuantity
+                                : null}
 
-                        {!isMobileSite ? cartAction : null}
+                            {!isMobileSite ? cartAction : null}
+                        </div>
 
+                        <div className="wrapperWishlist">
+                            {isMobileSite ? null : (
+                                <Suspense fallback={null}>
+                                    <div className="btnWishlist">
+                                        <WishlistButton
+                                            {...wishlistButtonProps}
+                                        />
+                                        <span>
+                                            <FormattedMessage
+                                                id={'Add to Favourites'}
+                                                defaultMessage={
+                                                    'Add to Favourites'
+                                                }
+                                            />
+                                        </span>
+                                    </div>
+                                </Suspense>
+                            )}
+                        </div>
+
+                        <div className="productDescription">
+                            {!isMobileSite && product.short_description ? (
+                                <RichContent
+                                    html={product.short_description.html}
+                                />
+                            ) : null}
+                        </div>
                         <div className={classes.wrapperError}>
                             <FormError
                                 classes={{
@@ -740,8 +816,57 @@ const ProductFullDetail = props => {
                                 }}
                                 errors={errors.get('form') || []}
                             />
-                        </div>    
-                    
+                        </div>
+
+                        <div className="sku-share-shop-by-brand">
+                            {!isMobileSite ? (
+                                <div className="wrapperSku">
+                                    <section className={classes.details}>
+                                        <span className={classes.detailsTitle}>
+                                            <span>
+                                                <FormattedMessage
+                                                    id={'SKU:'}
+                                                    defaultMessage={'SKU:'}
+                                                />
+                                            </span>
+
+                                            <span>{productDetails.sku}</span>
+                                        </span>
+                                    </section>
+                                </div>
+                            ) : null}
+                            <div className="socialShare">
+                                <FormattedMessage
+                                    id={'Share:'}
+                                    defaultMessage={'Share:'}
+                                />
+                                <SocialShare product={product} />
+                            </div>
+
+                            <div className="shopByBrand">
+                                <FormattedMessage
+                                    id={'Shop by brand:'}
+                                    defaultMessage={'Shop by brand:'}
+                                />
+                                <div>
+                                    <Pdetailsbrand product={product} />
+                                </div>
+                            </div>
+                            <div className="wrapperPriceAlertProductDetails">
+                                <PriceAlertProductDetails
+                                    sku={sku}
+                                    setMessage={setMessage}
+                                    setMessageType={setMessageType}
+                                    setPopUpData={setPopUpData}
+                                    setShowPopup={setShowPopup}
+                                />
+                                <PopupAlert
+                                    popupData={popupData}
+                                    showPopup={showPopup}
+                                    setShowPopup={setShowPopup}
+                                />
+                            </div>
+                        </div>
 
                         <div className={classes.wrapperDes}>
                             <section className={classes.description}>
@@ -750,10 +875,8 @@ const ProductFullDetail = props => {
                                     className="descriptionTitle"
                                 >
                                     <FormattedMessage
-                                        id={
-                                            'productFullDetail.productDescription'
-                                        }
-                                        defaultMessage={'Product Description'}
+                                        id={'Description'}
+                                        defaultMessage={'Description'}
                                     />
                                 </span>
 
@@ -782,10 +905,10 @@ const ProductFullDetail = props => {
                                                 <ArrowLeft />
                                                 <p>
                                                     <FormattedMessage
-                                                        id={
-                                                            'productFullDetail.productDescription'
+                                                        id={'Description'}
+                                                        defaultMessage={
+                                                            'Description'
                                                         }
-                                                        defaultMessage={'Product Description'}
                                                     />
                                                 </p>
                                             </div>
@@ -798,7 +921,8 @@ const ProductFullDetail = props => {
                                     </>
                                 )}
                             </section>
-                            {product.short_description !== '' && isMobileSite ? (
+                            {product.short_description !== '' &&
+                            isMobileSite ? (
                                 <div className="short-description">
                                     <RichContent
                                         html={product.short_description.html}
@@ -807,15 +931,16 @@ const ProductFullDetail = props => {
                             ) : null}
                         </div>
                         {!isMobileSite ? (
-                            <section className={classes.details}>
-                                {/* <span className={classes.detailsTitle}>
-                                    <FormattedMessage
-                                        id={'SKU'}
-                                        defaultMessage={'SKU'}
-                                    />
-                                </span>
-                                <strong>{productDetails.sku}</strong> */}
-                            </section>
+                            // <section className={classes.details}>
+                            //     <span className={classes.detailsTitle}>
+                            //         <FormattedMessage
+                            //             id={'SKU'}
+                            //             defaultMessage={'SKU'}
+                            //         />
+                            //     </span>
+                            //     <strong>{productDetails.sku}</strong>
+                            // </section>
+                            ''
                         ) : (
                             <div className="sku-details">
                                 <span className={classes.detailsTitle}>
@@ -839,7 +964,7 @@ const ProductFullDetail = props => {
                                                 __html: productDetails.name
                                             }}
                                         />
-                                        <Pdetailsbrand product={product} />
+                                        {/* <Pdetailsbrand product={product} /> */}
                                     </h1>
                                 </section>
                             </div>
@@ -859,7 +984,12 @@ const ProductFullDetail = props => {
                         }
                     />
                 ) : null}
-                {product.hasOwnProperty('custom_attributes') && product.custom_attributes.length > 0 && <CustomAttributes customAttributes={product.custom_attributes}/>}
+                {product.hasOwnProperty('custom_attributes') &&
+                    product.custom_attributes.length > 0 && (
+                        <CustomAttributes
+                            customAttributes={product.custom_attributes}
+                        />
+                    )}
                 <ProductReview
                     topInsets={topInsets}
                     product={product}

@@ -100,17 +100,20 @@
     font-family: Roboto;
 }
 .submitReviewBtn {
-    height: 45px;
-    width: 167px;
-    border-radius: 22.5px !important;
+    height: 48px;
+    width: 134px;
     background-color: var(--venia-global-color-button);
     color: var(--venia-global-color-button-text);
     font-family: Roboto;
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 0;
+
     line-height: 45px;
     margin-top: 20px;
+
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
 }
 @media (max-width: 450px) {
     .submitReviewBtn {
@@ -134,8 +137,9 @@
     }
 }
 .submitBtnContainer {
-    display: flex;
-    justify-content: right;
+    /* display: flex;
+    justify-content: right; */
+    margin-top: 60px;
 }
 .writeRWContainer {
     display: flex;
@@ -162,7 +166,6 @@
     }
 }
 @media screen and (max-width: 450px) {
-    
     .overlayActive {
         position: fixed;
         display: block;
@@ -187,26 +190,30 @@
         overflow: auto;
         background-color: #fff;
         padding: 15px;
-        animation: mymove .4s;
+        animation: mymove 0.4s;
     }
     @keyframes mymove {
-        from {left: 100%;}
-        to {left: 0%;}
-      }
+        from {
+            left: 100%;
+        }
+        to {
+            left: 0%;
+        }
+    }
 }
 .rating {
-    display: flex;
-    align-items: flex-end;
-
+    display: grid;
+    grid-template-columns: 120px max-content;
+    margin-bottom: 10px;
 }
 .ratingName {
-    margin-right: 10px;
     color: #111111;
     font-family: Roboto;
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0;
     line-height: 19px;
+    margin-inline-end: 63px;
 }
 .content {
     color: #111111;
@@ -217,9 +224,9 @@
 }
 .noReivew {
     color: #111111;
-  font-family: Roboto;
-  font-size: 16px;
-  letter-spacing: 0;
-  line-height: 22px;
-  margin-top: 15px;
+    font-family: Roboto;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 22px;
+    margin-top: 15px;
 }

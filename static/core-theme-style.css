@@ -339,7 +339,7 @@ carousel.min.js react-responsive-carousel/lib/styles/carousel.min.css
 }
 .carousel .thumb.selected,
 .carousel .thumb:hover {
-    border: 3px solid #333;
+    border: 2px solid #F69435;
     padding: 2px;
 }
 .carousel .thumb img {

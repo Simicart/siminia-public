@@ -17,6 +17,7 @@ import defaultOperations from '../talons/AddressBookPage/addressBookPage.gql';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import { useMutation } from '@apollo/client';
 import Loader from '../Loader';
+import { Link } from 'react-router-dom';
 
 const AddressBookPage = props => {
     const talonProps = useAddressBookPage();
@@ -42,7 +43,6 @@ const AddressBookPage = props => {
         isDialogOpen,
         isLoading
     } = talonProps;
-
     const [isDefault, setDefault] = useState();
 
     let bottomInsets = 0;
@@ -93,7 +93,172 @@ const AddressBookPage = props => {
         id: 'addressBookPage.addressBookText',
         defaultMessage: 'Address Book'
     });
+    const renderDefaultAddress = addresses => {
+        const defaultShipping = addresses.find(
+            ({ default_shipping }) => default_shipping === true
+        );
+        const defaultBilling = addresses.find(
+            ({ default_billing }) => default_billing === true
+        );
 
+        if (!defaultBilling && !defaultShipping) {
+            return (
+                <div className={classes.noDefault}>
+                    {formatMessage({
+                        id: 'No default billing/shipping address selected.',
+                        defaultMessage:
+                            'No default billing/shipping address selected.'
+                    })}
+                </div>
+            );
+        }
+        if (defaultBilling && !defaultShipping) {
+            const countryNameBilling = countryDisplayNameMap.get(
+                defaultShipping.country_code
+            );
+            const boundEditBilling = () => handleEditAddress(defaultBilling);
+            const boundDeleteBilling = () =>
+                handleDeleteAddress(defaultBilling.id);
+            const isConfirmingDeleteBilling =
+                confirmDeleteAddressId === defaultBilling.id;
+            return (
+                <>
+                    <AddressCard
+                        address={defaultBilling}
+                        countryName={countryNameBilling}
+                        isConfirmingDelete={isConfirmingDeleteBilling}
+                        isDeletingCustomerAddress={isDeletingCustomerAddress}
+                        key={defaultBilling.id}
+                        onCancelDelete={handleCancelDeleteAddress}
+                        onConfirmDelete={handleConfirmDeleteAddress}
+                        onDelete={boundDeleteBilling}
+                        onEdit={boundEditBilling}
+                        setDefaultShipping={setDefault}
+                        indexAddress={defaultBilling.id}
+                        isPhone={isPhone}
+                    />
+                </>
+            );
+        }
+        if (!defaultBilling && defaultShipping) {
+            const countryNameShipping = countryDisplayNameMap.get(
+                defaultShipping.country_code
+            );
+            const boundEditShipping = () => handleEditAddress(defaultShipping);
+            const boundDeleteShipping = () =>
+                handleDeleteAddress(defaultShipping.id);
+            const isConfirmingDeleteShipping =
+                confirmDeleteAddressId === defaultShipping.id;
+            return (
+                <>
+                    <AddressCard
+                        address={defaultShipping}
+                        countryName={countryNameShipping}
+                        isConfirmingDelete={isConfirmingDeleteShipping}
+                        isDeletingCustomerAddress={isDeletingCustomerAddress}
+                        key={defaultShipping.id}
+                        onCancelDelete={handleCancelDeleteAddress}
+                        onConfirmDelete={handleConfirmDeleteAddress}
+                        onDelete={boundDeleteShipping}
+                        onEdit={boundEditShipping}
+                        setDefaultShipping={setDefault}
+                        indexAddress={defaultShipping.id}
+                        isPhone={isPhone}
+                    />
+                </>
+            );
+        }
+
+        if (defaultBilling === defaultShipping) {
+            const countryNameBilling = countryDisplayNameMap.get(
+                defaultShipping.country_code
+            );
+            const boundEditBilling = () => handleEditAddress(defaultBilling);
+            const boundDeleteBilling = () =>
+                handleDeleteAddress(defaultBilling.id);
+            const isConfirmingDeleteBilling =
+                confirmDeleteAddressId === defaultBilling.id;
+            return (
+                <AddressCard
+                    address={defaultBilling}
+                    countryName={countryNameBilling}
+                    isConfirmingDelete={isConfirmingDeleteBilling}
+                    isDeletingCustomerAddress={isDeletingCustomerAddress}
+                    key={defaultBilling.id}
+                    onCancelDelete={handleCancelDeleteAddress}
+                    onConfirmDelete={handleConfirmDeleteAddress}
+                    onDelete={boundDeleteBilling}
+                    onEdit={boundEditBilling}
+                    setDefaultShipping={setDefault}
+                    indexAddress={defaultBilling.id}
+                    isPhone={isPhone}
+                />
+            );
+        }
+        if (
+            defaultBilling &&
+            defaultShipping &&
+            defaultBilling !== defaultShipping
+        ) {
+            const countryNameBilling = countryDisplayNameMap.get(
+                defaultShipping.country_code
+            );
+            const boundEditBilling = () => handleEditAddress(defaultBilling);
+            const boundDeleteBilling = () =>
+                handleDeleteAddress(defaultBilling.id);
+            const isConfirmingDeleteBilling =
+                confirmDeleteAddressId === defaultBilling.id;
+            const countryNameShipping = countryDisplayNameMap.get(
+                defaultShipping.country_code
+            );
+            const boundEditShipping = () => handleEditAddress(defaultShipping);
+            const boundDeleteShipping = () =>
+                handleDeleteAddress(defaultShipping.id);
+            const isConfirmingDeleteShipping =
+                confirmDeleteAddressId === defaultShipping.id;
+            return (
+                <>
+                    {defaultBilling && (
+                        <AddressCard
+                            address={defaultBilling}
+                            countryName={countryNameBilling}
+                            isConfirmingDelete={isConfirmingDeleteBilling}
+                            isDeletingCustomerAddress={
+                                isDeletingCustomerAddress
+                            }
+                            key={defaultBilling.id}
+                            onCancelDelete={handleCancelDeleteAddress}
+                            onConfirmDelete={handleConfirmDeleteAddress}
+                            onDelete={boundDeleteBilling}
+                            onEdit={boundEditBilling}
+                            setDefaultShipping={setDefault}
+                            indexAddress={defaultBilling.id}
+                            isPhone={isPhone}
+                        />
+                    )}
+                    {defaultShipping && (
+                        <AddressCard
+                            address={defaultShipping}
+                            countryName={countryNameShipping}
+                            isConfirmingDelete={isConfirmingDeleteShipping}
+                            isDeletingCustomerAddress={
+                                isDeletingCustomerAddress
+                            }
+                            key={defaultShipping.id}
+                            onCancelDelete={handleCancelDeleteAddress}
+                            onConfirmDelete={handleConfirmDeleteAddress}
+                            onDelete={boundDeleteShipping}
+                            onEdit={boundEditShipping}
+                            setDefaultShipping={setDefault}
+                            indexAddress={defaultShipping.id}
+                            isPhone={isPhone}
+                        />
+                    )}
+                </>
+            );
+        }
+        return '';
+    };
     const addressBookElements = useMemo(() => {
         const defaultToBeginning = (address1, address2) => {
             if (address1.default_shipping) return -1;
@@ -102,7 +267,11 @@ const AddressBookPage = props => {
         };
 
         return Array.from(customerAddresses)
-            .sort(defaultToBeginning)
+            .filter(
+                address =>
+                    address.default_shipping !== true &&
+                    address.default_billing !== true
+            )
             .map((addressEntry, index) => {
                 const countryName = countryDisplayNameMap.get(
                     addressEntry.country_code
@@ -159,23 +328,45 @@ const AddressBookPage = props => {
                 <div className={classes.addressbookContent}>
                     <div className={classes.content}>
                         {!isPhone ? (
-                            <h1 className={classes.heading}>{PAGE_TITLE}</h1>
-                        ) : null}
-                        {!isPhone ? (
-                            <div
-                                onClick={handleAddAddress}
-                                className={classes.addAddress}
-                            >
-                                <div className={classes.addAddressBtn}>
-                                    {formatMessage({
-                                        id: 'Add new address',
-                                        defaultMessage: 'Add new address'
-                                    }).toUpperCase()}
+                            <div className={classes.wrapHeading}>
+                                <h1 className={classes.heading}>
+                                    {PAGE_TITLE}
+                                </h1>
+                                <div
+                                    // onClick={handleAddAddress}
+                                    className={classes.addAddress}
+                                >
+                                    <Link
+                                        to={'/new-address'}
+                                        className={classes.addAddressBtn}
+                                    >
+                                        {formatMessage({
+                                            id: 'Add new address',
+                                            defaultMessage: 'Add new address'
+                                        }).toUpperCase()}
+                                    </Link>
                                 </div>
                             </div>
                         ) : null}
+
                         {customerAddresses.length > 0 ? (
-                            addressBookElements
+                            <div className={classes.wrapAddresCard}>
+                                <h2 className={classes.defaultAddress}>
+                                    {formatMessage({
+                                        id: 'Default Address',
+                                        defaultMessage: 'Default Address'
+                                    })}
+                                </h2>
+                                {renderDefaultAddress(customerAddresses)}
+                                <h2 className={classes.defaultAddress}>
+                                    {formatMessage({
+                                        id: 'Additional Address Entries',
+                                        defaultMessage:
+                                            'Additional Address Entries'
+                                    })}
+                                </h2>
+                                {addressBookElements}
+                            </div>
                         ) : (
                             <div className={classes.noAddress}>
                                 <img

@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 import { isGiftCardEnable } from 'src/simi/App/nativeInner/Helper/Module'
+import {SimiPriceFragment} from "src/simi/queries/catalog_gql/catalogFragment.gql";
 
 const productLabelEnabled =
     window.SMCONFIGS &&
@@ -38,8 +39,21 @@ export const WishlistItemFragment = gql`
                 url
             }
             name
+            price {
+                ...SimiPriceFragment
+            }
+            small_image {
+                url
+                label
+            }
+            rating_summary
+            review_count
             price_range {
                 maximum_price {
+                    regular_price {
+                        currency
+                        value
+                      }
                     final_price {
                         currency
                         value
@@ -106,4 +120,5 @@ export const WishlistItemFragment = gql`
             }
         }
     }
+    ${SimiPriceFragment}
 `;

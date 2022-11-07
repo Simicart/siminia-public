@@ -1,11 +1,34 @@
 .griditem-price-ctn {
-    .price {
-        font-size: 18px;
-        line-height: 24px;
-        font-weight: 600;
+    .product-prices {
+        // display: flex;
+        .regularPrice {
+            display: inline-block;
+            .price {
+                color: #d40000;
+                font-size: 16px;
+                font-weight: bold;
+                letter-spacing: 0;
+                line-height: 19px;
+            }
+        }
     }
-    .regular-price .price {
-        font-weight: 400;
+    .price {
+        color: #000000;
+        font-size: 16px;
+        font-weight: bold;
+        letter-spacing: 0;
+        line-height: 19px;
+    }
+    .regular-price {
+        margin-inline-end: 10px;
+        display: inline-block;
+        .price {
+            font-weight: unset;
+            color: #555555;
+            font-size: 14px;
+            letter-spacing: 0;
+            line-height: 16px;
+        }
     }
     .sale_off {
         display: none;
@@ -13,10 +36,27 @@
     .regular-price-label {
         display: none;
     }
+    .small {
+        .from {
+            color: #555555;
+            font-size: 14px;
+            letter-spacing: 0;
+            line-height: 16px;
+            margin-bottom: 3px;
+        }
+        .to {
+            color: #555555;
+            font-size: 14px;
+            letter-spacing: 0;
+            line-height: 16px;
+            margin-bottom: 3px;
+        }
+    }
 }
 @media (max-width: 480px) {
     .griditem-price-ctn {
-        .small > div > span > span, .product-prices > div>span>span{
+        .small > div > span > span,
+        .product-prices > div > span > span {
             height: 19px;
             width: 61px;
             font-family: Roboto;
@@ -25,10 +65,10 @@
             letter-spacing: 0;
             line-height: 19px;
         }
-        .product-prices{
+        .product-prices {
             display: inline-flex;
             column-gap: 6px;
-            .regular-price-value{
+            .regular-price-value {
                 > span > span {
                     font-family: Roboto;
                     font-size: 14px;

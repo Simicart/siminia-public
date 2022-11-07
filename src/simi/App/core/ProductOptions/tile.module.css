@@ -7,20 +7,111 @@
     pointer-events: auto;
     text-align: center;
     border: 1px solid transparent;
-    border-radius: 2px;
-    min-height: 30px;
-    min-width: 40px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
     padding: 0.5rem;
     border-color: rgb(242, 242, 242);
 }
+.wrapper {
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.active.root {
+    align-items: center;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: auto;
+    text-align: center;
+    border: 1px solid #000;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff !important;
+}
+.size.root {
+    width: 40px;
+    height: 40px;
+    border-radius: 0;
+    background-color: #333132 !important;
+}
+.size.root div {
+    background-color: #333132!important;
+    height: 34px;
+    width: 34px;
+    position: absolute;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.size.active.root{
+    align-items: center;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: auto;
+    text-align: center;
+    border: 1px solid #000;
+    width: 40px;
+    height: 40px;
+    border-radius: 0;
+    background-color: #fff !important;
+}
+.size.root div span {
+    color: #ffffff!important;
+    font-size: 16px;   
+    font-weight: 500!important;
+    letter-spacing: 0;
+    line-height: 19px;
+}
+
+.root span {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 19px;
+}
+/* .wrapper {
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    border-color: #000;
+    border: 1px solid #000;
+    display: flex;
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: center;
+}
+.size {
+    align-items: center;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: auto;
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: 0;
+    padding: 0.5rem;
+    border-color: rgb(242, 242, 242);
+    width: 40px;
+    height: 40px;
+} */
 
 .root_selected {
     composes: root;
-    border-color: #f69435;
+    /* border-color: #f69435; */
 }
 .root_focused {
     composes: root;
-    border-color: #bdbdbd;
+    /* border-color: #bdbdbd; */
 }
 .root_selected_focused {
     composes: root_selected;

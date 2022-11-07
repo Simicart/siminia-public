@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 
 import Header from '../Header';
 import FooterNative from '../FooterNative';
-import Footer from '@simicart/siminia/src/simi/App/core/Footer';
+import Footer from '../Footer';
 import LoadingComponent from 'src/simi/BaseComponents/Loading';
 import classes from './main.module.css';
 import { Meta } from '@magento/venia-ui/lib/components/Head';
@@ -13,7 +13,6 @@ const storage = new BrowserPersistence();
 import { Helmet } from 'react-helmet';
 import RsSeller from '../../core/Seo/Markup/RsSeller';
 import { useWindowSize } from '@magento/peregrine';
-import { configColor } from '../../../Config';
 
 const mageworxSeoEnabled =
     window.SMCONFIGS &&
@@ -119,7 +118,7 @@ const Main = props => {
             <Helmet>{links}</Helmet>
             {/* <StoreTitle /> comment out due to requesting extra query */}
             <main
-                style={{ backgroundColor: configColor.app_background }}
+                // style={{ backgroundColor: configColor.app_background }}
                 className={classes.root}
             >
                 <div

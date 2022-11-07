@@ -7,6 +7,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 import moment from 'moment';
 import { useWindowSize } from '@magento/peregrine';
+import Identify from 'src/simi/Helper/Identify'
+import Loader from '../../Loader';
 
 const RewardTransaction = props => {
     const { formatMessage } = useIntl();
@@ -29,7 +31,7 @@ const RewardTransaction = props => {
     }, []);
 
     if (isLoadingWithoutData) {
-        return <LoadingIndicator />;
+        return <Loader />;
     }
 
     const transactionRow =
@@ -83,12 +85,12 @@ const RewardTransaction = props => {
                   } else expireDateString = expireDateFormat;
                   return (
                       <tr>
-                          <td>{transaction_id}</td>
-                          <td>{dateFormat}</td>
-                          <td>{comment}</td>
-                          <td>{point_amount}</td>
-                          <td>{rewardStatus}</td>
-                          <td>{expireDateString}</td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{transaction_id}</td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{dateFormat}</td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{comment}</td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{point_amount}</td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{rewardStatus}</td>
+                          <td className={Identify.isRtl() ? classes.tdRTL : ''}>{expireDateString}</td>
                       </tr>
                   );
               })

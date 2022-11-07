@@ -4,7 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useToasts, useWindowSize } from '@magento/peregrine';
 import { useWishlistItem } from '../talons/WishlistPage/useWishlistItem';
 import AlertMessages from '../ProductFullDetail/AlertMessages';
-
+import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import Image from '@magento/venia-ui/lib/components/Image';
@@ -25,16 +25,25 @@ const WishlistItem = props => {
         product,
         __typename
     } = item;
+    console.log('product', product);
     const {
         name,
         price_range: priceRange,
-        stock_status: stockStatus
+        stock_status: stockStatus,
+        review_count,
+        rating_summary,
+        type_id,
+        small_image,
+        mp_label_data
     } = product;
     const { maximum_price: maximumPrice } = priceRange;
     const { final_price: finalPrice } = maximumPrice;
     const { currency, value: unitPrice } = finalPrice;
 
-    const talonProps = useWishlistItem({...props, operations: { createCartMutaion: CREATE_CART_MUTATION }});
+    const talonProps = useWishlistItem({
+        ...props,
+        operations: { createCartMutaion: CREATE_CART_MUTATION }
+    });
     const {
         addToCartButtonProps,
         handleRemoveProductFromWishlist,
@@ -216,21 +225,45 @@ const WishlistItem = props => {
                 alertMsg={alertMsg}
                 status="success"
             />
-            <div className={classes.wrapImage}>
-                <Image {...imageProps} />
-            </div>
-            <button
-                className={classes.deleteItem}
-                aria-label={removeProductAriaLabel}
-            >
-                {/* {!isMobileSite ? (
-                    <div className={classes.close} />
-                ) : ( */}
+            <div className={classes.wrapper}>
+                <Link to={`${product.url_key}${product.url_suffix}`}>
+                    <div className={classes.wrapImage}>
+                        <Image {...imageProps} />
+                    </div>
+                    <div className={classes.actionWrap}>
+                        {review_count ? (
+                            <div className={classes.itemReviewRate}>
+                                <StaticRate
+                                    rate={rating_summary}
+                                    classes={classes}
+                                />
+                                <span className={classes.itemReviewCount}>
+                                    ({review_count}{' '}
+                                    {review_count
+                                        ? formatMessage({ id: 'Reviews' })
+                                        : formatMessage({ id: 'Review' })}
+                                    )
+                                </span>
+                            </div>
+                        ) : (
+                            ''
+                        )}
+                        <span className={classes.name}>{name}</span>{' '}
+                        <div className={classes.priceContainer}>{price}</div>
+                        {optionElements}
+                    </div>
+                </Link>
+                <button
+                    className={classes.deleteItem}
+                    aria-label={removeProductAriaLabel}
+                >
                     <ConfirmPopup
-                        trigger={isMobileSite ? <VscTrash size={25} /> : <div className={classes.close} />}
+                        trigger={<VscTrash size={25} />}
                         content={
                             <FormattedMessage
-                                id={'Are you sure about remove this item from wish list?'}
+                                id={
+                                    'Are you sure about remove this item from wish list?'
+                                }
                                 defaultMessage={
                                     'Are you sure about remove this item from wish list?'
                                 }
@@ -238,30 +271,7 @@ const WishlistItem = props => {
                         }
                         confirmCallback={handleRemoveProductFromWishlist}
                     />
-                {/* )} */}
-            </button>
-            <div className={classes.actionWrap}>
-                <span className={classes.name}>{name}</span>{' '}
-                <div className={classes.priceContainer}>{price}</div>
-                {optionElements}
-            </div>
-            <div className={classes.wrapSocialShare}>
-                {isMobileSite ? (
-                    <button
-                        onClick={handleShareMobile}
-                        className={classes.share}
-                    >
-                        <BsFillShareFill size={20} />
-                    </button>
-                ) : (
-                    <>
-                        <SocialShare
-                            product={product}
-                            className={classes.socialShare}
-                        />
-                    </>
-                )}
-                {addToCart}
+                </button>
             </div>
         </div>
     );

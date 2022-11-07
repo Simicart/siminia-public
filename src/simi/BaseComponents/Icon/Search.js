@@ -17,7 +17,6 @@ const Search = props => {
             viewBox="0 0 50 50"
         >
             <title>icon/action/search</title>
-            
             <g id="Combined-Shape-search">
                 <path
                     id="path-1_1_search"

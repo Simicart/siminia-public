@@ -6,6 +6,7 @@
 .wrapper {
     display: grid;
     grid-template-columns: 20% auto;
+    gap: 30px;
 }
 @media (max-width: 960px) {
     .wrapper {
@@ -14,7 +15,7 @@
     }
 }
 .wrapperContainer {
-    margin: 0 20px
+    /* margin: 0 20px */
 }
 .buttonsContainer{
     margin-top: 10px;
@@ -48,13 +49,13 @@
 .rewardPointData {
     display: flex;
     margin-bottom: 30px;
-    margin-left: 20px;
+    margin-left: 0px;
 }
 .rewardPointTransaction {
-    margin-left: 20px;
+    margin-left: 0px;
 }
 .rewardNotification {
-    margin-left: 20px;
+    margin-left: 0px;
 }
 .linkButton {
     margin-left: 15px;
@@ -83,7 +84,7 @@ btn {
     text-decoration: none !important;
 }
 .rewardPageTitle {
-    margin: 40px 0 25px 20px;
+    margin: 40px 0 25px 0px;
     border-bottom: 1px solid #224bbb;
     font-size: 20px;
 }

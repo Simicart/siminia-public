@@ -23,7 +23,7 @@ const SimiProductOptions = props => {
         case 'BundleProduct':
             return <BundleOptions {...props} />;
         default:
-            return <div className={classes.root}>Other Types</div>;
+            return ''
     }
 };
 

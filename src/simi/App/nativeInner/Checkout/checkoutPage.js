@@ -420,7 +420,7 @@ const CheckoutPage = props => {
                         }
                     >
                         <FormattedMessage
-                            id={'checkoutPage.placeOrder'}
+                            id={'Place order'}
                             defaultMessage={'Place Order'}
                         />
                     </Button>

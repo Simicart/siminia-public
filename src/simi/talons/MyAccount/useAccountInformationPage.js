@@ -1,15 +1,20 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
+import {SET_CUSTOMER_INFORMATION,CHANGE_CUSTOMER_PASSWORD,GET_CUSTOMER_INFORMATION} from '../../App/nativeInner/AccountInformationPage/accountInformationPage.gql';
 
 export const useAccountInformationPage = props => {
+    // const {
+    //     mutations: {
+    //         setCustomerInformationMutation,
+    //         changeCustomerPasswordMutation
+    //     },
+    //     queries: { getCustomerInformationQuery }
+    // } = props;
     const {
-        mutations: {
-            setCustomerInformationMutation,
-            changeCustomerPasswordMutation
-        },
-        queries: { getCustomerInformationQuery }
+        defaultForm,
     } = props;
+    const [isActiveForm, setIsActiveForm] = useState(defaultForm);
 
     const [{ isSignedIn }] = useUserContext();
     const [shouldShowNewPassword, setShouldShowNewPassword] = useState(false);
@@ -22,7 +27,7 @@ export const useAccountInformationPage = props => {
     const [displayError, setDisplayError] = useState(false);
 
     const { data: accountInformationData, error: loadDataError } = useQuery(
-        getCustomerInformationQuery,
+        GET_CUSTOMER_INFORMATION,
         {
             skip: !isSignedIn,
             fetchPolicy: 'cache-and-network',
@@ -36,7 +41,7 @@ export const useAccountInformationPage = props => {
             error: customerInformationUpdateError,
             loading: isUpdatingCustomerInformation
         }
-    ] = useMutation(setCustomerInformationMutation);
+    ] = useMutation(SET_CUSTOMER_INFORMATION);
 
     const [
         changeCustomerPassword,
@@ -44,7 +49,13 @@ export const useAccountInformationPage = props => {
             error: customerPasswordChangeError,
             loading: isChangingCustomerPassword
         }
-    ] = useMutation(changeCustomerPasswordMutation);
+    ] = useMutation(CHANGE_CUSTOMER_PASSWORD);
+
+    const handleActiveForm = useCallback(
+        (state) => {
+            setIsActiveForm(state);
+        }, [setIsActiveForm]
+    );
 
     const initialValues = useMemo(() => {
         if (accountInformationData) {
@@ -139,6 +150,8 @@ export const useAccountInformationPage = props => {
         isUpdateMode,
         loadDataError,
         shouldShowNewPassword,
+        handleActiveForm,
+        isActiveForm,
         showUpdateMode,
         isLoading : isUpdatingCustomerInformation || isChangingCustomerPassword,
         setAlertMsg,

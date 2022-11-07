@@ -209,7 +209,7 @@ const CartPage = props => {
             />
             <h3 className={classes.noProductText}>
                 <FormattedMessage
-                    id={'cartNoProductText'}
+                    id={'There are no products matching'}
                     defaultMessage={'There are no products matching'}
                 />
             </h3>

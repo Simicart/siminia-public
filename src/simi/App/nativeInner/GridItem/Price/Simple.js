@@ -47,7 +47,11 @@ const Simple = props => {
             );
         } else {
             price = (
-                <div className="price-value">
+                <div
+                    className={`price-value ${
+                        prices && prices.has_special_price ? 'regularPrice' : ''
+                    }`}
+                >
                     {formatPrice(
                         prices.minimalPrice.amount.value,
                         prices.minimalPrice.amount.currency
@@ -105,7 +109,11 @@ const Simple = props => {
             );
         } else {
             price = (
-                <div className="price-value">
+                <div
+                    className={`price-value ${
+                        prices && prices.has_special_price ? 'regularPrice' : ''
+                    }`}
+                >
                     {formatPrice(
                         prices.minimalPrice.amount.value,
                         prices.minimalPrice.amount.currency
@@ -116,8 +124,8 @@ const Simple = props => {
     }
     return (
         <div className={`${classes['product-prices']} product-prices`}>
-            {price}
             {price_label}
+            {price}
             {special_price_label}
             {price_excluding_tax}
             {price_including_tax}

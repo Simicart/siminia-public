@@ -12,6 +12,11 @@ import Button from '@magento/venia-ui/lib/components/Button';
 import defaultClasses from './wishlist.module.css';
 import ActionMenu from '@magento/venia-ui/lib/components/WishlistPage/actionMenu';
 import NoWishList from './NoWishList';
+import Gallery from '../../../BaseComponents/Products/Gallery';
+import Pagination from '@magento/venia-ui/lib/components/Pagination';
+import Loader from '../Loader';
+
+// import Gallery from '.././../nativeInner/Products/Gallery';
 
 /**
  * A single wishlist container.
@@ -34,7 +39,12 @@ const Wishlist = props => {
         isFetchingMore,
         handleLoadMore
     } = talonProps;
-
+    let productList = [];
+    if (items) {
+        for (let i = 0; i < items.length; i++) {
+            productList.push(items[i].product);
+        }
+    }
     const classes = useStyle(defaultClasses, props.classes);
     const contentClass = isOpen ? classes.content : classes.content_hidden;
     const contentToggleIconSrc = isOpen ? ChevronUp : ChevronDown;
@@ -87,8 +97,9 @@ const Wishlist = props => {
 
     const contentMessageElement = itemsCount ? (
         <Fragment>
-            <WishlistItems items={items} wishlistId={id} />
-            {loadMoreButton}
+            <WishlistItems itemsCount={itemsCount} items={items} wishlistId={id} />
+            {/* <Gallery items={productList} history={history} /> */}
+            {/* {loadMoreButton} */}
         </Fragment>
     ) : (
         <NoWishList />
@@ -123,7 +134,7 @@ const Wishlist = props => {
                         />
                     </div>
                 </div>
-                <LoadingIndicator />
+                <Loader />
             </div>
         );
     }
@@ -145,6 +156,7 @@ const Wishlist = props => {
         </div>
     ) : null;
 
+
     return (
         <div className={classes.root}>
             <div className={classes.header}>
@@ -154,7 +166,9 @@ const Wishlist = props => {
                 </div>
                 {buttonsContainer}
             </div>
-            <div className={contentClass}>{contentMessageElement}</div>
+            <div className={contentClass}>
+                {contentMessageElement}
+            </div>
         </div>
     );
 };

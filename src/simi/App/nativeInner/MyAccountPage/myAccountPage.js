@@ -110,7 +110,7 @@ const MyAccountPage = props => {
             >
                 <span>{formatMessage({ id: 'Order' })}</span>
                 <Link to="/order-history">
-                    {formatMessage({ id: 'View All' })}
+                    {formatMessage({ id: 'View all',defaultMessage:'View All' })}
                 </Link>
             </div>
             <div
@@ -208,7 +208,7 @@ const MyAccountPage = props => {
             {MyOrders}
             <div className={classes.accServices}>
                 <div className={classes.accServicesTitle}>
-                    {formatMessage({ id: 'Your Account' })}
+                    {formatMessage({ id: 'Your account',defaultMessage:'Your Account' })}
                 </div>
                 <div className={classes.accServicesContent}>{Services}</div>
             </div>

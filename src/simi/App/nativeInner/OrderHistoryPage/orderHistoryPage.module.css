@@ -4,14 +4,15 @@
     /* row-gap: 2rem; */
 }
 .container {
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    justify-content: center; */
     
 }
 
 .wrapper {
     display: grid;
     grid-template-columns: 20% auto;
+    gap: 30px;
 }
 @media (max-width: 960px) {
     .wrapper {
@@ -39,7 +40,7 @@
     letter-spacing: 0;
     line-height: 14px;
     /* margin-left: 20%; */
-    font-family: poppins;
+    /* font-family: poppins; */
     /* text-align: right; */
     margin-bottom: 22px;
 }
@@ -53,7 +54,7 @@
     row-gap: 1rem; */
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 0px;
     min-width: 80%;
 }
 

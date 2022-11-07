@@ -14,9 +14,10 @@ import { useEventListener, useWindowSize } from '@magento/peregrine';
 import { cateUrlSuffix } from 'src/simi/Helper/Url';
 import { Link } from 'react-router-dom';
 import { BiFilterAlt } from 'react-icons/bi';
-import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
-import { ChevronDown, ChevronUp } from 'react-feather';
+import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
+import { ChevronDown, ChevronUp, ArrowRight } from 'react-feather';
 import CategoryDesription from '../CategoryList/CategoryDescription';
+import { useBrands } from '../ShopByBrand/talons/useBrands';
 require('./products.scss');
 
 let count = 0;
@@ -34,8 +35,12 @@ const Products = props => {
         sortByData,
         pageType,
         pageSize,
-        pageControl
+        pageControl,
+        brandsData
     } = props;
+
+    const brandsList =
+        brandsData && brandsData.mpbrand && brandsData.mpbrand.items;
     const { category, products } = data;
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
@@ -92,7 +97,63 @@ const Products = props => {
             );
         }
     };
-
+    const renderShopByBrand = () => {
+        return (
+            <div className="brands">
+                <div className="brand-heading">
+                    <span className="brand-title">
+                        {formatMessage({
+                            id: 'Shop By Brand',
+                            defaultMessage: `Shop By Brand`
+                        })}
+                    </span>
+                    <span
+                        className={`${
+                            Identify.isRtl() ? 'view-all-rtl' : 'view-all'
+                        }`}
+                    >
+                        <Link to={'/brands.html'}>
+                            {formatMessage({
+                                id: 'View All',
+                                defaultMessage: 'View All'
+                            })}
+                        </Link>
+                        <span className="arrow-right">
+                            <MdOutlineKeyboardArrowRight />
+                        </span>
+                    </span>
+                </div>
+                {brandsList ? (
+                    <div className="brands-list">
+                        {brandsList
+                            .filter((item, index) => index < 6)
+                            .map(brand => {
+                                const urlKey =
+                                    '/brands/' +
+                                    (brand.url_key
+                                        ? brand.url_key
+                                        : brand.default_value.toLowerCase()) +
+                                    '.html';
+                                return (
+                                    <div key={brand.brand_id}>
+                                        <Link to={urlKey}>
+                                            <img
+                                                width={109}
+                                                height={46}
+                                                src={brand.image}
+                                                alt={brand.value}
+                                            />
+                                        </Link>
+                                    </div>
+                                );
+                            })}
+                    </div>
+                ) : (
+                    ''
+                )}
+            </div>
+        );
+    };
     const renderLeftNavigation = () => {
         const shopby = [];
         const filter = renderFilter();
@@ -103,6 +164,7 @@ const Products = props => {
                     className="left-navigation"
                 >
                     {filter}
+                    {renderShopByBrand()}
                 </div>
             );
         }
@@ -134,6 +196,7 @@ const Products = props => {
             </div>
         );
     }
+    console.log('categorycategory', category);
     const renderList = () => {
         const items = data ? data.products.items : null;
         if (!data) return <Loading />;
@@ -171,10 +234,10 @@ const Products = props => {
                             data={items}
                             itemCount={total_count}
                             pageControl={pageControl}
+                            itemsPerPageOptions={[12, 24, 36]}
                             pageSize={pageSize}
                             showPageNumber={true}
                             showInfoItem={true}
-                            itemsPerPageOptions={false}
                         />
                     ) : (
                         <LoadMore
@@ -219,6 +282,7 @@ const Products = props => {
                     pathname: '/' + cate.url_path + cateUrlSuffix(),
                     cateId: cate.id
                 };
+                console.log('location', location);
                 return (
                     <li key={cate.id}>
                         <Link to={location}>
@@ -286,15 +350,15 @@ const Products = props => {
             <h1 className="title">
                 <div className="categoryTitle">{title}</div>
             </h1>
-            {windowSize.innerWidth > 768 ? (
+            {/* {windowSize.innerWidth > 768 ? (
                 <div className={`${category ? 'wrapCategoryDesription' : ''}`}>
                     <CategoryDesription childCate={category} />
                 </div>
             ) : (
                 ''
-            )}
+            )} */}
             <div className="product-list-container-siminia">
-                {windowSize.innerWidth <= 768 ? (
+                {/* {windowSize.innerWidth <= 768 ? (
                     <div
                         className={`${
                             category ? 'wrapCategoryDesription' : ''
@@ -304,7 +368,7 @@ const Products = props => {
                     </div>
                 ) : (
                     ''
-                )}
+                )} */}
                 <div style={{ top: heightFixed }} className="wrapper">
                     {windowSize.innerWidth > 768 ? (
                         ''
@@ -404,7 +468,9 @@ const Products = props => {
                 </div>
                 <div
                     className={`${
-                        renderCarouselChildCate() ? 'marginTop' : ''
+                        category && category.children.length === 0
+                            ? 'marginTop'
+                            : ''
                     } listing-product`}
                     style={{ display: 'inline-block', width: '100%' }}
                 >

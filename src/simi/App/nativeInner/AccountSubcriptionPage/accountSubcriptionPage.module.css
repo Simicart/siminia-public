@@ -6,6 +6,7 @@
 .wrapper {
     display: grid;
     grid-template-columns: 20% auto;
+    gap: 30px;
 }
 @media (max-width: 960px) {
     .wrapper {
@@ -14,8 +15,8 @@
     }
 }
 .container {
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    justify-content: center; */
 }
 @media (min-width: 376px) and (max-width: 745px) {
     .container {
@@ -29,7 +30,6 @@
 }
 .heading {
     /* justify-self: center; */
-    font-family: poppins;
     font-weight: var(--venia-global-fontWeight-bold);
     font-size: 24px;
     font-weight: 500;
@@ -39,17 +39,33 @@
     margin-bottom: 30px;
 }
 .title {
-    font-size: 1.5rem;
+    /* font-size: 1.5rem;
     font-family: var(--venia-global-fontFamily-serif);
-    font-weight: var(--venia-global-fontWeight-bold);
+    font-weight: var(--venia-global-fontWeight-bold); */
     margin-bottom: 15px;
+    color: #333132;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 25px;
+    margin-top: 8px;
 }
 .textSpan {
     text-transform: uppercase;
     font-size: 1rem;
     margin-bottom: 20px;
+    color: #333132;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
 }
-
+.form label[class*='checkbox-root-RLX'] span[class*='checkbox-label-3Wk'] {
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 16px;
+}
 .form {
     display: grid;
 }
@@ -60,7 +76,16 @@
     height: 50px;
     margin-top: 30px;
 }
-
+.buttonsContainer button {
+    height: 48px;
+    width: 185px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 19px;
+    text-transform: uppercase;
+}
 @media (max-width: 960px) {
     .buttonsContainer {
         justify-content: center;
@@ -123,15 +148,15 @@
         margin-top: 50px;
         background-color: var(--venia-global-color-button);
         color: var(--venia-global-color-button-text);
-        border-radius: 4px;
+        /* border-radius: 4px; */
         font-size: 18px;
         font-family: Roboto;
         display: flex;
         justify-content: center;
         font-weight: 500;
-        min-height: 50px;
+        /* min-height: 50px; */
         line-height: 50px;
-        max-width: 200px;
+        max-width: 185px;
     }
     .disabled {
         display: flex;
@@ -150,6 +175,5 @@
         line-height: 50px;
         opacity: 0.8;
         max-width: 200px;
-
     }
 }

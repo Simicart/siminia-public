@@ -65,6 +65,10 @@ const AddEditDialog = props => {
         id: 'Street Address 2',
         defaultMessage: 'Street Address 2'
     });
+    const companyLabel = formatMessage({
+        id: 'company',
+        defaultMessage: 'Company'
+    });
     const cityLabel = formatMessage({
         id: 'global.city',
         defaultMessage: 'City'
@@ -74,11 +78,15 @@ const AddEditDialog = props => {
         defaultMessage: 'Phone Number'
     });
     const defaultAddressCheckLabel = formatMessage({
-        id: 'addressBookPage.makeDefaultAddress',
-        defaultMessage: 'Make this my default address'
+        id: 'Use as my default shipping address',
+        defaultMessage: 'Use as my default shipping address'
     });
 
-    
+
+    const defaultBillingCheckLabel = formatMessage({
+        id: 'Use as my default billing address',
+        defaultMessage: 'Use as my default billing address'
+    });
 
     return (
         <Dialog
@@ -97,65 +105,101 @@ const AddEditDialog = props => {
                 errors={Array.from(formErrors.values())}
             />
             <div className={classes.root}>
-                <div className={classes.firstname}>
-                    <Field id="firstname" label={firstNameLabel}>
-                        <TextInput field="firstname" validate={isRequired} />
-                    </Field>
+                <div className={classes.info}>
+                    <span className={classes.infoTitle}>
+                        {formatMessage({
+                            id: 'Contact Information',
+                            defaultMessage: 'Contact Information'
+                        })}
+                    </span>
+                    <span className={classes.infoTitle}>
+                        {formatMessage({
+                            id: 'Address',
+                            defaultMessage: 'Address'
+                        })}
+                    </span>
                 </div>
-                <div className={classes.middlename}>
-                    <Field
-                        id="middlename"
-                        label={middleNameLabel}
-                        optional={true}
-                    >
-                        <TextInput field="middlename" />
-                    </Field>
-                </div>
-                <div className={classes.lastname}>
-                    <Field id="lastname" label={lastNameLabel}>
-                        <TextInput field="lastname" validate={isRequired} />
-                    </Field>
-                </div>
-                <div className={classes.country}>
-                    <Country field={'country_code'} validate={isRequired} />
-                </div>
-                <div className={classes.street1}>
-                    <Field id="street1" label={street1Label}>
-                        <TextInput field="street[0]" validate={isRequired} />
-                    </Field>
-                </div>
-                <div className={classes.street2}>
-                    <Field id="street2" label={street2Label} optional={true}>
-                        <TextInput field="street[1]" />
-                    </Field>
-                </div>
-                <div className={classes.city}>
-                    <Field id="city" label={cityLabel}>
-                        <TextInput field="city" validate={isRequired} />
-                    </Field>
-                </div>
-                <div className={classes.region}>
-                    <Region
-                        countryCodeField={'country_code'}
-                        fieldInput={'region[region]'}
-                        fieldSelect={'region[region_id]'}
-                        optionValueKey="id"
-                        validate={isRequired}
-                    />
-                </div>
-                <div className={classes.postcode}>
-                    <Postcode validate={isRequired} />
-                </div>
-                <div className={classes.telephone}>
-                    <Field id="telephone" label={telephoneLabel}>
-                        <TextInput field="telephone" validate={isRequired} />
-                    </Field>
-                </div>
-                <div className={classes.default_address_check}>
-                    <Checkbox
-                        field="default_shipping"
-                        label={defaultAddressCheckLabel}
-                    />
+                <div className={classes.formContent}>
+                    <div className={classes.infoContact}>
+                        <div className={classes.firstname}>
+                            <Field id="firstname" label={firstNameLabel}>
+                                <TextInput
+                                    field="firstname"
+                                    validate={isRequired}
+                                />
+                            </Field>
+                        </div>
+                        <div className={classes.lastname}>
+                            <Field id="lastname" label={lastNameLabel}>
+                                <TextInput
+                                    field="lastname"
+                                    validate={isRequired}
+                                />
+                            </Field>
+                        </div>
+                        <div className={classes.company}>
+                            <Field id="company" label={companyLabel}>
+                                <TextInput
+                                    field="company"
+                                    validate={isRequired}
+                                />
+                            </Field>
+                        </div>
+                        <div className={classes.telephone}>
+                            <Field id="telephone" label={telephoneLabel}>
+                                <TextInput
+                                    type="tel"
+                                    field="telephone"
+                                    validate={isRequired}
+                                />
+                            </Field>
+                        </div>
+                    </div>
+                    <div className={classes.infoAddress}>
+                        <div className={classes.street1}>
+                            <Field id="street1" label={street1Label}>
+                                <TextInput
+                                    field="street[0]"
+                                    validate={isRequired}
+                                />
+                            </Field>
+                            <Field id="street2">
+                                <TextInput field="street[1]" />
+                            </Field>
+                        </div>
+                        <div className={classes.city}>
+                            <Field id="city" label={cityLabel}>
+                                <TextInput field="city" validate={isRequired} />
+                            </Field>
+                        </div>
+                        <div className={classes.postcode}>
+                            <Postcode type="tel" validate={isRequired} />
+                        </div>
+                        <div className={classes.country}>
+                            <Country
+                                field={'country_code'}
+                                validate={isRequired}
+                            />
+                        </div>
+                        <div className={classes.default_address_check}>
+                            <Checkbox
+                                field="default_billing"
+                                label={defaultBillingCheckLabel}
+                            />
+                        </div>
+                        <div className={classes.default_address_check2}>
+                            <Checkbox
+                                field="default_shipping"
+                                label={defaultAddressCheckLabel}
+                            />
+                        </div>
+                        {/* <button className={classes.save} type="submit">
+                            {formatMessage({
+                                id: 'Save',
+                                defaultMessage: 'Save'
+                            })}
+                        </button> */}
+                    </div>
                 </div>
             </div>
         </Dialog>

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import {
     arrayOf,
     func,
@@ -36,6 +36,7 @@ const Option = props => {
         selectedValue,
         values
     } = props;
+    const { formatMessage } = useIntl();
 
     const talonProps = useOption({
         attribute_id,
@@ -60,14 +61,20 @@ const Option = props => {
 
     return (
         <div className={classes.root}>
-            <span className={classes.title}>{label}</span>
+            <span className={classes.title}>
+                {formatMessage({
+                    id: `${label}:`,
+                    defaultMessage: `${label}:`
+                })}
+            </span>
             <ValueList
+                label={label}
                 getItemKey={getItemKey}
                 selectedValue={initialSelection}
                 items={values}
                 onSelectionChange={handleSelectionChange}
             />
-            <dl className={classes.selection}>
+            {/* <dl className={classes.selection}>
                 <dt className={classes.selectionLabel}>
                     <FormattedMessage
                         id="productOptions.selectedLabel"
@@ -76,7 +83,7 @@ const Option = props => {
                     />
                 </dt>
                 <dd>{selectedValueDescription}</dd>
-            </dl>
+            </dl> */}
         </div>
     );
 };

@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 
 const BundlePrice = props => {
     const { classes, prices, type, formatPrice } = props;
-
     let product_from_label = <div />;
     let from_price_excluding_tax = <div />;
     let from_price_including_tax = <div />;
@@ -14,8 +13,8 @@ const BundlePrice = props => {
 
     if (prices.show_ex_in_price && prices.show_ex_in_price === 1) {
         product_from_label = (
-            <div>
-                {/* <FormattedMessage id={'From'} />: */}
+            <div className='from'>
+                <FormattedMessage id={'From'} />:
             </div>
         );
         from_price_excluding_tax = (
@@ -32,8 +31,8 @@ const BundlePrice = props => {
         );
 
         product_to_label = (
-            <div>
-                {/* <FormattedMessage id={'To'} />: */}
+            <div className='to'>
+                <FormattedMessage id={'To'} />:
             </div>
         );
         to_price_excluding_tax = (
@@ -50,17 +49,15 @@ const BundlePrice = props => {
         );
     } else {
         product_from_label = (
-            <div>
-                {/* <FormattedMessage id={'From'} />:{' '} */}
+            <div className='from'>
+                <FormattedMessage id={'From'} />:{' '}
                 {formatPrice(prices.minimalPrice.amount.value)}
-                <span> ~ </span>
-                {formatPrice(prices.maximalPrice.amount.value)}
             </div>
         );
         product_to_label = (
-            <div>
-                {/* <FormattedMessage id={'To'} />:{' '}
-                {formatPrice(prices.maximalPrice.amount.value)} */}
+            <div className='to'>
+                <FormattedMessage id={'To'} />:{' '}
+                {formatPrice(prices.maximalPrice.amount.value)}
             </div>
         );
     }
@@ -70,7 +67,7 @@ const BundlePrice = props => {
             {product_from_label}
             {from_price_excluding_tax}
             {from_price_including_tax}
-            {/* {product_to_label} */}
+            {product_to_label}
             {to_price_excluding_tax}
             {to_price_including_tax}
         </div>
