@@ -16,7 +16,7 @@ Based on PWA Studio, our open-source PWA theme for Magento 2 is an easy way to t
 ```
 git clone https://github.com/magento/pwa-studio/
 cd pwa-studio
-git checkout release/12.0
+git checkout release/12.6
 ```
 
 ### 2. Modify `package.json` at PWA Studio root folder
