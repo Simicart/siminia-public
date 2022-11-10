@@ -61,8 +61,7 @@ header {
 .megaMenu {
     composes: lg_flex from global;
     justify-content: center;
-    background-color: rgba(255, 255, 255, 0.95);
-    border-top: solid 1px #f7f7f7;
+    background-color: #333132;
     border-bottom: none;
     backdrop-filter: blur(6px);
     display: flex;
@@ -70,7 +69,7 @@ header {
 }
 /* megaMenuItem */
 .megaMenu > div {
-    padding: 0 40px;
+    padding: 0 30px;
 }
 /* submenu */
 .megaMenu > div > div {
@@ -82,11 +81,14 @@ header {
     min-width: unset !important;
 }
 .megaMenu > div > a {
-    min-height: 43px;
-    color: #333132;
+    min-height: 45px;
+    color: #ffffff;
     font-size: 16px;
-    line-height: 24px;
-    font-weight: 600;
+    line-height: 19px;
+}
+
+.megaMenu > div > a > span {
+    display: none;
 }
 
 .megaMenu > div > a polyline {
