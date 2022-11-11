@@ -98,6 +98,10 @@ const Products = props => {
         }
     };
     const renderShopByBrand = () => {
+        if(!brandsList || !brandsList.length) {
+            return;
+        }
+
         return (
             <div className="brands">
                 <div className="brand-heading">
@@ -123,34 +127,30 @@ const Products = props => {
                         </span>
                     </span>
                 </div>
-                {brandsList ? (
-                    <div className="brands-list">
-                        {brandsList
-                            .filter((item, index) => index < 6)
-                            .map(brand => {
-                                const urlKey =
-                                    '/brands/' +
-                                    (brand.url_key
-                                        ? brand.url_key
-                                        : brand.default_value.toLowerCase()) +
-                                    '.html';
-                                return (
-                                    <div key={brand.brand_id}>
-                                        <Link to={urlKey}>
-                                            <img
-                                                width={109}
-                                                height={46}
-                                                src={brand.image}
-                                                alt={brand.value}
-                                            />
-                                        </Link>
-                                    </div>
-                                );
-                            })}
-                    </div>
-                ) : (
-                    ''
-                )}
+                <div className="brands-list">
+                    {brandsList
+                        .filter((item, index) => index < 6)
+                        .map(brand => {
+                            const urlKey =
+                                '/brands/' +
+                                (brand.url_key
+                                    ? brand.url_key
+                                    : brand.default_value.toLowerCase()) +
+                                '.html';
+                            return (
+                                <div key={brand.brand_id}>
+                                    <Link to={urlKey}>
+                                        <img
+                                            width={109}
+                                            height={46}
+                                            src={brand.image}
+                                            alt={brand.value}
+                                        />
+                                    </Link>
+                                </div>
+                            );
+                        })}
+                </div>
             </div>
         );
     };
