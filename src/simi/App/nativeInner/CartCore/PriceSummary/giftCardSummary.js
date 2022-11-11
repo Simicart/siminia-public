@@ -13,9 +13,8 @@ import { useStyle } from '@magento/venia-ui/lib/classify';
 const GiftCardSummary = props => {
     const classes = useStyle({}, props.classes);
     const { data, currencyCode } = props;
-    const { formatMessage } = useIntl();
 
-    if (!data && !data.giftCardUsed && data.giftCardUsed.length == 0) {
+    if (!data || !data.giftCardUsed || data.giftCardUsed.length == 0) {
         return null;
     }
 
