@@ -1,12 +1,12 @@
-import React, {useMemo, useCallback} from 'react';
-import {string, shape, array} from 'prop-types';
-import {GridItem} from 'src/simi/App/nativeInner/GridItem';
+import React, { useMemo, useCallback } from 'react';
+import { string, shape, array } from 'prop-types';
+import { GridItem } from 'src/simi/App/nativeInner/GridItem';
 
 require('./gallery.scss');
 
 // map Magento 2.3.1 schema changes to Venia 2.0.0 proptype shape to maintain backwards compatibility
 const mapGalleryItem = item => {
-    const {small_image} = item;
+    const { small_image } = item;
     return {
         ...item,
         small_image:
@@ -15,8 +15,8 @@ const mapGalleryItem = item => {
 };
 
 const Gallery = props => {
-    const {items, history, overRideClasses = {}, styles} = props;
-    console.log("items",items);
+    const { items, history, overRideClasses = {}, styles } = props;
+
     const handleLink = useCallback(link => {
         history.push(link);
     }, []);
@@ -41,8 +41,13 @@ const Gallery = props => {
     );
 
     return (
-        <div className={`${overRideClasses["gallery-root"] || ""} gallery-root`}>
-            <div className={`${overRideClasses["gallery-items"] || ""} gallery-items`}>
+        <div
+            className={`${overRideClasses['gallery-root'] || ''} gallery-root`}
+        >
+            <div
+                className={`${overRideClasses['gallery-items'] ||
+                    ''} gallery-items`}
+            >
                 {galleryItems}
             </div>
         </div>
