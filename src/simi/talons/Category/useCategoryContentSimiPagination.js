@@ -13,10 +13,26 @@ import { GET_BRANDS_LIST } from '../../App/nativeInner/ShopByBrand/talons/Brand.
 import {
     getCateNoFilter,
     getFilterFromCate
-} from 
-// 'src/simi/queries/catalog_gql/category.gql'; 
-'src/simi/queries/catalog_gql/simiCategory.gql';
+} from 'src/simi/queries/catalog_gql/category.gql'; 
+
+import {
+    getCateNoFilter as getSimiCateNoFilter,
+    getFilterFromCate as getSimiFilterFromCate
+} from 'src/simi/queries/catalog_gql/simiCategory.gql'; 
+
 import { useQuery } from '@apollo/client';
+
+const shophByBrandEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_SHOP_BY_BRAND &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_SHOP_BY_BRAND) === 1;
+
+const connectorEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_CONNECTOR &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_CONNECTOR) === 1;
 
 // use pagination follow site magento default ( change both page and pagesize)
 export const useCategoryContentSimiPagination = props => {
@@ -74,13 +90,15 @@ export const useCategoryContentSimiPagination = props => {
         }
     }
 
+    const queryGetProductByCategory = connectorEnabled ? getSimiCateNoFilter : getCateNoFilter
     const [
         getProductsByCategory,
         { data: oriProductsData, error: error, loading: loading }
-    ] = useLazyQuery(getCateNoFilter);
+    ] = useLazyQuery(queryGetProductByCategory);
 
+    const queryGetFilterByCategory = connectorEnabled ? getSimiFilterFromCate : getFilterFromCate
     const [getFilterByCategory, { data: oriFilterData }] = useLazyQuery(
-        getFilterFromCate
+        queryGetFilterByCategory
     );
 
     const variables = {
@@ -114,7 +132,8 @@ export const useCategoryContentSimiPagination = props => {
             pageSize: 199,
             currentPage: 1,
         },
-        fetchPolicy:"cache-and-network"
+        fetchPolicy:"cache-and-network",
+        skip: !shophByBrandEnabled
     });
 
 
