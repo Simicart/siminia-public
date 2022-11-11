@@ -138,6 +138,7 @@ Rate
     font-weight: bold;
     letter-spacing: 0;
     line-height: 19px;
+    align-items: center;
 }
 .configurable-aslowas {
     margin-inline-end: 5px;

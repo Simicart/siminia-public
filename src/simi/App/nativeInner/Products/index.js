@@ -107,7 +107,11 @@ const Products = props => {
                             defaultMessage: `Shop By Brand`
                         })}
                     </span>
-                    <span className="view-all">
+                    <span
+                        className={`${
+                            Identify.isRtl() ? 'view-all-rtl' : 'view-all'
+                        }`}
+                    >
                         <Link to={'/brands.html'}>
                             {formatMessage({
                                 id: 'View All',
@@ -119,30 +123,34 @@ const Products = props => {
                         </span>
                     </span>
                 </div>
-                <div className="brands-list">
-                    {brandsList
-                        .filter((item, index) => index < 6)
-                        .map(brand => {
-                            const urlKey =
-                                '/brands/' +
-                                (brand.url_key
-                                    ? brand.url_key
-                                    : brand.default_value.toLowerCase()) +
-                                '.html';
-                            return (
-                                <div key={brand.brand_id}>
-                                    <Link to={urlKey}>
-                                        <img
-                                            width={109}
-                                            height={46}
-                                            src={brand.image}
-                                            alt={brand.value}
-                                        />
-                                    </Link>
-                                </div>
-                            );
-                        })}
-                </div>
+                {brandsList ? (
+                    <div className="brands-list">
+                        {brandsList
+                            .filter((item, index) => index < 6)
+                            .map(brand => {
+                                const urlKey =
+                                    '/brands/' +
+                                    (brand.url_key
+                                        ? brand.url_key
+                                        : brand.default_value.toLowerCase()) +
+                                    '.html';
+                                return (
+                                    <div key={brand.brand_id}>
+                                        <Link to={urlKey}>
+                                            <img
+                                                width={109}
+                                                height={46}
+                                                src={brand.image}
+                                                alt={brand.value}
+                                            />
+                                        </Link>
+                                    </div>
+                                );
+                            })}
+                    </div>
+                ) : (
+                    ''
+                )}
             </div>
         );
     };
@@ -460,7 +468,9 @@ const Products = props => {
                 </div>
                 <div
                     className={`${
-                        category && category.children.length === 0 ? 'marginTop' : ''
+                        category && category.children.length === 0
+                            ? 'marginTop'
+                            : ''
                     } listing-product`}
                     style={{ display: 'inline-block', width: '100%' }}
                 >

@@ -1,7 +1,27 @@
 .wrapper {
-
+    padding: 20px;
+    background-color: #fafafa;
+    margin: 0 1.5rem;
+    margin-top: 20px;
 }
 
 .root {
     margin: 0 1.5rem;
+}
+.root li {
+    margin-bottom: 11px;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 16px;
+}
+.root li:last-child{
+    margin-bottom: 0;
+}
+.root li span[class*='manually-formated-price'] {
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 17px;
 }

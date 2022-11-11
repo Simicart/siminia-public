@@ -23,7 +23,7 @@ const TierPrice = props => {
 
         if(productFinalPrice <= final_price.value) return null
         
-        const translateText = formatMessage({ id: 'By %s for %k each and save %c%'})
+        const translateText = formatMessage({ id: 'By %s for %k each and %c%'})
         const textArr = translateText.split(' ')
         const replaceTextArr = textArr.map((text => {
             if(text === '%s') {
@@ -37,7 +37,9 @@ const TierPrice = props => {
                 ) 
                   
             } else if(text === '%c%') {
-                return discount.percent_off + '% '
+                return  <span className='manually-formated-price'>
+                       {'save ' + discount.percent_off + '% '}
+                    </span>
             }
 
             return text + ' '

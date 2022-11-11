@@ -135,7 +135,7 @@ const GiftCardChooseImageTemplate = props => {
                     <div
                         className={classes['owl-stage']}
                         style={{
-                            transform: `translateX(${translateOwlStage}px)`
+                            // transform: `translateX(${translateOwlStage}px)`
                         }}
                     >
                         {images.map((image, i) => {

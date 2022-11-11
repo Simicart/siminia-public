@@ -40,7 +40,7 @@ export const QuantityFields = props => {
                 <label className={classes.label} htmlFor={itemId}>
                     {label}
                 </label>
-                {/* <button
+                <button
                     aria-label={formatMessage({
                         id: 'quantity.buttonIncrement',
                         defaultMessage: 'Increase Quantity'
@@ -51,7 +51,7 @@ export const QuantityFields = props => {
                     type="button"
                 >
                     <Icon classes={iconClasses} src={PlusIcon} size={20} />
-                </button> */}
+                </button>
                 <TextInput
                     aria-label={formatMessage({
                         id: 'quantity.input',
@@ -66,7 +66,7 @@ export const QuantityFields = props => {
                     onBlur={handleBlur}
                     pattern="[0-9]*"
                 />
-                {/* <button
+                <button
                     aria-label={formatMessage({
                         id: 'quantity.buttonDecrement',
                         defaultMessage: 'Decrease Quantity'
@@ -77,7 +77,7 @@ export const QuantityFields = props => {
                     type="button"
                 >
                     <Icon classes={iconClasses} src={MinusIcon} size={22} />
-                </button> */}
+                </button>
             </div>
             {errorMessage}
         </Fragment>

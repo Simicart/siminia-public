@@ -161,8 +161,8 @@
                             line-height: 16px;
                             font-weight: unset;
                         }
-                        .details{
-                            input{
+                        .details {
+                            input {
                                 min-height: 86px;
                             }
                         }
@@ -212,17 +212,25 @@
         }
     }
 }
-@media (max-width: 450px) {
-    .reviewList {
-        font-family: Roboto;
-        padding-bottom: 10px;
-    }
-    .reviewsContainer {
-        margin-bottom: 30px;
-        padding: 0 10px;
-        background-color: #fff;
-        .reviewBtn {
-            margin-bottom: 0;
+@media (max-width: 768px) {
+    .wrapperReviews {
+        .reviewList {
+            font-family: Roboto;
+            padding-bottom: 10px;
+        }
+        .reviewsContainer {
+            margin-bottom: 30px;
+            padding: 0 10px;
+            background-color: #fff;
+            .reviewBtn {
+                margin-bottom: 0;
+            }
+        }
+        .yourReviewing {
+            padding: 0 10px;
+            .writeReview {
+                max-width: 100%;
+            }
         }
     }
 }

@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 
 const Simple = props => {
     const { classes, prices, type, formatPrice } = props;
-    console.log('prices', prices);
     ////simple, configurable ....
     let price_label = <div />;
     let special_price_label = <div />;
