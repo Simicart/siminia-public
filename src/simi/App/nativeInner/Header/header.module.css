@@ -333,7 +333,7 @@ body.fixed-scroll {
 
 @media(min-width: 1200px) {
     .right-bar {
-        width: 65%;
+        width: 50%;
     }
 }
 
