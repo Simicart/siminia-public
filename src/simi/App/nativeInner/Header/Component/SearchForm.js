@@ -12,8 +12,8 @@ import { ArrowLeft } from 'react-feather';
 import { useWindowSize } from '@magento/peregrine';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { logoUrl } from 'src/simi/Helper/Url';
-import { configColor } from '../../../../../simi/Config'
-import { HiOutlineMicrophone } from 'react-icons/hi'
+import { configColor } from '../../../../../simi/Config';
+import { HiOutlineMicrophone } from 'react-icons/hi';
 require('./search.scss');
 
 const SearchAutoComplete = React.lazy(() =>
@@ -25,7 +25,7 @@ const SearchForm = props => {
     const history = useHistory();
     const location = useLocation();
     const itemsQty = props.itemsQty;
-    const topInsets = props.topInsets
+    const topInsets = props.topInsets;
 
     const displayBackBtn =
         location.pathname !== '/' &&
@@ -92,59 +92,59 @@ const SearchForm = props => {
         if (isPhone) {
             if (openSearchField) {
                 return (
-                    <div className="siminia-search-field-wrapper" style={{paddingTop:topInsets===0 ? 38 : topInsets}}>
+                    <div
+                        className="siminia-search-field-wrapper"
+                        style={{ paddingTop: topInsets === 0 ? 38 : topInsets }}
+                    >
                         <div>
                             <BiArrowBack
                                 className="header-close-icon"
                                 onClick={() => handleCloseSearch()}
                             />
                         </div>
-                        <div className='wrap-content'>
-                        <div className='wrap-search'>
-                            <span
-                                onClick={() => startSearch()}
-                                className="header-search-icon"
-                            >
-                                <Search
-                                    style={{
-                                        width: 20,
-                                        height: 20,
-                                        display: 'inline-block'
+                        <div className="wrap-content">
+                            <div className="wrap-search">
+                                <span
+                                    onClick={() => startSearch()}
+                                    className="header-search-icon"
+                                >
+                                    <Search
+                                        style={{
+                                            width: 20,
+                                            height: 20,
+                                            display: 'inline-block'
+                                        }}
+                                        color={'#333333'}
+                                    />
+                                </span>
+                                <input
+                                    autoFocus
+                                    className="siminia-search-field"
+                                    type="text"
+                                    id="siminia-search-field"
+                                    ref={e => {
+                                        searchField = e;
                                     }}
-                                    color={'#333333'}
+                                    onBlur={() => handleBlur()}
+                                    placeholder={formatMessage({
+                                        id: 'What are you looking for?'
+                                    })}
+                                    onChange={() => handleSearchField()}
+                                    onKeyPress={e => {
+                                        if (e.key === 'Enter') startSearch();
+                                    }}
                                 />
-                            </span>
-                            <input
-                                autoFocus
-                                className="siminia-search-field"
-                                type="text"
-                                id="siminia-search-field"
-                                ref={e => {
-                                    searchField = e;
-                                }}
-                                onBlur={() => handleBlur()}
-                                placeholder={formatMessage({
-                                    id: 'What are you looking for?'
-                                })}
-                                onChange={() => handleSearchField()}
-                                onKeyPress={e => {
-                                    if (e.key === 'Enter') startSearch();
-                                }}
-                            />
-                            <span className='micro-icon'>
-                                <HiOutlineMicrophone size={20}/>
-                            </span> 
-                        </div>
-                        <span className='cancel'>
+                                <span className="micro-icon">
+                                    <HiOutlineMicrophone size={20} />
+                                </span>
+                            </div>
+                            <span className="cancel">
                                 {formatMessage({
                                     id: 'cancel',
                                     defaultMessage: 'cancel'
                                 })}
                             </span>
                         </div>
-                        
-                        
-                        
                     </div>
                 );
             } else return null;
@@ -175,16 +175,18 @@ const SearchForm = props => {
                         className="main-header-icon"
                         src={logoUrl()}
                         alt="logo"
-                        
                     />
                     {/* <span className="header-title">SimiCart</span> */}
                 </Link>
             );
         } else
             return (
-                <div className="main-header-backIcon" style={{color: configColor.top_menu_icon_color}}>
-                    <div style={{marginRight:20}}>
-                    <ArrowLeft onClick={() => history.goBack()} />
+                <div
+                    className="main-header-backIcon"
+                    style={{ color: configColor.top_menu_icon_color }}
+                >
+                    <div style={{ marginRight: 20 }}>
+                        <ArrowLeft onClick={() => history.goBack()} />
                     </div>
                     <Link to="/" className="header-title">
                         SimiCart
@@ -195,7 +197,7 @@ const SearchForm = props => {
 
     return (
         <>
-         {isPhone ? renderHeaderIcon(displayBackBtn) : null}
+            {isPhone ? renderHeaderIcon(displayBackBtn) : null}
             <div className={classes['header-search-form']}>
                 {/* {isPhone ? renderHeaderIcon(displayBackBtn) : null} */}
                 <label htmlFor="siminia-search-field" className="hidden">
@@ -235,8 +237,18 @@ const SearchForm = props => {
             </div>
             {isPhone ? (
                 <Link to="/cart" className="shopping-cart-icon">
-                    <BiShoppingBag style={{fill:configColor.top_menu_icon_color}} />
-                    <span className="header-cartQty" style={{backgroundColor: configColor.top_menu_icon_color, color:configColor.key_color}}>{itemsQty}</span>
+                    <BiShoppingBag
+                        style={{ fill: configColor.top_menu_icon_color }}
+                    />
+                    <span
+                        className="header-cartQty"
+                        style={{
+                            backgroundColor: configColor.top_menu_icon_color,
+                            color: configColor.key_color
+                        }}
+                    >
+                        {itemsQty}
+                    </span>
                 </Link>
             ) : null}
         </>
