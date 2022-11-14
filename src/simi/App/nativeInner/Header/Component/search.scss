@@ -5,22 +5,21 @@
 @media (max-width: 780px) {
     .siminia-search-field-wrapper {
         background-color: #fff;
-        right: -60px;
-        top: -36px;
+        top: -50px;
+        right: -72px;
         z-index: 2;
         animation: inputIn 0.4s;
         padding: 10px;
         display: flex;
-        /* height: 5vh; */
         position: absolute;
         width: 100vw;
-        height: 96.6vh;
-        .wrap-content{
+        height: calc(100vh - 80px);
+        .wrap-content {
             display: grid;
-            grid-area: 'search input micro';
             grid-template-columns: 1fr min-content;
+            width: calc(100% - 52px);
             height: 45px;
-            .cancel{
+            .cancel {
                 text-transform: uppercase;
                 align-items: center;
                 display: flex;
@@ -33,24 +32,22 @@
                 padding-inline-start: 20px;
                 line-height: 16px;
             }
-            .wrap-search{
+            .wrap-search {
                 display: grid;
-                grid-area: 'search input micro';
                 grid-template-columns: min-content 1fr min-content;
                 height: 45px;
                 opacity: 0.3;
-                border-radius: 8px;
                 background-color: #fff;
                 border: 1px solid gray;
-                input{
-                    border:none;
+                input {
+                    border: none;
                     height: 43px;
                     padding: 0 30px 0 5px;
                     width: 100%;
                 }
             }
         }
-        .micro-icon{
+        .micro-icon {
             display: none;
         }
         .header-search-icon {
@@ -75,9 +72,8 @@
     }
     .main-header-icon {
         position: absolute;
-        /* left: 21px; */
         z-index: 2;
-        left: 42%;
+        left: calc(50% - 80px);
         bottom: 15px;
         max-height: 32px;
     }
