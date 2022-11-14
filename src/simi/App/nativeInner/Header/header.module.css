@@ -457,9 +457,9 @@ body.fixed-scroll {
         width: 89%;
     }
     .header-search-form .search-icon {
-        right: 16px;
-        top: -5px;
-        position: none;
+        right: 0;
+        height: 27px;
+        top: -23px;
     }
     .item-text {
         font-family: Roboto;

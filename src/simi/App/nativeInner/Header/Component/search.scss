@@ -39,7 +39,6 @@
                 grid-template-columns: min-content 1fr min-content;
                 height: 45px;
                 opacity: 0.3;
-                border-radius: 8px;
                 background-color: #fff;
                 border: 1px solid gray;
                 input{
@@ -75,9 +74,8 @@
     }
     .main-header-icon {
         position: absolute;
-        /* left: 21px; */
         z-index: 2;
-        left: 42%;
+        left: calc(50% - 80px);
         bottom: 15px;
         max-height: 32px;
     }
