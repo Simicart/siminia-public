@@ -158,7 +158,7 @@ const SearchForm = props => {
                     searchField = e;
                 }}
                 placeholder={formatMessage({
-                    id: 'search your product'
+                    id: 'What are you looking for?'
                 })}
                 onChange={() => handleSearchField()}
                 onKeyPress={e => {

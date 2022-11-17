@@ -93,12 +93,6 @@
     direction: ltr;
 }
 
-@media (min-width: 641px) {
-    .switchers {
-        display: none;
-    }
-}
-
 .modal {
     composes: exit hidden;
     background-color: white;
