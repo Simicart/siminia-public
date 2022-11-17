@@ -4,10 +4,10 @@ import { FormattedMessage } from 'react-intl';
 import { useGuestSignIn } from '@magento/peregrine/lib/talons/CheckoutPage/GuestSignIn/useGuestSignIn';
 
 import { useStyle } from '@magento/venia-ui/lib/classify';
-import CreateAccount from '@magento/venia-ui/lib/components/CreateAccount';
-import ForgotPassword from '@magento/venia-ui/lib/components/ForgotPassword';
+import CreateAccount from '../../Customer/CreateAccount';
+import ForgotPassword from '../../Customer/ForgotPassword';
 import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
-import SignIn from '@magento/venia-ui/lib/components/SignIn';
+import SignIn from '../../Customer/Login/SignIn/signIn';
 import defaultClasses from './guestSignIn.module.css';
 
 const GuestSignIn = props => {
