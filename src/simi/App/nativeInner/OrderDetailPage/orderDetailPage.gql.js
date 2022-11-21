@@ -35,7 +35,17 @@ const GET_ORDER_DETAIL = gql`
           region
           postcode
           company
-          
+
+        }
+        shipping_address {
+          firstname
+          lastname
+          street
+          telephone
+          city
+          region
+          postcode
+          company
         }
         ${deliveryTimeEnabled ? `
           mp_delivery_information {
@@ -45,7 +55,7 @@ const GET_ORDER_DETAIL = gql`
             mp_delivery_comment
           }
         ` : ''}
-        ${rewardPointEnabled ? ` 
+        ${rewardPointEnabled ? `
           mp_reward_points {
             earn
             spent

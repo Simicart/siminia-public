@@ -56,7 +56,7 @@ const Item = props => {
         ...props
     });
 
-    const { handleUpdateItemQuantity } = talonProps;
+    const { handleUpdateItemQuantity, errorMessage } = talonProps;
 
     const classes = useStyle(defaultClasses, propClasses);
     const itemLink = useMemo(
@@ -147,6 +147,7 @@ const Item = props => {
                     />
                 </button>
             </div>
+            <div className={classes.errorContainer}>{errorMessage}</div>
             <span
                 style={{ color: configColor.price_color }}
                 className={classes.price}

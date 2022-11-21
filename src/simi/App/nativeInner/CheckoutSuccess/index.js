@@ -12,9 +12,9 @@ import { ChevronRight } from 'react-feather'
 import Icon from '@magento/venia-ui/lib/components/Icon';
 
 const CheckoutSuccess = props => {
-    
+
     const { formatMessage } = useIntl();
-    
+
     // for 2 ways to get here
     let orderNumber =
         Identify.findGetParameter('lastOrderId') ||
@@ -76,8 +76,8 @@ const CheckoutSuccess = props => {
                     </div>
                 ) : (
                     <div className={classes.actionsToolbar}>
-                        <Link className={classes.continue} to="/order-history">
-                            <span>{formatMessage({ id: 'My Orders' })}</span>
+                        <Link className={classes.continue} to={`/order-history/${orderNumber}`}>
+                            <span>{formatMessage({ id: 'See order details' })}</span>
                         </Link>
                     </div>
                 )}

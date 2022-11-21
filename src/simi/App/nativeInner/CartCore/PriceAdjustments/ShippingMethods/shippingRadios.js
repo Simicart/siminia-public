@@ -8,7 +8,7 @@ import RadioGroup from '@magento/venia-ui/lib/components/RadioGroup';
 import { CartPageFragment } from '@magento/peregrine/lib/talons/CartPage/cartPageFragments.gql.js';
 import ShippingRadio from './shippingRadio';
 import defaultClasses from './shippingRadios.module.css';
-import { SelectedShippingMethodCartFragment } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/ShippingMethods/shippingMethodsFragments.gql.js';
+import { SelectedShippingMethodCartFragment } from './shippingMethodsFragments.gql.js';
 
 const ShippingRadios = props => {
     const {

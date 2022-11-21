@@ -14,6 +14,7 @@ import { MdLocationPin } from 'react-icons/md';
 import { useOrderRow } from '../OrderHistoryPage/useOrderRow';
 import Loader from '../Loader';
 import { logoUrl } from 'src/simi/Helper/Url';
+import { formatPrice } from 'src/simi/Helper/Pricing';
 
 const OrderDetailPage = props => {
     const [width, setWidth] = useState(window.innerWidth);
@@ -333,6 +334,26 @@ const OrderDetailPage = props => {
                         </td>
                         {/* <td colSpan={5}>GRANDTOTAL: {subTotal}</td> */}
                     </tr>
+
+                    {
+                        customer?.orders?.items[0]?.total?.discounts && customer?.orders?.items[0]?.total?.discounts.map(discount => {
+                            return (
+                                <tr key={new Date().getTime()}>
+                                    <td colSpan={5}>
+                                        <div className='flex items-center gap-4'>
+                                            <span>
+                                                {`${formatMessage({id: "Discount", defaultMessage: "Discount"})} (${discount.label}): `}
+                                            </span>
+                                            {
+                                                formatPrice(discount.amount.value, discount.amount.currency, true, true)
+                                            }
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            )})
+                    }
+
                     {mpRewardPoints.discount ? (
                         <tr>
                             <td colSpan={5}>
@@ -421,23 +442,23 @@ const OrderDetailPage = props => {
                         <div className={classes.infoItemContent}>
                             <span>
                                 {
-                                    customer.orders.items[0].billing_address
+                                    customer.orders.items[0].shipping_address
                                         .firstname
                                 }{' '}
                                 {
-                                    customer.orders.items[0].billing_address
+                                    customer.orders.items[0].shipping_address
                                         .lastname
                                 }
                             </span>
                             <span>
                                 {
-                                    customer.orders.items[0].billing_address
+                                    customer.orders.items[0].shipping_address
                                         .street[0]
                                 }
                             </span>
                             <span>
                                 {
-                                    customer.orders.items[0].billing_address
+                                    customer.orders.items[0].shipping_address
                                         .street[1]
                                 }
                             </span>

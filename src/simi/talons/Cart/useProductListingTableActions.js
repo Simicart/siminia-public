@@ -18,7 +18,7 @@ export const useProductListingTableActions = props => {
         }
     ] = useMutation(massRemoveItemInCart);
 
-  
+
     const [
         massUpdateItem,
         {
@@ -90,6 +90,9 @@ export const useProductListingTableActions = props => {
                     window.location.reload()
             } catch (err) {
                 // Do nothing. The error message is handled above.
+
+                //need to use location to redirect cause the result is not right when mass delete more than 2 items
+                if (deleteAll) window.location.reload();
             }
         },
         [cartId, massUpdateItem]
@@ -101,5 +104,5 @@ export const useProductListingTableActions = props => {
         handleMassUpdateItem
     };
 
-  
+
 };

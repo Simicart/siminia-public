@@ -10,7 +10,7 @@ export const HOPrice = props => {
     return formatPrice(value, currencyCode);
 };
 
-export const formatPrice = (price, currencyCode = null) => {
+export const formatPrice = (price, currencyCode = null, negative = false, useNumber = false) => {
     if (typeof price !== 'number') {
         price = parseFloat(price);
     }
@@ -77,6 +77,23 @@ export const formatPrice = (price, currencyCode = null) => {
                 {!currencyBefore && currency_symbol}
             </span>
         );
+    }
+
+    // Render raw value if no storeconfig defined
+    if (useNumber) {
+        const currencyBefore = true;
+        return (
+            <span className="price manually-formated-price flex">
+                { ((price < 0) || negative) && <span>&ndash;</span>}
+                    {currencyBefore && <span>&nbsp;{currencyCode}</span>}
+                    <span className="simi-priceval">
+                        &nbsp;
+                        {putThousandsSeparators(price, ',', '.', 2)}
+                        &nbsp;
+                    </span>
+                    {!currencyBefore && currencyCode}
+            </span>
+        )
     }
     return '';
 };

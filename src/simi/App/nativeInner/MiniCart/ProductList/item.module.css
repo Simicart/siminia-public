@@ -21,7 +21,7 @@
     font-weight: 600;
     letter-spacing: 0;
     line-height: 22px;
-} 
+}
 .root > dl {
     color: #111111;
     font-size: 14px;
@@ -91,9 +91,14 @@
     color: var(--venia-global-color-button);
     --stroke: var(--venia-global-color-gray-700);
 }
-.price {
+.errorContainer {
     grid-column: 2 / span 1;
     grid-row: 5 / span 1;
+    @apply text-red-400 text-sm italic max-w-[265px];
+}
+.price {
+    grid-column: 2 / span 1;
+    grid-row: 6 / span 1;
     color: #E02020;
     font-size: 18px;
     font-weight: bold;
@@ -105,7 +110,7 @@
     color: rgb(var(--venia-global-color-error));
     font-weight: var(--venia-global-fontWeight-semibold);
     grid-column: 2;
-    grid-row: 6;
+    grid-row: 7;
 }
 
 .deleteButton {
