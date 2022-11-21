@@ -71,7 +71,7 @@ module.exports = targets => {
     "{useAmMegaMenuContext} from '@simicart/siminia/src/simi/BaseComponents/MegaMenu/context'"
   );
   const navigationClasses = NavigationComponent.addImport(
-    "navigationClasses from '@simicart/siminia/src/simi/BaseComponents/MegaMenu/extendStyle/navigation.css'"
+    "navigationClasses from '@simicart/siminia/src/simi/BaseComponents/MegaMenu/extendStyle/navigation.module.css'"
   );
 
   NavigationComponent.insertAfterSource(
@@ -83,7 +83,7 @@ module.exports = targets => {
       'useStyle(defaultClasses,',
       `isEnabledMegaMenu ? ${navigationClasses} : undefined,`
     )
-    .setJSXProps('AuthBar', { classes: '{{ root: classes.authBar }}' });
+    .setJSXProps('AuthBar', { classes: '{isEnabledMegaMenu ? { root: classes.authBar } : {}}' });
 
   // PageBuilder
   targetables

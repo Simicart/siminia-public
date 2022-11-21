@@ -185,47 +185,48 @@ const SimiPagination = props => {
                     // </span>
 
                      <span className='wrapItemCount'>
-                     <span>{formatMessage({id:'Items'})}</span>
-                     <span className='itemCount'>{firstItem} - {lastItem} </span>
-                     <span>{formatMessage({id:'of'})}</span>
-                     <span className='itemCount'>{totalItem}</span>
-                  
-                 </span>
+                        <span>{formatMessage({id:'Items'})}</span>
+                        <span className='itemCount'>{firstItem} - {lastItem} </span>
+                        <span>{formatMessage({id:'of'})}</span>
+                        <span className='itemCount'>{totalItem}</span>
+                    </span>
                 )}
-                {option_limit.length ? (
-                    <React.Fragment>
-                        <span style={{ fontWeight: 600, fontSize: 16 }}>
-                            {formatMessage({ id: 'Show' })}
-                        </span>
-                        <span
-                            className="items-per-page-select"
-                            style={{
-                                margin: '0 5px',
-                                background: 'none'
-                            }}
-                        >
-                            <select
-                                value={pageSize}
-                                id="limit"
-                                onBlur={() => {}}
-                                onChange={e => changeLimit(e)}
+                <span className='wrapPageShow'>
+                    {option_limit.length ? (
+                        <React.Fragment>
+                            <span style={{ fontWeight: 600, fontSize: 16 }}>
+                                {formatMessage({ id: 'Show' })}
+                            </span>
+                            <span
+                                className="items-per-page-select"
                                 style={{
-                                    border: 'none',
-                                    borderRadius: '0',
-                                    borderBottom: 'solid #2d2d2d 1px',
-                                    fontSize: 14
+                                    margin: '0 5px',
+                                    background: 'none'
                                 }}
                             >
-                                {option_limit}
-                            </select>
-                        </span>
-                        <span style={{ fontWeight: 400, fontSize: 16 }}>
-                            {formatMessage({ id: 'per page' })}
-                        </span>
-                    </React.Fragment>
-                ) : (
-                    ''
-                )}
+                                <select
+                                    value={pageSize}
+                                    id="limit"
+                                    onBlur={() => {}}
+                                    onChange={e => changeLimit(e)}
+                                    style={{
+                                        border: 'none',
+                                        borderRadius: '0',
+                                        borderBottom: 'solid #2d2d2d 1px',
+                                        fontSize: 14
+                                    }}
+                                >
+                                    {option_limit}
+                                </select>
+                            </span>
+                            <span style={{ fontWeight: 400, fontSize: 16 }}>
+                                {formatMessage({ id: 'per page' })}
+                            </span>
+                        </React.Fragment>
+                    ) : (
+                        ''
+                    )}
+                </span>
             </div>
         );
 

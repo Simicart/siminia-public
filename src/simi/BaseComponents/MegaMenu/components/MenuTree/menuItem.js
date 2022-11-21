@@ -123,7 +123,7 @@ const MenuItem = props => {
             }
         } else {
             if (menuItemContainerNode) {
-                const menuHeight = menuItemContainerNode.lastChild.clientHeight;
+                const menuHeight = menuItemContainerNode.clientHeight;
                 style.height = menuHeight;
             }
         }

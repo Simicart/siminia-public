@@ -81,7 +81,7 @@
 }
 
 .authBar {
-  --venia-global-color-text: var(--am-mega-menu-text-color);
+  /* --venia-global-color-text: var(--am-mega-menu-text-color); */
   composes: root from '~@magento/venia-ui/lib/components/AuthBar/authBar.module.css';
   background-color: rgb(var(--am-mega-menu-hamburger-header-bg));
 }

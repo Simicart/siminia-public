@@ -25,7 +25,7 @@ const Search = props => {
         parameter1: 'page',
         parameter2: 'product_list_limit',
         initialTotalPages: 1,
-        defaultInitialPageSize: 299,
+        defaultInitialPageSize: 12,
         defaultInitialPage: 1
     });
 

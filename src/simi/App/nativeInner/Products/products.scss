@@ -232,6 +232,10 @@
         .list-items {
             .config-page {
                 .items-per-page {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    justify-content: flex-end;
                     .items-per-page-select {
                         font-weight: bold;
                     }
@@ -247,6 +251,22 @@
                             letter-spacing: 0;
                             line-height: 17px;
                         }
+                    }
+                }
+            }
+            @media(max-width: 767px) {
+                .config-page {
+                    flex-wrap: wrap;
+                    .page-numbers {
+                        justify-content: center;
+                        width: 100%;
+                    }
+
+                    .items-per-page {
+                        margin-top: 10px;
+                        justify-content: space-between;
+                        margin-left: 0 !important;
+                        width: 100%;
                     }
                 }
             }
