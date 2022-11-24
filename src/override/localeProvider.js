@@ -41,9 +41,13 @@ const LocaleProvider = props => {
         ? preloadedData.data
         : null;
     const language = useMemo(() => {
-        return data && data.storeConfig.locale
+        let locale = data && data.storeConfig.locale
             ? toReactIntl(data.storeConfig.locale)
             : DEFAULT_LOCALE;
+        if(locale.indexOf('_') !== -1) {
+            locale = locale.replaceAll('_', '-')
+        }
+        return locale
     }, [data]);
 
     /**

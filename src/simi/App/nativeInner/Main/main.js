@@ -65,18 +65,18 @@ const Main = props => {
                 key={1}
                 rel="icon"
                 type="image/x-icon"
-                href="/static/icons/siminia_square_512.png"
+                href="https://new.chelseainternational.hk/pub/media/favicon/stores/1/Chelsea_new_logo_Transparent-340-340.png"
             />,
             <link
                 key={2}
                 rel="apple-touch-icon"
-                href="/static/icons/siminia_square_512.png"
+                href="https://new.chelseainternational.hk/pub/media/favicon/stores/1/Chelsea_new_logo_Transparent-340-340.png"
             />,
             <link
                 key={3}
                 rel="apple-touch-icon"
                 sizes="180x180"
-                href="/static/icons/apple-touch-icon.png"
+                href="https://new.chelseainternational.hk/pub/media/favicon/stores/1/Chelsea_new_logo_Transparent-340-340.png"
             />
         ];
     }

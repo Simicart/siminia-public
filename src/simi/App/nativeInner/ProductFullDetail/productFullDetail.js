@@ -62,7 +62,7 @@ import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talo
 import StatusBar from './statusBar';
 import FooterFixedBtn from './footerFixedBtn';
 import AddToCartPopup from './addToCartPopup';
-import CallForPrice from './callForPrice';
+// import CallForPrice from './callForPrice';
 import CustomAttributes from './CustomAttributes';
 import { isCallForPriceEnable } from '../Helper/Module';
 import PriceTiers from './PriceTiers';
@@ -119,6 +119,8 @@ const ProductFullDetail = props => {
         alertMsg,
         handleUpdateQuantity
     } = talonProps;
+
+
     const {
         giftCardProductData,
         giftCardData,

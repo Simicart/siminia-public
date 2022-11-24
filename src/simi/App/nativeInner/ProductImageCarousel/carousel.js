@@ -65,8 +65,8 @@ const ProductImageCarousel = props => {
         const { variants } = product;
         const isConfigurable = isProductConfigurable(product);
 
-        const media_gallery_entries = product.media_gallery_entries
-            ? product.media_gallery_entries
+        const media_gallery_entries = product.media_gallery
+            ? product.media_gallery
             : product.small_image
             ? [
                   {
@@ -77,6 +77,8 @@ const ProductImageCarousel = props => {
                   }
               ]
             : [];
+
+
 
         if (
             !isConfigurable ||
@@ -120,15 +122,16 @@ const ProductImageCarousel = props => {
     const renderImageLightboxBlock = () => {
         let images = carouselImages;
         images = images.map(item => {
+            const image = item.url || item.file
             return {
-                url: item.file
-                    ? resourceUrl(item.file, {
+                url: image
+                    ? resourceUrl(image, {
                           type: 'image-product',
                           width: 640
                       })
                     : transparentPlaceholder,
                 fallBackUrl:
-                    getUrlBuffer() + '/media/catalog/product' + item.file
+                    getUrlBuffer() + '/media/catalog/product' + image
             };
         }, this);
         return <ImageLightbox ref={lightbox} images={images} />;
@@ -196,8 +199,9 @@ const ProductImageCarousel = props => {
                     />
                 ) : (
                     carouselImages.map(function(item, index) {
-                        const src = item.file
-                            ? resourceUrl(item.file, {
+                        const image = item.url || item.file
+                        const src = image
+                            ? resourceUrl(image, {
                                   type: 'image-product',
                                   width: IMAGE_WIDTH
                               })
@@ -205,10 +209,11 @@ const ProductImageCarousel = props => {
 
                         return (
                             <div
-                                key={item.file}
+                                key={image}
                                 style={{
                                     cursor: 'pointer',
-                                    backgroundColor: '#ffffff'
+                                    backgroundColor: '#ffffff',
+                                    maxWidth: 640
                                 }}
                                 className="carousel-image-container"
                             >
@@ -218,8 +223,8 @@ const ProductImageCarousel = props => {
                                 <img
                                     src={src}
                                     width={IMAGE_WIDTH}
-                                    alt={item.url}
-                                    style={{ objectFit: 'contain' }}
+                                    alt={image}
+                                    style={{ objectFit: 'contain', width: '100%' }}
                                     onLoad={() => setPlaceholder(false)}
                                 />
 

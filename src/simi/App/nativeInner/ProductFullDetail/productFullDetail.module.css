@@ -17,7 +17,7 @@
             'images cart'
             'images errors'
             'images .';
-        grid-template-columns: 1fr max-content;
+        grid-template-columns: 1fr minmax(50%, 1fr);
         column-gap: 60px;
         grid-template-rows: repeat(7, min-content) 1fr [fold];
         padding: 0;
