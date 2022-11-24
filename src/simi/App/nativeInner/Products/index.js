@@ -16,8 +16,8 @@ import { Link } from 'react-router-dom';
 import { BiFilterAlt } from 'react-icons/bi';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import { ChevronDown, ChevronUp, ArrowRight } from 'react-feather';
-import CategoryDesription from '../CategoryList/CategoryDescription';
-import { useBrands } from '../ShopByBrand/talons/useBrands';
+// import CategoryDesription from '../CategoryList/CategoryDescription';
+// import { useBrands } from '../ShopByBrand/talons/useBrands';
 require('./products.scss');
 
 let count = 0;
@@ -196,7 +196,6 @@ const Products = props => {
             </div>
         );
     }
-    console.log('categorycategory', category);
     const renderList = () => {
         const items = data ? data.products.items : null;
         if (!data) return <Loading />;
