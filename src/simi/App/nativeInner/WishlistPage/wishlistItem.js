@@ -6,16 +6,16 @@ import { useWishlistItem } from '../talons/WishlistPage/useWishlistItem';
 import AlertMessages from '../ProductFullDetail/AlertMessages';
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
-import Icon from '@magento/venia-ui/lib/components/Icon';
+// import Icon from '@magento/venia-ui/lib/components/Icon';
 import Image from '@magento/venia-ui/lib/components/Image';
 import Price from '@magento/venia-ui/lib/components/Price';
 import { FiShoppingCart } from 'react-icons/fi';
 import { VscTrash } from 'react-icons/vsc';
-import { BsFillShareFill } from 'react-icons/bs';
+// import { BsFillShareFill } from 'react-icons/bs';
 import defaultClasses from './wishlistItem.module.css';
 import { Link } from 'react-router-dom';
 import { ConfirmPopup } from '../Cart/ConfirmPopup';
-import SocialShare from '../../../BaseComponents/SocialShare';
+// import SocialShare from '../../../BaseComponents/SocialShare';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 
 const WishlistItem = props => {
@@ -25,7 +25,7 @@ const WishlistItem = props => {
         product,
         __typename
     } = item;
-    console.log('product', product);
+    // console.log('product', product);
     const {
         name,
         price_range: priceRange,
@@ -195,28 +195,28 @@ const WishlistItem = props => {
         id: 'addCartSuccess',
         defaultMessage: `You added ${product.name} to your shopping cart`
     });
-    const [share, setShare] = useState(false);
-    const handleShare = () => {
-        setShare(!share);
-    };
-    const handleShareMobile = () => {
-        if (navigator.share) {
-            navigator
-                .share({
-                    title: 'My phone',
-                    text: 'I shared this content via my mobile',
-                    url: `/${product.url_key}${product.url_suffix}`
-                })
-                .then(() => {})
-                .catch(error => {
-                    console.error(
-                        'Something went wrong sharing the blog',
-                        error
-                    );
-                });
-        } else {
-        }
-    };
+    // const [share, setShare] = useState(false);
+    // const handleShare = () => {
+    //     setShare(!share);
+    // };
+    // const handleShareMobile = () => {
+    //     if (navigator.share) {
+    //         navigator
+    //             .share({
+    //                 title: 'My phone',
+    //                 text: 'I shared this content via my mobile',
+    //                 url: `/${product.url_key}${product.url_suffix}`
+    //             })
+    //             .then(() => {})
+    //             .catch(error => {
+    //                 console.error(
+    //                     'Something went wrong sharing the blog',
+    //                     error
+    //                 );
+    //             });
+    //     } else {
+    //     }
+    // };
     return (
         <div className={rootClass}>
             <AlertMessages
@@ -272,6 +272,7 @@ const WishlistItem = props => {
                         confirmCallback={handleRemoveProductFromWishlist}
                     />
                 </button>
+                {addToCart}
             </div>
         </div>
     );

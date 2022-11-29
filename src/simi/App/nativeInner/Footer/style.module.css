@@ -88,7 +88,7 @@
 }
 .col-custom-20pr {
     padding-right: 24px;
-    padding-left: 24px;
+    /* padding-left: 24px; */
     width: 20%;
     float: start;
     text-align: start;
@@ -350,11 +350,5 @@ div[class*='col-mobile-pd-0']{
     .footer-middle .harlow-expansion-content{
         padding-top: 0;
         padding-bottom: 24px;
-    }
-}
-
-@media (min-width: 1440px) {
-    .footer-middle > div {
-        width: 1210px !important;
     }
 }

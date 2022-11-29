@@ -132,7 +132,7 @@ header {
     height: 100%;
     justify-content: center;
 }
-@media (min-width: 780px) {
+@media (min-width: 1023px) {
     .header-search {
         width: 100%;
         max-width: 495px;
@@ -337,12 +337,6 @@ body.fixed-scroll {
     }
 }
 
-@media (min-width: 1440px) {
-    .header-app-bar, .switchers {
-        width: 1210px !important;
-    }
-}
-
 @media (max-width: 1023px) {
     .header-app-bar {
         min-height: 80px;
@@ -381,7 +375,7 @@ body.fixed-scroll {
     }
 }
 
-@media (max-width: 780px) {
+@media (max-width: 1023px) {
     .header-search {
         margin: 0;
         max-width: unset;
@@ -456,13 +450,15 @@ body.fixed-scroll {
         /* animation: inputIn 0.4s; */
         width: 89%;
     }
+    .header-search-form input::placeholder {
+        font-size: 8px;
+    }
     .header-search-form .search-icon {
         right: 0;
         height: 27px;
         top: -23px;
     }
     .item-text {
-        font-family: Roboto;
         font-size: 18px;
         font-weight: 500;
         letter-spacing: 0;

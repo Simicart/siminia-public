@@ -1,17 +1,17 @@
 import React, { Fragment, useMemo } from 'react';
 import { useWishlistItems } from '@magento/peregrine/lib/talons/WishlistPage/useWishlistItems';
-
+import { useIntl } from 'react-intl';
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
 import defaultClasses from './wishlistItems.module.css';
 import WishlistItem from './wishlistItem';
 import AddToCartDialog from '@magento/venia-ui/lib/components/AddToCartDialog';
-import { smoothScrollToView } from 'src/simi/Helper/Behavior';
-import Loader from '../Loader';
+// import { smoothScrollToView } from 'src/simi/Helper/Behavior';
+// import Loader from '../Loader';
 import Pagination from 'src/simi/BaseComponents/Pagination';
 
 const WishlistItems = props => {
     const { items, wishlistId, itemsCount } = props;
-    console.log('items', items);
+    const { formatMessage } = useIntl();
     const talonProps = useWishlistItems();
     const {
         activeAddToCartItem,
@@ -46,7 +46,6 @@ const WishlistItems = props => {
     };
 
     let rows = null;
-
     if (itemsCount && items && items.length) {
         rows = (
             <Pagination
@@ -62,7 +61,14 @@ const WishlistItems = props => {
             />
         );
     } else {
-        rows = <Loader />;
+        rows = (
+            <h3 className={classes.noItemTitle}>
+                {formatMessage({
+                    id: 'No products added to the wishlist',
+                    defaultMessage: 'No products added to the wishlist'
+                })}
+            </h3>
+        )
     }
 
     return (

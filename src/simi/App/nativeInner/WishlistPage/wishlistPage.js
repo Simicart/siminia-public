@@ -3,19 +3,20 @@ import { FormattedMessage, useIntl } from 'react-intl';
 // import { useWishlistPage } from '@magento/peregrine/lib/talons/WishlistPage/useWishlistPage';
 import { useWishlistPage } from '../talons/WishlistPage/useWishlistPage';
 import { deriveErrorMessage } from '@magento/peregrine/lib/util/deriveErrorMessage';
-import { BsFillShareFill } from 'react-icons/bs';
+// import { BsFillShareFill } from 'react-icons/bs';
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
-// import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
+import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import Wishlist from './wishlist';
 import defaultClasses from './wishlistPage.module.css';
 import LeftMenu from '../../core/LeftMenu';
 import CreateWishlist from '@magento/venia-ui/lib/components/WishlistPage/createWishlist.js';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { useWindowSize } from '@magento/peregrine';
-import Loader from '../Loader';
-import { getBottomInsets } from '../Helper/Native';
+// import Loader from '../Loader';
+// import { getBottomInsets } from '../Helper/Native';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { Redirect } from 'react-router-dom';
+import NoWishList from './NoWishList'
 
 const WishlistPage = props => {
     const talonProps = useWishlistPage();
@@ -26,9 +27,11 @@ const WishlistPage = props => {
         wishlists
     } = talonProps;
     const [{ isSignedIn }] = useUserContext();
+
     if (!isSignedIn) {
         return <Redirect to={'/sign-in'} />;
     }
+
     const { formatMessage } = useIntl();
     const error = errors.get('getCustomerWishlistQuery');
 
@@ -45,8 +48,9 @@ const WishlistPage = props => {
 
     const wishlistElements = useMemo(() => {
         if (wishlists.length === 0) {
-            return <Wishlist />;
+            return <NoWishList classes={classes} />;
         }
+
         return wishlists.map((wishlist, index) => (
             <Wishlist
                 key={wishlist.id}
@@ -55,10 +59,10 @@ const WishlistPage = props => {
                 shouldRenderVisibilityToggle={shouldRenderVisibilityToggle}
             />
         ));
-    }, [shouldRenderVisibilityToggle, wishlists]);
+    }, [shouldRenderVisibilityToggle, wishlists, classes]);
 
     if (loading && !error) {
-        return ''
+        return fullPageLoadingIndicator
     }
 
     let content;
@@ -90,7 +94,7 @@ const WishlistPage = props => {
         content = (
             <Fragment>
                 {wishlistElements}
-                <CreateWishlist />
+                {/* <CreateWishlist /> */}
             </Fragment>
         );
     }
