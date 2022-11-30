@@ -35,10 +35,13 @@
     .root{
         padding: 0!important;
     }
-    .bg-color{
+    /* .bg-color{
         background-color: #F2F2F3;
-    }
+    } */
     .wrapProducts{
         margin-top: 70px;
+    }
+    .wrapProducts article[class*='products-root'] div[class*='listing-product'] {
+        margin-top: 0;
     }
 }
