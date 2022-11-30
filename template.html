@@ -48,7 +48,7 @@
             //eg. url is https://codymap.com/magento23 and media url must include pub, value should be 'magento23/pub/'
             media_url_prefix: 'pub/',
             plugins: {
-                'SM_ENABLE_CONNECTOR': 1, //https://github.com/Simicart/SimiCart-Magento2.x-GraphQl
+                'SM_ENABLE_CONNECTOR': 0, //https://github.com/Simicart/SimiCart-Magento2.x-GraphQl
                 'SM_ENABLE_META_PACKAGES': 0, //https://github.com/magento/magento2-pwa
                 'SM_ENABLE_PRODUCT_LABEL': 0,
                 'SM_ENABLE_SHOP_BY_BRAND': 0,
@@ -133,7 +133,20 @@
             }
         }
 
-        @media (min-width: 992px) {
+        @media (min-width: 1024px) {
+            #root .container {
+                width: 1024px;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            #root .container {
+                width: 1310px;
+            }
+        }
+
+
+        /* @media (min-width: 992px) {
             #root .container {
                 width: 970px;
             }
@@ -155,7 +168,7 @@
             #root .container {
                 width: 1430px;
             }
-        }
+        } */
 
         @media (max-width: 1024px) {
 

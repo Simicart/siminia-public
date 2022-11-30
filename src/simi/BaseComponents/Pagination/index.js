@@ -13,7 +13,6 @@ class Pagination extends React.Component {
         this.state = {
             currentPage: this.props.currentPage,
             limit: this.props.limit,
-            data: this.props.data,
             itemCount: this.props.itemCount
         };
         this.startPage = 1;
@@ -73,8 +72,8 @@ class Pagination extends React.Component {
         const totalItem = total;
         const { classes } = this.props;
         total = Math.ceil(total / this.state.limit);
-        const endpage = this.endPage > total ? total : this.endPage;
-        for (let i = this.startPage; i <= endpage; i++) {
+        this.endPage = this.endPage > total ? total : this.endPage;
+        for (let i = this.startPage; i <= this.endPage; i++) {
             pageNumbers.push(i);
         }
         const obj = this;
@@ -128,14 +127,16 @@ class Pagination extends React.Component {
         }
         let nextPageIcon = null;
         let prevPageIcon = null;
-        if (this.endPage < total && this.state.currentPage <= this.endPage) {
+        console.log(this.endPage)
+        if (this.state.currentPage < this.endPage) {
             nextPageIcon = isRtl ? (
                 <BackIcon style={{ width: 6 }} />
             ) : (
                 <NextIcon style={{ width: 6 }} />
             );
         }
-        if (this.state.currentPage >= this.startPage && this.endPage > 4) {
+
+        if (this.state.currentPage > this.startPage) {
             prevPageIcon = isRtl ? (
                 <NextIcon style={{ width: 6 }} />
             ) : (
@@ -149,29 +150,29 @@ class Pagination extends React.Component {
                     classes={classes['page-numbers']}
                     style={{
                         border: 'none',
-                        padding: 0,
+                        padding: '5px 0 0 0',
                         display: 'flex',
                         alignItems: 'center',
                         fontSize: 14
                     }}
                 >
-                    <li
+                    {!!prevPageIcon && <li
                         role="presentation"
                         className={classes['icon-page-number']}
-                        style={{ padding: '6px 6px 0 6px', cursor: 'pointer' }}
+                        style={{ padding: '0 6px 0 6px', cursor: 'pointer' }}
                         onClick={() => this.handleChangePage(false)}
                     >
                         {prevPageIcon}
-                    </li>
+                    </li>}
                     {renderPageNumbers}
-                    <li
+                    {!!nextPageIcon && <li
                         role="presentation"
                         className={classes['icon-page-number']}
-                        style={{ padding: '6px 6px 0 6px', cursor: 'pointer' }}
+                        style={{ padding: '0 6px 0 6px', cursor: 'pointer' }}
                         onClick={() => this.handleChangePage(true)}
                     >
                         {nextPageIcon}
-                    </li>
+                    </li>}
                 </ul>
             ) : (
                 ''
@@ -238,18 +239,8 @@ class Pagination extends React.Component {
     };
 
     renderPagination = () => {
-        //handle the case itemCount changed from parent
-        if (this.props.itemCount !== this.state.itemCount) {
-            this.setState({
-                currentPage: 1,
-                limit: this.props.limit,
-                data: this.props.data,
-                itemCount: this.props.itemCount
-            });
-        }
-
-        const { data, currentPage, limit, itemCount } = this.state;
-        const { classes } = this.props;
+        const { currentPage, limit, itemCount } = this.state;
+        const { classes, data } = this.props;
         if (data.length > 0) {
             // Logic for displaying current todos
             const indexOfLastTodo = currentPage * limit;

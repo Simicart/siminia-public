@@ -77,7 +77,7 @@ const SimiPagination = props => {
                     role="presentation"
                     key={number}
                     id={number}
-                    onClick={e => changePage(e, 'root-product-list')}
+                    onClick={e => changePage(e, 'root')}
                     style={active}
                     className={`pagination-page-number-item ${
                         number === currentPage ? 'active' : ''

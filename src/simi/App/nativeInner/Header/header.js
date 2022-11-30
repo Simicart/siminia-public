@@ -43,7 +43,7 @@ const Header = props => {
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
     const windowSize = useWindowSize();
-    const isPhone = windowSize.innerWidth <= 780;
+    const isPhone = windowSize.innerWidth < 1024;
 
     const storeConfig = Identify.getStoreConfig();
 

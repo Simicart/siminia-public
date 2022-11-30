@@ -79,21 +79,21 @@ const Wishlist = props => {
                 { count: itemsCount }
             )
         );
-    const loadMoreButton =
-        items && items.length < itemsCount ? (
-            <div>
-                <Button
-                    className={classes.loadMore}
-                    disabled={isFetchingMore}
-                    onClick={handleLoadMore}
-                >
-                    <FormattedMessage
-                        id={'wishlist.loadMore'}
-                        defaultMessage={'Load more'}
-                    />
-                </Button>
-            </div>
-        ) : null;
+    // const loadMoreButton =
+    //     items && items.length < itemsCount ? (
+    //         <div>
+    //             <Button
+    //                 className={classes.loadMore}
+    //                 disabled={isFetchingMore}
+    //                 onClick={handleLoadMore}
+    //             >
+    //                 <FormattedMessage
+    //                     id={'wishlist.loadMore'}
+    //                     defaultMessage={'Load more'}
+    //                 />
+    //             </Button>
+    //         </div>
+    //     ) : null;
 
     const contentMessageElement = itemsCount ? (
         <Fragment>
@@ -105,20 +105,20 @@ const Wishlist = props => {
         <NoWishList />
     );
 
-    const wishlistName = name ? (
-        <div className={classes.nameContainer}>
-            <h2 className={classes.name}>{name}</h2>
-        </div>
-    ) : (
-        <div className={classes.nameContainer}>
-            <h2 className={classes.name}>
-                <FormattedMessage
-                    id={'wishlist.name'}
-                    defaultMessage={'Wish List'}
-                />
-            </h2>
-        </div>
-    );
+    // const wishlistName = name ? (
+    //     <div className={classes.nameContainer}>
+    //         <h2 className={classes.name}>{name}</h2>
+    //     </div>
+    // ) : (
+    //     <div className={classes.nameContainer}>
+    //         <h2 className={classes.name}>
+    //             <FormattedMessage
+    //                 id={'wishlist.name'}
+    //                 defaultMessage={'Wish List'}
+    //             />
+    //         </h2>
+    //     </div>
+    // );
 
     if (isLoading) {
         return (
