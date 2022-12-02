@@ -49,6 +49,7 @@ const Item = props => {
         merchantTaxConfig.tax_cart_display_price &&
         parseInt(merchantTaxConfig.tax_cart_display_price) === 1;
     const { formatMessage } = useIntl();
+
     const talonProps = useQuantity({
         operations: {
             updateItemQuantityMutation: UPDATE_QUANTITY_MUTATION
@@ -56,7 +57,7 @@ const Item = props => {
         ...props
     });
 
-    const { handleUpdateItemQuantity } = talonProps;
+    const { handleUpdateItemQuantity, updateItemLoading } = talonProps;
 
     const classes = useStyle(defaultClasses, propClasses);
     const itemLink = useMemo(
@@ -79,8 +80,16 @@ const Item = props => {
     const rootClass = isDeleting ? classes.root_disabled : classes.root;
     const configured_variant = configuredVariant(configurable_options, product);
 
+    const loading = updateItemLoading ? (
+        <div className={classes.loader}>
+            <div className={classes.loaderOverlay}></div>
+            <div className={classes.loaderIcon}></div>
+        </div>
+    ) : null
+
     return (
         <div className={rootClass}>
+            {loading}
             <Link
                 className={classes.thumbnailContainer}
                 to={itemLink}

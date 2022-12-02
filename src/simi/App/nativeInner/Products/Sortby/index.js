@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Check } from 'react-feather';
-import { configColor } from 'src/simi/Config';
 import Dropdownoption from '../../BaseComponents/Dropdownoption';
 import { withRouter } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { capitalizeEachWords, randomString } from 'src/simi/Helper/String';
 require('./sortby.scss');
+
+import ArrowUpAlt from 'src/simi/BaseComponents/Icon/ArrowUpAlt';
+import ArrowDownAlt from 'src/simi/BaseComponents/Icon/ArrowDownAlt';
 
 const Sortby = props => {
     const { history, location, sortByData, data, showingDropdown } = props;
@@ -63,25 +65,24 @@ const Sortby = props => {
             { value: 'name', key: 'name', direction: 'desc', showDir: true },
         ];
     }
-    
     let sortByTitle = formatMessage({ id: 'sort by' });
     selections = orders.map((item) => {
         let itemCheck = '';
         let itemTitle = item.value;
         itemTitle = capitalizeEachWords(formatMessage({ id: itemTitle }));
-        if (item.showDir) {
-            itemTitle += formatMessage({ id: ': ' });
-            itemTitle +=
-                item.direction === 'asc'
-                    ? formatMessage({ id: 'Low to High' })
-                    : formatMessage({ id: 'High to Low' });
-        }
+        // if (item.showDir) {
+        //     itemTitle += formatMessage({ id: ': ' });
+        //     itemTitle +=
+        //         item.direction === 'asc'
+        //             ? formatMessage({ id: 'Low to High' })
+        //             : formatMessage({ id: 'High to Low' });
+        // }
 
         if (
             sortByData &&
             sortByData[`${item.key}`] === item.direction.toUpperCase()
         ) {
-            itemTitle = (<span className="dir-title-active">{itemTitle}</span>)
+            itemTitle = (<span className="dir-title-active" style={{color: '#f69435'}}>{itemTitle}</span>)
             itemCheck = (
                 <span className="is-selected">
                     <Check size={20} />
@@ -89,15 +90,19 @@ const Sortby = props => {
             );
         }
 
+        const arrowColorFill = itemCheck ? {color: '#f69435'} : {color: '#000'};
+
         return (
             <div
                 role="presentation"
                 key={randomString(5)}
-                className="dir-item"
+                className={`dir-item justify-between items-center ${itemCheck ? 'selected': null}`}
                 onClick={() => changedSortBy(item)}
             >
                 <div className="dir-title">{itemTitle}</div>
-                <div className="dir-check">{itemCheck}</div>
+                { item.direction === 'asc' ? <ArrowUpAlt width={25} height={25} {...arrowColorFill} /> : <ArrowDownAlt width={25} height={25} {...arrowColorFill} /> }
+
+                {/*{ itemCheck && <div className="dir-check">{itemCheck}</div> }*/}
             </div>
         );
     });

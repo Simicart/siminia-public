@@ -56,7 +56,6 @@ export const useCartPage = (props = {}) => {
     }, []);
 
     useEffect(() => {
-        console.log('run 12');
         if (!called && cartId) {
             fetchCartDetails({ variables: { cartId } });
         }

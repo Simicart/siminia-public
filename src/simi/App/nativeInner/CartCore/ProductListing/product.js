@@ -66,11 +66,14 @@ const Product = props => {
         urlKey,
         urlSuffix
     } = product;
+
     const classes = useStyle(defaultClasses, props.classes);
 
-    const itemClassName = isProductUpdating
-        ? classes.item_disabled
-        : classes.item;
+    // const itemClassName = isProductUpdating
+    //     ? classes.item_disabled
+    //     : classes.item;
+
+    const itemClassName = classes.item
 
     const editItemSection = isEditable ? (
         <Section
@@ -222,10 +225,19 @@ const Product = props => {
         ) : (
             ''
         );
+
+    const loading = isProductUpdating ? (
+        <div className={classes.loader}>
+            <div className={classes.loaderOverlay}></div>
+            <div className={classes.loaderIcon}></div>
+        </div>
+    ) : null
+
     return (
         <div className={classes.root}>
             <span className={classes.errorText}>{errorMessage}</span>
-            <div className={itemClassName}>
+            {loading}
+            <div className={itemClassName}>   
                 <Link to={itemLink} className={classes.imageContainer}>
                     <Image
                         alt={name}
@@ -247,18 +259,7 @@ const Product = props => {
                         className={classes.price}
                     >
                         <span className={classes.labelPrice} />
-                        {showExcludedTax ? (
-                            <Price currencyCode={currency} value={unitPrice} />
-                        ) : (
-                            <Price
-                                currencyCode={
-                                    item.prices.row_total_including_tax.currency
-                                }
-                                value={
-                                    item.prices.row_total_including_tax.value
-                                }
-                            />
-                        )}
+                        <Price currencyCode={item.prices.price.currency} value={item.prices.price.value} />
                         <FormattedMessage
                             id={'product.price'}
                             defaultMessage={' ea.'}
@@ -277,6 +278,35 @@ const Product = props => {
                             onChange={handleUpdateItemQuantity}
                         />
                     </div>
+                    <span
+                        style={{ color: configColor.price_color }}
+                        className={classes.priceTotal}
+                    >
+                        <span className={classes.labelPrice} />
+                        {showExcludedTax ? (
+                            <Price
+                                currencyCode={
+                                    item.prices.row_total.currency
+                                }
+                                value={
+                                    item.prices.row_total.value
+                                }
+                            />
+                        ) : (
+                            <Price
+                                currencyCode={
+                                    item.prices.row_total_including_tax.currency
+                                }
+                                value={
+                                    item.prices.row_total_including_tax.value
+                                }
+                            />
+                        )}
+                        <FormattedMessage
+                            id={'product.price'}
+                            defaultMessage={' ea.'}
+                        />
+                    </span>
                 </div>
                 <Kebab
                     classes={{
