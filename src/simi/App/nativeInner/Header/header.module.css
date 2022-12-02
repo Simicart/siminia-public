@@ -272,9 +272,6 @@ body.fixed-scroll {
     display: flex;
     align-items: center;
     width: 30%;
-    padding-inline-start: 15px;
-    position: absolute;
-    inset-inline-start: 0;
 }
 
 .mobileMenuToggle > a {
@@ -353,7 +350,7 @@ body.fixed-scroll {
         background: var(--venia-global-color-button);
     }
     .header-search-form {
-        margin-inline-start: 0;
+        margin-inline-start: auto;
     }
     .header-search-form input {
         padding: 10px 16px;
@@ -363,8 +360,7 @@ body.fixed-scroll {
         border-radius: 4px !important;
     }
     .header-search-form .search-icon {
-        right: 16px;
-        top: 4px;
+        position: static;
     }
     .header-search-form input::placeholder {
         font-size: 16px;
@@ -386,7 +382,7 @@ body.fixed-scroll {
         top: 0;
         box-shadow: 0 0 4px 0 rgb(0 0 0 / 30%);
         display: flex;
-        justify-content: flex-end;
+        justify-content: flex-start;
         align-items: flex-end;
     }
     .virtualHeader {

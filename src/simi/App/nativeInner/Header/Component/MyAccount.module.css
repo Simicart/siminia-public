@@ -27,12 +27,23 @@
         visibility 224ms var(--venia-global-anim-in), left 0s;
     visibility: visible;
 }
+@media (max-width: 1023px) {
+    .root {
+        display:flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .root > div {
+        margin-inline-end: 10px;
+    }
+
+    .root > div:first-child {
+        width: 35px;
+    }
+}
+
 @media (max-width:450px) {
-   .root {
-       display:flex;
-       align-items: center;
-       width: 100%;
-   }
    .accountLetter {
     height: 35px;
     width: 35px;

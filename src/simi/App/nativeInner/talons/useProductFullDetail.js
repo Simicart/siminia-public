@@ -1,5 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
-import { useIntl } from 'react-intl';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
@@ -187,8 +186,8 @@ export const useProductFullDetail = props => {
     );
 
     const operations = mergeOperations(defaultOperations, props.operations);
-    const [alertMsg, setAlertMsg] = useState(-1)
-    const [updatePrice, setUpdatePrice] = useState(null)
+    const [alertMsg, setAlertMsg] = useState(-1);
+    const [updatePrice, setUpdatePrice] = useState(null);
 
     const productType = product.__typename;
 
@@ -197,7 +196,7 @@ export const useProductFullDetail = props => {
 
     const [{ cartId }] = useCartContext();
     const [{ isSignedIn }] = useUserContext();
-    const { formatMessage } = useIntl();
+    // const { formatMessage } = useIntl();
 
     const { data: storeConfigData } = useQuery(
         operations.getWishlistConfigQuery,
@@ -221,9 +220,15 @@ export const useProductFullDetail = props => {
 
     const [
         addProductToCart,
-        { error: errorAddingProductToCart, loading: isAddProductLoading, data: dataAddingProductToCart}
+        {
+            error: errorAddingProductToCart,
+            loading: isAddProductLoading,
+            data: dataAddingProductToCart,
+            called: calledAddingProductToCart
+        }
     ] = useMutation(operations.addProductToCartMutation);
 
+    console.log(calledAddingProductToCart);
     const urlKey = product.url_key;
 
     // have to query separately because query depth exceed in original query
@@ -445,12 +450,9 @@ export const useProductFullDetail = props => {
         return selectedOptions;
     }, [attributeIdToValuesMap, optionSelections]);
 
-
-
     const handleAddToCart = useCallback(
         async formValues => {
             const { quantity } = formValues;
-
             /*
                 @deprecated in favor of general addProductsToCart mutation. Will support until the next MAJOR.
              */
@@ -499,7 +501,7 @@ export const useProductFullDetail = props => {
                         await addDownloadableProductToCart({
                             variables: downloadableVariable
                         });
-                        setAlertMsg(true)
+                        setAlertMsg(true);
                     } catch (e) {
                         console.warn(e);
                     }
@@ -550,7 +552,7 @@ export const useProductFullDetail = props => {
                     await addBundleProductToCart({
                         variables: variableParams
                     });
-                    setAlertMsg(true)
+                    setAlertMsg(true);
                 } else if (product.items && productType === 'GroupedProduct') {
                     const { items } = product;
                     variables.product = [];
@@ -564,14 +566,26 @@ export const useProductFullDetail = props => {
                             sku: sku
                         });
                     }
-                    await addProductToCart({ variables });
-                    setAlertMsg(true)
+                    const data = await addProductToCart({ variables });
+
                     return;
                 } else {
                     variables.product = [variables.product];
                     try {
-                        await addProductToCart({ variables });
-                        setAlertMsg(true)
+                        const { data } = await addProductToCart({ variables });
+                        if (
+                            !(
+                                data &&
+                                data.addProductsToCart &&
+                                data.addProductsToCart.user_errors &&
+                                Array.isArray(
+                                    data.addProductsToCart.user_errors
+                                ) &&
+                                data.addProductsToCart.user_errors.length > 0
+                            )
+                        ) {
+                            setAlertMsg(true);
+                        }
                     } catch {
                         return;
                     }
@@ -723,8 +737,21 @@ export const useProductFullDetail = props => {
                 } else {
                     variables.product = [variables.product];
                     try {
-                        await addProductToCart({ variables });
-                        goToCartPage();
+                        const { data } = await addProductToCart({ variables });
+                        if (
+                            !(
+                                data &&
+                                data.addProductsToCart &&
+                                data.addProductsToCart.user_errors &&
+                                Array.isArray(
+                                    data.addProductsToCart.user_errors
+                                ) &&
+                                data.addProductsToCart.user_errors.length > 0
+                            )
+                        ) {
+                            goToCartPage();
+                        }
+                   
                     } catch {
                         return;
                     }
@@ -760,24 +787,39 @@ export const useProductFullDetail = props => {
         [optionSelections]
     );
 
-    const handleUpdateQuantity = useCallback((quantity) => {
-        const {price_tiers} = product
-        if(productType !== 'ConfigurableProduct' && price_tiers && Array.isArray(price_tiers) && price_tiers.length > 0) {
-            const findPriceTier = price_tiers.find((priceTier) => {
-                if(priceTier.quantity && priceTier.quantity >= parseInt(quantity)) {
-                    return true
+    const handleUpdateQuantity = useCallback(
+        quantity => {
+            const { price_tiers } = product;
+            if (
+                productType !== 'ConfigurableProduct' &&
+                price_tiers &&
+                Array.isArray(price_tiers) &&
+                price_tiers.length > 0
+            ) {
+                const findPriceTier = price_tiers.find(priceTier => {
+                    if (
+                        priceTier.quantity &&
+                        priceTier.quantity >= parseInt(quantity)
+                    ) {
+                        return true;
+                    }
+
+                    return false;
+                });
+
+                if (
+                    findPriceTier &&
+                    findPriceTier.final_price &&
+                    findPriceTier.final_price.value
+                ) {
+                    setUpdatePrice(findPriceTier.final_price);
+                } else {
+                    setUpdatePrice(null);
                 }
-
-                return false
-            })
-
-            if(findPriceTier && findPriceTier.final_price && findPriceTier.final_price.value) {
-                setUpdatePrice(findPriceTier.final_price)
-            } else {
-                setUpdatePrice(null)
             }
-        }
-    }, [product, productType])
+        },
+        [product, productType]
+    );
 
     // original price + price of options
     const extraPrice = useMemo(
@@ -802,8 +844,12 @@ export const useProductFullDetail = props => {
         ]
     );
 
-    const productPrice = productType === 'BundleProduct'? getFromToBundlePrice({ product })
-            : updatePrice  ? updatePrice : extraPrice;
+    const productPrice =
+        productType === 'BundleProduct'
+            ? getFromToBundlePrice({ product })
+            : updatePrice
+            ? updatePrice
+            : extraPrice;
 
     const switchExtraPriceForNormalPrice = [
         'DownloadableProduct',
@@ -833,19 +879,20 @@ export const useProductFullDetail = props => {
     );
 
     const userErrorsMessage = useMemo(() => {
-        const { addProductsToCart } = dataAddingProductToCart || {}
-        if(
-            addProductsToCart 
-            && addProductsToCart.user_errors 
-            && Array.isArray(addProductsToCart.user_errors) 
-            && addProductsToCart.user_errors.length > 0
+        const { addProductsToCart } = dataAddingProductToCart || {};
+        if (
+            addProductsToCart &&
+            addProductsToCart.user_errors &&
+            Array.isArray(addProductsToCart.user_errors) &&
+            addProductsToCart.user_errors.length > 0
         ) {
-            return addProductsToCart.user_errors.map((user_error) => user_error.message)
+            return addProductsToCart.user_errors.map(
+                user_error => user_error.message
+            );
         }
 
-        return []
-    })
-    
+        return [];
+    });
 
     const wishlistItemOptions = useMemo(() => {
         const options = {
