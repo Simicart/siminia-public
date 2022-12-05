@@ -1,5 +1,4 @@
-import React, { Fragment, Suspense, useRef, useState, useEffect } from 'react';
-import { useLocation } from 'react-router';
+import React, { Suspense, useRef, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { arrayOf, bool, number, shape, string } from 'prop-types';
 import { Form } from 'informed';
@@ -26,6 +25,7 @@ import GiftCardInformationForm from 'src/simi/App/nativeInner/GiftCard/ProductFu
 import GridCardTemplate from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GridCardTemplate';
 import { PriceAlertProductDetails } from './PriceAlertProductDetails';
 import { PopupAlert } from './PopupAlert/popupAlert';
+
 const WishlistButton = React.lazy(() =>
     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
 );
@@ -39,7 +39,6 @@ import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import { ProductDetailExtraProducts as ProductDetailExtraProductsMB } from './productDetailExtraProducts.js';
 import { ProductDetailExtraProducts } from '../../core/ProductFullDetail/productDetailExtraProducts';
 import ProductReview from '@simicart/siminia/src/simi/App/nativeInner/ProductFullDetail/ProductReview';
-import ProductLabel from '@simicart/siminia/src/simi/App/core/ProductFullDetail/ProductLabel';
 import Pdetailsbrand from '@simicart/siminia/src/simi/App/core/ProductFullDetail/Pdetailsbrand';
 import DataStructure from '@simicart/siminia/src/simi/App/core/Seo/Markup/Product.js';
 import DataStructureBasic from '@simicart/siminia/src/simi/App/core/SeoBasic/Markup/Product.js';
@@ -49,7 +48,6 @@ import {
     ArrowLeft,
     ShoppingCart,
     MoreVertical,
-    ArrowRight
 } from 'react-feather';
 import { FaChevronRight } from 'react-icons/fa';
 import { BiHelpCircle, BiHome } from 'react-icons/bi';
@@ -528,8 +526,8 @@ const ProductFullDetail = props => {
     const productDetailCarousel = [];
     if (isMobileSite) {
         productDetailCarousel.push(
-            <React.Fragment>
-                <div className={classes.headerBtn} key="element-mobile">
+            <React.Fragment key="element-mobile">
+                <div className={classes.headerBtn} >
                     <button
                         className={classes.backBtn}
                         onClick={() => history.goBack()}
@@ -653,6 +651,17 @@ const ProductFullDetail = props => {
                             />
                         )
                     }
+                    formError={
+                        <div className={classes.wrapperError}>
+                            <FormError
+                                classes={{
+                                    root: classes.formErrors
+                                }}
+                                errors={errors.get('form') || []}
+                            />
+                        </div>
+                    }
+                    
                 />
             ) : null}
 
@@ -683,11 +692,7 @@ const ProductFullDetail = props => {
                 <div className="wrapperForm ">
                     <Form
                         className={classes.root}
-                        onSubmit={
-                            product.__typename === 'MpGiftCardProduct'
-                                ? handleAddGiftCardProductToCart
-                                : handleAddToCart
-                        }
+                        onSubmit={!isMobileSite ? product.__typename === 'MpGiftCardProduct' ? handleAddGiftCardProductToCart : handleAddToCart : () => {}}
                     >
                         {!isMobileSite ? (
                             <div className="wrapperTitle">
@@ -721,11 +726,10 @@ const ProductFullDetail = props => {
                                             : ''
                                     }`}
                                 >
-                                    {!isMobileSite ? wrapperPrice : null}
+                                    {wrapperPrice}
                                     <div className="optionsSizeChart">
                                         {options}
-                                        {!isMobileSite &&
-                                        product.mp_sizeChart &&
+                                        {product.mp_sizeChart &&
                                         product.mp_sizeChart.display_type ==
                                             'inline' ? (
                                             <SizeChart
@@ -783,7 +787,7 @@ const ProductFullDetail = props => {
                         </div>
 
                         <div className="wrapperWishlist">
-                            {isMobileSite ? null : (
+                            {!isMobileSite && (
                                 <Suspense fallback={null}>
                                     <div className="btnWishlist">
                                         <WishlistButton
@@ -799,7 +803,7 @@ const ProductFullDetail = props => {
                                         </span>
                                     </div>
                                 </Suspense>
-                            )}
+                            ) }
                         </div>
 
                         <div className="productDescription">
@@ -809,14 +813,14 @@ const ProductFullDetail = props => {
                                 />
                             ) : null}
                         </div>
-                        <div className={classes.wrapperError}>
+                        {!isMobileSite && <div className={classes.wrapperError}>
                             <FormError
                                 classes={{
                                     root: classes.formErrors
                                 }}
                                 errors={errors.get('form') || []}
                             />
-                        </div>
+                        </div>}
 
                         <div className="sku-share-shop-by-brand">
                             {!isMobileSite ? (

@@ -16,7 +16,8 @@ const AddToCartPopup = props => {
         handleBuyNow,
         typeBtn,
         loading,
-        addToCartPopup = { addToCartPopup }
+        addToCartPopup = { addToCartPopup },
+        formError
     } = props;
 
     const [height, setHeight] = useState();
@@ -53,6 +54,7 @@ const AddToCartPopup = props => {
                     {options}
                     {giftCardForm}
                     {wrapperQuantity}
+                    {formError}
                     {cartAction}
                 </Form>
             </div>

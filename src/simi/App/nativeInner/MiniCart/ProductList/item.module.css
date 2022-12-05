@@ -11,11 +11,12 @@
     transition-property: opacity;
     transition-timing-function: var(--venia-global-anim-standard);
     border-bottom: 1px solid rgb(var(--venia-global-color-border));
+    position: relative;
 }
 .root:last-child{
     border-bottom: none;
 }
-.root > a:nth-child(2){
+.root .name {
     color: #000000;
     font-size: 16px;
     font-weight: 600;
@@ -112,4 +113,22 @@
     grid-column: 3 / span 1;
     grid-row: 1 / span 1;
     margin-inline-start: 20px;
+}
+
+.loader {
+    @apply absolute w-full h-full;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}   
+.loaderOverlay {
+    @apply absolute w-full h-full bg-gray-400 opacity-50;
+
+}
+.loaderIcon {
+    @apply border-4 border-gray-400 border-t-gray-600 rounded-full w-12 h-12 animate-spin;
+    border-color: #fff;
+    border-top-color: #f69435;
+
 }

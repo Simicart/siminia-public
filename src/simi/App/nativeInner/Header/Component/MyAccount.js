@@ -17,7 +17,7 @@ const AccountMenu = React.lazy(() => import('./AccountMenu'));
 
 const MyAccount = props => {
     const windowSize = useWindowSize();
-    const isPhone = windowSize.innerWidth < 450;
+    const isPhone = windowSize.innerWidth < 1024;
     const history = useHistory();
     const { formatMessage } = useIntl();
     const { classes: propClasses, userData: user } = props;

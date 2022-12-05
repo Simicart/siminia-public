@@ -4,6 +4,7 @@
     padding-top: 16px;
     padding-bottom: 16px;
     border-bottom: solid 1px rgb(var(--venia-global-color-border));
+    position: relative;
 }
 
 .item {
@@ -59,7 +60,8 @@
         'name name name'
         'options options options'
         'price price price'
-        'quantity quantity quantity';
+        'quantity quantity quantity'
+        'totalPrice totalPrice totalPrice';
     grid-template-columns: 1fr 1fr max-content;
     line-height: 1.5;
 }
@@ -93,6 +95,13 @@
     font-weight: bold;
     letter-spacing: 0;
     line-height: 24px;
+}
+
+.priceTotal {
+    composes: price;
+    grid-area: totalPrice;
+    padding: 10px 0;
+ 
 }
 
 .quantity {
@@ -259,4 +268,22 @@
         padding-inline-end: 0;
         padding-inline-start: 0;
     }
+}
+
+.loader {
+    @apply absolute w-full h-full;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}   
+.loaderOverlay {
+    @apply absolute w-full h-full bg-gray-400 opacity-50;
+
+}
+.loaderIcon {
+    @apply border-4 border-gray-400 border-t-gray-600 rounded-full w-12 h-12 animate-spin;
+    border-color: #fff;
+    border-top-color: #f69435;
+
 }

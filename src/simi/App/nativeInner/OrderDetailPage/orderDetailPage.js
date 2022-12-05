@@ -14,6 +14,7 @@ import { MdLocationPin } from 'react-icons/md';
 import { useOrderRow } from '../OrderHistoryPage/useOrderRow';
 import Loader from '../Loader';
 import { logoUrl } from 'src/simi/Helper/Url';
+import Price from '@magento/venia-ui/lib/components/Price';
 
 const OrderDetailPage = props => {
     const [width, setWidth] = useState(window.innerWidth);
@@ -141,23 +142,6 @@ const OrderDetailPage = props => {
         customer.orders.items[0].mp_delivery_information || {};
     const status = customer.orders.items[0].status;
 
-    const dateFormat = date => {
-        const mystring = date;
-        const arrayStrig = mystring.split(' ');
-        return arrayStrig[0];
-    };
-    const timeFormat = date => {
-        const mystring = date;
-        const arrayStrig = mystring.split(' ');
-        return arrayStrig[1];
-    };
-
-    const forMatCurrentValue = value => {
-        if (value == 'USD') {
-            return '$';
-        } else return null;
-    };
-
     const renderTRTable = listItem => {
         let html = null;
         if (listItem) {
@@ -173,18 +157,11 @@ const OrderDetailPage = props => {
                         </td>
                         <td>{item.product_sku}</td>
                         <td>
-                            {forMatCurrentValue(
-                                item.product_sale_price.currency
-                            )}
-                            {item.product_sale_price.value}
+                            <Price currencyCode={item.product_sale_price.currency} value={item.product_sale_price.value} />
                         </td>
                         <td>{item.quantity_ordered}</td>
                         <td>
-                            {forMatCurrentValue(
-                                item.product_sale_price.currency
-                            )}
-                            {item.quantity_ordered *
-                                item.product_sale_price.value}
+                            <Price currencyCode={item.product_sale_price.currency} value={item.quantity_ordered * item.product_sale_price.value} />
                         </td>
                     </tr>
                 );
@@ -238,10 +215,7 @@ const OrderDetailPage = props => {
                             </div>
                             <div>
                                 <span className={classes.orderItemPrice}>
-                                    {forMatCurrentValue(
-                                        item.product_sale_price.currency
-                                    )}
-                                    {item.product_sale_price.value}
+                                    <Price currencyCode={item.product_sale_price.currency} value={item.product_sale_price.value} />
                                 </span>
                             </div>
                         </div>
@@ -326,10 +300,7 @@ const OrderDetailPage = props => {
                                 defaultMessage: 'Subtotal'
                             })}
                             :{' '}
-                            {forMatCurrentValue(
-                                customer.orders.items[0].total.subtotal.currency
-                            )}
-                            {subTotal}
+                            <Price currencyCode={customer.orders.items[0].total.subtotal.currency} value={subTotal} />
                         </td>
                         {/* <td colSpan={5}>GRANDTOTAL: {subTotal}</td> */}
                     </tr>
@@ -341,11 +312,7 @@ const OrderDetailPage = props => {
                                     defaultMessage: 'Discount'
                                 })}
                                 :{' -'}
-                                {forMatCurrentValue(
-                                    customer.orders.items[0].total.subtotal
-                                        .currency
-                                )}
-                                {mpRewardPoints.discount}
+                                <Price currencyCode={customer.orders.items[0].total.subtotal.currency} value={mpRewardPoints.discount} />
                             </td>
                         </tr>
                     ) : null}
@@ -356,14 +323,7 @@ const OrderDetailPage = props => {
                                 defaultMessage: 'Shipping Fee'
                             })}
                             :{' '}
-                            {forMatCurrentValue(
-                                customer.orders.items[0].total.total_shipping
-                                    .currency
-                            )}
-                            {
-                                customer.orders.items[0].total.total_shipping
-                                    .value
-                            }
+                            <Price currencyCode={customer.orders.items[0].total.total_shipping.currency} value={customer.orders.items[0].total.total_shipping.value} />
                         </td>
                     </tr>
                     <tr>
@@ -373,11 +333,7 @@ const OrderDetailPage = props => {
                                 defaultMessage: 'Tax'
                             })}
                             :{' '}
-                            {forMatCurrentValue(
-                                customer.orders.items[0].total.total_tax
-                                    .currency
-                            )}
-                            {customer.orders.items[0].total.total_tax.value}
+                            <Price currencyCode={customer.orders.items[0].total.total_tax.currency} value={customer.orders.items[0].total.total_tax.value} />
                         </td>
                     </tr>
 
@@ -391,11 +347,7 @@ const OrderDetailPage = props => {
                                 :{' '}
                             </span>
                             <span className={classes.child2}>
-                                {forMatCurrentValue(
-                                    customer.orders.items[0].total.subtotal
-                                        .currency
-                                )}
-                                {grandTotal}
+                                <Price currencyCode={customer.orders.items[0].total.subtotal.currency} value={grandTotal} />
                             </span>
                         </td>
                     </tr>
@@ -409,7 +361,12 @@ const OrderDetailPage = props => {
         let html = null;
         html = (
             <div className={classes.orderInfoWrapper}>
-                <div className={classes.orderInfoTitle}>Order Infomation</div>
+                <div className={classes.orderInfoTitle}>
+                    {formatMessage({
+                        id: 'Order Infomation',
+                        defaultMessage: 'Order Infomation'
+                    })}
+                </div>
                 <div className={classes.orderInfoMain}>
                     <div className={classes.infoItem}>
                         <div className={classes.infoItemTitle}>
@@ -713,14 +670,7 @@ const OrderDetailPage = props => {
                                 {customer.orders.items[0].shipping_method}
                             </span>
                             <span>
-                                {forMatCurrentValue(
-                                    customer.orders.items[0].total
-                                        .total_shipping.currency
-                                )}
-                                {
-                                    customer.orders.items[0].total
-                                        .total_shipping.value
-                                }
+                                <Price currencyCode={customer.orders.items[0].total.total_shipping.currency} value={customer.orders.items[0].total.total_shipping.value} />
                             </span>
                         </div>
                     </div>
@@ -732,10 +682,7 @@ const OrderDetailPage = props => {
                             })}
                         </span>
                         <span>
-                            {forMatCurrentValue(
-                                customer.orders.items[0].total.subtotal.currency
-                            )}
-                            {subTotal}
+                            <Price currencyCode={customer.orders.items[0].total.subtotal.currency} value={subTotal} />
                         </span>
                     </div>
                 </div>
@@ -817,10 +764,7 @@ const OrderDetailPage = props => {
                             defaultMessage: 'Subtotal'
                         })}
                         :{' '}
-                        {forMatCurrentValue(
-                            customer.orders.items[0].total.subtotal.currency
-                        )}
-                        {subTotal}
+                        <Price currencyCode={customer.orders.items[0].total.subtotal.currency} value={subTotal} />
                     </span>
                     <span>
                         {formatMessage({
@@ -828,11 +772,7 @@ const OrderDetailPage = props => {
                             defaultMessage: 'Shipping Fee'
                         })}
                         :{' '}
-                        {forMatCurrentValue(
-                            customer.orders.items[0].total.total_shipping
-                                .currency
-                        )}
-                        {customer.orders.items[0].total.total_shipping.value}
+                        <Price currencyCode={customer.orders.items[0].total.total_shipping.currency} value={customer.orders.items[0].total.total_shipping.value} />
                     </span>
                     <span>
                         {formatMessage({
@@ -840,10 +780,7 @@ const OrderDetailPage = props => {
                             defaultMessage: 'Tax'
                         })}
                         :{' '}
-                        {forMatCurrentValue(
-                            customer.orders.items[0].total.total_tax.currency
-                        )}
-                        {customer.orders.items[0].total.total_tax.value}
+                        <Price currencyCode={customer.orders.items[0].total.total_tax.currency} value={customer.orders.items[0].total.total_tax.value} />
                     </span>
                     {discount ? (
                         <span>
@@ -851,8 +788,7 @@ const OrderDetailPage = props => {
                                 id: 'Discount',
                                 defaultMessage: 'Discount'
                             })}
-                            : -{forMatCurrentValue(discount.currency)}
-                            {discount.value}
+                            : -<Price currencyCode={discount.currency} value={discount.value} />
                         </span>
                     ) : null}
                     <div>
@@ -864,10 +800,7 @@ const OrderDetailPage = props => {
                             :{' '}
                         </span>
                         <span className={classes.child2}>
-                            {forMatCurrentValue(
-                                customer.orders.items[0].total.subtotal.currency
-                            )}
-                            {grandTotal}
+                            <Price currencyCode={customer.orders.items[0].total.subtotal.currency} value={grandTotal} />
                         </span>
                     </div>
                 </div>

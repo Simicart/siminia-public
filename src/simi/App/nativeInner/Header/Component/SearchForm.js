@@ -170,9 +170,8 @@ const SearchForm = props => {
     const renderHeaderIcon = displayBackBtn => {
         if (!displayBackBtn) {
             return (
-                <Link to="/">
+                <Link to="/" className="main-header-icon">
                     <img
-                        className="main-header-icon"
                         src={logoUrl()}
                         alt="logo"
                     />

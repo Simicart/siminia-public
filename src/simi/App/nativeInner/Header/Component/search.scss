@@ -71,10 +71,12 @@
         left: 0;
     }
     .main-header-icon {
-        position: absolute;
-        z-index: 2;
-        left: calc(50% - 16px);
-        bottom: 15px;
+        display: flex;
+        justify-content: center;
+        width: 40%;
+    }
+    .main-header-icon img {
+        width: auto;
         max-height: 32px;
     }
     .main-header-backIcon {
