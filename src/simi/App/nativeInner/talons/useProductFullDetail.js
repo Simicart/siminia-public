@@ -228,7 +228,6 @@ export const useProductFullDetail = props => {
         }
     ] = useMutation(operations.addProductToCartMutation);
 
-    console.log(calledAddingProductToCart);
     const urlKey = product.url_key;
 
     // have to query separately because query depth exceed in original query

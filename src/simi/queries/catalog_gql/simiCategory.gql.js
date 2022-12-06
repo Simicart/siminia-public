@@ -54,30 +54,7 @@ export const ProductLabelFragment = productLabelEnabled
 export const CallForPriceFragment = callForPriceEnabled
     ? gql`
           fragment CallForPriceFragment on ProductInterface {
-              mp_callforprice_rule {
-                  rule_id
-                  name
-                  rule_content
-                  store_ids
-                  customer_group_ids
-                  action
-                  url_redirect
-                  quote_heading
-                  quote_description
-                  status
-                  show_fields
-                  required_fields
-                  conditions_serialized
-                  attribute_code
-                  button_label
-                  priority
-                  to_date
-                  created_at
-                  rule_description
-                  enable_terms
-                  url_terms
-                  from_date
-              }
+                callforprice_text 
           }
       `
     : gql`

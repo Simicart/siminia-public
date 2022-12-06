@@ -25,6 +25,7 @@ import GiftCardInformationForm from 'src/simi/App/nativeInner/GiftCard/ProductFu
 import GridCardTemplate from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GridCardTemplate';
 import { PriceAlertProductDetails } from './PriceAlertProductDetails';
 import { PopupAlert } from './PopupAlert/popupAlert';
+import { HidePrice } from 'src/simi/BaseComponents/CallForPrice/components'
 
 const WishlistButton = React.lazy(() =>
     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
@@ -60,9 +61,9 @@ import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talo
 import StatusBar from './statusBar';
 import FooterFixedBtn from './footerFixedBtn';
 import AddToCartPopup from './addToCartPopup';
-import CallForPrice from './callForPrice';
+// import CallForPrice from './callForPrice';
 import CustomAttributes from './CustomAttributes';
-import { isCallForPriceEnable } from '../Helper/Module';
+// import { isCallForPriceEnable } from '../Helper/Module';
 import PriceTiers from './PriceTiers';
 import SocialShare from '../../../BaseComponents/SocialShare';
 
@@ -383,7 +384,11 @@ const ProductFullDetail = props => {
                 toValue={productDetails.price.toValue}
             />
         );
+
+    const productPrice = product && product.price && product.price.has_special_price ? specialPrice : pricePiece
+
     const { price, sku, price_tiers } = product || {};
+
     const review =
         product && product.review_count && product.rating_summary ? (
             <div className="wrapperReviewSum">
@@ -426,45 +431,33 @@ const ProductFullDetail = props => {
                 />
             </div>
         );
+    
+    const productStock = isOutOfStock ? (
+        <span className="outOfStock">
+            <FormattedMessage
+                id="productFullDetail.outOfStoc"
+                defaultMessage="Out of stock"
+            />
+        </span>
+    ) : (
+        <span className="inStock">
+            <FormattedMessage
+                id="In stock"
+                defaultMessage="In stock"
+            />
+        </span>
+    )
 
     let wrapperPrice = (
         <React.Fragment>
             <div className="wrapperPrice">
-                {/* <span
-                    className="labelPrice"
-                    style={{ color: configColor.price_color }}
-                >
-                    {!isMobileSite ? (
-                        <FormattedMessage
-                            id="Per pack:"
-                            defaultMessage="Per pack: "
-                        />
-                    ) : null}
-                </span> */}
                 <span
                     style={{ color: configColor.price_color }}
                     className={classes.productPrice}
                 >
-                    {product && product.price && product.price.has_special_price
-                        ? specialPrice
-                        : pricePiece}
+                    {productPrice}
                 </span>
-
-                {isOutOfStock ? (
-                    <span className="outOfStock">
-                        <FormattedMessage
-                            id="productFullDetail.outOfStoc"
-                            defaultMessage="Out of stock"
-                        />
-                    </span>
-                ) : (
-                    <span className="inStock">
-                        <FormattedMessage
-                            id="In stock"
-                            defaultMessage="In stock"
-                        />
-                    </span>
-                )}
+                {productStock}
             </div>
             {price_tiers &&
             Array.isArray(price_tiers) &&
@@ -474,26 +467,24 @@ const ProductFullDetail = props => {
         </React.Fragment>
     );
 
-    if (isCallForPriceEnable()) {
-        if (
-            !(action === 'login_see_price' && isSignedIn) ||
-            action === 'redirect_url'
-        ) {
-            wrapperPrice = null;
-        }
-    }
+    const wrapperHidePrice = (
+        <div className="wrapperPrice">
+            {productStock}
+        </div>
+    )
+
+    wrapperPrice = (
+        <HidePrice 
+            price={wrapperPrice}
+            hidePrice={wrapperHidePrice}
+        />
+    )
 
     const wrapperQuantity = (
         <div className="wrapperQuantity">
             <section
                 className={!isMobileSite ? classes.quantity : 'mbQuantity'}
             >
-                {/* <span className={classes.quantityTitle}>
-                        <FormattedMessage
-                            id={'Quantity'}
-                            defaultMessage={'Quantity: '}
-                        />
-                    </span> */}
                 <QuantityFields
                     classes={{ root: classes.quantityRoot }}
                     onChange={handleUpdateQuantity}
@@ -501,10 +492,9 @@ const ProductFullDetail = props => {
                     message={errors.get('quantity')}
                 />
             </section>
-            {/* {!isMobileSite ? ( */}
-            {/* ) : null} */}
         </div>
     );
+
     const renderSizeChart = product.mp_sizeChart ? (
         <SizeChart
             sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null}
@@ -512,6 +502,7 @@ const ProductFullDetail = props => {
             topInsets={topInsets}
         />
     ) : null;
+
     const cartAction = (
         <div
             className={
@@ -523,6 +514,18 @@ const ProductFullDetail = props => {
             <section className={classes.actions}>{cartActionContent}</section>
         </div>
     );
+
+    const formError = (
+        <div className={classes.wrapperError}>
+            <FormError
+                classes={{
+                    root: classes.formErrors
+                }}
+                errors={errors.get('form') || []}
+            />
+        </div>
+    )
+
     const productDetailCarousel = [];
     if (isMobileSite) {
         productDetailCarousel.push(
@@ -651,17 +654,7 @@ const ProductFullDetail = props => {
                             />
                         )
                     }
-                    formError={
-                        <div className={classes.wrapperError}>
-                            <FormError
-                                classes={{
-                                    root: classes.formErrors
-                                }}
-                                errors={errors.get('form') || []}
-                            />
-                        </div>
-                    }
-                    
+                    formError={formError}
                 />
             ) : null}
 
@@ -813,15 +806,7 @@ const ProductFullDetail = props => {
                                 />
                             ) : null}
                         </div>
-                        {!isMobileSite && <div className={classes.wrapperError}>
-                            <FormError
-                                classes={{
-                                    root: classes.formErrors
-                                }}
-                                errors={errors.get('form') || []}
-                            />
-                        </div>}
-
+                        {!isMobileSite && formError}
                         <div className="sku-share-shop-by-brand">
                             {!isMobileSite ? (
                                 <div className="wrapperSku">
@@ -893,7 +878,6 @@ const ProductFullDetail = props => {
                                         <span>
                                             <FaChevronRight />
                                         </span>
-
                                         <div
                                             className={desStatus(descripttion)}
                                         >
