@@ -4,6 +4,7 @@ const componentOverrideMapping = require('./src/override/componentOverrideMappin
 const amSocialLoginIntercept = require('./src/simi/BaseComponents/SocialLogin/extend-intercept');
 const amMegaMenuIntercept = require('./src/simi/BaseComponents/MegaMenu/extend-intercept');
 const bssForceLoginIntercept = require('./src/simi/BaseComponents/ForceLogin/extend-intercept');
+const bssRewardPointIntercept = require('./src/simi/BaseComponents/RewardPoint/extend-intercept');
 
 /* eslint-disable */
 /**
@@ -34,6 +35,7 @@ function localIntercept(targets) {
     amSocialLoginIntercept(targets);
     amMegaMenuIntercept(targets);
     bssForceLoginIntercept(targets);
+    bssRewardPointIntercept(targets);
 }
 
 module.exports = localIntercept;
