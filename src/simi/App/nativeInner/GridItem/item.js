@@ -25,8 +25,8 @@ import { useHistory } from 'react-router-dom';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToListButton';
 import ProductLabel from '../../../App/core/ProductFullDetail/ProductLabel';
-import { useUserContext } from '@magento/peregrine/lib/context/user';
 import CallForPrice from '../ProductFullDetail/callForPrice';
+import ProductRewardPoint from 'src/simi/BaseComponents/RewardPoint/components/Product'
 
 const HeartIcon = <Icon size={20} src={Heart} />;
 
@@ -41,7 +41,6 @@ const Griditem = props => {
     const handleLink = linkInput => {
         history.push(linkInput);
     };
-    const [{ isSignedIn }] = useUserContext();
 
     const itemClasses = mergeClasses(defaultClasses, classes);
     const {
@@ -279,10 +278,7 @@ const Griditem = props => {
                         />
                     </div>
                 </div>
-
-                {/* <div className={itemClasses['sold']}>
-                        {formatMessage({ id: 'sold',defaultMessage:'123 sold' })}
-                </div> */}
+                <ProductRewardPoint item={item} type="list" />
             </div>
             <div
                 className={`${itemClasses['product-grid-actions']} ${loading &&

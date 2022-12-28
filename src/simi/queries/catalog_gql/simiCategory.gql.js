@@ -17,6 +17,13 @@ const giftCardEnabled =
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD) === 1;
+
+const rewardPointEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
+    
 export const ProductLabelFragment = productLabelEnabled
     ? gql`
           fragment ProductLabelFragment on ProductInterface {
@@ -85,6 +92,7 @@ export const CallForPriceFragment = callForPriceEnabled
               sku
           }
       `;
+
 export const GiftCardFragment = giftCardEnabled
     ? gql`
           fragment GiftCardFragment on MpGiftCardProduct {
@@ -97,6 +105,30 @@ export const GiftCardFragment = giftCardEnabled
       `
     : gql`
           fragment GiftCardFragment on ProductInterface {
+              sku
+          }
+      `;
+
+export const RewardPointFragment = rewardPointEnabled
+    ? gql`
+          fragment RewardPointFragment on ProductInterface {
+                reward_point {
+                    product_point {
+                        assign_by
+                        receive_point
+                        dependent_qty
+                        point
+                        message
+                    }
+                    customer_point {
+                        review_point
+                        message
+                    }
+                }
+          }
+      `
+    : gql`
+          fragment RewardPointFragment on ProductInterface {
               sku
           }
       `;
@@ -140,6 +172,7 @@ export const getCateNoFilter = gql`
                 ...ProductOfListFragment
                 ...ProductLabelFragment
                 ...GiftCardFragment
+                ...RewardPointFragment
             }
             page_info {
                 total_pages
@@ -154,6 +187,7 @@ export const getCateNoFilter = gql`
     ${CallForPriceFragment}
     ${GiftCardFragment}
     ${ProductOfListFragment}
+    ${RewardPointFragment}
 `;
 
 export const getFilterFromCate = gql`

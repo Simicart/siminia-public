@@ -60,11 +60,11 @@ import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talo
 import StatusBar from './statusBar';
 import FooterFixedBtn from './footerFixedBtn';
 import AddToCartPopup from './addToCartPopup';
-import CallForPrice from './callForPrice';
 import CustomAttributes from './CustomAttributes';
 import { isCallForPriceEnable } from '../Helper/Module';
 import PriceTiers from './PriceTiers';
 import SocialShare from '../../../BaseComponents/SocialShare';
+import RewardPointProduct from 'src/simi/BaseComponents/RewardPoint/components/Product'
 
 require('./productFullDetail.scss');
 
@@ -833,12 +833,12 @@ const ProductFullDetail = props => {
                                                     defaultMessage={'SKU:'}
                                                 />
                                             </span>
-
                                             <span>{productDetails.sku}</span>
                                         </span>
                                     </section>
                                 </div>
                             ) : null}
+                            <RewardPointProduct item={product} type="detail" />
                             <div className="socialShare">
                                 <FormattedMessage
                                     id={'Share:'}

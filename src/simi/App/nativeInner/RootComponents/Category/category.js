@@ -2,7 +2,6 @@ import React from 'react';
 import { number } from 'prop-types';
 import { withRouter } from 'src/drivers';
 import TitleHelper from 'src/simi/Helper/TitleHelper';
-import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
 import { resourceUrl, cateUrlSuffix } from 'src/simi/Helper/Url';
 import CategoryContentShimmer from './categoryContent.shimmer';
 /* import { useCategoryContent } from 'src/simi/talons/Category/useCategoryContent'; */

@@ -35,8 +35,7 @@ import Identify from 'src/simi/Helper/Identify';
         discounts: data.cart.prices.discounts,
         giftCards: data.cart.applied_gift_cards,
         taxes: data.cart.prices.applied_taxes,
-        shipping: data.cart.shipping_addresses,
-        priceData: data.cart.prices.mp_reward_segments
+        shipping: data.cart.shipping_addresses
     };
 };
 

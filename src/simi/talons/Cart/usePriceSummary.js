@@ -24,8 +24,7 @@ const flattenData = data => {
         discounts: data.cart.prices.discounts,
         giftCards: data.cart.mp_giftcard_config,
         taxes: data.cart.prices.applied_taxes,
-        shipping: data.cart.shipping_addresses,
-        priceData: data.cart.prices.mp_reward_segments
+        shipping: data.cart.shipping_addresses
     };
 };
 
