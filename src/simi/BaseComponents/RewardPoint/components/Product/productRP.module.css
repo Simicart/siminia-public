@@ -7,7 +7,7 @@
     margin: 7px 0;
 }
 
-.list {
+.listRoot {
     composes: root;
     border: none;
     padding: 10px 0;

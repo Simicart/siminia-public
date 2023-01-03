@@ -7,12 +7,13 @@ import { useStyle } from '@magento/venia-ui/lib/classify';
 import { Accordion, Section } from '@magento/venia-ui/lib/components/Accordion';
 
 import defaultClasses from './priceAdjustments.module.css';
-import Button from '@magento/venia-ui/lib/components/Button';
+// import Button from '@magento/venia-ui/lib/components/Button';
 import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
-import { useGetRewardPointData } from '../../../../talons/RewardPoint/useGetRewardPointData';
+// import { useGetRewardPointData } from '../../../../talons/RewardPoint/useGetRewardPointData';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
-import { showFogLoading } from '../../../../BaseComponents/Loading/GlobalLoading';
-import { Form } from 'informed';
+// import { showFogLoading } from '../../../../BaseComponents/Loading/GlobalLoading';
+import ApplyRewardPoint from 'src/simi/BaseComponents/RewardPoint/components/Cart/apply'
+// import { Form } from 'informed';
 
 const CouponCode = React.lazy(() => import('./CouponCode'));
 // const GiftOptions = React.lazy(() =>
@@ -41,71 +42,11 @@ const GiftCard = React.lazy(() =>
  * import PriceAdjustments from '@magento/venia-ui/lib/components/CartPage/PriceAdjustments'
  */
 const PriceAdjustments = props => {
+    const { setIsCartUpdating, giftCardConfig, refetchCartPage, priceSummaryData } = props;
     const classes = useStyle(defaultClasses, props.classes);
-    const [{ cartId }] = useCartContext();
-    const [rewardPoint, setRewardPoint] = useState(0);
-    const [enableWarningPoint, setEnalbleWarningPoint] = useState(false);
-    const {
-        spendRewardPointHandle,
-        flatData,
-        applyRuleData
-    } = usePriceSummary();
-    const { priceData, subtotal } = flatData;
-    const subtotalVal = subtotal && subtotal.value ? subtotal.value : 0;
-    const mpRewardSpent =
-        priceData &&
-        priceData.filter(function(rewardData) {
-            return rewardData.code == 'mp_reward_spent';
-        });
-
-    const { customerRewardPoint } = useGetRewardPointData({ onCart: true });
-
-    const exchange_rate = customerRewardPoint
-        ? customerRewardPoint.current_exchange_rates
-        : null;
-    const spending_rate = exchange_rate ? exchange_rate.spending_rate : '';
-    const words = spending_rate ? spending_rate.split(' points') : '';
-    const money = spending_rate ? spending_rate.split('for $') : '';
-    const spending_point = words[0] ? words[0].split(' ') : '';
-    const pointSpending = spending_point[1];
-    const moneySpending = money[1] ? money[1].split('.') : '';
-    const maxPoint = Math.floor(
-        (pointSpending * subtotalVal) / moneySpending[0]
-    );
-    const balance = customerRewardPoint ? customerRewardPoint.point_balance : 0;
-    let rewardPointSelected = 0;
-    if (mpRewardSpent && mpRewardSpent.length > 0)
-        rewardPointSelected = mpRewardSpent[0].value;
-    const { setIsCartUpdating, giftCardConfig, refetchCartPage } = props;
     const { formatMessage } = useIntl();
 
-    const applyHandle = () => {
-        if (rewardPoint > balance) {
-            setEnalbleWarningPoint(true);
-            setTimeout(function() {
-                setEnalbleWarningPoint(false);
-            }, 2000);
-        } else {
-            showFogLoading();
-            if (rewardPoint > maxPoint) {
-                setRewardPoint(maxPoint);
-            }
-            spendRewardPointHandle({
-                variables: {
-                    cart_id: cartId,
-                    points: rewardPoint,
-                    rule_id: 'rate',
-                    address_information: {}
-                }
-            });
-        }
-    };
-
-    const rewardPointEnabled =
-        window.SMCONFIGS &&
-        window.SMCONFIGS.plugins &&
-        window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
-        parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
+    const { rewardPoint } = priceSummaryData
 
     const giftCardEnabled =
         window.SMCONFIGS &&
@@ -148,111 +89,15 @@ const PriceAdjustments = props => {
                         <CouponCode setIsCartUpdating={setIsCartUpdating} />
                     </Suspense>
                 </Section>
-                {rewardPointEnabled && balance ? (
-                    <Section
-                        id={'reward_points'}
-                        title={formatMessage({
-                            id: 'Reward Points',
-                            defaultMessage: 'Reward Points'
-                        })}
-                        classes={{
-                            root: classes.sectionRoot,
-                            title: classes.sectionTitle
-                        }}
-                    >
-                        <Suspense fallback={<LoadingIndicator />}>
-                            <div className={classes.userBalance}>
-                                <span>
-                                    <FormattedMessage
-                                        id={'You have'}
-                                        defaultMessage={`You have`}
-                                    />
-                                </span>
-
-                                <span>{balance}</span>
-                                <span>
-                                    {formatMessage({
-                                        id: 'points',
-                                        defaultMessage: 'points'
-                                    })}
-                                </span>
-                            </div>
-                            {balance > 0 ? (
-                                <Form onSubmit={applyHandle}>
-                                    <input
-                                        type="range"
-                                        className={classes.slider}
-                                        min={0}
-                                        max={balance}
-                                        step={1}
-                                        value={
-                                            rewardPoint || rewardPointSelected
-                                        }
-                                        onChange={e => {
-                                            setRewardPoint(e.target.value);
-                                        }}
-                                    />
-                                    <div className={classes.pointSpend}>
-                                        <span className={classes.message}>
-                                            <FormattedMessage
-                                                id={'You will spend'}
-                                                defaultMessage={
-                                                    'You will spend'
-                                                }
-                                            />
-                                        </span>
-                                        <input
-                                            value={
-                                                rewardPoint ||
-                                                rewardPointSelected
-                                            }
-                                            onChange={e => {
-                                                setRewardPoint(e.target.value);
-                                            }}
-                                            className={classes.pointInput}
-                                        />
-                                    </div>
-                                    <Button
-                                        priority="high"
-                                        // onClick={applyHandle}
-                                        type="submit"
-                                    >
-                                        <FormattedMessage
-                                            id={'Apply'}
-                                            defaultMessage={'Apply'}
-                                        />
-                                    </Button>
-                                    {enableWarningPoint ? (
-                                        <div className={classes.message}>
-                                            <FormattedMessage
-                                                id={
-                                                    'The points are more than your balance'
-                                                }
-                                                defaultMessage={
-                                                    'The points are more than your balance'
-                                                }
-                                            />
-                                        </div>
-                                    ) : null}
-                                </Form>
-                            ) : (
-                                <div className={classes.message}>
-                                    <FormattedMessage
-                                        id={
-                                            'Please earn Reward Point to spend your points'
-                                        }
-                                        defaultMessage={
-                                            'Please earn Reward Point to spend your points'
-                                        }
-                                    />
-                                </div>
-                            )}
-                        </Suspense>
-                    </Section>
-                ) : (
-                    <></>
-                )}
-                {/* <GiftCardSection setIsCartUpdating={setIsCartUpdating} /> */}
+                <ApplyRewardPoint 
+                    useAccrodion={true} 
+                    classes={{
+                        sectionRoot: classes.sectionRoot,
+                        sectionTitle: classes.sectionTitle
+                    }}
+                    rewardPoint={rewardPoint}
+                    refetchCartPage={refetchCartPage}
+                />
                 {giftCardEnabled && giftCardConfig ? (
                     <Section
                         id={'gift-card'}

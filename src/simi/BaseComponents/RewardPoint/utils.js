@@ -12,6 +12,12 @@ export const getRewardPointStoreConfig = () => {
     return (storeConfig && storeConfig.bssRewardPointStoreConfig) || {};
 };
 
+export const getStoreConfig = () => {
+    const storeConfigData = Identify.getStoreConfig();
+
+    return storeConfigData?.storeConfig || {}
+}
+
 export const getRewardPointActive = () => {
     const rewardPointConfig = getRewardPointStoreConfig()
 
@@ -22,4 +28,18 @@ export const getRewardPointIcon = () => {
   const rewardPointConfig = getRewardPointStoreConfig()
 
   return rewardPointConfig.point_icon || ''
+}
+
+export const getBaseCurrency = () => {
+    const storeConfig = getStoreConfig()
+
+    return storeConfig?.base_currency_code || 'USD'
+}
+
+export const formatDate = (currentDate) => {
+    if(!currentDate) return null
+
+    const date = new Date(currentDate)
+
+    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
 }

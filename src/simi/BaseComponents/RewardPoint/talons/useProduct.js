@@ -7,15 +7,15 @@ export const useProduct = (props) => {
     const rewardPointIcon = getRewardPointIcon()
 
     const productPoint = useMemo(() => {
-        return (item && item.reward_point && item.reward_point.product_point) || {}
+        return item?.reward_point?.product_point || {}
     }, [item])
 
     const point = useMemo(() => {
-        return (productPoint && productPoint.point) || null
+        return productPoint?.point || null
     }, [productPoint])
 
     const message = useMemo(() => {
-        return (productPoint && productPoint.message) || null
+        return productPoint?.message || null
     }, [productPoint])
 
     return {

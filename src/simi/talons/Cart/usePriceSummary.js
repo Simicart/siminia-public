@@ -24,7 +24,11 @@ const flattenData = data => {
         discounts: data.cart.prices.discounts,
         giftCards: data.cart.mp_giftcard_config,
         taxes: data.cart.prices.applied_taxes,
-        shipping: data.cart.shipping_addresses
+        shipping: data.cart.shipping_addresses,
+        rewardPoint: {  
+            earnPoint: data?.cart?.earn_point,
+            spentPoint: data?.cart?.spent_point
+        }
     };
 };
 
@@ -48,9 +52,8 @@ const flattenData = data => {
  */
 export const usePriceSummary = (props = {}) => {
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
-    const { getPriceSummaryQuery, getRuleApply, spendRewardPoint } = operations;
+    const { getPriceSummaryQuery } = operations;
 
-    const [{ isSignedIn }] = useUserContext();
     const [{ cartId }] = useCartContext();
     const history = useHistory();
     // We don't want to display "Estimated" or the "Proceed" button in checkout.
@@ -65,41 +68,22 @@ export const usePriceSummary = (props = {}) => {
             cartId
         }
     });
-    const [loadingPriceData] = useLazyQuery(getPriceSummaryQuery, {
-        fetchPolicy: 'cache-and-network',
-        nextFetchPolicy: 'cache-first',
-        skip: !cartId,
-        variables: {
-            cartId
-        }
-    });
-    const [spendRewardPointHandle] = useMutation(spendRewardPoint, {
-        onCompleted() {
-            loadingPriceData();
-            hideFogLoading();
-        }
-    });
-    const applyRuleData = useQuery(getRuleApply, {
-        fetchPolicy: 'no-cache',
-        // nextFetchPolicy: 'cache-first',
-        skip:
-            !isSignedIn ||
-            !cartId ||
-            !window.SMCONFIGS ||
-            !window.SMCONFIGS.plugins ||
-            !window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS_PRO,
-        variables: {
-            cartId
-        }
-    });
+
+    // const [loadingPriceData] = useLazyQuery(getPriceSummaryQuery, {
+    //     fetchPolicy: 'cache-and-network',
+    //     nextFetchPolicy: 'cache-first',
+    //     skip: !cartId,
+    //     variables: {
+    //         cartId
+    //     }
+    // });
+
     const handleProceedToCheckout = useCallback(() => {
         history.push('/checkout');
     }, [history]);
 
     return {
         handleProceedToCheckout,
-        spendRewardPointHandle,
-        applyRuleData,
         hasError: !!error,
         hasItems: data && !!data.cart.items.length,
         isCheckout,

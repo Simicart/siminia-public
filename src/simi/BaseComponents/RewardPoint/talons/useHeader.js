@@ -1,14 +1,14 @@
 import { useMemo } from 'react';
 import { useQuery } from '@apollo/client';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
-import defaultOperations from '../queries/header.ggl';
-import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import { getRewardPointIcon, getRewardPointActive } from '../utils';
+import defaultOperations from '../queries/customer.ggl';
+import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 
 export const useHeader = props => {
     const [{ isSignedIn }] = useUserContext();
     const rewardPointActive = getRewardPointActive();
-    const rewardPointIcon = getRewardPointIcon()
+    const rewardPointIcon = getRewardPointIcon();
 
     const operations = mergeOperations(defaultOperations, props.operations);
 

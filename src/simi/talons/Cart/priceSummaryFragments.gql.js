@@ -50,6 +50,21 @@ export const GiftCardSummaryFragment = giftCardEnabled
               id
           }
       `;
+
+export const RewardPointOnCartFragment = rewardPointEnabled ? gql`
+    fragment RewardPointOnCartFragment on Cart {
+        earn_point
+        spent_point {
+            as_money_amount
+            point_amount
+        }
+    }     
+` : gql`
+    fragment RewardPointOnCartFragment on Cart {
+        id
+    }
+`;
+
 export const GrandTotalFragment = gql`
     fragment GrandTotalFragment on CartPrices {
         grand_total {
@@ -77,10 +92,12 @@ export const PriceSummaryFragment = gql`
             }
         }
         ...GiftCardSummaryFragment
+        ...RewardPointOnCartFragment
     }
     ${DiscountSummaryFragment}
     ${GiftCardSummaryFragment}
     ${GrandTotalFragment}
     ${ShippingSummaryFragment}
     ${TaxSummaryFragment}
+    ${RewardPointOnCartFragment}
 `;

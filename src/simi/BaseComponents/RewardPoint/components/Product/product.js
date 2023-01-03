@@ -20,7 +20,7 @@ const Product = (props) => {
 
     let rootClasses = classes.root
     if(type === 'list') {
-        rootClasses = classes.list
+        rootClasses = classes.listRoot
     }
 
     const rewardIcon = icon ? (
