@@ -8,8 +8,6 @@ import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import defaultOperations from '../queries/rewardPoint.gql';
 import Identify from 'src/simi/Helper/Identify';
 
-let rewardPointChange = [];
-
 export const useApply = (props = {}) => {
     const { formatMessage, rewardPoint, refetchCartPage } = props;
     const [{ isSignedIn }] = useUserContext();
@@ -25,27 +23,12 @@ export const useApply = (props = {}) => {
     }, [rewardPoint]);
 
     const [usePoint, setUsePoint] = useState(usedPoint);
-    const [useSlide, setUseSlide] = useState(false);
 
     useEffect(() => {
         if (usePoint !== usedPoint) {
             setUsePoint(usedPoint);
         }
     }, [usedPoint]);
-
-    useEffect(() => {
-        if (useSlide) {
-            rewardPointChange.push(usePoint);
-        }
-    }, [useSlide, usePoint]);
-
-    // useEffect(() => {
-    //     if(useSlide) {
-    //         setInterval(() => {
-    //             if()
-    //         }, 500)
-    //     }
-    // }, [useSlide])
 
     const operations = mergeOperations(defaultOperations, props.operations);
 
@@ -103,7 +86,7 @@ export const useApply = (props = {}) => {
             }
             setUsePoint(targetPoint);
         },
-        [setUsePoint, point, useSlide]
+        [setUsePoint, point]
     );
 
     const handleApply = useCallback(async () => {

@@ -97,6 +97,13 @@ const Apply = props => {
     );
 
     if (useAccrodion) {
+        const sesstionClasses = {
+            root: classes.sectionRoot,
+            title: classes.sectionTitle
+        }
+        if(classes.title_wrapper) sesstionClasses.title_wrapper = classes.title_wrapper
+        if(classes.contents_container) sesstionClasses.contents_container = classes.contents_container
+
         return (
             <Section
                 id={'reward_points'}
@@ -104,12 +111,7 @@ const Apply = props => {
                     id: 'Apply Reward',
                     defaultMessage: 'Apply Reward'
                 })}
-                classes={{
-                    root: classes.sectionRoot,
-                    title: classes.sectionTitle,
-                    title_wrapper: classes.title_wrapper,
-                    contents_container: classes.contents_container
-                }}
+                classes={sesstionClasses}
             >
                 <Suspense fallback={<LoadingIndicator />}>{content}</Suspense>
             </Section>
