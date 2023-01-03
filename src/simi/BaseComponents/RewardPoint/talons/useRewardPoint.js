@@ -21,8 +21,6 @@ export const useRewardPoint = (props = {}) => {
         return data?.customer?.reward_point || {};
     }, [data]);
 
-    console.log(customerRewardPointData)
-
     const point = useMemo(() => {
         return customerRewardPointData?.point || 0;
     }, [customerRewardPointData]);

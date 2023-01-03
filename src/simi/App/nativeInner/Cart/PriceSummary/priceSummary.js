@@ -48,8 +48,6 @@ export const PriceSummary = props => {
         flatData
     } = talonProps;
 
-    console.log(flatData)
-
     const {formatMessage} = useIntl();
 
     if (hasError) {
