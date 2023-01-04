@@ -54,36 +54,45 @@ export const CallForPriceFragment = callForPriceEnabled
           }
       `
     : gql`
-    fragment CallForPriceFragment on ProductInterface {
-        sku
-    }
-`;
+          fragment CallForPriceFragment on ProductInterface {
+              sku
+          }
+      `;
 
 export const ProductLabelFragment = productLabelEnabled
     ? gql`
           fragment ProductLabelFragment on ProductInterface {
-              mp_label_data {
-                  rule_id
-                  priority
-                  label_template
-                  label_image
-                  label
-                  label_font
-                  label_font_size
-                  label_color
-                  label_css
-                  label_position
-                  label_position_grid
-                  same
-                  list_template
-                  list_image
-                  list_label
-                  list_font
-                  list_font_size
-                  list_css
-                  list_position
-                  list_position_grid
+              product_label {
+                  active
+                  apply_outofstock_product
+                  conditions_serialized {
+                      aggregator
+                      attribute
+                      conditions
+                      is_value_processed
+                      operator
+                      type
+                      value
+                  }
+                  created_at
+                  customer_groups
+                  file
+                  id
+                  image_data {
+                      angle
+                      height
+                      heightOrigin
+                      left
+                      top
+                      width
+                      widthOrigin
+                  }
                   name
+                  priority
+                  store_views
+                  updated_at
+                  valid_end_date
+                  valid_start_date
               }
           }
       `
@@ -93,21 +102,21 @@ export const ProductLabelFragment = productLabelEnabled
           }
       `;
 
-export const GiftCardFragment = giftCardEnabled 
+export const GiftCardFragment = giftCardEnabled
     ? gql`
-        fragment GiftCardFragment on MpGiftCardProduct {
-            allow_amount_range
-            gift_card_amounts
-            max_amount
-            min_amount
-            price_rate
-        }
-    `
+          fragment GiftCardFragment on MpGiftCardProduct {
+              allow_amount_range
+              gift_card_amounts
+              max_amount
+              min_amount
+              price_rate
+          }
+      `
     : gql`
-        fragment GiftCardFragment on ProductInterface {
-            sku
-        }   
-`;
+          fragment GiftCardFragment on ProductInterface {
+              sku
+          }
+      `;
 
 export const RewardPointFragment = rewardPointEnabled
     ? gql`

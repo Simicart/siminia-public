@@ -313,12 +313,12 @@ const ProductFullDetail = props => {
                             product={product}
                             optionSelections={optionSelections}
                             optionCodes={optionCodes}
-                            labelData={
-                                product.mp_label_data &&
-                                product.mp_label_data.length > 0
-                                    ? product.mp_label_data
-                                    : null
-                            }
+                            // labelData={
+                            //     product.mp_label_data &&
+                            //     product.mp_label_data.length > 0
+                            //         ? product.mp_label_data
+                            //         : null
+                            // }
                         />
                         {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
                     </section>

@@ -24,9 +24,10 @@ import { useGridItem } from '../../../talons/Category/useGridItem';
 import { useHistory } from 'react-router-dom';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToListButton';
-import ProductLabel from '../../../App/core/ProductFullDetail/ProductLabel';
+import ProductLabel from '../ProductLabel';
 import CallForPrice from '../ProductFullDetail/callForPrice';
-import ProductRewardPoint from 'src/simi/BaseComponents/RewardPoint/components/Product'
+import ProductRewardPoint from 'src/simi/BaseComponents/RewardPoint/components/Product';
+import { CATALOG_PAGE, SEARCH_PAGE } from '../ProductLabel/consts';
 
 const HeartIcon = <Icon size={20} src={Heart} />;
 
@@ -37,6 +38,7 @@ const Griditem = props => {
     const logo_url = logoUrl();
     const { classes, styles = {} } = props;
     const history = useHistory();
+    const isSearchPage = history.location.pathname.indexOf('search');
     const [{ cartId }] = useCartContext();
     const handleLink = linkInput => {
         history.push(linkInput);
@@ -52,7 +54,7 @@ const Griditem = props => {
         small_image,
         rating_summary,
         review_count,
-        mp_label_data,
+        product_label,
         price_rate,
         allow_amount_range,
         gift_card_amounts,
@@ -172,8 +174,8 @@ const Griditem = props => {
                         className="product-image-label"
                     />
                     <ProductLabel
-                        productLabel={mp_label_data ? mp_label_data : null}
-                        label_tyle="gallery"
+                        page={isSearchPage === -1 ? CATALOG_PAGE : SEARCH_PAGE}
+                        productLabel={product_label}
                     />
                 </Link>
                 {productOutStock ? (

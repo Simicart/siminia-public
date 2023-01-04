@@ -65,6 +65,8 @@ import { isCallForPriceEnable } from '../Helper/Module';
 import PriceTiers from './PriceTiers';
 import SocialShare from '../../../BaseComponents/SocialShare';
 import RewardPointProduct from 'src/simi/BaseComponents/RewardPoint/components/Product'
+import ProductLabel from '../ProductLabel';
+import { PRODUCT_PAGE } from '../ProductLabel/consts';
 
 require('./productFullDetail.scss');
 
@@ -598,11 +600,11 @@ const ProductFullDetail = props => {
                 product={product}
                 optionSelections={optionSelections}
                 optionCodes={optionCodes}
-                labelData={
-                    product.mp_label_data && product.mp_label_data.length > 0
-                        ? product.mp_label_data
-                        : null
-                }
+                // labelData={
+                //     product.mp_label_data && product.mp_label_data.length > 0
+                //         ? product.mp_label_data
+                //         : null
+                // }
                 topInsets={topInsets}
             />
         );
@@ -712,7 +714,7 @@ const ProductFullDetail = props => {
                         >
                             {productDetailCarousel}
                             {/* {isMobileSite ? <FooterFixedBtn /> : null} */}
-                            {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
+                            <ProductLabel page={PRODUCT_PAGE} productLabel = {product?.product_label} />
                         </section>
 
                         {!isMobileSite ? (

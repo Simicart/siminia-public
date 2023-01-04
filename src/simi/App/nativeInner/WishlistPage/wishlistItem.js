@@ -17,6 +17,8 @@ import { Link } from 'react-router-dom';
 import { ConfirmPopup } from '../Cart/ConfirmPopup';
 // import SocialShare from '../../../BaseComponents/SocialShare';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
+import ProductLabel from '../ProductLabel';
+import { WISHLIST_PAGE } from '../ProductLabel/consts';
 
 const WishlistItem = props => {
     const { item } = props;
@@ -25,7 +27,6 @@ const WishlistItem = props => {
         product,
         __typename
     } = item;
-    // console.log('product', product);
     const {
         name,
         price_range: priceRange,
@@ -34,7 +35,7 @@ const WishlistItem = props => {
         rating_summary,
         type_id,
         small_image,
-        mp_label_data
+        product_label
     } = product;
     const { maximum_price: maximumPrice } = priceRange;
     const { final_price: finalPrice } = maximumPrice;
@@ -229,6 +230,10 @@ const WishlistItem = props => {
                 <Link to={`${product.url_key}${product.url_suffix}`}>
                     <div className={classes.wrapImage}>
                         <Image {...imageProps} />
+                        <ProductLabel
+                            page={WISHLIST_PAGE}
+                            productLabel={product_label}
+                        />
                     </div>
                     <div className={classes.actionWrap}>
                         {review_count ? (

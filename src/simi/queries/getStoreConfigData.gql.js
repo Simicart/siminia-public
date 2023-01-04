@@ -24,6 +24,12 @@ const rewardPointsEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
+const productLabelEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL) === 1;
+
 const GET_STORE_CONFIG = gql`
     query storeConfigData {
         storeConfig {
@@ -267,6 +273,18 @@ const GET_STORE_CONFIG = gql`
                 subscrible
             }
             `
+                : ''
+        }
+        ${
+            productLabelEnabled
+                ? `bssProductLabelStoreConfig(store_view: 1) {
+            active
+            display_multiple_label
+            display_only_out_of_stock_label
+            not_display_label_on
+            selector_product_list
+            selector_product_page
+          }`
                 : ''
         }
     }
