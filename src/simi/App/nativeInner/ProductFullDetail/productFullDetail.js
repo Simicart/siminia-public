@@ -65,7 +65,8 @@ import { isCallForPriceEnable } from '../Helper/Module';
 import PriceTiers from './PriceTiers';
 import SocialShare from '../../../BaseComponents/SocialShare';
 import RewardPointProduct from 'src/simi/BaseComponents/RewardPoint/components/Product'
-import ProductLabel from './ProductLabel';
+import ProductLabel from '../ProductLabel';
+import { PRODUCT_PAGE } from '../ProductLabel/consts';
 
 require('./productFullDetail.scss');
 
@@ -91,7 +92,6 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product } = props;
-    console.log("ProductFullDetail product",product);
     const talonProps = useProductFullDetail({ product });
 
     const {
@@ -714,7 +714,7 @@ const ProductFullDetail = props => {
                         >
                             {productDetailCarousel}
                             {/* {isMobileSite ? <FooterFixedBtn /> : null} */}
-                            <ProductLabel productLabel = {product?.product_label} />
+                            <ProductLabel page={PRODUCT_PAGE} productLabel = {product?.product_label} />
                         </section>
 
                         {!isMobileSite ? (
