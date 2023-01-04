@@ -51,6 +51,21 @@ export const useCartPage = (props = {}) => {
         return (data && data.cart.mp_giftcard_config || {})
     }, [data])
 
+    const priceSummaryData = useMemo(() => {
+        return {
+            subtotal: data?.cart?.prices?.subtotal_excluding_tax,
+            total: data?.cart?.prices?.grand_total,
+            discounts: data?.cart?.prices?.discounts,
+            // giftCards: data?.cart?.mp_giftcard_config,
+            taxes: data?.cart?.prices?.applied_taxes,
+            shipping: data?.cart?.shipping_addresses,
+            rewardPoint: {  
+                earnPoint: data?.cart?.earn_point,
+                spentPoint: data?.cart?.spent_point
+            }
+        };
+    }, [data])
+
     const onAddToWishlistSuccess = useCallback(successToastProps => {
         setWishlistSuccessProps(successToastProps);
     }, []);
@@ -67,6 +82,7 @@ export const useCartPage = (props = {}) => {
     return {
         giftCardConfig,
         cartItems,
+        priceSummaryData,
         hasItems,
         isCartUpdating,
         refetchCartPage,

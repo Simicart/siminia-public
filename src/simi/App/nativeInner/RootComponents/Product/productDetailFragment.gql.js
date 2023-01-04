@@ -42,6 +42,12 @@ const metaPackageEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES) === 1;
 
+const rewardPointEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
+    
 export const ProductCustomAttributesFragment = metaPackageEnabled
     ? gql`
           fragment ProductCustomAttributesFragment on ProductInterface {
@@ -83,6 +89,31 @@ export const ProductCustomAttributesFragment = metaPackageEnabled
               id
           }
       `;
+
+export const RewardPointFragment = rewardPointEnabled
+    ? gql`
+          fragment RewardPointFragment on ProductInterface {
+                reward_point {
+                    product_point {
+                        assign_by
+                        receive_point
+                        dependent_qty
+                        point
+                        message
+                    }
+                    customer_point {
+                        review_point
+                        message
+                    }
+                }
+          }
+      `
+    : gql`
+          fragment RewardPointFragment on ProductInterface {
+              sku
+          }
+      `;
+
 
 export const ProductDetailsFragment = gql`
     fragment ProductDetailsFragment on ProductInterface {
@@ -259,6 +290,7 @@ export const ProductDetailsFragment = gql`
             ...SimiPriceFragment    
         }
         ...ProductCustomAttributesFragment
+        ...RewardPointFragment
         sku
         small_image {
             url
@@ -406,6 +438,7 @@ export const ProductDetailsFragment = gql`
     }
     ${SimiPriceFragment}
     ${ProductCustomAttributesFragment}
+    ${RewardPointFragment}
 `;
 
 // might detach upsell_products and cross-sell for performance

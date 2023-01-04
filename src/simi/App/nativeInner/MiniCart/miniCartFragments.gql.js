@@ -19,24 +19,6 @@ export const GrandTotalFragment = gql`
         }
     }
 `;
-export const RewardPointFragment = rewardPointEnabled
-    ? gql`
-          fragment RewardPointFragment on CartPrices {
-              mp_reward_segments {
-                  code
-                  title
-                  value
-              }
-          }
-      `
-    : gql`
-          fragment RewardPointFragment on CartPrices {
-              subtotal_excluding_tax {
-                  currency
-                  value
-              }
-          }
-      `;
 
 export const MiniCartFragment = gql`
     fragment MiniCartFragment on Cart {
@@ -52,7 +34,6 @@ export const MiniCartFragment = gql`
                 currency
                 value
             }
-            ...RewardPointFragment
         }
         ...ProductListFragment
         ...GiftCardSummaryFragment
@@ -61,7 +42,6 @@ export const MiniCartFragment = gql`
     ${DiscountSummaryFragment}
     ${GiftCardSummaryFragment}
     ${GrandTotalFragment}
-    ${RewardPointFragment}
     ${ShippingSummaryFragment}
     ${TaxSummaryFragment}
 `;

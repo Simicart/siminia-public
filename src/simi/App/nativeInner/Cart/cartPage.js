@@ -54,6 +54,7 @@ const CartPage = props => {
     const {
         giftCardConfig,
         cartItems,
+        priceSummaryData,
         hasItems,
         isCartUpdating,
         fetchCartDetails,
@@ -142,6 +143,7 @@ const CartPage = props => {
             setIsCartUpdating={setIsCartUpdating}
             makeNotification={makeNotification}
             giftCardConfig={giftCardConfig}
+            priceSummaryData={priceSummaryData}
             refetchCartPage={refetchCartPage}
         />
     ) : null;
@@ -151,11 +153,11 @@ const CartPage = props => {
     ) : null;
 
     // will use this in header
-    const totalQuantity = cartItems.length
-        ? cartItems.reduce((total, item) => {
-              return total + item.quantity;
-          }, 0)
-        : 0;
+    // const totalQuantity = cartItems.length
+    //     ? cartItems.reduce((total, item) => {
+    //           return total + item.quantity;
+    //       }, 0)
+    //     : 0;
 
     const outOfStockLabel = displayOutOfStockLabel ? (
         <div className={classes.topOutOfStockContainer}>

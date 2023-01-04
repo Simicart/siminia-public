@@ -304,9 +304,7 @@ export const useStripeIntegration = props => {
 
         if (error) {
             hideFogLoading();
-            console.log('[error]', error);
         } else {
-            console.log('[PaymentMethod]', paymentMethod);
             if (paymentMethod && paymentMethod.card && paymentMethod.id) {
                 const stripeData = { ...paymentMethod };
                 stripeData.saveNewCard = saveNewCard ? true : false;

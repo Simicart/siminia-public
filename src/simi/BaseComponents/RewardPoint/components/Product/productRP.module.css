@@ -1,0 +1,26 @@
+.root {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 2px dotted #1498d0;
+    margin: 7px 0;
+}
+
+.listRoot {
+    composes: root;
+    border: none;
+    padding: 10px 0;
+}
+
+.image {
+    width: 20px;
+    margin-inline-end: 8px;
+}
+
+.message {
+    width: calc(100% - 20px);
+    text-transform: uppercase;
+    color: #1498d0;
+    font-weight: bold;
+}

@@ -215,7 +215,6 @@ export const useCheckoutPage = (props = {}) => {
         }
 
         if (placeOrderError) {
-            console.log('run');
             //Simi stripe-js handling
             let pickedPaymentMethod;
             try {
@@ -227,13 +226,10 @@ export const useCheckoutPage = (props = {}) => {
                     pickedPaymentMethod = pickedPaymentMethod.code;
             } catch (err) { }
 
-            console.log(pickedPaymentMethod)
-            console.log(placeOrderError)
             if (
                 pickedPaymentMethod === 'stripe_payments' &&
                 placeOrderError.graphQLErrors
             ) {
-                console.log('run')
                 const derivedErrorMessage = placeOrderError.graphQLErrors
                     .map(({ message, debugMessage }) =>
                         debugMessage ? debugMessage : message

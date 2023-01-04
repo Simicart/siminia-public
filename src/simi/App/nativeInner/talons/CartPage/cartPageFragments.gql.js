@@ -4,6 +4,7 @@ import { GiftCardFragment } from '@magento/peregrine/lib/talons/CartPage/GiftCar
 import { ProductListingFragment } from 'src/simi/App/nativeInner/CartCore/ProductListing/productListingFragments.gql';
 import { PriceSummaryFragment } from '@magento/peregrine/lib/talons/CartPage/PriceSummary/priceSummaryFragments.gql';
 import { AppliedCouponsFragment } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/CouponCode/couponCodeFragments.gql';
+import { RewardPointOnCartFragment } from 'src/simi/talons/Cart/priceSummaryFragments.gql'
 
 export const CartPageFragment = gql`
     fragment CartPageFragment on Cart {
@@ -13,9 +14,11 @@ export const CartPageFragment = gql`
         ...GiftCardFragment
         ...ProductListingFragment
         ...PriceSummaryFragment
+        ...RewardPointOnCartFragment
     }
     ${AppliedCouponsFragment}
     ${GiftCardFragment}
     ${ProductListingFragment}
     ${PriceSummaryFragment}
+    ${RewardPointOnCartFragment}
 `;

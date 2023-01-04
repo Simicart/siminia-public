@@ -21,7 +21,7 @@ import TaxSummary from 'src/simi/App/core/Cart/PriceSummary/taxSummary';
 import ShippingSummary from 'src/simi/App/core/Cart/PriceSummary/shippingSummary';
 import GiftCardSummary from '@magento/venia-ui/lib/components/CartPage/PriceSummary/giftCardSummary';
 import { configColor } from 'src/simi/Config';
-import { useGetRewardPointData } from '../../../talons/RewardPoint/useGetRewardPointData';
+// import { useGetRewardPointData } from '../../../talons/RewardPoint/useGetRewardPointData';
 import { useQuery } from '@apollo/client';
 import { GET_REWARD_POINTS_CONFIG } from '../../../talons/RewardPoint/rewardPoints.gql';
 const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
@@ -77,17 +77,17 @@ const MiniCart = React.forwardRef((props, ref) => {
     //     fetchPolicy: 'cache-and-network'
     // });
 
-    const { rewardPointConfig, customerRewardPoint } = useGetRewardPointData();
-    const pointBalance =
-        customerRewardPoint && customerRewardPoint.point_balance
-            ? customerRewardPoint.point_balance
-            : 0;
-    const icon =
-        rewardPointConfig &&
-        rewardPointConfig.MpRewardConfig &&
-        rewardPointConfig.MpRewardConfig.general
-            ? rewardPointConfig.MpRewardConfig.general.icon
-            : '';
+    // const { rewardPointConfig, customerRewardPoint } = useGetRewardPointData();
+    // const pointBalance =
+    //     customerRewardPoint && customerRewardPoint.point_balance
+    //         ? customerRewardPoint.point_balance
+    //         : 0;
+    // const icon =
+    //     rewardPointConfig &&
+    //     rewardPointConfig.MpRewardConfig &&
+    //     rewardPointConfig.MpRewardConfig.general
+    //         ? rewardPointConfig.MpRewardConfig.general.icon
+    //         : '';
 
     const classes = useStyle(defaultClasses, props.classes);
     const rootClass = isOpen ? classes.root_open : classes.root;
@@ -99,14 +99,14 @@ const MiniCart = React.forwardRef((props, ref) => {
 
     const isCartEmpty = !(productList && productList.length);
 
-    let mpRewardEarn, mpRewardDiscount, mpRewardSpent;
-    if (priceData && priceData.length > 1) {
-        mpRewardDiscount = priceData[0];
-        mpRewardSpent = priceData[1];
-        mpRewardEarn = priceData[2];
-    } else if (priceData && priceData.length == 1) {
-        mpRewardEarn = priceData[0];
-    }
+    // let mpRewardEarn, mpRewardDiscount, mpRewardSpent;
+    // if (priceData && priceData.length > 1) {
+    //     mpRewardDiscount = priceData[0];
+    //     mpRewardSpent = priceData[1];
+    //     mpRewardEarn = priceData[2];
+    // } else if (priceData && priceData.length == 1) {
+    //     mpRewardEarn = priceData[0];
+    // }
     const [, { addToast }] = useToasts();
 
     useEffect(() => {
@@ -150,7 +150,7 @@ const MiniCart = React.forwardRef((props, ref) => {
                         />
                     </span>
                 ) : null} */}
-                {mpRewardEarn ? (
+                {/* {mpRewardEarn ? (
                     <span className={classes.labelSubtotal}>
                         <span className={classes.wrapRewardEarnTitle}>
                             <span>
@@ -166,9 +166,9 @@ const MiniCart = React.forwardRef((props, ref) => {
                             />
                         </span>
                     </span>
-                ) : null}
+                ) : null} */}
 
-                {mpRewardEarn ? (
+                {/* {mpRewardEarn ? (
                     <span className={classes.priceSubtotal}>
                         <FormattedMessage
                             id={'priceSummary.rewardEarnValue'}
@@ -181,8 +181,8 @@ const MiniCart = React.forwardRef((props, ref) => {
                             })}
                         </>
                     </span>
-                ) : null}
-                {mpRewardSpent ? (
+                ) : null} */}
+                {/* {mpRewardSpent ? (
                     <span className={classes.labelSubtotal}>
                         <FormattedMessage
                             id={'You will spend'}
@@ -203,7 +203,7 @@ const MiniCart = React.forwardRef((props, ref) => {
                             })}
                         </>
                     </span>
-                ) : null}
+                ) : null} */}
                 <span className={classes.labelSubtotal}>
                     <FormattedMessage
                         id={'Subtotal'}
@@ -216,7 +216,7 @@ const MiniCart = React.forwardRef((props, ref) => {
                         value={subtotal.value}
                     />
                 </span>
-                {mpRewardDiscount ? (
+                {/* {mpRewardDiscount ? (
                     <span className={classes.labelSubtotal}>
                         <FormattedMessage
                             id={'Reward Points'}
@@ -231,7 +231,7 @@ const MiniCart = React.forwardRef((props, ref) => {
                             value={mpRewardDiscount.value}
                         />
                     </span>
-                ) : null}
+                ) : null} */}
                 <DiscountSummary
                     classes={{
                         lineItemLabel: classes.labelSubtotal,

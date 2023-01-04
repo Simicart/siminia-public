@@ -75,7 +75,7 @@ const RewardPointsPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import('src/simi/App/nativeInner/RewardPoint/RewardPointDataPage')
+                import('src/simi/BaseComponents/RewardPoint/components/Customer/rewardPoints')
             }
             {...props}
         />
@@ -85,7 +85,7 @@ const RewardTransactions = props => {
     return (
         <LazyComponent
             component={() =>
-                import('src/simi/App/nativeInner/RewardPoint/RewardTransactions')
+                import('src/simi/BaseComponents/RewardPoint/components/Customer/transaction')
             }
             {...props}
         />
@@ -644,6 +644,11 @@ const Routes = props => {
                 <Route
                     exact
                     path="/reward-transactions"
+                    render={props => <RewardTransactions {...props} />}
+                />
+                <Route
+                    exact
+                    path="/reward-transactions/:transactionId?"
                     render={props => <RewardTransactions {...props} />}
                 />
                 <Route

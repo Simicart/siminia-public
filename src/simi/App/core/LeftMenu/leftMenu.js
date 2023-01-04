@@ -33,11 +33,13 @@ const LeftMenu = props => {
     const { label } = props;
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
+
     const rewardPointEnabled =
         window.SMCONFIGS &&
         window.SMCONFIGS.plugins &&
         window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
         parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
+
     const giftCardEnabled =
         window.SMCONFIGS &&
         window.SMCONFIGS.plugins &&
@@ -101,11 +103,11 @@ const LeftMenu = props => {
             id: 'Reward Points',
             url: '/reward-points'
         },
-        {
-            name: 'Reward Transactions',
-            id: 'Reward Transactions',
-            url: '/reward-transactions'
-        }
+        // {
+        //     name: 'Reward Transactions',
+        //     id: 'Reward Transactions',
+        //     url: '/reward-transactions'
+        // }
     ];
     const giftCardContent = [
         {
