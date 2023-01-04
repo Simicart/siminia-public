@@ -65,6 +65,7 @@ import CustomAttributes from './CustomAttributes';
 import { isCallForPriceEnable } from '../Helper/Module';
 import PriceTiers from './PriceTiers';
 import SocialShare from '../../../BaseComponents/SocialShare';
+import ProductLabel from './ProductLabel';
 
 require('./productFullDetail.scss');
 
@@ -90,6 +91,7 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product } = props;
+    console.log("ProductFullDetail product",product);
     const talonProps = useProductFullDetail({ product });
 
     const {
@@ -598,11 +600,11 @@ const ProductFullDetail = props => {
                 product={product}
                 optionSelections={optionSelections}
                 optionCodes={optionCodes}
-                labelData={
-                    product.mp_label_data && product.mp_label_data.length > 0
-                        ? product.mp_label_data
-                        : null
-                }
+                // labelData={
+                //     product.mp_label_data && product.mp_label_data.length > 0
+                //         ? product.mp_label_data
+                //         : null
+                // }
                 topInsets={topInsets}
             />
         );
@@ -712,7 +714,7 @@ const ProductFullDetail = props => {
                         >
                             {productDetailCarousel}
                             {/* {isMobileSite ? <FooterFixedBtn /> : null} */}
-                            {/* <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} /> */}
+                            <ProductLabel productLabel = {product?.product_label} />
                         </section>
 
                         {!isMobileSite ? (

@@ -103,6 +103,7 @@
     grid-row: 1 / fold;
     margin: 0 auto;
     max-width: 640px;
+    position: relative;
 }
 
 @media (min-width: 1024px) {

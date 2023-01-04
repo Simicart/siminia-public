@@ -172,10 +172,10 @@ const Griditem = props => {
                         fallBackUrl={small_image}
                         className="product-image-label"
                     />
-                    <ProductLabel
+                    {/* <ProductLabel
                         productLabel={mp_label_data ? mp_label_data : null}
                         label_tyle="gallery"
-                    />
+                    /> */}
                 </Link>
                 {productOutStock ? (
                     <div className={itemClasses.soldOut}>

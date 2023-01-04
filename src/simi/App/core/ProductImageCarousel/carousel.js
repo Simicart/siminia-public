@@ -223,7 +223,7 @@ const ProductImageCarousel = props => {
             </Carousel>
             
             {/* <ProductLabel imageWidth={imageWidth} productLabel = {loading ? null : data.products.items[0].mp_label_data} /> */}
-            <ProductLabel imageWidth={imageWidth} productLabel = {data && data.products && data.products.items[0] && data.products.items[0].mp_label_data ? data.products.items[0].mp_label_data : null} />
+            {/* <ProductLabel imageWidth={imageWidth} productLabel = {data && data.products && data.products.items[0] && data.products.items[0].mp_label_data ? data.products.items[0].mp_label_data : null} /> */}
 
             {renderLightBox && renderImageLightboxBlock()}
         </div>
