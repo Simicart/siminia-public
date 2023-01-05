@@ -6,9 +6,9 @@ import Identify from '../../../Helper/Identify';
 const ProductLabel = props => {
     const { productLabel, page } = props;
     const storeConfig = Identify.getStoreConfig();
-    const { bssProductLabelStoreConfig } = storeConfig;
+    const { bssProductLabelStoreConfig } = storeConfig || {};
     const classes = useStyle(defaultClasses, props.classes);
-    const notDisplayLabel = bssProductLabelStoreConfig.not_display_label_on.split(',')
+    const notDisplayLabel = bssProductLabelStoreConfig?.not_display_label_on.split(',') || []
     if (
         !productLabel ||
         productLabel.length == 0 ||
