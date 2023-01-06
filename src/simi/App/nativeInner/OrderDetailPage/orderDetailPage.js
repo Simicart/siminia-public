@@ -137,7 +137,6 @@ const OrderDetailPage = props => {
         ? customer.orders.items[0].total.discounts[0].amount
         : null;
     const grandTotal = customer.orders.items[0].total.base_grand_total.value;
-    const mpRewardPoints = customer.orders.items[0].mp_reward_points || {};
     const mpDeliveryInformation =
         customer.orders.items[0].mp_delivery_information || {};
     const status = customer.orders.items[0].status;
@@ -263,36 +262,6 @@ const OrderDetailPage = props => {
                 </thead>
                 <tbody>{renderTRTable(listItem)}</tbody>
                 <tfoot>
-                    {mpRewardPoints.earn ? (
-                        <tr>
-                            <td colSpan={5}>
-                                {formatMessage({
-                                    id: 'You earned',
-                                    defaultMessage: 'You earned'
-                                })}
-                                : {mpRewardPoints.earn}{' '}
-                                {formatMessage({
-                                    id: 'points',
-                                    defaultMessage: 'points'
-                                })}
-                            </td>
-                        </tr>
-                    ) : null}
-                    {mpRewardPoints.spent ? (
-                        <tr>
-                            <td colSpan={5}>
-                                {formatMessage({
-                                    id: 'You spent',
-                                    defaultMessage: 'You spent'
-                                })}
-                                : {mpRewardPoints.spent}{' '}
-                                {formatMessage({
-                                    id: 'points',
-                                    defaultMessage: 'points'
-                                })}
-                            </td>
-                        </tr>
-                    ) : null}
                     <tr>
                         <td colSpan={5}>
                             {formatMessage({
@@ -304,18 +273,6 @@ const OrderDetailPage = props => {
                         </td>
                         {/* <td colSpan={5}>GRANDTOTAL: {subTotal}</td> */}
                     </tr>
-                    {mpRewardPoints.discount ? (
-                        <tr>
-                            <td colSpan={5}>
-                                {formatMessage({
-                                    id: 'Discount',
-                                    defaultMessage: 'Discount'
-                                })}
-                                :{' -'}
-                                <Price currencyCode={customer.orders.items[0].total.subtotal.currency} value={mpRewardPoints.discount} />
-                            </td>
-                        </tr>
-                    ) : null}
                     <tr>
                         <td colSpan={5}>
                             {formatMessage({
@@ -336,7 +293,6 @@ const OrderDetailPage = props => {
                             <Price currencyCode={customer.orders.items[0].total.total_tax.currency} value={customer.orders.items[0].total.total_tax.value} />
                         </td>
                     </tr>
-
                     <tr>
                         <td colSpan={5}>
                             <span className={classes.child1}>

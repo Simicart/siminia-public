@@ -45,13 +45,6 @@ const GET_ORDER_DETAIL = gql`
             mp_delivery_comment
           }
         ` : ''}
-        ${rewardPointEnabled ? ` 
-          mp_reward_points {
-            earn
-            spent
-            discount
-          }
-        ` : ''}
         items {
           product_name
           product_url_key
