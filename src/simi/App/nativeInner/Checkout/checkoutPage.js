@@ -351,6 +351,7 @@ const CheckoutPage = props => {
                     <PriceAdjustments
                         setIsCartUpdating={setIsUpdating}
                         isMobile={isMobile}
+                        isCheckout={true}
                         hideEstimateShipping={true}
                     />
                 </div>

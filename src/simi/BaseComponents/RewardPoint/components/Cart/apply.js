@@ -11,7 +11,7 @@ import { useApply } from 'src/simi/BaseComponents/RewardPoint/talons/useApply';
 import { Price } from '@magento/peregrine';
 
 const Apply = props => {
-    const { useAccrodion, rewardPoint, refetchCartPage } = props;
+    const { useAccrodion, rewardPoint, refetchCartPage, isCheckout } = props;
 
     const { formatMessage } = useIntl();
     const classes = useStyle(defaultClasses, props.classes);
@@ -20,6 +20,7 @@ const Apply = props => {
         operations: {
             ...customerOperations
         },
+        isCheckout,
         rewardPoint,
         refetchCartPage,
         formatMessage
@@ -120,5 +121,9 @@ const Apply = props => {
 
     return content;
 };
+
+Apply.defaultProps = {
+    isCheckout: false
+}
 
 export default Apply;

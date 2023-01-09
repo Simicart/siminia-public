@@ -8,9 +8,9 @@ import { Accordion, Section } from '@magento/venia-ui/lib/components/Accordion';
 
 import defaultClasses from './priceAdjustments.module.css';
 // import Button from '@magento/venia-ui/lib/components/Button';
-import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
+// import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
 // import { useGetRewardPointData } from '../../../../talons/RewardPoint/useGetRewardPointData';
-import { useCartContext } from '@magento/peregrine/lib/context/cart';
+// import { useCartContext } from '@magento/peregrine/lib/context/cart';
 // import { showFogLoading } from '../../../../BaseComponents/Loading/GlobalLoading';
 import ApplyRewardPoint from 'src/simi/BaseComponents/RewardPoint/components/Cart/apply'
 // import { Form } from 'informed';
@@ -42,11 +42,11 @@ const GiftCard = React.lazy(() =>
  * import PriceAdjustments from '@magento/venia-ui/lib/components/CartPage/PriceAdjustments'
  */
 const PriceAdjustments = props => {
-    const { setIsCartUpdating, giftCardConfig, refetchCartPage, priceSummaryData } = props;
+    const { setIsCartUpdating, giftCardConfig, refetchCartPage, priceSummaryData, isCheckout } = props;
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
 
-    const { rewardPoint } = priceSummaryData
+    const { rewardPoint } = priceSummaryData || {}
 
     const giftCardEnabled =
         window.SMCONFIGS &&
@@ -95,6 +95,7 @@ const PriceAdjustments = props => {
                         sectionRoot: classes.sectionRoot,
                         sectionTitle: classes.sectionTitle
                     }}
+                    isCheckout={isCheckout}
                     rewardPoint={rewardPoint}
                     refetchCartPage={refetchCartPage}
                 />
@@ -120,21 +121,6 @@ const PriceAdjustments = props => {
                 ) : (
                     <></>
                 )}
-                {/* <Section
-                    id={'gift_options'}
-                    title={formatMessage({
-                        id: 'priceAdjustments.giftOptions',
-                        defaultMessage: 'See Gift Options'
-                    })}
-                    classes={{
-                        root: classes.sectionRoot,
-                        title: classes.sectionTitle
-                    }}
-                >
-                    <Suspense fallback={<LoadingIndicator />}>
-                        <GiftOptions />
-                    </Suspense>
-                </Section> */}
             </Accordion>
         </div>
     );

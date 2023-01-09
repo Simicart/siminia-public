@@ -9,7 +9,7 @@ import defaultOperations from '../queries/rewardPoint.gql';
 import Identify from 'src/simi/Helper/Identify';
 
 export const useApply = (props = {}) => {
-    const { formatMessage, rewardPoint, refetchCartPage } = props;
+    const { formatMessage, rewardPoint, refetchCartPage, isCheckout } = props;
     const [{ isSignedIn }] = useUserContext();
     const storeConfigData = Identify.getStoreConfig();
     const rewardPointActive = getRewardPointActive();
@@ -35,8 +35,8 @@ export const useApply = (props = {}) => {
     const { getCustomerRewardPoint, applyRewardPointMutation } = operations;
 
     const isActive = useMemo(() => {
-        return rewardPointActive && isSignedIn;
-    }, [rewardPointActive, isSignedIn]);
+        return rewardPointActive && isSignedIn && !isCheckout;
+    }, [rewardPointActive, isSignedIn, isCheckout]);
 
     const { data } = useQuery(getCustomerRewardPoint, {
         skip: !isActive
