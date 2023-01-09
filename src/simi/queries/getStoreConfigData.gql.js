@@ -295,7 +295,7 @@ const GET_STORE_CONFIG = gql`
         ${
             deliveryTimeEnabled
                 ? `
-                bssDeliveryDateStoreConfig(store_view: 1) {
+                bssDeliveryDateStoreConfig{
                   active
                   as_processing_days
                   block_out_holidays

@@ -3,6 +3,10 @@
 .deliveryDate div[class*='react-datepicker-popper'] {
     z-index: 10;
 }
+.deliveryDate input{
+    min-width: 245px;
+    text-align: center;
+}
 .deliveryTime {
 }
 .comment {
