@@ -1,0 +1,39 @@
+.root {
+}
+.deliveryDate div[class*='react-datepicker-popper'] {
+    z-index: 10;
+}
+.deliveryTime {
+}
+.comment {
+}
+.deliveryTime select{
+    width: 100%;
+}
+.comment input{
+    width: 100%;
+    min-height: 80px;
+}
+
+.title{
+    color: #000000;
+    display: block;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.4;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.btnApply{
+    composes: root from '@magento/venia-ui/lib/components/Button/button.module.css';
+    background-color: var(--venia-global-color-button);;
+    color: #fff;
+    border-radius: 0px!important;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 22px;
+    margin-top: 16px;
+}

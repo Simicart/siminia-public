@@ -31,7 +31,7 @@ import ItemsReview from './ItemsReview';
 
 import defaultClasses from './checkoutPage.module.css';
 import ScrollAnchor from '@magento/venia-ui/lib/components/ScrollAnchor/scrollAnchor';
-import DeliveryDateTime from './DeliveryDateTime';
+import DeliveryDateTime from './DeliveryDateTimeNew';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 const errorIcon = <Icon src={AlertCircleIcon} size={20} />;
 import OrderSummary from './OrderSummary/orderSummary';

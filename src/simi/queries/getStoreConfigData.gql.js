@@ -29,6 +29,11 @@ const productLabelEnabled =
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL) === 1;
+const deliveryTimeEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME) === 1;
 
 const GET_STORE_CONFIG = gql`
     query storeConfigData {
@@ -285,6 +290,27 @@ const GET_STORE_CONFIG = gql`
             selector_product_list
             selector_product_page
           }`
+                : ''
+        }
+        ${
+            deliveryTimeEnabled
+                ? `
+                bssDeliveryDateStoreConfig(store_view: 1) {
+                  active
+                  as_processing_days
+                  block_out_holidays
+                  cut_off_time
+                  date_day_off
+                  date_fields
+                  icon_calendar
+                  is_field_required_comment
+                  is_field_required_date
+                  is_field_required_timeslot
+                  on_which_page
+                  process_time
+                  shipping_comment
+                  time_slots
+              }`
                 : ''
         }
     }
