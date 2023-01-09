@@ -8,7 +8,7 @@ const ProductLabel = props => {
     const storeConfig = Identify.getStoreConfig();
     const { bssProductLabelStoreConfig } = storeConfig || {};
     const classes = useStyle(defaultClasses, props.classes);
-    const notDisplayLabel = bssProductLabelStoreConfig?.not_display_label_on.split(',') || []
+    const notDisplayLabel = bssProductLabelStoreConfig?.not_display_label_on?.split(',') || []
     if (
         !productLabel ||
         productLabel.length == 0 ||
@@ -38,7 +38,7 @@ const ProductLabel = props => {
 
     return (
         <>
-            {bssProductLabelStoreConfig.display_multiple_label === '1' ? (
+            {bssProductLabelStoreConfig?.display_multiple_label === '1' ? (
                 listLabel.map(label => {
                     return (
                         <>
