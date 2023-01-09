@@ -1,5 +1,5 @@
 import { useMemo, useCallback, useState, useEffect } from 'react';
-import { getRewardPointActive } from '../utils';
+import { getRewardPointActive, getRewardPointSlider } from '../utils';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useQuery, useMutation } from '@apollo/client';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
@@ -13,6 +13,7 @@ export const useApply = (props = {}) => {
     const [{ isSignedIn }] = useUserContext();
     const storeConfigData = Identify.getStoreConfig();
     const rewardPointActive = getRewardPointActive();
+    const rewardPointSlider = getRewardPointSlider()
     const [{ cartId }] = useCartContext();
     const [, { addToast }] = useToasts();
 
@@ -123,6 +124,7 @@ export const useApply = (props = {}) => {
 
     return {
         isActive,
+        pointSlider: rewardPointSlider,
         point,
         loading: applyRewardPointLoading,
         balancePoint,

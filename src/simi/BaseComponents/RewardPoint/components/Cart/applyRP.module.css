@@ -1,13 +1,11 @@
 .root {
-
 }
 
 .title {
-
 }
 
 .title::after {
-    content: " ";
+    content: ' ';
 }
 
 .value {
@@ -17,10 +15,11 @@
 
 .slider {
     width: 100%;
-    margin: 25px 0;
+    margin-top: 25px;
 }
 
 .pointSpend {
+    margin-top: 25px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -38,11 +37,11 @@
     width: calc(100% - 160px);
 }
 
-@media(max-width: 449px) {
+@media (max-width: 449px) {
     .pointSpend > button {
         min-height: 35px;
         padding-top: 0.5rem;
-        padding-bottom: 0.5rem; 
+        padding-bottom: 0.5rem;
         border-radius: 4px;
         font-size: 0.8rem;
         width: 80px;
@@ -52,7 +51,7 @@
     .input {
         width: calc(100% - 90px);
         height: 35px;
-        background-color: #F2F2F3;
+        background-color: #f2f2f3;
         border: none;
         border-bottom: 1px solid #150826 !important;
     }
