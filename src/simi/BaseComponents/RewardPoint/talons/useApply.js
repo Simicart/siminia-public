@@ -68,7 +68,7 @@ export const useApply = (props = {}) => {
     }, [customerRewardPointData]);
 
     const currency = useMemo(() => {
-        const { storeConfig } = storeConfigData;
+        const { storeConfig } = storeConfigData || {};
         return storeConfig?.base_currency_code || 'USD';
     }, [storeConfigData]);
 
