@@ -44,11 +44,7 @@ import DataStructure from '@simicart/siminia/src/simi/App/core/Seo/Markup/Produc
 import DataStructureBasic from '@simicart/siminia/src/simi/App/core/SeoBasic/Markup/Product.js';
 import useProductReview from '../../../talons/ProductFullDetail/useProductReview';
 import { useHistory, Link } from 'react-router-dom';
-import {
-    ArrowLeft,
-    ShoppingCart,
-    MoreVertical,
-} from 'react-feather';
+import { ArrowLeft, ShoppingCart, MoreVertical } from 'react-feather';
 import { FaChevronRight } from 'react-icons/fa';
 import { BiHelpCircle, BiHome } from 'react-icons/bi';
 // import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
@@ -64,7 +60,7 @@ import CustomAttributes from './CustomAttributes';
 import { isCallForPriceEnable } from '../Helper/Module';
 import PriceTiers from './PriceTiers';
 import SocialShare from '../../../BaseComponents/SocialShare';
-import RewardPointProduct from 'src/simi/BaseComponents/RewardPoint/components/Product'
+import RewardPointProduct from 'src/simi/BaseComponents/RewardPoint/components/Product';
 import ProductLabel from '../ProductLabel';
 import { PRODUCT_PAGE } from '../ProductLabel/consts';
 
@@ -127,7 +123,6 @@ const ProductFullDetail = props => {
         handleAddGiftCardProductToCart,
         handleByNowGiftCardProduct
     } = useGiftCard({ product, setAlertMsg });
-
     const [message, setMessage] = useState(null);
     const [messageType, setMessageType] = useState(null);
     const [popupData, setPopUpData] = useState(null);
@@ -529,7 +524,7 @@ const ProductFullDetail = props => {
     if (isMobileSite) {
         productDetailCarousel.push(
             <React.Fragment key="element-mobile">
-                <div className={classes.headerBtn} >
+                <div className={classes.headerBtn}>
                     <button
                         className={classes.backBtn}
                         onClick={() => history.goBack()}
@@ -663,7 +658,6 @@ const ProductFullDetail = props => {
                             />
                         </div>
                     }
-                    
                 />
             ) : null}
 
@@ -694,7 +688,13 @@ const ProductFullDetail = props => {
                 <div className="wrapperForm ">
                     <Form
                         className={classes.root}
-                        onSubmit={!isMobileSite ? product.__typename === 'MpGiftCardProduct' ? handleAddGiftCardProductToCart : handleAddToCart : () => {}}
+                        onSubmit={
+                            !isMobileSite
+                                ? product.__typename === 'MpGiftCardProduct'
+                                    ? handleAddGiftCardProductToCart
+                                    : handleAddToCart
+                                : () => {}
+                        }
                     >
                         {!isMobileSite ? (
                             <div className="wrapperTitle">
@@ -714,7 +714,11 @@ const ProductFullDetail = props => {
                         >
                             {productDetailCarousel}
                             {/* {isMobileSite ? <FooterFixedBtn /> : null} */}
-                            <ProductLabel page={PRODUCT_PAGE} productLabel = {product?.product_label} />
+                            <ProductLabel
+                                page={PRODUCT_PAGE}
+                                productLabel={product?.product_label}
+                                productOutStock={product.stock_status ==="OUT_OF_STOCK" ? true : false}
+                            />
                         </section>
 
                         {!isMobileSite ? (
@@ -805,7 +809,7 @@ const ProductFullDetail = props => {
                                         </span>
                                     </div>
                                 </Suspense>
-                            ) }
+                            )}
                         </div>
 
                         <div className="productDescription">
@@ -815,14 +819,16 @@ const ProductFullDetail = props => {
                                 />
                             ) : null}
                         </div>
-                        {!isMobileSite && <div className={classes.wrapperError}>
-                            <FormError
-                                classes={{
-                                    root: classes.formErrors
-                                }}
-                                errors={errors.get('form') || []}
-                            />
-                        </div>}
+                        {!isMobileSite && (
+                            <div className={classes.wrapperError}>
+                                <FormError
+                                    classes={{
+                                        root: classes.formErrors
+                                    }}
+                                    errors={errors.get('form') || []}
+                                />
+                            </div>
+                        )}
 
                         <div className="sku-share-shop-by-brand">
                             {!isMobileSite ? (

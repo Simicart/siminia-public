@@ -38,6 +38,8 @@ const Griditem = props => {
     const logo_url = logoUrl();
     const { classes, styles = {} } = props;
     const history = useHistory();
+    const storeConfig = Identify.getStoreConfig();
+    const { bssProductLabelStoreConfig } = storeConfig || {};
     const isSearchPage = history.location.pathname.indexOf('search');
     const [{ cartId }] = useCartContext();
     const handleLink = linkInput => {
@@ -60,7 +62,6 @@ const Griditem = props => {
         gift_card_amounts,
         __typename
     } = item;
-
     const callForPriceRule = item.mp_callforprice_rule;
 
     const product_url = `/${url_key}${productUrlSuffix()}`;
@@ -148,7 +149,6 @@ const Griditem = props => {
     imageUrl = resourceUrl(imageUrl, { type: 'image-product', width: 260 });
 
     const productOutStock = item.stock_status === 'OUT_OF_STOCK';
-
     const image = (
         <div
             className={itemClasses['siminia-product-image']}
@@ -173,10 +173,21 @@ const Griditem = props => {
                         fallBackUrl={small_image}
                         className="product-image-label"
                     />
-                    <ProductLabel
-                        page={isSearchPage === -1 ? CATALOG_PAGE : SEARCH_PAGE}
-                        productLabel={product_label}
-                    />
+                    {(!productOutStock &&
+                        bssProductLabelStoreConfig?.display_only_out_of_stock_label ===
+                            '0') ||
+                    bssProductLabelStoreConfig?.display_only_out_of_stock_label ===
+                        '1' ? (
+                        <ProductLabel
+                            page={
+                                isSearchPage === -1 ? CATALOG_PAGE : SEARCH_PAGE
+                            }
+                            productLabel={product_label}
+                            productOutStock={productOutStock}
+                        />
+                    ) : (
+                        ''
+                    )}
                 </Link>
                 {productOutStock ? (
                     <div className={itemClasses.soldOut}>
@@ -189,7 +200,9 @@ const Griditem = props => {
                     ''
                 )}
 
-                {item.price && item.price.has_special_price ? (
+                {item.price &&
+                item.price.has_special_price &&
+                !productOutStock ? (
                     <div
                         className={itemClasses.discountBadge}
                         style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
