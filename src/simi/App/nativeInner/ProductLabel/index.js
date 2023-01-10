@@ -4,20 +4,21 @@ import defaultClasses from './productLabel.module.css';
 import Identify from '../../../Helper/Identify';
 
 const ProductLabel = props => {
-    const { productLabel, page } = props;
+    const { productLabel, page, productOutStock } = props;
     const storeConfig = Identify.getStoreConfig();
     const { bssProductLabelStoreConfig } = storeConfig || {};
+
     const classes = useStyle(defaultClasses, props.classes);
-    const notDisplayLabel = bssProductLabelStoreConfig?.not_display_label_on?.split(',') || []
+    const notDisplayLabel =
+        bssProductLabelStoreConfig?.not_display_label_on?.split(',') || [];
     if (
         !productLabel ||
         productLabel.length == 0 ||
-        bssProductLabelStoreConfig?.active === 0
-        || notDisplayLabel.includes(page)
+        bssProductLabelStoreConfig?.active === '0' ||
+        notDisplayLabel.includes(page)
     ) {
         return null;
     }
-
 
     const listLabel = [...productLabel].sort((a, b) =>
         a.priority < b.priority ? -1 : 1
@@ -42,7 +43,9 @@ const ProductLabel = props => {
                 listLabel.map(label => {
                     return (
                         <>
-                            {label.valid_start_date <= dateNow &&
+                            {!productOutStock &&
+                                label.apply_outofstock_product === '0' &&
+                                label.valid_start_date <= dateNow &&
                                 label.valid_end_date >= dateNow &&
                                 label.active && (
                                     <div
