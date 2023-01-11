@@ -4,12 +4,7 @@ import { DiscountSummaryFragment } from '@magento/peregrine/lib/talons/CartPage/
 import { GiftCardSummaryFragment } from '@magento/peregrine/lib/talons/CartPage/PriceSummary/queries/giftCardSummary';
 import { ShippingSummaryFragment } from '@magento/peregrine/lib/talons/CartPage/PriceSummary/shippingSummary.gql';
 import { TaxSummaryFragment } from '@magento/peregrine/lib/talons/CartPage/PriceSummary/taxSummary.gql';
-
-const rewardPointEnabled =
-    window.SMCONFIGS &&
-    window.SMCONFIGS.plugins &&
-    window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
-    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
+import { RewardPointOnCartFragment } from 'src/simi/talons/Cart/priceSummaryFragments.gql'
 
 export const GrandTotalFragment = gql`
     fragment GrandTotalFragment on CartPrices {
@@ -37,6 +32,7 @@ export const MiniCartFragment = gql`
         }
         ...ProductListFragment
         ...GiftCardSummaryFragment
+        ...RewardPointOnCartFragment
     }
     ${ProductListFragment}
     ${DiscountSummaryFragment}
@@ -44,4 +40,5 @@ export const MiniCartFragment = gql`
     ${GrandTotalFragment}
     ${ShippingSummaryFragment}
     ${TaxSummaryFragment}
+    ${RewardPointOnCartFragment}
 `;

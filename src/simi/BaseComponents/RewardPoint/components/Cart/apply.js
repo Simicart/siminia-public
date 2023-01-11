@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import defaultClasses from './applyRP.module.css';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
-import customerOperations from 'src/simi/BaseComponents/RewardPoint/queries/customer.ggl';
+import customerOperations from 'src/simi/BaseComponents/RewardPoint/queries/customer.gql';
 import Button from '@magento/venia-ui/lib/components/Button';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Section } from '@magento/venia-ui/lib/components/Accordion';
@@ -47,7 +47,7 @@ const Apply = props => {
         <FormattedMessage id={'Apply'} defaultMessage={'Apply'} />
     );
 
-    const inputSlider = true ? (
+    const inputSlider = pointSlider ? (
         <input
             type="range"
             className={classes.slider}

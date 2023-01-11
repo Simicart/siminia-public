@@ -6,7 +6,7 @@ import { useCreateAccountPage } from '@magento/peregrine/lib/talons/CreateAccoun
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import CreateAccount from '../CreateAccount';
 import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
-
+import RewardPointShowing from 'src/simi/BaseComponents/RewardPoint/components/PointShowing'
 import defaultClasses from './createAccountPage.module.css';
 
 const CreateAccountPage = props => {
@@ -28,6 +28,7 @@ const CreateAccountPage = props => {
                     defaultMessage="Create an Account"
                 />
             </h1>
+            <RewardPointShowing type="registration" />
             <div className={classes.contentContainer}>
                 <CreateAccount {...createAccountProps} classes={{
                     cancelButton: classes.cancelButton,

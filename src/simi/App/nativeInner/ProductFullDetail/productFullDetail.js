@@ -25,6 +25,7 @@ import GiftCardInformationForm from 'src/simi/App/nativeInner/GiftCard/ProductFu
 import GridCardTemplate from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GridCardTemplate';
 import { PriceAlertProductDetails } from './PriceAlertProductDetails';
 import { PopupAlert } from './PopupAlert/popupAlert';
+import RewardPointShowing from 'src/simi/BaseComponents/RewardPoint/components/PointShowing'
 
 const WishlistButton = React.lazy(() =>
     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
@@ -389,6 +390,7 @@ const ProductFullDetail = props => {
     const review =
         product && product.review_count && product.rating_summary ? (
             <div className="wrapperReviewSum">
+                <RewardPointShowing type="review" />
                 <section
                     onClick={() => scrollToReview()}
                     className={classes.reviewSum}

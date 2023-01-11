@@ -45,6 +45,43 @@ export const getRewardPointHeader = () => {
     return parseInt(rewardPointConfig.sw_point_header) === 1 || false
 }
 
+export const getRewardPointMessRegister = () => {
+    const rewardPointConfig = getRewardPointStoreConfig(); 
+
+    return parseInt(rewardPointConfig.point_mess_register) === 1 || false
+}
+
+export const getRewardPointSubscrible = () => {
+    const rewardPointConfig = getRewardPointStoreConfig(); 
+
+    return parseInt(rewardPointConfig.point_subscrible) === 1 || false
+}
+
+export const getRewardPointProductReview = () => {
+    const rewardPointConfig = getRewardPointStoreConfig(); 
+
+    return parseInt(rewardPointConfig.product_page_tab_review) === 1 || false
+}
+
+export const getRewardPointProductPage = () => {
+    const rewardPointConfig = getRewardPointStoreConfig(); 
+
+    return parseInt(rewardPointConfig.product_page_reward_point) === 1 || false
+}
+
+export const getRewardPointCatePage = () => {
+    const rewardPointConfig = getRewardPointStoreConfig(); 
+
+    return parseInt(rewardPointConfig.cate_page_reward_point) === 1 || false
+}
+
+export const getRewardPointCartOrderSummary= () => {
+    const rewardPointConfig = getRewardPointStoreConfig(); 
+
+    return parseInt(rewardPointConfig.cart_order_summary) === 1 || false
+}
+
+
 export const getBaseCurrency = () => {
     const storeConfig = getStoreConfig();
 
@@ -52,11 +89,12 @@ export const getBaseCurrency = () => {
 };
 
 export const formatDate = currentDate => {
+
     const date = new Date(currentDate);
 
     if (date instanceof Date && !isNaN(date)) {
-        return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+        return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     }
 
-    return null;
+    return null
 };

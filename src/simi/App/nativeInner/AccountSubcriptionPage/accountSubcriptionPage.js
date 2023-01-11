@@ -5,7 +5,6 @@ import { useToasts } from '@magento/peregrine';
 import AlertMessages from '../ProductFullDetail/AlertMessages';
 
 import Loading from 'src/simi/BaseComponents/Loading';
-import Button from '@magento/venia-ui/lib/components/Button';
 import Checkbox from '@magento/venia-ui/lib/components/Checkbox';
 import FormErrors from '@magento/venia-ui/lib/components/FormError';
 import NewsletterOperations from './newsletter.gql.js';
@@ -16,6 +15,7 @@ import { useStyle } from '@magento/venia-ui/lib/classify.js';
 import { StoreTitle } from '@magento/venia-ui/lib/components/Head';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useWindowSize } from '@magento/peregrine';
+import RewardPointShowing from 'src/simi/BaseComponents/RewardPoint/components/PointShowing'
 
 const AccountSubcriptionPage = props => {
     const [, { addToast }] = useToasts();
@@ -88,12 +88,14 @@ const AccountSubcriptionPage = props => {
                                 defaultMessage={'My Account'}
                             />
                         </h1>} */}
+               
                         <h2 className={classes.title}>
                             <FormattedMessage
                                 id={'Newsletter Subcription'}
                                 defaultMessage={'Newsletter Subcription'}
                             />
                         </h2>
+                        <RewardPointShowing type="newsletter" />
                         <p className={classes.textSpan}>
                             <FormattedMessage
                                 id={'Subscription option'}

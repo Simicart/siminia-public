@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useQuery } from '@apollo/client';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { getRewardPointIcon, getRewardPointActive, getRewardPointHeader } from '../utils';
-import defaultOperations from '../queries/customer.ggl';
+import defaultOperations from '../queries/customer.gql';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 
 export const useHeader = props => {

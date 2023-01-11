@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { getRewardPointActive } from '../utils';
 import { useHistory, useParams } from 'react-router-dom';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
-import defaultOperations from '../queries/customer.ggl';
+import defaultOperations from '../queries/customer.gql';
 
 export const useTransaction = (props) => {
     const history = useHistory()

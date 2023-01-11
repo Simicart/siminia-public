@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useMutation } from '@apollo/client';
 import { useToasts } from '@magento/peregrine';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
-import defaultOperations from '../queries/customer.ggl';
+import defaultOperations from '../queries/customer.gql';
 
 export const useNotification = (props = {}) => {
     const { formatMessage } = props
