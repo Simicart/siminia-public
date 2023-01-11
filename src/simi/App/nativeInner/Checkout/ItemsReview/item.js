@@ -47,6 +47,7 @@ const Item = props => {
                 <ProductLabel
                     page={WISHLIST_PAGE}
                     productLabel={product?.product_label}
+                    productOutStock={product?.stock_status ==="OUT_OF_STOCK" ? true : false}
                 />
             </div>
 

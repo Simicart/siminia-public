@@ -251,6 +251,7 @@ const Product = props => {
                     <ProductLabel
                         page={SHOPPING_CART_PAGE}
                         productLabel={item?.product?.product_label}
+                        productOutStock={stockStatus ==="OUT_OF_STOCK" ? true : false}
                     />
                 </Link>
                 <div className={classes.details}>
