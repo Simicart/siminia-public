@@ -51,7 +51,10 @@ import {
     MoreVertical,
     ArrowRight
 } from 'react-feather';
-import { FaChevronRight } from 'react-icons/fa';
+
+// import icon biểu thị ẩn/hiện nội dung tab
+import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
+
 import { BiHelpCircle, BiHome } from 'react-icons/bi';
 // import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
@@ -67,6 +70,13 @@ import CustomAttributes from './CustomAttributes';
 import { isCallForPriceEnable } from '../Helper/Module';
 import PriceTiers from './PriceTiers';
 import SocialShare from '../../../BaseComponents/SocialShare';
+
+// khai báo các thành phần cần thiết
+import SizeChartIcon from '../../../../sizechart/assets/images/size-chart-icon.png'
+import '../../../../sizechart/styles/sizechart.css'
+import PopUpSizeChart from '../../../../sizechart/components/PopUpSizeChart'
+import useProductData from '../../../../sizechart/talons/useProductData'
+import useSizeChartData from '../../../../sizechart/talons/useSizeChartData'
 
 require('./productFullDetail.scss');
 
@@ -94,6 +104,17 @@ const ProductFullDetail = props => {
     const { product } = props;
     const talonProps = useProductFullDetail({ product });
 
+    // state ẩn/hiện size chart pop up
+    const [openSizeChart, setOpenSizeChart] = useState(false)
+
+    // state cho biết tab nào được hiển thị
+    const [showTab, setShowTab] = useState(0)
+
+    // state cho biết đang hiển thị những tab nào phía native site
+    const [showDes, setShowDes] = useState(false)
+    const [showRev, setShowRev] = useState(false)
+    const [showSiz, setShowSiz] = useState(false)
+    
     const {
         breadcrumbCategoryId,
         errorMessage,
@@ -119,6 +140,14 @@ const ProductFullDetail = props => {
         alertMsg,
         handleUpdateQuantity
     } = talonProps;
+    
+    // lấy data size chart, tạo biến check điều kiện dạng size chart hiển thị
+    const sizeChartData = useSizeChartData(useProductData(talonProps.productDetails.sku).id).sizeChartData
+    const arr = sizeChartData?.display_popup
+    const pop_up = arr && arr[0] === 0
+    const tab = arr && arr[0] === 1
+    const inline = arr && arr[0] === 2
+    
     const {
         giftCardProductData,
         giftCardData,
@@ -765,6 +794,24 @@ const ProductFullDetail = props => {
                             </div>
                         ) : null}
 
+                        {/*pop up size chart*/}
+                        {pop_up && !isMobileSite && (
+                            <>
+                            <div className = 'pop-up-size-chart'>
+                                <div style={{marginRight: 10}} onClick={() => setOpenSizeChart(true)}>
+                                    <button type='button'><p className='button-title'>Size chart</p></button>
+                                </div>
+                                <div style={{cursor: 'pointer'}} onClick={() => setOpenSizeChart(true)}>
+                                    <img src={SizeChartIcon} style={{width: 30, height: 30}}></img>
+                                </div>
+                            </div>
+
+                            <PopUpSizeChart data={sizeChartData} isMobileSite={isMobileSite}
+                                            openSizeChart={openSizeChart} setOpenSizeChart={setOpenSizeChart} 
+                            ></PopUpSizeChart>
+                            </>
+                        )}
+
                         <div
                             className={`${
                                 product.__typename === 'GroupedProduct' ||
@@ -781,7 +828,6 @@ const ProductFullDetail = props => {
 
                             {!isMobileSite ? cartAction : null}
                         </div>
-
                         <div className="wrapperWishlist">
                             {isMobileSite ? null : (
                                 <Suspense fallback={null}>
@@ -802,6 +848,18 @@ const ProductFullDetail = props => {
                             )}
                         </div>
 
+                        {/*inline size chart web và native*/}
+                        {inline && (
+                            <>
+                                <div className='inline-size-chart'>
+                                    <h1 style={isMobileSite ? {fontSize: 14, marginLeft: '1.5rem'} : {fontSize: 16, fontWeight: 'bold'}}>{`${sizeChartData?.title}:`}</h1>
+                                    <div className={isMobileSite ? 'inline-image-native' : 'inline-image'}>
+                                        <RichContent html={sizeChartData?.content}></RichContent>
+                                    </div>
+                                </div>    
+                            </>
+                        )}
+                        
                         <div className="productDescription">
                             {!isMobileSite && product.short_description ? (
                                 <RichContent
@@ -809,6 +867,7 @@ const ProductFullDetail = props => {
                                 />
                             ) : null}
                         </div>
+                        
                         <div className={classes.wrapperError}>
                             <FormError
                                 classes={{
@@ -852,6 +911,25 @@ const ProductFullDetail = props => {
                                     <Pdetailsbrand product={product} />
                                 </div>
                             </div>
+
+                            {/*pop up size chart native*/}
+                            {pop_up && isMobileSite && (
+                            <>
+                            <div className = 'pop-up-size-chart-native'>
+                                <div style={{marginRight: 10}} onClick={() => setOpenSizeChart(true)}>
+                                    <button type='button'><p className='button-title-native'>Size chart</p></button>
+                                </div>
+                                <div style={{cursor: 'pointer'}} onClick={() => setOpenSizeChart(true)}>
+                                    <img src={SizeChartIcon} style={{width: 20, height: 20, marginTop: 3}}></img>
+                                </div>
+                            </div>
+
+                            <PopUpSizeChart data={sizeChartData} isMobileSite={isMobileSite}
+                                            openSizeChart={openSizeChart} setOpenSizeChart={setOpenSizeChart}
+                            ></PopUpSizeChart>
+                            </>
+                            )}
+
                             <div className="wrapperPriceAlertProductDetails">
                                 <PriceAlertProductDetails
                                     sku={sku}
@@ -868,69 +946,100 @@ const ProductFullDetail = props => {
                             </div>
                         </div>
 
+                        {/*Description*/}
                         <div className={classes.wrapperDes}>
-                            <section className={classes.description}>
-                                <span
-                                    onClick={() => setDescripttion(true)}
-                                    className="descriptionTitle"
-                                >
-                                    <FormattedMessage
-                                        id={'Description'}
-                                        defaultMessage={'Description'}
-                                    />
-                                </span>
+                            
+                            {/*chuyển các info sang dạng tab và tạo tab size chart web*/}
+                            {!isMobileSite ? (
+                            <>
+                            <div className='button-wrapper'>
+                                <button type='button' className={showTab===0 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(0)}>Description</button>
+                                <button type='button' className={showTab===1 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(1)}>{`Reviews (${useProductData(talonProps.productDetails.sku).reviewCount})`}</button>
+                                {tab && (<button type='button' className={showTab===2 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(2)}>Size Chart</button>)}
+                            </div>
 
-                                {!isMobileSite ? (
-                                    <RichContent
-                                        html={productDetails.description}
-                                    />
-                                ) : (
+                            <div className='show-content'>
+                                {showTab===0 && (
                                     <>
-                                        <span>
-                                            <FaChevronRight />
-                                        </span>
-
-                                        <div
-                                            className={desStatus(descripttion)}
-                                        >
-                                            <div
-                                                style={{ height: topInsets }}
-                                            />
-                                            <div
-                                                className="des-title"
-                                                onClick={() =>
-                                                    setDescripttion(false)
-                                                }
-                                            >
-                                                <ArrowLeft />
-                                                <p>
-                                                    <FormattedMessage
-                                                        id={'Description'}
-                                                        defaultMessage={
-                                                            'Description'
-                                                        }
-                                                    />
-                                                </p>
-                                            </div>
-                                            <RichContent
-                                                html={
-                                                    productDetails.description
-                                                }
-                                            />
-                                        </div>
+                                    <section className={classes.description}>          
+                                    <RichContent html={productDetails.description}/>
+                                    </section>
                                     </>
                                 )}
-                            </section>
-                            {product.short_description !== '' &&
-                            isMobileSite ? (
-                                <div className="short-description">
-                                    <RichContent
-                                        html={product.short_description.html}
-                                    />
-                                </div>
-                            ) : null}
+
+                                {showTab===1 && (
+                                    <>
+                                    <ProductReview topInsets={topInsets} product={product} ref={productReview}/>
+                                    </>
+                                )}
+
+                                {showTab===2 && (
+                                    <>
+                                    <div className='tab-size-chart'>
+                                        <h1 style={{fontSize: 24, fontWeight: 'bold'}}>{sizeChartData?.title}</h1>
+                                        <RichContent html={sizeChartData?.content}></RichContent>
+                                    </div>    
+                                    </>
+                                )}
+                            </div>
+                            </>) : 
+                            /*chuyển các info sang dạng drop down tab và tạo tab size chart native*/
+                            (
+                                <>
+                                    <div className='des-wrapper'>
+                                        <div className='des-title'>
+                                            <div style={{marginTop: 10}}>
+                                                <p style={{fontWeight: 'bold'}}>Description</p>
+                                            </div>
+                                            <div style={{marginTop: 15}}>
+                                                {showDes ? <FaChevronUp onClick={() => setShowDes(false)}/> : <FaChevronDown onClick={() => setShowDes(true)}/>}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            {showDes && (<section className={classes.description}>
+                                                <RichContent html={productDetails.description}/>
+                                            </section>)}
+                                        </div>
+                                    </div>
+
+                                    <div className='rev-wrapper'>
+                                        <div className='rev-title'>
+                                            <div style={{marginTop: 5}}>
+                                                <p style={{fontWeight: 'bold'}}>{`Reviews (${useProductData(talonProps.productDetails.sku).reviewCount})`}</p>
+                                            </div>
+                                            <div style={{marginTop: 10}}>
+                                                {showRev ? <FaChevronUp onClick={() => setShowRev(false)}/> : <FaChevronDown onClick={() => setShowRev(true)}/>}
+                                            </div>
+                                        </div>
+                                        <div>
+                                        {showRev && (<ProductReview
+                                        topInsets={topInsets}
+                                        product={product}
+                                        ref={productReview}/>)}
+                                        </div>
+                                    </div>
+                                    
+                                    {tab && (<div className='siz-wrapper'>
+                                        <div className='siz-title'>
+                                            <div style={{marginTop: 5}}>
+                                                <p style={{fontWeight: 'bold'}}>Size chart</p>
+                                            </div>
+                                            <div style={{marginTop: 10}}>
+                                                {showSiz ? <FaChevronUp onClick={() => setShowSiz(false)}/> : <FaChevronDown onClick={() => setShowSiz(true)}/>}
+                                            </div>
+                                        </div>
+                                        <div>
+                                        {showSiz && (<div className='tab-size-chart'>
+                                            <h1 style={{fontSize: 24, fontWeight: 'bold'}}>{sizeChartData?.title}</h1>
+                                            <RichContent html={sizeChartData?.content}></RichContent>
+                                        </div>)}  
+                                        </div>
+                                    </div>)}
+                                </>
+                            )}
                         </div>
-                        {!isMobileSite ? (
+                            
+                            {!isMobileSite ? (
                             // <section className={classes.details}>
                             //     <span className={classes.detailsTitle}>
                             //         <FormattedMessage
@@ -952,6 +1061,7 @@ const ProductFullDetail = props => {
                                 <strong>{productDetails.sku}</strong>
                             </div>
                         )}
+                        
                     </Form>
                     {isMobileSite ? (
                         <div className="productInfo">
@@ -990,11 +1100,7 @@ const ProductFullDetail = props => {
                             customAttributes={product.custom_attributes}
                         />
                     )}
-                <ProductReview
-                    topInsets={topInsets}
-                    product={product}
-                    ref={productReview}
-                />
+
                 {isMobileSite ? (
                     <ProductDetailExtraProductsMB
                         classes={classes}
