@@ -45,7 +45,6 @@ import DataStructure from '@simicart/siminia/src/simi/App/core/Seo/Markup/Produc
 import DataStructureBasic from '@simicart/siminia/src/simi/App/core/SeoBasic/Markup/Product.js';
 import useProductReview from '../../../talons/ProductFullDetail/useProductReview';
 import { useHistory, Link } from 'react-router-dom';
-import { ArrowLeft, ShoppingCart, MoreVertical } from 'react-feather';
 import {
     ArrowLeft,
     ShoppingCart,
