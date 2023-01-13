@@ -141,25 +141,6 @@ export const ProductDetailsFragment = gql`
                 : ``
         }
         ${
-            sizeChartEnabled
-                ? `
-            mp_sizeChart {
-                rule_id
-                name
-                rule_content
-                template_styles
-                enabled
-                display_type
-                conditions_serialized
-                attribute_code
-                demo_templates
-                priority
-                rule_description
-            }
-        `
-                : ``
-        }
-        ${
             productLabelEnabled
                 ? `
             mp_label_data {

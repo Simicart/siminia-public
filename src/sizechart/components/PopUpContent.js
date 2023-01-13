@@ -3,7 +3,7 @@ import Modal from 'react-modal'
 import RichContent from '@magento/venia-ui/lib/components/RichContent/richContent'
 import * as Icon from 'react-feather';
 
-const PopUpSizeChart = ({ isMobileSite, data, openSizeChart, setOpenSizeChart }) => {
+const PopUpContent = ({ isMobileSite, data, openSizeChart, setOpenSizeChart }) => {
     Modal.setAppElement('#root')
 
     return (
@@ -37,4 +37,4 @@ const PopUpSizeChart = ({ isMobileSite, data, openSizeChart, setOpenSizeChart })
     )
 }
 
-export default PopUpSizeChart
+export default PopUpContent

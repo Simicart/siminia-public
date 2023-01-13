@@ -21,7 +21,6 @@ import { QuantityFields } from '@simicart/siminia/src/simi/App/core/Cart/Product
 import RichContent from '@magento/venia-ui/lib/components/RichContent/richContent';
 import { ProductOptionsShimmer } from '@magento/venia-ui/lib/components/ProductOptions';
 import defaultClasses from './productFullDetail.module.css';
-import SizeChart from './SizeChart';
 import GiftCardInformationForm from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GiftCardInformationForm';
 import GridCardTemplate from 'src/simi/App/nativeInner/GiftCard/ProductFullDetail/GridCardTemplate';
 import { PriceAlertProductDetails } from './PriceAlertProductDetails';
@@ -52,7 +51,7 @@ import {
     ArrowRight
 } from 'react-feather';
 
-// import icon biểu thị ẩn/hiện nội dung tab
+// import icon describe tab show/hidden state
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 
 import { BiHelpCircle, BiHome } from 'react-icons/bi';
@@ -71,12 +70,10 @@ import { isCallForPriceEnable } from '../Helper/Module';
 import PriceTiers from './PriceTiers';
 import SocialShare from '../../../BaseComponents/SocialShare';
 
-// khai báo các thành phần cần thiết
-import SizeChartIcon from '../../../../sizechart/assets/images/size-chart-icon.png'
-import '../../../../sizechart/styles/sizechart.css'
-import PopUpSizeChart from '../../../../sizechart/components/PopUpSizeChart'
+// import talons and size chart component
 import useProductData from '../../../../sizechart/talons/useProductData'
 import useSizeChartData from '../../../../sizechart/talons/useSizeChartData'
+import SizeChart from '../../../../sizechart/components/SizeChart'
 
 require('./productFullDetail.scss');
 
@@ -85,6 +82,13 @@ const mageworxSeoEnabled =
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
+
+// get size chart extension enable/disable state
+const sizeChartEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_SIZE_CHART &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_SIZE_CHART) === 1;
 
 // Correlate a GQL error message to a field. GQL could return a longer error
 // string but it may contain contextual info such as product id. We can use
@@ -104,13 +108,10 @@ const ProductFullDetail = props => {
     const { product } = props;
     const talonProps = useProductFullDetail({ product });
 
-    // state ẩn/hiện size chart pop up
-    const [openSizeChart, setOpenSizeChart] = useState(false)
-
-    // state cho biết tab nào được hiển thị
+    // tab display/hidden state
     const [showTab, setShowTab] = useState(0)
 
-    // state cho biết đang hiển thị những tab nào phía native site
+    // tabs display/hidden state native site
     const [showDes, setShowDes] = useState(false)
     const [showRev, setShowRev] = useState(false)
     const [showSiz, setShowSiz] = useState(false)
@@ -141,12 +142,13 @@ const ProductFullDetail = props => {
         handleUpdateQuantity
     } = talonProps;
     
-    // lấy data size chart, tạo biến check điều kiện dạng size chart hiển thị
-    const sizeChartData = useSizeChartData(useProductData(talonProps.productDetails.sku).id).sizeChartData
+    // get size chart data and display style
+    const sizeChartData = useSizeChartData({
+        id: useProductData(talonProps.productDetails.sku).id,
+        sizeChartEnabled: sizeChartEnabled
+    })?.sizeChartData
     const arr = sizeChartData?.display_popup
-    const pop_up = arr && arr[0] === 0
-    const tab = arr && arr[0] === 1
-    const inline = arr && arr[0] === 2
+    const display = arr ? arr[0] : null
     
     const {
         giftCardProductData,
@@ -536,13 +538,7 @@ const ProductFullDetail = props => {
             {/* ) : null} */}
         </div>
     );
-    const renderSizeChart = product.mp_sizeChart ? (
-        <SizeChart
-            sizeChart={product.mp_sizeChart ? product.mp_sizeChart : null}
-            isMobileSite={isMobileSite}
-            topInsets={topInsets}
-        />
-    ) : null;
+    
     const cartAction = (
         <div
             className={
@@ -753,18 +749,6 @@ const ProductFullDetail = props => {
                                     {!isMobileSite ? wrapperPrice : null}
                                     <div className="optionsSizeChart">
                                         {options}
-                                        {!isMobileSite &&
-                                        product.mp_sizeChart &&
-                                        product.mp_sizeChart.display_type ==
-                                            'inline' ? (
-                                            <SizeChart
-                                                sizeChart={
-                                                    product.mp_sizeChart
-                                                        ? product.mp_sizeChart
-                                                        : null
-                                                }
-                                            />
-                                        ) : null}
                                     </div>
 
                                     {product.__typename ===
@@ -777,40 +761,14 @@ const ProductFullDetail = props => {
                                             giftCardActions={giftCardActions}
                                         />
                                     )}
-                                    {product.mp_sizeChart &&
-                                    product.mp_sizeChart &&
-                                    product.mp_sizeChart.display_type ==
-                                        'popup' ? (
-                                        <SizeChart
-                                            sizeChart={
-                                                product.mp_sizeChart
-                                                    ? product.mp_sizeChart
-                                                    : null
-                                            }
-                                            isMobileSite={isMobileSite}
-                                        />
-                                    ) : null}
                                 </section>
                             </div>
                         ) : null}
 
                         {/*pop up size chart*/}
-                        {pop_up && !isMobileSite && (
-                            <>
-                            <div className = 'pop-up-size-chart'>
-                                <div style={{marginRight: 10}} onClick={() => setOpenSizeChart(true)}>
-                                    <button type='button'><p className='button-title'>Size chart</p></button>
-                                </div>
-                                <div style={{cursor: 'pointer'}} onClick={() => setOpenSizeChart(true)}>
-                                    <img src={SizeChartIcon} style={{width: 30, height: 30}}></img>
-                                </div>
-                            </div>
-
-                            <PopUpSizeChart data={sizeChartData} isMobileSite={isMobileSite}
-                                            openSizeChart={openSizeChart} setOpenSizeChart={setOpenSizeChart} 
-                            ></PopUpSizeChart>
-                            </>
-                        )}
+                        {sizeChartEnabled && display===0 && !isMobileSite ? (
+                            <SizeChart display={display} sizeChartData={sizeChartData} isMobileSite={isMobileSite}></SizeChart>
+                        ) : null}
 
                         <div
                             className={`${
@@ -848,17 +806,10 @@ const ProductFullDetail = props => {
                             )}
                         </div>
 
-                        {/*inline size chart web và native*/}
-                        {inline && (
-                            <>
-                                <div className='inline-size-chart'>
-                                    <h1 style={isMobileSite ? {fontSize: 14, marginLeft: '1.5rem'} : {fontSize: 16, fontWeight: 'bold'}}>{`${sizeChartData?.title}:`}</h1>
-                                    <div className={isMobileSite ? 'inline-image-native' : 'inline-image'}>
-                                        <RichContent html={sizeChartData?.content}></RichContent>
-                                    </div>
-                                </div>    
-                            </>
-                        )}
+                        {/*inline size chart web and native*/}
+                        {sizeChartEnabled && display===2 ? (
+                            <SizeChart display={display} sizeChartData={sizeChartData} isMobileSite={isMobileSite}></SizeChart>
+                        ) : null}
                         
                         <div className="productDescription">
                             {!isMobileSite && product.short_description ? (
@@ -913,22 +864,9 @@ const ProductFullDetail = props => {
                             </div>
 
                             {/*pop up size chart native*/}
-                            {pop_up && isMobileSite && (
-                            <>
-                            <div className = 'pop-up-size-chart-native'>
-                                <div style={{marginRight: 10}} onClick={() => setOpenSizeChart(true)}>
-                                    <button type='button'><p className='button-title-native'>Size chart</p></button>
-                                </div>
-                                <div style={{cursor: 'pointer'}} onClick={() => setOpenSizeChart(true)}>
-                                    <img src={SizeChartIcon} style={{width: 20, height: 20, marginTop: 3}}></img>
-                                </div>
-                            </div>
-
-                            <PopUpSizeChart data={sizeChartData} isMobileSite={isMobileSite}
-                                            openSizeChart={openSizeChart} setOpenSizeChart={setOpenSizeChart}
-                            ></PopUpSizeChart>
-                            </>
-                            )}
+                            {sizeChartEnabled && display===0 && isMobileSite ? (
+                                <SizeChart display={display} sizeChartData={sizeChartData} isMobileSite={isMobileSite}></SizeChart>
+                            ) : null}
 
                             <div className="wrapperPriceAlertProductDetails">
                                 <PriceAlertProductDetails
@@ -949,13 +887,13 @@ const ProductFullDetail = props => {
                         {/*Description*/}
                         <div className={classes.wrapperDes}>
                             
-                            {/*chuyển các info sang dạng tab và tạo tab size chart web*/}
+                            {/*convert info to tab style*/}
                             {!isMobileSite ? (
                             <>
                             <div className='button-wrapper'>
                                 <button type='button' className={showTab===0 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(0)}>Description</button>
                                 <button type='button' className={showTab===1 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(1)}>{`Reviews (${useProductData(talonProps.productDetails.sku).reviewCount})`}</button>
-                                {tab && (<button type='button' className={showTab===2 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(2)}>Size Chart</button>)}
+                                {display===1 && (<button type='button' className={showTab===2 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(2)}>Size Chart</button>)}
                             </div>
 
                             <div className='show-content'>
@@ -973,17 +911,13 @@ const ProductFullDetail = props => {
                                     </>
                                 )}
 
+                                {/*tab size chart*/}
                                 {showTab===2 && (
-                                    <>
-                                    <div className='tab-size-chart'>
-                                        <h1 style={{fontSize: 24, fontWeight: 'bold'}}>{sizeChartData?.title}</h1>
-                                        <RichContent html={sizeChartData?.content}></RichContent>
-                                    </div>    
-                                    </>
+                                    <SizeChart display={display} sizeChartData={sizeChartData} isMobileSite={isMobileSite}></SizeChart>
                                 )}
                             </div>
                             </>) : 
-                            /*chuyển các info sang dạng drop down tab và tạo tab size chart native*/
+                            /*convert info to tab drop down style on native*/
                             (
                                 <>
                                     <div className='des-wrapper'>
@@ -1019,7 +953,8 @@ const ProductFullDetail = props => {
                                         </div>
                                     </div>
                                     
-                                    {tab && (<div className='siz-wrapper'>
+                                    {/*tab size chart native*/}
+                                    {display===1 && (<div className='siz-wrapper'>
                                         <div className='siz-title'>
                                             <div style={{marginTop: 5}}>
                                                 <p style={{fontWeight: 'bold'}}>Size chart</p>
@@ -1029,10 +964,9 @@ const ProductFullDetail = props => {
                                             </div>
                                         </div>
                                         <div>
-                                        {showSiz && (<div className='tab-size-chart'>
-                                            <h1 style={{fontSize: 24, fontWeight: 'bold'}}>{sizeChartData?.title}</h1>
-                                            <RichContent html={sizeChartData?.content}></RichContent>
-                                        </div>)}  
+                                        {showSiz && (
+                                            <SizeChart display={display} sizeChartData={sizeChartData} isMobileSite={isMobileSite}></SizeChart>
+                                        )}  
                                         </div>
                                     </div>)}
                                 </>
@@ -1085,15 +1019,7 @@ const ProductFullDetail = props => {
                         </div>
                     ) : null}
                 </div>
-                {isMobileSite ? renderSizeChart : null}
-                {product.mp_sizeChart &&
-                product.mp_sizeChart.display_type == 'tab' ? (
-                    <SizeChart
-                        sizeChart={
-                            product.mp_sizeChart ? product.mp_sizeChart : null
-                        }
-                    />
-                ) : null}
+
                 {product.hasOwnProperty('custom_attributes') &&
                     product.custom_attributes.length > 0 && (
                         <CustomAttributes

@@ -17,9 +17,10 @@ query getSizeChartData($id: Int!) {
   }
 `
 
-const useSizeChartData = (id) => {
+const useSizeChartData = ({id, sizeChartEnabled}) => {
+    
+  if(sizeChartEnabled) {
     const [sizeChartData, setSizeChartData] = useState({})
-  
     const { data, loading, error }= useQuery(GET_SIZE_CHART_DATA, {
       variables: { id },
       onCompleted: (data) => {
@@ -28,5 +29,7 @@ const useSizeChartData = (id) => {
     })
     return sizeChartData
   }
+  else return null
+}
   
   export default useSizeChartData
