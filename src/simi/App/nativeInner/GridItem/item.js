@@ -27,7 +27,7 @@ import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToList
 import ProductLabel from '../ProductLabel';
 import CallForPrice from '../ProductFullDetail/callForPrice';
 import ProductRewardPoint from 'src/simi/BaseComponents/RewardPoint/components/Product';
-import { CATALOG_PAGE, SEARCH_PAGE } from '../ProductLabel/consts';
+import { CATALOG_PAGE, SEARCH_PAGE, HOME_PAGE } from '../ProductLabel/consts';
 
 const HeartIcon = <Icon size={20} src={Heart} />;
 
@@ -41,6 +41,7 @@ const Griditem = props => {
     const storeConfig = Identify.getStoreConfig();
     const { bssProductLabelStoreConfig } = storeConfig || {};
     const isSearchPage = history.location.pathname.indexOf('search');
+    const isHomePage = history.location.pathname === '/';
     const [{ cartId }] = useCartContext();
     const handleLink = linkInput => {
         history.push(linkInput);
@@ -91,7 +92,7 @@ const Griditem = props => {
                     : giftCardPrices[0];
             max_price =
                 max_price > 0 &&
-                max_price > giftCardPrices[giftCardPrices.length - 1]
+                    max_price > giftCardPrices[giftCardPrices.length - 1]
                     ? max_price
                     : giftCardPrices[giftCardPrices.length - 1];
         }
@@ -175,12 +176,12 @@ const Griditem = props => {
                     />
                     {(!productOutStock &&
                         bssProductLabelStoreConfig?.display_only_out_of_stock_label ===
-                            '0') ||
-                    bssProductLabelStoreConfig?.display_only_out_of_stock_label ===
+                        '0') ||
+                        bssProductLabelStoreConfig?.display_only_out_of_stock_label ===
                         '1' ? (
                         <ProductLabel
                             page={
-                                isSearchPage === -1 ? CATALOG_PAGE : SEARCH_PAGE
+                                isSearchPage === -1 ? (isHomePage ? HOME_PAGE : CATALOG_PAGE) : SEARCH_PAGE
                             }
                             productLabel={product_label}
                             productOutStock={productOutStock}
@@ -201,8 +202,8 @@ const Griditem = props => {
                 )}
 
                 {item.price &&
-                item.price.has_special_price &&
-                !productOutStock ? (
+                    item.price.has_special_price &&
+                    !productOutStock ? (
                     <div
                         className={itemClasses.discountBadge}
                         style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
@@ -218,9 +219,8 @@ const Griditem = props => {
 
     return (
         <div
-            className={` ${
-                itemClasses['siminia-product-grid-item']
-            } siminia-product-grid-item ${productOutStock &&
+            className={` ${itemClasses['siminia-product-grid-item']
+                } siminia-product-grid-item ${productOutStock &&
                 itemClasses['item-outstock']}`}
             style={styles['siminia-product-grid-item']}
         >
@@ -259,20 +259,18 @@ const Griditem = props => {
                 )}
                 <div
                     role="presentation"
-                    className={`${itemClasses['product-name']} ${
-                        itemClasses['small']
-                    }`}
+                    className={`${itemClasses['product-name']} ${itemClasses['small']
+                        }`}
                     onClick={() => handleLink(location)}
                     dangerouslySetInnerHTML={{ __html: name }}
                 />
                 <div className={`${itemClasses['price-each-product']}`}>
                     <div
                         role="presentation"
-                        className={`${itemClasses['prices-layout']} ${
-                            Identify.isRtl()
+                        className={`${itemClasses['prices-layout']} ${Identify.isRtl()
                                 ? itemClasses['prices-layout-rtl']
                                 : ''
-                        }`}
+                            }`}
                         style={{
                             flexWrap:
                                 type_id === 'configurable' ? 'wrap' : 'nowrap'
@@ -313,8 +311,8 @@ const Griditem = props => {
                             id: productOutStock
                                 ? 'Out of stock'
                                 : loading
-                                ? 'Adding'
-                                : 'Add To Cart'
+                                    ? 'Adding'
+                                    : 'Add To Cart'
                         })}
                     </button>
                 )}
