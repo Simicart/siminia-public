@@ -25,7 +25,9 @@ const useSizeChartData = ({id, sizeChartEnabled}) => {
       variables: { id },
       onCompleted: (data) => {
         setSizeChartData(data)
-      }
+      },
+      fetchPolicy: 'network-only',
+      nextFetchPolicy: 'cache-and-network'
     })
     return sizeChartData
   }
