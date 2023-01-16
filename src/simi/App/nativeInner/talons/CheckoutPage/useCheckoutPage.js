@@ -123,7 +123,8 @@ export const useCheckoutPage = (props = {}) => {
 
     const {
         data: checkoutData,
-        networkStatus: checkoutQueryNetworkStatus
+        networkStatus: checkoutQueryNetworkStatus,
+        refetch: refetchCheckoutData
     } = useQuery(getCheckoutDetailsQuery, {
         /**
          * Skip fetching checkout details if the `cartId`
@@ -382,6 +383,21 @@ export const useCheckoutPage = (props = {}) => {
         isPlacingOrder
     ]);
 
+    const priceSummaryData = useMemo(() => {
+        return {
+            subtotal: checkoutData?.cart?.prices?.subtotal_excluding_tax,
+            total: checkoutData?.cart?.prices?.grand_total,
+            discounts: checkoutData?.cart?.prices?.discounts,
+            // giftCards: data?.cart?.mp_giftcard_config,
+            taxes: checkoutData?.cart?.prices?.applied_taxes,
+            shipping: checkoutData?.cart?.shipping_addresses,
+            rewardPoint: {  
+                earnPoint: checkoutData?.cart?.earn_point,
+                spentPoint: checkoutData?.cart?.spent_point
+            }
+        };
+    }, [checkoutData])
+
     return {
         isVirtual,
         activeContent,
@@ -389,6 +405,7 @@ export const useCheckoutPage = (props = {}) => {
             ? checkoutData.cart.available_payment_methods
             : null,
         cartItems,
+        priceSummaryData,
         checkoutStep,
         customer,
         error: checkoutError,
@@ -417,6 +434,7 @@ export const useCheckoutPage = (props = {}) => {
         handleReviewOrder,
         reviewOrderButtonClicked,
         toggleAddressBookContent,
-        toggleSignInContent
+        toggleSignInContent,
+        refetchCheckoutData
     };
 };
