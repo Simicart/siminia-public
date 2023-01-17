@@ -151,6 +151,8 @@ const ProductFullDetail = props => {
     })?.sizeChartData
     const arr = sizeChartData?.display_popup
     const display = arr ? arr[0] : null
+
+    const enabledSizeChart = sizeChartEnabled && sizeChartData?.storeConfig?.isEnabled
     
     const {
         giftCardProductData,
@@ -783,7 +785,7 @@ const ProductFullDetail = props => {
                         ) : null}
 
                         {/*pop up size chart*/}
-                        {sizeChartEnabled && display===0 && !isMobileSite ? (
+                        {enabledSizeChart && display===0 && !isMobileSite ? (
                             <SizeChart display={display} sizeChartData={sizeChartData} isMobileSite={isMobileSite}></SizeChart>
                         ) : null}
 
@@ -824,7 +826,7 @@ const ProductFullDetail = props => {
                         </div>
 
                         {/*inline size chart web and native*/}
-                        {sizeChartEnabled && display===2 ? (
+                        {enabledSizeChart && display===2 ? (
                             <SizeChart display={display} sizeChartData={sizeChartData} isMobileSite={isMobileSite}></SizeChart>
                         ) : null}
                         
@@ -882,7 +884,7 @@ const ProductFullDetail = props => {
                             </div>
 
                             {/*pop up size chart native*/}
-                            {sizeChartEnabled && display===0 && isMobileSite ? (
+                            {enabledSizeChart && display===0 && isMobileSite ? (
                                 <SizeChart display={display} sizeChartData={sizeChartData} isMobileSite={isMobileSite}></SizeChart>
                             ) : null}
 
@@ -911,7 +913,7 @@ const ProductFullDetail = props => {
                             <div className='button-wrapper'>
                                 <button type='button' className={showTab===0 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(0)}>Description</button>
                                 <button type='button' className={showTab===1 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(1)}>{`Reviews (${useProductData(talonProps.productDetails.sku).reviewCount})`}</button>
-                                {display===1 && (<button type='button' className={showTab===2 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(2)}>Size Chart</button>)}
+                                {enabledSizeChart && display===1 && (<button type='button' className={showTab===2 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(2)}>Size Chart</button>)}
                             </div>
 
                             <div className='show-content'>
@@ -972,7 +974,7 @@ const ProductFullDetail = props => {
                                     </div>
                                     
                                     {/*tab size chart native*/}
-                                    {display===1 && (<div className='siz-wrapper'>
+                                    {enabledSizeChart && display===1 && (<div className='siz-wrapper'>
                                         <div className='siz-title'>
                                             <div style={{marginTop: 5}}>
                                                 <p style={{fontWeight: 'bold'}}>Size chart</p>

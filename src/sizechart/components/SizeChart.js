@@ -12,10 +12,11 @@ const SizeChart = ({ display, isMobileSite, sizeChartData }) => {
             <>
                 <div className = 'pop-up-size-chart'>
                     <div style={{marginRight: 10}} onClick={() => setOpenSizeChart(true)}>
-                        <button type='button'><p className='button-title'>Size chart</p></button>
+                        <button type='button'><p className='button-title' style={{color: sizeChartData.storeConfig.linkPopupColor ? sizeChartData.storeConfig.linkPopupColor : 'orange'}}>
+                        {sizeChartData.storeConfig.linkPopupText ? sizeChartData.storeConfig.linkPopupText : 'Size Chart'}</p></button>
                     </div>
                     <div style={{cursor: 'pointer'}} onClick={() => setOpenSizeChart(true)}>
-                        <img src={SizeChartIcon} style={{width: 30, height: 30}}></img>
+                        <img src={sizeChartData.storeConfig.icon !== 'false' ? sizeChartData.storeConfig.icon : SizeChartIcon} style={{width: 30, height: 30}}></img>
                     </div>
                 </div>
 
@@ -31,10 +32,10 @@ const SizeChart = ({ display, isMobileSite, sizeChartData }) => {
             <>
                 <div className = 'pop-up-size-chart-native'>
                     <div style={{marginRight: 10}} onClick={() => setOpenSizeChart(true)}>
-                        <button type='button'><p className='button-title-native'>Size chart</p></button>
+                        <button type='button'><p className='button-title-native' style={{color: sizeChartData.storeConfig.linkPopupColor ? sizeChartData.storeConfig.linkPopupColor : 'orange'}}>Size chart</p></button>
                     </div>
                     <div style={{cursor: 'pointer'}} onClick={() => setOpenSizeChart(true)}>
-                        <img src={SizeChartIcon} style={{width: 20, height: 20, marginTop: 3}}></img>
+                        <img src={sizeChartData.storeConfig.icon !== 'false' ? sizeChartData.storeConfig.icon : SizeChartIcon} style={{width: 20, height: 20, marginTop: 3}}></img>
                     </div>
                 </div>
 
