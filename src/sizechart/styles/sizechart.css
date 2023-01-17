@@ -1,4 +1,4 @@
-/*customize cho pop up*/
+/*customize for pop up*/
 .body {
     overflow: hidden;
 }
@@ -41,7 +41,6 @@
 }
 
 .button-title {
-    color: orange;
     line-height: 30px;
     font-weight: bold;
     font-size: 16px;
