@@ -22,6 +22,7 @@ import Identify from 'src/simi/Helper/Identify';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import DataStructure from '@simicart/siminia/src/simi/App/core/Seo/Markup/Product.js';
 import DataStructureBasic from '@simicart/siminia/src/simi/App/core/SeoBasic/Markup/Product.js';
+import RewardPointShowing from 'src/simi/BaseComponents/RewardPoint/components/PointShowing'
 
 const mageworxSeoEnabled =
     window.SMCONFIGS &&
@@ -539,6 +540,7 @@ const ProductReview = forwardRef((props, ref) => {
                 </div>
             </div>
             <div className="yourReviewing">
+                <RewardPointShowing type="review" />
                 <div className="reviewing">
                     <span>
                         {formatMessage({

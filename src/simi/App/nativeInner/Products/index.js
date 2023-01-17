@@ -281,7 +281,6 @@ const Products = props => {
                     pathname: '/' + cate.url_path + cateUrlSuffix(),
                     cateId: cate.id
                 };
-                console.log('location', location);
                 return (
                     <li key={cate.id}>
                         <Link to={location}>

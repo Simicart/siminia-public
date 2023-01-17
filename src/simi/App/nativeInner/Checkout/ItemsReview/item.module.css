@@ -25,7 +25,9 @@
     grid-row: 1 / span 3;
     border: solid 1px rgb(var(--venia-global-color-border));
 }
-
+.wrapperImage{
+    position: relative;
+}
 .name {
     font-weight: 600;
     grid-column: 2 / span 1;

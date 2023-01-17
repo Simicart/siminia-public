@@ -1,0 +1,14 @@
+.root {
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+    margin-inline-end: 15px;
+}
+
+.root > span:first-child {
+    margin-inline-end: 8px;
+}
+
+.root img {
+    width: 20px;
+}

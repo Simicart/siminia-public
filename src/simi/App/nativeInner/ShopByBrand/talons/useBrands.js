@@ -29,7 +29,6 @@ const checkValidCateId = (categoryId, brandItem) => {
 export const useBrands = props => {
     const brandConfiguration = getBrandConfig()
     const brandConfiguration2 = storage.getItem('simiBrandConfiguration');
-    console.log("brandConfiguration2",brandConfiguration2)
     const { categoryId } = props
     //get Brand List useQuery
     const {

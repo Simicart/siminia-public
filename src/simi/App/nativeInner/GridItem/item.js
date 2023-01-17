@@ -24,9 +24,10 @@ import { useGridItem } from '../../../talons/Category/useGridItem';
 import { useHistory } from 'react-router-dom';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToListButton';
-import ProductLabel from '../../../App/core/ProductFullDetail/ProductLabel';
-import { useUserContext } from '@magento/peregrine/lib/context/user';
+import ProductLabel from '../ProductLabel';
 import CallForPrice from '../ProductFullDetail/callForPrice';
+import ProductRewardPoint from 'src/simi/BaseComponents/RewardPoint/components/Product';
+import { CATALOG_PAGE, SEARCH_PAGE, HOME_PAGE } from '../ProductLabel/consts';
 
 const HeartIcon = <Icon size={20} src={Heart} />;
 
@@ -37,11 +38,14 @@ const Griditem = props => {
     const logo_url = logoUrl();
     const { classes, styles = {} } = props;
     const history = useHistory();
+    const storeConfig = Identify.getStoreConfig();
+    const { bssProductLabelStoreConfig } = storeConfig || {};
+    const isSearchPage = history.location.pathname.indexOf('search');
+    const isHomePage = history.location.pathname === '/';
     const [{ cartId }] = useCartContext();
     const handleLink = linkInput => {
         history.push(linkInput);
     };
-    const [{ isSignedIn }] = useUserContext();
 
     const itemClasses = mergeClasses(defaultClasses, classes);
     const {
@@ -53,13 +57,12 @@ const Griditem = props => {
         small_image,
         rating_summary,
         review_count,
-        mp_label_data,
+        product_label,
         price_rate,
         allow_amount_range,
         gift_card_amounts,
         __typename
     } = item;
-
     const callForPriceRule = item.mp_callforprice_rule;
 
     const product_url = `/${url_key}${productUrlSuffix()}`;
@@ -89,7 +92,7 @@ const Griditem = props => {
                     : giftCardPrices[0];
             max_price =
                 max_price > 0 &&
-                max_price > giftCardPrices[giftCardPrices.length - 1]
+                    max_price > giftCardPrices[giftCardPrices.length - 1]
                     ? max_price
                     : giftCardPrices[giftCardPrices.length - 1];
         }
@@ -147,7 +150,6 @@ const Griditem = props => {
     imageUrl = resourceUrl(imageUrl, { type: 'image-product', width: 260 });
 
     const productOutStock = item.stock_status === 'OUT_OF_STOCK';
-
     const image = (
         <div
             className={itemClasses['siminia-product-image']}
@@ -172,10 +174,21 @@ const Griditem = props => {
                         fallBackUrl={small_image}
                         className="product-image-label"
                     />
-                    <ProductLabel
-                        productLabel={mp_label_data ? mp_label_data : null}
-                        label_tyle="gallery"
-                    />
+                    {(!productOutStock &&
+                        bssProductLabelStoreConfig?.display_only_out_of_stock_label ===
+                        '0') ||
+                        bssProductLabelStoreConfig?.display_only_out_of_stock_label ===
+                        '1' ? (
+                        <ProductLabel
+                            page={
+                                isSearchPage === -1 ? (isHomePage ? HOME_PAGE : CATALOG_PAGE) : SEARCH_PAGE
+                            }
+                            productLabel={product_label}
+                            productOutStock={productOutStock}
+                        />
+                    ) : (
+                        ''
+                    )}
                 </Link>
                 {productOutStock ? (
                     <div className={itemClasses.soldOut}>
@@ -188,7 +201,9 @@ const Griditem = props => {
                     ''
                 )}
 
-                {item.price && item.price.has_special_price ? (
+                {item.price &&
+                    item.price.has_special_price &&
+                    !productOutStock ? (
                     <div
                         className={itemClasses.discountBadge}
                         style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
@@ -204,9 +219,8 @@ const Griditem = props => {
 
     return (
         <div
-            className={` ${
-                itemClasses['siminia-product-grid-item']
-            } siminia-product-grid-item ${productOutStock &&
+            className={` ${itemClasses['siminia-product-grid-item']
+                } siminia-product-grid-item ${productOutStock &&
                 itemClasses['item-outstock']}`}
             style={styles['siminia-product-grid-item']}
         >
@@ -245,20 +259,18 @@ const Griditem = props => {
                 )}
                 <div
                     role="presentation"
-                    className={`${itemClasses['product-name']} ${
-                        itemClasses['small']
-                    }`}
+                    className={`${itemClasses['product-name']} ${itemClasses['small']
+                        }`}
                     onClick={() => handleLink(location)}
                     dangerouslySetInnerHTML={{ __html: name }}
                 />
                 <div className={`${itemClasses['price-each-product']}`}>
                     <div
                         role="presentation"
-                        className={`${itemClasses['prices-layout']} ${
-                            Identify.isRtl()
+                        className={`${itemClasses['prices-layout']} ${Identify.isRtl()
                                 ? itemClasses['prices-layout-rtl']
                                 : ''
-                        }`}
+                            }`}
                         style={{
                             flexWrap:
                                 type_id === 'configurable' ? 'wrap' : 'nowrap'
@@ -279,10 +291,7 @@ const Griditem = props => {
                         />
                     </div>
                 </div>
-
-                {/* <div className={itemClasses['sold']}>
-                        {formatMessage({ id: 'sold',defaultMessage:'123 sold' })}
-                </div> */}
+                <ProductRewardPoint item={item} type="list" />
             </div>
             <div
                 className={`${itemClasses['product-grid-actions']} ${loading &&
@@ -302,8 +311,8 @@ const Griditem = props => {
                             id: productOutStock
                                 ? 'Out of stock'
                                 : loading
-                                ? 'Adding'
-                                : 'Add To Cart'
+                                    ? 'Adding'
+                                    : 'Add To Cart'
                         })}
                     </button>
                 )}

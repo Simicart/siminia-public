@@ -103,6 +103,7 @@
     grid-row: 1 / fold;
     margin: 0 auto;
     max-width: 640px;
+    position: relative;
 }
 
 @media (min-width: 1024px) {
@@ -166,7 +167,6 @@
 @media (min-width: 1024px) {
     .description {
         align-self: stretch;
-        border-top-width: 1px;
         margin: 0;
         /* padding-left: 1.5rem; */
         padding-right: 1.5rem;

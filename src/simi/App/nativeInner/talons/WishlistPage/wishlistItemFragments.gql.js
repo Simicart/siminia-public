@@ -19,17 +19,38 @@ export const WishlistItemFragment = gql`
             ${
                 productLabelEnabled
                     ? `
-                mp_label_data {
-                    list_position
-                    list_position_grid
-                    label_image
-                    label_font
-                    label_font_size
-                    label_color
-                    label_template
-                    priority
-                    label
-                }        
+                    product_label {
+                        active
+                        apply_outofstock_product
+                        conditions_serialized {
+                          aggregator
+                          attribute
+                          conditions
+                          is_value_processed
+                          operator
+                          type
+                          value
+                        }
+                        created_at
+                        customer_groups
+                        file
+                        id
+                        image_data {
+                          angle
+                          height
+                          heightOrigin
+                          left
+                          top
+                          width
+                          widthOrigin
+                        }
+                        name
+                        priority
+                        store_views
+                        updated_at
+                        valid_end_date
+                        valid_start_date
+                      }
             `
                     : ``
             }

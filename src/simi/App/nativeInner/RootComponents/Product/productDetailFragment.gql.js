@@ -41,6 +41,12 @@ const metaPackageEnabled =
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES) === 1;
+
+const rewardPointEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
     
 export const ProductCustomAttributesFragment = metaPackageEnabled
     ? gql`
@@ -84,6 +90,30 @@ export const ProductCustomAttributesFragment = metaPackageEnabled
           }
       `;
 
+export const RewardPointFragment = rewardPointEnabled
+    ? gql`
+          fragment RewardPointFragment on ProductInterface {
+                reward_point {
+                    product_point {
+                        assign_by
+                        receive_point
+                        dependent_qty
+                        point
+                        message
+                    }
+                    customer_point {
+                        review_point
+                        message
+                    }
+                }
+          }
+      `
+    : gql`
+          fragment RewardPointFragment on ProductInterface {
+              sku
+          }
+      `;
+
 
 export const ProductDetailsFragment = gql`
     fragment ProductDetailsFragment on ProductInterface {
@@ -118,50 +148,40 @@ export const ProductDetailsFragment = gql`
                 : ``
         }
         ${
-            sizeChartEnabled
-                ? `
-            mp_sizeChart {
-                rule_id
-                name
-                rule_content
-                template_styles
-                enabled
-                display_type
-                conditions_serialized
-                attribute_code
-                demo_templates
-                priority
-                rule_description
-            }
-        `
-                : ``
-        }
-        ${
             productLabelEnabled
                 ? `
-            mp_label_data {
-                rule_id
-                priority
-                label_template
-                label_image
-                label
-                label_font
-                label_font_size
-                label_color
-                label_css
-                label_position
-                label_position_grid
-                same
-                list_template
-                list_image
-                list_label
-                list_font
-                list_font_size
-                list_css
-                list_position
-                list_position_grid
-                name
-            }        
+                product_label {
+                    active
+                    apply_outofstock_product
+                    conditions_serialized {
+                      aggregator
+                      attribute
+                      conditions
+                      is_value_processed
+                      operator
+                      type
+                      value
+                    }
+                    created_at
+                    customer_groups
+                    file
+                    id
+                    image_data {
+                      angle
+                      height
+                      heightOrigin
+                      left
+                      top
+                      width
+                      widthOrigin
+                    }
+                    name
+                    priority
+                    store_views
+                    updated_at
+                    valid_end_date
+                    valid_start_date
+                  }
         `
                 : ``
         }
@@ -228,6 +248,7 @@ export const ProductDetailsFragment = gql`
             ...SimiPriceFragment    
         }
         ...ProductCustomAttributesFragment
+        ...RewardPointFragment
         sku
         small_image {
             url
@@ -375,6 +396,7 @@ export const ProductDetailsFragment = gql`
     }
     ${SimiPriceFragment}
     ${ProductCustomAttributesFragment}
+    ${RewardPointFragment}
 `;
 
 // might detach upsell_products and cross-sell for performance

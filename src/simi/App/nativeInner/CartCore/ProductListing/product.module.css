@@ -37,6 +37,7 @@
 
 .imageContainer {
     grid-area: image;
+    position: relative;
 }
 
 .imageRoot {
