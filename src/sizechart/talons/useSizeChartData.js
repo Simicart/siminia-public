@@ -11,6 +11,7 @@ query getSizeChartData($id: Int!) {
         linkPopupText
         linkPopupColor
         icon
+        product_tab_text
       }
       title
     }

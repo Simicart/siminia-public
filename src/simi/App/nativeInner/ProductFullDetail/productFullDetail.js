@@ -895,7 +895,7 @@ const ProductFullDetail = props => {
                             <div className='button-wrapper'>
                                 <button type='button' className={showTab===0 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(0)}>Description</button>
                                 <button type='button' className={showTab===1 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(1)}>{`Reviews (${useProductData(talonProps.productDetails.sku).reviewCount})`}</button>
-                                {enabledSizeChart && display===1 && (<button type='button' className={showTab===2 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(2)}>Size Chart</button>)}
+                                {enabledSizeChart && display===1 && (<button type='button' className={showTab===2 ? 'selected-button' : 'deselected-button'} onClick={() => setShowTab(2)}>{sizeChartData.storeConfig.product_tab_text ? sizeChartData.storeConfig.product_tab_text : 'Size Chart'}</button>)}
                             </div>
 
                             <div className='show-content'>
@@ -959,7 +959,7 @@ const ProductFullDetail = props => {
                                     {enabledSizeChart && display===1 && (<div className='siz-wrapper'>
                                         <div className='siz-title'>
                                             <div style={{marginTop: 5}}>
-                                                <p style={{fontWeight: 'bold'}}>Size chart</p>
+                                                <p style={{fontWeight: 'bold'}}>{sizeChartData.storeConfig.product_tab_text ? sizeChartData.storeConfig.product_tab_text : 'Size Chart'}</p>
                                             </div>
                                             <div style={{marginTop: 10}}>
                                                 {showSiz ? <FaChevronUp onClick={() => setShowSiz(false)}/> : <FaChevronDown onClick={() => setShowSiz(true)}/>}
