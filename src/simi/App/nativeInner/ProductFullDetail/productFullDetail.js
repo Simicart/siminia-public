@@ -69,8 +69,6 @@ import { isCallForPriceEnable } from '../Helper/Module';
 import PriceTiers from './PriceTiers';
 import SocialShare from '../../../BaseComponents/SocialShare';
 import RewardPointProduct from 'src/simi/BaseComponents/RewardPoint/components/Product';
-import ProductLabel from '../ProductLabel';
-import { PRODUCT_PAGE } from '../ProductLabel/consts';
 
 // import talons and size chart component
 import useProductData from '../../../../sizechart/talons/useProductData'
@@ -748,11 +746,7 @@ const ProductFullDetail = props => {
                         >
                             {productDetailCarousel}
                             {/* {isMobileSite ? <FooterFixedBtn /> : null} */}
-                            <ProductLabel
-                                page={PRODUCT_PAGE}
-                                productLabel={product?.product_label}
-                                productOutStock={product.stock_status ==="OUT_OF_STOCK" ? true : false}
-                            />
+                            
                         </section>
 
                         {!isMobileSite ? (
