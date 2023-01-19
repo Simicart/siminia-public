@@ -27,7 +27,10 @@ const rewardPointEnabled =
 export const CallForPriceFragment = callForPriceEnabled
     ? gql`
           fragment CallForPriceFragment on ProductInterface {
-                callforprice_text
+                advancedhideprice {
+                    advancedhideprice_text
+                    advancedhideprice_type
+                }
           }
       `
     : gql`

@@ -133,7 +133,10 @@ export const ProductDetailsFragment = gql`
         ${
             callForPriceEnabled
                 ? `
-            callforprice_text
+            advancedhideprice {
+                advancedhideprice_text
+                advancedhideprice_type
+            }
         `
                 : ``
         }

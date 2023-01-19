@@ -25,6 +25,7 @@ import GridCardTemplate from 'src/simi/App/nativeInner/GiftCard/ProductFullDetai
 import { PriceAlertProductDetails } from './PriceAlertProductDetails';
 import { PopupAlert } from './PopupAlert/popupAlert';
 import RewardPointShowing from 'src/simi/BaseComponents/RewardPoint/components/PointShowing'
+import { HidePrice, HideAddToCartBtn, checkIsHidePriceEnable } from 'src/simi/BaseComponents/CallForPrice/components/Product'
 
 const WishlistButton = React.lazy(() =>
     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
@@ -169,12 +170,7 @@ const ProductFullDetail = props => {
     const successMsg = `${productDetails.name} was added to shopping cart`;
     const [{ isSignedIn }] = useUserContext();
     const history = useHistory();
-    const dataLocation = product.mp_callforprice_rule
-        ? product.mp_callforprice_rule
-        : null;
 
-    const action =
-        dataLocation && dataLocation.action ? dataLocation.action : '';
     const [moreBtn, setMoreBtn] = useState(false);
     const storeConfig = Identify.getStoreConfig();
     const enabledReview =
@@ -362,6 +358,7 @@ const ProductFullDetail = props => {
             </p>
         </div>
     );
+
     let topInsets = 0;
     let bottomInsets = 0;
     try {
@@ -484,7 +481,7 @@ const ProductFullDetail = props => {
         </span>
     )
 
-    let wrapperPrice = (
+    const showPrice = (
         <React.Fragment>
             <div className="wrapperPrice">
                 <span
@@ -503,16 +500,17 @@ const ProductFullDetail = props => {
         </React.Fragment>
     );
 
-    const wrapperHidePrice = (
-        <div className="wrapperPrice">
+    const hidePrice = (
+        <div className="wrapperPrice noPrice">
             {productStock}
         </div>
     )
 
-    wrapperPrice = (
+    const wrapperPrice = (
         <HidePrice 
-            price={wrapperPrice}
-            hidePrice={wrapperHidePrice}
+            showPrice={showPrice}
+            hidePrice={hidePrice}
+            product={product}
         />
     )
 
@@ -639,6 +637,27 @@ const ProductFullDetail = props => {
         );
     }
 
+    const addToCartArea = !isMobileSite ? (
+        <div
+            className={`${
+                product.__typename === 'GroupedProduct' ||
+                product.__typename === 'BundleProduct'
+                    ? 'groupCartAction'
+                    : ''
+            } quantityCartAction`}
+        >
+            {wrapperQuantity}
+            {cartAction}
+        </div>
+    ) : null
+
+    const wrapperAddToCartArea = !isMobileSite ? (
+        <HideAddToCartBtn 
+            product={product}
+            addToCartBtn={addToCartArea}
+        />
+    ) : null
+
     return (
         <div className={isMobileSite ? 'main-product-detail-native' : null}>
             <div style={{ height: topInsets }} />
@@ -723,7 +742,7 @@ const ProductFullDetail = props => {
                     <Form
                         className={classes.root}
                         onSubmit={
-                            !isMobileSite
+                            (!isMobileSite || !checkIsHidePriceEnable(product))
                                 ? product.__typename === 'MpGiftCardProduct'
                                     ? handleAddGiftCardProductToCart
                                     : handleAddToCart
@@ -788,23 +807,7 @@ const ProductFullDetail = props => {
                         {enabledSizeChart && display===0 && !isMobileSite ? (
                             <SizeChart display={display} sizeChartData={sizeChartData} isMobileSite={isMobileSite}></SizeChart>
                         ) : null}
-
-                        <div
-                            className={`${
-                                product.__typename === 'GroupedProduct' ||
-                                product.__typename === 'BundleProduct'
-                                    ? 'groupCartAction'
-                                    : ''
-                            } quantityCartAction`}
-                        >
-                            {product.items
-                                ? ''
-                                : !isMobileSite
-                                ? wrapperQuantity
-                                : null}
-
-                            {!isMobileSite ? cartAction : null}
-                        </div>
+                        {wrapperAddToCartArea}
                         <div className="wrapperWishlist">
                             {!isMobileSite && (
                                 <Suspense fallback={null}>
@@ -1126,9 +1129,8 @@ const ProductFullDetail = props => {
                     typeBtn={typeBtn}
                     setTypeBtn={setTypeBtn}
                     bottomInsets={bottomInsets}
-                    data={dataLocation}
                     wrapperPrice={wrapperPrice}
-                    item_id={product.id}
+                    product={product}
                 />
             ) : null}
         </div>
