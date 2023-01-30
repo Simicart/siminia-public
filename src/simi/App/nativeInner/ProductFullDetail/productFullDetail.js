@@ -25,6 +25,7 @@ import GridCardTemplate from 'src/simi/App/nativeInner/GiftCard/ProductFullDetai
 import { PriceAlertProductDetails } from './PriceAlertProductDetails';
 import { PopupAlert } from './PopupAlert/popupAlert';
 import RewardPointShowing from 'src/simi/BaseComponents/RewardPoint/components/PointShowing'
+import { HidePrice, HideAddToCartBtn, checkIsHidePriceEnable } from 'src/simi/BaseComponents/CallForPrice/components/Product'
 
 const WishlistButton = React.lazy(() =>
     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
@@ -65,7 +66,7 @@ import StatusBar from './statusBar';
 import FooterFixedBtn from './footerFixedBtn';
 import AddToCartPopup from './addToCartPopup';
 import CustomAttributes from './CustomAttributes';
-import { isCallForPriceEnable } from '../Helper/Module';
+// import { isCallForPriceEnable } from '../Helper/Module';
 import PriceTiers from './PriceTiers';
 import SocialShare from '../../../BaseComponents/SocialShare';
 import RewardPointProduct from 'src/simi/BaseComponents/RewardPoint/components/Product';
@@ -167,12 +168,7 @@ const ProductFullDetail = props => {
     const successMsg = `${productDetails.name} was added to shopping cart`;
     const [{ isSignedIn }] = useUserContext();
     const history = useHistory();
-    const dataLocation = product.mp_callforprice_rule
-        ? product.mp_callforprice_rule
-        : null;
 
-    const action =
-        dataLocation && dataLocation.action ? dataLocation.action : '';
     const [moreBtn, setMoreBtn] = useState(false);
     const storeConfig = Identify.getStoreConfig();
     const enabledReview =
@@ -360,6 +356,7 @@ const ProductFullDetail = props => {
             </p>
         </div>
     );
+
     let topInsets = 0;
     let bottomInsets = 0;
     try {
@@ -417,7 +414,11 @@ const ProductFullDetail = props => {
                 toValue={productDetails.price.toValue}
             />
         );
+
+    const productPrice = product && product.price && product.price.has_special_price ? specialPrice : pricePiece
+
     const { price, sku, price_tiers } = product || {};
+
     const review =
         product && product.review_count && product.rating_summary ? (
             <div className="wrapperReviewSum">
@@ -461,45 +462,33 @@ const ProductFullDetail = props => {
                 />
             </div>
         );
+    
+    const productStock = isOutOfStock ? (
+        <span className="outOfStock">
+            <FormattedMessage
+                id="productFullDetail.outOfStoc"
+                defaultMessage="Out of stock"
+            />
+        </span>
+    ) : (
+        <span className="inStock">
+            <FormattedMessage
+                id="In stock"
+                defaultMessage="In stock"
+            />
+        </span>
+    )
 
-    let wrapperPrice = (
+    const showPrice = (
         <React.Fragment>
             <div className="wrapperPrice">
-                {/* <span
-                    className="labelPrice"
-                    style={{ color: configColor.price_color }}
-                >
-                    {!isMobileSite ? (
-                        <FormattedMessage
-                            id="Per pack:"
-                            defaultMessage="Per pack: "
-                        />
-                    ) : null}
-                </span> */}
                 <span
                     style={{ color: configColor.price_color }}
                     className={classes.productPrice}
                 >
-                    {product && product.price && product.price.has_special_price
-                        ? specialPrice
-                        : pricePiece}
+                    {productPrice}
                 </span>
-
-                {isOutOfStock ? (
-                    <span className="outOfStock">
-                        <FormattedMessage
-                            id="productFullDetail.outOfStoc"
-                            defaultMessage="Out of stock"
-                        />
-                    </span>
-                ) : (
-                    <span className="inStock">
-                        <FormattedMessage
-                            id="In stock"
-                            defaultMessage="In stock"
-                        />
-                    </span>
-                )}
+                {productStock}
             </div>
             {price_tiers &&
             Array.isArray(price_tiers) &&
@@ -509,26 +498,25 @@ const ProductFullDetail = props => {
         </React.Fragment>
     );
 
-    if (isCallForPriceEnable()) {
-        if (
-            !(action === 'login_see_price' && isSignedIn) ||
-            action === 'redirect_url'
-        ) {
-            wrapperPrice = null;
-        }
-    }
+    const hidePrice = (
+        <div className="wrapperPrice noPrice">
+            {productStock}
+        </div>
+    )
+
+    const wrapperPrice = (
+        <HidePrice 
+            showPrice={showPrice}
+            hidePrice={hidePrice}
+            product={product}
+        />
+    )
 
     const wrapperQuantity = (
         <div className="wrapperQuantity">
             <section
                 className={!isMobileSite ? classes.quantity : 'mbQuantity'}
             >
-                {/* <span className={classes.quantityTitle}>
-                        <FormattedMessage
-                            id={'Quantity'}
-                            defaultMessage={'Quantity: '}
-                        />
-                    </span> */}
                 <QuantityFields
                     classes={{ root: classes.quantityRoot }}
                     onChange={handleUpdateQuantity}
@@ -536,8 +524,6 @@ const ProductFullDetail = props => {
                     message={errors.get('quantity')}
                 />
             </section>
-            {/* {!isMobileSite ? ( */}
-            {/* ) : null} */}
         </div>
     );
     
@@ -552,6 +538,18 @@ const ProductFullDetail = props => {
             <section className={classes.actions}>{cartActionContent}</section>
         </div>
     );
+
+    const formError = (
+        <div className={classes.wrapperError}>
+            <FormError
+                classes={{
+                    root: classes.formErrors
+                }}
+                errors={errors.get('form') || []}
+            />
+        </div>
+    )
+
     const productDetailCarousel = [];
     if (isMobileSite) {
         productDetailCarousel.push(
@@ -637,6 +635,27 @@ const ProductFullDetail = props => {
         );
     }
 
+    const addToCartArea = !isMobileSite ? (
+        <div
+            className={`${
+                product.__typename === 'GroupedProduct' ||
+                product.__typename === 'BundleProduct'
+                    ? 'groupCartAction'
+                    : ''
+            } quantityCartAction`}
+        >
+            {wrapperQuantity}
+            {cartAction}
+        </div>
+    ) : null
+
+    const wrapperAddToCartArea = !isMobileSite ? (
+        <HideAddToCartBtn 
+            product={product}
+            addToCartBtn={addToCartArea}
+        />
+    ) : null
+
     return (
         <div className={isMobileSite ? 'main-product-detail-native' : null}>
             <div style={{ height: topInsets }} />
@@ -721,7 +740,7 @@ const ProductFullDetail = props => {
                     <Form
                         className={classes.root}
                         onSubmit={
-                            !isMobileSite
+                            (!isMobileSite || !checkIsHidePriceEnable(product))
                                 ? product.__typename === 'MpGiftCardProduct'
                                     ? handleAddGiftCardProductToCart
                                     : handleAddToCart
@@ -782,23 +801,7 @@ const ProductFullDetail = props => {
                         {enabledSizeChart && display===0 && !isMobileSite ? (
                             <SizeChart display={display} sizeChartData={sizeChartData} isMobileSite={isMobileSite}></SizeChart>
                         ) : null}
-
-                        <div
-                            className={`${
-                                product.__typename === 'GroupedProduct' ||
-                                product.__typename === 'BundleProduct'
-                                    ? 'groupCartAction'
-                                    : ''
-                            } quantityCartAction`}
-                        >
-                            {product.items
-                                ? ''
-                                : !isMobileSite
-                                ? wrapperQuantity
-                                : null}
-
-                            {!isMobileSite ? cartAction : null}
-                        </div>
+                        {wrapperAddToCartArea}
                         <div className="wrapperWishlist">
                             {!isMobileSite && (
                                 <Suspense fallback={null}>
@@ -1120,9 +1123,8 @@ const ProductFullDetail = props => {
                     typeBtn={typeBtn}
                     setTypeBtn={setTypeBtn}
                     bottomInsets={bottomInsets}
-                    data={dataLocation}
                     wrapperPrice={wrapperPrice}
-                    item_id={product.id}
+                    product={product}
                 />
             ) : null}
         </div>
