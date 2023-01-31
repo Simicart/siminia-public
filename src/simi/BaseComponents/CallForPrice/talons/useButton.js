@@ -30,7 +30,7 @@ export const useButton = (props = {}) => {
     }, [advancedhideprice]);
 
     const handleOpen = useCallback(() => {
-        toggleDrawer('hidePrice.form');
+        toggleDrawer('hidePrice.form.' + sku);
     }, [toggleDrawer]);
 
     return {

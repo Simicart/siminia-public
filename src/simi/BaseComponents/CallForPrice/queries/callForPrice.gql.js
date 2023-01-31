@@ -11,6 +11,9 @@ export const GET_CALL_FOR_PRICE_CONFIG = gql`
         field_required
         field_enable
       }
+      is_show_customer_fields
+      recaptcha
+      site_key
     }
   }
 `;

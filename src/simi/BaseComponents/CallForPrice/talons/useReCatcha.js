@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useQuery } from '@apollo/client';
-
+// import { useQuery } from '@apollo/client';
+import { getRecaptcha, getSiteKey } from '../utils'
 import useScript from 'src/simi/hooks/useScript';
-import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 
-import defaultOperations from './googleReCaptchaConfig.gql';
+// import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
+
+// import defaultOperations from './googleReCaptchaConfig.gql';
 
 const GOOGLE_RECAPTCHA_HEADER = 'X-ReCaptcha';
 const GOOGLE_RECAPTCHA_URL = 'https://www.google.com/recaptcha/api.js';
@@ -24,16 +25,10 @@ const GOOGLE_RECAPTCHA_URL = 'https://www.google.com/recaptcha/api.js';
  * import { useGoogleReCaptcha } from '@magento/peregrine/lib/hooks/useGoogleReCaptcha';
  */
 export const useGoogleReCaptcha = props => {
-    const operations = mergeOperations(defaultOperations, props.operations);
-    const { currentForm, formAction } = props;
 
-    const {
-        data: configData,
-        error: configError,
-        loading: configLoading
-    } = useQuery(operations.getReCaptchaV3ConfigQuery, {
-        fetchPolicy: 'cache-and-network'
-    });
+    const { formAction } = props;
+    const reCaptchaEnable = getRecaptcha()
+
     if (!globalThis['recaptchaCallbacks']) {
         globalThis['recaptchaCallbacks'] = {};
     }
@@ -53,20 +48,16 @@ export const useGoogleReCaptcha = props => {
         }
     }, []);
 
-    const recaptchaBadge =
-        configData?.recaptchaV3Config?.badge_position &&
-        configData.recaptchaV3Config.badge_position.length > 0
-            ? configData.recaptchaV3Config.badge_position
-            : 'bottomright';
-    const recaptchaKey = configData?.recaptchaV3Config?.website_key;
-    const recaptchaLang = configData?.recaptchaV3Config?.language_code;
-    const activeForms = configData?.recaptchaV3Config?.forms || [];
+    const recaptchaBadge = 'inline'
+    const recaptchaKey = getSiteKey();
+    // const recaptchaLang = configData?.recaptchaV3Config?.language_code;
+    // const activeForms = configData?.recaptchaV3Config?.forms || [];
     const isEnabled =
-        !(configError instanceof Error) &&
+        reCaptchaEnable &&
         recaptchaKey &&
-        recaptchaKey.length > 0 &&
-        activeForms.includes(currentForm);
+        recaptchaKey.length > 0 
 
+    console.log(isEnabled)
     // Determine which type of badge should be loaded
     const isInline = recaptchaBadge === 'inline';
 
@@ -82,9 +73,9 @@ export const useGoogleReCaptcha = props => {
     );
     scriptUrl.searchParams.append('onload', 'onloadRecaptchaCallback');
 
-    if (recaptchaLang && recaptchaLang.length > 0) {
-        scriptUrl.searchParams.append('hl', recaptchaLang);
-    }
+    // if (recaptchaLang && recaptchaLang.length > 0) {
+    //     scriptUrl.searchParams.append('hl', recaptchaLang);
+    // }
 
     // Load Script only if the API is not already set, if the key is set
     // and if the current form is enabled in the V3 configs
@@ -92,7 +83,7 @@ export const useGoogleReCaptcha = props => {
 
     // Wait for config to be loaded and script to be ready
     const isLoading =
-        configLoading || (isEnabled && !apiIsReady && status !== 'ready');
+       (isEnabled && !apiIsReady && status !== 'ready');
 
     // Render inline widget manually
     useEffect(() => {
