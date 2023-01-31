@@ -27,4 +27,21 @@ export const getFormFields = () => {
     return hidePriceConfig?.form_fields || []
 }
 
+export const getIsShowCustomerFields = () => {
+    const hidePriceConfig = getHidePriceConfig();
+
+    return hidePriceConfig?.is_show_customer_fields || false
+}
+
+export const getRecaptcha = () => {
+    const hidePriceConfig = getHidePriceConfig();
+
+    return hidePriceConfig?.recaptcha || false
+}
+
+export const getSiteKey = () => {
+    const hidePriceConfig = getHidePriceConfig();
+
+    return hidePriceConfig?.site_key || ''
+}
 
