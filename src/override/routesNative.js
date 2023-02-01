@@ -332,7 +332,7 @@ const Faq = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "HomePage"*/ 'src/simi/App/nativeInner/Faq/HomePage')
+                import(/* webpackChunkName: "MainPage"*/ 'src/simi/App/nativeInner/Faq/MainPage')
             }
             {...props}
         />
@@ -348,16 +348,46 @@ const FaqCategory = props => {
         />
     );
 };
-const Article = props => {
+const FaqQuestion = props => {
     return (
         <LazyComponent
             component={() =>
-                import(/* webpackChunkName: "Article"*/ 'src/simi/App/nativeInner/Faq/Article')
+                import(/* webpackChunkName: "FaqQuestion"*/ 'src/simi/App/nativeInner/Faq/FaqQuestion')
             }
             {...props}
         />
     );
 };
+const FaqTagList = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "FaqTagList"*/ 'src/simi/App/nativeInner/Faq/FaqTagList')
+            }
+            {...props}
+        />
+    );
+};
+const FaqSearch = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "FaqSearch"*/ 'src/simi/App/nativeInner/Faq/FaqSearch')
+            }
+            {...props}
+        />
+    );
+};
+// const Article = props => {
+//     return (
+//         <LazyComponent
+//             component={() =>
+//                 import(/* webpackChunkName: "Article"*/ 'src/simi/App/nativeInner/Faq/Article')
+//             }
+//             {...props}
+//         />
+//     );
+// };
 const BlogHome = props => {
     return (
         <LazyComponent
@@ -569,14 +599,29 @@ const Routes = props => {
                 />
                 <Route
                     exact
-                    path="/faq/category/:categoryUrl?"
+                    path="/faqs/category/:categoryUrl?"
                     render={props => <FaqCategory {...props} />}
                 />
                 <Route
                     exact
+                    path="/faqs/question/:questionUrl?"
+                    render={props => <FaqQuestion {...props} />}
+                />
+                <Route
+                    exact
+                    path="/faqs/tag/:tagName?"
+                    render={props => <FaqTagList {...props} />}
+                />
+                <Route
+                    exact
+                    path="/faqs/search/:category?/:keyword?"
+                    render={props => <FaqSearch {...props} />}
+                />
+                {/* <Route
+                    exact
                     path="/faq/article/:articleUrl?"
                     render={props => <Article {...props} />}
-                />
+                /> */}
                 <Route
                     exact
                     path="/customer/account/createPassword"
