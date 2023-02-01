@@ -1,22 +1,16 @@
-import React, { Fragment, useState } from 'react';
-import { useMainPage } from '../talons/useMainPage';
-import { useStoreConfig } from '../talons/useStoreConfig';
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
 import defaultClasses from '../MainPage/mainPage.module.css';
-import Search from 'src/simi/BaseComponents/Icon/Search';
-import { Link } from 'react-router-dom';
 import SearchBox from '../SearchBox';
 import Sidebar from '../Sidebar';
-import { useParams } from 'react-router-dom';
-import { useCategory } from '../talons/useCategory';
-import CategoryContent from './categoryContent';
+import TagListContent from './tagListContent';
 
-const Category = props => {
+const FaqTagList = props => {
     const { formatMessage } = useIntl();
     const title = formatMessage({
-        id: 'FAQs Category',
-        defaultMessage: 'FAQs Category'
+        id: 'FAQs Question with Tag',
+        defaultMessage: 'FAQs Question with Tag'
     });
     const classes = defaultClasses;
 
@@ -30,11 +24,11 @@ const Category = props => {
                 <h1 class={classes.title}>{title}</h1>
             </div>
             <div className={classes.columns}>
-                <CategoryContent />
+                <TagListContent />
                 <Sidebar />
             </div>
         </div>
     );
 };
 
-export default Category;
+export default FaqTagList;
