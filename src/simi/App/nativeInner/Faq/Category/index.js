@@ -3,7 +3,7 @@ import { useMainPage } from '../talons/useMainPage';
 import { useStoreConfig } from '../talons/useStoreConfig';
 import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
-import defaultClasses from '../MainPage/MainPage';
+import defaultClasses from '../MainPage/mainPage.module.css';
 import Search from 'src/simi/BaseComponents/Icon/Search';
 import { Link } from 'react-router-dom';
 import SearchBox from '../SearchBox';
