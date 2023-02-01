@@ -133,30 +133,10 @@ export const ProductDetailsFragment = gql`
         ${
             callForPriceEnabled
                 ? `
-        mp_callforprice_rule {
-            rule_id
-            name
-            rule_content
-            store_ids
-            customer_group_ids
-            action
-            url_redirect
-            quote_heading
-            quote_description
-            status
-            show_fields
-            required_fields
-            conditions_serialized
-            attribute_code
-            button_label
-            priority
-            to_date
-            created_at
-            rule_description
-            enable_terms
-            url_terms
-            from_date
-        }
+            advancedhideprice {
+                advancedhideprice_text
+                advancedhideprice_type
+            }
         `
                 : ``
         }
@@ -168,25 +148,6 @@ export const ProductDetailsFragment = gql`
                 __typename
                 extraData
             }`
-                : ``
-        }
-        ${
-            sizeChartEnabled
-                ? `
-            mp_sizeChart {
-                rule_id
-                name
-                rule_content
-                template_styles
-                enabled
-                display_type
-                conditions_serialized
-                attribute_code
-                demo_templates
-                priority
-                rule_description
-            }
-        `
                 : ``
         }
         ${

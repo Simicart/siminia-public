@@ -35,6 +35,13 @@ const deliveryTimeEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME) === 1;
 
+const callForPriceEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_CALL_FOR_PRICE &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_CALL_FOR_PRICE) === 1;
+
+
 const GET_STORE_CONFIG = gql`
     query storeConfigData {
         storeConfig {
@@ -312,6 +319,39 @@ const GET_STORE_CONFIG = gql`
                   time_slots
               }`
                 : ''
+        }
+        ${
+            callForPriceEnabled 
+                ? `
+            getConfigAdvancedHidePrice {
+                enable
+                selector
+                email_sender
+                admin_response_email_template
+                admin_notify_email
+                admin_notify_email_template
+                priority 
+                form_fields {
+                    field_label 
+                    field_type
+                    field_order
+                    field_required
+                    field_enable 
+                }
+                is_show_customer_fields
+                recaptcha
+                site_key
+                secret_key
+                call_for_price_text
+                call_for_price_categories
+                call_for_price_customers
+                call_for_price_not_apply
+                hide_price_text
+                hide_price_categories
+                hide_price_customers
+                hide_price_not_apply
+            }
+                ` : null
         }
     }
 `;

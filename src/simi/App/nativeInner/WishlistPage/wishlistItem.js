@@ -233,6 +233,7 @@ const WishlistItem = props => {
                         <ProductLabel
                             page={WISHLIST_PAGE}
                             productLabel={product_label}
+                            productOutStock={stockStatus ==="OUT_OF_STOCK" ? true : false}
                         />
                     </div>
                     <div className={classes.actionWrap}>

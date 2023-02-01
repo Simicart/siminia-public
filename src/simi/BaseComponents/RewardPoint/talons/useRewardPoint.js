@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
-import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
-import defaultOperations from '../queries/customer.ggl';
 import { useQuery } from '@apollo/client';
 import { getRewardPointActive, getBaseCurrency } from '../utils';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
+import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
+import defaultOperations from '../queries/customer.gql';
+
 
 export const useRewardPoint = (props = {}) => {
     const operations = mergeOperations(defaultOperations, props.operations);

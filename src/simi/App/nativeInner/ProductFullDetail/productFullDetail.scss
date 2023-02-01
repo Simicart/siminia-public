@@ -202,7 +202,6 @@
                 letter-spacing: 0;
                 line-height: 32px;
             }
-
             // > span:nth-child(2) {
             //     color: #e02020;
             //     font-size: 24px;
@@ -224,6 +223,9 @@
                 font-weight: bold;
                 letter-spacing: 0;
                 line-height: 17px;
+            }
+            &.noPrice {
+                justify-content: flex-end;
             }
         }
     }
@@ -512,7 +514,6 @@
             border-bottom: 1px solid #dfe1e2;
             padding: 1rem 10px;
             background-color: #fff;
-            margin-top: 15px;
             span {
                 margin-right: 1rem;
             }

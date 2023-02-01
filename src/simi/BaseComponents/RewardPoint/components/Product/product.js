@@ -9,7 +9,8 @@ const Product = (props) => {
     const classes = useStyle(defaultClasses, props.classes);
 
     const talonProps = useProduct({
-        item
+        item,
+        type
     })
 
     const { active, icon, point, message } = talonProps
@@ -35,6 +36,10 @@ const Product = (props) => {
             <span className={classes.message}>{message}</span>
         </div>
     )
+}
+
+Product.defaultProps = {
+    type: 'detail'
 }
 
 export default Product

@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Price } from '@magento/peregrine';
 import { Link, Redirect } from 'react-router-dom';
 import Page404 from 'src/simi/App/nativeInner/NoMatch/Page404';
-import defaultClasses from './rewardPoint.module.css';
+import defaultClasses from './rewardPoints.module.css';
 import LeftMenu from 'src/simi/App/core/LeftMenu/leftMenu';
 import Notification from './notification';
 import Transaction from './transaction';

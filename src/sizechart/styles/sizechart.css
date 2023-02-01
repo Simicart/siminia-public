@@ -1,0 +1,240 @@
+/*customize for pop up*/
+.body {
+    overflow: hidden;
+}
+
+.portal {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    height: 100vh;
+    background-color: rgb(105, 105, 105, 0.7) !important;
+}
+
+.overlay {
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: all 500ms ease-in-out;
+}
+
+.overlay-afterOpen {
+    opacity: 1;
+    transform: translateY(0);
+}
+  
+.overlay-beforeClose {
+    opacity: 0;
+    transform: translateY(-50%);
+}
+
+.content {
+    width: 100vw;
+    text-align: center;
+}
+
+/*pop up size chart*/
+.pop-up-size-chart {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 30px;
+    margin-left: 1.5rem;
+}
+
+.button-title {
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.button-title:hover {
+    text-decoration-line: underline;
+}
+
+.size-chart-content {
+    background-color: white;
+    width: 80%;
+    height: 90vh;
+    margin: auto;
+    overflow: scroll;
+    margin-top: 5vh;
+}
+
+.size-chart-content img {
+    width: 80%;
+    margin-left: 10% !important;
+}
+
+.size-chart-button {
+    background-color: white;
+    position: absolute;
+    right: 12%;
+    top: 3%;
+}
+
+.x-button {
+    color: #ccc;
+    transition: color 0.5s;
+    cursor: pointer;
+}
+
+.x-button:hover {
+    color: black
+}
+
+/*pop up size chart native*/
+.pop-up-size-chart-native {
+    display: flex;
+    flex-direction: row;
+    margin-top: 12px;
+}
+
+.button-title-native {
+    color: orange;
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: 1.5rem;
+}
+
+.button-title-native:hover {
+    text-decoration-line: underline;
+}
+
+.size-chart-content-native {
+    background-color: white;
+    width: 100%;
+    height: 100vh;
+}
+
+.size-chart-content-native img {
+    width: 100%;
+}
+
+/*inline size chart*/
+.inline-size-chart {
+    margin: 0 1.5rem;
+    margin-top: 30px;
+}
+
+.inline-image {
+    margin-top: 1.5rem;
+    height: 70vh;
+    overflow: scroll;
+}
+
+.inline-image img {
+    max-width: 45vw;
+}
+
+/*inline size chart native*/
+.inline-image-native {
+    margin: 12px 1.5rem 0 1.5rem;
+}
+
+/*tab size chart*/
+.button-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1.5rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.selected-button {
+    height: 60px;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: white;
+    padding: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.deselected-button {
+    height: 60px;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: #eeeeee;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(121, 121, 121);
+    transition: background-color 0.5s;
+}
+
+.deselected-button:hover {
+    background-color: white;
+    color: black;
+}
+
+.show-content {
+    border-bottom: 1px solid #ccc;
+}
+
+.tab-size-chart {
+    margin: 1.5rem 0;
+    grid-column: 1 / span 2;
+}
+
+/*tab size chart native*/
+.des-wrapper {
+    padding-bottom: 10px;
+}
+
+.des-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.rev-wrapper {
+    border-bottom: 1px solid #dfe1e2;
+    border-top: 1px solid #dfe1e2;
+    padding-bottom: 10px;
+}
+
+.rev-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.siz-wrapper {
+    padding-bottom: 10px;
+}
+
+.siz-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+/*chỉnh sửa giao diện responsive*/
+@media only screen and (max-width: 1020px) {
+    .pop-up-size-chart {
+        margin-left: 0;
+    }
+    .inline-size-chart {
+        margin: 15px 0 0 0;
+    }
+    .inline-image img {
+        max-width: 80vw;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .size-chart-content {
+        margin-left: 10%;
+        width: 90%;
+        height: 100vh;
+        margin-top: 0;
+    }
+    .size-chart-button {
+        right: 20px;
+    }
+    .size-chart-content img {
+        width: 84%;
+        margin-left: 8% !important;
+    }
+}
