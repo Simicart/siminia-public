@@ -94,6 +94,7 @@ export const convertSimiFilterInputToMagentoFilterInput = (
     filterInputs = {},
     categoryId = null
 ) => {
+
     const keys = Object.keys(filterInputs);
     keys.forEach(key => {
         if (Array.isArray(filterInputs[key])) {
@@ -113,6 +114,9 @@ export const convertSimiFilterInputToMagentoFilterInput = (
             //do nothing
         } else {
             filterInputs['category_id'] = { eq: String(categoryId) };
+        }
+        if(filterInputs.hasOwnProperty('category_uid')) {
+            delete filterInputs['category_uid']
         }
     }
     return filterInputs;

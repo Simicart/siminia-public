@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { useButton } from '../../talons/useButton';
 import { useStyle } from '@magento/venia-ui/lib/classify';
-import Modal from '../Modal';
 import Button from '@magento/venia-ui/lib/components/Button';
 import defaultClasses from './buttonCFP.module.css';
 
@@ -10,6 +9,10 @@ export const checkIsHidePriceEnable = (product) => {
 
     return !!advancedhideprice.advancedhideprice_text && !!advancedhideprice.advancedhideprice_type
 }
+
+const Modal = React.lazy(() =>
+    import('../Modal')
+);
 
 const HidePriceButton = props => {
     const { addToCartBtn, product, type } = props;
