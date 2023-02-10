@@ -15,6 +15,10 @@ const ErrIc = <Icon src={AlertCircleIcon} attrs={{ width: 18 }} />;
 
 export const useGridItem = props => {
     const { updateCompare, handleLink, cartId, location } = props;
+    const giftCardLocation = {
+        ...location,
+        pathname: `giftcard${location.pathname}`
+    }
     const [, { addToast }] = useToasts();
     const { formatMessage } = useIntl();
     const [quickView, setQuickView] = useState(false);
@@ -152,7 +156,8 @@ export const useGridItem = props => {
                     });
                 }
             } else {
-                handleLink(location);
+                if(item.__typename === 'BssGiftCardProduct') handleLink(giftCardLocation)
+                else handleLink(location);
             }
         },
         [addCart, cartId, handleLink, location, addToast, formatMessage]

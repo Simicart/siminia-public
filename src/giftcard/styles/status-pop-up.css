@@ -1,0 +1,60 @@
+.status-portal {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    height: 100vh;
+}
+
+.status-overlay {
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: all 500ms ease-in-out;
+}
+
+.status-overlay-afterOpen {
+    opacity: 1;
+    transform: translateY(0);
+}
+  
+.status-overlay-beforeClose {
+    opacity: 0;
+    transform: translateY(-50%);
+}
+
+.status-content {
+    position: fixed;
+    top: 88vh;
+    transform: translateX(-100%);
+    left: 95vw;
+    width: max-content;
+    height: max-content;
+    text-align: center;
+    background-color: white;
+}
+
+@media only screen and (max-width: 800px) {
+    .status-content {
+        top: 80vh;
+        left: 92vw
+    }
+}
+
+.successPopUp {
+    width: 300px;
+    border: none;
+    border-bottom: 3px solid green;
+    box-shadow: -2px -2px 5px grey, 2px 2px 5px grey;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px 10px 20px;
+}
+
+.errorPopUp {
+    width: 300px;
+    border: none;
+    border-bottom: 3px solid red;
+    box-shadow: -2px -2px 5px grey, 2px 2px 5px grey;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px 10px 20px;
+}

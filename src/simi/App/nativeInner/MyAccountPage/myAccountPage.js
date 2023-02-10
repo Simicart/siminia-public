@@ -64,11 +64,7 @@ const MyAccountPage = props => {
     const { formatMessage } = useIntl();
     const orderSize = useRef();
     
-    const giftCardEnabled =
-        window.SMCONFIGS &&
-        window.SMCONFIGS.plugins &&
-        window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD &&
-        parseInt(window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD) === 1;
+    const giftCardEnabled = true //get config variable later
 
     let iconList = [
         <Icon className={classes.icon} size={22} src={MapPin} />,

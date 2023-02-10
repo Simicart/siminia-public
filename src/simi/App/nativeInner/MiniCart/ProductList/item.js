@@ -63,6 +63,9 @@ const Item = props => {
         () => resourceUrl(`/${product.url_key}${storeUrlSuffix || ''}`),
         [product.url_key, storeUrlSuffix]
     );
+
+    const giftCardItemLink = `/giftcard${itemLink}`
+
     const stockStatusText =
         product.stock_status === 'OUT_OF_STOCK'
             ? formatMessage({
@@ -83,7 +86,7 @@ const Item = props => {
         <div className={rootClass}>
             <Link
                 className={classes.thumbnailContainer}
-                to={itemLink}
+                to={product.__typename === 'BssGiftCardProduct' ? giftCardItemLink : itemLink}
                 onClick={closeMiniCart}
             >
                 <Image
@@ -102,7 +105,7 @@ const Item = props => {
             </Link>
             <Link
                 className={classes.name}
-                to={itemLink}
+                to={product.__typename === 'BssGiftCardProduct' ? giftCardItemLink : itemLink}
                 onClick={closeMiniCart}
             >
                 {product.name}

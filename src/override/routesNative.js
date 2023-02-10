@@ -7,6 +7,8 @@ import NoMatch, { endPoint } from '../simi/App/nativeInner/NoMatch';
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import Loader from '../simi/App/nativeInner/Loader'
 import PageBuilderComponent from '../simi/App/core/TapitaPageBuilder/PageBuilderComponent';
+import GiftCardPage from '../giftcard/components/GiftCardPage'
+import MyGiftCards from '../giftcard/components/MyGiftCards';
 //import Login from 'src/simi/App/core/Customer/Login';
 const Login = props => {
     return (
@@ -646,10 +648,17 @@ const Routes = props => {
                     path="/reward-transactions"
                     render={props => <RewardTransactions {...props} />}
                 />
-                <Route
+
+                {/*<Route
                     exact
                     path="/my-gift-cards"
                     render={props => <MyGiftCard {...props} />}
+                />*/}
+                
+                <Route
+                    exact
+                    path="/my-gift-cards"
+                    render={props => <MyGiftCards {...props}/>}
                 />
                 
                 <Route
@@ -704,6 +713,14 @@ const Routes = props => {
                     path="/paypal_express_failure.html"
                     render={props => (
                         <PPfailure key="ppExpressFailure" {...props} />
+                    )}
+                />
+
+                <Route
+                    exact
+                    path="/giftcard/:giftCardName.html"
+                    render={props => (
+                        <GiftCardPage {...props} />
                     )}
                 />
                 

@@ -54,8 +54,8 @@ const Header = props => {
             : '0';
     const icon =
         rewardPointConfig &&
-        rewardPointConfig.MpRewardConfig &&
-        rewardPointConfig.MpRewardConfig.general
+            rewardPointConfig.MpRewardConfig &&
+            rewardPointConfig.MpRewardConfig.general
             ? rewardPointConfig.MpRewardConfig.general.icon
             : '';
 
@@ -92,7 +92,7 @@ const Header = props => {
     const type = location && location.pathname ? location.pathname : null;
     const isOrderDetailPage =
         type.split('/order-history')[1] !== '' &&
-        type.split('/order-history').length === 2
+            type.split('/order-history').length === 2
             ? true
             : false;
 
@@ -110,7 +110,8 @@ const Header = props => {
         '/contact.html',
         '/account-setting',
         '/checkout',
-        '/product-alert'
+        '/product-alert',
+        '/my-gift-cards'
     ];
 
     // const storeConfig = Identify.getStoreConfig();
@@ -125,7 +126,7 @@ const Header = props => {
             const simpifyRNinsets = JSON.parse(window.simpifyRNinsets);
             topInsets = parseInt(simpifyRNinsets.top);
         }
-    } catch (err) {}
+    } catch (err) { }
 
     let headerHeight = isPhone ? 55 : 107;
     headerHeight += topInsets;
@@ -176,9 +177,8 @@ const Header = props => {
                     </Link>
                 </div>
                 <div
-                    className={`${classes['right-bar-item']} ${
-                        Identify.isRtl() ? classes['right-bar-item-rtl'] : ''
-                    }`}
+                    className={`${classes['right-bar-item']} ${Identify.isRtl() ? classes['right-bar-item-rtl'] : ''
+                        }`}
                 >
                     {!isBotOrHeadless && <CartTrigger classes={classes} />}
                 </div>
@@ -194,9 +194,8 @@ const Header = props => {
                 : '';
         return (
             <div
-                className={`${classes['search-icon']} ${
-                    classes['header-logo']
-                }`}
+                className={`${classes['search-icon']} ${classes['header-logo']
+                    }`}
             >
                 <Link to="/">
                     <img
@@ -206,8 +205,8 @@ const Header = props => {
                             objectPosition: isPhone
                                 ? 'center'
                                 : Identify.isRtl()
-                                ? 'right'
-                                : 'left',
+                                    ? 'right'
+                                    : 'left',
                             objectFit: 'contain',
                             width: isPhone ? 180 : 240,
                             height: isPhone ? 30 : 40
@@ -221,9 +220,8 @@ const Header = props => {
     const renderSearchForm = () => {
         return (
             <div
-                className={`${classes['header-search']} ${
-                    Identify.isRtl() ? classes['header-search-rtl'] : ''
-                }`}
+                className={`${classes['header-search']} ${Identify.isRtl() ? classes['header-search-rtl'] : ''
+                    }`}
                 style={{
                     backgroundColor: configColor.key_color,
                     height: headerHeight
@@ -336,12 +334,16 @@ const Header = props => {
             const name =
                 type
                     .split('/')[1]
-                    .replace('-', ' ')
+                    .replaceAll('-', ' ')
                     .charAt(0)
                     .toUpperCase() +
                 type
                     .split('/')[1]
-                    .replace('-', ' ')
+                    .replaceAll('-', ' ')
+                    .slice(1); +
+                type
+                    .split('/')[1]
+                    .replaceAll('-', ' ')
                     .slice(1);
             return (
                 <div
@@ -354,9 +356,9 @@ const Header = props => {
                         {type !== '/contact.html'
                             ? formatMessage({ id: name, defaultMessage: name })
                             : formatMessage({
-                                  id: 'Contact Us',
-                                  defaultMessage: 'Contact Us'
-                              })}
+                                id: 'Contact Us',
+                                defaultMessage: 'Contact Us'
+                            })}
                     </span>
                 </div>
             );
@@ -430,9 +432,8 @@ const Header = props => {
                     }}
                 >
                     <div
-                        className={`${
-                            classes['header-app-bar']
-                        } ${Identify.isRtl() &&
+                        className={`${classes['header-app-bar']
+                            } ${Identify.isRtl() &&
                             classes['header-app-bar-rtl']} container`}
                     >
                         {renderLogo()}

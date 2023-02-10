@@ -136,6 +136,12 @@ const Griditem = props => {
             callForPriceRule: callForPriceRule
         }
     };
+
+    const giftCardLocation = {
+        ...location,
+        pathname: `giftcard${location.pathname}`
+    }
+
     const { handleAddCart, handleAddCompare, loading, isPhone } = useGridItem({
         location,
         handleLink,
@@ -165,7 +171,7 @@ const Griditem = props => {
                     // padding: 1
                 }}
             >
-                <Link to={location}>
+                <Link to={location.state.item_data.type_id === 'bss_giftcard' ? giftCardLocation : location}>
                     <Image
                         src={imageUrl}
                         alt={name}
@@ -248,7 +254,12 @@ const Griditem = props => {
                     className={`${itemClasses['product-name']} ${
                         itemClasses['small']
                     }`}
-                    onClick={() => handleLink(location)}
+                    onClick={() => {
+                        if(location.state.item_data.type_id === 'bss_giftcard') {
+                            history.push(`giftcard${location.pathname}`)
+                        }
+                        else handleLink(location)
+                    }}
                     dangerouslySetInnerHTML={{ __html: name }}
                 />
                 <div className={`${itemClasses['price-each-product']}`}>

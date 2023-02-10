@@ -1,0 +1,81 @@
+.my-gift-cards-wrapper {
+    display: grid;
+    grid-template-columns: 20% auto;
+    gap: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 2rem 15px;
+}
+
+@media only screen and (min-width: 768px) {
+    .my-gift-cards-wrapper {
+        width: 750px
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .my-gift-cards-wrapper {
+        width: 1024px
+    }
+}
+
+@media only screen and (min-width: 1280px) {
+    .my-gift-cards-wrapper {
+        width: 1310px
+    }
+}
+
+.gift-cards-info-wrapper {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.gift-cards-info-header {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    border-bottom: 1px solid lightgray;
+}
+
+.gift-card-code {
+    width: 30%
+}
+
+.gift-card-value {
+    width: 10%
+}
+
+.gift-card-expire-date {
+    width: 30%
+}
+
+.gift-card-status {
+    width: 10%
+}
+
+.gift-card-order {
+    width: 20%
+}
+
+.gift-cards-info-content {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    border-bottom: 1px solid lightgray;
+    padding: 10px 0 10px 0;
+}
+
+.gift-cards-info-content2 {
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+    border-bottom: 1px solid lightgray;
+    padding: 10px 0 10px 0;
+}
+
+.gift-card-details {
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px -2px #000000;
+}

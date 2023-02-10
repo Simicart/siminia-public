@@ -19,6 +19,8 @@ export const useAccountMenuItems = props => {
         window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
         parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
+        const giftCardEnabled = true //get config variable later
+
     let MENU_ITEMS = [
         {
             name: 'Order History',
@@ -70,7 +72,7 @@ export const useAccountMenuItems = props => {
             name: 'Product Alert',
             id: 'Product Alert',
             url: '/product-alert'
-        }
+        },
     ];
     const rewardItems = [
         {
@@ -84,8 +86,21 @@ export const useAccountMenuItems = props => {
             url: '/reward-transactions'
         }
     ];
+
+    const giftCardContent = [
+        {
+            name: 'My Gift Cards',
+            id: 'My Gift Cards',
+            url: '/my-gift-cards'
+        }
+    ];
+
     if(rewardPointEnabled){
         MENU_ITEMS = MENU_ITEMS.concat(rewardItems)
+    }
+
+    if(giftCardEnabled){
+        MENU_ITEMS = MENU_ITEMS.concat(giftCardContent)
     }
 
     return {

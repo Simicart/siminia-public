@@ -1,0 +1,156 @@
+.review-status-portal {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    height: 100vh;
+}
+
+.review-status-overlay {
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: all 500ms ease-in-out;
+}
+
+.review-status-overlay-afterOpen {
+    opacity: 1;
+    transform: translateY(0);
+}
+  
+.review-status-overlay-beforeClose {
+    opacity: 0;
+    transform: translateY(-50%);
+}
+
+.review-status-content {
+    position: fixed;
+    top: 88vh;
+    transform: translateX(-100%);
+    left: 95vw;
+    width: max-content;
+    height: max-content;
+    text-align: center;
+    background-color: white;
+}
+
+@media only screen and (max-width: 800px) {
+    .review-status-content {
+        top: 80vh;
+        left: 92vw
+    }
+}
+
+.successPopUp {
+    width: 300px;
+    border: none;
+    border-bottom: 3px solid green;
+    box-shadow: -2px -2px 5px grey, 2px 2px 5px grey;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px 10px 20px;
+}
+
+.errorPopUp {
+    width: 300px;
+    border: none;
+    border-bottom: 3px solid red;
+    box-shadow: -2px -2px 5px grey, 2px 2px 5px grey;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px 10px 20px;
+}
+
+.review-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.rating-wrapper {
+    margin-top: 40px;
+}
+
+.value-rating {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.price-rating {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.rating-rating {
+    display: flex;
+    flex-direction: row;
+}
+
+.star-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+}
+
+.star-uncheck {
+    color: gray;
+    margin-right: 10px;
+    transition: color 0.5s;
+}
+
+.star-uncheck:hover {
+    color: yellow;
+    fill: yellow;
+    cursor: pointer;
+}
+
+.star-checked {
+    color: yellow;
+    fill: yellow;
+    margin-right: 10px;
+    cursor: pointer
+}
+
+.nickname-wrapper {
+    margin-bottom: 20px;
+}
+
+.title-wrapper {
+    margin-bottom: 20px;
+}
+
+.submit-button {
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    width: 120px;
+    text-align: center;
+    color: white;
+    flex-grow: 1;
+    height: 50px;
+    border: none;
+    background-color: dodgerblue;
+    transition: background-color 0.5s, color 0.5s;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.submit-button:hover {
+    background-color: cyan;
+    color: black
+}
+
+.submit-button-loading {
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    width: 120px;
+    text-align: center;
+    color: white;
+    flex-grow: 1;
+    height: 50px;
+    border: none;
+    background-color: rgba(30, 144, 255, 0.8);
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
