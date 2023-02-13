@@ -19,7 +19,7 @@ import {
     getCateNoFilter as getSimiCateNoFilter,
     getFilterFromCate as getSimiFilterFromCate
 } from 'src/simi/queries/catalog_gql/simiCategory.gql'; 
-
+import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useQuery } from '@apollo/client';
 
 const shophByBrandEnabled =
@@ -70,6 +70,7 @@ export const useCategoryContentSimiPagination = props => {
     sortByData = null;
     const productListOrder = Identify.findGetParameter('product_list_order');
     const productListDir = Identify.findGetParameter('product_list_dir');
+    const [{ isSignedIn }] = useUserContext();
     const newSortByData = productListOrder
         ? productListDir
             ? { [productListOrder]: productListDir.toUpperCase() }
@@ -108,6 +109,7 @@ export const useCategoryContentSimiPagination = props => {
         stringId: String(categoryId),
         filters: {}
     };
+    if(isSignedIn) variables.signedIn = 'true' 
     if (filterData || categoryId) {
         variables.simiFilter = filterData ? filterData : '';
         variables.filters = convertSimiFilterInputToMagentoFilterInput(

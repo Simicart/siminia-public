@@ -1,24 +1,20 @@
-import { usePrice } from '../../talons/usePrice'
+import { usePrice } from '../../talons/usePrice';
 
-const Price = (props) => {
-    const { showPrice, hidePrice, product } = props
-
+const Price = props => {
+    const { showPrice, hidePrice, product } = props;
     const talonProps = usePrice({
         product
-    })
-
-    const { isHidePrice } = talonProps
-
-    if(isHidePrice) {
-        return hidePrice
+    });
+    const { isHidePrice } = talonProps;
+    if (isHidePrice) {
+        return hidePrice;
     }
-
-    return showPrice
-}
+    return showPrice;
+};
 
 Price.defaultProps = {
     showPrice: null,
-    hidePrice: null,
-}
+    hidePrice: null
+};
 
-export default Price
+export default Price;

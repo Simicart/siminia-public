@@ -10,14 +10,10 @@ import defaultClasses from './modal.module.css';
 
 const Modal = props => {
     const { productSku } = props;
-
-    const talonsProps = useModal({productSku});
-
+    const talonsProps = useModal({ productSku });
     const { isOpen, handleClose } = talonsProps;
-
     const classes = useStyle(defaultClasses, props.classes);
     const rootClass = isOpen ? classes.root_open : classes.root;
-
     const bodyElement = isOpen ? <Form productSku={productSku} /> : null;
 
     return (

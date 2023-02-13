@@ -1,11 +1,15 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import { useApolloClient, useMutation } from '@apollo/client';
 
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 
 import DEFAULT_OPERATIONS from '@magento/peregrine/lib/talons/Header/accountMenu.gql';
+
+import { clearCartDataFromCache } from '@magento/peregrine/lib/Apollo/clearCartDataFromCache';
+import { clearCustomerDataFromCache } from '@magento/peregrine/lib/Apollo/clearCustomerDataFromCache';
+import { clearCatalogDataFromCache } from 'src/simi/Apollo/clearCatalogDataFromCache'
 
 /**
  * The useAccountMenu talon complements the AccountMenu component.
@@ -31,6 +35,7 @@ export const useAccountMenu = props => {
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const { signOutMutation } = operations;
 
+    const apolloClient = useApolloClient();
     const [view, setView] = useState('SIGNIN');
     const [username, setUsername] = useState('');
 
@@ -45,6 +50,9 @@ export const useAccountMenu = props => {
 
         // Delete cart/user data from the redux store.
         await signOut({ revokeToken });
+        await clearCartDataFromCache(apolloClient);
+        await clearCustomerDataFromCache(apolloClient);
+        await clearCatalogDataFromCache(apolloClient)
 
         window.location.replace('/');
         // Refresh the page as a way to say "re-initialize". An alternative

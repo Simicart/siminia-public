@@ -4,6 +4,7 @@ import { useIntl } from 'react-intl';
 import { useForm } from '../../talons/useForm';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import { isRequired } from '@magento/venia-ui/lib/util/formValidators';
+import combine from '@magento/venia-ui/lib/util/combineValidators';
 import defaultClasses from './form.module.css';
 import Field from '@magento/venia-ui/lib/components/Field';
 import TextInput from '@magento/venia-ui/lib/components/TextInput';
@@ -11,6 +12,17 @@ import TextArea from '@magento/venia-ui/lib/components/TextArea';
 import Button from '@magento/venia-ui/lib/components/Button';
 import Checkbox from '@magento/venia-ui/lib/components/Checkbox';
 import Captcha from './captcha';
+import { validateEmail } from 'src/simi/Helper/Validation';
+
+const isValidEmaill = value => {
+    if (!validateEmail(value)) {
+        return {
+            id: 'Email not valid',
+            defaultMessage: 'Email not valid'
+        };
+    }
+    return undefined;
+};
 
 const HidePriceForm = props => {
     const { productSku } = props;
@@ -71,14 +83,12 @@ const HidePriceForm = props => {
             default:
                 break;
         }
-
         return returnField;
     });
 
     const basicFields = hdieFieldWhenLogin ? (
         <React.Fragment>
             <InformedText type="hidden" field="name" id="name" />
-
             <InformedText type="hidden" field="email" id="email" />
         </React.Fragment>
     ) : (
@@ -102,7 +112,11 @@ const HidePriceForm = props => {
                         defaultMessage: 'Email'
                     })}
                 >
-                    <TextInput field="email" id="email" validate={isRequired} />
+                    <TextInput
+                        field="email"
+                        id="email"
+                        validate={combine([isRequired, isValidEmaill])}
+                    />
                 </Field>
             </div>
         </React.Fragment>
