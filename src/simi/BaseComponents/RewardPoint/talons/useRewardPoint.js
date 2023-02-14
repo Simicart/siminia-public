@@ -16,8 +16,7 @@ export const useRewardPoint = (props = {}) => {
 
     const { data } = useQuery(getCustomerRewardPoint, {
         skip: !(rewardPointActive && isSignedIn),
-        fetchPolicy: 'cache-and-network',
-        nextFetchPolicy: 'cache-first',
+        fetchPolicy: 'no-cache',
     });
 
     const customerRewardPointData = useMemo(() => {
