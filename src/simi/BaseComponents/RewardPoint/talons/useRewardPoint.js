@@ -14,7 +14,7 @@ export const useRewardPoint = (props = {}) => {
     const baseCurrencyCode = getBaseCurrency();
     const [{ isSignedIn }] = useUserContext();
 
-    const { data } = useQuery(getCustomerRewardPoint, {
+    const { data, loading } = useQuery(getCustomerRewardPoint, {
         skip: !(rewardPointActive && isSignedIn),
         fetchPolicy: 'no-cache',
     });
@@ -45,6 +45,7 @@ export const useRewardPoint = (props = {}) => {
 
     return {
         isActive: rewardPointActive,
+        loading,
         isSignedIn,
         point,
         pointEarned,
