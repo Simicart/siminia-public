@@ -19,26 +19,34 @@ const faqsEnabled =
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;
 
 const FaqHeader = props => {
+    const {
+        storeConfig,
+        storeConfigLoading,
+        storeConfigError
+    } = useStoreConfig();
+    const { enable } = storeConfig?.bssFaqsConfig || '';
     const { classes: propClasses } = props;
     const classes = useStyle(defaultClasses, propClasses);
     const { formatMessage } = useIntl();
-    if (!faqsEnabled) return '';
+    if (!faqsEnabled || parseInt(enable) === 0) return '';
     return (
-        <Link className={classes.faqUrl} to={`/faqs`}>
-            <div className={classes.faqIcon}>
-                <FaQuestion size={20} />
-            </div>
+        <div className={classes['right-bar-item']}>
+            <Link className={classes.faqUrl} to={`/faqs`}>
+                <div className={classes.faqIcon}>
+                    <FaQuestion size={20} />
+                </div>
 
-            <div
-                className={classes['item-text']}
-                style={{ whiteSpace: 'nowrap' }}
-            >
-                {formatMessage({
-                    id: 'FAQs',
-                    defaultMessage: 'FAQs'
-                })}
-            </div>
-        </Link>
+                <div
+                    className={classes['item-text']}
+                    style={{ whiteSpace: 'nowrap' }}
+                >
+                    {formatMessage({
+                        id: 'FAQs',
+                        defaultMessage: 'FAQs'
+                    })}
+                </div>
+            </Link>
+        </div>
     );
 };
 

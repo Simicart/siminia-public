@@ -30,7 +30,7 @@ import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header
 import { configColor } from '../../../../simi/Config';
 // import { useGetRewardPointData } from '../../../talons/RewardPoint/useGetRewardPointData';
 import { useAppContext } from '@magento/peregrine/lib/context/app';
-import  RewardPointHeader from 'src/simi/BaseComponents/RewardPoint/components/Header'
+import RewardPointHeader from 'src/simi/BaseComponents/RewardPoint/components/Header';
 import FaqHeader from '../Faq/FaqHeader';
 // check if bot or headless chrome / wont get cart to avoid perf accection
 // can modify deeper on  peregrine/lib/context/cart.js:83 to avoid creating cart - db wasting - https://prnt.sc/2628k9h
@@ -146,15 +146,17 @@ const Header = props => {
     const renderRightBar = () => {
         return (
             <div
-                className={`${classes['right-bar']} ${Identify.isRtl() ? 'right-bar-rtl' : ''}`}
+                className={`${classes['right-bar']} ${
+                    Identify.isRtl() ? 'right-bar-rtl' : ''
+                }`}
                 style={{ height: headerHeight }}
             >
                 <div className={classes['right-bar-item']}>
                     <StoreSwitcher />
                 </div>
-                <div className={classes['right-bar-item']} >
-                    <FaqHeader classes={classes} />
-                </div>
+
+                <FaqHeader classes={classes} />
+
                 <div className={classes['right-bar-item']} id="my-account">
                     <MyAccount classes={classes} userData={userData} />
                 </div>
