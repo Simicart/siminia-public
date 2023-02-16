@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import checkEnabledGiftCard from '../../../giftcard/functions/gift-card-store-config/checkEnabledGiftCard'
 
 /**
  * @param {Object}      props
@@ -19,7 +20,7 @@ export const useAccountMenuItems = props => {
         window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
         parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
-        const giftCardEnabled = true //get config variable later
+        const giftCardEnabled = checkEnabledGiftCard()
 
     let MENU_ITEMS = [
         {
