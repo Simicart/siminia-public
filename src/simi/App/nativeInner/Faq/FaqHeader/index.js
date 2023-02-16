@@ -28,7 +28,7 @@ const FaqHeader = props => {
     const { classes: propClasses } = props;
     const classes = useStyle(defaultClasses, propClasses);
     const { formatMessage } = useIntl();
-    if (!faqsEnabled || parseInt(enable) === 0) return '';
+    if (!faqsEnabled || parseInt(enable) === 0 || storeConfigLoading) return '';
     return (
         <div className={classes['right-bar-item']}>
             <Link className={classes.faqUrl} to={`/faqs`}>
