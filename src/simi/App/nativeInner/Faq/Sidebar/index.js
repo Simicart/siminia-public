@@ -5,21 +5,22 @@ import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
 import defaultClasses from '../MainPage/mainPage.module.css';
 import Search from 'src/simi/BaseComponents/Icon/Search';
-import { Link } from 'react-router-dom';
-
+import { Link, useHistory } from 'react-router-dom';
+import RichContent from '@magento/venia-ui/lib/components/RichContent';
+let strTagName = '';
 const Sidebar = props => {
     const {
         storeConfig,
         storeConfigLoading,
         storeConfigError
     } = useStoreConfig();
-    const bgColor = storeConfig?.bssFaqsConfig?.background_color || ''
+    const { most_faq_show, most_faq_number } = storeConfig?.bssFaqsConfig || '';
+    const bgColor = storeConfig?.bssFaqsConfig?.background_color || '';
     const { formatMessage } = useIntl();
     const { mainPageData, mainPageLoading, mainPageError } = useMainPage();
     const classes = defaultClasses;
     const { category, most_faq, tag } =
         mainPageData?.mainPageFaqs?.sidebar || [];
-
     const [isActive, setIsActive] = useState(0);
     const handleExpand = faqId => {
         if (faqId === isActive) {
@@ -31,6 +32,9 @@ const Sidebar = props => {
 
     const renderMostFaqs = () => {
         return most_faq?.map(faq => {
+            const str = faq.frontend_label.slice(6);
+            const indexStr = str.indexOf('","');
+            const label = str.slice(0, indexStr);
             return (
                 <li key={faq.faq_id}>
                     <div
@@ -39,7 +43,7 @@ const Sidebar = props => {
                         url_key=""
                         onClick={() => handleExpand(faq.faq_id)}
                     >
-                        {faq.title}
+                        {label ? label : faq.title}
                     </div>
                     <div
                         className={`${classes.shortAnswer} ${
@@ -48,12 +52,16 @@ const Sidebar = props => {
                         faq_id={faq.faq_id}
                     >
                         <div className={classes.questionShortAnswer}>
-                            {faq.short_answer}
+                            <RichContent html={faq.short_answer} />
+                            {/* {faq.short_answer} */}
                         </div>
                         <div>
                             <Link
                                 className={classes.faqUrl}
-                                to={`/faqs/question/${faq.url_key}`}
+                                to={{
+                                    pathname: `/faqs/question/${faq.url_key}`,
+                                    state: { stateParam: true }
+                                }}
                             >
                                 {formatMessage({
                                     id: 'See more',
@@ -92,40 +100,60 @@ const Sidebar = props => {
         });
     };
 
+    const history = useHistory();
+
+    let listTagName = [];
+
+    const handleClickTagName = tagName => {
+        if (!listTagName.includes(tagName)) {
+            listTagName.push(tagName);
+        }
+        listTagName.forEach(function(element) {
+            if (!strTagName.includes(element)) {
+                strTagName += element + `~`;
+            }
+        });
+        return history.push(`/faqs/tag/${strTagName}`);
+    };
     const renderTagList = () => {
         return tag?.map(tagName => {
             return (
-                <div className={classes.sidebarTag}>
-                     <Link to={`/faqs/tag/${tagName}`}>
-                     <span>
-                        {formatMessage({
-                            id: tagName
-                        })}
-                    </span>
-                     </Link>
-                    
+                <div
+                    onClick={() => handleClickTagName(tagName)}
+                    className={classes.sidebarTag}
+                >
+                    <div>
+                        <span>
+                            {formatMessage({
+                                id: tagName
+                            })}
+                        </span>
+                    </div>
                 </div>
             );
         });
     };
     const styles = {
-        backgroundColor:bgColor
-    }
+        backgroundColor: bgColor
+    };
     return (
         <div className={classes.sidebar}>
-            <div className={classes.sidebarMostFaq}>
-                <div style={styles} className={classes.label}>
-                    <div>
-                        {formatMessage({
-                            id: 'Most FAQs',
-                            defaultMessage: 'Most FAQs'
-                        })}
+            {most_faq_show === '1' && most_faq_number && (
+                <div className={classes.sidebarMostFaq}>
+                    <div style={styles} className={classes.label}>
+                        <div>
+                            {formatMessage({
+                                id: 'Most FAQs',
+                                defaultMessage: 'Most FAQs'
+                            })}
+                        </div>
+                    </div>
+
+                    <div className={classes.mostFaq}>
+                        <ul>{renderMostFaqs(most_faq)}</ul>
                     </div>
                 </div>
-                <div className={classes.mostFaq}>
-                    <ul>{renderMostFaqs(most_faq)}</ul>
-                </div>
-            </div>
+            )}
 
             <div className={classes.sidebarCategory}>
                 <div style={styles} className={classes.label}>

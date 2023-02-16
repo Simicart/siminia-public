@@ -5,13 +5,15 @@ import { useIntl } from 'react-intl';
 import defaultClasses from './mainPage.module.css';
 import { Link } from 'react-router-dom';
 import SearchBox from '../SearchBox';
+import RichContent from '@magento/venia-ui/lib/components/RichContent';
 
 const MainContent = props => {
+    const { bssFaqsConfig } = props;
     const { formatMessage } = useIntl();
     const { mainPageData, mainPageLoading, mainPageError } = useMainPage();
 
     const classes = defaultClasses;
-    const { main_content } = mainPageData?.mainPageFaqs;
+    const { main_content } = mainPageData?.mainPageFaqs || '';
     const [isQuestion, setIsQuestion] = useState(0);
     const handleExpandQuestion = (faqId, cateId) => {
         if (faqId === isQuestion) {
@@ -22,6 +24,9 @@ const MainContent = props => {
     };
     const renderQuestionList = (list, id) => {
         return list?.map(faq => {
+            const str = faq.frontend_label.slice(6);
+            const indexStr = str.indexOf('","');
+            const label = str.slice(0, indexStr);
             return (
                 <li key={faq.faq_id}>
                     <div
@@ -30,16 +35,20 @@ const MainContent = props => {
                         url_key=""
                         onClick={() => handleExpandQuestion(faq.faq_id, id)}
                     >
-                        {faq.title}
+                        {label ? label : faq.title}
                     </div>
                     <div
                         className={`${classes.shortAnswer} ${
                             isQuestion === faq.faq_id ? classes.expanding : ''
+                        } ${
+                            bssFaqsConfig?.question_display === 'expand'
+                                ? classes.expanding
+                                : ''
                         }`}
                         faq_id={faq.faq_id}
                     >
                         <div className={classes.questionShortAnswer}>
-                            {faq.short_answer}
+                            <RichContent html={faq.short_answer} />
                         </div>
                         <div>
                             <Link

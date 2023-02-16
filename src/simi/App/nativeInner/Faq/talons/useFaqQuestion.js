@@ -11,7 +11,6 @@ export const useFaqQuestion = props => {
         variables:{ url: url_key },
         fetchPolicy:"no-cache"
     });
-   
     let derivedErrorMessage;
     if (questionError) {
         const errorTarget = questionError;

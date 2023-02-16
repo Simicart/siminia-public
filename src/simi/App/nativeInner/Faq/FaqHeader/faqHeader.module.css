@@ -1,0 +1,14 @@
+.faqHeader{
+}
+.faqIcon{
+    display: flex;
+    justify-content: center;
+    height: 30px;
+    width: auto;
+    align-items: center;
+}
+.faqUrl{
+}
+.faqUrl:hover .faqIcon{
+    opacity: 0.6;
+}

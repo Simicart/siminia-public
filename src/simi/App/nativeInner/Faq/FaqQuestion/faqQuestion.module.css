@@ -232,7 +232,7 @@
     padding-left: 1.3em;
     margin-left: 20px;
 }
-.wrapperListFaq ul li:before{
+/* .wrapperListFaq ul li:before{
     content: "";
     display: inline-block;
     margin-left: -1.3em;
@@ -243,13 +243,25 @@
     border-bottom: 5px solid transparent;
     border-left: 5px solid #4c4c4c;
     margin-inline-end: 1rem;
-}
+} */
 .sidebarItem{
     font-family: Roboto;
     font-size: 16px;
     color: #505050;
     display: inline-block;
     cursor: pointer;
+}
+.sidebarItem:before{
+    content: "";
+    display: inline-block;
+    margin-left: -1.3em;
+    width: 1.3em;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid #4c4c4c;
+    margin-inline-end: 1rem;
 }
 .sidebarItem:hover{
     box-shadow: 0px 4px 59px 0 rgb(0 0 0 / 13%);

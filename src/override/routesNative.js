@@ -594,7 +594,7 @@ const Routes = props => {
                 />
                 <Route
                     exact
-                    path="/faq.html"
+                    path="/faqs"
                     render={props => <Faq {...props} />}
                 />
                 <Route

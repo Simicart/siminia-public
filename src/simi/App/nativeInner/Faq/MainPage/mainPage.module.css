@@ -1,28 +1,27 @@
-.wrapperMainPage{
-   
+.wrapperMainPage {
 }
-.mainPage{
+.mainPage {
     padding-top: 3rem;
     padding-bottom: 2rem;
 }
-.title{
+.title {
     color: #000000;
     font-size: 1.5rem;
     font-weight: bold;
     letter-spacing: 0;
     line-height: 29px;
 }
-.columns{
+.columns {
     display: block;
     box-sizing: border-box;
 }
-.column{
+.column {
     float: right;
     width: 70%;
     padding-bottom: 40px;
     min-height: 300px;
 }
-.columns:after{
+.columns:after {
     clear: both;
     content: ' ';
     display: block;
@@ -30,13 +29,12 @@
     overflow: hidden;
     visibility: hidden;
 }
-.searchBar{
+.searchBar {
     width: 50%;
     margin-bottom: 30px;
     float: right;
-    
 }
-.mainBlock{
+.mainBlock {
     opacity: 0.88;
     border-radius: 3px;
     background-color: #fff;
@@ -45,11 +43,13 @@
     min-height: 200px;
     width: 100%;
 }
-.sidebar{
+.sidebar {
     padding-right: 2%;
     width: 30%;
 }
-.sidebarMostFaq, .sidebarCategory, .sidebarTagList{
+.sidebarMostFaq,
+.sidebarCategory,
+.sidebarTagList {
     width: 100%;
     opacity: 0.88;
     border-radius: 3px;
@@ -58,43 +58,49 @@
     margin-bottom: 50px;
     font-family: Roboto;
 }
-.label{
+.label {
     width: 100%;
     height: 40px;
     border-radius: 3px 3px 0 0;
-    background-color: #00C8B3;    box-shadow: 0px 11px 24px 0 rgb(0 0 0 / 11%);
+    background-color: #00c8b3;
+    box-shadow: 0px 11px 24px 0 rgb(0 0 0 / 11%);
     font-family: Roboto;
     font-size: 14px;
     font-weight: bold;
     text-align: justify;
     color: #fff;
 }
-.label div{
+.label div {
     float: left;
     margin-top: 12px;
     margin-left: 20px;
 }
-.mostFaq, .category{
+.mostFaq,
+.category {
     margin: 12px;
     padding-top: 3px;
     padding-bottom: 3px;
 }
-.tagList{
+.tagList {
     margin: 27px;
     height: auto;
     overflow: hidden;
 }
-.mostFaq ul, .category ul, .questionList ul{
+.mostFaq ul,
+.category ul,
+.questionList ul {
     list-style: none;
     padding: 0;
 }
-.mostFaq ul li, .category ul li, .questionList ul li{
+.mostFaq ul li,
+.category ul li,
+.questionList ul li {
     margin-top: 13px;
     margin-bottom: 13px;
     padding-left: 1.3em;
     margin-left: 20px;
 }
-.mostFaq ul li:before, .questionList ul li:before{
+/* .mostFaq ul li:before, .questionList ul li:before{
     content: "";
     display: inline-block;
     margin-left: -1.3em;
@@ -105,19 +111,31 @@
     border-bottom: 5px solid transparent;
     border-left: 5px solid #4c4c4c;
     margin-inline-end: 1rem;
+} */
+.sidebarItem:before {
+    content: '';
+    display: inline-block;
+    margin-left: -1.3em;
+    width: 1.3em;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid #4c4c4c;
+    margin-inline-end: 1rem;
 }
-.sidebarItem{
+.sidebarItem {
     font-family: Roboto;
     font-size: 16px;
     color: #505050;
     display: inline-block;
     cursor: pointer;
 }
-.sidebarItem:hover{
+.sidebarItem:hover {
     box-shadow: 0px 4px 59px 0 rgb(0 0 0 / 13%);
 }
 
-.shortAnswer{
+.shortAnswer {
     display: none;
     margin-left: 40px;
     margin-right: 23px;
@@ -128,24 +146,24 @@
     text-align: justify;
     color: #6f6f6f;
 }
-.expanding{
+.expanding {
     display: inline-block;
 }
-.shortAnswer:before{
+.shortAnswer:before {
     width: 20px;
     height: 1px;
     background-color: #212b40;
-    content: "";
+    content: '';
     display: inline-block;
     margin-top: 5px;
     margin-left: -44px;
     margin-right: 20px;
     vertical-align: top;
 }
-.faqUrl{
+.faqUrl {
     color: #536fd8;
 }
-.sidebarTag{
+.sidebarTag {
     padding: 3px 10px 3px 10px;
     margin-right: 13px;
     margin-bottom: 16px;
@@ -159,13 +177,11 @@
     text-align: justify;
     cursor: pointer;
 }
-.searchBar{
-
+.searchBar {
 }
-.form{
-
+.form {
 }
-.form input{
+.form input {
     width: 50%;
     float: right;
     height: 35px;
@@ -177,7 +193,7 @@
     vertical-align: baseline;
     box-sizing: border-box;
 }
-.btnSubmit{
+.btnSubmit {
     width: 70px;
     height: 35px;
     background-color: #2f4860;
@@ -187,24 +203,24 @@
     box-shadow: none !important;
 }
 
-.categoryBlock{
+.categoryBlock {
     width: 100%;
     float: left;
 }
-.categoryImage{
+.categoryImage {
     width: 150px;
     height: 200px;
     border-radius: 3px;
     margin: 15px 30px;
     float: left;
 }
-.categoryBlockInfo{
+.categoryBlockInfo {
     width: 530px;
     margin-top: 15px;
     margin-bottom: 15px;
     float: left;
 }
-.categoryTitle{
+.categoryTitle {
     width: 90%;
     height: 20px;
     margin-top: 10px;
@@ -217,12 +233,115 @@
     text-align: justify;
     float: left;
     cursor: pointer;
-    color: #58575C;
+    color: #58575c;
 }
-.questionList{
+.questionList {
     width: 530px;
     min-height: auto;
     float: left;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.tagName {
+    display: inline;
+    color: #888888;
+    background-color: #eeeeee;
+    border: solid 1px #999999;
+    margin-left: 7px;
+    padding: 4px 5px 4px 5px;
+}
+
+.faqProductDetail .questionList {
+    float: unset;
+    margin-top: 20px;
+    clear: both;
+}
+.faqProductDetail {
+    margin-top: 20px;
+    padding: 30px;
+    border: 1px solid #cccccc;
+}
+.askButton {
+    border-radius: 2px;
+    background-color: #ef5350;
+    float: left;
+    margin-right: 20px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+.askButton.activeQuestion {
+    background-color: #ffffff;
+    border: solid 1px #ef5350;
+}
+.askButton.activeQuestion div {
+    color: #ef5350;
+}
+.askButton div {
+    margin: 10px;
+    text-align: center;
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+}
+.askField {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    transition: 0.4s all;
+}
+.textField {
+    display: block;
+    width: 70%;
+}
+.askLabel {
+    text-align: center;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: bold;
+}
+.textField input {
+    width: 100%;
+    border-radius: 2px;
+    background-color: #ffffff;
+    border: solid 1px #bdbdbd;
+    display: inline-block;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    height: 38px;
+}
+.textField textarea {
+    width: 100%;
+    border-radius: 2px;
+    background-color: #ffffff;
+    border: solid 1px #bdbdbd;
+    display: inline-block;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+.productSubmit:disabled{
+    opacity: 0.6;
+}
+.productSubmit {
+    border-radius: 2px;
+    background-color: #ef5350;
+    margin-right: 20px;
+    cursor: pointer;
+    width: 70px;
+    height: auto;
+    padding: 10px;
+}
+.productSubmit div {
+    text-align: center;
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.faqNoti{
+    display: block;
+    color: #ff0000;
+    margin: 10px 0;
 }

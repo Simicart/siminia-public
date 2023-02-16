@@ -272,3 +272,30 @@ export const GET_CATEGORY_BY_URL = gql`
     ${CategoryFragment}
     ${MostFaqFragment}
 `;
+
+export const ADD_VOTE_FAQ = gql`
+    mutation addVoteFaq($type: String, $faqId: Int!) {
+        voteFaqs(type: $type, faq_id: $faqId) {
+            help_full
+            message
+            un_help_full
+        }
+    }
+`;
+export const ASK_A_QUESTION = gql`
+    mutation askAQuestion(
+        $question: String
+        $customer: String
+        $productId: Int
+    ) {
+        submitFaqs(
+            question: $question
+            product_id: $productId
+            customer: $customer
+        ) {
+            help_full
+            message
+            un_help_full
+        }
+    }
+`;
