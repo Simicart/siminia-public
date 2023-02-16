@@ -17,7 +17,6 @@ const TagListContent = props => {
     const { formatMessage } = useIntl();
     const classes = defaultClasses;
     const { result } = tagListData?.tagFaqs || [];
-   
     const [isQuestion, setIsQuestion] = useState(0);
     const handleExpandQuestion = faqId => {
         if (faqId === isQuestion) {
@@ -85,7 +84,15 @@ const TagListContent = props => {
                                 {formatMessage({
                                     id: `We found ${
                                         result.length
-                                    } result(s) with tag(s): ${tagName}`
+                                    } result(s) with tag(s): `
+                                })}
+
+                                {result.map(faq => {
+                                    return (
+                                        <span className={classes.tagName}>
+                                            {faq.tag}
+                                        </span>
+                                    );
                                 })}
                             </span>
                         </div>

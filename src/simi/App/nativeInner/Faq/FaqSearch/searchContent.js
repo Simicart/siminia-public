@@ -3,22 +3,24 @@ import { useMainPage } from '../talons/useMainPage';
 import { useStoreConfig } from '../talons/useStoreConfig';
 import { useIntl } from 'react-intl';
 import defaultClasses from '../MainPage/mainPage.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useCategory } from '../talons/useCategory';
 import Loader from '../../Loader';
 import { useFaqSearch } from '../talons/useFaqSearch';
 import SearchBox from '../SearchBox';
 const SearchContent = props => {
-    const { keyword = '', category = '' } = useParams();
-
+    const search = useLocation()?.search;
+    const indexKeyword = search.indexOf("&keyword=")
+    const category = search.slice(10,indexKeyword)
+    const keyword = search.slice(indexKeyword+9,search.length)
     const {
         searchResults,
         searchResultsLoading,
         searchResultsError
     } = useFaqSearch({
         key_word: keyword,
-        category_id: category
+        category_id: category || 0
     });
     const { formatMessage } = useIntl();
     const classes = defaultClasses;

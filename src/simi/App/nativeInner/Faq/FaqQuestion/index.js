@@ -4,30 +4,33 @@ import { useStoreConfig } from '../talons/useStoreConfig';
 import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
 import defaultClasses from './faqQuestion.module.css';
-import { useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useFaqQuestion } from '../talons/useFaqQuestion';
 import Loader from '../../Loader';
 import RichContent from '@magento/venia-ui/lib/components/RichContent/richContent';
 import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai';
 import {
-    EmailShareButton,
     FacebookShareButton,
-    TelegramShareButton,
     TwitterShareButton,
-    EmailIcon,
     FacebookIcon,
-    TelegramIcon,
     TwitterIcon
 } from 'react-share';
 import { Link } from 'react-router-dom';
+import { ADD_VOTE_FAQ } from '../talons/Faq.gql';
+import { useMutation } from '@apollo/client';
+import faqImg from '../Image/faq.png';
+import { useVoteFaq } from '../talons/useVoteFaq';
 
 const FaqQuestion = props => {
+    const stateParam = useLocation()?.state?.stateParam || '';
+
     const {
         storeConfig,
         storeConfigLoading,
         storeConfigError
     } = useStoreConfig();
-
+    const { social_button, related_faq_show } =
+        storeConfig?.bssFaqsConfig || '';
     const bgColor = storeConfig?.bssFaqsConfig?.background_color || '';
     const { questionUrl = '' } = useParams();
     const { questionData, questionLoading, questionError } = useFaqQuestion({
@@ -43,12 +46,24 @@ const FaqQuestion = props => {
         url: window.location.href
     };
     const { questionUrl: question } = questionData || {};
-   
+
     const { formatMessage } = useIntl();
     const title = formatMessage({
         id: 'FAQs Question',
         defaultMessage: 'FAQs Question'
     });
+
+    const [addVoteFaq, { data }] = useMutation(ADD_VOTE_FAQ);
+
+    const handleVoteFaq = () => {
+        addVoteFaq({
+            variables: {
+                type: '',
+                faqId: 2
+            }
+        });
+    };
+
     const classes = defaultClasses;
     const [isActive, setIsActive] = useState(0);
     const handleExpand = faqId => {
@@ -108,7 +123,7 @@ const FaqQuestion = props => {
                         faq_id={faq?.faq_id}
                     >
                         <div className={classes.questionShortAnswer}>
-                            {faq?.short_answer}
+                            <RichContent html={faq?.short_answer} />
                         </div>
                         <div>
                             <Link
@@ -152,7 +167,10 @@ const FaqQuestion = props => {
                     <div className={classes.faqQuestion}>
                         <div className={classes.faqQuestionImage}>
                             {categoryImage && (
-                                <img src={categoryImage} alt="categoryImage" />
+                                <img
+                                    src={stateParam ? faqImg : categoryImage}
+                                    alt="categoryImage"
+                                />
                             )}
                         </div>
                         <div className={classes.questionBlockInfo}>
@@ -189,7 +207,10 @@ const FaqQuestion = props => {
                             </div>
                         </div>
                         <div className={classes.vote}>
-                            <div className={classes.voteLike}>
+                            <div
+                                onClick={handleVoteFaq}
+                                className={classes.voteLike}
+                            >
                                 <div
                                     tooltip="Helpful"
                                     className={classes.helpful}
@@ -234,36 +255,40 @@ const FaqQuestion = props => {
                             </Link>
                         </div>
                     </div>
-                    <div className={classes.faqSocialShare}>
-                        <div className={classes.jssocialsShares}>
-                            <div className={classes.twitter}>
-                                <TwitterShareButton {...shareProps}>
-                                    <TwitterIcon size={50} round={false} />
-                                </TwitterShareButton>
+                    {social_button === '1' && (
+                        <div className={classes.faqSocialShare}>
+                            <div className={classes.jssocialsShares}>
+                                <div className={classes.twitter}>
+                                    <TwitterShareButton {...shareProps}>
+                                        <TwitterIcon size={50} round={false} />
+                                    </TwitterShareButton>
+                                </div>
+                                <div className={classes.facebook}>
+                                    <FacebookShareButton {...shareProps}>
+                                        <FacebookIcon size={50} round={false} />
+                                    </FacebookShareButton>
+                                </div>
                             </div>
-                            <div className={classes.facebook}>
-                                <FacebookShareButton {...shareProps}>
-                                    <FacebookIcon size={50} round={false} />
-                                </FacebookShareButton>
+                        </div>
+                    )}
+                </div>
+                {related_faq_show === '1' && (
+                    <div className={classes.sidebar}>
+                        <div className={classes.wrapperRelated}>
+                            <div style={styles} className={classes.relatedFaq}>
+                                <div>
+                                    {formatMessage({
+                                        id: 'Related FAQs',
+                                        defaultMessage: 'Related FAQs'
+                                    })}
+                                </div>
+                            </div>
+                            <div className={classes.wrapperListFaq}>
+                                <ul>{renderRelatedFaq()}</ul>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className={classes.sidebar}>
-                    <div className={classes.wrapperRelated}>
-                        <div style={styles} className={classes.relatedFaq}>
-                            <div>
-                                {formatMessage({
-                                    id: 'Related FAQs',
-                                    defaultMessage: 'Related FAQs'
-                                })}
-                            </div>
-                        </div>
-                        <div className={classes.wrapperListFaq}>
-                            <ul>{renderRelatedFaq()}</ul>
-                        </div>
-                    </div>
-                </div>
+                )}
             </div>
         </div>
     );

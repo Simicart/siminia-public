@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
 import { SimiPriceFragment } from 'src/simi/queries/catalog_gql/catalogFragment.gql';
-
 const sizeChartEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&
@@ -47,7 +46,12 @@ const rewardPointEnabled =
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
-    
+
+const faqsEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_FAQS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;
 export const ProductCustomAttributesFragment = metaPackageEnabled
     ? gql`
           fragment ProductCustomAttributesFragment on ProductInterface {
@@ -93,19 +97,19 @@ export const ProductCustomAttributesFragment = metaPackageEnabled
 export const RewardPointFragment = rewardPointEnabled
     ? gql`
           fragment RewardPointFragment on ProductInterface {
-                reward_point {
-                    product_point {
-                        assign_by
-                        receive_point
-                        dependent_qty
-                        point
-                        message
-                    }
-                    customer_point {
-                        review_point
-                        message
-                    }
-                }
+              reward_point {
+                  product_point {
+                      assign_by
+                      receive_point
+                      dependent_qty
+                      point
+                      message
+                  }
+                  customer_point {
+                      review_point
+                      message
+                  }
+              }
           }
       `
     : gql`
@@ -113,7 +117,6 @@ export const RewardPointFragment = rewardPointEnabled
               sku
           }
       `;
-
 
 export const ProductDetailsFragment = gql`
     fragment ProductDetailsFragment on ProductInterface {
@@ -130,6 +133,33 @@ export const ProductDetailsFragment = gql`
         }
         id
         uid
+            
+        ${
+            faqsEnabled
+                ? `faqs {
+            answer
+            category_id
+            customer
+            faq_id
+            frontend_label
+            helpful_vote
+            is_check_all_product
+            is_most_frequently
+            is_show_full_answer
+            limit_link
+            product_id
+            related_faq_id
+            short_answer
+            store_id
+            tag
+            time
+            title
+            unhelpful_vote
+            url_key
+            use_real_vote_data
+        }`
+                : ``
+        }
         ${
             callForPriceEnabled
                 ? `

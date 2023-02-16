@@ -7,6 +7,7 @@ import Sidebar from '../Sidebar';
 import TagListContent from './tagListContent';
 
 const FaqTagList = props => {
+    const {strTagName} = props
     const { formatMessage } = useIntl();
     const title = formatMessage({
         id: 'FAQs Question with Tag',

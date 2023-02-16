@@ -31,6 +31,7 @@ import { configColor } from '../../../../simi/Config';
 // import { useGetRewardPointData } from '../../../talons/RewardPoint/useGetRewardPointData';
 import { useAppContext } from '@magento/peregrine/lib/context/app';
 import  RewardPointHeader from 'src/simi/BaseComponents/RewardPoint/components/Header'
+import FaqHeader from '../Faq/FaqHeader';
 // check if bot or headless chrome / wont get cart to avoid perf accection
 // can modify deeper on  peregrine/lib/context/cart.js:83 to avoid creating cart - db wasting - https://prnt.sc/2628k9h
 const isBotOrHeadless = isBot() || isHeadlessChrome();
@@ -150,6 +151,9 @@ const Header = props => {
             >
                 <div className={classes['right-bar-item']}>
                     <StoreSwitcher />
+                </div>
+                <div className={classes['right-bar-item']} >
+                    <FaqHeader classes={classes} />
                 </div>
                 <div className={classes['right-bar-item']} id="my-account">
                     <MyAccount classes={classes} userData={userData} />
