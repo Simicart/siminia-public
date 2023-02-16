@@ -12,12 +12,6 @@ const callForPriceEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_CALL_FOR_PRICE &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_CALL_FOR_PRICE) === 1;
 
-const giftCardEnabled =
-    window.SMCONFIGS &&
-    window.SMCONFIGS.plugins &&
-    window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD &&
-    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD) === 1;
-
 export const CallForPriceFragment = callForPriceEnabled
     ? gql`
           fragment CallForPriceFragment on ProductInterface {
@@ -87,17 +81,7 @@ export const ProductLabelFragment = productLabelEnabled
           }
       `;
 
-export const GiftCardFragment = giftCardEnabled 
-    ? gql`
-        fragment GiftCardFragment on MpGiftCardProduct {
-            allow_amount_range
-            gift_card_amounts
-            max_amount
-            min_amount
-            price_rate
-        }
-    `
-    : gql`
+export const GiftCardFragment =  gql`
         fragment GiftCardFragment on ProductInterface {
             sku
         }   

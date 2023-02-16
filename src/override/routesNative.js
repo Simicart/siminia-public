@@ -9,6 +9,7 @@ import Loader from '../simi/App/nativeInner/Loader'
 import PageBuilderComponent from '../simi/App/core/TapitaPageBuilder/PageBuilderComponent';
 import GiftCardPage from '../giftcard/components/GiftCardPage'
 import MyGiftCards from '../giftcard/components/MyGiftCards';
+import checkEnabledGiftCard from '../giftcard/functions/gift-card-store-config/checkEnabledGiftCard';
 //import Login from 'src/simi/App/core/Customer/Login';
 const Login = props => {
     return (
@@ -58,7 +59,7 @@ const AccountSettingPage = props => {
     return (
         <LazyComponent
             component={() =>
-                import( 'src/simi/App/nativeInner/AccountSettingPage')
+                import('src/simi/App/nativeInner/AccountSettingPage')
             }
             {...props}
         />
@@ -430,6 +431,18 @@ const BlogAuthor = props => {
         />
     );
 };
+
+const Page404 = props => {
+    return (
+        <LazyComponent
+            component={() =>
+                import(/* webpackChunkName: "Page404"*/ '../simi/App/nativeInner/NoMatch/Page404')
+            }
+            {...props}
+        />
+    );
+};
+
 const Routes = props => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
@@ -596,7 +609,7 @@ const Routes = props => {
                     path="/address-book"
                     render={props => <AddressBookPage {...props} />}
                 />
-                 <Route
+                <Route
                     exact
                     path="/new-address"
                     render={props => <AddNewAddress {...props} />}
@@ -654,13 +667,13 @@ const Routes = props => {
                     path="/my-gift-cards"
                     render={props => <MyGiftCard {...props} />}
                 />*/}
-                
-                <Route
+
+                {checkEnabledGiftCard() && (<Route
                     exact
                     path="/my-gift-cards"
-                    render={props => <MyGiftCards {...props}/>}
-                />
-                
+                    render={props => <MyGiftCards {...props} />}
+                />)}
+
                 <Route
                     exact
                     path="/communications"
@@ -716,14 +729,22 @@ const Routes = props => {
                     )}
                 />
 
-                <Route
+                {checkEnabledGiftCard() && (<Route
                     exact
                     path="/giftcard/:giftCardName.html"
                     render={props => (
                         <GiftCardPage {...props} />
                     )}
-                />
-                
+                />)}
+
+                {!checkEnabledGiftCard() && (<Route
+                    exact
+                    path="/gift-card.html"
+                    render={props => (
+                        <Page404/>
+                    )}
+                />)}
+
                 {HomePage ? (
                     <Route
                         exact

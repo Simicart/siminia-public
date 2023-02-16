@@ -1,6 +1,5 @@
 import Modal from 'react-modal';
 import React from "react";
-import '../styles/status-pop-up.css'
 import { Check } from 'react-feather'
 import { AlertCircle } from 'react-feather';
 
@@ -16,20 +15,20 @@ const StatusPopUp = ({status, showStatus, setShowStatus}) => {
       return (
         <Modal
           isOpen={showStatus}
-          portalClassName='status-portal'
+          portalClassName='status-pop-up-portal'
           className={{
-            base: 'status-content',
-            afterOpen: 'status-content-afterOpen',
-            beforeClose: 'status-content-beforeClose'
+            base: 'status-pop-up-content',
+            afterOpen: 'status-pop-up-content-afterOpen',
+            beforeClose: 'status-pop-up-content-beforeClose'
           }}
           overlayClassName={{
-            base: 'status-overlay',
-            afterOpen: 'status-overlay-afterOpen',
-            beforeClose: 'status-overlay-beforeClose'
+            base: 'status-pop-up-overlay',
+            afterOpen: 'status-pop-up-overlay-afterOpen',
+            beforeClose: 'status-pop-up-overlay-beforeClose'
           }}
           closeTimeoutMS={1000}
         >
-          <div className={status.includes('was added') ? 'successPopUp' : 'errorPopUp'}>
+          <div className={status.includes('was added') ? 'status-pop-up-success' : 'status-pop-up-error'}>
             <div style={{width: '10%', marginRight: '10%'}}>
                 {status.includes('was added') ? (<Check style={{color: 'green'}}></Check>) : (<AlertCircle style={{color: 'red'}}></AlertCircle>)}
             </div>

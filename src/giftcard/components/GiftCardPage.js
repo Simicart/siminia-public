@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom"
 import useGiftCardData from "../talons/useGiftCardData";
 import useTimezoneData from "../talons/useTimezoneData";
 import convertParams from "../talons/convertParams";
-import ProductInfo from "./ProductInfo"
-import ReviewWrapper from "./ReviewWrapper"
+import GiftCardInfo from "./GiftCardInfo"
+import GiftCardReview from "./GiftCardReview"
 
 function GiftCardPage() {
     const { giftCardName = '' } = useParams()
@@ -24,8 +24,8 @@ function GiftCardPage() {
 
     return (
         <>
-            <ProductInfo giftCardData={giftCardData} timezoneData={timezoneData}></ProductInfo>
-            <ReviewWrapper giftCardData={giftCardData}></ReviewWrapper>
+            <GiftCardInfo giftCardData={giftCardData} timezoneData={timezoneData}></GiftCardInfo>
+            <GiftCardReview giftCardData={giftCardData}></GiftCardReview>
         </>
     )
 }

@@ -16,20 +16,20 @@ const ReviewStatus = ({reviewStatus, showReviewStatus, setShowReviewStatus}) => 
       return (
         <Modal
           isOpen={showReviewStatus}
-          portalClassName='review-status-portal'
+          portalClassName='gift-card-review-status-portal'
           className={{
-            base: 'review-status-content',
-            afterOpen: 'review-status-content-afterOpen',
-            beforeClose: 'review-status-content-beforeClose'
+            base: 'gift-card-review-status-content',
+            afterOpen: 'gift-card-review-status-content-afterOpen',
+            beforeClose: 'gift-card-review-status-content-beforeClose'
           }}
           overlayClassName={{
-            base: 'review-status-overlay',
-            afterOpen: 'review-status-overlay-afterOpen',
-            beforeClose: 'review-status-overlay-beforeClose'
+            base: 'gift-card-review-status-overlay',
+            afterOpen: 'gift-card-review-status-overlay-afterOpen',
+            beforeClose: 'gift-card-review-status-overlay-beforeClose'
           }}
           closeTimeoutMS={1000}
         >
-        <div className={reviewStatus.includes('successful') ? 'successPopUp' : 'errorPopUp'}>
+        <div className={reviewStatus.includes('successful') ? 'gift-card-review-success' : 'gift-card-review-error'}>
             <div style={{width: '10%', marginRight: '10%'}}>
                 {reviewStatus.includes('successful') ? (<Check style={{color: 'green'}}></Check>) : (<AlertCircle style={{color: 'red'}}></AlertCircle>)}
             </div>

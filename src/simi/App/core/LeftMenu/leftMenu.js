@@ -22,6 +22,7 @@ import {
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import { Link } from 'react-router-dom';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
+import checkEnabledGiftCard from '../../../../giftcard/functions/gift-card-store-config/checkEnabledGiftCard';
 
 const LeftMenu = props => {
     const [userData] = useUserContext();
@@ -38,7 +39,7 @@ const LeftMenu = props => {
         window.SMCONFIGS.plugins &&
         window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
         parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
-    const giftCardEnabled = true   //get store config variable later
+    const giftCardEnabled = checkEnabledGiftCard()  //get store config variable later
 
     let listMenuContent = [
         {

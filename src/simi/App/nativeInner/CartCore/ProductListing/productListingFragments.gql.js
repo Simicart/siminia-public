@@ -1,26 +1,6 @@
 import { gql } from '@apollo/client';
 
-const giftcardEnabled =
-    window.SMCONFIGS &&
-    window.SMCONFIGS.plugins &&
-    window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD &&
-    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD) === 1;
-
-export const GiftcartListingFragment = giftcardEnabled
-    ? gql`
-          fragment GiftcartListingFragment on CartItemInterface {
-              ... on MpGiftCardCartItem {
-                  giftcard_options {
-                      item_id
-                      code
-                      option_id
-                      product_id
-                      value
-                  }
-              }
-          }
-      `
-    : gql`
+export const GiftcartListingFragment = gql`
           fragment GiftcartListingFragment on CartItemInterface {
               id
           }
