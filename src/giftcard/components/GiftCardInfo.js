@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/client';
-import TinySlider from "tiny-slider-react";
+import TinySlider from 'tiny-slider-react'
 import 'tiny-slider/dist/tiny-slider.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,7 +10,6 @@ import ADD_GIFT_CARD_TO_WISHLIST from '../talons/useAddGiftCardToWishlist'
 import GiftCardPreview from './GiftCardPreview'
 import StatusPopUp from './StatusPopUp';
 import '../styles/styles.scss'
-import checkEnabledGiftCard from '../functions/gift-card-store-config/checkEnabledGiftCard';
 
 import { handlePriceInput, handleSenderName, handleRecipientName, handleSenderEmail, handleRecipientEmail, handleMessage } from '../functions/gift-card-info/HandleUserInput'
 import { imgStyles, selectedImgStyles, settings, loadingImage } from '../functions/gift-card-info/CarouselConfig'
