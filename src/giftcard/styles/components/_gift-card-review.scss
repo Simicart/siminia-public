@@ -1,0 +1,180 @@
+.gift-card-review-wrapper {
+    border: 2px solid gray;
+    padding: 40px 80px 0 80px;
+    margin: 0 60px 80px 60px;
+}
+
+.gift-card-value-rating {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.gift-card-price-rating {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.gift-card-rating-rating {
+    display: flex;
+    flex-direction: row;
+}
+
+.gift-card-star-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+}
+
+.gift-card-star-uncheck {
+    color: gray;
+    margin-right: 10px;
+    transition: color 0.5s;
+
+    &:hover {
+        color: yellow;
+        fill: yellow;
+        cursor: pointer;
+    }
+}
+
+.gift-card-star-checked {
+    color: yellow;
+    fill: yellow;
+    margin-right: 10px;
+    cursor: pointer
+}
+
+.gift-card-nickname-input {
+    width: 50%;
+    height: 36px;
+    padding-left: 10px
+}
+
+.gift-card-title-input {
+    width: 50%;
+    height: 36px;
+    padding-left: 10px
+}
+
+.gift-card-details-input {
+    width: 50%;
+    height: 100px;
+    padding-left: 10px;
+    padding-top: 10px;
+    resize: none
+}
+
+.gift-card-submit-review-button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 120px;
+    text-align: center;
+    color: white;
+    flex-grow: 1;
+    height: 50px;
+    border: none;
+    background-color: dodgerblue;
+    transition: background-color 0.5s, color 0.5s;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+
+    &:hover {
+        background-color: cyan;
+        color: black
+    }
+}
+
+.gift-card-submit-review-loading-button {
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    width: 120px;
+    text-align: center;
+    color: white;
+    flex-grow: 1;
+    height: 50px;
+    border: none;
+    background-color: rgba(30, 144, 255, 0.8);
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.gift-card-review-status-portal {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    height: 100vh;
+}
+
+.gift-card-review-status-overlay {
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: all 500ms ease-in-out;
+}
+
+.gift-card-review-status-overlay-afterOpen {
+    opacity: 1;
+    transform: translateY(0);
+}
+  
+.gift-card-review-status-overlay-beforeClose {
+    opacity: 0;
+    transform: translateY(-50%);
+}
+
+.gift-card-review-status-content {
+    position: fixed;
+    top: 88vh;
+    transform: translateX(-100%);
+    left: 95vw;
+    width: max-content;
+    height: max-content;
+    text-align: center;
+    background-color: white;
+}
+
+@media only screen and (max-width: 800px) {
+    .gift-card-review-status-content {
+        top: 80vh;
+        left: 92vw
+    }
+    .gift-card-review-wrapper {
+        padding: 40px 20px 0 20px;
+        margin: 0 20px 40px 20px;
+    }
+
+    .gift-card-nickname-input {
+        width: 100%
+    }
+
+    .gift-card-title-input {
+        width: 100%
+    }
+
+    .gift-card-details-input {
+        width: 100%;
+    }
+}
+
+.gift-card-review-success {
+    width: 300px;
+    border: none;
+    border-bottom: 3px solid green;
+    box-shadow: -2px -2px 5px grey, 2px 2px 5px grey;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px 10px 20px;
+}
+
+.gift-card-reivew-error {
+    width: 300px;
+    border: none;
+    border-bottom: 3px solid red;
+    box-shadow: -2px -2px 5px grey, 2px 2px 5px grey;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px 10px 20px;
+}

@@ -11,41 +11,7 @@ const rewardPointEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
-const giftCardEnabled =
-    window.SMCONFIGS &&
-    window.SMCONFIGS.plugins &&
-    window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD &&
-    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD) === 1;
-
-export const GiftCardSummaryFragment = giftCardEnabled
-    ? gql`
-          fragment GiftCardSummaryFragment on Cart {
-              mp_giftcard_config {
-                  balance
-                  canShowDetail
-                  creditUsed
-                  css
-                  enableGiftCard
-                  enableGiftCredit
-                  enableMultiple
-                  giftCardUsed {
-                      amount
-                      code
-                      expired_at
-                      status
-                  }
-                  listGiftCard {
-                      balance
-                      code
-                      expired_at
-                      hidden
-                      status
-                  }
-                  maxUsed
-              }
-          }
-      `
-    : gql`
+export const GiftCardSummaryFragment = gql`
           fragment GiftCardSummaryFragment on Cart {
               id
           }

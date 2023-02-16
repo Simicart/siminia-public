@@ -1,0 +1,133 @@
+.gift-card-preview-body {
+    overflow: hidden;
+}
+
+.gift-card-preview-portal {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    height: 100vh;
+    background-color: rgba(105, 105, 105, 0.7) !important;
+}
+
+.gift-card-preview-overlay {
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: all 500ms ease-in-out;
+}
+
+.gift-card-preview-overlay-afterOpen {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.gift-card-preview-overlay-beforeClose {
+    opacity: 0;
+    transform: translateY(-50%);
+}
+
+.gift-card-preview-content {
+    width: 100vw;
+}
+
+.gift-card-preview-wrapper {
+    background-color: white;
+    width: 60%;
+    height: 90vh;
+    margin: auto;
+    overflow: scroll;
+    margin-top: 5vh;
+    position: relative;
+}
+
+.gift-card-preview-title {
+    width: 80%;
+    border-bottom: 2px solid gray;
+    margin: 50px auto 20px auto;
+    animation: rainbow 5s infinite;
+}
+
+@keyframes rainbow {
+    0% {
+        color: violet;
+    }
+
+    12.5% {
+        color: indigo;
+    }
+
+    25% {
+        color: blue;
+    }
+
+    37.5% {
+        color: green;
+    }
+
+    50% {
+        color: yellow;
+    }
+
+    62.5% {
+        color: orange;
+    }
+
+    75% {
+        color: red;
+    }
+}
+
+.gift-card-preview-info {
+    width: 80%;
+    margin: 50px auto 0 auto;
+}
+
+.gift-card-preview-image {
+    width: 80%;
+    height: 80%;
+    margin: 50px auto 0 auto;
+
+    img {
+        width: 100%;
+        height: 90%;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .gift-card-preview-wrapper {
+        width: 80%;
+
+        img {
+            width: 80%;
+            margin-left: 10%;
+            height: 75%
+        }
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .gift-card-preview-wrapper {
+        width: 100%;
+        height: 100vh;
+        margin-top: 0;
+
+        img {
+            width: 90%;
+            margin-left: 5%;
+            height: 60%;
+        }
+    }
+}
+
+.gift-card-preview-close-button {
+    background-color: white;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 2%;
+    right: 0;
+}
+
+.gift-card-preview-close-button:hover {
+    color: gray
+}
