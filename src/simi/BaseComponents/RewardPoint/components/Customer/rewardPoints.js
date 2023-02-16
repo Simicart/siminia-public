@@ -9,6 +9,7 @@ import defaultClasses from './rewardPoints.module.css';
 import LeftMenu from 'src/simi/App/core/LeftMenu/leftMenu';
 import Notification from './notification';
 import Transaction from './transaction';
+import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 
 const RewardPoint = props => {
     const talonProps = useRewardPoint();
@@ -18,6 +19,7 @@ const RewardPoint = props => {
     const {
         isActive,
         isSignedIn,
+        loading,
         point,
         pointUsed,
         pointEarned,
@@ -28,6 +30,10 @@ const RewardPoint = props => {
     if (!isActive) return <Page404 />;
 
     if (!isSignedIn) return <Redirect to="/sign-in" />;
+
+    if(loading) {
+        return <LoadingIndicator />
+    }
 
     return (
         <div className={classes.root}>
