@@ -56,8 +56,8 @@ export const ProductLabelFragment = productLabelEnabled
                   }
                   created_at
                   customer_groups
-                  file
                   id
+                  image
                   image_data {
                       angle
                       height

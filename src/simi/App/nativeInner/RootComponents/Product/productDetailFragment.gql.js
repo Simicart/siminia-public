@@ -41,17 +41,20 @@ const metaPackageEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES) === 1;
 
+const faqEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_FAQS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;  
+
 const rewardPointEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
-const faqsEnabled =
-    window.SMCONFIGS &&
-    window.SMCONFIGS.plugins &&
-    window.SMCONFIGS.plugins.SM_ENABLE_FAQS &&
-    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;
+
+
 export const ProductCustomAttributesFragment = metaPackageEnabled
     ? gql`
           fragment ProductCustomAttributesFragment on ProductInterface {
@@ -135,7 +138,7 @@ export const ProductDetailsFragment = gql`
         uid
             
         ${
-            faqsEnabled
+            faqEnabled
                 ? `faqs {
             answer
             category_id
@@ -197,7 +200,7 @@ export const ProductDetailsFragment = gql`
                     }
                     created_at
                     customer_groups
-                    file
+                    image
                     id
                     image_data {
                       angle

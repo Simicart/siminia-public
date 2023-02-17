@@ -33,7 +33,7 @@ export const WishlistItemFragment = gql`
                         }
                         created_at
                         customer_groups
-                        file
+                        image
                         id
                         image_data {
                           angle
