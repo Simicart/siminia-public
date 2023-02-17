@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Price from '@magento/venia-ui/lib/components/Price';
 // import { usePriceSummary } from '@magento/peregrine/lib/talons/CartPage/PriceSummary/usePriceSummary';
@@ -12,6 +12,7 @@ import ShippingSummary from './shippingSummary';
 import TaxSummary from './taxSummary';
 import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
 import { configColor } from 'src/simi/Config';
+import { GiftCodeCartContext } from '../cartPage';
 
 /**
  * A child component of the CartPage component.
@@ -32,6 +33,8 @@ const PriceSummary = props => {
     const { isUpdating } = props;
     const classes = useStyle(defaultClasses, props.classes);
     const talonProps = usePriceSummary();
+
+    const { giftCodeData, setGiftCodeData } = useContext(GiftCodeCartContext)
 
     const {
         handleProceedToCheckout,
@@ -218,6 +221,10 @@ const PriceSummary = props => {
                     data={shipping}
                     isCheckout={isCheckout}
                 />
+                {giftCodeData && (<>
+                    <span style={{maxWidth: 80}}>{giftCodeData.code}</span>
+                    <span style={{textAlign: 'right'}}>{`-$${giftCodeData.value}.00`}</span>
+                </>)}
                 <span className={classes.totalLabel}>{totalPriceLabel}</span>
                 <span
                     style={{ color: configColor.price_color }}

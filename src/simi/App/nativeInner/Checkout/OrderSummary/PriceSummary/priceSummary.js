@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Price from '@magento/venia-ui/lib/components/Price';
 // import { usePriceSummary } from '@magento/peregrine/lib/talons/CartPage/PriceSummary/usePriceSummary';
@@ -11,6 +11,7 @@ import ShippingSummary from 'src/simi/App/core/Cart/PriceSummary/shippingSummary
 import TaxSummary from 'src/simi/App/core/Cart/PriceSummary/taxSummary';
 import { usePriceSummary } from 'src/simi/talons/Cart/usePriceSummary';
 import { useWindowSize } from '@magento/peregrine';
+import { GiftCodeCheckoutContext } from '../../checkoutPage';
 
 /**
  * A child component of the CartPage component.
@@ -31,6 +32,8 @@ const PriceSummary = props => {
     const { isUpdating } = props;
     const classes = useStyle(defaultClasses, props.classes);
     const talonProps = usePriceSummary();
+    
+    const { giftCodeData, setGiftCodeData } = useContext(GiftCodeCheckoutContext)
 
     const {
         handleProceedToCheckout,
@@ -225,9 +228,13 @@ const PriceSummary = props => {
                     data={shipping}
                     isCheckout={isCheckout}
                 />
+                {giftCodeData && (<>
+                    <span style={{maxWidth: 80}}>{giftCodeData.code}</span>
+                    <span style={{textAlign: 'right'}}>{`-$${giftCodeData.value}.00`}</span>
+                </>)}
                 <span className={classes.totalLabel}>{totalPriceLabel}</span>
                 <span className={totalPriceClass}>
-                    <Price value={total.value} currencyCode={total.currency} />
+                    <Price value={giftCodeData ? total.value - giftCodeData.value : total.value} currencyCode={total.currency} />
                 </span>
             </div>
             {proceedToCheckoutButton}

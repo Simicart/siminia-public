@@ -15,7 +15,7 @@ const OrderSummary = props => {
                     defaultMessage={'Order Summary'}
                 />
             </h1>
-            <PriceSummary isUpdating={props.isUpdating} />
+            <PriceSummary isUpdating={props.isUpdating} location={props.location}/>
         </div>
     );
 };

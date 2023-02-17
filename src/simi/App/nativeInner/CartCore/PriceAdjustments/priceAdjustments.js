@@ -14,6 +14,9 @@ import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { showFogLoading } from '../../../../BaseComponents/Loading/GlobalLoading';
 import { Form } from 'informed';
 
+import checkEnabledGiftCard from '../../../../../giftcard/functions/gift-card-store-config/checkEnabledGiftCard'
+import DiscountGiftCard from '../../../../../giftcard/components/DiscountGiftCard';
+
 const CouponCode = React.lazy(() => import('./CouponCode'));
 // const GiftOptions = React.lazy(() =>
 //     import('@magento/venia-ui/lib/components/CartPage/PriceAdjustments/GiftOptions')
@@ -59,6 +62,8 @@ const PriceAdjustments = props => {
         });
 
     const { customerRewardPoint } = useGetRewardPointData({ onCart: true });
+
+    const giftCardEnabled = checkEnabledGiftCard()
 
     const exchange_rate = customerRewardPoint
         ? customerRewardPoint.current_exchange_rates
@@ -106,12 +111,6 @@ const PriceAdjustments = props => {
         window.SMCONFIGS.plugins &&
         window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
         parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
-
-    const giftCardEnabled =
-        window.SMCONFIGS &&
-        window.SMCONFIGS.plugins &&
-        window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD &&
-        parseInt(window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD) === 1;
 
     return (
         <div className={classes.root}>
@@ -253,25 +252,8 @@ const PriceAdjustments = props => {
                     <></>
                 )}
                 {/* <GiftCardSection setIsCartUpdating={setIsCartUpdating} /> */}
-                {giftCardEnabled && giftCardConfig ? (
-                    <Section
-                        id={'gift-card'}
-                        title={formatMessage({
-                            id: 'Gift Card'
-                        })}
-                        classes={{
-                            root: classes.sectionRoot,
-                            title: classes.sectionTitle
-                        }}
-                    >
-                        <Suspense fallback={<LoadingIndicator />}>
-                            <GiftCard
-                                giftCardConfig={giftCardConfig}
-                                setIsCartUpdating={setIsCartUpdating}
-                                refetchCartPage={refetchCartPage}
-                            />
-                        </Suspense>
-                    </Section>
+                {giftCardEnabled ? (
+                    <DiscountGiftCard location={props.location}></DiscountGiftCard>
                 ) : (
                     <></>
                 )}

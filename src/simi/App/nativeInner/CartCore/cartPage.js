@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Check } from 'react-feather';
 import { useCartPage } from 'src/simi/App/nativeInner/talons/CartPage/useCartPage.js';
@@ -13,6 +13,8 @@ import PriceAdjustments from './PriceAdjustments';
 import PriceSummary from './PriceSummary';
 import ProductListing from './ProductListing';
 import defaultClasses from './cartPage.module.css';
+
+export const GiftCodeCartContext = createContext({});
 
 const CheckIcon = <Icon size={20} src={Check} />;
 
@@ -48,6 +50,8 @@ const CartPage = props => {
         shouldShowLoadingIndicator,
         wishlistSuccessProps,
     } = talonProps;
+
+    const [giftCodeData, setGiftCodeData] = useState()
    
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
@@ -80,11 +84,11 @@ const CartPage = props => {
     );
 
     const priceAdjustments = hasItems ? (
-        <PriceAdjustments setIsCartUpdating={setIsCartUpdating} giftCardConfig={giftCardConfig} refetchCartPage={refetchCartPage}/>
+        <PriceAdjustments setIsCartUpdating={setIsCartUpdating} giftCardConfig={giftCardConfig} refetchCartPage={refetchCartPage} location='cart'/>
     ) : null;
 
     const priceSummary = hasItems ? (
-        <PriceSummary isUpdating={isCartUpdating} />
+        <PriceSummary isUpdating={isCartUpdating} location = 'cart' />
     ) : null;
 
     const totalQuantity = cartItems.length ? (
@@ -96,6 +100,8 @@ const CartPage = props => {
         </span>
     ) : null;    
     return (
+        <GiftCodeCartContext.Provider value={{giftCodeData, setGiftCodeData}}>
+
         <div className={classes.root}>
             <StoreTitle>
                 {formatMessage({
@@ -129,6 +135,7 @@ const CartPage = props => {
                 </div>
             </div>
         </div>
+    </GiftCodeCartContext.Provider>
     );
 };
 

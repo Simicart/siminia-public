@@ -1,0 +1,62 @@
+.discount-gift-card-wrapper {
+    padding: 25px;
+    cursor: pointer
+}
+
+.discount-gift-card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.discount-gift-card-title {
+    font-size: 18px;
+}
+
+.discount-gift-card-input-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.discount-gift-card-apply-button {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: black;
+    padding: 10;
+    flex-grow: 1;
+    height: 50px;
+    width: 160px
+}
+
+.discount-gift-card-apply-button:hover {
+    background-color: rgba(0, 0, 0, 0.8)
+}
+
+@media only screen and (max-width: 960px) {
+    .discount-gift-card-wrapper {
+        padding: 40px 35px;
+    }
+    .discount-gift-card-input-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+    .discount-gift-card-apply-button {
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        background-color: black;
+        padding: 8px;
+        height: 40px;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .discount-gift-card-title {
+        font-size: 16px;
+    }
+}

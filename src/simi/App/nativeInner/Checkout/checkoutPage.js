@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { createContext, Fragment, useEffect, useRef, useState } from 'react';
 import { shape, string } from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {
@@ -49,6 +49,8 @@ const deliveryTimeEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME) === 1;
 
+export const GiftCodeCheckoutContext = createContext({});
+
 require('./checkoutPage.scss');
 const CheckoutPage = props => {
     const { classes: propClasses, history } = props;
@@ -57,6 +59,8 @@ const CheckoutPage = props => {
     const [openDeli, setOpenDeli] = useState(false);
 
     const [{ cartId }] = useCartContext();
+
+    const [giftCodeData, setGiftCodeData] = useState()
 
     const {
         /**
@@ -106,10 +110,10 @@ const CheckoutPage = props => {
                 error && error.message
                     ? error.message
                     : formatMessage({
-                          id: 'checkoutPage.errorSubmit',
-                          defaultMessage:
-                              'Oops! An error occurred while submitting. Please try again.'
-                      });
+                        id: 'checkoutPage.errorSubmit',
+                        defaultMessage:
+                            'Oops! An error occurred while submitting. Please try again.'
+                    });
             addToast({
                 type: 'error',
                 icon: errorIcon,
@@ -192,8 +196,8 @@ const CheckoutPage = props => {
             )
                 window.location.replace(
                     storeConfig.storeConfig.base_url +
-                        '/myfatoorah/checkout/index?gateway=myfatoorah&order_id=' +
-                        orderNumber
+                    '/myfatoorah/checkout/index?gateway=myfatoorah&order_id=' +
+                    orderNumber
                 );
             return '';
         }
@@ -281,7 +285,7 @@ const CheckoutPage = props => {
                         <React.Fragment>
                             <div className="main-delivery">
                                 <label className="check-container">
-                                    {formatMessage({ id: 'Delivery time',defaultMessage:'Delivery Time' })}
+                                    {formatMessage({ id: 'Delivery time', defaultMessage: 'Delivery Time' })}
                                     <input
                                         onClick={() => setOpenDeli(!openDeli)}
                                         type="checkbox"
@@ -352,6 +356,7 @@ const CheckoutPage = props => {
                         setIsCartUpdating={setIsUpdating}
                         isMobile={isMobile}
                         hideEstimateShipping={true}
+                        location='checkout'
                     />
                 </div>
             ) : null;
@@ -434,7 +439,7 @@ const CheckoutPage = props => {
 
         const orderSummary = shouldRenderPriceSummary ? (
             <div className={classes.summaryContainer}>
-                <OrderSummary isUpdating={isUpdating} />
+                <OrderSummary isUpdating={isUpdating} location='checkout'/>
             </div>
         ) : null;
 
@@ -544,17 +549,19 @@ const CheckoutPage = props => {
     ) : null;
 
     return (
-        <div className={`${classes.root} checkout-step-${checkoutStep}`}>
-            <StoreTitle>
-                {formatMessage({
-                    id: 'checkoutPage.titleCheckout',
-                    defaultMessage: 'Checkout'
-                })}
-            </StoreTitle>
-            {checkoutContent}
-            {addressBookElement}
-            {signInElement}
-        </div>
+        <GiftCodeCheckoutContext.Provider value={{giftCodeData, setGiftCodeData}}>
+            <div className={`${classes.root} checkout-step-${checkoutStep}`}>
+                <StoreTitle>
+                    {formatMessage({
+                        id: 'checkoutPage.titleCheckout',
+                        defaultMessage: 'Checkout'
+                    })}
+                </StoreTitle>
+                {checkoutContent}
+                {addressBookElement}
+                {signInElement}
+            </div>
+        </GiftCodeCheckoutContext.Provider>
     );
 };
 
