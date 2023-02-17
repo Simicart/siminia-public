@@ -5,8 +5,20 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ASK_A_QUESTION } from '../talons/Faq.gql';
 import Loader from '../../Loader';
+import { useStoreConfig } from '../talons/useStoreConfig';
+const faqsEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_FAQS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;
 
 const FaqProductDetail = props => {
+    const {
+        storeConfig,
+        storeConfigLoading,
+        storeConfigError
+    } = useStoreConfig();
+    const { enable } = storeConfig?.bssFaqsConfig || '';
     const classes = defaultClasses;
     const { faqs, productId } = props;
     const { formatMessage } = useIntl();
@@ -70,7 +82,7 @@ const FaqProductDetail = props => {
     };
 
     useEffect(() => {
-        if (name !== '' && question !== '') {
+        if (name !== '' && question.trim().length >= 10) {
             setIsSubmit(false);
         } else {
             setIsSubmit(true);
@@ -92,6 +104,8 @@ const FaqProductDetail = props => {
     if (loading) {
         return <Loader />;
     }
+
+    if (!faqsEnabled || parseInt(enable) === 0 || storeConfigLoading) return '';
 
     return (
         <div className={classes.faqProductDetail}>
@@ -160,6 +174,17 @@ const FaqProductDetail = props => {
                                 })}
                             </div>
                         </button>
+                        {question.trim().length < 10 &&
+                            question.trim().length > 0 && (
+                                <div className={classes.questionError}>
+                                    {formatMessage({
+                                        id:
+                                            'The question length must be greater than 10 and less than 255',
+                                        defaultMessage:
+                                            'The question length must be greater than 10 and less than 255'
+                                    })}
+                                </div>
+                            )}
                         {message && (
                             <div className={classes.faqNoti}>{message}</div>
                         )}

@@ -340,7 +340,7 @@
     color: #ffffff;
 }
 
-.faqNoti{
+.faqNoti, .questionError{
     display: block;
     color: #ff0000;
     margin: 10px 0;
