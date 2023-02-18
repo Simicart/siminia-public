@@ -80,6 +80,7 @@ import useProductData from '../../../../sizechart/talons/useProductData';
 import useSizeChartData from '../../../../sizechart/talons/useSizeChartData';
 import SizeChart from '../../../../sizechart/components/SizeChart';
 import FaqProductDetail from '../Faq/FaqProductDetail';
+import ButtonFaq from '../Faq/FaqProductDetail/buttonFaq';
 
 require('./productFullDetail.scss');
 
@@ -958,19 +959,22 @@ const ProductFullDetail = props => {
                                                 Size Chart
                                             </button>
                                         )}
-                                        {product?.faqs && (
-                                            <button
-                                                type="button"
-                                                className={
-                                                    showTab === 3
-                                                        ? 'selected-button'
-                                                        : 'deselected-button'
-                                                }
-                                                onClick={() => setShowTab(3)}
-                                            >
-                                                FAQs
-                                            </button>
-                                        )}
+
+                                        {/* <button
+                                            type="button"
+                                            className={
+                                                showTab === 3
+                                                    ? 'selected-button'
+                                                    : 'deselected-button'
+                                            }
+                                            onClick={() => setShowTab(3)}
+                                        >
+                                            FAQs
+                                        </button> */}
+                                        <ButtonFaq
+                                            showTab={showTab}
+                                            setShowTab={setShowTab}
+                                        />
                                     </div>
 
                                     <div className="show-content">
@@ -1010,8 +1014,8 @@ const ProductFullDetail = props => {
                                         )}
                                         {showTab === 3 && (
                                             <FaqProductDetail
-                                                faqs={product?.faqs}
-                                                productId = {product?.id}
+                                                urlKey={product?.url_key}
+                                                productId={product?.id}
                                             />
                                         )}
                                     </div>

@@ -32,6 +32,7 @@ const Sidebar = props => {
 
     const renderMostFaqs = () => {
         return most_faq?.map(faq => {
+            console.log("faq",faq)
             const str = faq.frontend_label.slice(6);
             const indexStr = str.indexOf('","');
             const label = str.slice(0, indexStr);
@@ -71,8 +72,8 @@ const Sidebar = props => {
                         </div>
                         <p className={classes.createdInfo}>
                             {formatMessage({
-                                id: 'Created by Admin on:',
-                                defaultMessage: 'Created by Admin on:'
+                                id: `Created by ${faq.customer} on:`,
+                                defaultMessage: `Created by ${faq.customer} on:`
                             })}{' '}
                             {faq.time}
                         </p>

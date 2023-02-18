@@ -41,12 +41,6 @@ const metaPackageEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES) === 1;
 
-const faqEnabled =
-    window.SMCONFIGS &&
-    window.SMCONFIGS.plugins &&
-    window.SMCONFIGS.plugins.SM_ENABLE_FAQS &&
-    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;  
-
 const rewardPointEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&
@@ -136,33 +130,6 @@ export const ProductDetailsFragment = gql`
         }
         id
         uid
-            
-        ${
-            faqEnabled
-                ? `faqs {
-            answer
-            category_id
-            customer
-            faq_id
-            frontend_label
-            helpful_vote
-            is_check_all_product
-            is_most_frequently
-            is_show_full_answer
-            limit_link
-            product_id
-            related_faq_id
-            short_answer
-            store_id
-            tag
-            time
-            title
-            unhelpful_vote
-            url_key
-            use_real_vote_data
-        }`
-                : ``
-        }
         ${
             callForPriceEnabled
                 ? `

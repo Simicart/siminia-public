@@ -6,6 +6,8 @@ import { useMutation } from '@apollo/client';
 import { ASK_A_QUESTION } from '../talons/Faq.gql';
 import Loader from '../../Loader';
 import { useStoreConfig } from '../talons/useStoreConfig';
+import RichContent from '@magento/venia-ui/lib/components/RichContent';
+import { useFaqProductDetail } from './useFaqProductDetail';
 const faqsEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&
@@ -13,14 +15,21 @@ const faqsEnabled =
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;
 
 const FaqProductDetail = props => {
+    const { urlKey, productId } = props;
     const {
         storeConfig,
         storeConfigLoading,
         storeConfigError
     } = useStoreConfig();
     const { enable } = storeConfig?.bssFaqsConfig || '';
+
+    const {
+        faqDetailData,
+        faqDetailLoading,
+        faqDetailError
+    } = useFaqProductDetail({ urlKey: urlKey });
     const classes = defaultClasses;
-    const { faqs, productId } = props;
+    const faqs = faqDetailData?.products?.items[0]?.faqs || [];
     const { formatMessage } = useIntl();
     const [isActive, setIsActive] = useState(false);
     const [isQuestion, setIsQuestion] = useState(0);
@@ -55,7 +64,7 @@ const FaqProductDetail = props => {
                         faq_id={faq.faq_id}
                     >
                         <div className={classes.questionShortAnswer}>
-                            {faq.short_answer}
+                            <RichContent html={faq.short_answer} />
                         </div>
                         <div>
                             <Link
@@ -70,8 +79,8 @@ const FaqProductDetail = props => {
                         </div>
                         <p className={classes.createdInfo}>
                             {formatMessage({
-                                id: 'Created by Admin on:',
-                                defaultMessage: 'Created by Admin on:'
+                                id: `Created by ${faq.customer} on:`,
+                                defaultMessage: `Created by ${faq.customer} on:`
                             })}{' '}
                             {faq.time}
                         </p>
@@ -101,10 +110,9 @@ const FaqProductDetail = props => {
         setQuestion('');
     };
 
-    if (loading) {
+    if (loading || faqDetailLoading) {
         return <Loader />;
     }
-
     if (!faqsEnabled || parseInt(enable) === 0 || storeConfigLoading) return '';
 
     return (
