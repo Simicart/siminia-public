@@ -9,6 +9,7 @@ import { useCategory } from '../talons/useCategory';
 import Loader from '../../Loader';
 import { useTagList } from '../talons/useTagList';
 import SearchBox from '../SearchBox';
+import RichContent from '@magento/venia-ui/lib/components/RichContent';
 const TagListContent = props => {
     const { tagName = '' } = useParams();
     const { tagListData, tagListLoading, tagListError } = useTagList({
@@ -44,7 +45,7 @@ const TagListContent = props => {
                         faq_id={faq.faq_id}
                     >
                         <div className={classes.questionShortAnswer}>
-                            {faq.short_answer}
+                            <RichContent html={faq.short_answer} />
                         </div>
                         <div>
                             <Link
@@ -59,8 +60,8 @@ const TagListContent = props => {
                         </div>
                         <p className={classes.createdInfo}>
                             {formatMessage({
-                                id: 'Created by Admin on:',
-                                defaultMessage: 'Created by Admin on:'
+                                id: `Created by ${faq.customer} on:`,
+                                defaultMessage: `Created by ${faq.customer} on:`
                             })}{' '}
                             {faq.time}
                         </p>

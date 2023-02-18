@@ -147,7 +147,7 @@
     color: #6f6f6f;
 }
 .expanding {
-    display: inline-block;
+    display: block;
 }
 .shortAnswer:before {
     width: 20px;
@@ -344,4 +344,7 @@
     display: block;
     color: #ff0000;
     margin: 10px 0;
+}
+.faqProductDetail .expanding {
+    display: block;
 }

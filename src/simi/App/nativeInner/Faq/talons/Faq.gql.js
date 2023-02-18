@@ -299,3 +299,44 @@ export const ASK_A_QUESTION = gql`
         }
     }
 `;
+
+export const FaqDetailFragment = faqsEnabled
+    ? gql`
+          fragment FaqDetailFragment on ProductInterface {
+              faqs {
+                  answer
+                  category_id
+                  customer
+                  faq_id
+                  frontend_label
+                  helpful_vote
+                  is_check_all_product
+                  is_most_frequently
+                  is_show_full_answer
+                  limit_link
+                  product_id
+                  related_faq_id
+                  short_answer
+                  store_id
+                  tag
+                  time
+                  title
+                  unhelpful_vote
+                  url_key
+                  use_real_vote_data
+              }
+          }
+      `
+    : '';
+
+export const GET_FAQ_INFO_PRODUCT_DETAIL = gql`
+    query getProductDetailForProductPage($urlKey: String!) {
+        products(filter: { url_key: { eq: $urlKey } }) {
+            items {
+                name
+                ...FaqDetailFragment
+            }
+        }
+    }
+    ${FaqDetailFragment}
+`;

@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { useCategory } from '../talons/useCategory';
 import Loader from '../../Loader';
 import SearchBox from '../SearchBox';
+import RichContent from '@magento/venia-ui/lib/components/RichContent';
 const CategoryContent = props => {
     const { categoryUrl = '' } = useParams();
     const { categoriesData, categoriesLoading, categoriesError } = useCategory({
@@ -45,7 +46,7 @@ const CategoryContent = props => {
                         faq_id={faq.faq_id}
                     >
                         <div className={classes.questionShortAnswer}>
-                            {faq.short_answer}
+                            <RichContent html={faq.short_answer} />
                         </div>
                         <div>
                             <Link
@@ -60,8 +61,8 @@ const CategoryContent = props => {
                         </div>
                         <p className={classes.createdInfo}>
                             {formatMessage({
-                                id: 'Created by Admin on:',
-                                defaultMessage: 'Created by Admin on:'
+                                id: `Created by ${faq.customer} on:`,
+                                defaultMessage: `Created by ${faq.customer} on:`
                             })}{' '}
                             {faq.time}
                         </p>

@@ -63,8 +63,8 @@ const MainContent = props => {
                         </div>
                         <p className={classes.createdInfo}>
                             {formatMessage({
-                                id: 'Created by Admin on:',
-                                defaultMessage: 'Created by Admin on:'
+                                 id: `Created by ${faq.customer} on:`,
+                                 defaultMessage: `Created by ${faq.customer} on:`
                             })}{' '}
                             {faq.time}
                         </p>

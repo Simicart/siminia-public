@@ -37,7 +37,7 @@ const FaqQuestion = props => {
         url_key: questionUrl
     });
     const { mainPageData, mainPageLoading, mainPageError } = useMainPage();
-    const { main_content, sidebar } = mainPageData?.mainPageFaqs;
+    const { main_content, sidebar } = mainPageData?.mainPageFaqs || {};
     const categoryImage = sidebar?.category?.filter(
         cate => cate.faq_id === questionData?.questionUrl?.category_id
     )[0]?.image;
@@ -138,8 +138,8 @@ const FaqQuestion = props => {
                         </div>
                         <p className={classes.createdInfo}>
                             {formatMessage({
-                                id: 'Created by Admin on:',
-                                defaultMessage: 'Created by Admin on:'
+                                 id: `Created by ${faq.customer} on:`,
+                                 defaultMessage: `Created by ${faq.customer} on:`
                             })}{' '}
                             {faq?.time}
                         </p>
