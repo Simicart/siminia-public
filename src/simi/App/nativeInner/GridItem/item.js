@@ -25,7 +25,10 @@ import { useHistory } from 'react-router-dom';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToListButton';
 import ProductLabel from '../ProductLabel';
-import { HidePrice, HideAddToCartBtn } from 'src/simi/BaseComponents/CallForPrice/components/Product'
+import {
+    HidePrice,
+    HideAddToCartBtn
+} from 'src/simi/BaseComponents/CallForPrice/components/Product';
 import ProductRewardPoint from 'src/simi/BaseComponents/RewardPoint/components/Product';
 import { CATALOG_PAGE, SEARCH_PAGE, HOME_PAGE } from '../ProductLabel/consts';
 
@@ -92,7 +95,7 @@ const Griditem = props => {
                     : giftCardPrices[0];
             max_price =
                 max_price > 0 &&
-                    max_price > giftCardPrices[giftCardPrices.length - 1]
+                max_price > giftCardPrices[giftCardPrices.length - 1]
                     ? max_price
                     : giftCardPrices[giftCardPrices.length - 1];
         }
@@ -174,7 +177,18 @@ const Griditem = props => {
                         fallBackUrl={small_image}
                         className="product-image-label"
                     />
-                    {(!productOutStock &&
+                    <ProductLabel
+                        page={
+                            isSearchPage === -1
+                                ? isHomePage
+                                    ? HOME_PAGE
+                                    : CATALOG_PAGE
+                                : SEARCH_PAGE
+                        }
+                        productLabel={product_label}
+                        productOutStock={productOutStock}
+                    />
+                    {/* {(!productOutStock &&
                         bssProductLabelStoreConfig?.display_only_out_of_stock_label ===
                         '0') ||
                         bssProductLabelStoreConfig?.display_only_out_of_stock_label ===
@@ -188,7 +202,7 @@ const Griditem = props => {
                         />
                     ) : (
                         ''
-                    )}
+                    )} */}
                 </Link>
                 {productOutStock ? (
                     <div className={itemClasses.soldOut}>
@@ -202,8 +216,8 @@ const Griditem = props => {
                 )}
 
                 {item.price &&
-                    item.price.has_special_price &&
-                    !productOutStock ? (
+                item.price.has_special_price &&
+                !productOutStock ? (
                     <div
                         className={itemClasses.discountBadge}
                         style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
@@ -221,50 +235,46 @@ const Griditem = props => {
         <div className={`${itemClasses['price-each-product']}`}>
             <div
                 role="presentation"
-                className={`${itemClasses['prices-layout']} ${Identify.isRtl()
-                        ? itemClasses['prices-layout-rtl']
-                        : ''
-                    }`}
+                className={`${itemClasses['prices-layout']} ${
+                    Identify.isRtl() ? itemClasses['prices-layout-rtl'] : ''
+                }`}
                 style={{
-                    flexWrap:
-                        type_id === 'configurable' ? 'wrap' : 'nowrap'
+                    flexWrap: type_id === 'configurable' ? 'wrap' : 'nowrap'
                 }}
                 id={`price-${id}`}
             >
                 {type_id === 'configurable' && (
-                    <div
-                        className={itemClasses['configurable-aslowas']}
-                    >
+                    <div className={itemClasses['configurable-aslowas']}>
                         {formatMessage({ id: 'As low as:' })}
                     </div>
                 )}
                 {priceComponent}
             </div>
         </div>
-    )
+    );
 
     const addToCartBtn = (
         <button
             className={itemClasses['product-grid-addcartbtn']}
             onClick={() => {
-                if (!loading && !productOutStock)
-                    handleAddCart(item);
+                if (!loading && !productOutStock) handleAddCart(item);
             }}
         >
             {formatMessage({
                 id: productOutStock
                     ? 'Out of stock'
                     : loading
-                        ? 'Adding'
-                        : 'Add To Cart'
+                    ? 'Adding'
+                    : 'Add To Cart'
             })}
         </button>
-    )
+    );
 
     return (
         <div
-            className={` ${itemClasses['siminia-product-grid-item']
-                } siminia-product-grid-item ${productOutStock &&
+            className={` ${
+                itemClasses['siminia-product-grid-item']
+            } siminia-product-grid-item ${productOutStock &&
                 itemClasses['item-outstock']}`}
             style={styles['siminia-product-grid-item']}
         >
@@ -303,8 +313,9 @@ const Griditem = props => {
                 )}
                 <div
                     role="presentation"
-                    className={`${itemClasses['product-name']} ${itemClasses['small']
-                        }`}
+                    className={`${itemClasses['product-name']} ${
+                        itemClasses['small']
+                    }`}
                     onClick={() => handleLink(location)}
                     dangerouslySetInnerHTML={{ __html: name }}
                 />
@@ -314,11 +325,11 @@ const Griditem = props => {
             <div
                 className={`${itemClasses['product-grid-actions']} ${loading &&
                     itemClasses['action-loading']}`}
-            >   
-                <HideAddToCartBtn 
+            >
+                <HideAddToCartBtn
                     type="list"
                     product={item}
-                    addToCartBtn={addToCartBtn} 
+                    addToCartBtn={addToCartBtn}
                 />
                 <div className={itemClasses['product-grid-wishlistbtn']}>
                     <AddToListButton
