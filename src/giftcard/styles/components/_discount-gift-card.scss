@@ -18,6 +18,7 @@
     flex-direction: row;
     justify-content: space-between;
     gap: 8px;
+    margin-bottom: 10px;
 }
 
 .discount-gift-card-apply-button {
@@ -59,4 +60,12 @@
     .discount-gift-card-title {
         font-size: 16px;
     }
+}
+
+.discount-gift-card-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid gray;
 }

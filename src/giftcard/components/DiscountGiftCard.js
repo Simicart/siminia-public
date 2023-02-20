@@ -9,24 +9,25 @@ import { GiftCodeCartContext } from "../../simi/App/nativeInner/CartCore/cartPag
 const DiscountGiftCard = ({ location }) => {
     let giftCodeData = null
     let setGiftCodeData = null
-    if(location === 'cart') {
+    if (location === 'cart') {
         giftCodeData = useContext(GiftCodeCartContext).giftCodeData
         setGiftCodeData = useContext(GiftCodeCartContext).setGiftCodeData
     }
-    if(location === 'checkout') {
+    if (location === 'checkout') {
         giftCodeData = useContext(GiftCodeCheckoutContext).giftCodeData
         setGiftCodeData = useContext(GiftCodeCheckoutContext).setGiftCodeData
     }
-    
+
     const [expand, setExpand] = useState(false)
     const [giftCode, setGiftCode] = useState('')
     const [giftCodeError, setGiftCodeError] = useState(false)
+    const [matchCode, setMatchCode] = useState()
     const myGiftCards = useOrderedGiftCards()
     const orderGiftCardId = useOrderedGiftCardId()
 
-    if (myGiftCards.loading) return <p>Loading</p>
+    if (myGiftCards.loading) return <></>
     if (myGiftCards.error) return <p>{`Error! ${myGiftCards.error.message}`}</p>
-    if (orderGiftCardId.loading) return <p>Loading</p>
+    if (orderGiftCardId.loading) return <></>
     if (orderGiftCardId.error) return <p>{`Error! ${orderGiftCardId.error.message}`}</p>
 
     const handleCodeChange = (e) => {
@@ -36,19 +37,25 @@ const DiscountGiftCard = ({ location }) => {
     const handleAddGiftCode = () => {
         const orderedGiftCard = myGiftCards.data.bssCustomerGiftCards.filter((element) => {
             let result = false
-            for(let i=0; i<orderGiftCardId.data.customerOrders.items.length; i++) {
-                if(element.order_id.toString() === orderGiftCardId.data.customerOrders.items[i].id) result = true
+            for (let i = 0; i < orderGiftCardId.data.customerOrders.items.length; i++) {
+                if (element.order_id.toString() === orderGiftCardId.data.customerOrders.items[i].id) result = true
             }
             return result
         })
-        
+
         const matchCode = orderedGiftCard.find((element) => element.code === giftCode)
-        if(matchCode) {
+        if (matchCode) {
+            setMatchCode(matchCode)
             setGiftCodeError(false)
             setGiftCodeData(matchCode)
         }
-        else setGiftCodeError(true)
+        else {
+            setMatchCode()
+            setGiftCodeError(true)
+        }
     }
+
+    console.log(matchCode)
 
     return (
         <>
@@ -64,18 +71,38 @@ const DiscountGiftCard = ({ location }) => {
                 {expand && (<div>
                     <p style={{ fontSize: 14, marginTop: 40, marginBottom: 6 }}>Gift Card Code</p>
                     <div className="discount-gift-card-input-wrapper">
-                        <div style={{flexGrow: 1}}>
-                            <input style={{width: '100%', height: 50, paddingLeft: 15}} placeholder="Enter code" onChange={handleCodeChange} value={giftCode}></input>
-                            {giftCodeError && (<p style={{fontSize: 14, marginTop: 10, color: 'red'}}>The gift code isn't valid. Verify the code and try again.</p>)}
+                        <div style={{ flexGrow: 1 }}>
+                            <input style={{ width: '100%', height: 50, paddingLeft: 15 }} placeholder="Enter code" onChange={handleCodeChange} value={giftCode}></input>
+                            {giftCodeError && (<p style={{ fontSize: 14, marginTop: 10, color: 'red' }}>The gift code isn't valid. Verify the code and try again.</p>)}
                         </div>
                         <div>
-                            <button className='discount-gift-card-apply-button' onClick = {handleAddGiftCode}>APPLY</button>
+                            <button className='discount-gift-card-apply-button' onClick={handleAddGiftCode}>APPLY</button>
                         </div>
                     </div>
                 </div>)}
+                {matchCode && (
+                    <>
+                        <div className="discount-gift-card-info">
+                            <p>Code:</p>
+                            <p>{matchCode.code}</p>
+                        </div>
+                        <div className="discount-gift-card-info">
+                            <p>Value:</p>
+                            <p>{`$${matchCode.value}.00`}</p>
+                        </div>
+                        <div className="discount-gift-card-info">
+                            <p>Status:</p>
+                            <p>{matchCode.status.label}</p>
+                        </div>
+                        <div className="discount-gift-card-info">
+                            <p>Expire date:</p>
+                            <p>{matchCode.expire_date}</p>
+                        </div>
+                    </>
+                )}
             </div>
         </>
-                )
-    }
+    )
+}
 
 export default DiscountGiftCard
