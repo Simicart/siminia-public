@@ -237,7 +237,7 @@ const FaqQuestion = props => {
                             </div>
                         </div>
                     </div>
-                    <div className={classes.faqTagBlock}>
+                    {question?.tag && <div className={classes.faqTagBlock}>
                         <div className={classes.tagLabel}>
                             <div>
                                 {formatMessage({
@@ -251,10 +251,10 @@ const FaqQuestion = props => {
                                 className={classes.faqUrl}
                                 to={`/faqs/tag/${question.tag}`}
                             >
-                                {question?.tag}
+                                {question.tag}
                             </Link>
                         </div>
-                    </div>
+                    </div>}
                     {social_button === '1' && (
                         <div className={classes.faqSocialShare}>
                             <div className={classes.jssocialsShares}>
