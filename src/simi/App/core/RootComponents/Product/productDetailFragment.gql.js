@@ -101,37 +101,18 @@ export const ProductDetailsFragment = gql`
             productLabelEnabled
                 ? `
                 product_label {
-                    active
-                    apply_outofstock_product
-                    conditions_serialized {
-                      aggregator
-                      attribute
-                      conditions
-                      is_value_processed
-                      operator
-                      type
-                      value
-                    }
-                    created_at
-                    customer_groups
-                    image
-                    id
-                    image_data {
-                      angle
-                      height
-                      heightOrigin
-                      left
-                      top
-                      width
-                      widthOrigin
-                    }
                     name
-                    priority
-                    store_views
-                    updated_at
-                    valid_end_date
-                    valid_start_date
-                  }
+                    image
+                    image_data {
+                        left
+                        top
+                        width
+                        height
+                        widthOrigin
+                        heightOrigin
+                        angle
+                    }
+                }
         `
                 : ``
         }
