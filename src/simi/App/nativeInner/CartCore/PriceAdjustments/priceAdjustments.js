@@ -96,7 +96,7 @@ const PriceAdjustments = props => {
                     rewardPoint={rewardPoint}
                     refetchCartPage={refetchCartPage}
                 />
-                {giftCardEnabled ? (
+                {checkEnabledGiftCard() ? (
                     <DiscountGiftCard location={props.location} />
                 ) : (
                     <></>

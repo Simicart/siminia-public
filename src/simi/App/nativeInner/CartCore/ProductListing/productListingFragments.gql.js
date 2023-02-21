@@ -1,5 +1,11 @@
 import { gql } from '@apollo/client';
 
+const productLabelEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL) === 1;
+
 export const GiftcartListingFragment = gql`
           fragment GiftcartListingFragment on CartItemInterface {
               id

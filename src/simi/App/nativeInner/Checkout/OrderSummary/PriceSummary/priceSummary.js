@@ -147,13 +147,6 @@ const PriceSummary = props => {
                     data={rewardPoint}
                     currencyCode={subtotal.currency}
                 />
-                <GiftCardSummary
-                    classes={{
-                        lineItemLabel: classes.lineItemLabel,
-                        price: priceClass
-                    }}
-                    data={giftCards}
-                />
                 <TaxSummary
                     classes={{
                         lineItemLabel: classes.lineItemLabel,
