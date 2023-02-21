@@ -36,6 +36,21 @@
     background-color: rgba(0, 0, 0, 0.8)
 }
 
+.discount-gift-card-remove-button {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: black;
+    margin-top: 20px;
+    flex-grow: 1;
+    height: 50px;
+    width: 160px;
+}
+
+.discount-gift-card-remove-button:hover {
+    background-color: rgba(0, 0, 0, 0.8)
+}
+
 @media only screen and (max-width: 960px) {
     .discount-gift-card-wrapper {
         padding: 40px 35px;
@@ -53,6 +68,16 @@
         padding: 8px;
         height: 40px;
         width: 100%;
+    }
+    .discount-gift-card-remove-button {
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        background-color: black;
+        padding: 8px;
+        height: 40px;
+        width: 100%;
+        margin-top: 20px
     }
 }
 

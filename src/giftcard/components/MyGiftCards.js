@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import LeftMenu from '../../simi/App/core/LeftMenu/leftMenu'
 import '../styles/styles.scss'
-import useOrderedGiftCards from '../talons/useOrderedGiftCards'
-import useOrderedGiftCardId from '../talons/useOrderedGiftCardId'
+import { useOrderedGiftCards } from '../talons/useOrderedGiftCards'
+import { useOrderedGiftCardId } from '../talons/useOrderedGiftCardId'
+import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 
 const MyGiftCards = () => {
     const myGiftCards = useOrderedGiftCards()
     const orderGiftCardId = useOrderedGiftCardId()
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
-    if (myGiftCards.loading) return <p>Loading</p>
+    if (myGiftCards.loading) return fullPageLoadingIndicator
     if (myGiftCards.error) return <p>{`Error! ${myGiftCards.error.message}`}</p>
-    if (orderGiftCardId.loading) return <p>Loading</p>
+    if (orderGiftCardId.loading) return fullPageLoadingIndicator
     if (orderGiftCardId.error) return <p>{`Error! ${orderGiftCardId.error.message}`}</p>
 
     const orderedGiftCard = myGiftCards.data.bssCustomerGiftCards.filter((element) => {

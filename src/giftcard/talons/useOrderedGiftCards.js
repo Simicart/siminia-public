@@ -23,4 +23,4 @@ const useOrderedGiftCards = () => {
      return orderedGiftCards
 }
 
-export default useOrderedGiftCards
+export { useOrderedGiftCards, GET_ORDERED_GIFT_CARDS }

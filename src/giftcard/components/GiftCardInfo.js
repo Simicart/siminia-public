@@ -60,6 +60,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData }) => {
     //control status when user add gift card to wish list
     const [showWishlistStatus, setShowWishlistStatus] = useState(false)
     const [wishlistStatus, setWishlistStatus] = useState('')
+    const [heartFill, setHeartFill] = useState('white')
 
     //templates data and price range
     const imgs = giftCardData.products.items[0].giftcard_options.template[0].images
@@ -390,6 +391,8 @@ const GiftCardInfo = ({ giftCardData, timezoneData }) => {
         onCompleted: (addWishlistData) => {
             setWishlistStatus(`${giftCardData.products.items[0].name.toUpperCase()} was added to your wishlist`)
             setShowWishlistStatus(true)
+            setHeartFill('rgba(236, 91, 98, 1)')
+
         },
         onError: (addWishlistError) => {
             setWishlistStatus('Some errors occurred. Please try again later')
@@ -586,7 +589,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData }) => {
                         {quantityError && (<p style={{ color: 'red', fontSize: 12, marginTop: 5 }}>{quantityText}</p>)}
                         <div className='gift-card-add-wishlist-button'>
                             <div style={{marginRight: 15, cursor: 'pointer'}}>
-                                <Heart size={28} onClick={handleAddToWishlist}></Heart>
+                                <Heart size={28} onClick={handleAddToWishlist} fill={heartFill}></Heart>
                             </div>
                             <div>
                                 <p style={{ marginTop: 5 }}>Add to Favorites</p>

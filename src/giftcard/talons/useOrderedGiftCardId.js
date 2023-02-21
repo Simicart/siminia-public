@@ -19,4 +19,4 @@ const useOrderedGiftCardId = () => {
     return orderData
 }
 
-export default useOrderedGiftCardId
+export { useOrderedGiftCardId, GET_ORDERED_GIFT_CARD_ID }

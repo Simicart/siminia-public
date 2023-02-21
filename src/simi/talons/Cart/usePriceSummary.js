@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useContext } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
@@ -6,6 +6,7 @@ import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import DEFAULT_OPERATIONS from './priceSummary.gql';
 import { hideFogLoading } from '../../BaseComponents/Loading/GlobalLoading';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
+import { GiftCodeCheckoutContext } from '../../App/nativeInner/Checkout/checkoutPage';
 
 /**
  * @ignore
@@ -16,8 +17,23 @@ import { useUserContext } from '@magento/peregrine/lib/context/user';
  *
  * @param {Object} data query data
  */
-const flattenData = data => {
+const flattenData = (data, giftCodeData) => {
     if (!data) return {};
+    if (giftCodeData) {
+        const total = {
+            ...data.cart.prices.grand_total,
+            value: data.cart.prices.grand_total.value - giftCodeData.value > 0 ? (data.cart.prices.grand_total.value - giftCodeData.value).toFixed(2) : 0
+        }
+        return {
+            subtotal: data.cart.prices.subtotal_excluding_tax,
+            total: total,
+            discounts: data.cart.prices.discounts,
+            giftCards: data.cart.mp_giftcard_config,
+            taxes: data.cart.prices.applied_taxes,
+            shipping: data.cart.shipping_addresses,
+            priceData: data.cart.prices.mp_reward_segments
+        }
+    }
     return {
         subtotal: data.cart.prices.subtotal_excluding_tax,
         total: data.cart.prices.grand_total,
@@ -51,6 +67,8 @@ export const usePriceSummary = (props = {}) => {
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const { getPriceSummaryQuery, getRuleApply, spendRewardPoint } = operations;
 
+    const { giftCodeData, setGiftCodeData } = useContext(GiftCodeCheckoutContext)
+
     const [{ isSignedIn }] = useUserContext();
     const [{ cartId }] = useCartContext();
     const history = useHistory();
@@ -66,6 +84,7 @@ export const usePriceSummary = (props = {}) => {
             cartId
         }
     });
+
     const [loadingPriceData] = useLazyQuery(getPriceSummaryQuery, {
         fetchPolicy: 'cache-and-network',
         nextFetchPolicy: 'cache-first',
@@ -105,7 +124,7 @@ export const usePriceSummary = (props = {}) => {
         hasItems: data && !!data.cart.items.length,
         isCheckout,
         isLoading: !!loading,
-        flatData: flattenData(data)
+        flatData: flattenData(data, giftCodeData)
     };
 };
 

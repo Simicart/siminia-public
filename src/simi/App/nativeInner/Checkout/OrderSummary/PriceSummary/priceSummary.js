@@ -6,7 +6,6 @@ import Button from '@magento/venia-ui/lib/components/Button';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import defaultClasses from './priceSummary.module.css';
 import DiscountSummary from 'src/simi/App/core/Cart/PriceSummary/discountSummary';
-import GiftCardSummary from '@magento/venia-ui/lib/components/CartPage/PriceSummary/giftCardSummary';
 import ShippingSummary from 'src/simi/App/core/Cart/PriceSummary/shippingSummary';
 import TaxSummary from 'src/simi/App/core/Cart/PriceSummary/taxSummary';
 import { usePriceSummary } from 'src/simi/talons/Cart/usePriceSummary';
@@ -205,13 +204,6 @@ const PriceSummary = props => {
                     }}
                     data={discounts}
                 />
-                <GiftCardSummary
-                    classes={{
-                        lineItemLabel: classes.lineItemLabel,
-                        price: priceClass
-                    }}
-                    data={giftCards}
-                />
                 <TaxSummary
                     classes={{
                         lineItemLabel: classes.lineItemLabel,
@@ -234,7 +226,7 @@ const PriceSummary = props => {
                 </>)}
                 <span className={classes.totalLabel}>{totalPriceLabel}</span>
                 <span className={totalPriceClass}>
-                    <Price value={giftCodeData ? total.value - giftCodeData.value : total.value} currencyCode={total.currency} />
+                    <Price value={total.value} currencyCode={total.currency} />
                 </span>
             </div>
             {proceedToCheckoutButton}
