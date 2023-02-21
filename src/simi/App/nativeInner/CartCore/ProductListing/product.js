@@ -23,7 +23,8 @@ import { AvailableShippingMethodsCartFragment } from '@magento/peregrine/lib/tal
 import { func } from 'prop-types';
 import { configColor } from 'src/simi/Config';
 import { taxConfig } from '../../../../Helper/Pricing';
-
+import ProductLabel from '../../ProductLabel';
+import { SHOPPING_CART_PAGE } from '../../ProductLabel/consts';
 const IMAGE_SIZE = 100;
 
 const HeartIcon = <Icon size={16} src={Heart} />;
@@ -66,11 +67,10 @@ const Product = props => {
         urlKey,
         urlSuffix
     } = product;
+
     const classes = useStyle(defaultClasses, props.classes);
 
-    const itemClassName = isProductUpdating
-        ? classes.item_disabled
-        : classes.item;
+    const itemClassName = classes.item;
 
     const editItemSection = isEditable ? (
         <Section
@@ -196,8 +196,11 @@ const Product = props => {
             );
         });
     }
-    if(item.giftcard_options && item.giftcard_options.length) {
-        const gcOptions = item.giftcard_options.slice(2, item.giftcard_options.length)
+    if (item.giftcard_options && item.giftcard_options.length) {
+        const gcOptions = item.giftcard_options.slice(
+            2,
+            item.giftcard_options.length
+        );
         gcOptions.map((gcOption, index) => {
             optionText.push(
                 <div key={index} className={classes.optionLabel}>
@@ -214,7 +217,7 @@ const Product = props => {
                     />
                 </div>
             );
-        })
+        });
     }
     const itemOption =
         Array.isArray(optionText) && optionText.length ? (
@@ -222,9 +225,18 @@ const Product = props => {
         ) : (
             ''
         );
+
+    const loading = isProductUpdating ? (
+        <div className={classes.loader}>
+            <div className={classes.loaderOverlay} />
+            <div className={classes.loaderIcon} />
+        </div>
+    ) : null;
+
     return (
         <div className={classes.root}>
             <span className={classes.errorText}>{errorMessage}</span>
+            {loading}
             <div className={itemClassName}>
                 <Link to={itemLink} className={classes.imageContainer}>
                     <Image
@@ -235,6 +247,11 @@ const Product = props => {
                         }}
                         width={IMAGE_SIZE}
                         resource={image}
+                    />
+                    <ProductLabel
+                        page={SHOPPING_CART_PAGE}
+                        productLabel={item?.product?.product_label}
+                        productOutStock={stockStatus ==="OUT_OF_STOCK" ? true : false}
                     />
                 </Link>
                 <div className={classes.details}>
@@ -247,18 +264,10 @@ const Product = props => {
                         className={classes.price}
                     >
                         <span className={classes.labelPrice} />
-                        {showExcludedTax ? (
-                            <Price currencyCode={currency} value={unitPrice} />
-                        ) : (
-                            <Price
-                                currencyCode={
-                                    item.prices.row_total_including_tax.currency
-                                }
-                                value={
-                                    item.prices.row_total_including_tax.value
-                                }
-                            />
-                        )}
+                        <Price
+                            currencyCode={item.prices.price.currency}
+                            value={item.prices.price.value}
+                        />
                         <FormattedMessage
                             id={'product.price'}
                             defaultMessage={' ea.'}
@@ -277,6 +286,31 @@ const Product = props => {
                             onChange={handleUpdateItemQuantity}
                         />
                     </div>
+                    <span
+                        style={{ color: configColor.price_color }}
+                        className={classes.priceTotal}
+                    >
+                        <span className={classes.labelPrice} />
+                        {showExcludedTax ? (
+                            <Price
+                                currencyCode={item.prices.row_total.currency}
+                                value={item.prices.row_total.value}
+                            />
+                        ) : (
+                            <Price
+                                currencyCode={
+                                    item.prices.row_total_including_tax.currency
+                                }
+                                value={
+                                    item.prices.row_total_including_tax.value
+                                }
+                            />
+                        )}
+                        <FormattedMessage
+                            id={'product.price'}
+                            defaultMessage={' ea.'}
+                        />
+                    </span>
                 </div>
                 <Kebab
                     classes={{

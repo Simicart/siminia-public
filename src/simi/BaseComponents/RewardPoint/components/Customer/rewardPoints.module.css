@@ -1,0 +1,56 @@
+.root {
+    padding-top: 3rem;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin-bottom: 50px;
+    font-weight: 700;
+}
+
+.block {
+    margin-bottom: 50px;
+}
+
+.blockTitle {
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f2f2f2;
+    font-weight: 700;
+}
+
+.blockTitleTransactions {
+    composes: blockTitle;
+}
+
+.blockTitleTransactions > span {
+    text-transform: uppercase;
+}
+
+.blockTitleTransactions > a {
+    margin-inline-start: 15px;
+    color: #1498d0;
+}
+
+.rwPoint {
+    margin-bottom: 1rem;
+}
+
+.rwPoint > span:first-child:after {
+    content: ' ';
+}   
+
+.panelPoint {
+    color: #1498d0;
+    font-weight: 600;
+} 
+
+@media(min-width: 1024px) {
+    .wrapper {
+        display: grid;
+        grid-template-columns: 20% auto;
+        gap: 30px;
+    }
+}

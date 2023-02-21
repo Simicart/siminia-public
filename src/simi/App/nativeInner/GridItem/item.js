@@ -24,9 +24,13 @@ import { useGridItem } from '../../../talons/Category/useGridItem';
 import { useHistory } from 'react-router-dom';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToListButton';
-import ProductLabel from '../../../App/core/ProductFullDetail/ProductLabel';
-import { useUserContext } from '@magento/peregrine/lib/context/user';
-import CallForPrice from '../ProductFullDetail/callForPrice';
+import ProductLabel from '../ProductLabel';
+import {
+    HidePrice,
+    HideAddToCartBtn
+} from 'src/simi/BaseComponents/CallForPrice/components/Product';
+import ProductRewardPoint from 'src/simi/BaseComponents/RewardPoint/components/Product';
+import { CATALOG_PAGE, SEARCH_PAGE, HOME_PAGE } from '../ProductLabel/consts';
 
 const HeartIcon = <Icon size={20} src={Heart} />;
 
@@ -37,11 +41,14 @@ const Griditem = props => {
     const logo_url = logoUrl();
     const { classes, styles = {} } = props;
     const history = useHistory();
+    const storeConfig = Identify.getStoreConfig();
+    const { bssProductLabelStoreConfig } = storeConfig || {};
+    const isSearchPage = history.location.pathname.indexOf('search');
+    const isHomePage = history.location.pathname === '/';
     const [{ cartId }] = useCartContext();
     const handleLink = linkInput => {
         history.push(linkInput);
     };
-    const [{ isSignedIn }] = useUserContext();
 
     const itemClasses = mergeClasses(defaultClasses, classes);
     const {
@@ -53,13 +60,12 @@ const Griditem = props => {
         small_image,
         rating_summary,
         review_count,
-        mp_label_data,
+        product_label,
         price_rate,
         allow_amount_range,
         gift_card_amounts,
         __typename
     } = item;
-
     const callForPriceRule = item.mp_callforprice_rule;
 
     const product_url = `/${url_key}${productUrlSuffix()}`;
@@ -153,7 +159,6 @@ const Griditem = props => {
     imageUrl = resourceUrl(imageUrl, { type: 'image-product', width: 260 });
 
     const productOutStock = item.stock_status === 'OUT_OF_STOCK';
-
     const image = (
         <div
             className={itemClasses['siminia-product-image']}
@@ -179,9 +184,31 @@ const Griditem = props => {
                         className="product-image-label"
                     />
                     <ProductLabel
-                        productLabel={mp_label_data ? mp_label_data : null}
-                        label_tyle="gallery"
+                        page={
+                            isSearchPage === -1
+                                ? isHomePage
+                                    ? HOME_PAGE
+                                    : CATALOG_PAGE
+                                : SEARCH_PAGE
+                        }
+                        productLabel={product_label}
+                        productOutStock={productOutStock}
                     />
+                    {/* {(!productOutStock &&
+                        bssProductLabelStoreConfig?.display_only_out_of_stock_label ===
+                        '0') ||
+                        bssProductLabelStoreConfig?.display_only_out_of_stock_label ===
+                        '1' ? (
+                        <ProductLabel
+                            page={
+                                isSearchPage === -1 ? (isHomePage ? HOME_PAGE : CATALOG_PAGE) : SEARCH_PAGE
+                            }
+                            productLabel={product_label}
+                            productOutStock={productOutStock}
+                        />
+                    ) : (
+                        ''
+                    )} */}
                 </Link>
                 {productOutStock ? (
                     <div className={itemClasses.soldOut}>
@@ -194,7 +221,9 @@ const Griditem = props => {
                     ''
                 )}
 
-                {item.price && item.price.has_special_price ? (
+                {item.price &&
+                item.price.has_special_price &&
+                !productOutStock ? (
                     <div
                         className={itemClasses.discountBadge}
                         style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
@@ -206,6 +235,45 @@ const Griditem = props => {
                 )}
             </div>
         </div>
+    );
+
+    const showPrice = (
+        <div className={`${itemClasses['price-each-product']}`}>
+            <div
+                role="presentation"
+                className={`${itemClasses['prices-layout']} ${
+                    Identify.isRtl() ? itemClasses['prices-layout-rtl'] : ''
+                }`}
+                style={{
+                    flexWrap: type_id === 'configurable' ? 'wrap' : 'nowrap'
+                }}
+                id={`price-${id}`}
+            >
+                {type_id === 'configurable' && (
+                    <div className={itemClasses['configurable-aslowas']}>
+                        {formatMessage({ id: 'As low as:' })}
+                    </div>
+                )}
+                {priceComponent}
+            </div>
+        </div>
+    );
+
+    const addToCartBtn = (
+        <button
+            className={itemClasses['product-grid-addcartbtn']}
+            onClick={() => {
+                if (!loading && !productOutStock) handleAddCart(item);
+            }}
+        >
+            {formatMessage({
+                id: productOutStock
+                    ? 'Out of stock'
+                    : loading
+                    ? 'Adding'
+                    : 'Add To Cart'
+            })}
+        </button>
     );
 
     return (
@@ -262,62 +330,18 @@ const Griditem = props => {
                     }}
                     dangerouslySetInnerHTML={{ __html: name }}
                 />
-                <div className={`${itemClasses['price-each-product']}`}>
-                    <div
-                        role="presentation"
-                        className={`${itemClasses['prices-layout']} ${
-                            Identify.isRtl()
-                                ? itemClasses['prices-layout-rtl']
-                                : ''
-                        }`}
-                        style={{
-                            flexWrap:
-                                type_id === 'configurable' ? 'wrap' : 'nowrap'
-                        }}
-                        id={`price-${id}`}
-                    >
-                        {type_id === 'configurable' && (
-                            <div
-                                className={itemClasses['configurable-aslowas']}
-                            >
-                                {formatMessage({ id: 'As low as:' })}
-                            </div>
-                        )}
-                        <CallForPrice
-                            data={callForPriceRule}
-                            wrapperPrice={priceComponent}
-                            item_id={item.id}
-                        />
-                    </div>
-                </div>
-
-                {/* <div className={itemClasses['sold']}>
-                        {formatMessage({ id: 'sold',defaultMessage:'123 sold' })}
-                </div> */}
+                <HidePrice showPrice={showPrice} product={item} />
+                <ProductRewardPoint item={item} type="list" />
             </div>
             <div
                 className={`${itemClasses['product-grid-actions']} ${loading &&
                     itemClasses['action-loading']}`}
             >
-                {callForPriceRule?.action === 'hide_add_to_cart' ? (
-                    ''
-                ) : (
-                    <button
-                        className={itemClasses['product-grid-addcartbtn']}
-                        onClick={() => {
-                            if (!loading && !productOutStock)
-                                handleAddCart(item);
-                        }}
-                    >
-                        {formatMessage({
-                            id: productOutStock
-                                ? 'Out of stock'
-                                : loading
-                                ? 'Adding'
-                                : 'Add To Cart'
-                        })}
-                    </button>
-                )}
+                <HideAddToCartBtn
+                    type="list"
+                    product={item}
+                    addToCartBtn={addToCartBtn}
+                />
                 <div className={itemClasses['product-grid-wishlistbtn']}>
                     <AddToListButton
                         icon={HeartIcon}

@@ -106,14 +106,21 @@ const RewardTransaction = props => {
                             defaultMessage={'Reward Transactions'}
                         />
                     </div>
-                    {customerTransactions ? (
+                    {customerTransactions && customerTransactions.items ? (
                         <table>
                             <thead>
                                 <tr />
                             </thead>
                             <tbody>{transactionRow}</tbody>
                         </table>
-                    ) : null}
+                    ) : (
+                        <div>
+                            <FormattedMessage
+                                id={'You currently have no transactions.'}
+                                defaultMessage={'You currently have no transactions.'}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

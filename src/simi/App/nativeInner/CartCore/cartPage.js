@@ -41,6 +41,7 @@ const CartPage = props => {
     const {
         giftCardConfig,
         cartItems,
+        priceSummaryData,
         hasItems,
         isCartUpdating,
         fetchCartDetails,
@@ -84,7 +85,7 @@ const CartPage = props => {
     );
 
     const priceAdjustments = hasItems ? (
-        <PriceAdjustments setIsCartUpdating={setIsCartUpdating} giftCardConfig={giftCardConfig} refetchCartPage={refetchCartPage} location='cart'/>
+        <PriceAdjustments setIsCartUpdating={setIsCartUpdating} giftCardConfig={giftCardConfig} priceSummaryData={priceSummaryData} refetchCartPage={refetchCartPage}/>
     ) : null;
 
     const priceSummary = hasItems ? (

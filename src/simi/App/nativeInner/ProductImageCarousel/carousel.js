@@ -7,7 +7,6 @@ import { transparentPlaceholder } from '@magento/peregrine/lib/util/images';
 import { Carousel } from 'react-responsive-carousel';
 import ImageLightbox from './ImageLightbox';
 import { resourceUrl, getUrlBuffer, logoUrl } from 'src/simi/Helper/Url';
-import ProductLabel from '@simicart/siminia/src/simi/App/core/ProductFullDetail/ProductLabel';
 import './style.css';
 import { useWindowSize } from '@magento/peregrine';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
@@ -16,7 +15,8 @@ import getUrlKey from '../../../../../src/util/getUrlKey';
 import DEFAULT_OPERATIONS from '../../core/ProductFullDetail/ProductLabel/productLabel.gql';
 import ImageLoading from './imageLoading';
 const IMAGE_WIDTH = 640;
-
+import ProductLabel from '../ProductLabel';
+import { PRODUCT_PAGE } from '../ProductLabel/consts';
 /**
  * Carousel component for product images
  * Carousel - Component that holds number of images
@@ -49,7 +49,7 @@ const ProductImageCarousel = props => {
     const { getProductLabel } = operations;
     const [placeHoder, setPlaceholder] = useState(true);
     const { data, error, loading } = useQuery(getProductLabel, {
-        fetchPolicy: "no-cache",
+        fetchPolicy: 'no-cache',
         variables: {
             urlKey: getUrlKey()
         }
@@ -222,37 +222,20 @@ const ProductImageCarousel = props => {
                                     style={{ objectFit: 'contain' }}
                                     onLoad={() => setPlaceholder(false)}
                                 />
-
-                                {/* {index == 0 ? 
-                                <ProductLabel productLabel = {product.mp_label_data.length > 0 ? product.mp_label_data : null} />
-                            : null} */}
+                                <ProductLabel
+                                    page={PRODUCT_PAGE}
+                                    productLabel={product?.product_label}
+                                    productOutStock={
+                                        product.stock_status === 'OUT_OF_STOCK'
+                                            ? true
+                                            : false
+                                    }
+                                />
                             </div>
                         );
                     })
                 )}
             </Carousel>
-
-            {/* <ProductLabel
-                productLabel={
-                    product.mp_label_data.length > 0
-                        ? product.mp_label_data
-                        : null
-                }
-            /> */}
-
-            {/* <ProductLabel imageWidth={imageWidth} productLabel = {loading ? null : data.products.items[0].mp_label_data} /> */}
-            <ProductLabel
-                imageWidth={imageWidth}
-                productLabel={
-                    // labelData
-                    data &&
-                    data.products &&
-                    data.products.items[0] &&
-                    data.products.items[0].mp_label_data
-                        ? data.products.items[0].mp_label_data
-                        : null
-                }
-            />
 
             {renderLightBox && renderImageLightboxBlock()}
         </div>

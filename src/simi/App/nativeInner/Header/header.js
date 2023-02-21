@@ -28,8 +28,10 @@ import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
 import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 import { configColor } from '../../../../simi/Config';
-import { useGetRewardPointData } from '../../../talons/RewardPoint/useGetRewardPointData';
+// import { useGetRewardPointData } from '../../../talons/RewardPoint/useGetRewardPointData';
 import { useAppContext } from '@magento/peregrine/lib/context/app';
+import RewardPointHeader from 'src/simi/BaseComponents/RewardPoint/components/Header';
+import FaqHeader from '../Faq/FaqHeader';
 // check if bot or headless chrome / wont get cart to avoid perf accection
 // can modify deeper on  peregrine/lib/context/cart.js:83 to avoid creating cart - db wasting - https://prnt.sc/2628k9h
 const isBotOrHeadless = isBot() || isHeadlessChrome();
@@ -47,17 +49,17 @@ const Header = props => {
 
     const storeConfig = Identify.getStoreConfig();
 
-    const { rewardPointConfig, customerRewardPoint } = useGetRewardPointData();
-    const pointBalance =
-        customerRewardPoint && customerRewardPoint.point_balance
-            ? customerRewardPoint.point_balance
-            : '0';
-    const icon =
-        rewardPointConfig &&
-            rewardPointConfig.MpRewardConfig &&
-            rewardPointConfig.MpRewardConfig.general
-            ? rewardPointConfig.MpRewardConfig.general.icon
-            : '';
+    // const { rewardPointConfig, customerRewardPoint } = useGetRewardPointData();
+    // const pointBalance =
+    //     customerRewardPoint && customerRewardPoint.point_balance
+    //         ? customerRewardPoint.point_balance
+    //         : '0';
+    // const icon =
+    //     rewardPointConfig &&
+    //     rewardPointConfig.MpRewardConfig &&
+    //     rewardPointConfig.MpRewardConfig.general
+    //         ? rewardPointConfig.MpRewardConfig.general.icon
+    //         : '';
 
     const { itemCount: itemsQty } = useCartTrigger({
         mutations: {
@@ -145,12 +147,17 @@ const Header = props => {
     const renderRightBar = () => {
         return (
             <div
-                className={`${classes['right-bar']} ${Identify.isRtl() ? 'right-bar-rtl' : ''}`}
+                className={`${classes['right-bar']} ${
+                    Identify.isRtl() ? 'right-bar-rtl' : ''
+                }`}
                 style={{ height: headerHeight }}
             >
                 <div className={classes['right-bar-item']}>
                     <StoreSwitcher />
                 </div>
+
+                <FaqHeader classes={classes} />
+
                 <div className={classes['right-bar-item']} id="my-account">
                     <MyAccount classes={classes} userData={userData} />
                 </div>
@@ -389,33 +396,8 @@ const Header = props => {
                 <div className={classes.switchersContainer}>
                     {storeConfig ? (
                         <div className={`${classes.switchers} container`}>
+                            <RewardPointHeader />
                             <CurrencySwitcher />
-                            {pointBalance && isSignedIn ? (
-                                <Link
-                                    to={'/reward-points'}
-                                    className={classes.wrapPoints}
-                                >
-                                    <img
-                                        style={{ height: '35px' }}
-                                        alt="icon"
-                                        src={icon}
-                                    />
-                                    <span className={classes.priceSubtotal}>
-                                        <FormattedMessage
-                                            id={'priceSummary.rewardEarnValue'}
-                                            defaultMessage={`${pointBalance} `}
-                                        />
-                                        <>
-                                            {formatMessage({
-                                                id: 'point(s)',
-                                                defaultMessage: 'point(s)'
-                                            })}
-                                        </>
-                                    </span>
-                                </Link>
-                            ) : (
-                                ''
-                            )}
                         </div>
                     ) : (
                         <div style={{ height: 37 }} />

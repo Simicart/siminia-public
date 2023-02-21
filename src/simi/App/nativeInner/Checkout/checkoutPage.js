@@ -70,6 +70,7 @@ const CheckoutPage = props => {
         isVirtual,
         activeContent,
         availablePaymentMethods,
+        priceSummaryData,
         cartItems,
         checkoutStep,
         customer,
@@ -97,7 +98,8 @@ const CheckoutPage = props => {
         handleReviewOrder,
         reviewOrderButtonClicked,
         toggleAddressBookContent,
-        toggleSignInContent
+        toggleSignInContent,
+        refetchCheckoutData
     } = talonProps;
 
     const deliveryDateTime = useRef(null);
@@ -356,7 +358,8 @@ const CheckoutPage = props => {
                         setIsCartUpdating={setIsUpdating}
                         isMobile={isMobile}
                         hideEstimateShipping={true}
-                        location='checkout'
+                        priceSummaryData={priceSummaryData}
+                        refetchCartPage={refetchCheckoutData}
                     />
                 </div>
             ) : null;

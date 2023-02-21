@@ -12,6 +12,7 @@ import NoProductsFound from 'src/simi/App/nativeInner/Products/NoProductsFound';
 import { useSearchContentSimiPagination } from 'src/simi/talons/Search/useSearchContentSimiPagination';
 import TitleHelper from 'src/simi/Helper/TitleHelper';
 import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
+import { SEARCH_PAGE } from '../../ProductLabel/consts';
 
 const Search = props => {
     const { classes, location, history } = props;
@@ -77,6 +78,7 @@ const Search = props => {
                             loading={loading}
                             loadStyle={loadStyle}
                             pageControl={pageControl}
+                            page={SEARCH_PAGE}
                         />
                     </div>
                 ) : (

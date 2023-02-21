@@ -18,6 +18,30 @@ const mageworxSeoEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_MAGEWORX_SEO) === 1;
 
+const rewardPointsEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
+
+const productLabelEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL) === 1;
+const deliveryTimeEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME) === 1;
+
+const callForPriceEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_CALL_FOR_PRICE &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_CALL_FOR_PRICE) === 1;
+
+
 const GET_STORE_CONFIG = gql`
     query storeConfigData {
         storeConfig {
@@ -225,6 +249,109 @@ const GET_STORE_CONFIG = gql`
             }
             `
                 : ''
+        }
+        ${
+            rewardPointsEnabled
+                ? `
+            bssRewardPointStoreConfig(storeview: 1) {
+                active
+                redeem_threshold
+                maximum_threshold
+                expire_day
+                earn_tax
+                earn_shipping
+                earn_order_paid
+                maximum_earn_order
+                maximum_earn_review
+                auto_refund
+                maximum_point_order
+                allow_spend_tax
+                allow_spend_shipping
+                restore_spent
+                point_icon
+                sw_point_header
+                point_mess_register
+                point_subscrible
+                cart_order_summary
+                product_page_tab_review
+                product_page_reward_point
+                cate_page_reward_point
+                point_slider
+                sender
+                earn_point_template
+                spend_point_template
+                expiry_warning_template
+                expire_day_before
+                subscrible
+            }
+            `
+                : ''
+        }
+        ${
+            productLabelEnabled
+                ? `bssProductLabelStoreConfig(store_view: 1) {
+            active
+            display_multiple_label
+            display_only_out_of_stock_label
+            not_display_label_on
+            selector_product_list
+            selector_product_page
+          }`
+                : ''
+        }
+        ${
+            deliveryTimeEnabled
+                ? `
+                bssDeliveryDateStoreConfig(store_view: 1){
+                  active
+                  as_processing_days
+                  block_out_holidays
+                  cut_off_time
+                  date_day_off
+                  date_fields
+                  icon_calendar
+                  is_field_required_comment
+                  is_field_required_date
+                  is_field_required_timeslot
+                  on_which_page
+                  process_time
+                  shipping_comment
+                  time_slots
+              }`
+                : ''
+        }
+        ${
+            callForPriceEnabled 
+                ? `
+            getConfigAdvancedHidePrice {
+                enable
+                selector
+                email_sender
+                admin_response_email_template
+                admin_notify_email
+                admin_notify_email_template
+                priority 
+                form_fields {
+                    field_label 
+                    field_type
+                    field_order
+                    field_required
+                    field_enable 
+                }
+                is_show_customer_fields
+                recaptcha
+                site_key
+                secret_key
+                call_for_price_text
+                call_for_price_categories
+                call_for_price_customers
+                call_for_price_not_apply
+                hide_price_text
+                hide_price_categories
+                hide_price_customers
+                hide_price_not_apply
+            }
+                ` : null
         }
     }
 `;

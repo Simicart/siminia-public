@@ -12,6 +12,7 @@
     line-height: 21px;
     font-size: 1.1rem;
     color: #150826;
+    justify-self: end;
 }
 
 .checkoutButton_container > button {

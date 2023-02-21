@@ -23,6 +23,7 @@ import Icon from '@magento/venia-ui/lib/components/Icon';
 import { Link } from 'react-router-dom';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import checkEnabledGiftCard from '../../../../giftcard/functions/gift-card-store-config/checkEnabledGiftCard';
+import { getRewardPointActive } from 'src/simi/BaseComponents/RewardPoint/utils'
 
 const LeftMenu = props => {
     const [userData] = useUserContext();
@@ -39,7 +40,9 @@ const LeftMenu = props => {
         window.SMCONFIGS.plugins &&
         window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
         parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
+        
     const giftCardEnabled = checkEnabledGiftCard()  //get store config variable later
+    const rewardPointActive = getRewardPointActive()
 
     let listMenuContent = [
         {
@@ -97,11 +100,6 @@ const LeftMenu = props => {
             name: 'Reward Points',
             id: 'Reward Points',
             url: '/reward-points'
-        },
-        {
-            name: 'Reward Transactions',
-            id: 'Reward Transactions',
-            url: '/reward-transactions'
         }
     ];
     const giftCardContent = [
@@ -129,7 +127,7 @@ const LeftMenu = props => {
     const giftCardIconList = [
         <Icon className={classes.icon} size={22} src={CreditCard} />
     ];
-    if (rewardPointEnabled) {
+    if (rewardPointActive) {
         listMenuContent = listMenuContent.concat(rewardMenuContent);
         iconList = iconList.concat(rewardIconList);
     }

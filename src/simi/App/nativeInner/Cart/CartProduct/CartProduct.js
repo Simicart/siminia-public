@@ -277,8 +277,32 @@ const CartProduct = props => {
         <div>
             <span className={classes.price}>
                 <span className={classes.labelPrice} />
-                {showExcludedTax || !item.prices.row_total_including_tax ? (
+                <PriceWithColor currencyCode={item.prices.price.currency} value={item.prices.price.value} />
+                {/* {showExcludedTax || !item.prices.row_total_including_tax ? (
                     <PriceWithColor currencyCode={currency} value={unitPrice} />
+                ) : (
+                    <PriceWithColor
+                        currencyCode={
+                            item.prices.row_total_including_tax.currency
+                        }
+                        value={item.prices.row_total_including_tax.value}
+                    />
+                )} */}
+
+                {/* <FormattedMessage
+                    id={'product.price'}
+                    defaultMessage={' ea.'}
+                /> */}
+            </span>
+        </div>
+    );
+
+    const pricePieceTotal = (
+        <div>
+            <span className={classes.price}>
+                <span className={classes.labelPrice} />
+                {showExcludedTax || !item.prices.row_total_including_tax ? (
+                    <PriceWithColor currencyCode={item.prices.row_total.currency} value={item.prices.row_total.value} />
                 ) : (
                     <PriceWithColor
                         currencyCode={
@@ -294,7 +318,7 @@ const CartProduct = props => {
                 /> */}
             </span>
         </div>
-    );
+    )
 
     useEffect(() => {
         if (errorMessage) {
@@ -366,6 +390,9 @@ const CartProduct = props => {
                             initialValue={quantity}
                             onChange={handleUpdateItemQuantity}
                         />
+                    </div>
+                    <div className={classes.priceTotal}>
+                        <div className={classes.lowerTools}>{pricePieceTotal}</div>
                     </div>
                 </div>
             </div>

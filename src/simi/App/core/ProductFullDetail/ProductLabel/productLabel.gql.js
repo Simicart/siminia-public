@@ -12,29 +12,19 @@ const GET_PRODUCT_LABEL = gql`
                 ${
                     productLabelEnabled
                         ? `
-                mp_label_data {
-                    rule_id
-                    priority
-                    label_template
-                    label_image
-                    label
-                    label_font
-                    label_font_size
-                    label_color
-                    label_css
-                    label_position
-                    label_position_grid
-                    same
-                    list_template
-                    list_image
-                    list_label
-                    list_font
-                    list_font_size
-                    list_css
-                    list_position
-                    list_position_grid
+                product_label {
                     name
-                }
+                    image
+                    image_data {
+                        left
+                        top
+                        width
+                        height
+                        widthOrigin
+                        heightOrigin
+                        angle
+                    }
+                  }
                 
                 `
                         : `sku`

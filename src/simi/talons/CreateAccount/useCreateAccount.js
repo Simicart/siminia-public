@@ -9,7 +9,7 @@ import { retrieveCartId } from '@magento/peregrine/lib/store/actions/cart';
 import { useGoogleReCaptcha } from '../../hooks/useGoogleReCaptcha';
 import { clearCartDataFromCache } from '@magento/peregrine/lib/Apollo/clearCartDataFromCache';
 import { clearCustomerDataFromCache } from '@magento/peregrine/lib/Apollo/clearCustomerDataFromCache';
-
+import { showFogLoading, hideFogLoading } from 'src/simi/BaseComponents/Loading/GlobalLoading';
 import DEFAULT_OPERATIONS from './createAccount.gql';
 
 /**
@@ -87,6 +87,7 @@ export const useCreateAccount = props => {
     const handleSubmit = useCallback(
         async formValues => {
             setIsSubmitting(true);
+            showFogLoading()
             try {
                 // Get source cart id (guest cart id).
                 const sourceCartId = cartId;
@@ -149,11 +150,13 @@ export const useCreateAccount = props => {
                 if (onSubmit) {
                     onSubmit();
                 }
+                hideFogLoading()
             } catch (error) {
                 if (process.env.NODE_ENV !== 'production') {
                     console.error(error);
                 }
                 setIsSubmitting(false);
+                hideFogLoading()
             }
         },
         [

@@ -142,6 +142,10 @@
     
 }
 
+.priceTotal {
+    padding: 10px 0;
+}
+
 @media (min-width: 759px) {
     .root {
         padding-top: 25px;

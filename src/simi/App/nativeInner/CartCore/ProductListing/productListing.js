@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, Suspense } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useProductListing } from '@magento/peregrine/lib/talons/CartPage/ProductListing/useProductListing';
+import { useProductListing } from 'src/simi/App/nativeInner/talons/CartPage/useProductListing';
 import DEFAULT_OPERATIONS from './productListing.gql';
 
 import { useStyle } from '@magento/venia-ui/lib/classify';

@@ -1,0 +1,58 @@
+.root {
+}
+
+.title {
+}
+
+.title::after {
+    content: ' ';
+}
+
+.value {
+    color: #1498d0;
+    font-weight: bold;
+}
+
+.slider {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.pointSpend {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pointSpend > button {
+    border-radius: 0;
+}
+
+.input {
+    border-color: rgb(223, 225, 226);
+    border-width: 1px;
+    padding: 5px 10px;
+    height: 50px;
+    width: calc(100% - 160px);
+}
+
+@media (max-width: 449px) {
+    .pointSpend > button {
+        min-height: 35px;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        width: 80px;
+        min-width: 80px;
+    }
+
+    .input {
+        width: calc(100% - 90px);
+        height: 35px;
+        background-color: #f2f2f3;
+        border: none;
+        border-bottom: 1px solid #150826 !important;
+    }
+}

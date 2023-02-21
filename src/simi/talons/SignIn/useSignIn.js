@@ -10,6 +10,7 @@ import { retrieveCartId } from '@magento/peregrine/lib//store/actions/cart';
 
 import { clearCartDataFromCache } from '@magento/peregrine/lib/Apollo/clearCartDataFromCache';
 import { clearCustomerDataFromCache } from '@magento/peregrine/lib/Apollo/clearCustomerDataFromCache';
+import { clearCatalogDataFromCache } from 'src/simi/Apollo/clearCatalogDataFromCache'
 
 import DEFAULT_OPERATIONS from './signIn.gql';
 
@@ -86,6 +87,7 @@ export const useSignIn = props => {
                 // Clear all cart/customer data from cache and redux.
                 await clearCartDataFromCache(apolloClient);
                 await clearCustomerDataFromCache(apolloClient);
+                await clearCatalogDataFromCache(apolloClient)
                 await removeCart();
 
                 // Create and get the customer's cart id.

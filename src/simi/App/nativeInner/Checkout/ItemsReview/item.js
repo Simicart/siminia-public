@@ -8,6 +8,8 @@ import configuredVariant from '@magento/peregrine/lib/util/configuredVariant';
 import { useWindowSize } from '@magento/peregrine';
 import Price from '@magento/venia-ui/lib/components/Price';
 import defaultClasses from './item.module.css';
+import ProductLabel from '../../ProductLabel';
+import { WISHLIST_PAGE } from '../../ProductLabel/consts';
 
 const Item = props => {
     const {
@@ -28,17 +30,27 @@ const Item = props => {
 
     return (
         <div className={className}>
-            <Image
-                alt={product.name}
-                classes={{ root: classes.thumbnail }}
-                width={100}
-                resource={
-                    configurableThumbnailSource === 'itself' &&
-                    configured_variant && configured_variant.thumbnail && configured_variant.thumbnail.url
-                        ? configured_variant.thumbnail.url
-                        : product.thumbnail.url
-                }
-            />
+            <div className={classes.wrapperImage}>
+                <Image
+                    alt={product.name}
+                    classes={{ root: classes.thumbnail }}
+                    width={100}
+                    resource={
+                        configurableThumbnailSource === 'itself' &&
+                        configured_variant &&
+                        configured_variant.thumbnail &&
+                        configured_variant.thumbnail.url
+                            ? configured_variant.thumbnail.url
+                            : product.thumbnail.url
+                    }
+                />
+                <ProductLabel
+                    page={WISHLIST_PAGE}
+                    productLabel={product?.product_label}
+                    productOutStock={product?.stock_status ==="OUT_OF_STOCK" ? true : false}
+                />
+            </div>
+
             <span className={classes.name}>{product.name}</span>
             <ProductOptions
                 options={configurable_options}
@@ -47,15 +59,24 @@ const Item = props => {
                 }}
             />
             <span className={classes.quantity}>
-                {!isMobile ? <FormattedMessage
-                    id={'checkoutPage.quantity'}
-                    defaultMessage={'Qty :'}
-                    values={{ quantity }}
-                /> : `x${quantity}` } 
+                {!isMobile ? (
+                    <FormattedMessage
+                        id={'checkoutPage.quantity'}
+                        defaultMessage={'Qty :'}
+                        values={{ quantity }}
+                    />
+                ) : (
+                    `x${quantity}`
+                )}
             </span>
-            {isMobile && prices && prices.price && <span className={classes.price}>
-                <Price value={prices.price.value} currencyCode={prices.price.currency}/>
-            </span>}
+            {isMobile && prices && prices.price && (
+                <span className={classes.price}>
+                    <Price
+                        value={prices.price.value}
+                        currencyCode={prices.price.currency}
+                    />
+                </span>
+            )}
         </div>
     );
 };

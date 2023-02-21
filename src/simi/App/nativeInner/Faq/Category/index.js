@@ -1,88 +1,38 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { Fragment, useState } from 'react';
+import { useMainPage } from '../talons/useMainPage';
+import { useStoreConfig } from '../talons/useStoreConfig';
 import { Helmet } from 'react-helmet';
-import SearchBox from '../SearchBox/searchbox.js';
-// import Loader from '../Loader/Loader'
-import Loader from '../../Loader';
-
-import CategoriesList from '../FaqsListContainer/CategoriesList';
-import { useCategoryListUrl } from '../../talons/Faq/useCategoryListUrl';
-import { useCategoryList } from '../../talons/Faq/useCategoryList';
 import { useIntl } from 'react-intl';
+import defaultClasses from '../MainPage/mainPage.module.css';
+import Search from 'src/simi/BaseComponents/Icon/Search';
+import { Link } from 'react-router-dom';
+import SearchBox from '../SearchBox';
+import Sidebar from '../Sidebar';
+import { useParams } from 'react-router-dom';
+import { useCategory } from '../talons/useCategory';
+import CategoryContent from './categoryContent';
 
 const Category = props => {
-    const { categoryUrl = '' } = useParams();
     const { formatMessage } = useIntl();
-    const {
-        categoryData,
-        categoryLoading,
-        categoryErrorMessage
-    } = useCategoryListUrl({ url_key: categoryUrl });
-    const {
-        categoriesData,
-        categoriesLoading,
-        categoriesError
-    } = useCategoryList();
-    const [userInput, setUserInput] = useState('');
-    const [searchInput, setSearchInput] = useState('');
-    const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [reRender, setReRender] = useState(false);
-    useEffect(() => {
-        if (categoryData) {
-            const _category = categoryData.MpMageplazaFaqsCategoryList.items;
-            setCategories(_category);
-        }
-    }, [reRender]);
-    useEffect(() => {
-        setTimeout(() => setReRender(true), 2000);
+    const title = formatMessage({
+        id: 'FAQs Category',
+        defaultMessage: 'FAQs Category'
     });
-    if (!categoryData || !categoryData.MpMageplazaFaqsCategoryList) {
-        return <Loader />;
-    }
-    if (!categoriesData || !categoriesData.MpMageplazaFaqsCategoryList) {
-        return <Loader />;
-    }
-
-    const onChange = e => {
-        setUserInput(e.target.value);
-    };
-    const onSearch = () => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-            if (userInput != '') {
-                setCategories(categoriesData.MpMageplazaFaqsCategoryList.items);
-            } else {
-                setCategories(categoryData.MpMageplazaFaqsCategoryList.items);
-            }
-            setSearchInput(userInput);
-        }, 500);
-    };
+    const classes = defaultClasses;
 
     return (
-        <div className="container">
+        <div className={`${classes.wrapperMainPage} container`}>
             <Helmet>
                 <meta charSet="utf-8" />
-                <title>
-                    {categories.length ? categories[0].name : ''}
-                    {formatMessage({
-                        id: 'answerAndQuestion',
-                        defaultMessage: '- Frequently Answer and Question'
-                    })}
-                </title>
+                <title>{title}</title>
             </Helmet>
-            <SearchBox
-                onChange={onChange}
-                userInput={userInput}
-                onSearch={onSearch}
-            />
-            <CategoriesList
-                loading={loading}
-                categories={categories}
-                searchInput={searchInput}
-                reRender={reRender}
-            />
+            <div class={classes.mainPage}>
+                <h1 class={classes.title}>{title}</h1>
+            </div>
+            <div className={classes.columns}>
+                <CategoryContent />
+                <Sidebar />
+            </div>
         </div>
     );
 };

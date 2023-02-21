@@ -4,12 +4,7 @@ import { DiscountSummaryFragment } from '@magento/peregrine/lib/talons/CartPage/
 import { GiftCardSummaryFragment } from '@magento/peregrine/lib/talons/CartPage/PriceSummary/queries/giftCardSummary';
 import { ShippingSummaryFragment } from '@magento/peregrine/lib/talons/CartPage/PriceSummary/shippingSummary.gql';
 import { TaxSummaryFragment } from '@magento/peregrine/lib/talons/CartPage/PriceSummary/taxSummary.gql';
-
-const rewardPointEnabled =
-    window.SMCONFIGS &&
-    window.SMCONFIGS.plugins &&
-    window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
-    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
+import { RewardPointOnCartFragment } from 'src/simi/talons/Cart/priceSummaryFragments.gql'
 
 export const GrandTotalFragment = gql`
     fragment GrandTotalFragment on CartPrices {
@@ -19,24 +14,6 @@ export const GrandTotalFragment = gql`
         }
     }
 `;
-export const RewardPointFragment = rewardPointEnabled
-    ? gql`
-          fragment RewardPointFragment on CartPrices {
-              mp_reward_segments {
-                  code
-                  title
-                  value
-              }
-          }
-      `
-    : gql`
-          fragment RewardPointFragment on CartPrices {
-              subtotal_excluding_tax {
-                  currency
-                  value
-              }
-          }
-      `;
 
 export const MiniCartFragment = gql`
     fragment MiniCartFragment on Cart {
@@ -52,16 +29,16 @@ export const MiniCartFragment = gql`
                 currency
                 value
             }
-            ...RewardPointFragment
         }
         ...ProductListFragment
         ...GiftCardSummaryFragment
+        ...RewardPointOnCartFragment
     }
     ${ProductListFragment}
     ${DiscountSummaryFragment}
     ${GiftCardSummaryFragment}
     ${GrandTotalFragment}
-    ${RewardPointFragment}
     ${ShippingSummaryFragment}
     ${TaxSummaryFragment}
+    ${RewardPointOnCartFragment}
 `;

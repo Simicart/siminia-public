@@ -9,3 +9,7 @@ export const isGiftCardEnable = () => {
 export const isMegaMenuEnable = () => {
     return window.SMCONFIGS && window.SMCONFIGS.plugins && window.SMCONFIGS.plugins.ENABLE_MEGA_MENU && parseInt(window.SMCONFIGS.plugins.ENABLE_MEGA_MENU) === 1;
 }
+
+export const isRewardPointEnable = () => {
+    return window.SMCONFIGS && window.SMCONFIGS.plugins && window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS && parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
+}

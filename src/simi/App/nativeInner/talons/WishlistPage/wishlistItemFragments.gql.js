@@ -17,17 +17,19 @@ export const WishlistItemFragment = gql`
             ${
                 productLabelEnabled
                     ? `
-                mp_label_data {
-                    list_position
-                    list_position_grid
-                    label_image
-                    label_font
-                    label_font_size
-                    label_color
-                    label_template
-                    priority
-                    label
-                }        
+                    product_label {
+                        name
+                        image
+                        image_data {
+                            left
+                            top
+                            width
+                            height
+                            widthOrigin
+                            heightOrigin
+                            angle
+                        }
+                    }
             `
                     : ``
             }

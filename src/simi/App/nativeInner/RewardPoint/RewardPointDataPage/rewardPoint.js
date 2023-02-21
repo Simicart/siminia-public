@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { mergeClasses, useStyle } from '@magento/venia-ui/lib/classify';
+import React, { useEffect, useState } from 'react';
+import { useStyle } from '@magento/venia-ui/lib/classify';
 import { shape, string } from 'prop-types';
 import defaultClasses from './rewardPoint.module.css';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -9,11 +9,9 @@ import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import { useGetRewardPointData } from '../../../../talons/RewardPoint/useGetRewardPointData';
 import LeftMenu from '../../../core/LeftMenu';
-import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 // import Checkbox from '../../../../BaseComponents/Checkbox';
 import { useToasts, useWindowSize } from '@magento/peregrine';
 import { Form } from 'informed';
-import Field from '@magento/venia-ui/lib/components/Field';
 import Checkbox from '@magento/venia-ui/lib/components/Checkbox';
 import AlertMessages from '../../ProductFullDetail/AlertMessages';
 import Loader from '../../Loader';
@@ -244,7 +242,14 @@ const RewardPointDataPage = props => {
                         <tbody>{transactionRow}</tbody>
                     </table>
                 </div>
-            ) : null}
+            ) : (
+                <div>
+                    <FormattedMessage
+                        id={'You currently have no transactions.'}
+                        defaultMessage={'You currently have no transactions.'}
+                    />
+                </div>
+            )}
         </div>
     );
     if (isLoadingWithoutData || setSubcribeLoading) {

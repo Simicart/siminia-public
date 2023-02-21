@@ -37,8 +37,6 @@ const StripeIntegration = props => {
         handleSavePaymentDone, // for stripe payment btn
     } = props;
 
-    console.log(paymentCode)
-
     const { formatMessage } = useIntl();
 
     const classes = useStyle(defaultClasses, propClasses);

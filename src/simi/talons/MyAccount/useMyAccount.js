@@ -5,7 +5,7 @@ import { clearCartDataFromCache } from '@magento/peregrine/lib/Apollo/clearCartD
 import { clearCustomerDataFromCache } from '@magento/peregrine/lib/Apollo/clearCustomerDataFromCache';
 import { showFogLoading, hideFogLoading } from 'src/simi/BaseComponents/Loading/GlobalLoading';
 import { useHistory } from 'react-router-dom';
-import Identify from "src/simi/Helper/Identify";
+import { clearCatalogDataFromCache } from 'src/simi/Apollo/clearCatalogDataFromCache'
 
 const DEFAULT_TITLE = 'My Account';
 const UNAUTHED_TITLE = 'Signing Out';
@@ -33,7 +33,8 @@ export const useMyAccount = props => {
         await signOut({ revokeToken });
         await clearCartDataFromCache(apolloClient);
         await clearCustomerDataFromCache(apolloClient);
-
+        await clearCatalogDataFromCache(apolloClient)
+ 
         // Refresh the page as a way to say "re-initialize". An alternative
         // would be to call apolloClient.resetStore() but that would require
         // a large refactor.

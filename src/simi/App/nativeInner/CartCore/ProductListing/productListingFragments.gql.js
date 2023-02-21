@@ -17,6 +17,25 @@ export const ProductListingFragment = gql`
                 name
                 sku
                 url_key
+                ${
+                    productLabelEnabled
+                        ? `
+                        product_label {
+                            name
+                            image
+                            image_data {
+                                left
+                                top
+                                width
+                                height
+                                widthOrigin
+                                heightOrigin
+                                angle
+                            }
+                        }
+                `
+                        : ``
+                }
                 thumbnail {
                     url
                 }

@@ -36,7 +36,10 @@ import Identify from 'src/simi/Helper/Identify';
         giftCards: data.cart.applied_gift_cards,
         taxes: data.cart.prices.applied_taxes,
         shipping: data.cart.shipping_addresses,
-        priceData: data.cart.prices.mp_reward_segments
+        rewardPoint: {  
+            earnPoint: data?.cart?.earn_point,
+            spentPoint: data?.cart?.spent_point
+        }
     };
 };
 

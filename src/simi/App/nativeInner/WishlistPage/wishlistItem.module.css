@@ -90,7 +90,9 @@
     position: absolute;
     /* //left: 0; */
 }
-
+.wrapImage{
+    position: relative;
+}
 .actionWrap {
     display: unset;
 }

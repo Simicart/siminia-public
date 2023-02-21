@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import checkEnabledGiftCard from '../../../giftcard/functions/gift-card-store-config/checkEnabledGiftCard'
+import { getRewardPointActive } from 'src/simi/BaseComponents/RewardPoint/utils'
 
 /**
  * @param {Object}      props
@@ -10,17 +11,13 @@ import checkEnabledGiftCard from '../../../giftcard/functions/gift-card-store-co
  */
 export const useAccountMenuItems = props => {
     const { onSignOut } = props;
+    const rewardPointActive = getRewardPointActive()
 
     const handleSignOut = useCallback(() => {
         onSignOut();
     }, [onSignOut]);
-    const rewardPointEnabled =
-        window.SMCONFIGS &&
-        window.SMCONFIGS.plugins &&
-        window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
-        parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
-        const giftCardEnabled = checkEnabledGiftCard()
+    const giftCardEnabled = checkEnabledGiftCard()
 
     let MENU_ITEMS = [
         {
@@ -80,11 +77,6 @@ export const useAccountMenuItems = props => {
             name: 'Reward Points',
             id: 'Reward Points',
             url: '/reward-points'
-        },
-        {
-            name: 'Reward Transactions',
-            id: 'Reward Transactions',
-            url: '/reward-transactions'
         }
     ];
 
@@ -96,7 +88,7 @@ export const useAccountMenuItems = props => {
         }
     ];
 
-    if(rewardPointEnabled){
+    if(rewardPointActive){
         MENU_ITEMS = MENU_ITEMS.concat(rewardItems)
     }
 

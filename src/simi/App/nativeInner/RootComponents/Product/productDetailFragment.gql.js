@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
 import { SimiPriceFragment } from 'src/simi/queries/catalog_gql/catalogFragment.gql';
-
 const sizeChartEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&
@@ -35,7 +34,15 @@ const metaPackageEnabled =
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_META_PACKAGES) === 1;
-    
+
+const rewardPointEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
+
+
+
 export const ProductCustomAttributesFragment = metaPackageEnabled
     ? gql`
           fragment ProductCustomAttributesFragment on ProductInterface {
@@ -78,6 +85,29 @@ export const ProductCustomAttributesFragment = metaPackageEnabled
           }
       `;
 
+export const RewardPointFragment = rewardPointEnabled
+    ? gql`
+          fragment RewardPointFragment on ProductInterface {
+              reward_point {
+                  product_point {
+                      assign_by
+                      receive_point
+                      dependent_qty
+                      point
+                      message
+                  }
+                  customer_point {
+                      review_point
+                      message
+                  }
+              }
+          }
+      `
+    : gql`
+          fragment RewardPointFragment on ProductInterface {
+              sku
+          }
+      `;
 
 export const ProductDetailsFragment = gql`
     fragment ProductDetailsFragment on ProductInterface {
@@ -97,30 +127,10 @@ export const ProductDetailsFragment = gql`
         ${
             callForPriceEnabled
                 ? `
-        mp_callforprice_rule {
-            rule_id
-            name
-            rule_content
-            store_ids
-            customer_group_ids
-            action
-            url_redirect
-            quote_heading
-            quote_description
-            status
-            show_fields
-            required_fields
-            conditions_serialized
-            attribute_code
-            button_label
-            priority
-            to_date
-            created_at
-            rule_description
-            enable_terms
-            url_terms
-            from_date
-        }
+            advancedhideprice {
+                advancedhideprice_text
+                advancedhideprice_type
+            }
         `
                 : ``
         }
@@ -137,29 +147,19 @@ export const ProductDetailsFragment = gql`
         ${
             productLabelEnabled
                 ? `
-            mp_label_data {
-                rule_id
-                priority
-                label_template
-                label_image
-                label
-                label_font
-                label_font_size
-                label_color
-                label_css
-                label_position
-                label_position_grid
-                same
-                list_template
-                list_image
-                list_label
-                list_font
-                list_font_size
-                list_css
-                list_position
-                list_position_grid
-                name
-            }        
+                product_label {
+                    name
+                    image
+                    image_data {
+                        left
+                        top
+                        width
+                        height
+                        widthOrigin
+                        heightOrigin
+                        angle
+                    }
+                }
         `
                 : ``
         }
@@ -192,6 +192,7 @@ export const ProductDetailsFragment = gql`
             ...SimiPriceFragment    
         }
         ...ProductCustomAttributesFragment
+        ...RewardPointFragment
         sku
         small_image {
             url
@@ -339,6 +340,7 @@ export const ProductDetailsFragment = gql`
     }
     ${SimiPriceFragment}
     ${ProductCustomAttributesFragment}
+    ${RewardPointFragment}
 `;
 
 // might detach upsell_products and cross-sell for performance

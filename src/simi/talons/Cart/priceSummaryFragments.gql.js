@@ -16,6 +16,21 @@ export const GiftCardSummaryFragment = gql`
               id
           }
       `;
+
+export const RewardPointOnCartFragment = rewardPointEnabled ? gql`
+    fragment RewardPointOnCartFragment on Cart {
+        earn_point
+        spent_point {
+            as_money_amount
+            point_amount
+        }
+    }     
+` : gql`
+    fragment RewardPointOnCartFragment on Cart {
+        id
+    }
+`;
+
 export const GrandTotalFragment = gql`
     fragment GrandTotalFragment on CartPrices {
         grand_total {
@@ -24,24 +39,6 @@ export const GrandTotalFragment = gql`
         }
     }
 `;
-export const RewardPointFragment = rewardPointEnabled
-    ? gql`
-          fragment RewardPointFragment on CartPrices {
-              mp_reward_segments {
-                  code
-                  title
-                  value
-              }
-          }
-      `
-    : gql`
-          fragment RewardPointFragment on CartPrices {
-              subtotal_excluding_tax {
-                  currency
-                  value
-              }
-          }
-      `;
 
 export const PriceSummaryFragment = gql`
     fragment PriceSummaryFragment on Cart {
@@ -59,14 +56,14 @@ export const PriceSummaryFragment = gql`
                 currency
                 value
             }
-            ...RewardPointFragment
         }
         ...GiftCardSummaryFragment
+        ...RewardPointOnCartFragment
     }
     ${DiscountSummaryFragment}
     ${GiftCardSummaryFragment}
-    ${RewardPointFragment}
     ${GrandTotalFragment}
     ${ShippingSummaryFragment}
     ${TaxSummaryFragment}
+    ${RewardPointOnCartFragment}
 `;

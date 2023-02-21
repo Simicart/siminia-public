@@ -4,6 +4,7 @@ import { BiMessageAltDetail } from 'react-icons/bi';
 import CallForPrice from './callForPrice';
 import { isCallForPriceEnable } from 'src/simi/App/nativeInner/Helper/Module';
 import { useIntl } from 'react-intl';
+import {  HideAddToCartBtn } from 'src/simi/BaseComponents/CallForPrice/components/Product'
 require('./statusBar.scss');
 
 const FooterFixedBtn = props => {
@@ -13,116 +14,54 @@ const FooterFixedBtn = props => {
         typeBtn,
         setTypeBtn,
         bottomInsets,
-        data
+        product
     } = props;
     const { formatMessage } = useIntl();
 
-    const callForPriceEnabled = isCallForPriceEnable();
-
-    const [{ isSignedIn }] = useUserContext();
-    const action = data && data.action ? data.action : '';
-
-    if (callForPriceEnabled) {
-        return (
-            <>
-                <div
-                    style={{ height: 55 + bottomInsets }}
-                    className="virtual"
-                />
-                {action === 'login_see_price' && isSignedIn ? (
-                    <div
-                        style={{ height: 55 + bottomInsets }}
-                        className="main-footerFixedBtn"
-                    >
-                        <ul>
-                            <li className="msg-icon">
-                                <BiMessageAltDetail />
-                            </li>
-                            <li
-                                onClick={() => {
-                                    setAddToCartPopup(true);
-                                    setTypeBtn('add to cart');
-                                }}
-                            >
-                                {formatMessage({
-                                    id: 'Add to Cart',
-                                    default: 'ADD TO CART'
-                                })}
-                            </li>
-                            <li
-                                onClick={() => {
-                                    setAddToCartPopup(true);
-                                    setTypeBtn('buy now');
-                                }}
-                            >
-                                {formatMessage({
-                                    id: 'Buy now',
-                                    default: 'BUY NOW'
-                                })}
-                            </li>
-                        </ul>
-                    </div>
-                ) : (
-                    <div
-                        style={{ height: 55 + bottomInsets }}
-                        className="main-footerFixedBtn"
-                    >
-                        <ul>
-                            <li className="msg-icon">
-                                {action === 'hide_add_to_cart' ? (
-                                    ''
-                                ) : (
-                                    <BiMessageAltDetail />
-                                )}
-                            </li>
-                            <li className="callForPrice">
-                                <CallForPrice
-                                    data={props.data}
-                                    wrapperPrice={props.wrapperPrice}
-                                    item_id={props.item_id}
-                                />
-                            </li>
-                        </ul>
-                    </div>
-                )}
-            </>
-        );
-    } else {
-        return (
-            <div
-                style={{ height: 55 + bottomInsets }}
-                className="main-footerFixedBtn"
+    const addToCartBtn = (
+        <React.Fragment>
+             <li
+                onClick={() => {
+                    setAddToCartPopup(true);
+                    setTypeBtn('add to cart');
+                }}
             >
-                <ul>
-                    <li className="msg-icon">
-                        <BiMessageAltDetail />
-                    </li>
-                    <li
-                        onClick={() => {
-                            setAddToCartPopup(true);
-                            setTypeBtn('add to cart');
-                        }}
-                    >
-                        {formatMessage({
-                            id: 'Add to Cart',
-                            default: 'ADD TO CART'
-                        })}
-                    </li>
-                    <li
-                        onClick={() => {
-                            setAddToCartPopup(true);
-                            setTypeBtn('buy now');
-                        }}
-                    >
-                        {formatMessage({
-                            id: 'Buy now',
-                            default: 'BUY NOW'
-                        })}
-                    </li>
-                </ul>
-            </div>
-        );
-    }
+                {formatMessage({
+                    id: 'Add to Cart',
+                    default: 'ADD TO CART'
+                })}
+            </li>
+            <li
+                onClick={() => {
+                    setAddToCartPopup(true);
+                    setTypeBtn('buy now');
+                }}
+            >
+                {formatMessage({
+                    id: 'Buy now',
+                    default: 'BUY NOW'
+                })}
+            </li>
+        </React.Fragment>
+    )
+  
+    return (
+        <div
+            style={{ height: 55 + bottomInsets }}
+            className="main-footerFixedBtn"
+        >
+            <ul>
+                <li className="msg-icon">
+                    <BiMessageAltDetail />
+                </li>
+                <HideAddToCartBtn 
+                    product={product}
+                    addToCartBtn={addToCartBtn}
+                    type='detail-mobile'
+                />
+            </ul>
+        </div>
+    );
 };
 
 export default FooterFixedBtn;

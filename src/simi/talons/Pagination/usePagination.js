@@ -18,7 +18,7 @@ export const usePagination = props => {
     };
 
     // handle when click button previous page or button next page
-    const handleChangePage = (next = true, total) => {
+    const handleChangePage = (next = true, total, idScrollTo = 'root') => {
         const newCurrentPage = next
             ? currentPage === total
                 ? currentPage
@@ -34,6 +34,9 @@ export const usePagination = props => {
             setEndPage(endPage - 1);
         }
         setPageAndLimit(newCurrentPage, pageSize);
+        document
+            .getElementById(idScrollTo)
+            .scrollIntoView({ behavior: 'smooth' });
     };
 
     // handle when click change page size ( number product items on 1 page)

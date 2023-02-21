@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { RewardPointOnCartFragment } from 'src/simi/talons/Cart/priceSummaryFragments.gql'
 
 export const CheckoutPageFragment = gql`
     fragment CheckoutPageFragment on Cart {
@@ -16,5 +17,7 @@ export const CheckoutPageFragment = gql`
         available_payment_methods {
             code
         }
+        ...RewardPointOnCartFragment
     }
+    ${RewardPointOnCartFragment}
 `;

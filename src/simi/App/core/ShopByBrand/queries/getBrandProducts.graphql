@@ -107,19 +107,19 @@ query getBrandProducts(
               image
               description
             }
-            mp_label_data {
-                  list_position
-                  list_position_grid
-                  label_image
-                  rule_id
-                  label_font
-                  label_font_size
-                  label_color
-                  label_template
-                  priority
-                  label
-                  list_css
-            }
+             product_label {
+                    name
+                    image
+                    image_data {
+                        left
+                        top
+                        width
+                        height
+                        widthOrigin
+                        heightOrigin
+                        angle
+                    }
+                }
             price {
                 regularPrice {
                     amount {

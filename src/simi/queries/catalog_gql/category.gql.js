@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import { CategoryFragment, ProductOfListFragment } from './catalogFragment.gql';
+
 const productLabelEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&
@@ -15,64 +16,34 @@ const callForPriceEnabled =
 export const CallForPriceFragment = callForPriceEnabled
     ? gql`
           fragment CallForPriceFragment on ProductInterface {
-              mp_callforprice_rule {
-                  rule_id
-                  name
-                  rule_content
-                  store_ids
-                  customer_group_ids
-                  action
-                  url_redirect
-                  quote_heading
-                  quote_description
-                  status
-                  show_fields
-                  required_fields
-                  conditions_serialized
-                  attribute_code
-                  button_label
-                  priority
-                  to_date
-                  created_at
-                  rule_description
-                  enable_terms
-                  url_terms
-                  from_date
-              }
+                advancedhideprice {
+                    advancedhideprice_text
+                    advancedhideprice_type
+                }
           }
       `
     : gql`
-    fragment CallForPriceFragment on ProductInterface {
-        sku
-    }
-`;
+          fragment CallForPriceFragment on ProductInterface {
+              sku
+          }
+      `;
 
 export const ProductLabelFragment = productLabelEnabled
     ? gql`
           fragment ProductLabelFragment on ProductInterface {
-              mp_label_data {
-                  rule_id
-                  priority
-                  label_template
-                  label_image
-                  label
-                  label_font
-                  label_font_size
-                  label_color
-                  label_css
-                  label_position
-                  label_position_grid
-                  same
-                  list_template
-                  list_image
-                  list_label
-                  list_font
-                  list_font_size
-                  list_css
-                  list_position
-                  list_position_grid
-                  name
-              }
+            product_label {
+                name
+                image
+                image_data {
+                    left
+                    top
+                    width
+                    height
+                    widthOrigin
+                    heightOrigin
+                    angle
+                }
+            }
           }
       `
     : gql`
