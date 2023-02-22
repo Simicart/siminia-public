@@ -208,17 +208,30 @@
     float: left;
 }
 .categoryImage {
-    width: 150px;
+    width: 40%;
     height: 200px;
     border-radius: 3px;
-    margin: 15px 30px;
+    margin: 10px 5% 10px 5%;
     float: left;
 }
+.categoryImage img{
+    max-height: 60%;
+    margin-left: 50%;
+    margin-top: 40px;
+    transform: translateX(-50%);
+}
 .categoryBlockInfo {
-    width: 530px;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    width: 45%;
+    height: 20px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.2px;
+    text-align: justify;
     float: left;
+    cursor: pointer;
 }
 .categoryTitle {
     width: 90%;
