@@ -20,6 +20,7 @@ const CategoryContent = props => {
     const { faq } = main_content || [];
     const categoryId = main_content?.faq_category_id || '';
     const [isQuestion, setIsQuestion] = useState(0);
+    const { color, title_color } = main_content || '';
     const handleExpandQuestion = faqId => {
         if (faqId === isQuestion) {
             setIsQuestion(0);
@@ -83,13 +84,21 @@ const CategoryContent = props => {
             <div className={classes.mainBlock}>
                 <div className={classes.categoryBlock}>
                     {main_content.image && (
-                        <div className={classes.categoryImage}>
+                        <div
+                            style={{
+                                backgroundColor: color,
+                                boxShadow: `0px 5px 24px ${color}`
+                            }}
+                            className={classes.categoryImage}
+                        >
                             <img src={main_content.image} />
                         </div>
                     )}
                     <div className={classes.categoryBlockInfo}>
                         <div className={classes.categoryTitle}>
-                            <span>{main_content.title}</span>
+                            <span style={{ color: title_color }}>
+                                {main_content.title}
+                            </span>
                         </div>
                     </div>
                 </div>
