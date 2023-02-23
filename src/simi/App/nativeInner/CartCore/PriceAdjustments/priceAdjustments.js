@@ -15,7 +15,7 @@ import defaultClasses from './priceAdjustments.module.css';
 import ApplyRewardPoint from 'src/simi/BaseComponents/RewardPoint/components/Cart/apply'
 // import { Form } from 'informed';
 
-import checkEnabledGiftCard from '../../../../../giftcard/functions/gift-card-store-config/checkEnabledGiftCard'
+import checkDisabledGiftCard from '../../../../../giftcard/functions/gift-card-store-config/checkDisabledGiftCard'
 import DiscountGiftCard from '../../../../../giftcard/components/DiscountGiftCard';
 
 const CouponCode = React.lazy(() => import('./CouponCode'));
@@ -96,7 +96,7 @@ const PriceAdjustments = props => {
                     rewardPoint={rewardPoint}
                     refetchCartPage={refetchCartPage}
                 />
-                {checkEnabledGiftCard() ? (
+                {!checkDisabledGiftCard() ? (
                     <DiscountGiftCard location={props.location} />
                 ) : (
                     <></>

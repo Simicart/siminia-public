@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import checkEnabledGiftCard from '../../../giftcard/functions/gift-card-store-config/checkEnabledGiftCard'
+import checkDisabledGiftCard from '../../../giftcard/functions/gift-card-store-config/checkDisabledGiftCard'
 import { getRewardPointActive } from 'src/simi/BaseComponents/RewardPoint/utils'
 
 /**
@@ -17,7 +17,7 @@ export const useAccountMenuItems = props => {
         onSignOut();
     }, [onSignOut]);
 
-    const giftCardEnabled = checkEnabledGiftCard()
+    const giftCardDisabled = checkDisabledGiftCard()
 
     let MENU_ITEMS = [
         {
@@ -92,7 +92,7 @@ export const useAccountMenuItems = props => {
         MENU_ITEMS = MENU_ITEMS.concat(rewardItems)
     }
 
-    if(giftCardEnabled){
+    if(!giftCardDisabled){
         MENU_ITEMS = MENU_ITEMS.concat(giftCardContent)
     }
 

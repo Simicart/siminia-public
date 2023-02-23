@@ -4,7 +4,7 @@ import { useStyle } from '@magento/venia-ui/lib/classify';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { FormattedMessage, useIntl } from 'react-intl';
 import CacheHelper from 'src/simi/Helper/CacheHelper';
-import checkEnabledGiftCard from '../../../../giftcard/functions/gift-card-store-config/checkEnabledGiftCard';
+import checkDisabledGiftCard from '../../../../giftcard/functions/gift-card-store-config/checkDisabledGiftCard';
 
 import {
     MdPendingActions,
@@ -65,7 +65,7 @@ const MyAccountPage = props => {
     const { formatMessage } = useIntl();
     const orderSize = useRef();
     
-    const giftCardEnabled = checkEnabledGiftCard() //get config variable later
+    const giftCardDisabled = checkDisabledGiftCard()
 
     let iconList = [
         <Icon className={classes.icon} size={22} src={MapPin} />,
@@ -86,7 +86,7 @@ const MyAccountPage = props => {
 
     let mergeServicesList = [...servicesList]
 
-    if (giftCardEnabled) {
+    if (!giftCardDisabled) {
         mergeServicesList = servicesList.concat(giftCard);
         iconList = iconList.concat(giftCardIconList);
     }

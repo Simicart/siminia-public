@@ -9,7 +9,7 @@ import Loader from '../simi/App/nativeInner/Loader'
 import PageBuilderComponent from '../simi/App/core/TapitaPageBuilder/PageBuilderComponent';
 import GiftCardPage from '../giftcard/components/GiftCardPage'
 import MyGiftCards from '../giftcard/components/MyGiftCards';
-import checkEnabledGiftCard from '../giftcard/functions/gift-card-store-config/checkEnabledGiftCard';
+import checkDisabledGiftCard from '../giftcard/functions/gift-card-store-config/checkDisabledGiftCard';
 //import Login from 'src/simi/App/core/Customer/Login';
 const Login = props => {
     return (
@@ -718,7 +718,7 @@ const Routes = props => {
                     render={props => <MyGiftCard {...props} />}
                 />*/}
 
-                {checkEnabledGiftCard() && (<Route
+                {!checkDisabledGiftCard() && (<Route
                     exact
                     path="/my-gift-cards"
                     render={props => <MyGiftCards {...props} />}
@@ -779,7 +779,7 @@ const Routes = props => {
                     )}
                 />
 
-                {checkEnabledGiftCard() && (<Route
+                {!checkDisabledGiftCard() && (<Route
                     exact
                     path="/giftcard/:giftCardName.html"
                     render={props => (
@@ -787,7 +787,7 @@ const Routes = props => {
                     )}
                 />)}
 
-                {!checkEnabledGiftCard() && (<Route
+                {checkDisabledGiftCard() && (<Route
                     exact
                     path="/gift-card.html"
                     render={props => (

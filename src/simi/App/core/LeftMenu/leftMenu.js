@@ -22,7 +22,7 @@ import {
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import { Link } from 'react-router-dom';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
-import checkEnabledGiftCard from '../../../../giftcard/functions/gift-card-store-config/checkEnabledGiftCard';
+import checkDisabledGiftCard from '../../../../giftcard/functions/gift-card-store-config/checkDisabledGiftCard';
 import { getRewardPointActive } from 'src/simi/BaseComponents/RewardPoint/utils'
 
 const LeftMenu = props => {
@@ -41,7 +41,7 @@ const LeftMenu = props => {
         window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
         parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
         
-    const giftCardEnabled = checkEnabledGiftCard()  //get store config variable later
+    const giftCardDisabled = checkDisabledGiftCard()
     const rewardPointActive = getRewardPointActive()
 
     let listMenuContent = [
@@ -131,7 +131,7 @@ const LeftMenu = props => {
         listMenuContent = listMenuContent.concat(rewardMenuContent);
         iconList = iconList.concat(rewardIconList);
     }
-    if (giftCardEnabled) {
+    if (!giftCardDisabled) {
         listMenuContent = listMenuContent.concat(giftCardContent);
         iconList = iconList.concat(giftCardIconList);
     }
