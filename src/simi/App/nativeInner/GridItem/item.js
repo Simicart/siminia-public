@@ -176,7 +176,12 @@ const Griditem = props => {
                     // padding: 1
                 }}
             >
-                <Link to={location.state.item_data.type_id === 'bss_giftcard' ? giftCardLocation : location}>
+                <Link to={{
+                    pathname: location.state.item_data.type_id === 'bss_giftcard' ? giftCardLocation.pathname : location.pathname,
+                    state: {
+                        sku: item.sku
+                    }
+                }}>
                     <Image
                         src={imageUrl}
                         alt={name}
@@ -324,7 +329,12 @@ const Griditem = props => {
                     }`}
                     onClick={() => {
                         if(location.state.item_data.type_id === 'bss_giftcard') {
-                            history.push(`giftcard${location.pathname}`)
+                            history.push({
+                                pathname: `giftcard${location.pathname}`,
+                                state: {
+                                    sku: item.sku
+                                }
+                            })
                         }
                         else handleLink(location)
                     }}
