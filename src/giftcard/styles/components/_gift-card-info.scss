@@ -34,7 +34,7 @@
     }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 900px) {
     .gift-card-info-wrapper {
         flex-direction: column;
         margin: 0 20px 40px 20px
@@ -104,7 +104,6 @@
 .gift-card-nav-review {
     margin-top: 10px;
     color: rgb(54, 124, 253);
-    font-weight: bold;
     margin: 0;
 
     &:hover {
