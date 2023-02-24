@@ -1,7 +1,7 @@
 .gift-card-review-wrapper {
-    border: 2px solid gray;
-    padding: 40px 80px 0 80px;
+    padding: 40px 40px 0 40px;
     margin: 0 60px 80px 60px;
+    width: 60%;
 }
 
 .gift-card-value-rating {
@@ -47,19 +47,19 @@
 }
 
 .gift-card-nickname-input {
-    width: 50%;
+    width: 100%;
     height: 36px;
     padding-left: 10px
 }
 
 .gift-card-title-input {
-    width: 50%;
+    width: 100%;
     height: 36px;
     padding-left: 10px
 }
 
 .gift-card-details-input {
-    width: 50%;
+    width: 100%;
     height: 100px;
     padding-left: 10px;
     padding-top: 10px;
@@ -136,26 +136,15 @@
     background-color: white;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 900px) {
     .gift-card-review-status-content {
         top: 80vh;
         left: 92vw
     }
     .gift-card-review-wrapper {
         padding: 40px 20px 0 20px;
-        margin: 0 20px 40px 20px;
-    }
-
-    .gift-card-nickname-input {
-        width: 100%
-    }
-
-    .gift-card-title-input {
-        width: 100%
-    }
-
-    .gift-card-details-input {
-        width: 100%;
+        margin: 0 2% 40px 2%;
+        width: 96%;
     }
 }
 

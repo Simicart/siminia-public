@@ -451,17 +451,17 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                 <div className='gift-card-details-wrapper'>
                     <div className='gift-card-overview-wrapper'>
                         <div style={{ textAlign: 'left', marginBottom: 30}}>
-                            <h1 style={{fontSize: 24, fontWeight: 'bold', margin: 0, wordWrap: 'break-word'}}>
-                                {giftCardData.products.items[0].name.toUpperCase()}</h1>
+                            <h1 style={{fontSize: 24, margin: 0, wordWrap: 'break-word'}}>
+                                {giftCardData.products.items[0].name}</h1>
                             <button onClick={handleAutoScroll} style={{ textAlign: 'left' }}>
                                 <p className='gift-card-nav-review'>Be the first to review this product</p>
                             </button>
-                            <h1 style={{fontSize: 24, fontWeight: 'bold'}}>{priceTitle}</h1>
+                            <h1 style={{fontSize: 20, fontWeight: 'bold'}}>{priceTitle}</h1>
                         </div>
-                        <div style={{paddingTop: 70, textAlign: 'right'}}>
-                            <h3 style={{fontWeight: 'bold', fontSize: 24}}>{storeConfigData.bssGiftCardStoreConfig.active ? giftCardData.products.items[0].stock_status.split('_').join(' ') : 'OUT OF STOCK'}</h3>
-                            <p style={{fontWeight: 'bold'}}>{`SKU#: ${giftCardData.products.items[0].sku}`}</p>
-                            <p style={{fontWeight: 'bold'}}>{`Expires after: ${giftCardData.products.items[0].giftcard_options.expires_at} day(s)`}</p>
+                        <div style={{paddingTop: 60, textAlign: 'right'}}>
+                            <h3 style={{fontWeight: 'bold', fontSize: 20}}>{storeConfigData.bssGiftCardStoreConfig.active ? giftCardData.products.items[0].stock_status.split('_').join(' ') : 'OUT OF STOCK'}</h3>
+                            <p>{`SKU#: ${giftCardData.products.items[0].sku}`}</p>
+                            <p>{`Expires after: ${giftCardData.products.items[0].giftcard_options.expires_at} day(s)`}</p>
                         </div>
                     </div>
                     <div style={{textAlign: 'left'}}>
