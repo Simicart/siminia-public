@@ -779,21 +779,13 @@ const Routes = props => {
                     )}
                 />
 
-                {!checkDisabledGiftCard() && (<Route
+                <Route
                     exact
                     path="/giftcard/:giftCardName.html"
                     render={props => (
                         <GiftCardPage {...props} />
                     )}
-                />)}
-
-                {checkDisabledGiftCard() && (<Route
-                    exact
-                    path="/gift-card.html"
-                    render={props => (
-                        <Page404/>
-                    )}
-                />)}
+                />
 
                 {HomePage ? (
                     <Route

@@ -14,7 +14,7 @@ import '../styles/styles.scss'
 import { handlePriceInput, handleSenderName, handleRecipientName, handleSenderEmail, handleRecipientEmail, handleMessage } from '../functions/gift-card-info/HandleUserInput'
 import { imgStyles, selectedImgStyles, settings, loadingImage } from '../functions/gift-card-info/CarouselConfig'
 
-const GiftCardInfo = ({ giftCardData, timezoneData }) => {
+const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
     const [priceTitle, setPriceTitle] = useState('$0.00')                  //price title show when user type or click option
     const [priceError, setPriceError] = useState(false)                    //control price error state when submit 
     const [showDynamic, setShowDynamic] = useState(false)                  //control show dynamic price when user click that option
@@ -359,30 +359,37 @@ const GiftCardInfo = ({ giftCardData, timezoneData }) => {
 
     //handle add to cart action
     const handleAddToCart = () => {
-        const tmp = checkInput()
-        const cart_id = JSON.parse(localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__cartId')).value
-        const index = document.getElementById('val').selectedIndex
+        if(!storeConfigData.bssGiftCardStoreConfig.active) {
+            setCartStatus('Some errors occurred. Please try again later')
+            setShowCartStatus(true)
+        }
 
-        if (tmp) {
-            setCartButton('Adding...')
-            addGiftCardToCart({
-                variables: {
-                    cart_id: cart_id.slice(1, cart_id.length - 1),
-                    sku: giftCardData.products.items[0].sku,
-                    quantity: quantity,
-                    bss_giftcard_amount: showDynamic ? 'custom' : giftCardData.products.items[0].giftcard_options.amount[index - 1].id,
-                    ...showDynamic && { bss_giftcard_amount_dynamic: dynamicPrice },
-                    bss_giftcard_delivery_date: document.getElementById('calendar').value,
-                    bss_giftcard_recipient_email: recipientEmail,
-                    bss_giftcard_recipient_name: recipientName,
-                    bss_giftcard_sender_email: senderEmail,
-                    bss_giftcard_sender_name: senderName,
-                    bss_giftcard_selected_image: imageId,
-                    bss_giftcard_template: giftCardData.products.items[0].giftcard_options.template[0].template_id,
-                    bss_giftcard_message_email: message,
-                    bss_giftcard_timezone: document.getElementById('tz').value
-                }
-            })
+        else {
+            const tmp = checkInput()
+            const cart_id = JSON.parse(localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__cartId')).value
+            const index = document.getElementById('val').selectedIndex
+            
+            if (tmp) {
+                setCartButton('Adding...')
+                addGiftCardToCart({
+                    variables: {
+                        cart_id: cart_id.slice(1, cart_id.length - 1),
+                        sku: giftCardData.products.items[0].sku,
+                        quantity: quantity,
+                        bss_giftcard_amount: showDynamic ? 'custom' : giftCardData.products.items[0].giftcard_options.amount[index - 1].id,
+                        ...showDynamic && { bss_giftcard_amount_dynamic: dynamicPrice },
+                        bss_giftcard_delivery_date: document.getElementById('calendar').value,
+                        bss_giftcard_recipient_email: recipientEmail,
+                        bss_giftcard_recipient_name: recipientName,
+                        bss_giftcard_sender_email: senderEmail,
+                        bss_giftcard_sender_name: senderName,
+                        bss_giftcard_selected_image: imageId,
+                        bss_giftcard_template: giftCardData.products.items[0].giftcard_options.template[0].template_id,
+                        bss_giftcard_message_email: message,
+                        bss_giftcard_timezone: document.getElementById('tz').value
+                    }
+                })
+            }
         }
     }
 
@@ -452,7 +459,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData }) => {
                             <h1 style={{fontSize: 24, fontWeight: 'bold'}}>{priceTitle}</h1>
                         </div>
                         <div style={{paddingTop: 70, textAlign: 'right'}}>
-                            <h3 style={{fontWeight: 'bold', fontSize: 24}}>{giftCardData.products.items[0].stock_status.split('_').join(' ')}</h3>
+                            <h3 style={{fontWeight: 'bold', fontSize: 24}}>{storeConfigData.bssGiftCardStoreConfig.active ? giftCardData.products.items[0].stock_status.split('_').join(' ') : 'OUT OF STOCK'}</h3>
                             <p style={{fontWeight: 'bold'}}>{`SKU#: ${giftCardData.products.items[0].sku}`}</p>
                             <p style={{fontWeight: 'bold'}}>{`Expires after: ${giftCardData.products.items[0].giftcard_options.expires_at} day(s)`}</p>
                         </div>
