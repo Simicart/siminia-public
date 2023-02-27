@@ -65,12 +65,14 @@ const ProductImageCarousel = props => {
         const { variants } = product;
         const isConfigurable = isProductConfigurable(product);
 
-        const media_gallery_entries = product.media_gallery_entries
-            ? product.media_gallery_entries
+        console.log(product)
+
+        const media_gallery_entries = product.media_gallery
+            ? product.media_gallery
             : product.small_image
             ? [
                   {
-                      file: product.small_image,
+                      url: product.small_image,
                       disabled: false,
                       label: '',
                       position: 1
@@ -84,6 +86,8 @@ const ProductImageCarousel = props => {
         ) {
             return media_gallery_entries;
         }
+
+    
 
         const item = findMatchingVariant({
             optionCodes,
@@ -102,8 +106,8 @@ const ProductImageCarousel = props => {
         const returnedImages = [];
         var obj = {};
         images.forEach(image => {
-            if (!obj[image.file]) {
-                obj[image.file] = true;
+            if (!obj[image.url]) {
+                obj[image.url] = true;
                 returnedImages.push(image);
             }
         });
@@ -121,8 +125,8 @@ const ProductImageCarousel = props => {
         let images = carouselImages;
         images = images.map(item => {
             return {
-                url: item.file
-                    ? resourceUrl(item.file, {
+                url: item.url
+                    ? resourceUrl(item.url, {
                           type: 'image-product',
                           width: 640
                       })
@@ -196,8 +200,8 @@ const ProductImageCarousel = props => {
                     />
                 ) : (
                     carouselImages.map(function(item, index) {
-                        const src = item.file
-                            ? resourceUrl(item.file, {
+                        const src = item.url
+                            ? resourceUrl(item.url, {
                                   type: 'image-product',
                                   width: IMAGE_WIDTH
                               })
@@ -205,7 +209,7 @@ const ProductImageCarousel = props => {
 
                         return (
                             <div
-                                key={item.file}
+                                key={item.url}
                                 style={{
                                     cursor: 'pointer',
                                     backgroundColor: '#ffffff'
