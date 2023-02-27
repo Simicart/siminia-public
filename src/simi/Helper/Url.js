@@ -67,7 +67,7 @@ export const logoUrl = () => {
         );
         return url.href;
     }
-    return 'https://www.simicart.com/skin/frontend/default/simicart2.1/images/simicart/new_logo_small.png';
+    return 'https://uat.easternchristiansupply.biz/pub/media/logo/stores/1/ecs_logo_1.png';
 };
 
 /*
