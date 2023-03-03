@@ -7,13 +7,11 @@
 .gift-card-value-rating {
     display: flex;
     flex-direction: row;
-    margin-bottom: 20px;
 }
 
 .gift-card-price-rating {
     display: flex;
     flex-direction: row;
-    margin-bottom: 20px;
 }
 
 .gift-card-rating-rating {
@@ -25,24 +23,20 @@
     display: flex;
     flex-direction: column;
     margin-left: 40px;
+    margin-top: 5px
 }
 
 .gift-card-star-uncheck {
-    color: gray;
-    margin-right: 10px;
+    color: rgb(224, 224, 224);
+    fill: rgb(224, 224, 224);
+    margin-right: 5px;
     transition: color 0.5s;
-
-    &:hover {
-        color: yellow;
-        fill: yellow;
-        cursor: pointer;
-    }
 }
 
 .gift-card-star-checked {
-    color: yellow;
-    fill: yellow;
-    margin-right: 10px;
+    color: rgba(0, 0, 0, 0.87);
+    fill: rgba(0, 0, 0, 0.87);
+    margin-right: 5px;
     cursor: pointer
 }
 

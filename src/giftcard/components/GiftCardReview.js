@@ -199,7 +199,7 @@ const GiftCardReivew = ({ giftCardData }) => {
             <p
                 style={{
                     fontWeight: 'bold',
-                    fontSize: 18,
+                    fontSize: 16,
                     marginTop: 30,
                     borderBottom: '2px solid gray'
                 }}
@@ -212,10 +212,10 @@ const GiftCardReivew = ({ giftCardData }) => {
                         style={{
                             width: '5%',
                             position: 'relative',
-                            height: 60
+                            height: 20
                         }}
                     >
-                        <p style={{ position: 'absolute', top: '20%' }}>
+                        <p style={{ fontSize: 14, position: 'absolute', top: '20%' }}>
                             Value
                         </p>
                     </div>
@@ -232,7 +232,7 @@ const GiftCardReivew = ({ giftCardData }) => {
                                         )
                                     }
                                     className={`gift-card-star-${element}`}
-                                    size={40}
+                                    size={18}
                                 />
                             ))}
                         </div>
@@ -251,10 +251,10 @@ const GiftCardReivew = ({ giftCardData }) => {
                         style={{
                             width: '5%',
                             position: 'relative',
-                            height: 60
+                            height: 20
                         }}
                     >
-                        <p style={{ position: 'absolute', top: '25%' }}>
+                        <p style={{ fontSize: 14, position: 'absolute', top: '25%' }}>
                             Price
                         </p>
                     </div>
@@ -271,7 +271,7 @@ const GiftCardReivew = ({ giftCardData }) => {
                                         )
                                     }
                                     className={`gift-card-star-${element}`}
-                                    size={40}
+                                    size={18}
                                 />
                             ))}
                         </div>
@@ -290,10 +290,10 @@ const GiftCardReivew = ({ giftCardData }) => {
                         style={{
                             width: '5%',
                             position: 'relative',
-                            height: 60
+                            height: 20
                         }}
                     >
-                        <p style={{ position: 'absolute', top: '25%' }}>
+                        <p style={{ fontSize: 14, position: 'absolute', top: '25%' }}>
                             Rating
                         </p>
                     </div>
@@ -310,7 +310,7 @@ const GiftCardReivew = ({ giftCardData }) => {
                                         )
                                     }
                                     className={`gift-card-star-${element}`}
-                                    size={40}
+                                    size={18}
                                 />
                             ))}
                         </div>
@@ -328,7 +328,7 @@ const GiftCardReivew = ({ giftCardData }) => {
             <p
                 style={{
                     fontWeight: 'bold',
-                    fontSize: 18,
+                    fontSize: 16,
                     marginTop: 30,
                     borderBottom: '2px solid gray',
                     marginBottom: 40
@@ -337,7 +337,7 @@ const GiftCardReivew = ({ giftCardData }) => {
                 User info <span style={{ color: 'red' }}>*</span>
             </p>
             <div style={{ marginBottom: 20 }}>
-                <p style={{ fontWeight: 'bold', marginBottom: 5 }}>
+                <p style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 5 }}>
                     Nickname <span style={{ color: 'red' }}>*</span>
                 </p>
                 <input
@@ -361,7 +361,7 @@ const GiftCardReivew = ({ giftCardData }) => {
                 )}
             </div>
             <div style={{ marginBottom: 20 }}>
-                <p style={{ fontWeight: 'bold', marginBottom: 5 }}>
+                <p style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 5 }}>
                     Title <span style={{ color: 'red' }}>*</span>
                 </p>
                 <input
@@ -385,7 +385,7 @@ const GiftCardReivew = ({ giftCardData }) => {
                 )}
             </div>
             <div>
-                <p style={{ fontWeight: 'bold', marginBottom: 5 }}>
+                <p style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 5 }}>
                     Details <span style={{ color: 'red' }}>*</span>
                 </p>
                 <textarea
