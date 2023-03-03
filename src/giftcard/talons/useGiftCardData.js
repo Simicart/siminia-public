@@ -1,8 +1,8 @@
 import { useQuery, gql } from '@apollo/client';
 
 const GET_GIFT_CARD_DETAILS = gql`
-    query getGiftCardDetails($filter: String) {
-        products (filter: {sku: {eq: $filter}}) {
+    query getGiftCardDetails($urlKey: String!) {
+      products(filter: { url_key: { eq: $urlKey } }) {
           items {
             ... on BssGiftCardProduct {
               name
@@ -26,6 +26,7 @@ const GET_GIFT_CARD_DETAILS = gql`
                   min_value
                 }
                 template {
+                  name
                   template_id
                   status
                   code_color
@@ -42,9 +43,9 @@ const GET_GIFT_CARD_DETAILS = gql`
     }
 `
 
-const useGiftCardData = (filter) => {
+const useGiftCardData = (urlKey) => {
   const giftCardDetails = useQuery(GET_GIFT_CARD_DETAILS, {
-    variables: {filter: filter},
+    variables: {urlKey: urlKey},
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'cache-and-network',
   })

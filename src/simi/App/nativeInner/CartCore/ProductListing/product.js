@@ -31,6 +31,7 @@ const HeartIcon = <Icon size={16} src={Heart} />;
 
 const Product = props => {
     const { item } = props;
+    console.log('itemmmm', item);
     const merchantTaxConfig = taxConfig();
     const showExcludedTax =
         merchantTaxConfig &&
@@ -84,10 +85,15 @@ const Product = props => {
     ) : null;
 
     const itemLink = useMemo(
-        () => resourceUrl(`/${urlKey}${urlSuffix || ''}`),
+        () =>
+            resourceUrl(
+                `${
+                    item.__typename === 'BssGiftCardItem' ? 'giftcard' : ''
+                }/${urlKey}${urlSuffix || ''}`
+            ),
         [urlKey, urlSuffix]
     );
-
+    console.log('itemLink', itemLink);
     const stockStatusMessage =
         stockStatus === 'OUT_OF_STOCK'
             ? formatMessage({
@@ -251,7 +257,9 @@ const Product = props => {
                     <ProductLabel
                         page={SHOPPING_CART_PAGE}
                         productLabel={item?.product?.product_label}
-                        productOutStock={stockStatus ==="OUT_OF_STOCK" ? true : false}
+                        productOutStock={
+                            stockStatus === 'OUT_OF_STOCK' ? true : false
+                        }
                     />
                 </Link>
                 <div className={classes.details}>

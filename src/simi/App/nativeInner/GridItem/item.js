@@ -49,7 +49,6 @@ const Griditem = props => {
     const handleLink = linkInput => {
         history.push(linkInput);
     };
-
     const itemClasses = mergeClasses(defaultClasses, classes);
     const {
         name,
@@ -77,62 +76,62 @@ const Griditem = props => {
     let priceComponent = (
         <Price prices={price} type={type_id} classes={itemClasses} />
     );
-    if (__typename === 'MpGiftCardProduct') {
-        let min_price = (item.min_amount * price_rate) / 100;
-        let max_price = (item.max_amount * price_rate) / 100;
+    // if (__typename === 'BssGiftCardProduct') {
+    //     let min_price = (item.min_amount * price_rate) / 100;
+    //     let max_price = (item.max_amount * price_rate) / 100;
 
-        let giftCardPrices = [];
-        if (!allow_amount_range && gift_card_amounts) {
-            JSON.parse(gift_card_amounts).map(({ price }) => {
-                giftCardPrices.push(price);
-            });
-            giftCardPrices.sort((a, b) => {
-                return a - b;
-            });
-            min_price =
-                min_price > 0 && min_price < giftCardPrices[0]
-                    ? min_price
-                    : giftCardPrices[0];
-            max_price =
-                max_price > 0 &&
-                max_price > giftCardPrices[giftCardPrices.length - 1]
-                    ? max_price
-                    : giftCardPrices[giftCardPrices.length - 1];
-        }
+    //     let giftCardPrices = [];
+    //     if (!allow_amount_range && gift_card_amounts) {
+    //         JSON.parse(gift_card_amounts).map(({ price }) => {
+    //             giftCardPrices.push(price);
+    //         });
+    //         giftCardPrices.sort((a, b) => {
+    //             return a - b;
+    //         });
+    //         min_price =
+    //             min_price > 0 && min_price < giftCardPrices[0]
+    //                 ? min_price
+    //                 : giftCardPrices[0];
+    //         max_price =
+    //             max_price > 0 &&
+    //             max_price > giftCardPrices[giftCardPrices.length - 1]
+    //                 ? max_price
+    //                 : giftCardPrices[giftCardPrices.length - 1];
+    //     }
 
-        if (min_price != max_price) {
-            priceComponent = (
-                <div className={itemClasses['giftcard-prices-wrapper']}>
-                    From:{' '}
-                    <span className={itemClasses['giftcard-prices']}>
-                        <CorePrice
-                            value={min_price}
-                            currencyCode={price.regularPrice.amount.currency}
-                        />
-                    </span>
-                    <br />
-                    To:{' '}
-                    <span className={itemClasses['giftcard-prices']}>
-                        <CorePrice
-                            value={max_price}
-                            currencyCode={price.regularPrice.amount.currency}
-                        />
-                    </span>
-                </div>
-            );
-        } else {
-            priceComponent = (
-                <div className={itemClasses['giftcard-prices-wrapper']}>
-                    <span className={itemClasses['giftcard-prices']}>
-                        <CorePrice
-                            value={min_price}
-                            currencyCode={price.regularPrice.amount.currency}
-                        />
-                    </span>
-                </div>
-            );
-        }
-    }
+    //     if (min_price != max_price) {
+    //         priceComponent = (
+    //             <div className={itemClasses['giftcard-prices-wrapper']}>
+    //                 From:{' '}
+    //                 <span className={itemClasses['giftcard-prices']}>
+    //                     <CorePrice
+    //                         value={min_price}
+    //                         currencyCode={price.regularPrice.amount.currency}
+    //                     />
+    //                 </span>
+    //                 <br />
+    //                 To:{' '}
+    //                 <span className={itemClasses['giftcard-prices']}>
+    //                     <CorePrice
+    //                         value={max_price}
+    //                         currencyCode={price.regularPrice.amount.currency}
+    //                     />
+    //                 </span>
+    //             </div>
+    //         );
+    //     } else {
+    //         priceComponent = (
+    //             <div className={itemClasses['giftcard-prices-wrapper']}>
+    //                 <span className={itemClasses['giftcard-prices']}>
+    //                     <CorePrice
+    //                         value={min_price}
+    //                         currencyCode={price.regularPrice.amount.currency}
+    //                     />
+    //                 </span>
+    //             </div>
+    //         );
+    //     }
+    // }
 
     const location = {
         pathname: product_url,
@@ -145,8 +144,8 @@ const Griditem = props => {
 
     const giftCardLocation = {
         ...location,
-        pathname: `giftcard${location.pathname}`
-    }
+        pathname: `/giftcard${location.pathname}`
+    };
 
     const { handleAddCart, handleAddCompare, loading, isPhone } = useGridItem({
         location,
@@ -176,12 +175,17 @@ const Griditem = props => {
                     // padding: 1
                 }}
             >
-                <Link to={{
-                    pathname: location.state.item_data.type_id === 'bss_giftcard' ? giftCardLocation.pathname : location.pathname,
-                    state: {
-                        sku: item.sku
-                    }
-                }}>
+                <Link
+                    to={{
+                        pathname:
+                            location.state.item_data.type_id === 'bss_giftcard'
+                                ? giftCardLocation.pathname
+                                : location.pathname,
+                        state: {
+                            sku: item.sku
+                        }
+                    }}
+                >
                     <Image
                         src={imageUrl}
                         alt={name}
@@ -328,15 +332,16 @@ const Griditem = props => {
                         itemClasses['small']
                     }`}
                     onClick={() => {
-                        if(location.state.item_data.type_id === 'bss_giftcard') {
+                        if (
+                            location.state.item_data.type_id === 'bss_giftcard'
+                        ) {
                             history.push({
                                 pathname: `giftcard${location.pathname}`,
                                 state: {
                                     sku: item.sku
                                 }
-                            })
-                        }
-                        else handleLink(location)
+                            });
+                        } else handleLink(location);
                     }}
                     dangerouslySetInnerHTML={{ __html: name }}
                 />
