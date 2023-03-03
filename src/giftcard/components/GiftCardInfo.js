@@ -79,9 +79,6 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
     //templates data and price range
     const [templateImage,setTemplateImage] = useState();
     
-
-
-   
     const min_value =
         giftCardData.products.items[0]?.giftcard_options.dynamic_price
             .min_value;
@@ -94,7 +91,8 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
     const priceInput = `(${min_value}-${max_value})`;
     const ListTemplate =
         giftCardData?.products?.items[0]?.giftcard_options?.template || [];
-    
+    const [codeColor, setCodeColor] = useState()
+    const [messageColor, setMessageColor] = useState()
 
     const [listImage,setListImage] = useState() 
     // const imgs =
@@ -143,7 +141,8 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
             setTemplateId(Number(e.target.value));
             setListImage(imageArray?.images || [])
             setShowTemplates(true);
-
+            setCodeColor(imageArray.code_color)
+            setMessageColor(imageArray.message_color)
             //setTemplate(imgs[0].url)
         } else setShowTemplates(false);
     };
@@ -591,7 +590,8 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                             } day(s)`}</p>
                         </div>
                     </div>
-                    <div style={{ textAlign: 'left' }}>
+
+                    {(storeConfigData.bssGiftCardStoreConfig.active && ListTemplate.length > 0) ? (<div style={{ textAlign: 'left' }}>
                         <div style={{ marginTop: 20 }}>
                             <p style={{ fontWeight: 'bold', marginBottom: 5 }}>
                                 Card value{' '}
@@ -1041,14 +1041,8 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                             senderName={senderName}
                             recipientName={recipientName}
                             message={message}
-                            codeColor={
-                                giftCardData.products.items[0]?.giftcard_options
-                                    .template[0].code_color
-                            }
-                            messageColor={
-                                giftCardData.products.items[0]?.giftcard_options
-                                    .template[0].message_color
-                            }
+                            codeColor={codeColor}
+                            messageColor={messageColor}
                             value={priceTitle}
                         />
                         <p style={{ fontWeight: 'bold', marginBottom: 5 }}>
@@ -1116,7 +1110,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                 <p style={{ marginTop: 5 }}>Add to Favorites</p>
                             </div>
                         </div>
-                    </div>
+                    </div>) : <></>}
                 </div>
                 {showCartStatus && (
                     <StatusPopUp
