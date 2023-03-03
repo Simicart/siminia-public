@@ -60,9 +60,9 @@ const PriceComponent = props => {
     };
 
     const renderView = () => {
-        if (type === 'bundle') {
+        if (type === 'bundle' ) {
             return <BundlePrice {...priceProps} />;
-        } else if (type === 'grouped') {
+        } else if (type === 'grouped' || type==='bss_giftcard') {
             // for list page group product
             return <Grouped {...priceProps} />;
         } else {

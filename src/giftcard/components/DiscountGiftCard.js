@@ -19,7 +19,7 @@ const DiscountGiftCard = ({ location }) => {
         setGiftCodeData = useContext(GiftCodeCheckoutContext).setGiftCodeData
     }
 
-    const customerToken = JSON.parse(localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token')).value
+    const customerToken = JSON.parse(localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token'))?.value
     const base_url = window.location.origin
     const [expand, setExpand] = useState(false)
     const [giftCode, setGiftCode] = useState('')

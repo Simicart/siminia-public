@@ -22,7 +22,7 @@ export const useWishlistPage = (props = {}) => {
         nextFetchPolicy: 'cache-first',
         skip: !isSignedIn
     });
-
+    console.log("dataaaa",data)
     const derivedWishlists = useMemo(() => {
         return (data && data.customer.wishlists) || [];
     }, [data]);

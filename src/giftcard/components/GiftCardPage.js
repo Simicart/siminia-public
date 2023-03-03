@@ -10,9 +10,11 @@ import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/Loadi
 
 function GiftCardPage() {
     const location = useLocation();
-    const filter = location.state.sku
+    const pathName = location.pathname
+    const urlKey = pathName.slice(10,pathName.length-5)
+    const filter = location?.state?.sku || ''
  
-    const giftCardDetails = useGiftCardData(filter)
+    const giftCardDetails = useGiftCardData(urlKey)
     const timezoneDetails = useTimezoneData()
     const storeConfig = useStoreConfig()
     
