@@ -28,13 +28,27 @@ const Grouped = props => {
             </div>
         );
     } else {
-        product_from_label = (
-            <div className='from'>
-                <FormattedMessage id={'From'} />
-                {' : '}
-                {formatPrice(prices.minimalPrice.amount.value)}
-            </div>
-        );
+        if (prices.minimalPrice.amount.value !== prices.maximalPrice.amount.value) {
+            product_from_label = (
+                <>
+                    <div className='from'>
+                        <FormattedMessage id={'From'} />
+                        {' : '}
+                        {formatPrice(prices.minimalPrice.amount.value)}
+                    </div>
+                    <div className='from'>
+                        <FormattedMessage id={'To'} />
+                        {' : '}
+                        {formatPrice(prices.maximalPrice.amount.value)}
+                    </div>
+                </>
+            )
+        }
+        else {
+            product_from_label = (
+               formatPrice(prices.minimalPrice.amount.value)
+            )
+        };
     }
 
     return (

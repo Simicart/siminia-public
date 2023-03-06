@@ -31,6 +31,7 @@ import {
 } from 'src/simi/BaseComponents/CallForPrice/components/Product';
 import ProductRewardPoint from 'src/simi/BaseComponents/RewardPoint/components/Product';
 import { CATALOG_PAGE, SEARCH_PAGE, HOME_PAGE } from '../ProductLabel/consts';
+import checkDisabledGiftCard from '../../../../giftcard/functions/gift-card-store-config/checkDisabledGiftCard';
 
 const HeartIcon = <Icon size={20} src={Heart} />;
 
@@ -38,6 +39,7 @@ const Griditem = props => {
     const { lazyImage } = props;
     const { formatMessage } = useIntl();
     const item = prepareProduct(props.item);
+    const giftCardDisabled = checkDisabledGiftCard()
     const logo_url = logoUrl();
     const { classes, styles = {} } = props;
     const history = useHistory();
@@ -268,7 +270,22 @@ const Griditem = props => {
         </div>
     );
 
-    const addToCartBtn = (
+    const addToCartBtn = location.state.item_data.type_id === 'bss_giftcard' ? (
+        <button
+            className={itemClasses['product-grid-addcartbtn']}
+            onClick={() => {
+                if (!loading && !productOutStock && !giftCardDisabled) handleAddCart(item);
+            }}
+        >
+            {formatMessage({
+                id: productOutStock || giftCardDisabled
+                    ? 'Out of stock'
+                    : loading
+                    ? 'Adding'
+                    : 'Add To Cart'
+            })}
+        </button>
+    ) : (
         <button
             className={itemClasses['product-grid-addcartbtn']}
             onClick={() => {
