@@ -29,6 +29,7 @@ const productLabelEnabled =
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_PRODUCT_LABEL) === 1;
+
 const deliveryTimeEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&
@@ -302,10 +303,13 @@ const GET_STORE_CONFIG = gql`
         ${
             deliveryTimeEnabled
                 ? `
-                bssDeliveryDateStoreConfig(store_view: 1){
+                bssDeliveryDateStoreConfig {
                   active
                   as_processing_days
-                  block_out_holidays
+                  block_out_holidays {
+                    date
+                    content
+                  }
                   cut_off_time
                   date_day_off
                   date_fields
@@ -316,7 +320,13 @@ const GET_STORE_CONFIG = gql`
                   on_which_page
                   process_time
                   shipping_comment
-                  time_slots
+                  time_slots {
+                    value
+                    label
+                    disabled
+                    name
+                    price
+                  }
               }`
                 : ''
         }
