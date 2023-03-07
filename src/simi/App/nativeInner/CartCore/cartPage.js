@@ -51,7 +51,7 @@ const CartPage = props => {
         wishlistSuccessProps,
     } = talonProps;
 
-    const [giftCodeData, setGiftCodeData] = useState()
+    const [giftCodeData, setGiftCodeData] = useState([])
    
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
