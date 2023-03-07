@@ -81,14 +81,19 @@ const DiscountGiftCard = ({ location }) => {
                 if(data[0]?.id) {
                     setGiftCodeError('')
                     setMatchCode(matchCode)
-                    setGiftCodeData(matchCode)
-                    setApplyId(data[0].id)
+                    setGiftCodeData((giftCodeData) => {
+                        if(giftCodeData.length >= 0) {
+                            return [...giftCodeData, matchCode]
+                        }
+                        else {
+                           return [matchCode] 
+                        }})
+                    setApplyId(data[data.length-1].id)
                     setApplyButtonTitle('APPLY')
                 }
                 if(data?.message) {
                     setGiftCodeError('You have already apply this gift card code.')
                     setMatchCode()
-                    setGiftCodeData()
                     setApplyButtonTitle('APPLY')
                 }
             })
@@ -103,7 +108,14 @@ const DiscountGiftCard = ({ location }) => {
     const handleRemoveGiftCode = () => {
         setGiftCode('')
         setMatchCode()
-        setGiftCodeData()
+        setGiftCodeData((giftCodeData) => {
+            if(giftCodeData.length > 1) {
+                const tmp = giftCodeData.splice(0, giftCodeData.length-1);
+                return tmp
+            }
+            else {
+               return [] 
+            }})
         removeGiftCode(applyId)
     }
 

@@ -42,7 +42,8 @@ const PriceSummary = props => {
         hasItems,
         isCheckout,
         isLoading,
-        flatData
+        flatData,
+        cartGiftCode
     } = talonProps;
     const { formatMessage } = useIntl();
     let mpRewardEarn, mpRewardDiscount, mpRewardSpent;
@@ -102,7 +103,7 @@ const PriceSummary = props => {
             <Button
                 disabled={isPriceUpdating}
                 priority={'high'}
-                onClick={handleProceedToCheckout}
+                onClick={() => handleProceedToCheckout(cartGiftCode)}
             >
                 <FormattedMessage
                     id={'priceSummary.checkoutButton'}
@@ -221,10 +222,12 @@ const PriceSummary = props => {
                     data={shipping}
                     isCheckout={isCheckout}
                 />
-                {giftCodeData && (<>
-                    <span style={{maxWidth: 80}}>{giftCodeData.code}</span>
-                    <span style={{textAlign: 'right'}}>{`-$${giftCodeData.value}.00`}</span>
-                </>)}
+                {giftCodeData && (giftCodeData.map((element) => 
+                <>
+                    <span style={{maxWidth: 80}}>{element.code}</span>
+                    <span style={{textAlign: 'right'}}>{`-$${element.value}.00`}</span>
+                </>
+                ))}
                 <span className={classes.totalLabel}>{totalPriceLabel}</span>
                 <span
                     style={{ color: configColor.price_color }}

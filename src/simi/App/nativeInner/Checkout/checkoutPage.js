@@ -48,6 +48,7 @@ const deliveryTimeEnabled =
     window.SMCONFIGS.plugins &&
     window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME) === 1;
+import { useLocation } from 'react-router-dom';
 
 export const GiftCodeCheckoutContext = createContext({});
 
@@ -59,8 +60,12 @@ const CheckoutPage = props => {
     const [openDeli, setOpenDeli] = useState(false);
 
     const [{ cartId }] = useCartContext();
-
-    const [giftCodeData, setGiftCodeData] = useState()
+    const location = useLocation()
+    let initGiftCode = []
+    if(location?.state?.cartGiftCode) {
+        initGiftCode = location?.state?.cartGiftCode
+    }
+    const [giftCodeData, setGiftCodeData] = useState(initGiftCode)
 
     const {
         /**
