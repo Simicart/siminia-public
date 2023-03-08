@@ -71,3 +71,79 @@
     border-radius: 10px;
     box-shadow: 0px 0px 10px -2px #000000;
 }
+
+.my-gift-code-title {
+    font-weight: bold;
+    font-size: 16px; 
+}
+
+.my-gift-code-title-border {
+    font-weight: bold;
+    font-size: 16px; 
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 20px;
+}
+
+.my-gift-code-row {
+    display: flex; 
+    flex-direction: row;
+    border-bottom: 1px solid lightgray;
+    padding: 10px 0 10px 0;
+}
+
+.my-gift-code-details-input {
+    height: 40px;
+    flex-grow: 1;
+    padding-left: 10px;
+}
+
+.my-gift-code-details-submit {
+    text-align: center;
+    color: white;
+    height: 40px;
+    width: 120px;
+    border: none;
+    background-color: dodgerblue;
+    transition: background-color 0.5s, color 0.5s;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+        background-color: cyan;
+        color: black
+    }
+}
+
+.my-gift-cards-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+@media only screen and (max-width: 767px) {
+    .my-gift-cards-nav {
+        width: 94%;
+        margin-left: 3%;
+    }
+}
+
+.my-gift-cards-page-number {
+    width: 40px;
+    height: 40px;
+    padding-top: 6px;
+    text-align: center;
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+    cursor: pointer
+}
+
+.my-gift-cards-page-number-selected {
+    width: 40px;
+    height: 40px;
+    padding-top: 6px;
+    text-align: center;
+    background-color: #000000;
+    color: white;
+}
