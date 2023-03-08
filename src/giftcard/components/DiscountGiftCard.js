@@ -67,6 +67,7 @@ const DiscountGiftCard = ({ location }) => {
 
     const handleAddGiftCode = () => {
         setApplyButtonTitle('APPLYING...')
+        setGiftCodeError('')
         const orderedGiftCard = myGiftCards.data.bssCustomerGiftCards.filter((element) => {
             let result = false
             for (let i = 0; i < orderGiftCardId.data.customerOrders.items.length; i++) {
@@ -78,30 +79,44 @@ const DiscountGiftCard = ({ location }) => {
         const matchCode = orderedGiftCard.find((element) => element.code === giftCode)
         if (matchCode) {
             applyGiftCode(matchCode.code).then((data) => {
-                if(data[0]?.id) {
+                if (data[0]?.id) {
                     setGiftCodeError('')
                     setMatchCode(matchCode)
                     setGiftCodeData((giftCodeData) => {
-                        if(giftCodeData.length >= 0) {
+                        if (giftCodeData.length >= 0) {
                             return [...giftCodeData, matchCode]
                         }
                         else {
-                           return [matchCode] 
-                        }})
-                    setApplyId(data[data.length-1].id)
+                            return [matchCode]
+                        }
+                    })
+                    setApplyId(data[data.length - 1].id)
                     setApplyButtonTitle('APPLY')
                 }
-                if(data?.message) {
-                    setGiftCodeError('You have already apply this gift card code.')
+                if (data?.message) {
+                    if(data.message.includes('incorrect')) {
+                        setGiftCodeError(`${data.message.slice(0, data.message.length-12)} ${data.parameters[0]} seconds`)
+                    }
+                    else {
+                        setGiftCodeError(data.message)
+                    }
                     setMatchCode()
                     setApplyButtonTitle('APPLY')
                 }
             })
         }
         else {
-            setMatchCode()
-            setGiftCodeError(`The gift code isn't valid. Verify the code and try again.`)
-            setApplyButtonTitle('APPLY')
+            applyGiftCode(giftCode).then((data) => {
+                setMatchCode()
+                if(data.message.includes('incorrect')) {
+                    setGiftCodeError(`${data.message.slice(0, data.message.length-12)} ${data.parameters[0]} seconds`)
+                }
+                else {
+                    setGiftCodeError(data.message)
+                }
+                setApplyButtonTitle('APPLY')
+            }
+            )
         }
     }
 
@@ -109,13 +124,14 @@ const DiscountGiftCard = ({ location }) => {
         setGiftCode('')
         setMatchCode()
         setGiftCodeData((giftCodeData) => {
-            if(giftCodeData.length > 1) {
-                const tmp = giftCodeData.splice(0, giftCodeData.length-1);
+            if (giftCodeData.length > 1) {
+                const tmp = giftCodeData.splice(0, giftCodeData.length - 1);
                 return tmp
             }
             else {
-               return [] 
-            }})
+                return []
+            }
+        })
         removeGiftCode(applyId)
     }
 
