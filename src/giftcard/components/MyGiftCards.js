@@ -47,9 +47,9 @@ const MyGiftCards = () => {
 
     const start = pageSize * (pageNumber - 1)
     const end = pageSize * (pageNumber - 1) + pageSize
-    const listCodeTitle = pageNumber !== Math.ceil(orderedGiftCard.length / pageSize) ? 
-    `Items ${start+1} to ${end} of ${orderedGiftCard.length} total` :
-    `Items ${start+1} to ${orderedGiftCard.length} of ${orderedGiftCard.length} total`
+    const listCodeTitle = pageNumber !== Math.ceil(orderedGiftCard.length / pageSize) ?
+        `Items ${start + 1} to ${end} of ${orderedGiftCard.length} total` :
+        `Items ${start + 1} to ${orderedGiftCard.length} of ${orderedGiftCard.length} total`
 
     const numberCharacterShow = giftCardConfig.data.bssGiftCardStoreConfig.number_character
     const replaceHiddenCharacter = giftCardConfig.data.bssGiftCardStoreConfig.replace_character
@@ -128,6 +128,16 @@ const MyGiftCards = () => {
                                         <p>{codeData.status.label}</p>
                                     </div>
                                 </div>
+                                <div className='my-gift-code-row'>
+                                    <div style={{ width: '40%' }}>
+                                        <p>Order</p>
+                                    </div>
+                                    <div style={{ width: '60%' }}>
+                                    <a href={`/order-history/${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}
+                                                style={{ color: '#0058AC', textDecorationLine: 'underline', fontWeight: 'bold' }}>
+                                                {`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}</a>
+                                    </div>
+                                </div>
                             </div>)}
                             <div style={{ display: 'flex', flexDirection: 'row', gap: 10, marginTop: 20 }}>
                                 <input className='my-gift-code-details-input' onChange={(e) => setSearchCode(e.target.value)}
@@ -140,9 +150,9 @@ const MyGiftCards = () => {
 
                     <div className='my-gift-cards-nav'>
                         <div>
-                            <p style={{marginTop: 8}}>{listCodeTitle}</p>
+                            <p style={{ marginTop: 8 }}>{listCodeTitle}</p>
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'row', gap: 10}}>
+                        <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
                             {renderPageNumber.map((element, index) =>
                                 <button className={pageNumber === index + 1 ? 'my-gift-cards-page-number-selected' : 'my-gift-cards-page-number'}
                                     onClick={() => setPageNumber(index + 1)}>
@@ -235,6 +245,16 @@ const MyGiftCards = () => {
                                                 <p>{codeData.status.label}</p>
                                             </div>
                                         </div>
+                                        <div className='my-gift-code-row'>
+                                            <div style={{ width: '40%' }}>
+                                                <p>Order</p>
+                                            </div>
+                                            <div style={{ width: '60%' }}>
+                                                <a href={`/order-history/${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}
+                                                    style={{ color: '#0058AC', textDecorationLine: 'underline', fontWeight: 'bold' }}>
+                                                    {`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}</a>
+                                            </div>
+                                        </div>
                                     </div>)}
                                     <div style={{ display: 'flex', flexDirection: 'row', gap: 10, marginTop: 20 }}>
                                         <input className='my-gift-code-details-input' onChange={(e) => setSearchCode(e.target.value)}
@@ -247,7 +267,7 @@ const MyGiftCards = () => {
 
                             <div className='my-gift-cards-nav'>
                                 <div>
-                                    <p style={{marginTop: 8}}>{listCodeTitle}</p>
+                                    <p style={{ marginTop: 8 }}>{listCodeTitle}</p>
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
                                     {renderPageNumber.map((element, index) =>
@@ -355,6 +375,16 @@ const MyGiftCards = () => {
                                         <p>{codeData.status.label}</p>
                                     </div>
                                 </div>
+                                <div className='my-gift-code-row'>
+                                    <div style={{ width: '40%' }}>
+                                        <p>Order</p>
+                                    </div>
+                                    <div style={{ width: '60%' }}>
+                                        <a href={`/order-history/${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}
+                                            style={{ color: '#0058AC', textDecorationLine: 'underline', fontWeight: 'bold' }}>
+                                            {`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}</a>
+                                    </div>
+                                </div>
                             </div>)}
                             <div style={{ display: 'flex', flexDirection: 'row', gap: 10, marginTop: 20 }}>
                                 <input className='my-gift-code-details-input' onChange={(e) => setSearchCode(e.target.value)}
@@ -367,7 +397,7 @@ const MyGiftCards = () => {
 
                     <div className='my-gift-cards-nav'>
                         <div>
-                            <p style={{marginTop: 8}}>{listCodeTitle}</p>
+                            <p style={{ marginTop: 8 }}>{listCodeTitle}</p>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
                             {renderPageNumber.map((element, index) =>
