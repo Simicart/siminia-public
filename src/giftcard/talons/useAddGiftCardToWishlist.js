@@ -9,36 +9,40 @@ const ADD_GIFT_CARD_TO_WISHLIST = gql`
             wishlistId: $wishlistId
             wishlistItems: $wishlistItems
         ) {
-            wishlist {
-                id
-                items {
-                  product{
-                    name
-                    ...on BssGiftCardProduct{
-                      name
-                    }
-                  }
-                }
-                items_count
-                items_v2(currentPage: 1, pageSize: 20) {
-                    items {
-                      product{
-                        name
-                        ...on BssGiftCardProduct{
-                          name
-                        }
+          wishlist {
+            id
+            items_count
+            items {
+              id
+              qty
+              product {
+                  ... on BssGiftCardProduct {
+                  giftcard_option {
+                      giftcard_value
+                      giftcard_image {
+                          origin
+                          base
+                          thumbnail
                       }
-                    }
-                }
-                sharing_code
-                updated_at
-            }
-            user_errors {
-                code
-                message
-            }
+                      giftcard_sender_email
+                      giftcard_sender_name
+                      giftcard_recipient_name
+                      giftcard_recipient_email
+                      giftcard_message
+                      giftcard_template_name
+                      giftcard_delivery_date
+                      giftcard_timezone
+                  }
+                  }
+              }
+              }
+          }
+          user_errors {
+            code
+            message
+          }
         }
-    }
+      }
 `;
 
 export default ADD_GIFT_CARD_TO_WISHLIST;
