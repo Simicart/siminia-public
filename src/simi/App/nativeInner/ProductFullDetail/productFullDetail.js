@@ -156,10 +156,8 @@ const ProductFullDetail = props => {
     })?.sizeChartData;
     const arr = sizeChartData?.display_popup;
     const display = arr ? arr[0] : null;
-
     const enabledSizeChart =
         sizeChartEnabled && sizeChartData?.storeConfig?.isEnabled;
-
     const {
         giftCardProductData,
         giftCardData,
@@ -223,7 +221,8 @@ const ProductFullDetail = props => {
 
     if (product.__typename === 'MpGiftCardProduct') positionFooterFixed - 100;
     const scrollToReview = () => {
-        smoothScrollToView(document.querySelector('.wrapperReviews'));
+        setShowTab(1);
+        smoothScrollToView(document.querySelector('.selectedReviews'));
     };
     const desStatus = status => {
         if (status === -1) {
@@ -433,10 +432,7 @@ const ProductFullDetail = props => {
         product && product.review_count && product.rating_summary ? (
             <div className="wrapperReviewSum">
                 <RewardPointShowing type="review" />
-                <section
-                    onClick={() => scrollToReview()}
-                    className={classes.reviewSum}
-                >
+                <section className={classes.reviewSum}>
                     <StaticRate
                         size={25}
                         backgroundColor={
@@ -449,14 +445,20 @@ const ProductFullDetail = props => {
                             'static-rate': classes['static-rate']
                         }}
                     />
-                    <span className={classes.reviewSumCount}>
+                    <span
+                        onClick={() => scrollToReview()}
+                        className={classes.reviewSumCount}
+                    >
                         ({product.review_count}{' '}
                         {product.review_count > 1
                             ? formatMessage({ id: 'Reviews' })
                             : formatMessage({ id: 'Review' })}
                         )
                     </span>
-                    <span className="submitReview">
+                    <span
+                        onClick={() => scrollToReview()}
+                        className="submitReview"
+                    >
                         {formatMessage({
                             id: 'Submit Review',
                             defaultMessage: 'Submit Review'
@@ -854,7 +856,7 @@ const ProductFullDetail = props => {
                             </div>
                         )}
 
-                        <div className="sku-share-shop-by-brand">
+                        <div className={classes.wrapperShopbybrands}>
                             {!isMobileSite ? (
                                 <div className="wrapperSku">
                                     <section className={classes.details}>
@@ -879,14 +881,8 @@ const ProductFullDetail = props => {
                                 <SocialShare product={product} />
                             </div>
 
-                            <div className="shopByBrand">
-                                <FormattedMessage
-                                    id={'Shop by brand:'}
-                                    defaultMessage={'Shop by brand:'}
-                                />
-                                <div>
-                                    <Pdetailsbrand product={product} />
-                                </div>
+                            <div className={classes.shopByBrand}>
+                                <Pdetailsbrand product={product} />
                             </div>
 
                             {/*pop up size chart native*/}
@@ -935,11 +931,11 @@ const ProductFullDetail = props => {
                                         </button>
                                         <button
                                             type="button"
-                                            className={
+                                            className={`${
                                                 showTab === 1
                                                     ? 'selected-button'
                                                     : 'deselected-button'
-                                            }
+                                            } selectedReviews`}
                                             onClick={() => setShowTab(1)}
                                         >{`Reviews (${
                                             useProductData(
