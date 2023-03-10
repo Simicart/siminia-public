@@ -92,6 +92,7 @@ const MyGiftCards = () => {
         <>
             {windowWidth < 767 && (
                 <>
+                    <h1 style={{ fontSize: 18, fontWeight: 'bold', marginTop: 40, marginBottom: 30, marginLeft: '3%' }}>Gift Cards Information</h1>
                     <div style={{ border: '1px solid black', padding: 20, marginTop: 30, width: '94%', marginLeft: '3%' }}>
                         <p className={showDetails ? 'my-gift-code-title-border' : 'my-gift-code-title'}>Gift Code Details</p>
                         <div className='my-gift-code-details'>
@@ -133,9 +134,9 @@ const MyGiftCards = () => {
                                         <p>Order</p>
                                     </div>
                                     <div style={{ width: '60%' }}>
-                                    <a href={`/order-history/${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}
-                                                style={{ color: '#0058AC', textDecorationLine: 'underline', fontWeight: 'bold' }}>
-                                                {`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}</a>
+                                        <a href={`/order-history/${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}
+                                            style={{ color: '#0058AC', textDecorationLine: 'underline', fontWeight: 'bold' }}>
+                                            {`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}</a>
                                     </div>
                                 </div>
                             </div>)}
@@ -148,7 +149,7 @@ const MyGiftCards = () => {
                         </div>
                     </div>
 
-                    <div className='my-gift-cards-nav'>
+                    {orderedGiftCard.length > 0 && (<div className='my-gift-cards-nav'>
                         <div>
                             <p style={{ marginTop: 8 }}>{listCodeTitle}</p>
                         </div>
@@ -168,9 +169,9 @@ const MyGiftCards = () => {
                             </select>
                             <p style={{ marginLeft: 5, marginTop: 8 }}>per page</p>
                         </div>
-                    </div>
-                    {orderedGiftCard.length > 0 ? (<div style={{ display: 'flex', flexDirection: 'column', marginTop: 20 }}>
-                        {orderedGiftCard.map((element, index) => {
+                    </div>)}
+                    {orderedGiftCard.length > 0 && (<div style={{ display: 'flex', flexDirection: 'column', marginTop: 20 }}>
+                        {listGiftCodeShow().map((element, index) => {
                             return (
                                 <div className='my-gift-card-details'>
                                     <div style={{ paddingLeft: 20, paddingTop: 20, paddingBottom: 5 }}>
@@ -195,13 +196,7 @@ const MyGiftCards = () => {
                                 </div>
                             )
                         })}
-                    </div>) : (
-                        <div>
-                            <img src='https://laposadamilagro.com/wp-content/uploads/2020/04/giftcard.png'
-                                style={{ width: '60%', height: '50%', margin: 'auto' }}></img>
-                            <h1 style={{ textAlign: 'center', marginTop: 20 }}>You don't have any gift card yet.</h1>
-                        </div>
-                    )}
+                    </div>)}
                 </>
             )}
 
@@ -330,8 +325,39 @@ const MyGiftCards = () => {
                                 })}
                             </div>
                         </div>) : (
-                        <h1 style={{ textAlign: 'center', marginTop: 50 }}>You don't have any gift card yet.</h1>
-                    )}
+                    <div style={{ position: 'relative', width: '94%', marginLeft: '3%' }}>
+                        <h1 style={{ fontSize: 24, fontWeight: 'bold', marginTop: 30, marginBottom: 30 }}>Gift Cards Information</h1>
+                        <div style={{ border: '1px solid black', padding: 20 }}>
+                            <p className='my-gift-code-title'>Gift Code Details</p>
+                            <div className='my-gift-code-details'>
+                                <div style={{ display: 'flex', flexDirection: 'row', gap: 10, marginTop: 20 }}>
+                                    <input className='my-gift-code-details-input' onChange={(e) => setSearchCode(e.target.value)}
+                                        value={searchCode}></input>
+                                    <button className='my-gift-code-details-submit' onClick={handleSearchCode}>Submit</button>
+                                </div>
+                                {showDetails === false && (<p style={{ color: 'red', marginTop: 10 }}>{`The gift card code ${errorCode} is not valid.`}</p>)}
+                            </div>
+                        </div>
+                        <div style={{display: 'flex', flexDirection: 'row', gap: 40, 
+                        borderBottom: '1px solid lightgray', marginTop: 30}}>
+                            <div className='my-gift-card-code'>
+                                <p style={{ fontWeight: 'bold', fontSize: 16 }}>Code</p>
+                            </div>
+                            <div className='my-gift-card-value'>
+                                <p style={{ fontWeight: 'bold' }}>Value</p>
+                            </div>
+                            <div className='my-gift-card-expire-date'>
+                                <p style={{ fontWeight: 'bold' }}>Expire Date</p>
+                            </div>
+                            <div className='my-gift-card-status'>
+                                <p style={{ fontWeight: 'bold' }}>Status</p>
+                            </div>
+                            <div className='my-gift-card-order'>
+                                <p style={{ fontWeight: 'bold' }}>Order</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 </>
             )}
 
@@ -460,7 +486,38 @@ const MyGiftCards = () => {
                         })}
                     </div>
                 </div>) : (
-                    <h1 style={{ textAlign: 'center' }}>You don't have any gift card yet.</h1>
+                    <div style={{ position: 'relative' }}>
+                        <h1 style={{ fontSize: 24, fontWeight: 'bold', marginTop: 10, marginBottom: 30 }}>Gift Cards Information</h1>
+                        <div style={{ border: '1px solid black', padding: 20 }}>
+                            <p className='my-gift-code-title'>Gift Code Details</p>
+                            <div className='my-gift-code-details'>
+                                <div style={{ display: 'flex', flexDirection: 'row', gap: 10, marginTop: 20 }}>
+                                    <input className='my-gift-code-details-input' onChange={(e) => setSearchCode(e.target.value)}
+                                        value={searchCode}></input>
+                                    <button className='my-gift-code-details-submit' onClick={handleSearchCode}>Submit</button>
+                                </div>
+                                {showDetails === false && (<p style={{ color: 'red', marginTop: 10 }}>{`The gift card code ${errorCode} is not valid.`}</p>)}
+                            </div>
+                        </div>
+                        <div style={{display: 'flex', flexDirection: 'row', gap: 40, 
+                        borderBottom: '1px solid lightgray', marginTop: 30}}>
+                            <div className='my-gift-card-code'>
+                                <p style={{ fontWeight: 'bold', fontSize: 16 }}>Code</p>
+                            </div>
+                            <div className='my-gift-card-value'>
+                                <p style={{ fontWeight: 'bold' }}>Value</p>
+                            </div>
+                            <div className='my-gift-card-expire-date'>
+                                <p style={{ fontWeight: 'bold' }}>Expire Date</p>
+                            </div>
+                            <div className='my-gift-card-status'>
+                                <p style={{ fontWeight: 'bold' }}>Status</p>
+                            </div>
+                            <div className='my-gift-card-order'>
+                                <p style={{ fontWeight: 'bold' }}>Order</p>
+                            </div>
+                        </div>
+                    </div>
                 )}
             </div>)}
         </>
