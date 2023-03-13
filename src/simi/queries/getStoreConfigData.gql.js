@@ -254,7 +254,7 @@ const GET_STORE_CONFIG = gql`
         ${
             rewardPointsEnabled
                 ? `
-            bssRewardPointStoreConfig(storeview: 1) {
+            bssRewardPointStoreConfig {
                 active
                 redeem_threshold
                 maximum_threshold
