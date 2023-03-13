@@ -105,11 +105,10 @@
 
 @media (max-width: 640px) {
     .root {
-        /* padding-top: 5px; */
         min-height: 50px;
-        font-size: 18px;
-       
+        font-size: 15px;
         width: 100%;
         border-radius:4px;
+        min-width: unset;
     }
 }

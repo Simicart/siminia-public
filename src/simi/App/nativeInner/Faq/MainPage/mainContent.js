@@ -11,7 +11,6 @@ const MainContent = props => {
     const { bssFaqsConfig } = props;
     const { formatMessage } = useIntl();
     const { mainPageData, mainPageLoading, mainPageError } = useMainPage();
-
     const classes = defaultClasses;
     const { main_content } = mainPageData?.mainPageFaqs || '';
     const [isQuestion, setIsQuestion] = useState(0);
@@ -24,9 +23,8 @@ const MainContent = props => {
     };
     const renderQuestionList = (list, id) => {
         return list?.map(faq => {
-            const str = faq.frontend_label.slice(6);
-            const indexStr = str.indexOf('","');
-            const label = str.slice(0, indexStr);
+            const label = Object.values(JSON.parse(faq.frontend_label));
+
             return (
                 <li key={faq.faq_id}>
                     <div
@@ -35,7 +33,7 @@ const MainContent = props => {
                         url_key=""
                         onClick={() => handleExpandQuestion(faq.faq_id, id)}
                     >
-                        {label ? label : faq.title}
+                        {label && label[0] !== '' ? label[0] : faq.title}
                     </div>
                     <div
                         className={`${classes.shortAnswer} ${
@@ -63,8 +61,8 @@ const MainContent = props => {
                         </div>
                         <p className={classes.createdInfo}>
                             {formatMessage({
-                                 id: `Created by ${faq.customer} on:`,
-                                 defaultMessage: `Created by ${faq.customer} on:`
+                                id: `Created by ${faq.customer} on:`,
+                                defaultMessage: `Created by ${faq.customer} on:`
                             })}{' '}
                             {faq.time}
                         </p>
@@ -77,12 +75,11 @@ const MainContent = props => {
         return main_content?.map(cate => {
             return (
                 <div className={classes.categoryBlock}>
-                    <div className={classes.categoryImage}>
-                        {cate.image && (
+                    {cate.image && (
+                        <div className={classes.categoryImage}>
                             <img src={cate.image} alt={cate.title} />
-                        )}
-                    </div>
-
+                        </div>
+                    )}
                     <div className={classes.categoryBlockInfo}>
                         <div className={classes.categoryTitle}>
                             <span>{cate.title}</span>

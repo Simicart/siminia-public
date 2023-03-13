@@ -32,10 +32,8 @@ const Sidebar = props => {
 
     const renderMostFaqs = () => {
         return most_faq?.map(faq => {
-            console.log("faq",faq)
-            const str = faq.frontend_label.slice(6);
-            const indexStr = str.indexOf('","');
-            const label = str.slice(0, indexStr);
+            const label = Object.values(JSON.parse(faq.frontend_label));
+
             return (
                 <li key={faq.faq_id}>
                     <div
@@ -44,7 +42,7 @@ const Sidebar = props => {
                         url_key=""
                         onClick={() => handleExpand(faq.faq_id)}
                     >
-                        {label ? label : faq.title}
+                        {label && label[0] !== '' ? label[0] : faq.title}
                     </div>
                     <div
                         className={`${classes.shortAnswer} ${
