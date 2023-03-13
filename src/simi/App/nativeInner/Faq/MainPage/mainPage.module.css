@@ -214,13 +214,14 @@
     margin: 10px 5% 10px 5%;
     float: left;
 }
-.categoryImage img{
+.categoryImage img {
     max-height: 60%;
     margin-left: 50%;
     margin-top: 40px;
     transform: translateX(-50%);
 }
-.categoryBlockInfo {
+.categoryBlockInfo,
+.tagBlockInfo {
     width: 45%;
     height: 20px;
     margin-top: 30px;
@@ -233,7 +234,11 @@
     float: left;
     cursor: pointer;
 }
-.categoryTitle {
+.tagBlockInfo {
+    width: 100%;
+}
+.categoryTitle,
+.tagTitle {
     width: 90%;
     height: 20px;
     margin-top: 10px;
@@ -247,6 +252,9 @@
     float: left;
     cursor: pointer;
     color: #58575c;
+}
+.tagTitle {
+    width: 100%;
 }
 .questionList {
     width: 530px;
@@ -333,7 +341,7 @@
     margin-bottom: 20px;
     margin-top: 10px;
 }
-.productSubmit:disabled{
+.productSubmit:disabled {
     opacity: 0.6;
 }
 .productSubmit {
@@ -353,7 +361,8 @@
     color: #ffffff;
 }
 
-.faqNoti, .questionError{
+.faqNoti,
+.questionError {
     display: block;
     color: #ff0000;
     margin: 10px 0;

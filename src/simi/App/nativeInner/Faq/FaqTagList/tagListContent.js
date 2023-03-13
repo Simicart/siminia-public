@@ -79,8 +79,8 @@ const TagListContent = props => {
             <SearchBox />
             <div className={classes.mainBlock}>
                 <div className={classes.categoryBlock}>
-                    <div className={classes.categoryBlockInfo}>
-                        <div className={classes.categoryTitle}>
+                    <div className={classes.tagBlockInfo}>
+                        <div className={classes.tagTitle}>
                             <span>
                                 {formatMessage({
                                     id: `We found ${

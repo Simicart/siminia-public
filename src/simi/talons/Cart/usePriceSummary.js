@@ -7,6 +7,7 @@ import DEFAULT_OPERATIONS from './priceSummary.gql';
 import { hideFogLoading } from '../../BaseComponents/Loading/GlobalLoading';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { GiftCodeCheckoutContext } from '../../App/nativeInner/Checkout/checkoutPage';
+import { GiftCodeCartContext } from '../../App/nativeInner/CartCore/cartPage';
 
 /**
  * @ignore
@@ -21,16 +22,14 @@ const flattenData = (data, giftCodeData) => {
    
     if (!data) return {};
     if (giftCodeData) {
+        let giftCodeValue = 0
+        for(let i=0; i<giftCodeData.length; i++) {
+            giftCodeValue += giftCodeData[i].value
+        }
         const total = {
             ...data.cart.prices.grand_total,
-            value:
-                data.cart.prices.grand_total.value - giftCodeData.value > 0
-                    ? (
-                          data.cart.prices.grand_total.value -
-                          giftCodeData.value
-                      ).toFixed(2)
-                    : 0
-        };
+            value: data.cart.prices.grand_total.value - giftCodeValue > 0 ? (data.cart.prices.grand_total.value - giftCodeValue).toFixed(2) : 0
+        }
         return {
             subtotal: data.cart.prices.subtotal_excluding_tax,
             total: total,
@@ -78,15 +77,24 @@ export const usePriceSummary = (props = {}) => {
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const { getPriceSummaryQuery } = operations;
 
-    const { giftCodeData, setGiftCodeData } = useContext(
-        GiftCodeCheckoutContext
-    );
-
+    
     const [{ cartId }] = useCartContext();
     const history = useHistory();
     // We don't want to display "Estimated" or the "Proceed" button in checkout.
     const match = useRouteMatch('/checkout');
     const isCheckout = !!match;
+    
+    let giftCodeData = null
+    let setGiftCodeData = null
+    
+    if(isCheckout) {
+        giftCodeData = useContext(GiftCodeCheckoutContext).giftCodeData
+        setGiftCodeData = useContext(GiftCodeCheckoutContext).setGiftCodeData
+    }
+    else {
+        giftCodeData = useContext(GiftCodeCartContext).giftCodeData
+        setGiftCodeData = useContext(GiftCodeCartContext).setGiftCodeData
+    }
 
     const { error, loading, data } = useQuery(getPriceSummaryQuery, {
         fetchPolicy: 'cache-and-network',
@@ -105,8 +113,13 @@ export const usePriceSummary = (props = {}) => {
     //     }
     // });
 
-    const handleProceedToCheckout = useCallback(() => {
-        history.push('/checkout');
+    const handleProceedToCheckout = useCallback((cartGiftCode) => {
+        history.push({
+            pathname: '/checkout',
+            state: {
+                cartGiftCode: cartGiftCode
+            }
+        });
     }, [history]);
 
     return {
@@ -115,7 +128,8 @@ export const usePriceSummary = (props = {}) => {
         hasItems: data && !!data.cart.items.length,
         isCheckout,
         isLoading: !!loading,
-        flatData: flattenData(data, giftCodeData)
+        flatData: flattenData(data, giftCodeData),
+        cartGiftCode: giftCodeData
     };
 };
 

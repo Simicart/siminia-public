@@ -28,6 +28,8 @@ import { GiftCodeCheckoutContext } from '../../checkoutPage';
  * @example <caption>Importing into your project</caption>
  * import PriceSummary from "@magento/venia-ui/lib/components/CartPage/PriceSummary";
  */
+
+import { useLocation } from 'react-router-dom';
 const PriceSummary = props => {
     const { isUpdating } = props;
     const classes = useStyle(defaultClasses, props.classes);
@@ -41,7 +43,7 @@ const PriceSummary = props => {
         hasItems,
         isCheckout,
         isLoading,
-        flatData
+        flatData,
     } = talonProps;
 
     const windowSize = useWindowSize();
@@ -75,8 +77,6 @@ const PriceSummary = props => {
         shipping,
         rewardPoint
     } = flatData;
-
-    console.log(flatData);
 
     const isPriceUpdating = isUpdating || isLoading;
     const priceClass = isPriceUpdating ? classes.priceUpdating : classes.price;
@@ -163,10 +163,12 @@ const PriceSummary = props => {
                     data={shipping}
                     isCheckout={isCheckout}
                 />
-                {giftCodeData && (<>
-                    <span style={{maxWidth: 80}}>{giftCodeData.code}</span>
-                    <span style={{textAlign: 'right'}}>{`-$${giftCodeData.value}.00`}</span>
-                </>)}
+                {giftCodeData && (giftCodeData.map((element) => 
+                <>
+                    <span style={{maxWidth: 80}}>{element.code}</span>
+                    <span style={{textAlign: 'right'}}>{`-$${element.value}.00`}</span>
+                </>
+                ))}
                 <span className={classes.totalLabel}>{totalPriceLabel}</span>
                 <span className={totalPriceClass}>
                     <Price value={total.value} currencyCode={total.currency} />

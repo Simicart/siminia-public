@@ -16,14 +16,20 @@
             'images quantity'
             'images cart'
             'images errors'
-            'images .';
+            'images brands';
         grid-template-columns: 1fr max-content;
         column-gap: 60px;
         grid-template-rows: repeat(7, min-content) 1fr [fold];
         padding: 0;
     }
 }
-
+.wrapperShopbybrands{
+    grid-area: brands;
+    margin: 1rem 0;
+}
+.shopByBrand{
+    margin: 0 1.5rem;
+}
 .section {
     border-color: rgb(var(--venia-global-color-border));
     border-style: solid;
