@@ -23,7 +23,6 @@ import { useVoteFaq } from '../talons/useVoteFaq';
 
 const FaqQuestion = props => {
     const stateParam = useLocation()?.state?.stateParam || '';
-
     const {
         storeConfig,
         storeConfigLoading,
@@ -41,7 +40,6 @@ const FaqQuestion = props => {
     const categoryImage = sidebar?.category?.filter(
         cate => cate.faq_id === questionData?.questionUrl?.category_id
     )[0]?.image;
-
     const shareProps = {
         url: window.location.href
     };
@@ -76,7 +74,7 @@ const FaqQuestion = props => {
     const getAllFaq = () => {
         const arrFaq = [];
         const uniqueFaqId = [];
-        main_content.forEach(element => {
+        main_content?.forEach(element => {
             const { faq } = element;
             faq.forEach(elm => {
                 {
@@ -138,8 +136,8 @@ const FaqQuestion = props => {
                         </div>
                         <p className={classes.createdInfo}>
                             {formatMessage({
-                                 id: `Created by ${faq.customer} on:`,
-                                 defaultMessage: `Created by ${faq.customer} on:`
+                                 id: `Created by ${faq?.customer} on:`,
+                                 defaultMessage: `Created by ${faq?.customer} on:`
                             })}{' '}
                             {faq?.time}
                         </p>
@@ -166,7 +164,7 @@ const FaqQuestion = props => {
                 <div className={classes.column}>
                     <div className={classes.faqQuestion}>
                         <div className={classes.faqQuestionImage}>
-                            {categoryImage && (
+                            {categoryImage ||(!categoryImage && stateParam) && (
                                 <img
                                     src={stateParam ? faqImg : categoryImage}
                                     alt="categoryImage"

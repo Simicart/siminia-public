@@ -16,8 +16,8 @@ const DeliveryDateTime = forwardRef((props, ref) => {
     const classes = useStyle(defaultClasses, props.classes);
     const storeConfig = Identify.getStoreConfig();
     const { bssDeliveryDateStoreConfig } = storeConfig || {};
-    const { formatMessage } = useIntl();
 
+    const { formatMessage } = useIntl();
     if (
         !bssDeliveryDateStoreConfig ||
         bssDeliveryDateStoreConfig.active === '0'
@@ -59,17 +59,26 @@ const DeliveryDateTime = forwardRef((props, ref) => {
         );
     };
     const now = new Date();
-    const holidays = block_out_holidays
-        .split('{s:4:"date";s:10:')
-        .filter(item => item.indexOf('content') !== -1);
+    // const holidays = block_out_holidays
+    //     .split('{s:4:"date";s:10:')
+    //     .filter(item => item.indexOf('content') !== -1);
     const daysOff = date_day_off.split(',');
-    const dateOff = [];
+    const dateOff = block_out_holidays;
 
-    holidays.forEach(function(element) {
-        dateOff.push(element.slice(1, 11));
-    });
+    // holidays.forEach(function(element) {
+    //     dateOff.push(element.slice(1, 11));
+    // });
     const filterDate = (date, dateOff) => {
-        if (dateOff.includes(formatDate(date, '/'))) {
+        let d =
+            date.getDate() < '10' ? '' + '0' + date.getDate() : date.getDate();
+
+        let m =
+            date.getMonth() + 1 < '10'
+                ? '0' + parseInt(date.getMonth() + 1)
+                : '' + parseInt(date.getMonth() + 1);
+        let y = date.getFullYear();
+        let thisDay = m + '/' + d + '/' + y;
+        if (dateOff.findIndex(item => item.date === thisDay) !== -1) {
             return false;
         }
         return true;
@@ -106,65 +115,52 @@ const DeliveryDateTime = forwardRef((props, ref) => {
     const minDate = new Date();
     minDate.setDate(now.getDate() + 1 + Number(process_time) + excludeHolidays);
 
-    const handleSubString = (str, number) => {
-        return str.substring(0, str.length - number);
-    };
+    // const handleSubString = (str, number) => {
+    //     return str.substring(0, str.length - number);
+    // };
 
-    const chunkArray = (arr, size) => {
-        let index = 0;
-        let arrayLength = arr.length;
-        let tempArray = [];
+    // const chunkArray = (arr, size) => {
+    //     let index = 0;
+    //     let arrayLength = arr.length;
+    //     let tempArray = [];
 
-        for (index = 0; index < arrayLength; index += size) {
-            let myChunk = arr.slice(index, index + size);
-            tempArray.push(myChunk);
-        }
+    //     for (index = 0; index < arrayLength; index += size) {
+    //         let myChunk = arr.slice(index, index + size);
+    //         tempArray.push(myChunk);
+    //     }
 
-        return tempArray;
-    };
+    //     return tempArray;
+    // };
 
-    const handletimeSlots = () => {
-        const strTimeSlots = time_slots.slice(5);
-        let tempArray = [];
-        handleSubString(strTimeSlots, 1)
-            .split('s:18:')
-            .filter(item => item.indexOf('name') !== -1)
-            .map(element => {
-                const item = handleSubString(element.slice(26), 2).split(';');
-                item.map(i => {
-                    tempArray.push(
-                        handleSubString(i.slice(i.indexOf('"') + 1), 1)
-                    );
-                });
-            });
-        const arraySplit = chunkArray(tempArray, 10);
-        let deliveryTimeSlot = [];
-        arraySplit.forEach(function(element) {
-            let splitHalf = chunkArray(element, 2);
-            const entries = new Map(splitHalf);
-            const obj = Object.fromEntries(entries);
-            deliveryTimeSlot.push(obj);
-        });
-        return deliveryTimeSlot;
-    };
-    const deliveryTime = handletimeSlots();
-    const OptionDeliveryTime = deliveryTime.map((time, index) => {
-        const opt =
-            time.name +
-            ' | ' +
-            time.from +
-            ' - ' +
-            time.to +
-            ' | ' +
-            time.note +
-            ' | ' +
-            '(+$' +
-            time.price +
-            ')';
-
+    // const handletimeSlots = () => {
+    //     const strTimeSlots = time_slots.slice(5);
+    //     let tempArray = [];
+    //     handleSubString(strTimeSlots, 1)
+    //         .split('s:18:')
+    //         .filter(item => item.indexOf('name') !== -1)
+    //         .map(element => {
+    //             const item = handleSubString(element.slice(26), 2).split(';');
+    //             item.map(i => {
+    //                 tempArray.push(
+    //                     handleSubString(i.slice(i.indexOf('"') + 1), 1)
+    //                 );
+    //             });
+    //         });
+    //     const arraySplit = chunkArray(tempArray, 10);
+    //     let deliveryTimeSlot = [];
+    //     arraySplit.forEach(function(element) {
+    //         let splitHalf = chunkArray(element, 2);
+    //         const entries = new Map(splitHalf);
+    //         const obj = Object.fromEntries(entries);
+    //         deliveryTimeSlot.push(obj);
+    //     });
+    //     return deliveryTimeSlot;
+    // };
+    // const deliveryTime = time_slots;
+    const OptionDeliveryTime = time_slots.map((time, index) => {
         return (
-            <option value={opt} key={index}>
-                {opt}
+            <option value={time.value} key={index}>
+                {time.label}
             </option>
         );
     });
