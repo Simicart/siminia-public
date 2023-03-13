@@ -19,6 +19,7 @@ import { GiftCodeCartContext } from '../../App/nativeInner/CartCore/cartPage';
  * @param {Object} data query data
  */
 const flattenData = (data, giftCodeData) => {
+   
     if (!data) return {};
     if (giftCodeData) {
         let giftCodeValue = 0
@@ -37,8 +38,9 @@ const flattenData = (data, giftCodeData) => {
             taxes: data.cart.prices.applied_taxes,
             shipping: data.cart.shipping_addresses,
             priceData: data.cart.prices.mp_reward_segments
-        }
+        };
     }
+    
     return {
         subtotal: data.cart.prices.subtotal_excluding_tax,
         total: data.cart.prices.grand_total,
@@ -46,7 +48,7 @@ const flattenData = (data, giftCodeData) => {
         giftCards: data.cart.mp_giftcard_config,
         taxes: data.cart.prices.applied_taxes,
         shipping: data.cart.shipping_addresses,
-        rewardPoint: {  
+        rewardPoint: {
             earnPoint: data?.cart?.earn_point,
             spentPoint: data?.cart?.spent_point
         }
@@ -102,7 +104,6 @@ export const usePriceSummary = (props = {}) => {
             cartId
         }
     });
-
     // const [loadingPriceData] = useLazyQuery(getPriceSummaryQuery, {
     //     fetchPolicy: 'cache-and-network',
     //     nextFetchPolicy: 'cache-first',

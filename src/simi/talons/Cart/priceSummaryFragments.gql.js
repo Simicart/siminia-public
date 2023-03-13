@@ -11,25 +11,33 @@ const rewardPointEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
-export const GiftCardSummaryFragment = gql`
-          fragment GiftCardSummaryFragment on Cart {
-              id
-          }
-      `;
+const deliveryTimeEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME) === 1;
 
-export const RewardPointOnCartFragment = rewardPointEnabled ? gql`
-    fragment RewardPointOnCartFragment on Cart {
-        earn_point
-        spent_point {
-            as_money_amount
-            point_amount
-        }
-    }     
-` : gql`
-    fragment RewardPointOnCartFragment on Cart {
+export const GiftCardSummaryFragment = gql`
+    fragment GiftCardSummaryFragment on Cart {
         id
     }
 `;
+
+export const RewardPointOnCartFragment = rewardPointEnabled
+    ? gql`
+          fragment RewardPointOnCartFragment on Cart {
+              earn_point
+              spent_point {
+                  as_money_amount
+                  point_amount
+              }
+          }
+      `
+    : gql`
+          fragment RewardPointOnCartFragment on Cart {
+              id
+          }
+      `;
 
 export const GrandTotalFragment = gql`
     fragment GrandTotalFragment on CartPrices {
@@ -43,6 +51,17 @@ export const GrandTotalFragment = gql`
 export const PriceSummaryFragment = gql`
     fragment PriceSummaryFragment on Cart {
         id
+        ${
+            deliveryTimeEnabled
+                ? `
+                delivery_date {
+                    shipping_arrival_timeslot
+                    shipping_arrival_date
+                    shipping_arrival_comments
+                }`
+                : ''
+        }
+        
         items {
             id
             quantity
