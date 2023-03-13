@@ -18,12 +18,19 @@ import { GiftCodeCheckoutContext } from '../../App/nativeInner/Checkout/checkout
  * @param {Object} data query data
  */
 const flattenData = (data, giftCodeData) => {
+   
     if (!data) return {};
     if (giftCodeData) {
         const total = {
             ...data.cart.prices.grand_total,
-            value: data.cart.prices.grand_total.value - giftCodeData.value > 0 ? (data.cart.prices.grand_total.value - giftCodeData.value).toFixed(2) : 0
-        }
+            value:
+                data.cart.prices.grand_total.value - giftCodeData.value > 0
+                    ? (
+                          data.cart.prices.grand_total.value -
+                          giftCodeData.value
+                      ).toFixed(2)
+                    : 0
+        };
         return {
             subtotal: data.cart.prices.subtotal_excluding_tax,
             total: total,
@@ -32,8 +39,9 @@ const flattenData = (data, giftCodeData) => {
             taxes: data.cart.prices.applied_taxes,
             shipping: data.cart.shipping_addresses,
             priceData: data.cart.prices.mp_reward_segments
-        }
+        };
     }
+    
     return {
         subtotal: data.cart.prices.subtotal_excluding_tax,
         total: data.cart.prices.grand_total,
@@ -41,7 +49,7 @@ const flattenData = (data, giftCodeData) => {
         giftCards: data.cart.mp_giftcard_config,
         taxes: data.cart.prices.applied_taxes,
         shipping: data.cart.shipping_addresses,
-        rewardPoint: {  
+        rewardPoint: {
             earnPoint: data?.cart?.earn_point,
             spentPoint: data?.cart?.spent_point
         }
@@ -70,7 +78,9 @@ export const usePriceSummary = (props = {}) => {
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const { getPriceSummaryQuery } = operations;
 
-    const { giftCodeData, setGiftCodeData } = useContext(GiftCodeCheckoutContext)
+    const { giftCodeData, setGiftCodeData } = useContext(
+        GiftCodeCheckoutContext
+    );
 
     const [{ cartId }] = useCartContext();
     const history = useHistory();
@@ -86,7 +96,6 @@ export const usePriceSummary = (props = {}) => {
             cartId
         }
     });
-
     // const [loadingPriceData] = useLazyQuery(getPriceSummaryQuery, {
     //     fetchPolicy: 'cache-and-network',
     //     nextFetchPolicy: 'cache-first',

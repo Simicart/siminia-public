@@ -48,6 +48,16 @@ const GET_ORDER_DETAIL = gql`
           }
         }
         total {
+          ${
+              deliveryTimeEnabled
+                  ? `
+                order_delivery_date {
+                  time_slot_price {
+                      value
+                  }
+              }`
+                  : ''
+          }
           discounts {
             amount {
               currency
@@ -87,30 +97,30 @@ const GET_ORDER_DETAIL = gql`
 `;
 
 const REORDER_MUTATION = gql`
-  mutation ReorderItem($orderId: String!){
-  reorderItems(orderNumber:$orderId){
-    cart {
-      id
-      items {
-        uid
-        product {
-          sku
+    mutation ReorderItem($orderId: String!) {
+        reorderItems(orderNumber: $orderId) {
+            cart {
+                id
+                items {
+                    uid
+                    product {
+                        sku
+                    }
+                    quantity
+                    prices {
+                        price {
+                            value
+                        }
+                    }
+                }
+            }
+            userInputErrors {
+                code
+                message
+                path
+            }
         }
-        quantity
-        prices {
-          price {
-            value
-          }
-        }
-      }
     }
-    userInputErrors{
-      code
-      message
-      path
-    }
-  }
-}
 `;
 export default {
     getOrderDetail: GET_ORDER_DETAIL,
