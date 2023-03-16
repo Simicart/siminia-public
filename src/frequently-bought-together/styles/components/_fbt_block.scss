@@ -1,0 +1,72 @@
+.fbt-slider-prev {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #333;
+    display: block !important;
+    padding-left: 5px;
+}
+
+.fbt-slider-next {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #333;
+    display: block !important;
+    padding-left: 5px;
+}
+
+.fpt-slider-first {
+    margin-bottom: 20px;
+    padding: 20px
+}
+
+.fpt-slider {
+    margin-bottom: 20px;
+    padding: 20px
+}
+
+.fpt-slider-last {
+    margin-bottom: 20px;
+    padding: 20px
+}
+
+.fpt-slider-first:hover {
+    box-shadow: 3px 6px 8px 0px rgba(0, 0, 0, 0.4);
+}
+
+.fpt-slider:hover {
+    box-shadow: 3px 0px 8px 0px rgba(0, 0, 0, 0.2),
+                -3px 0px 8px 0px rgba(0, 0, 0, 0.2),
+                0px 6px 8px 0px rgba(0, 0, 0, 0.4);
+}
+
+.fpt-slider-last:hover {
+    box-shadow: -3px 6px 8px 0px rgba(0, 0, 0, 0.4);
+}
+
+.fbt-product-name {
+    font-size: 16px;
+    margin-bottom: 10px
+}
+
+.fbt-product-name:hover {
+    text-decoration-line: underline;
+}
+
+.fbt-product-name:active {
+    text-decoration-line: underline;
+    color: blue
+}
+
+.fbt-product-review {
+    color: gray;
+    margin-top: -2px
+}
+
+.fbt-product-review:hover {
+    text-decoration-line: underline;
+}
+
+.fbt-product-review:active {
+    text-decoration-line: underline;
+    color: black
+}
