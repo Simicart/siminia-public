@@ -8,6 +8,24 @@ export const GET_RELATED_PRODUCT_QUERY = gql`
                 id
                 uid
                 related_products{
+                    ...on ConfigurableProduct {
+                        configurable_options {
+                            attribute_code
+                            attribute_id
+                            id
+                            label
+                            values {
+                                default_label
+                                store_label
+                                label
+                                swatch_data {
+                                    value
+                                }
+                                uid
+                                use_default_value
+                            }
+                        }
+                    }
                     id
                     name
                     sku

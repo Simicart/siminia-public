@@ -1287,7 +1287,8 @@ const ProductFullDetail = props => {
                     </ProductDetailExtraProducts>
                 )}
 
-                <FbtBlock crosssellProducts={crosssellProducts}></FbtBlock>
+                <FbtBlock product={product} relatedProducts={relatedProducts} 
+                upsellProducts={upsellProducts} crosssellProducts={crosssellProducts}></FbtBlock>
             </div>
             {isMobileSite ? (
                 <FooterFixedBtn
