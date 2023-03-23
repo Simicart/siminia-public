@@ -11,7 +11,7 @@ import { fullPageLoadingIndicator } from "@magento/venia-ui/lib/components/Loadi
 import ADD_PRODUCTS_TO_CART from '../talons/useAddProductsToCart';
 
 const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, addCartData, setAddCartData,
-    configurableProduct, setOpenModalConfigurable, setOpenPopUpConfigurable, fbt_config_data }) => {
+    configurableProduct, setOpenModalConfigurable, setOpenPopUpConfigurable, fbt_config_data, savedQuantity }) => {
 
     Modal.setAppElement('#root')
 
@@ -38,6 +38,8 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
     const [listProductOptions, setListProductOptions] = useState([])
     const [errorOption, setErrorOption] = useState(false)
     const history = useHistory()
+
+    console.log(savedQuantity)
 
     const [
         addProductsToCart,
@@ -68,6 +70,7 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
     }
 
     let cartData = ''
+    let cartLength = ''
     const cart_id = JSON.parse(
         localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__cartId')).value
 
@@ -84,7 +87,17 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
         cartData = cartQuery.data
     }
 
-    const cartLength = popUpType === 'add cart' ? addCartData.addProductsToCart.cart.items.length - 1 : 0
+    if (popUpType === 'add cart') {
+        if (addCartData) {
+            cartLength = addCartData.addProductsToCart.cart.items.length - 1
+        }
+        else if (cartData !== '') {
+            cartLength = cartData.cart.items.length - 1
+        }
+        else {
+            cartLength = 0
+        }
+    }
 
     if (active_countdown === '1') {
         setTimeout(() => {
@@ -152,7 +165,9 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
             for (let i = 0; i < configurableProduct.length; i++) {
                 listConfigurableProducts.push({
                     sku: configurableProduct[i].sku,
-                    quantity: parseInt(document.getElementById(`fbt-quantity-configurable-${i}`).value),
+                    quantity: parseInt(document.getElementById(`fbt-quantity-configurable-${i}`).value) > 0
+                        ? parseInt(document.getElementById(`fbt-quantity-configurable-${i}`).value)
+                        : 1,
                     selected_options: listProductOptions[i]
                 })
             }
@@ -175,7 +190,45 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
     }
 
     if (popUpType !== 'add cart') {
-        return (
+        if (FBT_Brief_Data.length === 0) {
+            return (
+                <Modal
+                    isOpen={isOpen}
+                    bodyOpenClassName='fbt-pop-up-body'
+                    portalClassName='fbt-pop-up-portal'
+                    className={{
+                        base: 'fbt-pop-up-content',
+                        afterOpen: 'fbt-pop-up-content-afterOpen',
+                        beforeClose: 'fbt-pop-up-content-beforeClose'
+                    }}
+                    overlayClassName={{
+                        base: 'fbt-pop-up-overlay',
+                        afterOpen: 'fbt-pop-up-overlay-afterOpen',
+                        beforeClose: 'fbt-pop-up-overlay-beforeClose'
+                    }}
+                    closeTimeoutMS={500}>
+                    <div className='fbt-pop-up-no-product'>
+                        <button onClick={() => {
+                            setIsOpen(false)
+                            setTimeout(() => {
+                                setOpenModal(false)
+                            }, 500)
+                        }} className='fbt-pop-up-close-button'>
+                            <X size={18}></X>
+                        </button>
+                        <p style={{fontSize: 16, marginTop: 10}}>Please select a product</p>
+                        <button onClick={() => {
+                            setIsOpen(false)
+                            setTimeout(() => {
+                                setOpenModal(false)
+                            }, 500)
+                        }} className='fbt-pop-up-ok-button'>OK</button>
+                    </div>
+                </Modal>
+            )
+        }
+
+        else return (
             <Modal
                 isOpen={isOpen}
                 bodyOpenClassName='fbt-pop-up-body'
@@ -194,7 +247,7 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                 {loading && (<div className="fbt-pop-up-loading-indicator">
                     {fullPageLoadingIndicator}
                 </div>)}
-                <div className='fbt-pop-up-wrapper'>
+                <div className={configurableProduct.length > 0 ? 'fbt-pop-up-wrapper' : 'fbt-pop-up-wrapper-add-cart'}>
                     <button className='fbt-pop-up-close-button' onClick={() => {
                         setIsOpen(false)
                         setTimeout(() => {
@@ -205,13 +258,16 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                     </button>
                     <div className='fbt-pop-up-content-wrapper'>
                         <p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>Shopping Cart</p>
-                        {addCartData && (<p style={{ textAlign: 'center', marginTop: 5, fontSize: 16, marginBottom: 10 }}>You have added the following items to the cart:</p>)}
-                        <div className='fbt-pop-up-slider'>
+                        {addCartData && (<p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>You have added the following items to the cart:</p>)}
+                        <div className={parseInt(item_popup_slide) < FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length
+                         ? 'fbt-pop-up-slider' : 'fbt-pop-up-no-slider'}>
                             <div style={{ position: 'relative' }}>
-                                {addCartData && (<button className="fbt-pop-up-slider-prev">
+                                {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length > 0 && (
+                                <button className="fbt-pop-up-slider-prev">
                                     <ChevronLeft size={16} />
                                 </button>)}
-                                {addCartData && (<button className="fbt-pop-up-slider-next">
+                                {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length > 0 && (
+                                <button className="fbt-pop-up-slider-next">
                                     <ChevronRight size={16} />
                                 </button>)}
                                 <TinySlider settings={settings}>
@@ -225,19 +281,19 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                                                 style={imgStyles}
                                                 onClick={() => history.push(`/${element.url_key}.html`)}
                                             />
-                                            <div style={{ height: 32 }}><a dangerouslySetInnerHTML={{ __html: element.name }}
-                                                href={`/${element.url_key}.html`} className='fbt-pop-up-product-name'></a></div>
-                                            {product_price === '1' && <p style={{ fontWeight: 'bold', fontSize: 14, marginTop: 10 }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>}
+                                            <a dangerouslySetInnerHTML={{ __html: element.name }}
+                                                href={`/${element.url_key}.html`} className='fbt-pop-up-product-name'></a>
+                                            {product_price === '1' && <p style={{ fontWeight: 'bold', fontSize: 16, marginTop: 10 }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>}
                                         </div>
                                     ))}
                                 </TinySlider>
                             </div>
 
-                            <div style={{ marginTop: 10 }}>
+                            <div style={{ marginTop: 20 }}>
                                 {configurableProduct.map((element, index) => (
-                                    <div className='fbt-pop-up-configurable-wrapper'>
-                                        <p style={{ color: 'red', marginTop: 5, marginLeft: 5, fontSize: 14 }}>You need to choose options for your item.</p>
-                                        <div className='fbt-pop-up-configurable-info'>
+                                    <div className='fbt-pop-up-conf-wrapper'>
+                                        <p style={{ color: 'red', marginTop: 5, marginLeft: 5, fontSize: 16 }}>You need to choose options for your item.</p>
+                                        <div className='fbt-pop-up-conf-info'>
                                             <img
                                                 src={element.small_image.url ? element.small_image.url : element.small_image}
                                                 data-src={element.small_image.url ? element.small_image.url : element.small_image}
@@ -248,7 +304,7 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                                             <div style={{ display: 'flex', flexDirection: 'column', width: '70%' }}>
                                                 <a dangerouslySetInnerHTML={{ __html: element.name }}
                                                     href={`/${element.url_key}.html`} className='fbt-pop-up-product-name'></a>
-                                                {product_price === '1' && <p style={{ fontSize: 14, marginTop: 10 }}>{`As low as $${element.price.regularPrice.amount.value.toFixed(2)}`}</p>}
+                                                {product_price === '1' && <p style={{ fontSize: 16, marginTop: 10 }}>{`As low as $${element.price.regularPrice.amount.value.toFixed(2)}`}</p>}
                                                 {element.configurable_options.map((ele, idx) => (
                                                     <div style={{ marginTop: 10 }}>
                                                         <span style={{ display: 'flex', flexDirection: 'row', fontSize: 16, fontWeight: 'bold', marginBottom: 5 }}>{ele.label}<p style={{ color: 'red', marginLeft: 5 }}>*</p></span>
@@ -267,7 +323,7 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                                                 ))}
                                                 <div className='fbt-pop-up-quantity-wrapper'>
                                                     <p style={{ fontSize: 16, fontWeight: 'bold' }}>Qty</p>
-                                                    <input defaultValue={1} className='fbt-pop-up-quantity-input'
+                                                    <input defaultValue={savedQuantity[index]} className='fbt-pop-up-quantity-input'
                                                         id={`fbt-quantity-configurable-${index}`}></input>
                                                 </div>
                                             </div>
@@ -279,11 +335,11 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                             {configurableProduct.length > 0 && (<button style={{ backgroundColor: `#${popup_btn_cart_bg}`, color: `#${popup_btn_cart_cl}` }}
                                 className='fbt-pop-up-add-cart' onClick={addConfigurableProducts}>{popup_btn_text_cart}</button>)}
 
-                            {mini_cart === '1' && (<span style={{ textAlign: 'center' }}>There are
+                            {mini_cart === '1' && (<span style={{ textAlign: 'center', fontSize: 16 }}>There are
                                 <a href='/cart' className='fbt-pop-up-cart'>{` ${addCartData ? addCartData.addProductsToCart.cart.total_quantity : cartData.cart.total_quantity} items`}</a> in your cart</span>)}
-                            {mini_cart === '1' && (<p style={{ textAlign: 'center' }}>
+                            {mini_cart === '1' && (<p style={{ textAlign: 'center', fontSize: 16 }}>
                                 {`Cart subtotal: $${addCartData ? addCartData.addProductsToCart.cart.prices.subtotal_excluding_tax.value.toFixed(2) : cartData.cart.prices.subtotal_excluding_tax.value.toFixed(2)}`}</p>)}
-                            {mini_checkout === '1' && (<a style={{ textAlign: 'center' }} className='fbt-pop-up-check-out'
+                            {mini_checkout === '1' && (<a style={{ textAlign: 'center', fontSize: 16 }} className='fbt-pop-up-check-out'
                                 href='/checkout'>Go to checkout</a>)}
 
                             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
@@ -329,7 +385,7 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                         <X size={18}></X>
                     </button>
                     <div className='fbt-pop-up-content-wrapper'>
-                        <p style={{ textAlign: 'center', marginTop: 20, fontSize: 16 }}>Shopping Cart</p>
+                        <p style={{ textAlign: 'center', marginTop: 10, fontSize: 16 }}>Shopping Cart</p>
                         {configurableProduct.length === 0 && (<span style={{ textAlign: 'center', marginTop: 15, fontSize: 16 }}>
                             You added <a href={`/${addCartData.addProductsToCart.cart.items[cartLength].product.url_key}.html`}
                                 dangerouslySetInnerHTML={{ __html: addCartData.addProductsToCart.cart.items[cartLength].product.name }}
@@ -374,7 +430,7 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                                         ))}
                                         <div style={{ display: 'flex', flexDirection: 'row', gap: 10, marginTop: 20, marginBottom: 10 }}>
                                             <p style={{ fontSize: 16, fontWeight: 'bold' }}>Qty</p>
-                                            <input defaultValue={1} style={{ width: 40, height: 30, padding: 10, border: '1px solid lightgray' }}
+                                            <input defaultValue={savedQuantity[index]} style={{ width: 40, height: 30, padding: 10, border: '1px solid lightgray' }}
                                                 id={`fbt-quantity-configurable-${index}`}></input>
                                         </div>
                                     </div>
@@ -384,11 +440,11 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                         {configurableProduct.length > 0 && (<button style={{ backgroundColor: `#${popup_btn_cart_bg}`, color: `#${popup_btn_cart_cl}` }}
                             className='fbt-pop-up-add-cart' onClick={addConfigurableProducts}>{popup_btn_text_cart}</button>)}
 
-                        {mini_cart === '1' && (<span style={{ textAlign: 'center' }}>There are
+                        {mini_cart === '1' && (<span style={{ textAlign: 'center', fontSize: 16 }}>There are
                             <a href='/cart' className='fbt-pop-up-cart'>{` ${addCartData ? addCartData.addProductsToCart.cart.total_quantity : cartData.cart.total_quantity} items`}</a> in your cart</span>)}
-                        {mini_cart === '1' && (<p style={{ textAlign: 'center' }}>
+                        {mini_cart === '1' && (<p style={{ textAlign: 'center', fontSize: 16 }}>
                             {`Cart subtotal: $${addCartData ? addCartData.addProductsToCart.cart.prices.subtotal_excluding_tax.value.toFixed(2) : cartData.cart.prices.subtotal_excluding_tax.value.toFixed(2)}`}</p>)}
-                        {mini_checkout === '1' && (<a style={{ textAlign: 'center' }} className='fbt-pop-up-check-out'
+                        {mini_checkout === '1' && (<a style={{ textAlign: 'center', fontSize: 16 }} className='fbt-pop-up-check-out'
                             href='/checkout'>Go to checkout</a>)}
 
                         <div style={{

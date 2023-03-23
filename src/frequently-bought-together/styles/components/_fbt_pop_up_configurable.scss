@@ -29,14 +29,14 @@
 .fbt-pop-up-configurable-wrapper {
     background-color: white;
     width: 600px;
-    height: 60vh;
+    height: 430px;
     margin: auto;
-    margin-top: 20vh;
+    margin-top: calc(50vh - 215px);
     position: relative;
 }
 
 @media only screen and (max-width: 700px) {
-    .fbt-pop-up-configurable-wrapper-add-cart {
+    .fbt-pop-up-configurable-wrapper {
         width: 90%;
         margin-left: calc(5% - 10px);
         margin-top: 22.5vh;
@@ -68,7 +68,7 @@
 .fbt-pop-up-configurable-slider {
     width: 80%;
     margin-left: 10%;
-    margin-bottom: 5;
+    margin-bottom: 10;
 }
 
 .fbt-pop-up-configurable-product-name {

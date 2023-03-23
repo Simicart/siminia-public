@@ -25,6 +25,7 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
     const [popUpType, setPopUpType] = useState('')
     const [addCartData, setAddCartData] = useState()
     const [configurableProduct, setConfigurableProduct] = useState([])
+    const [savedQuantity, setSavedQuantity] = useState([])
 
     const [
         addProductsToCart,
@@ -47,15 +48,15 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
     });
 
     const configFBT = useConfigFBT()
+    //const fbtData = useProductData(sku)
+    
     if (configFBT.loading) return fullPageLoadingIndicator
     if (configFBT.error) return <p>{configFBT.error.message}</p>
 
-    /*const fbtData = useProductData(sku)
-    if (fbtData.loading) return fullPageLoadingIndicator
-    if (fbtData.error) return <p>{fbtData.error.message}</p>*/
+    //if (fbtData.loading) return fullPageLoadingIndicator
+    //if (fbtData.error) return <p>{fbtData.error.message}</p>*/
 
     const FBT_Config_Data = configFBT.data.GetConfigFBT
-    console.log(FBT_Config_Data)
     /*const fbtProducts = fbtData.data.product.items[0].fbt_product_data
     console.log(fbtProducts)*/
 
@@ -158,7 +159,7 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
         const tmp = briefInfoData.length > 0 ? briefInfoData.slice(0) : initListProductStatus.slice()
         tmp[index] = {
             index: index,
-            quantity: parseInt(e.target.value),
+            quantity: e.target.value,
             isChecked: document.getElementById(`fbt-quantity-checkbox-${index}`).checked
         }
         setBriefInfoData(tmp)
@@ -174,8 +175,8 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
             tmp[i] = {
                 index: i,
                 quantity: document.getElementById(`fbt-quantity-${i}`).value ?
-                    parseInt(document.getElementById(`fbt-quantity-${i}`).value) :
-                    parseInt(document.getElementById(`fbt-quantity-${i}`).defaultValue),
+                    document.getElementById(`fbt-quantity-${i}`).value :
+                    document.getElementById(`fbt-quantity-${i}`).defaultValue,
                 isChecked: e.target.checked
             }
         }
@@ -187,8 +188,8 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
         tmp[index] = {
             index: index,
             quantity: document.getElementById(`fbt-quantity-${index}`).value ?
-                parseInt(document.getElementById(`fbt-quantity-${index}`).value) :
-                parseInt(document.getElementById(`fbt-quantity-${index}`).defaultValue),
+                document.getElementById(`fbt-quantity-${index}`).value :
+                document.getElementById(`fbt-quantity-${index}`).defaultValue,
             isChecked: e.target.checked
         }
         setBriefInfoData(tmp)
@@ -198,19 +199,12 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
         const cart_id = JSON.parse(
             localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__cartId')
         ).value;
+        
         if (FBT_Config_Data.display_list === '0' && FBT_Slider_Data[index].__typename === 'ConfigurableProduct') {
             setConfigurableProduct([FBT_Slider_Data[index]])
-            addProductsToCart({
-                variables: {
-                    cartId: cart_id.slice(1, cart_id.length - 1),
-                    cartItems: [{
-                        sku: element.sku,
-                        quantity: document.getElementById(`fbt-quantity-${index}`).value ?
-                            parseInt(document.getElementById(`fbt-quantity-${index}`).value) :
-                            parseInt(document.getElementById(`fbt-quantity-${index}`).defaultValue)
-                    }]
-                }
-            })
+            setSavedQuantity([document.getElementById(`fbt-quantity-${index}`).value])
+            setOpenModal(true)
+            setOpenPopUp(true)
             setPopUpType('add cart')
         }
         if (FBT_Config_Data.display_list === '0' && FBT_Slider_Data[index].__typename !== 'ConfigurableProduct') {
@@ -220,7 +214,7 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
                     cartId: cart_id.slice(1, cart_id.length - 1),
                     cartItems: [{
                         sku: element.sku,
-                        quantity: document.getElementById(`fbt-quantity-${index}`).value ?
+                        quantity: parseInt(document.getElementById(`fbt-quantity-${index}`).value) > 0 ?
                             parseInt(document.getElementById(`fbt-quantity-${index}`).value) :
                             parseInt(document.getElementById(`fbt-quantity-${index}`).defaultValue)
                     }]
@@ -237,21 +231,24 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
 
         const listSimpleProducts = []
         const listConfigurableProducts = []
+        const listSavedQuantity = []
 
         for (let i = 0; i < FBT_Brief_Data.length; i++) {
             if (FBT_Brief_Data[i].__typename === 'SimpleProduct') {
                 listSimpleProducts.push({
                     sku: FBT_Brief_Data[i].sku,
-                    quantity: briefInfoData[i].quantity
+                    quantity: parseInt(briefInfoData[i].quantity) > 0 ? parseInt(briefInfoData[i].quantity) : 1
                 })
             }
             if (FBT_Brief_Data[i].__typename === 'ConfigurableProduct') {
                 listConfigurableProducts.push(FBT_Brief_Data[i])
+                listSavedQuantity.push(renderBriefInfoData[i].quantity)
             }
         }
 
         if (listSimpleProducts.length > 0) {
             setConfigurableProduct(listConfigurableProducts)
+            setSavedQuantity(listSavedQuantity)
             addProductsToCart({
                 variables: {
                     cartId: cart_id.slice(1, cart_id.length - 1),
@@ -263,6 +260,7 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
 
         else {
             setConfigurableProduct(listConfigurableProducts)
+            setSavedQuantity(listSavedQuantity)
             setPopUpType('add all cart')
             setOpenModal(true)
             setOpenPopUp(true)
@@ -274,19 +272,27 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
         for (let i = 0; i < FBT_Brief_Data.length; i++) {
             listProducts.push({
                 sku: FBT_Brief_Data[i].sku,
-                quantity: briefInfoData[i].quantity
+                quantity: parseInt(briefInfoData[i].quantity) > 0 ? parseInt(briefInfoData[i].quantity) : 1
             })
         }
         if (listProducts.length > 0) {
-            addProductsToWishlist({
-                variables: {
-                    wishlistId: 0,
-                    wishlistItems: listProducts
-                }
-            })
+            if (!localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token')) {
+                history.push('/sign-in')
+            }
+            else {
+                addProductsToWishlist({
+                    variables: {
+                        wishlistId: 0,
+                        wishlistItems: listProducts
+                    }
+                })
+            }
+        }
+        else {
+            setOpenModal(true)
+            setOpenPopUp(true)
         }
     }
-
 
     if (FBT_Config_Data.active_countdown === '1' && openPopUp === true) {
         setTimeout(() => {
@@ -309,7 +315,8 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
                 <div className="fbt-wrapper">
                     <div className="fbt-header">
                         <p style={{ fontSize: 22, fontWeight: 'bold' }}>{FBT_Config_Data.title_of_list}</p>
-                        <div className="fbt-slider-button">
+                        <div className={!(FBT_Config_Data.display_list === '1' && FBT_Brief_Data.length <= parseInt(FBT_Config_Data.item_on_slide)) 
+                                        ? "fbt-slider-button" : "fbt-slider-button-hide"}>
                             <button className="fbt-slider-prev">
                                 <ChevronLeft size={16} />
                             </button>
@@ -356,8 +363,8 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
                                                     <input style={{ height: 30, width: 60, padding: 10 }} id={`fbt-quantity-${index}`}
                                                         defaultValue={1} placeholder={0} onChange={(e) => handleQuantity(e, index)}></input>
                                                 </div>
-                                                {FBT_Config_Data.sng_cart === '1' && (<button className='fbt-add-cart-button' 
-                                                onClick={() => handleAddProductToCart(element, index)}>Add to cart</button>)}
+                                                {FBT_Config_Data.sng_cart === '1' && (<button className='fbt-add-cart-button'
+                                                    onClick={() => handleAddProductToCart(element, index)}>Add to cart</button>)}
                                             </div>)}
                                     </div>
                                 ))}
@@ -375,7 +382,7 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
                                             return (
                                                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                                                     <p style={{ fontSize: 16, width: '60%' }} dangerouslySetInnerHTML={{ __html: element.name }}></p>
-                                                    <p style={{ fontSize: 16, width: '10%' }}>{renderBriefInfoData[index].quantity}</p>
+                                                    <p style={{ fontSize: 16, width: '10%', wordWrap: 'break-word' }}>{renderBriefInfoData[index].quantity}</p>
                                                     <p style={{ fontSize: 16, width: '30%' }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>
                                                 </div>
                                             )
@@ -420,7 +427,7 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
                                 ))}
                             </TinySlider>
 
-                            <div className="fbt-brieft-info">
+                            <div className="fbt-brief-info">
                                 {FBT_Slider_Data.length > 0 && (
                                     <>
                                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', gap: 25 }}>
@@ -461,10 +468,10 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
             {openModal && (<FbtPopUp isOpen={openPopUp} setIsOpen={setOpenPopUp} setOpenModal={setOpenModal}
                 fbt_config_data={FBT_Config_Data} FBT_Brief_Data={FBT_Brief_Data} popUpType={popUpType} addCartData={addCartData}
                 configurableProduct={configurableProduct} setOpenModalConfigurable={setOpenModalConfigurable}
-                setAddCartData={setAddCartData} setOpenPopUpConfigurable={setOpenPopUpConfigurable}></FbtPopUp>)}
+                setAddCartData={setAddCartData} setOpenPopUpConfigurable={setOpenPopUpConfigurable} savedQuantity={savedQuantity}></FbtPopUp>)}
 
             {openModalConfigurable && (<FbtPopUpConfigurable isOpen={openPopUpConfigurable} setIsOpen={setOpenPopUpConfigurable}
-                setOpenModalConfigurable={setOpenModalConfigurable} configurableProduct={configurableProduct} 
+                setOpenModalConfigurable={setOpenModalConfigurable} configurableProduct={configurableProduct}
                 addCartData={addCartData} fbt_config_data={FBT_Config_Data}></FbtPopUpConfigurable>)}
         </>
     )

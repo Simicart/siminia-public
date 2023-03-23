@@ -127,17 +127,17 @@ const FbtPopUpConfigurable = ({ isOpen, setIsOpen, setOpenModalConfigurable, con
                                         />
                                         <div style={{ height: 32 }}><a dangerouslySetInnerHTML={{ __html: element.name }}
                                             href={`/${element.url_key}.html`} className='fbt-pop-up-product-name'></a></div>
-                                        {product_price === '1' && <p style={{ fontWeight: 'bold', fontSize: 14, marginTop: 10 }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>}
+                                        {product_price === '1' && <p style={{ fontWeight: 'bold', fontSize: 16, marginTop: 20 }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>}
                                     </div>))}
                             </TinySlider>
                         </div>
                     </div>
 
-                    {mini_cart === '1' && (<span style={{ textAlign: 'center' }}>There are
+                    {mini_cart === '1' && (<span style={{ textAlign: 'center', fontSize: 16}}>There are
                         <a href='/cart' className='fbt-pop-up-configurable-cart'>{` ${addCartData ? addCartData.addProductsToCart.cart.total_quantity : cartData.cart.total_quantity} items`}</a> in your cart</span>)}
-                    {mini_cart === '1' && (<p style={{ textAlign: 'center' }}>
+                    {mini_cart === '1' && (<p style={{ textAlign: 'center', fontSize: 16 }}>
                         {`Cart subtotal: $${addCartData ? addCartData.addProductsToCart.cart.prices.subtotal_excluding_tax.value.toFixed(2) : cartData.cart.prices.subtotal_excluding_tax.value.toFixed(2)}`}</p>)}
-                    {mini_checkout === '1' && (<a style={{ textAlign: 'center' }} className='fbt-pop-up-configurable-check-out'
+                    {mini_checkout === '1' && (<a style={{ textAlign: 'center', fontSize: 16 }} className='fbt-pop-up-configurable-check-out'
                         href='/checkout'>Go to checkout</a>)}
 
                     <div style={{
