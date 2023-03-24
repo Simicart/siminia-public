@@ -48,7 +48,7 @@ import Pdetailsbrand from '@simicart/siminia/src/simi/App/core/ProductFullDetail
 import DataStructure from '@simicart/siminia/src/simi/App/core/Seo/Markup/Product.js';
 import DataStructureBasic from '@simicart/siminia/src/simi/App/core/SeoBasic/Markup/Product.js';
 import useProductReview from '../../../talons/ProductFullDetail/useProductReview';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link, useLocation } from 'react-router-dom';
 import {
     ArrowLeft,
     ShoppingCart,
@@ -82,6 +82,8 @@ import SizeChart from '../../../../sizechart/components/SizeChart';
 import FaqProductDetail from '../Faq/FaqProductDetail';
 import ButtonFaq from '../Faq/FaqProductDetail/buttonFaq';
 
+import FbtBlock from '../../../../frequently-bought-together/components/FbtBlock'
+
 require('./productFullDetail.scss');
 
 const mageworxSeoEnabled =
@@ -113,15 +115,25 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product } = props;
+    const location = useLocation()
     const talonProps = useProductFullDetail({ product });
+    const reviewElement = document.querySelector('.show-content')
 
     // tab display/hidden state
-    const [showTab, setShowTab] = useState(0);
+    const [showTab, setShowTab] = useState(location.state?.autofocus === 'review' ? 1 : 0);
 
     // tabs display/hidden state native site
     const [showDes, setShowDes] = useState(false);
     const [showRev, setShowRev] = useState(false);
     const [showSiz, setShowSiz] = useState(false);
+
+    if (location.state?.autofocus === 'review') {
+        let topHeight = reviewElement?.offsetTop - 450;
+        window.scrollTo({
+            top: topHeight,
+            behavior: 'smooth'
+        });
+    }
 
     const {
         breadcrumbCategoryId,
@@ -375,7 +387,7 @@ const ProductFullDetail = props => {
             topInsets = parseInt(simpifyRNinsets.top);
             bottomInsets = parseInt(simpifyRNinsets.bottom);
         }
-    } catch (err) {}
+    } catch (err) { }
 
     const specialPrice =
         product && product.price && product.price.has_special_price ? (
@@ -500,8 +512,8 @@ const ProductFullDetail = props => {
                 {productStock}
             </div>
             {price_tiers &&
-            Array.isArray(price_tiers) &&
-            price_tiers.length > 0 ? (
+                Array.isArray(price_tiers) &&
+                price_tiers.length > 0 ? (
                 <PriceTiers priceTiers={price_tiers} price={price} />
             ) : null}
         </React.Fragment>
@@ -644,12 +656,11 @@ const ProductFullDetail = props => {
 
     const addToCartArea = !isMobileSite ? (
         <div
-            className={`${
-                product.__typename === 'GroupedProduct' ||
-                product.__typename === 'BundleProduct'
+            className={`${product.__typename === 'GroupedProduct' ||
+                    product.__typename === 'BundleProduct'
                     ? 'groupCartAction'
                     : ''
-            } quantityCartAction`}
+                } quantityCartAction`}
         >
             {wrapperQuantity}
             {cartAction}
@@ -748,7 +759,7 @@ const ProductFullDetail = props => {
                                 ? product.__typename === 'MpGiftCardProduct'
                                     ? handleAddGiftCardProductToCart
                                     : handleAddToCart
-                                : () => {}
+                                : () => { }
                         }
                     >
                         {!isMobileSite ? (
@@ -774,13 +785,12 @@ const ProductFullDetail = props => {
                         {!isMobileSite ? (
                             <div className="wrapperOptions">
                                 <section
-                                    className={`${classes.options} ${
-                                        product.__typename ===
+                                    className={`${classes.options} ${product.__typename ===
                                             'GroupedProduct' ||
-                                        product.__typename === 'BundleProduct'
+                                            product.__typename === 'BundleProduct'
                                             ? 'groupOptions'
                                             : ''
-                                    }`}
+                                        }`}
                                 >
                                     {wrapperPrice}
                                     <div className="optionsSizeChart">
@@ -788,14 +798,14 @@ const ProductFullDetail = props => {
                                     </div>
                                     {product.__typename ===
                                         'MpGiftCardProduct' && (
-                                        <GiftCardInformationForm
-                                            giftCardProductData={
-                                                giftCardProductData
-                                            }
-                                            giftCardData={giftCardData}
-                                            giftCardActions={giftCardActions}
-                                        />
-                                    )}
+                                            <GiftCardInformationForm
+                                                giftCardProductData={
+                                                    giftCardProductData
+                                                }
+                                                giftCardData={giftCardData}
+                                                giftCardActions={giftCardActions}
+                                            />
+                                        )}
                                 </section>
                             </div>
                         ) : null}
@@ -887,8 +897,8 @@ const ProductFullDetail = props => {
 
                             {/*pop up size chart native*/}
                             {enabledSizeChart &&
-                            display === 0 &&
-                            isMobileSite ? (
+                                display === 0 &&
+                                isMobileSite ? (
                                 <SizeChart
                                     display={display}
                                     sizeChartData={sizeChartData}
@@ -937,11 +947,10 @@ const ProductFullDetail = props => {
                                                     : 'deselected-button'
                                             } selectedReviews`}
                                             onClick={() => setShowTab(1)}
-                                        >{`Reviews (${
-                                            useProductData(
-                                                talonProps.productDetails.sku
-                                            ).reviewCount
-                                        })`}</button>
+                                        >{`Reviews (${useProductData(
+                                            talonProps.productDetails.sku
+                                        ).reviewCount
+                                            })`}</button>
                                         {enabledSizeChart && display === 1 && (
                                             <button
                                                 type="button"
@@ -1070,12 +1079,11 @@ const ProductFullDetail = props => {
                                                     style={{
                                                         fontWeight: 'bold'
                                                     }}
-                                                >{`Reviews (${
-                                                    useProductData(
-                                                        talonProps
-                                                            .productDetails.sku
-                                                    ).reviewCount
-                                                })`}</p>
+                                                >{`Reviews (${useProductData(
+                                                    talonProps
+                                                        .productDetails.sku
+                                                ).reviewCount
+                                                    })`}</p>
                                             </div>
                                             <div style={{ marginTop: 10 }}>
                                                 {showRev ? (
@@ -1278,6 +1286,9 @@ const ProductFullDetail = props => {
                         />
                     </ProductDetailExtraProducts>
                 )}
+
+                <FbtBlock product={product} relatedProducts={relatedProducts} 
+                upsellProducts={upsellProducts} crosssellProducts={crosssellProducts}></FbtBlock>
             </div>
             {isMobileSite ? (
                 <FooterFixedBtn

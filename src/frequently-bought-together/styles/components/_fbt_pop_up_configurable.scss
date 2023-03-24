@@ -1,0 +1,131 @@
+.fbt-pop-up-configurable-portal {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    height: 100vh;
+    background-color: rgba(45, 45, 45, 0.7) !important;
+}
+
+.fbt-pop-up-configurable-overlay {
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: all 500ms ease-in-out;
+}
+
+.fbt-pop-up-configurable-overlay-afterOpen {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fbt-pop-up-configurable-overlay-beforeClose {
+    opacity: 0;
+    transform: translateY(-50%);
+}
+
+.fbt-pop-up-configurable-content {
+    width: 100vw;
+}
+
+.fbt-pop-up-configurable-wrapper {
+    background-color: white;
+    width: 600px;
+    height: 60vh;
+    margin: auto;
+    margin-top: 20vh;
+    position: relative;
+}
+
+@media only screen and (max-width: 700px) {
+    .fbt-pop-up-configurable-wrapper-add-cart {
+        width: 90%;
+        margin-left: calc(5% - 10px);
+        margin-top: 22.5vh;
+        overflow-x: hidden;
+    }
+}
+
+.fbt-pop-up-configurable-content-wrapper {
+    position: absolute;
+    top: 5%;
+    height: 90%;
+    width: 90%;
+    left: 5%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.fbt-pop-up-configurable-close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.fbt-pop-up-configurable-close-button:hover {
+    color: rgb(108, 108, 108)
+}
+
+.fbt-pop-up-configurable-slider {
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom: 5;
+}
+
+.fbt-pop-up-configurable-product-name {
+    color: #1979C3;
+    font-size: 14px;
+}
+
+.fbt-pop-up-configurable-product-name:hover {
+    text-decoration-line: underline;
+}
+
+.fbt-pop-up-configurable-product-name:active {
+    color: orange;
+}
+
+.fbt-pop-up-configurable-slider-prev {
+    position: absolute;
+    left: 3%;
+    top: 45%;
+    border: 1px solid black;
+    padding: 5px
+}
+
+.fbt-pop-up-configurable-slider-next {
+    position: absolute;
+    right: 3%;
+    top: 45%;
+    border: 1px solid black;
+    padding: 5px
+}
+
+.fbt-pop-up-configurable-view-cart {
+    padding: 10px 20px;
+    width: max-content;
+    font-weight: bold;
+}
+
+.fbt-pop-up-configurable-continue {
+    padding: 10px 20px;
+    width: max-content;
+    font-weight: bold;
+}
+
+.fbt-pop-up-configurable-cart {
+    color: #1979C3
+}
+
+.fbt-pop-up-configurable-cart:hover {
+    text-decoration-line: underline;
+    color: orange
+}
+
+.fbt-pop-up-configurable-check-out {
+    color: #1979C3
+}
+
+.fbt-pop-up-configurable-check-out:hover {
+    text-decoration-line: underline;
+    color: orange
+}

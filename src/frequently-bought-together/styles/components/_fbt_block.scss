@@ -1,0 +1,148 @@
+.fbt-loading-indicator {
+    width: 100vw; 
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    padding-top: 40vh;
+    left: 0; 
+    z-index: 9999;
+    background-color: rgba(45, 45, 45, 0.7);
+}
+
+.fbt-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%
+}
+
+.fbt-header {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px; 
+    justify-content: space-between
+}
+
+.fbt-slider-button {
+    display: flex; 
+    flex-direction: row;
+    text-align: center; 
+    gap: 32px
+}
+
+.fbt-slider-prev {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #333;
+    display: block !important;
+    padding-left: 5px;
+}
+
+.fbt-slider-next {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #333;
+    display: block !important;
+    padding-left: 5px;
+}
+
+.fbt-slider-first {
+    margin-bottom: 20px;
+    padding: 20px
+}
+
+.fbt-slider {
+    margin-bottom: 20px;
+    padding: 20px
+}
+
+.fbt-slider-last {
+    margin-bottom: 20px;
+    padding: 20px
+}
+
+.fbt-slider-first:hover {
+    box-shadow: 3px 6px 8px 0px rgba(0, 0, 0, 0.4);
+}
+
+.fbt-slider:hover {
+    box-shadow: 3px 0px 8px 0px rgba(0, 0, 0, 0.2),
+                -3px 0px 8px 0px rgba(0, 0, 0, 0.2),
+                0px 6px 8px 0px rgba(0, 0, 0, 0.4);
+}
+
+.fbt-slider-last:hover {
+    box-shadow: -3px 6px 8px 0px rgba(0, 0, 0, 0.4);
+}
+
+@media only screen and (max-width: 1020px) {
+    .fbt-slider-first:hover {
+        box-shadow: none
+    }
+    
+    .fbt-slider:hover {
+        box-shadow: none
+    }
+    
+    .fbt-slider-last:hover {
+        box-shadow: none
+    }
+}
+
+.fbt-review-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    gap: 5px
+}
+
+.fbt-product-review {
+    color: gray;
+    margin-top: -2px
+}
+
+.fbt-product-review:hover {
+    text-decoration-line: underline;
+}
+
+.fbt-product-review:active {
+    text-decoration-line: underline;
+    color: black
+}
+
+.fbt-product-name {
+    font-size: 16px;
+    margin-bottom: 10px
+}
+
+.fbt-product-name:hover {
+    text-decoration-line: underline;
+}
+
+.fbt-product-name:active {
+    text-decoration-line: underline;
+    color: blue
+}
+
+.fbt-input-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 20px
+}
+
+.fbt-add-cart-button {
+    padding: 10px 20px;
+    text-align: center;
+    width: max-content;
+    background-color: #1979C3; 
+    color: white;
+    font-weight: bold
+}
+
+.fbt-brief-info {
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    gap: 25px;
+    margin-top: 50px
+}

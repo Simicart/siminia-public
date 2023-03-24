@@ -1,5 +1,5 @@
-import {gql} from '@apollo/client';
-import {ProductOfListFragment, SimiPriceFragment} from "src/simi/queries/catalog_gql/catalogFragment.gql";
+import { gql } from '@apollo/client';
+import { ProductOfListFragment, SimiPriceFragment } from "src/simi/queries/catalog_gql/catalogFragment.gql";
 
 
 export const SimiProductInterfaceFragment = gql`
@@ -47,6 +47,24 @@ export const GET_PRODUCT_UPSELL_CROSSSELL_QUERY = gql`
                 id
                 uid
                 upsell_products {
+                    ...on ConfigurableProduct {
+                        configurable_options {
+                            attribute_code
+                            attribute_id
+                            id
+                            label
+                            values {
+                                default_label
+                                store_label
+                                label
+                                swatch_data {
+                                    value
+                                }
+                                uid
+                                use_default_value
+                            }
+                        }
+                    }
                     id
                     name
                     sku
@@ -80,6 +98,24 @@ export const GET_PRODUCT_UPSELL_CROSSSELL_QUERY = gql`
                     review_count
                 }
                 crosssell_products{
+                    ...on ConfigurableProduct {
+                        configurable_options {
+                            attribute_code
+                            attribute_id
+                            id
+                            label
+                            values {
+                                default_label
+                                store_label
+                                label
+                                swatch_data {
+                                    value
+                                }
+                                uid
+                                use_default_value
+                            }
+                        }
+                    }
                     id
                     name
                     sku
