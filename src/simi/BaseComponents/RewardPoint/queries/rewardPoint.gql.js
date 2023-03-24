@@ -19,6 +19,16 @@ export const APPLY_REWARD_POINT = gql`
     }
 `
 
+export const GET_REWARD_POINT_EXCHANGE_RATE = gql`
+    query getRewardPointsExchangeRate { 
+        bssRewardPointsExchangeRate {
+            currency_to_point_rate
+            point_rate_to_currency
+        }
+    }
+`
+
 export default {
-    applyRewardPointMutation: APPLY_REWARD_POINT
+    applyRewardPointMutation: APPLY_REWARD_POINT,
+    getRewardPointExchangeRate: GET_REWARD_POINT_EXCHANGE_RATE
 }

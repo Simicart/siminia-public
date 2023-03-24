@@ -32,7 +32,8 @@ const Apply = props => {
         loading,
         balancePoint,
         point,
-        rate,
+        pointExchangeRate,
+        currencyExchaneRate,
         currency,
         handleApply,
         handleSetUsePoint
@@ -77,11 +78,11 @@ const Apply = props => {
                     <FormattedMessage
                         id={'{rate} point(s) can be redeemed for'}
                         defaultMessage={'{rate} point(s) can be redeemed for'}
-                        values={{ rate }}
+                        values={{ rate: pointExchangeRate }}
                     />
                 </span>
                 <span className={classes.value}>
-                    <Price value={1} currencyCode={currency} />
+                    <Price value={currencyExchaneRate} currencyCode={currency} />
                 </span>
             </div>
             <Form onSubmit={handleApply}>
@@ -100,6 +101,10 @@ const Apply = props => {
             </Form>
         </div>
     );
+
+    if(point <= 0) {
+        return null
+    }
 
     if (useAccrodion) {
         const sesstionClasses = {

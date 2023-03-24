@@ -31,7 +31,6 @@ const HeartIcon = <Icon size={16} src={Heart} />;
 
 const Product = props => {
     const { item } = props;
-    console.log('itemmmm', item);
     const merchantTaxConfig = taxConfig();
     const showExcludedTax =
         merchantTaxConfig &&
@@ -93,7 +92,6 @@ const Product = props => {
             ),
         [urlKey, urlSuffix]
     );
-    console.log('itemLink', itemLink);
     const stockStatusMessage =
         stockStatus === 'OUT_OF_STOCK'
             ? formatMessage({
