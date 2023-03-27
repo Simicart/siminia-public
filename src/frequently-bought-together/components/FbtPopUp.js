@@ -39,6 +39,16 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
     const [errorOption, setErrorOption] = useState(false)
     const history = useHistory()
 
+    useEffect(() => {
+        const countdownInterval = setInterval(() => {
+            setRemainingCountdown(state => state - 1)
+        }, 1000)
+
+        return () => {
+            clearInterval(countdownInterval)
+        }
+    }, [remainingCountdown])
+
     const [
         addProductsToCart,
         { data, loading, error }
@@ -51,8 +61,6 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
             setTimeout(() => {
                 setOpenModal(false)
             }, 500)
-
-
         }
     });
 
@@ -111,16 +119,6 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
             }, parseInt(countdown_time) * 1000)
         }, [])
     }
-
-    useEffect(() => {
-        const countdownInterval = setInterval(() => {
-            setRemainingCountdown(state => state - 1)
-        }, 1000)
-
-        return () => {
-            clearInterval(countdownInterval)
-        }
-    }, [remainingCountdown])
 
     const settings = {
         nav: true,
@@ -186,6 +184,8 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
             : 'default'
         setListProductOptions(tmp)
     }
+
+    console.log(loading)
 
     if (popUpType !== 'add cart') {
         if (FBT_Brief_Data.length === 0) {
@@ -268,7 +268,7 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                                 <button className="fbt-pop-up-slider-next">
                                     <ChevronRight size={16} />
                                 </button>)}
-                                <TinySlider settings={settings}>
+                                {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length > 0 && (<TinySlider settings={settings}>
                                     {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').map((element, index) => (
                                         <div key={index} style={{ textAlign: 'center', border: '1px solid lightgray' }}>
                                             <img
@@ -284,7 +284,7 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                                             {product_price === '1' && <p style={{ fontWeight: 'bold', fontSize: 16, marginTop: 10 }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>}
                                         </div>
                                     ))}
-                                </TinySlider>
+                                </TinySlider>)}
                             </div>
 
                             <div style={{ marginTop: 20 }}>
@@ -342,10 +342,15 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
 
                             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
                                 <button style={{ backgroundColor: `#${btn_viewcart_bg}`, color: `#${btn_viewcart_cl}` }}
-                                    className='fbt-pop-up-view-cart'>{active_countdown === '2' ? `${btn_text_viewcart} (${remainingCountdown})` : `${btn_text_viewcart}`}</button>
+                                    className='fbt-pop-up-view-cart' onClick={() => history.push('/cart')}>{active_countdown === '2' ? `${btn_text_viewcart} (${remainingCountdown})` : `${btn_text_viewcart}`}</button>
 
                                 {continue_button === '1' && (<button style={{ backgroundColor: `#${btn_continue_bg}`, color: `#${btn_continue_cl}` }}
-                                    className='fbt-pop-up-continue'>{active_countdown === '1' ? `${btn_text_continue} (${remainingCountdown})` : `${btn_text_continue}`}</button>)}
+                                    className='fbt-pop-up-continue' onClick={() => {
+                                        setIsOpen(false)
+                                        setTimeout(() => {
+                                            setOpenModal(false)
+                                        }, 500)
+                                    }}>{active_countdown === '1' ? `${btn_text_continue} (${remainingCountdown})` : `${btn_text_continue}`}</button>)}
                             </div>
                         </div>
                     </div>
