@@ -19,31 +19,24 @@ import { GiftCodeCartContext } from '../../App/nativeInner/CartCore/cartPage';
  * @param {Object} data query data
  */
 const flattenData = (data, giftCodeData) => {
-   
+    let giftCodeValue = 0
+    let total = {}
+    
     if (!data) return {};
     if (giftCodeData) {
-        let giftCodeValue = 0
         for(let i=0; i<giftCodeData.length; i++) {
             giftCodeValue += giftCodeData[i].value
         }
-        const total = {
+
+        total = {
             ...data.cart.prices.grand_total,
             value: data.cart.prices.grand_total.value - giftCodeValue > 0 ? (data.cart.prices.grand_total.value - giftCodeValue).toFixed(2) : 0
         }
-        return {
-            subtotal: data.cart.prices.subtotal_excluding_tax,
-            total: total,
-            discounts: data.cart.prices.discounts,
-            giftCards: data.cart.mp_giftcard_config,
-            taxes: data.cart.prices.applied_taxes,
-            shipping: data.cart.shipping_addresses,
-            priceData: data.cart.prices.mp_reward_segments
-        };
     }
     
     return {
         subtotal: data.cart.prices.subtotal_excluding_tax,
-        total: data.cart.prices.grand_total,
+        total: giftCodeData.length > 0 ? total : data.cart.prices.grand_total,
         discounts: data.cart.prices.discounts,
         giftCards: data.cart.mp_giftcard_config,
         taxes: data.cart.prices.applied_taxes,
