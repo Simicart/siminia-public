@@ -1,8 +1,6 @@
 import React, { useState } from "react"
 import { useHistory } from 'react-router-dom'
 import { useMutation } from "@apollo/client"
-import useConfigFBT from "../talons/useConfigFBT"
-import useProductData from "../talons/useProductData"
 import FbtPopUp from './FbtPopUp.js'
 import FbtPopUpConfigurable from "./FbtPopUpConfigurable"
 import { fullPageLoadingIndicator } from "@magento/venia-ui/lib/components/LoadingIndicator"
@@ -14,16 +12,24 @@ import ADD_PRODUCTS_TO_CART from "../talons/useAddProductsToCart"
 import ADD_PRODUCTS_TO_WISHLIST from "../talons/useAddProductsToWishlist"
 import '../styles/styles.scss'
 
-const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts }) => {
-    const sku = product.sku
+const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
+    const initListProductStatus = []
+    for (let i = 0; i < FBT_Slider_Data.length; i++) {
+        initListProductStatus[i] = {
+            index: i,
+            quantity: 1,
+            isChecked: FBT_Config_Data.display_list === '0' ? false : true
+        }
+    }
+
     const history = useHistory()
-    const [briefInfoData, setBriefInfoData] = useState([])
     const [openPopUp, setOpenPopUp] = useState(false)
     const [openPopUpConfigurable, setOpenPopUpConfigurable] = useState(false)
     const [openModal, setOpenModal] = useState(false)
     const [openModalConfigurable, setOpenModalConfigurable] = useState(false)
     const [popUpType, setPopUpType] = useState('')
     const [addCartData, setAddCartData] = useState()
+    const [briefInfoData, setBriefInfoData] = useState(FBT_Config_Data.display_list !== '0' ? initListProductStatus : [])
     const [configurableProduct, setConfigurableProduct] = useState([])
     const [savedQuantity, setSavedQuantity] = useState([])
 
@@ -47,79 +53,9 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
         }
     });
 
-    const configFBT = useConfigFBT()
-    //const fbtData = useProductData(sku)
-    
-    if (configFBT.loading) return fullPageLoadingIndicator
-    if (configFBT.error) return <p>{configFBT.error.message}</p>
-
-    //if (fbtData.loading) return fullPageLoadingIndicator
-    //if (fbtData.error) return <p>{fbtData.error.message}</p>*/
-
-    const FBT_Config_Data = configFBT.data.GetConfigFBT
-    /*const fbtProducts = fbtData.data.product.items[0].fbt_product_data
-    console.log(fbtProducts)*/
-
-    if (FBT_Config_Data.show_curent_product === '1') {
-        relatedProducts = [product, ...relatedProducts]
-        upsellProducts = [product, ...upsellProducts]
-        crosssellProducts = [product, ...crosssellProducts]
-        //fbtProducts = [product, ...fbtProducts]
-    }
-
-    const sortItemType = () => {
-        if (FBT_Config_Data.sort_item_type[7] !== '4') {
-            if (FBT_Config_Data.sort_item_type[7] === '0') {
-                return relatedProducts.length > FBT_Config_Data.limit_products
-                    ? relatedProducts.slice(0, FBT_Config_Data.limit_products) : relatedProducts
-            }
-            if (FBT_Config_Data.sort_item_type[7] === '1') {
-                return upsellProducts.length > FBT_Config_Data.limit_products
-                    ? upsellProducts.slice(0, FBT_Config_Data.limit_products) : upsellProducts
-            }
-            if (FBT_Config_Data.sort_item_type[7] === '2') {
-                return crosssellProducts.length > FBT_Config_Data.limit_products
-                    ? crosssellProducts.slice(0, FBT_Config_Data.limit_products) : crosssellProducts
-            }
-            /*if (FBT_Config_Data.sort_item_type[7] === '3') {
-                return fbtProducts.length > FBT_Config_Data.limit_products
-                    ? fbtProducts.slice(0, FBT_Config_Data.limit_products) : fbtProducts
-            }*/
-        }
-        else {
-            if (FBT_Config_Data.sort_item_type[16] === '0') {
-                return relatedProducts.length > FBT_Config_Data.limit_products
-                    ? relatedProducts.slice(0, FBT_Config_Data.limit_products) : relatedProducts
-            }
-            if (FBT_Config_Data.sort_item_type[16] === '1') {
-                return upsellProducts.length > FBT_Config_Data.limit_products
-                    ? upsellProducts.slice(0, FBT_Config_Data.limit_products) : upsellProducts
-            }
-            if (FBT_Config_Data.sort_item_type[16] === '2') {
-                return crosssellProducts.length > FBT_Config_Data.limit_products
-                    ? crosssellProducts.slice(0, FBT_Config_Data.limit_products) : crosssellProducts
-            }
-            /*if (FBT_Config_Data.sort_item_type[16] === '3') {
-                return fbtProducts.length > FBT_Config_Data.limit_products
-                    ? fbtProducts.slice(0, FBT_Config_Data.limit_products) : fbtProducts
-            }*/
-        }
-    }
-
-    const FBT_Slider_Data = sortItemType()
-
     const FBT_Brief_Data = FBT_Slider_Data.filter((element, index) => briefInfoData[index]?.isChecked === true)
 
     const renderBriefInfoData = briefInfoData.filter((element, index) => element?.isChecked === true)
-
-    const initListProductStatus = []
-    for (let i = 0; i < FBT_Slider_Data.length; i++) {
-        initListProductStatus[i] = {
-            index: i,
-            quantity: 1,
-            isChecked: false
-        }
-    }
 
     const imgStyles = {
         width: "100%",
@@ -136,7 +72,9 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
         lazyload: true,
         mouseDrag: true,
         items: parseInt(FBT_Config_Data.item_on_slide),
-        autoplay: Boolean(FBT_Config_Data.slide_auto),
+        autoplay: (FBT_Config_Data.display_list === '1') 
+                  ? false 
+                  : Boolean(FBT_Config_Data.slide_auto),
         autoplayText: ['', ''],
         speed: parseInt(FBT_Config_Data.slide_speed),
         controlText: ['', ''],
@@ -431,7 +369,7 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
                                 {FBT_Slider_Data.length > 0 && (
                                     <>
                                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', gap: 25 }}>
-                                            <input type='checkbox' style={{ width: '2%' }} onChange={handleSelectAll}></input>
+                                            <input type='checkbox' style={{ width: '2%' }} onChange={handleSelectAll} defaultChecked={true}></input>
                                             <p style={{ fontSize: 16, fontWeight: 'bold', width: '60%' }}>Products Name</p>
                                             <p style={{ fontSize: 16, fontWeight: 'bold', width: '8%' }}>Qty</p>
                                             <p style={{ fontSize: 16, fontWeight: 'bold', width: '30%' }}>Unit Price</p>
@@ -440,7 +378,7 @@ const FbtBlock = ({ product, relatedProducts, upsellProducts, crosssellProducts 
                                             return (
                                                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', gap: 25 }}>
                                                     <input type='checkbox' style={{ width: '2%' }} id={`fbt-quantity-checkbox-${index}`}
-                                                        onChange={(e) => handleSelectSingle(e, index)}></input>
+                                                        onChange={(e) => handleSelectSingle(e, index)} defaultChecked={true}></input>
                                                     <p style={{ fontSize: 16, width: '60%' }} dangerouslySetInnerHTML={{ __html: element.name }}></p>
                                                     <input style={{ height: 30, width: '8%', padding: 10 }} defaultValue={1} placeholder={0}
                                                         id={`fbt-quantity-${index}`} onChange={(e) => handleQuantity(e, index)}></input>

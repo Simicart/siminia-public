@@ -39,8 +39,6 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
     const [errorOption, setErrorOption] = useState(false)
     const history = useHistory()
 
-    console.log(savedQuantity)
-
     const [
         addProductsToCart,
         { data, loading, error }
@@ -139,8 +137,8 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
     }
 
     const imgStyles = {
-        width: '60%',
-        height: '48%',
+        width: '45%',
+        height: '36%',
         objectFit: "ratio",
         cursor: 'pointer',
         margin: 'auto'
