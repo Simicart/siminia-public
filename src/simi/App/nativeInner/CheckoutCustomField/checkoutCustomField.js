@@ -37,7 +37,7 @@ import Loader from '../Loader';
 
 const CheckoutCustomField = props => {
     const storeConfig = Identify.getStoreConfig();
-    const { id } = storeConfig?.storeConfig;
+    const { id } = storeConfig?.storeConfig || '';
 
     const classes = useStyle(defaultClasses, props.classes);
     const {
