@@ -12,6 +12,7 @@ import {
     CHECKOUT_STEP,
     useCheckoutPage
 } from 'src/simi/App/nativeInner/talons/CheckoutPage/useCheckoutPage';
+import CheckoutCustomField from '../CheckoutCustomField';
 
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Button from '@magento/venia-ui/lib/components/Button';
@@ -60,6 +61,7 @@ const CheckoutPage = props => {
     const [openDeli, setOpenDeli] = useState(false);
 
     const [{ cartId }] = useCartContext();
+    console.log("cartId",cartId);
     const location = useLocation()
     let initGiftCode = []
     if(location?.state?.cartGiftCode) {
@@ -518,6 +520,9 @@ const CheckoutPage = props => {
                         </ScrollAnchor>
                     </div>
                 )}
+                <div className={classes.checkout_custom_field}>
+                    <CheckoutCustomField />
+                </div>
                 {!isVirtual && (
                     <div className={classes.shipping_method_container}>
                         <ScrollAnchor ref={shippingMethodRef}>
