@@ -1,10 +1,11 @@
 import { useQuery, gql } from '@apollo/client'
 import {SimiPriceFragment} from '../../simi/queries/catalog_gql/catalogFragment.gql';
 
-const GET_PRODUCT_DATA = gql`
+const GET_FBT_PRODUCT_DATA = gql`
 query getFbtProductData($product_sku: String) {
     products(filter: { sku: { eq: $product_sku } }) {
       items {
+        name
         fbt_product_data {
           ...on ConfigurableProduct {
             configurable_options {
@@ -63,9 +64,9 @@ query getFbtProductData($product_sku: String) {
 `
 
 const useFbtData = (product_sku) => {
-  const product = useQuery(GET_PRODUCT_DATA, {
+  const product = useQuery(GET_FBT_PRODUCT_DATA, {
     variables: {
-      sku: product_sku
+      product_sku: product_sku
     },
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'cache-and-network'

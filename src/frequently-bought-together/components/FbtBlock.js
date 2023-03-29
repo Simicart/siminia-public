@@ -42,8 +42,6 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
         }
     }
 
-    console.log(FBT_Slider_Data)
-
     const history = useHistory()
     const windowSize = useWindowSize();
     const isMobile = windowSize.innerWidth < 500;
@@ -330,9 +328,9 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                                             <a href={`/${element.url_key}.html`}>
                                                 <img
                                                     className={`tns-lazy-img`}
-                                                    src={index === 0 ? element.small_image : element.small_image.url}
+                                                    src={element.small_image.url ? element.small_image.url : element.small_image}
+                                                    data-src={element.small_image.url ? element.small_image.url : element.small_image}
                                                     alt=''
-                                                    data-src={index === 0 ? element.small_image : element.small_image.url}
                                                     style={imgStyles}
                                                 />
                                             </a>

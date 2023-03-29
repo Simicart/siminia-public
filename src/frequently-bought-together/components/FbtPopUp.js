@@ -18,7 +18,6 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
 
     const windowSize = useWindowSize();
     const isMobile = windowSize.innerWidth < 500;
-    console.log(isMobile)
 
     const countdown_time = fbt_config_data.countdown_time
     const active_countdown = fbt_config_data.active_countdown
