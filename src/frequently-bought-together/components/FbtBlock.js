@@ -6,11 +6,31 @@ import FbtPopUpConfigurable from "./FbtPopUpConfigurable"
 import { fullPageLoadingIndicator } from "@magento/venia-ui/lib/components/LoadingIndicator"
 import TinySlider from 'tiny-slider-react';
 import 'tiny-slider/dist/tiny-slider.css';
+import Slider from 'react-slick'
 import { ChevronLeft, ChevronRight } from "react-feather";
 import { StaticRate } from '../../simi/BaseComponents/Rate'
 import ADD_PRODUCTS_TO_CART from "../talons/useAddProductsToCart"
 import ADD_PRODUCTS_TO_WISHLIST from "../talons/useAddProductsToWishlist"
+import '../styles/slick.scss'
+import '../styles/slick-theme.scss'
 import '../styles/styles.scss'
+import { useWindowSize } from '@magento/peregrine';
+
+const NextArrow = (props) => {
+    return (
+        <button className="fbt-slider-next-2" onClick={props.onClick}>
+            <ChevronRight size={16} />
+        </button>
+    );
+}
+
+const PrevArrow = (props) => {
+    return (
+        <button className="fbt-slider-prev-2" onClick={props.onClick}>
+            <ChevronLeft size={16} />
+        </button>
+    );
+}
 
 const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
     const initListProductStatus = []
@@ -22,7 +42,11 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
         }
     }
 
+    console.log(FBT_Slider_Data)
+
     const history = useHistory()
+    const windowSize = useWindowSize();
+    const isMobile = windowSize.innerWidth < 500;
     const [openPopUp, setOpenPopUp] = useState(false)
     const [openPopUpConfigurable, setOpenPopUpConfigurable] = useState(false)
     const [openModal, setOpenModal] = useState(false)
@@ -35,7 +59,7 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
 
     const [
         addProductsToCart,
-        { data, loading, error }
+        { loading }
     ] = useMutation(ADD_PRODUCTS_TO_CART, {
         onCompleted: data => {
             setAddCartData(data)
@@ -46,35 +70,35 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
 
     const [
         addProductsToWishlist,
-        { data: wishlistData, loading: wishlistLoading, error: wishlistError }
+        { loading: wishlistLoading }
     ] = useMutation(ADD_PRODUCTS_TO_WISHLIST, {
-        onCompleted: wishlistData => {
-            history.push('/wishlist')
+        onCompleted: data => {
+            if (data) history.push('/wishlist')
         }
     });
 
     const FBT_Brief_Data = FBT_Slider_Data.filter((element, index) => briefInfoData[index]?.isChecked === true)
 
-    const renderBriefInfoData = briefInfoData.filter((element, index) => element?.isChecked === true)
+    const renderBriefInfoData = briefInfoData.filter((element) => element?.isChecked === true)
 
     const imgStyles = {
         width: "100%",
         height: '100%',
+        maxWidth: 300,
+        maxHeight: 320,
         objectFit: "ratio",
         cursor: 'pointer',
         padding: 20
     };
 
     const settings = {
-        nav: true,
+        nav: false,
         gutter: 20,
         rewind: true,
         lazyload: true,
         mouseDrag: true,
         items: parseInt(FBT_Config_Data.item_on_slide),
-        autoplay: (FBT_Config_Data.display_list === '1') 
-                  ? false 
-                  : Boolean(FBT_Config_Data.slide_auto),
+        autoplay: Boolean(FBT_Config_Data.slide_auto),
         autoplayText: ['', ''],
         speed: parseInt(FBT_Config_Data.slide_speed),
         controlText: ['', ''],
@@ -91,6 +115,37 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                 items: parseInt(FBT_Config_Data.item_on_slide)
             }
         }
+    };
+
+    const slickSettings = {
+        dots: false,
+        infinite: true,
+        lazyLoad: true,
+        slidesToShow: parseInt(FBT_Config_Data.item_on_slide),
+        autoplay: Boolean(FBT_Config_Data.slide_auto),
+        speed: parseInt(FBT_Config_Data.slide_speed),
+        responsive: [
+            {
+                breakpoint: 0,
+                settings: {
+                    slidesToShow: parseInt(FBT_Config_Data.item_on_slide) > 2 ? 2 : parseInt(FBT_Config_Data.item_on_slide)
+                }
+            },
+            {
+                breakpoint: 540,
+                settings: {
+                    slidesToShow: parseInt(FBT_Config_Data.item_on_slide) > 3 ? 3 : parseInt(FBT_Config_Data.item_on_slide)
+                }
+            },
+            {
+                breakpoint: 1020,
+                settings: {
+                    slidesToShow: parseInt(FBT_Config_Data.item_on_slide)
+                }
+            }
+        ],
+        nextArrow: <NextArrow/>,
+        prevArrow: <PrevArrow/>
     };
 
     const handleQuantity = (e, index) => {
@@ -137,7 +192,7 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
         const cart_id = JSON.parse(
             localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__cartId')
         ).value;
-        
+
         if (FBT_Config_Data.display_list === '0' && FBT_Slider_Data[index].__typename === 'ConfigurableProduct') {
             setConfigurableProduct([FBT_Slider_Data[index]])
             setSavedQuantity([document.getElementById(`fbt-quantity-${index}`).value])
@@ -252,15 +307,17 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
             {FBT_Config_Data.active === '1' && (
                 <div className="fbt-wrapper">
                     <div className="fbt-header">
-                        <p style={{ fontSize: 22, fontWeight: 'bold' }}>{FBT_Config_Data.title_of_list}</p>
-                        <div className={!(FBT_Config_Data.display_list === '1' && FBT_Brief_Data.length <= parseInt(FBT_Config_Data.item_on_slide)) 
-                                        ? "fbt-slider-button" : "fbt-slider-button-hide"}>
-                            <button className="fbt-slider-prev">
-                                <ChevronLeft size={16} />
-                            </button>
-                            <button className="fbt-slider-next">
-                                <ChevronRight size={16} />
-                            </button>
+                        <p className={isMobile ? 'fbt-header-title-mobile' : 'fbt-header-title'}>{FBT_Config_Data.title_of_list}</p>
+                        <div className={!(FBT_Config_Data.display_list === '1' && FBT_Brief_Data.length <= parseInt(FBT_Config_Data.item_on_slide))
+                            ? "fbt-slider-button" : "fbt-slider-button-hide"}>
+                            {FBT_Config_Data.display_list === '0' && (<>
+                                <button className="fbt-slider-prev">
+                                    <ChevronLeft size={16} />
+                                </button>
+                                <button className="fbt-slider-next">
+                                    <ChevronRight size={16} />
+                                </button>
+                            </>)}
                         </div>
                     </div>
 
@@ -269,13 +326,17 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                             <TinySlider settings={settings}>
                                 {FBT_Slider_Data.map((element, index) => (
                                     <div key={index} className={index === 0 ? 'fbt-slider-first' : (index === FBT_Slider_Data.length ? 'fbt-slider-last' : 'fbt-slider')}>
-                                        {FBT_Config_Data.preview === '1' && (<img
-                                            className={`tns-lazy-img`}
-                                            src={index === 0 ? element.small_image : element.small_image.url}
-                                            data-src={index === 0 ? element.small_image : element.small_image.url}
-                                            style={imgStyles}
-                                            onClick={() => history.push(`/${element.url_key}.html`)}
-                                        />)}
+                                        {FBT_Config_Data.preview === '1' && (
+                                            <a href={`/${element.url_key}.html`}>
+                                                <img
+                                                    className={`tns-lazy-img`}
+                                                    src={index === 0 ? element.small_image : element.small_image.url}
+                                                    alt=''
+                                                    data-src={index === 0 ? element.small_image : element.small_image.url}
+                                                    style={imgStyles}
+                                                />
+                                            </a>
+                                        )}
                                         {FBT_Config_Data.show_review === '1' && (
                                             <div className='fbt-review-wrapper'>
                                                 <StaticRate rate={element.rating_summary}></StaticRate>
@@ -334,11 +395,11 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                             </div>
                         </>) : (
                         <>
-                            <TinySlider settings={settings}>
+                            <Slider {...slickSettings}>
                                 {FBT_Brief_Data.map((element, index) => (
-                                    <div key={index} className={index === 0 ? 'fbt-slider-first' : (index === FBT_Brief_Data.length ? 'fbt-slider-last' : 'fbt-slider')}>
+                                    <div key={index} 
+                                        className={index === 0 ? 'fbt-slider-first' : (index === FBT_Brief_Data.length ? 'fbt-slider-last' : 'fbt-slider')}>
                                         <img
-                                            className={`tns-lazy-img`}
                                             src={element.small_image.url ? element.small_image.url : element.small_image}
                                             data-src={element.small_image.url ? element.small_image.url : element.small_image}
                                             alt=""
@@ -363,7 +424,7 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                                         {FBT_Config_Data.show_price === '1' && <p style={{ fontWeight: 'bold', fontSize: 16 }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>}
                                     </div>
                                 ))}
-                            </TinySlider>
+                            </Slider>
 
                             <div className="fbt-brief-info">
                                 {FBT_Slider_Data.length > 0 && (

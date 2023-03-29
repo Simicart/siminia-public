@@ -681,6 +681,8 @@ const ProductFullDetail = props => {
     const FBT_Config_Data = configFBT.data?.GetConfigFBT
     const fbtProducts = fbtData.data?.products.items[0].fbt_product_data
 
+    console.log(fbtProducts)
+
     const sortItemType = () => {
         if (FBT_Config_Data?.show_curent_product === '1') {
             const related_Products = [product, ...relatedProducts]

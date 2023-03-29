@@ -9,11 +9,16 @@ import { useQuery } from '@apollo/client';
 import CART_DATA from '../talons/useCartData';
 import { fullPageLoadingIndicator } from "@magento/venia-ui/lib/components/LoadingIndicator"
 import ADD_PRODUCTS_TO_CART from '../talons/useAddProductsToCart';
+import { useWindowSize } from '@magento/peregrine';
 
 const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, addCartData, setAddCartData,
     configurableProduct, setOpenModalConfigurable, setOpenPopUpConfigurable, fbt_config_data, savedQuantity }) => {
 
     Modal.setAppElement('#root')
+
+    const windowSize = useWindowSize();
+    const isMobile = windowSize.innerWidth < 500;
+    console.log(isMobile)
 
     const countdown_time = fbt_config_data.countdown_time
     const active_countdown = fbt_config_data.active_countdown
@@ -185,8 +190,6 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
         setListProductOptions(tmp)
     }
 
-    console.log(loading)
-
     if (popUpType !== 'add cart') {
         if (FBT_Brief_Data.length === 0) {
             return (
@@ -291,7 +294,7 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                                 {configurableProduct.map((element, index) => (
                                     <div className='fbt-pop-up-conf-wrapper'>
                                         <p style={{ color: 'red', marginTop: 5, marginLeft: 5, fontSize: 16 }}>You need to choose options for your item.</p>
-                                        <div className='fbt-pop-up-conf-info'>
+                                        <div className={isMobile ? 'fbt-pop-up-conf-info-mobile' : 'fbt-pop-up-conf-info'}>
                                             <img
                                                 src={element.small_image.url ? element.small_image.url : element.small_image}
                                                 data-src={element.small_image.url ? element.small_image.url : element.small_image}
@@ -403,7 +406,7 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                                 marginLeft: '10%', marginTop: 20, marginBottom: 20
                             }}>
                                 <p style={{ color: 'red', marginTop: 5, marginLeft: 5, fontSize: 16 }}>You need to choose options for your item.</p>
-                                <div style={{ display: 'flex', flexDirection: 'row', width: '90%', gap: 20, margin: 'auto', marginTop: 20 }}>
+                                <div className={isMobile ? 'fbt-pop-up-conf-info-mobile' : 'fbt-pop-up-conf-info'}>
                                     <img
                                         src={element.small_image.url ? element.small_image.url : element.small_image}
                                         data-src={element.small_image.url ? element.small_image.url : element.small_image}

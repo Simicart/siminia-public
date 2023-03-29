@@ -18,11 +18,9 @@ query getSizeChartData($id: Int!) {
   }
 `
 
-const useSizeChartData = ({id, sizeChartEnabled}) => {
-    
-  if(sizeChartEnabled) {
+const useSizeChartData = ({id}) => {
     const [sizeChartData, setSizeChartData] = useState({})
-    const { data, loading, error }= useQuery(GET_SIZE_CHART_DATA, {
+    useQuery(GET_SIZE_CHART_DATA, {
       variables: { id },
       onCompleted: (data) => {
         setSizeChartData(data)
@@ -31,8 +29,6 @@ const useSizeChartData = ({id, sizeChartEnabled}) => {
       nextFetchPolicy: 'cache-and-network'
     })
     return sizeChartData
-  }
-  else return null
 }
   
   export default useSizeChartData

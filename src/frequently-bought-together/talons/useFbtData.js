@@ -2,7 +2,7 @@ import { useQuery, gql } from '@apollo/client'
 import {SimiPriceFragment} from '../../simi/queries/catalog_gql/catalogFragment.gql';
 
 const GET_PRODUCT_DATA = gql`
-query getProductData($product_sku: String) {
+query getFbtProductData($product_sku: String) {
     products(filter: { sku: { eq: $product_sku } }) {
       items {
         fbt_product_data {
