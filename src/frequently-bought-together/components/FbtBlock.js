@@ -126,7 +126,7 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
     const slickSettings = {
         dots: false,
         infinite: parseInt(FBT_Config_Data.item_on_slide) < FBT_Brief_Data.length ? true : false,
-        slidesToShow: parseInt(FBT_Config_Data.item_on_slide),
+        slidesToShow: parseInt(FBT_Config_Data.item_on_slide) < FBT_Brief_Data.length ? parseInt(FBT_Config_Data.item_on_slide) : FBT_Brief_Data.length,
         autoplay: Boolean(FBT_Config_Data.slide_auto),
         speed: parseInt(FBT_Config_Data.slide_speed),
         responsive: [
