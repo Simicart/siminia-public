@@ -16,8 +16,12 @@ import { showToastMessage } from 'src/simi/Helper/Message';
 import Identify from 'src/simi/Helper/Identify';
 import { useStripe } from '@stripe/react-stripe-js'; //Simi stripe-js handling
 import { useIntl } from 'react-intl';
-import { showFogLoading, hideFogLoading } from 'src/simi/BaseComponents/Loading/GlobalLoading';
+import {
+    showFogLoading,
+    hideFogLoading
+} from 'src/simi/BaseComponents/Loading/GlobalLoading';
 import { useHistory } from 'react-router-dom';
+import { useDeliveryDateTime } from '../../Checkout/DeliveryDateTime/useDeliveryDateTime.js';
 
 export const CHECKOUT_STEP = {
     SHIPPING_ADDRESS: 1,
@@ -69,7 +73,6 @@ export const CHECKOUT_STEP = {
  */
 export const useCheckoutPage = (props = {}) => {
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
-
     const {
         createCartMutation,
         getCheckoutDetailsQuery,
@@ -94,6 +97,32 @@ export const useCheckoutPage = (props = {}) => {
     const { formatMessage } = useIntl();
     const [{ isSignedIn }] = useUserContext();
     const [{ cartId }, { createCart, removeCart }] = useCartContext();
+
+
+    // const [isSubmit, setIsSubmit] = useState(false);
+    // const { bssDeliveryDateStoreConfig, deliTime , deliveryComment} = useDeliveryDateTime({
+    //     setPageIsUpdating: setIsUpdating,
+    // });
+   
+    // const {
+    //     is_field_required_comment,
+    //     is_field_required_date,
+    //     is_field_required_timeslot
+    // } = bssDeliveryDateStoreConfig || '';
+    // useEffect(() => {
+    //     if (
+    //         (Number(is_field_required_comment) === 1 &&
+    //             deliveryComment === '') ||
+    //         (Number(is_field_required_timeslot) === 1 && deliTime === '')
+    //     ) {
+    //         setIsSubmit(true);
+    //     } else {
+    //         setIsSubmit(false);
+    //     }
+    // }, [deliveryComment, deliTime]);
+
+
+
     const stripe = useStripe();
     const history = useHistory();
     const [fetchCartId] = useMutation(createCartMutation);
@@ -143,7 +172,7 @@ export const useCheckoutPage = (props = {}) => {
 
     const isVirtual = useMemo(() => {
         return (checkoutData && checkoutData.cart.is_virtual) || false;
-    }, [checkoutData])
+    }, [checkoutData]);
     /**
      * For more info about network statues check this out
      *
@@ -225,7 +254,7 @@ export const useCheckoutPage = (props = {}) => {
                 );
                 if (pickedPaymentMethod && pickedPaymentMethod.code)
                     pickedPaymentMethod = pickedPaymentMethod.code;
-            } catch (err) { }
+            } catch (err) {}
 
             if (
                 pickedPaymentMethod === 'stripe_payments' &&
@@ -243,7 +272,7 @@ export const useCheckoutPage = (props = {}) => {
                     if (paymentIntents && paymentIntents[0]) {
                         stripe
                             .confirmCardPayment(paymentIntents[0])
-                            .then(function (result) {
+                            .then(function(result) {
                                 if (result && result.paymentIntent) {
                                     showFogLoading();
                                     simi2ndTimePlaceOrderAndCleanup();
@@ -322,6 +351,19 @@ export const useCheckoutPage = (props = {}) => {
         // order. If/when Apollo returns promises for invokers from useLazyQuery
         // we can just await this function and then perform the rest of order
         // placement.
+        
+        // console.log('isSubmit',isSubmit);
+        // return;
+        // // if (isSubmitDelivery) {
+        // //     showToastMessage(
+        // //         formatMessage({
+        // //             id: 'Delivery is require',
+        // //             defaultMessage: 'Delivery is require'
+        // //         })
+        // //     );
+        // //     return;
+        // // }
+
         await getOrderDetails({
             variables: {
                 cartId
@@ -331,10 +373,10 @@ export const useCheckoutPage = (props = {}) => {
     }, [cartId, getOrderDetails]);
 
     useEffect(() => {
-        if(isVirtual) {
+        if (isVirtual) {
             setCheckoutStep(CHECKOUT_STEP.PAYMENT);
         }
-    }, [isVirtual])
+    }, [isVirtual]);
 
     // Go back to checkout if shopper logs in
     useEffect(() => {
@@ -391,12 +433,12 @@ export const useCheckoutPage = (props = {}) => {
             // giftCards: data?.cart?.mp_giftcard_config,
             taxes: checkoutData?.cart?.prices?.applied_taxes,
             shipping: checkoutData?.cart?.shipping_addresses,
-            rewardPoint: {  
+            rewardPoint: {
                 earnPoint: checkoutData?.cart?.earn_point,
                 spentPoint: checkoutData?.cart?.spent_point
             }
         };
-    }, [checkoutData])
+    }, [checkoutData]);
 
     return {
         isVirtual,

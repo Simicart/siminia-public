@@ -58,7 +58,7 @@ const CheckoutCustomField = props => {
     } = useCheckoutCustomFieldConfig();
     const {
         is_enabled
-    } = checkoutCustomFieldConfig?.getCheckoutCustomFieldConfig;
+    } = checkoutCustomFieldConfig?.getCheckoutCustomFieldConfig || false;
     const { getAllCheckoutCustomFieldData } = checkoutCustomFieldData || [];
 
     const handleCustomField = () => {
