@@ -130,7 +130,7 @@ const OrderDetailPage = props => {
     // const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
 
     const { customer } = dataDetail;
-
+    console.log("dataDetail",dataDetail)
     const listItem = customer.orders.items[0].items;
     const subTotal = customer.orders.items[0].total.subtotal.value;
     const discount = customer.orders.items[0].total.discounts[0]

@@ -30,6 +30,7 @@ import { GiftCodeCheckoutContext } from '../../checkoutPage';
  */
 
 import { useLocation } from 'react-router-dom';
+import DeliveryTimeSlot from '../../DeliveryDateTime/deliveryTimeSlot';
 const PriceSummary = props => {
     const { isUpdating } = props;
     const classes = useStyle(defaultClasses, props.classes);
@@ -75,9 +76,10 @@ const PriceSummary = props => {
         giftCards,
         taxes,
         shipping,
-        rewardPoint
+        rewardPoint,
+        shipping_arrival_timeslot
     } = flatData;
-
+    
     const isPriceUpdating = isUpdating || isLoading;
     const priceClass = isPriceUpdating ? classes.priceUpdating : classes.price;
     const totalPriceClass = isPriceUpdating
@@ -153,6 +155,14 @@ const PriceSummary = props => {
                         price: priceClass
                     }}
                     data={taxes}
+                    isCheckout={isCheckout}
+                />
+                <DeliveryTimeSlot
+                    classes={{
+                        lineItemLabel: classes.lineItemLabel,
+                        price: priceClass
+                    }}
+                    data={flatData}
                     isCheckout={isCheckout}
                 />
                 <ShippingSummary
