@@ -59,12 +59,14 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
     ] = useMutation(ADD_PRODUCTS_TO_CART, {
         onCompleted: data => {
             setAddCartData(data)
-            setIsOpen(false)
-            setOpenModalConfigurable(true)
-            setOpenPopUpConfigurable(true)
-            setTimeout(() => {
-                setOpenModal(false)
-            }, 500)
+            if (data.addProductsToCart.user_errors.length === 0) {
+                setIsOpen(false)
+                setOpenModalConfigurable(true)
+                setOpenPopUpConfigurable(true)
+                setTimeout(() => {
+                    setOpenModal(false)
+                }, 500)
+            }
         }
     });
 
@@ -189,6 +191,8 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
         setListProductOptions(tmp)
     }
 
+    console.log(addCartData)
+
     if (popUpType !== 'add cart') {
         if (FBT_Brief_Data.length === 0) {
             return (
@@ -216,7 +220,7 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                         }} className='fbt-pop-up-close-button'>
                             <X size={18}></X>
                         </button>
-                        <p style={{fontSize: 16, marginTop: 10}}>Please select a product</p>
+                        <p style={{ fontSize: 16, marginTop: 10 }}>Please select a product</p>
                         <button onClick={() => {
                             setIsOpen(false)
                             setTimeout(() => {
@@ -260,16 +264,16 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                         <p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>Shopping Cart</p>
                         {addCartData && (<p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>You have added the following items to the cart:</p>)}
                         <div className={parseInt(item_popup_slide) < FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length
-                         ? 'fbt-pop-up-slider' : 'fbt-pop-up-no-slider'}>
+                            ? 'fbt-pop-up-slider' : 'fbt-pop-up-no-slider'}>
                             <div style={{ position: 'relative' }}>
                                 {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length > 0 && (
-                                <button className="fbt-pop-up-slider-prev">
-                                    <ChevronLeft size={16} />
-                                </button>)}
+                                    <button className="fbt-pop-up-slider-prev">
+                                        <ChevronLeft size={16} />
+                                    </button>)}
                                 {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length > 0 && (
-                                <button className="fbt-pop-up-slider-next">
-                                    <ChevronRight size={16} />
-                                </button>)}
+                                    <button className="fbt-pop-up-slider-next">
+                                        <ChevronRight size={16} />
+                                    </button>)}
                                 {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length > 0 && (<TinySlider settings={settings}>
                                     {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').map((element, index) => (
                                         <div key={index} style={{ textAlign: 'center', border: '1px solid lightgray' }}>
@@ -404,7 +408,8 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                                 textAlign: 'left', border: '1px solid lightgray', width: '80%',
                                 marginLeft: '10%', marginTop: 20, marginBottom: 20
                             }}>
-                                <p style={{ color: 'red', marginTop: 5, marginLeft: 5, fontSize: 16 }}>You need to choose options for your item.</p>
+                                <p style={{ color: 'red', marginTop: 5, marginLeft: 5, fontSize: 16 }}>{!addCartData || addCartData?.addProductsToCart.user_errors.length === 0 
+                                ? 'You need to choose options for your item.' : addCartData?.addProductsToCart.user_errors[0]?.message}</p>
                                 <div className={isMobile ? 'fbt-pop-up-conf-info-mobile' : 'fbt-pop-up-conf-info'}>
                                     <img
                                         src={element.small_image.url ? element.small_image.url : element.small_image}

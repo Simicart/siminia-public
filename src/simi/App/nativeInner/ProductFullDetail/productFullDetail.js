@@ -121,6 +121,7 @@ const ProductFullDetail = props => {
     const product_sku = product.sku
     const configFBT = useConfigFBT()
     const fbtData = useFbtData(product_sku)
+    let FBT_Slider_Data = []
     const talonProps = useProductFullDetail({ product });
     const location = useLocation()
 
@@ -167,6 +168,69 @@ const ProductFullDetail = props => {
         alertMsg,
         handleUpdateQuantity
     } = talonProps;
+
+    const FBT_Config_Data = configFBT.data?.GetConfigFBT
+    const fbtProducts = fbtData.data?.products.items[0].fbt_product_data
+
+    const sortItemType = () => {
+        
+        if (FBT_Config_Data?.show_curent_product === '1') {
+            const related_Products = [product, ...relatedProducts]
+            const upsell_Products = [product, ...upsellProducts]
+            const crosssell_Products = [product, ...crosssellProducts]
+
+            if (FBT_Config_Data?.sort_item_type[7] !== '4') {
+                if (FBT_Config_Data?.sort_item_type[7] === '0') {
+                    return related_Products.length > FBT_Config_Data?.limit_products
+                        ? related_Products.slice(0, FBT_Config_Data?.limit_products) : related_Products
+                }
+                if (FBT_Config_Data?.sort_item_type[7] === '1') {
+                    return upsell_Products.length > FBT_Config_Data?.limit_products
+                        ? upsell_Products.slice(0, FBT_Config_Data?.limit_products) : upsell_Products
+                }
+                if (FBT_Config_Data?.sort_item_type[7] === '2') {
+                    return crosssell_Products.length > FBT_Config_Data?.limit_products
+                        ? crosssell_Products.slice(0, FBT_Config_Data?.limit_products) : crosssell_Products
+                }
+                if (FBT_Config_Data?.sort_item_type[7] === '3') {
+                    return fbtProducts?.length > FBT_Config_Data?.limit_products
+                        ? fbtProducts?.slice(0, FBT_Config_Data?.limit_products) : fbtProducts
+                }
+            }
+            else {
+                return fbtProducts?.length > FBT_Config_Data?.limit_products
+                    ? fbtProducts?.slice(0, FBT_Config_Data?.limit_products) : fbtProducts
+            }
+        }
+        else {
+            if (FBT_Config_Data?.sort_item_type[7] !== '4') {
+                if (FBT_Config_Data?.sort_item_type[7] === '0') {
+                    return relatedProducts.length > FBT_Config_Data?.limit_products
+                        ? relatedProducts.slice(0, FBT_Config_Data?.limit_products) : relatedProducts
+                }
+                if (FBT_Config_Data?.sort_item_type[7] === '1') {
+                    return upsellProducts.length > FBT_Config_Data?.limit_products
+                        ? upsellProducts.slice(0, FBT_Config_Data?.limit_products) : upsellProducts
+                }
+                if (FBT_Config_Data?.sort_item_type[7] === '2') {
+                    return crosssellProducts.length > FBT_Config_Data?.limit_products
+                        ? crosssellProducts.slice(0, FBT_Config_Data?.limit_products) : crosssellProducts
+                }
+                if (FBT_Config_Data?.sort_item_type[7] === '3') {
+                    return fbtProducts?.length > FBT_Config_Data?.limit_products
+                        ? fbtProducts?.slice(0, FBT_Config_Data?.limit_products) : fbtProducts
+                }
+            }
+            else {
+                return fbtProducts?.length > FBT_Config_Data?.limit_products
+                    ? fbtProducts?.slice(0, FBT_Config_Data?.limit_products) : fbtProducts
+            }
+        }
+    }
+
+    if(!fbtData.loading && !configFBT.loading && fbtProducts) {
+        FBT_Slider_Data = sortItemType()
+    }
 
     // get size chart data and display style
     const sizeChartData = useSizeChartData({
@@ -677,66 +741,6 @@ const ProductFullDetail = props => {
     const wrapperAddToCartArea = !isMobileSite ? (
         <HideAddToCartBtn product={product} addToCartBtn={addToCartArea} />
     ) : null;
-
-    const FBT_Config_Data = configFBT.data?.GetConfigFBT
-    const fbtProducts = fbtData.data?.products.items[0].fbt_product_data
-
-    const sortItemType = () => {
-        if (FBT_Config_Data?.show_curent_product === '1') {
-            const related_Products = [product, ...relatedProducts]
-            const upsell_Products = [product, ...upsellProducts]
-            const crosssell_Products = [product, ...crosssellProducts]
-
-            if (FBT_Config_Data?.sort_item_type[7] !== '4') {
-                if (FBT_Config_Data?.sort_item_type[7] === '0') {
-                    return related_Products.length > FBT_Config_Data?.limit_products
-                        ? related_Products.slice(0, FBT_Config_Data?.limit_products) : related_Products
-                }
-                if (FBT_Config_Data?.sort_item_type[7] === '1') {
-                    return upsell_Products.length > FBT_Config_Data?.limit_products
-                        ? upsell_Products.slice(0, FBT_Config_Data?.limit_products) : upsell_Products
-                }
-                if (FBT_Config_Data?.sort_item_type[7] === '2') {
-                    return crosssell_Products.length > FBT_Config_Data?.limit_products
-                        ? crosssell_Products.slice(0, FBT_Config_Data?.limit_products) : crosssell_Products
-                }
-                if (FBT_Config_Data?.sort_item_type[7] === '3') {
-                    return fbtProducts?.length > FBT_Config_Data?.limit_products
-                        ? fbtProducts?.slice(0, FBT_Config_Data?.limit_products) : fbtProducts
-                }
-            }
-            else {
-                return fbtProducts?.length > FBT_Config_Data?.limit_products
-                    ? fbtProducts?.slice(0, FBT_Config_Data?.limit_products) : fbtProducts
-            }
-        }
-        else {
-            if (FBT_Config_Data?.sort_item_type[7] !== '4') {
-                if (FBT_Config_Data?.sort_item_type[7] === '0') {
-                    return relatedProducts.length > FBT_Config_Data?.limit_products
-                        ? relatedProducts.slice(0, FBT_Config_Data?.limit_products) : relatedProducts
-                }
-                if (FBT_Config_Data?.sort_item_type[7] === '1') {
-                    return upsellProducts.length > FBT_Config_Data?.limit_products
-                        ? upsellProducts.slice(0, FBT_Config_Data?.limit_products) : upsellProducts
-                }
-                if (FBT_Config_Data?.sort_item_type[7] === '2') {
-                    return crosssellProducts.length > FBT_Config_Data?.limit_products
-                        ? crosssellProducts.slice(0, FBT_Config_Data?.limit_products) : crosssellProducts
-                }
-                if (FBT_Config_Data?.sort_item_type[7] === '3') {
-                    return fbtProducts?.length > FBT_Config_Data?.limit_products
-                        ? fbtProducts?.slice(0, FBT_Config_Data?.limit_products) : fbtProducts
-                }
-            }
-            else {
-                return fbtProducts?.length > FBT_Config_Data?.limit_products
-                    ? fbtProducts?.slice(0, FBT_Config_Data?.limit_products) : fbtProducts
-            }
-        }
-    }
-
-    const FBT_Slider_Data = sortItemType()
 
     return (
         <div className={isMobileSite ? 'main-product-detail-native' : null}>

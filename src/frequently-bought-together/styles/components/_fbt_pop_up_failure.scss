@@ -1,0 +1,148 @@
+.fbt-pop-up-failure-portal {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    height: 100vh;
+    background-color: rgba(45, 45, 45, 0.7) !important;
+}
+
+.fbt-pop-up-failure-overlay {
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: all 500ms ease-in-out;
+}
+
+.fbt-pop-up-failure-overlay-afterOpen {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fbt-pop-up-failure-overlay-beforeClose {
+    opacity: 0;
+    transform: translateY(-50%);
+}
+
+.fbt-pop-up-failure-content {
+    width: 100vw;
+}
+
+.fbt-pop-up-failure-loading-indicator {
+    width: 100vw; 
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    padding-top: 40vh;
+    left: 0; 
+    z-index: 9999;
+    background-color: rgba(45, 45, 45, 0.7);
+}
+
+.fbt-pop-up-failure-wrapper {
+    background-color: white;
+    width: 600px;
+    height: 600px;
+    margin: auto;
+    margin-top: calc(50vh - 300px);
+    position: relative;
+}
+
+.fbt-pop-up-failure-content-wrapper {
+    position: absolute;
+    top: 5%;
+    height: 90%;
+    width: 90%;
+    left: 5%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.fbt-pop-up-failure-close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.fbt-pop-up-failure-close-button:hover {
+    color: rgb(108, 108, 108)
+}
+
+.fbt-pop-up-ok-button {
+    margin-top: 25px;
+    padding: 0 15px;
+    width: max-content;
+    height: 30px;
+    color: white;
+    background-color: #1979C3;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.fbt-pop-up-failure-product-name {
+    color: #1979C3;
+    font-size: 16px;
+}
+
+.fbt-pop-up-failure-product-name:hover {
+    text-decoration-line: underline;
+}
+
+.fbt-pop-up-product-name:active {
+    color: orange;
+}
+
+.fbt-pop-up-failure-info {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    gap: 20px;
+    margin: auto;
+    margin-top: 20px
+}
+
+.fbt-pop-up-failure-info-mobile {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    margin-top: 20px;
+    gap: 0px !important;
+    margin: 0px !important;
+}
+
+.fbt-pop-up-failure-add-cart {
+    margin: 20px 50% 10px 50%; 
+    padding: 10px 20px;
+    width: max-content;
+    font-weight: bold;
+    transform: translateX(-50%)
+}
+
+.fbt-pop-up-failure-view-cart {
+    padding: 10px 20px;
+    width: max-content;
+    font-weight: bold;
+}
+
+.fbt-pop-up-failure-continue {
+    padding: 10px 20px;
+    width: max-content;
+    font-weight: bold;
+}
+
+.fbt-pop-up-failure-cart {
+    color: #1979C3
+}
+
+.fbt-pop-up-failure-cart:hover {
+    text-decoration-line: underline;
+    color: orange
+}
+
+.fbt-pop-up-failure-check-out {
+    color: #1979C3
+}
+
+.fbt-pop-up-failure-check-out:hover {
+    text-decoration-line: underline;
+    color: orange
+}
