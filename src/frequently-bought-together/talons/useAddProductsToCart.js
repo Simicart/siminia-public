@@ -27,6 +27,10 @@ mutation addProductsToCart($cartId: String!, $cartItems: [CartItemInput!]!) {
             }
             total_quantity
         }
+        user_errors {
+            code
+            message
+        }
     }
 }
 `

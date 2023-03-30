@@ -125,9 +125,9 @@ const FbtPopUpConfigurable = ({ isOpen, setIsOpen, setOpenModalConfigurable, con
                                             style={imgStyles}
                                             onClick={() => history.push(`/${element.url_key}.html`)}
                                         />
-                                        <div style={{ height: 32 }}><a dangerouslySetInnerHTML={{ __html: element.name }}
+                                        <div><a dangerouslySetInnerHTML={{ __html: element.name }}
                                             href={`/${element.url_key}.html`} className='fbt-pop-up-product-name'></a></div>
-                                        {product_price === '1' && <p style={{ fontWeight: 'bold', fontSize: 16, marginTop: 20 }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>}
+                                        {product_price === '1' && <p style={{ fontWeight: 'bold', fontSize: 16 }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>}
                                     </div>))}
                             </TinySlider>
                         </div>
@@ -152,7 +152,7 @@ const FbtPopUpConfigurable = ({ isOpen, setIsOpen, setOpenModalConfigurable, con
                             className='fbt-pop-up-configurable-continue' onClick={() => {
                                 setIsOpen(false)
                                 setTimeout(() => {
-                                    setOpenModal(false)
+                                    setOpenModalConfigurable(false)
                                 }, 500)
                             }}>{active_countdown === '1' ? `${btn_text_continue} (${remainingCountdown})` : `${btn_text_continue}`}
                         </button>)}
