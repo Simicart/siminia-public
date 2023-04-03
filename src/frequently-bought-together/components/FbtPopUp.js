@@ -1,15 +1,15 @@
 import Modal from 'react-modal';
 import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom'
-import { useMutation } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import TinySlider from 'tiny-slider-react';
 import 'tiny-slider/dist/tiny-slider.css';
 import { ChevronLeft, ChevronRight, X } from 'react-feather';
-import { useQuery } from '@apollo/client';
 import CART_DATA from '../talons/useCartData';
 import { fullPageLoadingIndicator } from "@magento/venia-ui/lib/components/LoadingIndicator"
 import ADD_PRODUCTS_TO_CART from '../talons/useAddProductsToCart';
 import { useWindowSize } from '@magento/peregrine';
+import { FormattedMessage } from 'react-intl';
 
 const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, addCartData, setAddCartData,
     configurableProduct, setOpenModalConfigurable, setOpenPopUpConfigurable, fbt_config_data, savedQuantity }) => {
@@ -55,7 +55,7 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
 
     const [
         addProductsToCart,
-        { data, loading, error }
+        { loading }
     ] = useMutation(ADD_PRODUCTS_TO_CART, {
         onCompleted: data => {
             setAddCartData(data)
@@ -216,13 +216,17 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                         }} className='fbt-pop-up-close-button'>
                             <X size={18}></X>
                         </button>
-                        <p style={{fontSize: 16, marginTop: 10}}>Please select a product</p>
+                        <p style={{ fontSize: 16, marginTop: 10 }}>
+                            <FormattedMessage id='Please select a product' defaultMessage='Please select a product'></FormattedMessage>
+                        </p>
                         <button onClick={() => {
                             setIsOpen(false)
                             setTimeout(() => {
                                 setOpenModal(false)
                             }, 500)
-                        }} className='fbt-pop-up-ok-button'>OK</button>
+                        }} className='fbt-pop-up-ok-button'>
+                            <FormattedMessage id='OK' defaultMessage='OK'></FormattedMessage>
+                        </button>
                     </div>
                 </Modal>
             )
@@ -257,30 +261,36 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                         <X size={18}></X>
                     </button>
                     <div className='fbt-pop-up-content-wrapper'>
-                        <p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>Shopping Cart</p>
-                        {addCartData && (<p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>You have added the following items to the cart:</p>)}
-                        <div className={parseInt(item_popup_slide) < FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length
-                         ? 'fbt-pop-up-slider' : 'fbt-pop-up-no-slider'}>
+                        <p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>
+                            <FormattedMessage id='Shopping Cart' defaultMessage='Shopping Cart'></FormattedMessage>
+                        </p>
+                        {addCartData && (<p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>
+                            <FormattedMessage id='You have added the following items to cart:'
+                                defaultMessage='you have added the following items to cart:'></FormattedMessage>
+                        </p>)}
+                        <div className={parseInt(item_popup_slide) < FBT_Brief_Data.filter((element) => element.__typename === 'SimpleProduct').length
+                            ? 'fbt-pop-up-slider' : 'fbt-pop-up-no-slider'}>
                             <div style={{ position: 'relative' }}>
-                                {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length > 0 && (
-                                <button className="fbt-pop-up-slider-prev">
-                                    <ChevronLeft size={16} />
-                                </button>)}
-                                {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length > 0 && (
-                                <button className="fbt-pop-up-slider-next">
-                                    <ChevronRight size={16} />
-                                </button>)}
-                                {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length > 0 && (<TinySlider settings={settings}>
-                                    {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').map((element, index) => (
+                                {FBT_Brief_Data.filter((element) => element.__typename === 'SimpleProduct').length > 0 && (
+                                    <button className="fbt-pop-up-slider-prev">
+                                        <ChevronLeft size={16} />
+                                    </button>)}
+                                {FBT_Brief_Data.filter((element) => element.__typename === 'SimpleProduct').length > 0 && (
+                                    <button className="fbt-pop-up-slider-next">
+                                        <ChevronRight size={16} />
+                                    </button>)}
+                                {FBT_Brief_Data.filter((element) => element.__typename === 'SimpleProduct').length > 0 && (<TinySlider settings={settings}>
+                                    {FBT_Brief_Data.filter((element) => element.__typename === 'SimpleProduct').map((element, index) => (
                                         <div key={index} style={{ textAlign: 'center', border: '1px solid lightgray' }}>
-                                            <img
-                                                className={`tns-lazy-img`}
-                                                src={element.small_image.url ? element.small_image.url : element.small_image}
-                                                data-src={element.small_image.url ? element.small_image.url : element.small_image}
-                                                alt=""
-                                                style={imgStyles}
-                                                onClick={() => history.push(`/${element.url_key}.html`)}
-                                            />
+                                            <a href={`/${element.url_key}.html`}>
+                                                <img
+                                                    className={`tns-lazy-img`}
+                                                    src={element.small_image.url ? element.small_image.url : element.small_image}
+                                                    data-src={element.small_image.url ? element.small_image.url : element.small_image}
+                                                    alt=""
+                                                    style={imgStyles}
+                                                />
+                                            </a>
                                             <a dangerouslySetInnerHTML={{ __html: element.name }}
                                                 href={`/${element.url_key}.html`} className='fbt-pop-up-product-name'></a>
                                             {product_price === '1' && <p style={{ fontWeight: 'bold', fontSize: 16, marginTop: 10 }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>}

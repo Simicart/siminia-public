@@ -15,6 +15,7 @@ import '../styles/slick.scss'
 import '../styles/slick-theme.scss'
 import '../styles/styles.scss'
 import { useWindowSize } from '@magento/peregrine';
+import { FormattedMessage } from "react-intl"
 
 const NextArrow = (props) => {
     return (
@@ -350,8 +351,12 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                                         )}
                                         <a className='fbt-product-name' dangerouslySetInnerHTML={{ __html: element.name }}
                                             href={`/${element.url_key}.html`}></a>
-                                        {FBT_Config_Data.show_price === '1' && element.__typename === 'ConfigurableProduct' && (<p style={{ fontWeight: 'bold', fontSize: 16 }}>{`As low as $${element.price.regularPrice.amount.value.toFixed(2)}`}</p>)}
-                                        {FBT_Config_Data.show_price === '1' && element.__typename !== 'ConfigurableProduct' && (<p style={{ fontWeight: 'bold', fontSize: 16 }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>)}
+                                        {FBT_Config_Data.show_price === '1' && element.__typename === 'ConfigurableProduct' && (<p style={{ fontWeight: 'bold', fontSize: 16 }}>
+                                            <FormattedMessage id='conf-price-0'defaultMessage={`As low as $${element.price.regularPrice.amount.value.toFixed(2)}`}></FormattedMessage>
+                                        </p>)}
+                                        {FBT_Config_Data.show_price === '1' && element.__typename !== 'ConfigurableProduct' && (<p style={{ fontWeight: 'bold', fontSize: 16 }}>
+                                            <FormattedMessage id='simp-price-0' defaultMessage={`$${element.price.regularPrice.amount.value.toFixed(2)}`}></FormattedMessage>
+                                        </p>)}
                                         {FBT_Config_Data.display_list === '0' && (
                                             <div style={{ display: 'flex', flexDirection: 'column', marginTop: 20 }}>
                                                 <div className='fbt-input-wrapper'>
@@ -361,7 +366,9 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                                                         defaultValue={1} placeholder={0} onChange={(e) => handleQuantity(e, index)}></input>
                                                 </div>
                                                 {FBT_Config_Data.sng_cart === '1' && (<button className='fbt-add-cart-button'
-                                                    onClick={() => handleAddProductToCart(element, index)}>Add to cart</button>)}
+                                                    onClick={() => handleAddProductToCart(element, index)}>
+                                                        <FormattedMessage id='Add to cart' defaultMessage='Add to cart'></FormattedMessage>
+                                                </button>)}
                                             </div>)}
                                     </div>
                                 ))}
@@ -371,16 +378,29 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                                 {renderBriefInfoData.length > 0 && (
                                     <>
                                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                                            <p style={{ fontSize: 16, fontWeight: 'bold', width: '60%' }}>Products Name</p>
-                                            <p style={{ fontSize: 16, fontWeight: 'bold', width: '10%' }}>Qty</p>
-                                            <p style={{ fontSize: 16, fontWeight: 'bold', width: '30%' }}>Unit Price</p>
+                                            <p style={{ fontSize: 16, fontWeight: 'bold', width: '60%' }}>
+                                                <FormattedMessage id='Product Name' defaultMessage='Product Name'></FormattedMessage>
+                                            </p>
+                                            <p style={{ fontSize: 16, fontWeight: 'bold', width: '10%' }}>
+                                                <FormattedMessage id='Qty' defaultMessage='Qty'></FormattedMessage>
+                                            </p>
+                                            <p style={{ fontSize: 16, fontWeight: 'bold', width: '30%' }}>
+                                                <FormattedMessage id='Unit Price' defaultMessage='Unit Price'></FormattedMessage>
+                                            </p>
                                         </div>
                                         {FBT_Brief_Data.map((element, index) => {
                                             return (
                                                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                                                     <p style={{ fontSize: 16, width: '60%' }} dangerouslySetInnerHTML={{ __html: element.name }}></p>
                                                     <p style={{ fontSize: 16, width: '10%', wordWrap: 'break-word' }}>{renderBriefInfoData[index].quantity}</p>
-                                                    <p style={{ fontSize: 16, width: '30%' }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>
+                                                    <p style={{ fontSize: 16, width: '30%' }}>
+                                                    {FBT_Config_Data.show_price === '1' && element.__typename === 'ConfigurableProduct' && (
+                                                        <FormattedMessage id='brief-price-conf-0'defaultMessage={`As low as $${element.price.regularPrice.amount.value.toFixed(2)}`}></FormattedMessage>
+                                                    )}
+                                                    {FBT_Config_Data.show_price === '1' && element.__typename !== 'ConfigurableProduct' && (
+                                                        <FormattedMessage id='brief-price-simp-0'defaultMessage={`$${element.price.regularPrice.amount.value.toFixed(2)}`}></FormattedMessage>
+                                                    )}
+                                                    </p>
                                                 </div>
                                             )
                                         })}
@@ -388,7 +408,9 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                                 )}
                                 <div style={{ display: 'flex', flexDirection: 'row', gap: 5 }}>
                                     <input type='checkbox' onChange={handleSelectAll}></input>
-                                    <p style={{ fontSize: 16 }}>Select all products</p>
+                                    <p style={{ fontSize: 16 }}>
+                                        <FormattedMessage id='Select all products' defaultMessage='Select all products'></FormattedMessage>
+                                    </p>
                                 </div>
                             </div>
                         </>) : (
@@ -397,13 +419,13 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                                 {FBT_Brief_Data.map((element, index) => (
                                     <div key={index} 
                                         className={index === 0 ? 'fbt-slider-first' : (index === FBT_Brief_Data.length ? 'fbt-slider-last' : 'fbt-slider')}>
-                                        <img
+                                        <a href={`/${element.url_key}.html`}>
+                                            <img
                                             src={element.small_image.url ? element.small_image.url : element.small_image}
                                             data-src={element.small_image.url ? element.small_image.url : element.small_image}
                                             alt=""
-                                            style={imgStyles}
-                                            onClick={() => history.push(`/${element.url_key}.html`)}
-                                        />
+                                            style={imgStyles}/>
+                                        </a>
                                         {FBT_Config_Data.show_review === '1' && (
                                             <div className="fbt-review-wrapper">
                                                 <StaticRate rate={element.rating_summary}></StaticRate>
@@ -419,7 +441,12 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                                         )}
                                         <a className='fbt-product-name' dangerouslySetInnerHTML={{ __html: element.name }}
                                             href={`/${element.url_key}.html`}></a>
-                                        {FBT_Config_Data.show_price === '1' && <p style={{ fontWeight: 'bold', fontSize: 16 }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>}
+                                        {FBT_Config_Data.show_price === '1' && element.__typename === 'ConfigurableProduct' && (<p style={{ fontWeight: 'bold', fontSize: 16 }}>
+                                            <FormattedMessage id='conf-price-1'defaultMessage={`As low as $${element.price.regularPrice.amount.value.toFixed(2)}`}></FormattedMessage>
+                                        </p>)}
+                                        {FBT_Config_Data.show_price === '1' && element.__typename !== 'ConfigurableProduct' && (<p style={{ fontWeight: 'bold', fontSize: 16 }}>
+                                            <FormattedMessage id='simp-price-1' defaultMessage={`$${element.price.regularPrice.amount.value.toFixed(2)}`}></FormattedMessage>
+                                        </p>)}
                                     </div>
                                 ))}
                             </Slider>
@@ -429,9 +456,15 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                                     <>
                                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', gap: 25 }}>
                                             <input type='checkbox' style={{ width: '2%' }} onChange={handleSelectAll} defaultChecked={true}></input>
-                                            <p style={{ fontSize: 16, fontWeight: 'bold', width: '60%' }}>Products Name</p>
-                                            <p style={{ fontSize: 16, fontWeight: 'bold', width: '8%' }}>Qty</p>
-                                            <p style={{ fontSize: 16, fontWeight: 'bold', width: '30%' }}>Unit Price</p>
+                                            <p style={{ fontSize: 16, fontWeight: 'bold', width: '60%' }}>
+                                                <FormattedMessage id='Product Name' defaultMessage='Product Name'></FormattedMessage>
+                                            </p>
+                                            <p style={{ fontSize: 16, fontWeight: 'bold', width: '8%' }}>
+                                                <FormattedMessage id='Quantity' defaultMessage='Qty'></FormattedMessage>
+                                            </p>
+                                            <p style={{ fontSize: 16, fontWeight: 'bold', width: '30%' }}>
+                                                <FormattedMessage id='Unit Price' defaultMessage='Unit Price'></FormattedMessage>
+                                            </p>
                                         </div>
                                         {FBT_Slider_Data.map((element, index) => {
                                             return (
@@ -441,7 +474,14 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                                                     <p style={{ fontSize: 16, width: '60%' }} dangerouslySetInnerHTML={{ __html: element.name }}></p>
                                                     <input style={{ height: 30, width: '8%', padding: 10 }} defaultValue={1} placeholder={0}
                                                         id={`fbt-quantity-${index}`} onChange={(e) => handleQuantity(e, index)}></input>
-                                                    <p style={{ fontSize: 16, width: '30%' }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>
+                                                    <p style={{ fontSize: 16, width: '30%' }}>
+                                                    {FBT_Config_Data.show_price === '1' && element.__typename === 'ConfigurableProduct' && (
+                                                        <FormattedMessage id='brief-price-conf-1'defaultMessage={`As low as $${element.price.regularPrice.amount.value.toFixed(2)}`}></FormattedMessage>
+                                                    )}
+                                                    {FBT_Config_Data.show_price === '1' && element.__typename !== 'ConfigurableProduct' && (
+                                                        <FormattedMessage id='brief-price-simp-1'defaultMessage={`$${element.price.regularPrice.amount.value.toFixed(2)}`}></FormattedMessage>
+                                                    )}
+                                                    </p>
                                                 </div>
                                             )
                                         })}
