@@ -121,6 +121,7 @@ const ProductFullDetail = props => {
     const product_sku = product.sku
     const configFBT = useConfigFBT()
     const fbtData = useFbtData(product_sku)
+    let FBT_Slider_Data = []
     const talonProps = useProductFullDetail({ product });
     const location = useLocation()
 

@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { useHistory } from 'react-router-dom'
 import { useMutation } from "@apollo/client"
 import FbtPopUp from './FbtPopUp.js'
+import FbtPopUpFailure from "./FbtPopUpFailure.js"
 import FbtPopUpConfigurable from "./FbtPopUpConfigurable"
 import { fullPageLoadingIndicator } from "@magento/venia-ui/lib/components/LoadingIndicator"
 import TinySlider from 'tiny-slider-react';
@@ -12,8 +13,6 @@ import { StaticRate } from '../../simi/BaseComponents/Rate'
 import ADD_PRODUCTS_TO_CART from "../talons/useAddProductsToCart"
 import ADD_PRODUCTS_TO_WISHLIST from "../talons/useAddProductsToWishlist"
 import '../styles/slick.scss'
-import '../styles/slick-theme.scss'
-import '../styles/styles.scss'
 import { useWindowSize } from '@magento/peregrine';
 import { FormattedMessage } from "react-intl"
 
@@ -47,14 +46,17 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
     const windowSize = useWindowSize();
     const isMobile = windowSize.innerWidth < 500;
     const [openPopUp, setOpenPopUp] = useState(false)
+    const [openPopUpFailure, setOpenPopUpFailure] = useState(false)
     const [openPopUpConfigurable, setOpenPopUpConfigurable] = useState(false)
     const [openModal, setOpenModal] = useState(false)
+    const [openModalFailure, setOpenModalFailure] = useState(false)
     const [openModalConfigurable, setOpenModalConfigurable] = useState(false)
     const [popUpType, setPopUpType] = useState('')
     const [addCartData, setAddCartData] = useState()
     const [briefInfoData, setBriefInfoData] = useState(FBT_Config_Data.display_list !== '0' ? initListProductStatus : [])
     const [configurableProduct, setConfigurableProduct] = useState([])
     const [savedQuantity, setSavedQuantity] = useState([])
+    const [savedProduct, setSavedProduct] = useState([])
 
     const [
         addProductsToCart,
@@ -62,8 +64,14 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
     ] = useMutation(ADD_PRODUCTS_TO_CART, {
         onCompleted: data => {
             setAddCartData(data)
-            setOpenModal(true)
-            setOpenPopUp(true)
+            if(data.addProductsToCart.user_errors.length > 0) {
+                setOpenModalFailure(true)
+                setOpenPopUpFailure(true)
+            }
+            else {
+                setOpenModal(true)
+                setOpenPopUp(true)
+            }
         }
     });
 
@@ -118,9 +126,8 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
 
     const slickSettings = {
         dots: false,
-        infinite: true,
-        lazyLoad: true,
-        slidesToShow: parseInt(FBT_Config_Data.item_on_slide),
+        infinite: parseInt(FBT_Config_Data.item_on_slide) < FBT_Brief_Data.length ? true : false,
+        slidesToShow: parseInt(FBT_Config_Data.item_on_slide) < FBT_Brief_Data.length ? parseInt(FBT_Config_Data.item_on_slide) : FBT_Brief_Data.length,
         autoplay: Boolean(FBT_Config_Data.slide_auto),
         speed: parseInt(FBT_Config_Data.slide_speed),
         responsive: [
@@ -201,6 +208,8 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
         }
         if (FBT_Config_Data.display_list === '0' && FBT_Slider_Data[index].__typename !== 'ConfigurableProduct') {
             setConfigurableProduct([])
+            setSavedProduct([element])
+            setSavedQuantity([document.getElementById(`fbt-quantity-${index}`).value])
             addProductsToCart({
                 variables: {
                     cartId: cart_id.slice(1, cart_id.length - 1),
@@ -229,7 +238,7 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
             if (FBT_Brief_Data[i].__typename === 'SimpleProduct') {
                 listSimpleProducts.push({
                     sku: FBT_Brief_Data[i].sku,
-                    quantity: parseInt(briefInfoData[i].quantity) > 0 ? parseInt(briefInfoData[i].quantity) : 1
+                    quantity: parseInt(renderBriefInfoData[i].quantity) > 0 ? parseInt(renderBriefInfoData[i].quantity) : 1
                 })
             }
             if (FBT_Brief_Data[i].__typename === 'ConfigurableProduct') {
@@ -507,9 +516,16 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                 configurableProduct={configurableProduct} setOpenModalConfigurable={setOpenModalConfigurable}
                 setAddCartData={setAddCartData} setOpenPopUpConfigurable={setOpenPopUpConfigurable} savedQuantity={savedQuantity}></FbtPopUp>)}
 
+            {openModalFailure && (<FbtPopUpFailure isOpen={openPopUpFailure} setIsOpen={setOpenPopUpFailure} setOpenModalFailure={setOpenModalFailure}
+                fbt_config_data={FBT_Config_Data} FBT_Brief_Data={FBT_Brief_Data} popUpType={popUpType} addCartData={addCartData}
+                configurableProduct={configurableProduct} setOpenModal={setOpenModal} setOpenPopUp={setOpenPopUp}
+                setAddCartData={setAddCartData} savedQuantity={savedQuantity}
+                savedProduct={savedProduct} setOpenPopUpFailure={setOpenPopUpFailure}></FbtPopUpFailure>)}
+
+
             {openModalConfigurable && (<FbtPopUpConfigurable isOpen={openPopUpConfigurable} setIsOpen={setOpenPopUpConfigurable}
-                setOpenModalConfigurable={setOpenModalConfigurable} configurableProduct={configurableProduct}
-                addCartData={addCartData} fbt_config_data={FBT_Config_Data}></FbtPopUpConfigurable>)}
+                setOpenModalConfigurable={setOpenModalConfigurable} configurableProduct={configurableProduct} setOpenPopUp={setOpenPopUp}
+                addCartData={addCartData} fbt_config_data={FBT_Config_Data} ></FbtPopUpConfigurable>)}
         </>
     )
 }

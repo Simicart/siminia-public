@@ -59,12 +59,14 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
     ] = useMutation(ADD_PRODUCTS_TO_CART, {
         onCompleted: data => {
             setAddCartData(data)
-            setIsOpen(false)
-            setOpenModalConfigurable(true)
-            setOpenPopUpConfigurable(true)
-            setTimeout(() => {
-                setOpenModal(false)
-            }, 500)
+            if (data.addProductsToCart.user_errors.length === 0) {
+                setIsOpen(false)
+                setOpenModalConfigurable(true)
+                setOpenPopUpConfigurable(true)
+                setTimeout(() => {
+                    setOpenModal(false)
+                }, 500)
+            }
         }
     });
 
@@ -188,6 +190,8 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
             : 'default'
         setListProductOptions(tmp)
     }
+
+    console.log(addCartData)
 
     if (popUpType !== 'add cart') {
         if (FBT_Brief_Data.length === 0) {
@@ -414,7 +418,8 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                                 textAlign: 'left', border: '1px solid lightgray', width: '80%',
                                 marginLeft: '10%', marginTop: 20, marginBottom: 20
                             }}>
-                                <p style={{ color: 'red', marginTop: 5, marginLeft: 5, fontSize: 16 }}>You need to choose options for your item.</p>
+                                <p style={{ color: 'red', marginTop: 5, marginLeft: 5, fontSize: 16 }}>{!addCartData || addCartData?.addProductsToCart.user_errors.length === 0 
+                                ? 'You need to choose options for your item.' : addCartData?.addProductsToCart.user_errors[0]?.message}</p>
                                 <div className={isMobile ? 'fbt-pop-up-conf-info-mobile' : 'fbt-pop-up-conf-info'}>
                                     <img
                                         src={element.small_image.url ? element.small_image.url : element.small_image}
