@@ -1,19 +1,23 @@
 import Modal from 'react-modal';
 import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom'
-import { useMutation } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import TinySlider from 'tiny-slider-react';
 import 'tiny-slider/dist/tiny-slider.css';
 import { ChevronLeft, ChevronRight, X } from 'react-feather';
-import { useQuery } from '@apollo/client';
 import CART_DATA from '../talons/useCartData';
 import { fullPageLoadingIndicator } from "@magento/venia-ui/lib/components/LoadingIndicator"
 import ADD_PRODUCTS_TO_CART from '../talons/useAddProductsToCart';
+import { useWindowSize } from '@magento/peregrine';
+import { FormattedMessage } from 'react-intl';
 
 const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, addCartData, setAddCartData,
     configurableProduct, setOpenModalConfigurable, setOpenPopUpConfigurable, fbt_config_data, savedQuantity }) => {
 
     Modal.setAppElement('#root')
+
+    const windowSize = useWindowSize();
+    const isMobile = windowSize.innerWidth < 500;
 
     const countdown_time = fbt_config_data.countdown_time
     const active_countdown = fbt_config_data.active_countdown
@@ -39,20 +43,30 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
     const [errorOption, setErrorOption] = useState(false)
     const history = useHistory()
 
+    useEffect(() => {
+        const countdownInterval = setInterval(() => {
+            setRemainingCountdown(state => state - 1)
+        }, 1000)
+
+        return () => {
+            clearInterval(countdownInterval)
+        }
+    }, [remainingCountdown])
+
     const [
         addProductsToCart,
-        { data, loading, error }
+        { loading }
     ] = useMutation(ADD_PRODUCTS_TO_CART, {
         onCompleted: data => {
             setAddCartData(data)
-            setIsOpen(false)
-            setOpenModalConfigurable(true)
-            setOpenPopUpConfigurable(true)
-            setTimeout(() => {
-                setOpenModal(false)
-            }, 500)
-
-
+            if (data.addProductsToCart.user_errors.length === 0) {
+                setIsOpen(false)
+                setOpenModalConfigurable(true)
+                setOpenPopUpConfigurable(true)
+                setTimeout(() => {
+                    setOpenModal(false)
+                }, 500)
+            }
         }
     });
 
@@ -111,16 +125,6 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
             }, parseInt(countdown_time) * 1000)
         }, [])
     }
-
-    useEffect(() => {
-        const countdownInterval = setInterval(() => {
-            setRemainingCountdown(state => state - 1)
-        }, 1000)
-
-        return () => {
-            clearInterval(countdownInterval)
-        }
-    }, [remainingCountdown])
 
     const settings = {
         nav: true,
@@ -187,6 +191,8 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
         setListProductOptions(tmp)
     }
 
+    console.log(addCartData)
+
     if (popUpType !== 'add cart') {
         if (FBT_Brief_Data.length === 0) {
             return (
@@ -214,13 +220,17 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                         }} className='fbt-pop-up-close-button'>
                             <X size={18}></X>
                         </button>
-                        <p style={{fontSize: 16, marginTop: 10}}>Please select a product</p>
+                        <p style={{ fontSize: 16, marginTop: 10 }}>
+                            <FormattedMessage id='Please select a product' defaultMessage='Please select a product'></FormattedMessage>
+                        </p>
                         <button onClick={() => {
                             setIsOpen(false)
                             setTimeout(() => {
                                 setOpenModal(false)
                             }, 500)
-                        }} className='fbt-pop-up-ok-button'>OK</button>
+                        }} className='fbt-pop-up-ok-button'>
+                            <FormattedMessage id='OK' defaultMessage='OK'></FormattedMessage>
+                        </button>
                     </div>
                 </Modal>
             )
@@ -255,43 +265,49 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                         <X size={18}></X>
                     </button>
                     <div className='fbt-pop-up-content-wrapper'>
-                        <p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>Shopping Cart</p>
-                        {addCartData && (<p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>You have added the following items to the cart:</p>)}
-                        <div className={parseInt(item_popup_slide) < FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length
-                         ? 'fbt-pop-up-slider' : 'fbt-pop-up-no-slider'}>
+                        <p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>
+                            <FormattedMessage id='Shopping Cart' defaultMessage='Shopping Cart'></FormattedMessage>
+                        </p>
+                        {addCartData && (<p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>
+                            <FormattedMessage id='You have added the following items to cart:'
+                                defaultMessage='you have added the following items to cart:'></FormattedMessage>
+                        </p>)}
+                        <div className={parseInt(item_popup_slide) < FBT_Brief_Data.filter((element) => element.__typename === 'SimpleProduct').length
+                            ? 'fbt-pop-up-slider' : 'fbt-pop-up-no-slider'}>
                             <div style={{ position: 'relative' }}>
-                                {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length > 0 && (
-                                <button className="fbt-pop-up-slider-prev">
-                                    <ChevronLeft size={16} />
-                                </button>)}
-                                {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').length > 0 && (
-                                <button className="fbt-pop-up-slider-next">
-                                    <ChevronRight size={16} />
-                                </button>)}
-                                <TinySlider settings={settings}>
-                                    {FBT_Brief_Data.filter((element, index) => element.__typename === 'SimpleProduct').map((element, index) => (
+                                {FBT_Brief_Data.filter((element) => element.__typename === 'SimpleProduct').length > 0 && (
+                                    <button className="fbt-pop-up-slider-prev">
+                                        <ChevronLeft size={16} />
+                                    </button>)}
+                                {FBT_Brief_Data.filter((element) => element.__typename === 'SimpleProduct').length > 0 && (
+                                    <button className="fbt-pop-up-slider-next">
+                                        <ChevronRight size={16} />
+                                    </button>)}
+                                {FBT_Brief_Data.filter((element) => element.__typename === 'SimpleProduct').length > 0 && (<TinySlider settings={settings}>
+                                    {FBT_Brief_Data.filter((element) => element.__typename === 'SimpleProduct').map((element, index) => (
                                         <div key={index} style={{ textAlign: 'center', border: '1px solid lightgray' }}>
-                                            <img
-                                                className={`tns-lazy-img`}
-                                                src={element.small_image.url ? element.small_image.url : element.small_image}
-                                                data-src={element.small_image.url ? element.small_image.url : element.small_image}
-                                                alt=""
-                                                style={imgStyles}
-                                                onClick={() => history.push(`/${element.url_key}.html`)}
-                                            />
+                                            <a href={`/${element.url_key}.html`}>
+                                                <img
+                                                    className={`tns-lazy-img`}
+                                                    src={element.small_image.url ? element.small_image.url : element.small_image}
+                                                    data-src={element.small_image.url ? element.small_image.url : element.small_image}
+                                                    alt=""
+                                                    style={imgStyles}
+                                                />
+                                            </a>
                                             <a dangerouslySetInnerHTML={{ __html: element.name }}
                                                 href={`/${element.url_key}.html`} className='fbt-pop-up-product-name'></a>
                                             {product_price === '1' && <p style={{ fontWeight: 'bold', fontSize: 16, marginTop: 10 }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>}
                                         </div>
                                     ))}
-                                </TinySlider>
+                                </TinySlider>)}
                             </div>
 
                             <div style={{ marginTop: 20 }}>
                                 {configurableProduct.map((element, index) => (
                                     <div className='fbt-pop-up-conf-wrapper'>
                                         <p style={{ color: 'red', marginTop: 5, marginLeft: 5, fontSize: 16 }}>You need to choose options for your item.</p>
-                                        <div className='fbt-pop-up-conf-info'>
+                                        <div className={isMobile ? 'fbt-pop-up-conf-info-mobile' : 'fbt-pop-up-conf-info'}>
                                             <img
                                                 src={element.small_image.url ? element.small_image.url : element.small_image}
                                                 data-src={element.small_image.url ? element.small_image.url : element.small_image}
@@ -342,10 +358,15 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
 
                             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
                                 <button style={{ backgroundColor: `#${btn_viewcart_bg}`, color: `#${btn_viewcart_cl}` }}
-                                    className='fbt-pop-up-view-cart'>{active_countdown === '2' ? `${btn_text_viewcart} (${remainingCountdown})` : `${btn_text_viewcart}`}</button>
+                                    className='fbt-pop-up-view-cart' onClick={() => history.push('/cart')}>{active_countdown === '2' ? `${btn_text_viewcart} (${remainingCountdown})` : `${btn_text_viewcart}`}</button>
 
                                 {continue_button === '1' && (<button style={{ backgroundColor: `#${btn_continue_bg}`, color: `#${btn_continue_cl}` }}
-                                    className='fbt-pop-up-continue'>{active_countdown === '1' ? `${btn_text_continue} (${remainingCountdown})` : `${btn_text_continue}`}</button>)}
+                                    className='fbt-pop-up-continue' onClick={() => {
+                                        setIsOpen(false)
+                                        setTimeout(() => {
+                                            setOpenModal(false)
+                                        }, 500)
+                                    }}>{active_countdown === '1' ? `${btn_text_continue} (${remainingCountdown})` : `${btn_text_continue}`}</button>)}
                             </div>
                         </div>
                     </div>
@@ -397,8 +418,9 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                                 textAlign: 'left', border: '1px solid lightgray', width: '80%',
                                 marginLeft: '10%', marginTop: 20, marginBottom: 20
                             }}>
-                                <p style={{ color: 'red', marginTop: 5, marginLeft: 5, fontSize: 16 }}>You need to choose options for your item.</p>
-                                <div style={{ display: 'flex', flexDirection: 'row', width: '90%', gap: 20, margin: 'auto', marginTop: 20 }}>
+                                <p style={{ color: 'red', marginTop: 5, marginLeft: 5, fontSize: 16 }}>{!addCartData || addCartData?.addProductsToCart.user_errors.length === 0 
+                                ? 'You need to choose options for your item.' : addCartData?.addProductsToCart.user_errors[0]?.message}</p>
+                                <div className={isMobile ? 'fbt-pop-up-conf-info-mobile' : 'fbt-pop-up-conf-info'}>
                                     <img
                                         src={element.small_image.url ? element.small_image.url : element.small_image}
                                         data-src={element.small_image.url ? element.small_image.url : element.small_image}
