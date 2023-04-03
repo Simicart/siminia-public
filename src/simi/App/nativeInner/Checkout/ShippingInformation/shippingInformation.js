@@ -13,6 +13,7 @@ import defaultClasses from './shippingInformation.module.css';
 import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
 
 import Loader from 'src/simi/App/nativeInner/Loader';
+import CheckoutCustomField from '../../CheckoutCustomField/checkoutCustomField';
 
 const EditModal = React.lazy(() =>
     import('@magento/venia-ui/lib/components/CheckoutPage/ShippingInformation/editModal')
@@ -121,7 +122,10 @@ const ShippingInformation = props => {
         </Fragment>
     );
 
-    return <div className={rootClassName}>{shippingInformation}</div>;
+    return <div className={rootClassName}>
+        {shippingInformation}
+        {/* <CheckoutCustomField /> */}
+    </div>;
 };
 
 export default ShippingInformation;
