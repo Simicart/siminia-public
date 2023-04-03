@@ -124,8 +124,6 @@ const ProductFullDetail = props => {
     const talonProps = useProductFullDetail({ product });
     const location = useLocation()
 
-    console.log(fbtData)
-
     const FBT_Config_Data = configFBT.data?.GetConfigFBT
     const fbtProducts = fbtData.data?.products.items[0].fbt_product_data
 
