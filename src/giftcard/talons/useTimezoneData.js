@@ -9,7 +9,7 @@ const GET_LIST_TIMEZONE = gql`
     }
 `
 
-const useTimezoneData = (filter) => {
+const useTimezoneData = () => {
     const timezoneDetails = useQuery(GET_LIST_TIMEZONE, {
        fetchPolicy: 'network-only',
        nextFetchPolicy: 'cache-and-network',

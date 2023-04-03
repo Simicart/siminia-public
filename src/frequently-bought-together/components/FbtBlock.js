@@ -469,7 +469,7 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                                                 <FormattedMessage id='Product Name' defaultMessage='Product Name'></FormattedMessage>
                                             </p>
                                             <p style={{ fontSize: 16, fontWeight: 'bold', width: '8%' }}>
-                                                <FormattedMessage id='Quantity' defaultMessage='Qty'></FormattedMessage>
+                                                <FormattedMessage id='Qty' defaultMessage='Qty'></FormattedMessage>
                                             </p>
                                             <p style={{ fontSize: 16, fontWeight: 'bold', width: '30%' }}>
                                                 <FormattedMessage id='Unit Price' defaultMessage='Unit Price'></FormattedMessage>
@@ -518,7 +518,7 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
 
             {openModalFailure && (<FbtPopUpFailure isOpen={openPopUpFailure} setIsOpen={setOpenPopUpFailure} setOpenModalFailure={setOpenModalFailure}
                 fbt_config_data={FBT_Config_Data} FBT_Brief_Data={FBT_Brief_Data} popUpType={popUpType} addCartData={addCartData}
-                configurableProduct={configurableProduct} setOpenModal={setOpenModal} setOpenPopUp={setOpenPopUp}
+                configurableProduct={configurableProduct} setOpenPopUp={setOpenPopUp}
                 setAddCartData={setAddCartData} savedQuantity={savedQuantity}
                 savedProduct={savedProduct} setOpenPopUpFailure={setOpenPopUpFailure}></FbtPopUpFailure>)}
 

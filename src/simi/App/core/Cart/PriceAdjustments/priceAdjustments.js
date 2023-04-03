@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { func } from 'prop-types';
 
@@ -12,7 +12,6 @@ import Button from '@magento/venia-ui/lib/components/Button';
 import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
 import { useGetRewardPointData } from '../../../../talons/RewardPoint/useGetRewardPointData';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
-import app from '@magento/peregrine/lib/context/app';
 import { showFogLoading } from '../../../../BaseComponents/Loading/GlobalLoading';
 
 const CouponCode = React.lazy(() => import('./CouponCode'));

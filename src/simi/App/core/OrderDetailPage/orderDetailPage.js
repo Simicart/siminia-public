@@ -1,6 +1,6 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
-import { useQuery, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
 import { useParams } from 'react-router-dom';
 import DEFAULT_OPERATIONS from './orderDetailPage.gql';
@@ -40,7 +40,7 @@ const OrderDetailPage = props => {
 
     const classes = useStyle(defaultClasses, props.classes);
 
-    const [reorderItem, { data, loading, error }] = useMutation(
+    const [reorderItem, { loading }] = useMutation(
         reorderItemMutation
     );
 

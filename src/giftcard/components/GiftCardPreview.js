@@ -1,6 +1,7 @@
 import Modal from 'react-modal';
 import React from "react";
-import { X } from 'react-feather' 
+import { X } from 'react-feather'
+import { FormattedMessage } from 'react-intl' 
 
 const GiftCardPreview = ({ open, setShowPreview, template, senderName, recipientName, message, codeColor, messageColor, value }) => {
     const fontStyle = {
@@ -32,18 +33,38 @@ const GiftCardPreview = ({ open, setShowPreview, template, senderName, recipient
           <X></X>
         </button>
         <div className='gift-card-preview-title'>    
-            <h1 style={{fontSize: 28, fontWeight: 'bold', textAlign: 'center'}}>Selected Gift Card</h1>
+            <h1 style={{fontSize: 28, fontWeight: 'bold', textAlign: 'center'}}>
+              <FormattedMessage id='Selected Gift Card' defaultMessage='Selected Gift Card'></FormattedMessage>
+              </h1>
         </div>
         <div className='gift-card-preview-info'> 
-            <h1 style={fontStyle}>Sender Name: <span style={{fontWeight: 300}}>{`${senderName}`}</span></h1>
-            <h1 style={fontStyle}>Recipient Name: <span style={{fontWeight: 300}}>{`${recipientName}`}</span></h1>
-            <h1 style={fontStyle}>Value: <span style={{fontWeight: 300}}>{value}</span></h1>
-            <h1 style={fontStyle}>Expires At: <span style={{fontWeight: 300}}>mm-dd-yyyy</span></h1>
-            <h1 style={fontStyle}>Message: <span style={{color: `#${messageColor}`, wordBreak: 'break-all'}}>{`${message}`}</span></h1>
-            <h1 style={fontStyle}>Gift Card Code: <span style={{color: `#${codeColor}`}}>XXXXXXXXXXXX</span></h1>
+            <h1 style={fontStyle}>
+              <FormattedMessage id='Sender Name: ' defaultMessage='Sender Name: '></FormattedMessage>
+              <span style={{fontWeight: 300}}>{senderName}</span></h1>
+            <h1 style={fontStyle}>
+              <FormattedMessage id='Recipient Name: ' defaultMessage='Recipient Name: '></FormattedMessage>
+              <span style={{fontWeight: 300}}>{recipientName}</span></h1>
+            <h1 style={fontStyle}>
+              <FormattedMessage id='Value: ' defaultMessage='Value: '></FormattedMessage>
+              <span style={{fontWeight: 300}}>{value}</span></h1>
+            <h1 style={fontStyle}>
+              <FormattedMessage id='Expires At: ' defaultMessage='Expires At: '></FormattedMessage>
+              <span style={{fontWeight: 300}}>
+                <FormattedMessage id='mm-dd-yyyy' defaultMessage='mm-dd-yyyy'></FormattedMessage>
+              </span>
+            </h1>
+            <h1 style={fontStyle}>
+              <FormattedMessage id='Message: ' defaultMessage='Message: '></FormattedMessage>
+              <span style={{color: `#${messageColor}`, wordBreak: 'break-all'}}>{message}</span></h1>
+            <h1 style={fontStyle}>
+              <FormattedMessage id='Gift Card Code: ' defaultMessage='Gift Card Code: '></FormattedMessage>
+              <span style={{color: `#${codeColor}`}}>
+                <FormattedMessage id='XXXXXXXXXXXX' defaultMessage='XXXXXXXXXXXX'></FormattedMessage>
+              </span>
+            </h1>
         </div>
         <div className='gift-card-preview-image'>
-            <img src={template} className='image'></img>
+            <img src={template} className='image' alt=''></img>
         </div> 
         </div>
       </Modal>

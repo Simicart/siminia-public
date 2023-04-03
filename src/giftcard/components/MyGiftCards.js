@@ -5,6 +5,7 @@ import useStoreConfig from '../talons/useStoreConfig'
 import { useOrderedGiftCards } from '../talons/useOrderedGiftCards'
 import { useOrderedGiftCardId } from '../talons/useOrderedGiftCardId'
 import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
+import { FormattedMessage } from 'react-intl'
 
 const MyGiftCards = () => {
     const giftCardConfig = useStoreConfig()
@@ -19,11 +20,20 @@ const MyGiftCards = () => {
     const [pageNumber, setPageNumber] = useState(1)
 
     if (giftCardConfig.loading) return fullPageLoadingIndicator
-    if (giftCardConfig.error) return <p>{`Error! ${giftCardConfig.error.message}`}</p>
+    if (giftCardConfig.error) return <p>
+        <FormattedMessage id={`Error! ${giftCardConfig.error.message}`}
+        defaultMessage={`Error! ${giftCardConfig.error.message}`}></FormattedMessage>
+        </p>
     if (myGiftCards.loading) return fullPageLoadingIndicator
-    if (myGiftCards.error) return <p>{`Error! ${myGiftCards.error.message}`}</p>
+    if (myGiftCards.error) return <p>
+        <FormattedMessage id={`Error! ${myGiftCards.error.message}`}
+        defaultMessage={`Error! ${myGiftCards.error.message}`}></FormattedMessage>
+        </p>
     if (orderGiftCardId.loading) return fullPageLoadingIndicator
-    if (orderGiftCardId.error) return <p>{`Error! ${orderGiftCardId.error.message}`}</p>
+    if (orderGiftCardId.error) return <p>
+        <FormattedMessage id={`Error! ${orderGiftCardId.error.message}`}
+        defaultMessage={`Error! ${orderGiftCardId.error.message}`}></FormattedMessage>
+        </p>
 
     const orderedGiftCard = myGiftCards.data.bssCustomerGiftCards.filter((element) => {
         let result = false
@@ -33,10 +43,14 @@ const MyGiftCards = () => {
         return result
     })
 
-    let renderPageNumber = []
+    const renderPageNumber = []
     for (let i = 0; i < Math.ceil(orderedGiftCard.length / pageSize); i++) {
         renderPageNumber.push('L95')
     }
+
+    const pagePernumber1 = 10
+    const pagePernumber2 = 15
+    const pagePernumber3 = 20
 
     const listGiftCodeShow = () => {
         if (pageNumber !== Math.ceil(orderedGiftCard.length / pageSize)) {
@@ -92,14 +106,20 @@ const MyGiftCards = () => {
         <>
             {windowWidth < 767 && (
                 <>
-                    <h1 style={{ fontSize: 18, fontWeight: 'bold', marginTop: 40, marginBottom: 30, marginLeft: '3%' }}>Gift Cards Information</h1>
+                    <h1 style={{ fontSize: 18, fontWeight: 'bold', marginTop: 40, marginBottom: 30, marginLeft: '3%' }}>
+                        <FormattedMessage id='Gift Cards Information' defaultMessage='Gift Cards Information'></FormattedMessage>
+                    </h1>
                     <div style={{ border: '1px solid black', padding: 20, marginTop: 30, width: '94%', marginLeft: '3%' }}>
-                        <p className={showDetails ? 'my-gift-code-title-border' : 'my-gift-code-title'}>Gift Code Details</p>
+                        <p className={showDetails ? 'my-gift-code-title-border' : 'my-gift-code-title'}>
+                            <FormattedMessage id='Gift Code Details' defaultMessage='Gift Code Details'></FormattedMessage>
+                        </p>
                         <div className='my-gift-code-details'>
                             {showDetails && (<div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <div className='my-gift-code-row'>
                                     <div style={{ width: '40%' }}>
-                                        <p>Code</p>
+                                        <p>
+                                            <FormattedMessage id='Code' defaultMessage='Code'></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div style={{ width: '60%' }}>
                                         <p>{codeData.code}</p>
@@ -107,15 +127,21 @@ const MyGiftCards = () => {
                                 </div>
                                 <div className='my-gift-code-row'>
                                     <div style={{ width: '40%' }}>
-                                        <p>Value</p>
+                                        <p>
+                                            <FormattedMessage id='Value' defaultMessage='Value'></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div style={{ width: '60%' }}>
-                                        <p>{`$${codeData.value}`}</p>
+                                        <p>
+                                            <FormattedMessage id={`$${codeData.value}`} defaultMessage={`$${codeData.value}`}></FormattedMessage>
+                                        </p>
                                     </div>
                                 </div>
                                 <div className='my-gift-code-row'>
                                     <div style={{ width: '40%' }}>
-                                        <p>Expire Date</p>
+                                        <p>
+                                            <FormattedMessage id='Expire Date' defaultMessage='Expire Date'></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div style={{ width: '60%' }}>
                                         <p>{codeData.expire_date}</p>
@@ -123,7 +149,9 @@ const MyGiftCards = () => {
                                 </div>
                                 <div className='my-gift-code-row'>
                                     <div style={{ width: '40%' }}>
-                                        <p>Status</p>
+                                        <p>
+                                            <FormattedMessage id='Status' defaultMessage='Status'></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div style={{ width: '60%' }}>
                                         <p>{codeData.status.label}</p>
@@ -131,21 +159,31 @@ const MyGiftCards = () => {
                                 </div>
                                 <div className='my-gift-code-row'>
                                     <div style={{ width: '40%' }}>
-                                        <p>Order</p>
+                                        <p>
+                                            <FormattedMessage id='Order' defaultMessage='Order'></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div style={{ width: '60%' }}>
                                         <a href={`/order-history/${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}
                                             style={{ color: '#0058AC', textDecorationLine: 'underline', fontWeight: 'bold' }}>
-                                            {`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}</a>
+                                                <FormattedMessage id={`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}
+                                                defaultMessage={`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}
+                                                ></FormattedMessage>
+                                            </a>
                                     </div>
                                 </div>
                             </div>)}
                             <div style={{ display: 'flex', flexDirection: 'row', gap: 10, marginTop: 20 }}>
                                 <input className='my-gift-code-details-input' onChange={(e) => setSearchCode(e.target.value)}
                                     value={searchCode}></input>
-                                <button className='my-gift-code-details-submit' onClick={handleSearchCode}>Submit</button>
+                                <button className='my-gift-code-details-submit' onClick={handleSearchCode}>
+                                    <FormattedMessage id='Submit' defaultMessage='Submit'></FormattedMessage>
+                                </button>
                             </div>
-                            {showDetails === false && (<p style={{ color: 'red', marginTop: 10 }}>{`The gift card code ${errorCode} is not valid.`}</p>)}
+                            {showDetails === false && (<p style={{ color: 'red', marginTop: 10 }}>
+                                <FormattedMessage id={`The gift card code ${errorCode} is not valid.`}
+                                defaultMessage={`The gift card code ${errorCode} is not valid.`}></FormattedMessage>
+                            </p>)}
                         </div>
                     </div>
 
@@ -161,36 +199,58 @@ const MyGiftCards = () => {
                                 </button>)}
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
-                            <p style={{ marginRight: 5, marginTop: 8 }}>Show</p>
+                            <p style={{ marginRight: 5, marginTop: 8 }}>
+                                <FormattedMessage id='Show' defaultMessage='Show'></FormattedMessage>
+                            </p>
                             <select name='value' id='page-size' style={{ width: 40 }} onChange={handlePageSize}>
-                                <option value='10'>10</option>
-                                <option value='15'>15</option>
-                                <option value='20'>20</option>
+                                <option value='10'>{pagePernumber1}</option>
+                                <option value='15'>{pagePernumber2}</option>
+                                <option value='20'>{pagePernumber3}</option>
                             </select>
-                            <p style={{ marginLeft: 5, marginTop: 8 }}>per page</p>
+                            <p style={{ marginLeft: 5, marginTop: 8 }}>
+                                <FormattedMessage id='per page' defaultMessage='per page'></FormattedMessage>
+                            </p>
                         </div>
                     </div>)}
                     {orderedGiftCard.length > 0 && (<div style={{ display: 'flex', flexDirection: 'column', marginTop: 20 }}>
-                        {listGiftCodeShow().map((element, index) => {
+                        {listGiftCodeShow().map((element) => {
                             return (
                                 <div className='my-gift-card-details'>
                                     <div style={{ paddingLeft: 20, paddingTop: 20, paddingBottom: 5 }}>
-                                        <p style={{ fontWeight: 'bold' }}>Code: <span style={{ fontWeight: 400 }}>{`${element.code.slice(0, parseInt(numberCharacterShow))}${replaceHiddenCharacter}`}</span></p>
+                                        <p style={{ fontWeight: 'bold' }}> 
+                                            <FormattedMessage id='Code: ' defaultMessage='Code: '></FormattedMessage>
+                                            <span style={{ fontWeight: 400 }}>
+                                                <FormattedMessage id={`${element.code.slice(0, parseInt(numberCharacterShow))}${replaceHiddenCharacter}`}
+                                                defaultMessage={`${element.code.slice(0, parseInt(numberCharacterShow))}${replaceHiddenCharacter}`}></FormattedMessage>
+                                                
+                                            </span></p>
                                     </div>
                                     <div style={{ paddingLeft: 20, paddingTop: 5, paddingBottom: 5 }}>
-                                        <p style={{ fontWeight: 'bold' }}>Value: <span style={{ fontWeight: 400 }}>{`$${element.value}`}</span></p>
+                                        <p style={{ fontWeight: 'bold' }}>
+                                            <FormattedMessage id='Value: ' defaultMessage='Value: '></FormattedMessage>
+                                            <span style={{ fontWeight: 400 }}>
+                                                <FormattedMessage id={`$${element.value}`} defaultMessage={`$${element.value}`}></FormattedMessage>
+                                            </span>
+                                        </p>
                                     </div>
                                     <div style={{ paddingLeft: 20, paddingTop: 5, paddingBottom: 5 }}>
-                                        <p style={{ fontWeight: 'bold' }}>Expire Date: <span style={{ fontWeight: 400 }}>{element.expire_date}</span></p>
+                                        <p style={{ fontWeight: 'bold' }}>
+                                            <FormattedMessage id='Expire Date: ' defaultMessage='Expire Date: '></FormattedMessage>
+                                            <span style={{ fontWeight: 400 }}>{element.expire_date}</span></p>
                                     </div>
                                     <div style={{ paddingLeft: 20, paddingTop: 5, paddingBottom: 5 }}>
-                                        <p style={{ fontWeight: 'bold' }}>Status: <span style={{ fontWeight: 400 }}>{element.status.label}</span></p>
+                                        <p style={{ fontWeight: 'bold' }}>
+                                            <FormattedMessage id='Status: ' defaultMessage='Status: '></FormattedMessage>
+                                            <span style={{ fontWeight: 400 }}>{element.status.label}</span></p>
                                     </div>
                                     <div style={{ paddingLeft: 20, paddingTop: 5, paddingBottom: 20 }}>
                                         <p style={{ fontWeight: 'bold' }}>
-                                            Order: <a href={`/order-history/${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === element.order_id.toString()).increment_id}`}
+                                            <FormattedMessage id='Order: ' defaultMessage='Order: '></FormattedMessage>
+                                            <a href={`/order-history/${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === element.order_id.toString()).increment_id}`}
                                                 style={{ color: '#0058AC', textDecorationLine: 'underline', fontWeight: 'bold' }}>
-                                                {`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === element.order_id.toString()).increment_id}`}</a>
+                                                <FormattedMessage id={`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === element.order_id.toString()).increment_id}`}
+                                                defaultMessage={`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === element.order_id.toString()).increment_id}`}></FormattedMessage>
+                                            </a>
                                         </p>
                                     </div>
                                 </div>
@@ -205,12 +265,16 @@ const MyGiftCards = () => {
                     {orderedGiftCard.length > 0 ? (
                         <div style={{ width: '90%', margin: 'auto' }}>
                             <div style={{ border: '1px solid black', padding: 20, marginTop: 30 }}>
-                                <p className={showDetails ? 'my-gift-code-title-border' : 'my-gift-code-title'}>Gift Code Details</p>
+                                <p className={showDetails ? 'my-gift-code-title-border' : 'my-gift-code-title'}>
+                                    <FormattedMessage id='Gift Code Details' defaultMessage='Gift Code Details'></FormattedMessage>
+                                </p>
                                 <div className='my-gift-code-details'>
                                     {showDetails && (<div style={{ display: 'flex', flexDirection: 'column' }}>
                                         <div className='my-gift-code-row'>
                                             <div style={{ width: '40%' }}>
-                                                <p>Code</p>
+                                                <p>
+                                                    <FormattedMessage id='Code' defaultMessage='Code'></FormattedMessage>
+                                                </p>
                                             </div>
                                             <div style={{ width: '60%' }}>
                                                 <p>{codeData.code}</p>
@@ -218,15 +282,21 @@ const MyGiftCards = () => {
                                         </div>
                                         <div className='my-gift-code-row'>
                                             <div style={{ width: '40%' }}>
-                                                <p>Value</p>
+                                                <p>
+                                                    <FormattedMessage id='Value' defaultMessage='Value'></FormattedMessage>
+                                                </p>
                                             </div>
                                             <div style={{ width: '60%' }}>
-                                                <p>{`$${codeData.value}`}</p>
+                                                <p>
+                                                    <FormattedMessage id={`$${codeData.value}`} defaultMessage={`$${codeData.value}`}></FormattedMessage>
+                                                </p>
                                             </div>
                                         </div>
                                         <div className='my-gift-code-row'>
                                             <div style={{ width: '40%' }}>
-                                                <p>Expire Date</p>
+                                                <p>
+                                                    <FormattedMessage id='Expire Date' defaultMessage='Expire Date'></FormattedMessage>
+                                                </p>
                                             </div>
                                             <div style={{ width: '60%' }}>
                                                 <p>{codeData.expire_date}</p>
@@ -234,7 +304,9 @@ const MyGiftCards = () => {
                                         </div>
                                         <div className='my-gift-code-row'>
                                             <div style={{ width: '40%' }}>
-                                                <p>Status</p>
+                                                <p>
+                                                    <FormattedMessage id='Status' defaultMessage='Status'></FormattedMessage>
+                                                </p>
                                             </div>
                                             <div style={{ width: '60%' }}>
                                                 <p>{codeData.status.label}</p>
@@ -242,21 +314,30 @@ const MyGiftCards = () => {
                                         </div>
                                         <div className='my-gift-code-row'>
                                             <div style={{ width: '40%' }}>
-                                                <p>Order</p>
+                                                <p>
+                                                    <FormattedMessage id='Order' defaultMessage='Order'></FormattedMessage>
+                                                </p>
                                             </div>
                                             <div style={{ width: '60%' }}>
                                                 <a href={`/order-history/${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}
                                                     style={{ color: '#0058AC', textDecorationLine: 'underline', fontWeight: 'bold' }}>
-                                                    {`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}</a>
+                                                    <FormattedMessage id={`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}
+                                                    defaultMessage={`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}></FormattedMessage>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>)}
                                     <div style={{ display: 'flex', flexDirection: 'row', gap: 10, marginTop: 20 }}>
                                         <input className='my-gift-code-details-input' onChange={(e) => setSearchCode(e.target.value)}
                                             value={searchCode}></input>
-                                        <button className='my-gift-code-details-submit' onClick={handleSearchCode}>Submit</button>
+                                        <button className='my-gift-code-details-submit' onClick={handleSearchCode}>
+                                            <FormattedMessage id='Submit' defaultMessage='Submit'></FormattedMessage>
+                                        </button>
                                     </div>
-                                    {showDetails === false && (<p style={{ color: 'red', marginTop: 10 }}>{`The gift card code ${errorCode} is not valid.`}</p>)}
+                                    {showDetails === false && (<p style={{ color: 'red', marginTop: 10 }}>
+                                        <FormattedMessage id={`The gift card code ${errorCode} is not valid.`}
+                                        defaultMessage={`The gift card code ${errorCode} is not valid.`}></FormattedMessage>
+                                    </p>)}
                                 </div>
                             </div>
 
@@ -272,42 +353,61 @@ const MyGiftCards = () => {
                                         </button>)}
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                    <p style={{ marginRight: 5, marginTop: 8 }}>Show</p>
+                                    <p style={{ marginRight: 5, marginTop: 8 }}>
+                                        <FormattedMessage id='Show' defaultMessage='Show'></FormattedMessage>
+                                    </p>
                                     <select name='value' id='page-size' style={{ width: 40 }} onChange={handlePageSize}>
-                                        <option value='10'>10</option>
-                                        <option value='15'>15</option>
-                                        <option value='20'>20</option>
+                                        <option value='10'>{pagePernumber1}</option>
+                                        <option value='15'>{pagePernumber2}</option>
+                                        <option value='20'>{pagePernumber3}</option>
                                     </select>
-                                    <p style={{ marginLeft: 5, marginTop: 8 }}>per page</p>
+                                    <p style={{ marginLeft: 5, marginTop: 8 }}>
+                                        <FormattedMessage id='per page' defaultMessage='per page'></FormattedMessage>
+                                    </p>
                                 </div>
                             </div>
 
                             <div className='my-gift-cards-info'>
                                 <div className='my-gift-cards-header'>
                                     <div className='my-gift-card-code'>
-                                        <p style={{ fontWeight: 'bold', fontSize: 16 }}>Code</p>
+                                        <p style={{ fontWeight: 'bold', fontSize: 16 }}>
+                                            <FormattedMessage id='Code' defaultMessage='Code'></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div className='my-gift-card-value'>
-                                        <p style={{ fontWeight: 'bold' }}>Value</p>
+                                        <p style={{ fontWeight: 'bold' }}>
+                                            <FormattedMessage id='Value' defaultMessage='Value'></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div className='my-gift-card-expire-date'>
-                                        <p style={{ fontWeight: 'bold' }}>Expire Date</p>
+                                        <p style={{ fontWeight: 'bold' }}>
+                                            <FormattedMessage id='Expire Date' defaultMessage='Expire Date'></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div className='my-gift-card-status'>
-                                        <p style={{ fontWeight: 'bold' }}>Status</p>
+                                        <p style={{ fontWeight: 'bold' }}>
+                                            <FormattedMessage id='Status' defaultMessage='Status'></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div className='my-gift-card-order'>
-                                        <p style={{ fontWeight: 'bold' }}>Order</p>
+                                        <p style={{ fontWeight: 'bold' }}>
+                                            <FormattedMessage id='Order' defaultMessage='Order'></FormattedMessage>
+                                        </p>
                                     </div>
                                 </div>
-                                {listGiftCodeShow().map((element, index) => {
+                                {listGiftCodeShow().map((element) => {
                                     return (
                                         <div className='my-gift-cards-info-content'>
                                             <div className='my-gift-card-code'>
-                                                <p>{`${element.code.slice(0, parseInt(numberCharacterShow))}${replaceHiddenCharacter}`}</p>
+                                                <p>
+                                                    <FormattedMessage id={`${element.code.slice(0, parseInt(numberCharacterShow))}${replaceHiddenCharacter}`}
+                                                    defaultMessage={`${element.code.slice(0, parseInt(numberCharacterShow))}${replaceHiddenCharacter}`}></FormattedMessage>                 
+                                                </p>
                                             </div>
                                             <div className='my-gift-card-value'>
-                                                <p>{`$${element.value}`}</p>
+                                                <p>
+                                                    <FormattedMessage id={`$${element.value}`} defaultMessage={`$${element.value}`}></FormattedMessage>
+                                                </p>
                                             </div>
                                             <div className='my-gift-card-expire-date'>
                                                 <p>{element.expire_date}</p>
@@ -318,7 +418,9 @@ const MyGiftCards = () => {
                                             <div className='my-gift-card-order'>
                                                 <a href={`/order-history/${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === element.order_id.toString()).increment_id}`}
                                                     style={{ color: '#0058AC', textDecorationLine: 'underline', fontWeight: 'bold' }}>
-                                                    {`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === element.order_id.toString()).increment_id}`}</a>
+                                                    <FormattedMessage id={`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === element.order_id.toString()).increment_id}`}
+                                                    defaultMessage={`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === element.order_id.toString()).increment_id}`}></FormattedMessage>
+                                                </a>
                                             </div>
                                         </div>
                                     )
@@ -326,34 +428,53 @@ const MyGiftCards = () => {
                             </div>
                         </div>) : (
                     <div style={{ position: 'relative', width: '94%', marginLeft: '3%' }}>
-                        <h1 style={{ fontSize: 24, fontWeight: 'bold', marginTop: 30, marginBottom: 30 }}>Gift Cards Information</h1>
+                        <h1 style={{ fontSize: 24, fontWeight: 'bold', marginTop: 30, marginBottom: 30 }}>
+                            <FormattedMessage id='Gift Cards Information' defaultMessage='Gift Cards Information'></FormattedMessage>
+                        </h1> 
                         <div style={{ border: '1px solid black', padding: 20 }}>
-                            <p className='my-gift-code-title'>Gift Code Details</p>
+                            <p className='my-gift-code-title'>
+                                <FormattedMessage id='Gift Code Details' defaultMessage='Gift Code Details'></FormattedMessage>
+                                </p>
                             <div className='my-gift-code-details'>
                                 <div style={{ display: 'flex', flexDirection: 'row', gap: 10, marginTop: 20 }}>
                                     <input className='my-gift-code-details-input' onChange={(e) => setSearchCode(e.target.value)}
                                         value={searchCode}></input>
-                                    <button className='my-gift-code-details-submit' onClick={handleSearchCode}>Submit</button>
+                                    <button className='my-gift-code-details-submit' onClick={handleSearchCode}>
+                                        <FormattedMessage id='Submit' defaultMessage='Submit'></FormattedMessage>
+                                    </button> 
                                 </div>
-                                {showDetails === false && (<p style={{ color: 'red', marginTop: 10 }}>{`The gift card code ${errorCode} is not valid.`}</p>)}
+                                {showDetails === false && (<p style={{ color: 'red', marginTop: 10 }}>
+                                    <FormattedMessage id={`The gift card code ${errorCode} is not valid.`}
+                                    defaultMessage={`The gift card code ${errorCode} is not valid.`}></FormattedMessage>
+                                </p>)}
                             </div>
                         </div>
                         <div style={{display: 'flex', flexDirection: 'row', gap: 40, 
                         borderBottom: '1px solid lightgray', marginTop: 30}}>
                             <div className='my-gift-card-code'>
-                                <p style={{ fontWeight: 'bold', fontSize: 16 }}>Code</p>
+                                <p style={{ fontWeight: 'bold', fontSize: 16 }}>
+                                    <FormattedMessage id='Code' defaultMessage='Code'></FormattedMessage>
+                                </p>
                             </div>
                             <div className='my-gift-card-value'>
-                                <p style={{ fontWeight: 'bold' }}>Value</p>
+                                <p style={{ fontWeight: 'bold' }}>
+                                    <FormattedMessage id='Value' defaultMessage='Value'></FormattedMessage>
+                                </p>
                             </div>
                             <div className='my-gift-card-expire-date'>
-                                <p style={{ fontWeight: 'bold' }}>Expire Date</p>
+                                <p style={{ fontWeight: 'bold' }}>
+                                    <FormattedMessage id='Expire Date' defaultMessage='Expire Date'></FormattedMessage>
+                                </p>
                             </div>
                             <div className='my-gift-card-status'>
-                                <p style={{ fontWeight: 'bold' }}>Status</p>
+                                <p style={{ fontWeight: 'bold' }}>
+                                    <FormattedMessage id='Status' defaultMessage='Status'></FormattedMessage>
+                                </p>
                             </div>
                             <div className='my-gift-card-order'>
-                                <p style={{ fontWeight: 'bold' }}>Order</p>
+                                <p style={{ fontWeight: 'bold' }}>
+                                    <FormattedMessage id='Order' defaultMessage='Order'></FormattedMessage>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -364,14 +485,20 @@ const MyGiftCards = () => {
             {windowWidth > 960 && (<div className='my-gift-cards-wrapper'>
                 <LeftMenu label='My Gift Cards'></LeftMenu>
                 {orderedGiftCard.length > 0 ? (<div style={{ position: 'relative' }}>
-                    <h1 style={{ fontSize: 24, fontWeight: 'bold', marginTop: 10, marginBottom: 30 }}>Gift Cards Information</h1>
+                    <h1 style={{ fontSize: 24, fontWeight: 'bold', marginTop: 10, marginBottom: 30 }}>
+                        <FormattedMessage id='Gift Cards Information' defaultMessage='Gift Card Information'></FormattedMessage>
+                    </h1>
                     <div style={{ border: '1px solid black', padding: 20 }}>
-                        <p className={showDetails ? 'my-gift-code-title-border' : 'my-gift-code-title'}>Gift Code Details</p>
+                        <p className={showDetails ? 'my-gift-code-title-border' : 'my-gift-code-title'}>
+                            <FormattedMessage id='Gift Code Details' defaultMessage='Gift Code Details'></FormattedMessage>
+                        </p>
                         <div className='my-gift-code-details'>
                             {showDetails && (<div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <div className='my-gift-code-row'>
                                     <div style={{ width: '40%' }}>
-                                        <p>Code</p>
+                                        <p>
+                                            <FormattedMessage id='Code' defaultMessage='Code'></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div style={{ width: '60%' }}>
                                         <p>{codeData.code}</p>
@@ -379,15 +506,21 @@ const MyGiftCards = () => {
                                 </div>
                                 <div className='my-gift-code-row'>
                                     <div style={{ width: '40%' }}>
-                                        <p>Value</p>
+                                        <p>
+                                            <FormattedMessage id='Value' defaultMessage='Value'></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div style={{ width: '60%' }}>
-                                        <p>{`$${codeData.value}`}</p>
+                                        <p>
+                                            <FormattedMessage id={`$${codeData.value}`} defaultMessage={`$${codeData.value}`}></FormattedMessage>
+                                        </p>
                                     </div>
                                 </div>
                                 <div className='my-gift-code-row'>
                                     <div style={{ width: '40%' }}>
-                                        <p>Expire Date</p>
+                                        <p>
+                                            <FormattedMessage id='Expire Date' defaultMessage='Expire Date'></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div style={{ width: '60%' }}>
                                         <p>{codeData.expire_date}</p>
@@ -395,7 +528,9 @@ const MyGiftCards = () => {
                                 </div>
                                 <div className='my-gift-code-row'>
                                     <div style={{ width: '40%' }}>
-                                        <p>Status</p>
+                                        <p>
+                                            <FormattedMessage id='Status' defaultMessage='Status'></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div style={{ width: '60%' }}>
                                         <p>{codeData.status.label}</p>
@@ -403,21 +538,30 @@ const MyGiftCards = () => {
                                 </div>
                                 <div className='my-gift-code-row'>
                                     <div style={{ width: '40%' }}>
-                                        <p>Order</p>
+                                        <p>
+                                            <FormattedMessage id='Order' defaultMessage='Order'></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div style={{ width: '60%' }}>
                                         <a href={`/order-history/${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}
                                             style={{ color: '#0058AC', textDecorationLine: 'underline', fontWeight: 'bold' }}>
-                                            {`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}</a>
+                                            <FormattedMessage id={`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}
+                                            defaultMessage={`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === codeData.order_id.toString()).increment_id}`}></FormattedMessage>
+                                        </a>
                                     </div>
                                 </div>
                             </div>)}
                             <div style={{ display: 'flex', flexDirection: 'row', gap: 10, marginTop: 20 }}>
                                 <input className='my-gift-code-details-input' onChange={(e) => setSearchCode(e.target.value)}
                                     value={searchCode}></input>
-                                <button className='my-gift-code-details-submit' onClick={handleSearchCode}>Submit</button>
+                                <button className='my-gift-code-details-submit' onClick={handleSearchCode}>
+                                    <FormattedMessage id='Submit' defaultMessage='Submit'></FormattedMessage>
+                                </button>
                             </div>
-                            {showDetails === false && (<p style={{ color: 'red', marginTop: 10 }}>{`The gift card code ${errorCode} is not valid.`}</p>)}
+                            {showDetails === false && (<p style={{ color: 'red', marginTop: 10 }}>
+                                <FormattedMessage id={`The gift card code ${errorCode} is not valid.`} 
+                                defaultMessage={`The gift card code ${errorCode} is not valid.`}></FormattedMessage>
+                            </p>)}
                         </div>
                     </div>
 
@@ -433,42 +577,61 @@ const MyGiftCards = () => {
                                 </button>)}
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
-                            <p style={{ marginRight: 5, marginTop: 8 }}>Show</p>
+                            <p style={{ marginRight: 5, marginTop: 8 }}>
+                                <FormattedMessage id='Show' defaultMessage='Show'></FormattedMessage>
+                            </p>
                             <select name='value' id='page-size' style={{ width: 40 }} onChange={handlePageSize}>
-                                <option value='10'>10</option>
-                                <option value='15'>15</option>
-                                <option value='20'>20</option>
+                                <option value='10'>{pagePernumber1}</option>
+                                <option value='15'>{pagePernumber2}</option>
+                                <option value='20'>{pagePernumber3}</option>
                             </select>
-                            <p style={{ marginLeft: 5, marginTop: 8 }}>per page</p>
+                            <p style={{ marginLeft: 5, marginTop: 8 }}>
+                                <FormattedMessage id='per page' defaultMessage='per page'></FormattedMessage>
+                            </p>
                         </div>
                     </div>
 
                     <div className='my-gift-cards-info'>
                         <div className='my-gift-cards-header'>
                             <div className='my-gift-card-code'>
-                                <p style={{ fontWeight: 'bold', fontSize: 16 }}>Code</p>
+                                <p style={{ fontWeight: 'bold', fontSize: 16 }}>
+                                    <FormattedMessage id='Code' defaultMessage='Code'></FormattedMessage>
+                                </p>
                             </div>
                             <div className='my-gift-card-value'>
-                                <p style={{ fontWeight: 'bold' }}>Value</p>
+                                <p style={{ fontWeight: 'bold' }}>
+                                    <FormattedMessage id='Value' defaultMessage='Value'></FormattedMessage>
+                                </p>
                             </div>
                             <div className='my-gift-card-expire-date'>
-                                <p style={{ fontWeight: 'bold' }}>Expire Date</p>
+                                <p style={{ fontWeight: 'bold' }}>
+                                    <FormattedMessage id='Expire Date' defaultMessage='Expire Date'></FormattedMessage>
+                                </p>
                             </div>
                             <div className='my-gift-card-status'>
-                                <p style={{ fontWeight: 'bold' }}>Status</p>
+                                <p style={{ fontWeight: 'bold' }}>
+                                    <FormattedMessage id='Status' defaultMessage='Status'></FormattedMessage>
+                                </p>
                             </div>
                             <div className='my-gift-card-order'>
-                                <p style={{ fontWeight: 'bold' }}>Order</p>
+                                <p style={{ fontWeight: 'bold' }}>
+                                    <FormattedMessage id='Order' defaultMessage='Order'></FormattedMessage>
+                                </p>
                             </div>
                         </div>
-                        {listGiftCodeShow().map((element, index) => {
+                        {listGiftCodeShow().map((element) => {
                             return (
                                 <div className='my-gift-cards-info-content'>
                                     <div className='my-gift-card-code'>
-                                        <p>{`${element.code.slice(0, parseInt(numberCharacterShow))}${replaceHiddenCharacter}`}</p>
+                                        <p>
+                                            <FormattedMessage id={`${element.code.slice(0, parseInt(numberCharacterShow))}${replaceHiddenCharacter}`}
+                                            defaultMessage={`${element.code.slice(0, parseInt(numberCharacterShow))}${replaceHiddenCharacter}`}></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div className='my-gift-card-value'>
-                                        <p>{`$${element.value}`}</p>
+                                        <p>
+                                            <FormattedMessage id={`$${element.value}`} defaultMessage={`$${element.value}`}></FormattedMessage>
+                                        </p>
                                     </div>
                                     <div className='my-gift-card-expire-date'>
                                         <p>{element.expire_date}</p>
@@ -479,7 +642,9 @@ const MyGiftCards = () => {
                                     <div className='my-gift-card-order'>
                                         <a href={`/order-history/${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === element.order_id.toString()).increment_id}`}
                                             style={{ color: '#0058AC', textDecorationLine: 'underline', fontWeight: 'bold' }}>
-                                            {`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === element.order_id.toString()).increment_id}`}</a>
+                                            <FormattedMessage id={`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === element.order_id.toString()).increment_id}`}
+                                            defaultMessage={`#${orderGiftCardId.data.customerOrders.items.find(ele => ele.id === element.order_id.toString()).increment_id}`}></FormattedMessage>
+                                        </a>
                                     </div>
                                 </div>
                             )
@@ -487,34 +652,53 @@ const MyGiftCards = () => {
                     </div>
                 </div>) : (
                     <div style={{ position: 'relative' }}>
-                        <h1 style={{ fontSize: 24, fontWeight: 'bold', marginTop: 10, marginBottom: 30 }}>Gift Cards Information</h1>
+                        <h1 style={{ fontSize: 24, fontWeight: 'bold', marginTop: 10, marginBottom: 30 }}>
+                            <FormattedMessage id='Gift Cards Information' defaultMessage='Gift Cards Information'></FormattedMessage>
+                        </h1>
                         <div style={{ border: '1px solid black', padding: 20 }}>
-                            <p className='my-gift-code-title'>Gift Code Details</p>
+                            <p className='my-gift-code-title'>
+                                <FormattedMessage id='Gift Code Details' defaultMessage='Gift Code Details'></FormattedMessage>
+                            </p>
                             <div className='my-gift-code-details'>
                                 <div style={{ display: 'flex', flexDirection: 'row', gap: 10, marginTop: 20 }}>
                                     <input className='my-gift-code-details-input' onChange={(e) => setSearchCode(e.target.value)}
                                         value={searchCode}></input>
-                                    <button className='my-gift-code-details-submit' onClick={handleSearchCode}>Submit</button>
+                                    <button className='my-gift-code-details-submit' onClick={handleSearchCode}>
+                                        <FormattedMessage id='Submit' defaultMessage='Submit'></FormattedMessage>
+                                    </button>
                                 </div>
-                                {showDetails === false && (<p style={{ color: 'red', marginTop: 10 }}>{`The gift card code ${errorCode} is not valid.`}</p>)}
+                                {showDetails === false && (<p style={{ color: 'red', marginTop: 10 }}>
+                                    <FormattedMessage id={`The gift card code ${errorCode} is not valid.`}
+                                    defaultMessage={`The gift card code ${errorCode} is not valid.`}></FormattedMessage>
+                                </p>)}
                             </div>
                         </div>
                         <div style={{display: 'flex', flexDirection: 'row', gap: 40, 
                         borderBottom: '1px solid lightgray', marginTop: 30}}>
                             <div className='my-gift-card-code'>
-                                <p style={{ fontWeight: 'bold', fontSize: 16 }}>Code</p>
+                                <p style={{ fontWeight: 'bold', fontSize: 16 }}>
+                                    <FormattedMessage id='Code' defaultMessage='Code'></FormattedMessage>
+                                </p>
                             </div>
                             <div className='my-gift-card-value'>
-                                <p style={{ fontWeight: 'bold' }}>Value</p>
+                                <p style={{ fontWeight: 'bold' }}>
+                                    <FormattedMessage id='Value' defaultMessage='Code'></FormattedMessage>
+                                </p>
                             </div>
                             <div className='my-gift-card-expire-date'>
-                                <p style={{ fontWeight: 'bold' }}>Expire Date</p>
+                                <p style={{ fontWeight: 'bold' }}>
+                                    <FormattedMessage id='Expire Date' defaultMessage='Expire Date'></FormattedMessage>
+                                </p>
                             </div>
                             <div className='my-gift-card-status'>
-                                <p style={{ fontWeight: 'bold' }}>Status</p>
+                                <p style={{ fontWeight: 'bold' }}>
+                                    <FormattedMessage id='Status' defaultMessage='Status'></FormattedMessage>
+                                </p>
                             </div>
                             <div className='my-gift-card-order'>
-                                <p style={{ fontWeight: 'bold' }}>Order</p>
+                                <p style={{ fontWeight: 'bold' }}>
+                                    <FormattedMessage id='Order' defaultMessage='Order'></FormattedMessage>
+                                </p>
                             </div>
                         </div>
                     </div>
