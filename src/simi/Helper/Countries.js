@@ -1,10 +1,10 @@
-import Identify from './Identify';
+// import Identify from './Identify';
 import getCountries from 'src/simi/queries/getCountries.graphql';
-import React, { useEffect } from 'react';
-import { simiUseQuery as useQuery } from 'src/simi/Network/Query';
+// import React, { useEffect } from 'react';
+import { simiUseQuery } from 'src/simi/Network/Query';
 
 export const getAllowedCountries = () => {
-    const { data } = useQuery(getCountries, {
+    const { data } = simiUseQuery(getCountries, {
         fetchPolicy: 'cache-first'
     });
     if (data && data.countries) return data.countries;

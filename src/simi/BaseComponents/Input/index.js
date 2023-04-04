@@ -3,11 +3,11 @@ import { configColor } from 'src/simi/Config';
 import Identify from 'src/simi/Helper/Identify';
 import { randomString } from 'src/simi/Helper/String';
 import PropTypes from 'prop-types';
-import { useIntl } from 'react-intl';
+// import { useIntl } from 'react-intl';
 
 export const Qty = props => {
-    const { classes, value, onChange, dataId } = props;
-    const { formatMessage } = useIntl();
+    const {  value, onChange, dataId } = props;
+    // const { formatMessage } = useIntl();
     const thisInputId = 'qty-field-' + randomString(10);
     let style = {
         border: '1px solid ' + configColor.button_background,

@@ -34,7 +34,7 @@ const Content = props => {
 
     const classes = mergeClasses(defaultClasses, props.classes);
 
-    let isShowSubCategories =
+    const isShowSubCategories =
         Array.isArray(subCategories) &&
         subCategories.length &&
         !hideChildCategories;
@@ -63,7 +63,7 @@ const Content = props => {
         : null;
 
     let isContentAvailable = true;
-    let content = props.content;
+    const content = props.content;
     if (!content) {
         isContentAvailable = false;
     } else if (content === '{{child_categories_content}}') {

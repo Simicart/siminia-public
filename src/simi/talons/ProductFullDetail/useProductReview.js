@@ -4,12 +4,12 @@ import { useIntl } from 'react-intl';
 import { useToasts } from '@magento/peregrine';
 
 const useProductReview = props => {
-    const { product, setIsOpen, enabledReview, enabledGuestReview } = props;
+    const { product, setIsOpen, enabledReview } = props;
     const { formatMessage } = useIntl();
     const [, { addToast }] = useToasts();
 
     const { getAllReviews, createProductReview } = operations;
-    const { data, error, loading } = useQuery(getAllReviews, {
+    const { data, loading } = useQuery(getAllReviews, {
         fetchPolicy: 'network-only',
         skip: !enabledReview,
         variables: {
@@ -47,7 +47,8 @@ const useProductReview = props => {
         data,
         loading,
         submitReviewLoading,
-        submitReview
+        submitReview,
+        submitReviewCalled
     };
 };
 export default useProductReview;

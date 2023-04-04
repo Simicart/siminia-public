@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { simiUseMutation as useMutation } from 'src/simi/Network/Query';
 

@@ -43,8 +43,8 @@ export const mapAddressData = rawAddressData => {
 export const usePlainOffline = props => {
     const {
         onSuccess,
-        onReady,
-        onError,
+        // onReady,
+        // onError,
         shouldSubmit,
         resetShouldSubmit,
         paymentCode
@@ -154,7 +154,7 @@ export const usePlainOffline = props => {
         }
 
         return { isBillingAddressSame, ...billingAddress };
-    }, [isBillingAddressSameData, billingAddressData]);
+    }, [isVirtual, billingAddressData, isBillingAddressSameData]);
 
     /**
      * Helpers
@@ -242,7 +242,7 @@ export const usePlainOffline = props => {
                 paymentCode
             }
         });
-    }, [updateCCDetails, cartId]);
+    }, [updateCCDetails, cartId, paymentCode]);
 
     /**
      * Effects
@@ -340,12 +340,7 @@ export const usePlainOffline = props => {
             setStepNumber(0);
             resetShouldSubmit();
         }
-    }, [
-        billingAddressMutationError,
-        billingAddressMutationCalled,
-        billingAddressMutationLoading,
-        resetShouldSubmit
-    ]);
+    }, [billingAddressMutationError, billingAddressMutationCalled, billingAddressMutationLoading, resetShouldSubmit, updatePaymentDetailsOnCart]);
 
     /**
      * Step 3 effect

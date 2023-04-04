@@ -1,6 +1,6 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
-import Identify from "./Identify";
+// import Identify from "./Identify";
 
 function updateTracking(title) {
     try {

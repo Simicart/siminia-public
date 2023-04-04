@@ -128,7 +128,7 @@ async function ConnectionApi(api,method = 'GET',params = null){
                 throw new Error('Network response was not ok');
             })
             .then(function (data) {
-                //console.log(data);
+                console.log(data);
             }).catch((error) => {
             //alert(error.toString());
             console.error(error);
@@ -156,7 +156,7 @@ async function checkVersionPwa(){
             throw new Error('Network response was not ok');
         })
         .then(function (data) {
-            if(data && data.pwa && data.pwa.hasOwnProperty('pwa_studio_client_ver_number') && data.pwa.pwa_studio_client_ver_number && localStorage){
+            if(data && data.pwa && Object.prototype.hasOwnProperty.call(data.pwa,'pwa_studio_client_ver_number') && data.pwa.pwa_studio_client_ver_number && localStorage){
                 const pwa_build_time = localStorage.getItem("CLIENT_VER");
                 if(!pwa_build_time || pwa_build_time === null){
                     localStorage.setItem("CLIENT_VER",data.pwa.pwa_studio_client_ver_number);

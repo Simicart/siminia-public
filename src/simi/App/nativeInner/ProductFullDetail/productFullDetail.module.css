@@ -73,6 +73,7 @@
     padding: 0 1.5rem;
     text-decoration: underline;
     cursor: pointer;
+    text-align: start;
 }
 
 .static-rate {

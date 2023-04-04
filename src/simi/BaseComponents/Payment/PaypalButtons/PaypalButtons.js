@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback, useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { bool, func, shape, string } from 'prop-types';
+// import { bool, func, shape, string } from 'prop-types';
 import { usePaypalButtons } from './usePaypalButtons';
 
 import { isRequired } from '@magento/venia-ui/lib/util/formValidators';
@@ -63,7 +63,7 @@ const PaypalButtons = props => {
          * `3` Payment information mutation intiated
          * `4` All mutations done
          */
-        stepNumber,
+        // stepNumber,
         initialValues,
         shippingAddressCountry,
         cartTotalData,
@@ -326,7 +326,7 @@ const ButtonWrapper = ({
                 currency: currency
             }
         });
-    }, [currency, showSpinner]);
+    }, [currency, dispatch, options, showSpinner]);
 
     return (
         <>
@@ -336,10 +336,10 @@ const ButtonWrapper = ({
                 disabled={false}
                 forceReRender={[amount, currency]}
                 fundingSource={undefined}
-                createOrder={(data, actions) => {
+                createOrder={() => {
                     return token;
                 }}
-                onApprove={function(data, actions) {
+                onApprove={function(data) {
                     savePayment(data);
                 }}
                 onCancel={() => {

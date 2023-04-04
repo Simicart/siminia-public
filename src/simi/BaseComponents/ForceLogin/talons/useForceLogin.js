@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import useForceLoginConfig from "./useForceLoginConfig";
 import { useLocation } from "react-router-dom";
-import { useIntl } from 'react-intl';
+// import { useIntl } from 'react-intl';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 
 import builtinIgnoreForceLoginRoutes from '../components/Routes/ignoreForceLoginRoutes';
@@ -22,7 +22,7 @@ const useForceLogin = props => {
 
     const { showAlert = false } = props || {};
     const { pathname } = useLocation();
-    const { formatMessage } = useIntl();
+    // const { formatMessage } = useIntl();
     const { moduleConfig = {}, loading: bssLoading } = useForceLoginConfig();
     const [{ isSignedIn }] = useUserContext();
     const formatRoute = route => route.replace(/^\/+/, '').replace(/\/$/, '');

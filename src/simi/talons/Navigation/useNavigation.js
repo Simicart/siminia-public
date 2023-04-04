@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useQuery } from '@apollo/client';
+// import { useQuery } from '@apollo/client';
 
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import { useAppContext } from '@magento/peregrine/lib/context/app';
@@ -21,7 +21,7 @@ const ancestors = {
 export const useNavigation = (props = {}) => {
     const { storeConfig } = props;
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
-    const { getCustomerQuery, getRootCategoryId } = operations;
+    const { getCustomerQuery } = operations;
     // retrieve app state from context
     const [appState, { closeDrawer }] = useAppContext();
     const [catalogState, { actions: catalogActions }] = useCatalogContext();

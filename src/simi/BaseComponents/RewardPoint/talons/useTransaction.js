@@ -14,7 +14,7 @@ export const useTransaction = (props) => {
 
     const isDetail = useMemo(() => {
         return !!params?.transactionId || false
-    })
+    },[params?.transactionId])
 
     const { getRewardPointsTransaction } = operations;
 
@@ -26,7 +26,7 @@ export const useTransaction = (props) => {
 
     const detailData = useMemo(() => {
         return history?.location?.state?.detail || {}
-    })
+    },[history])
 
     const items = useMemo(() => {
         return data?.bssRewardPointsTransaction?.items || []

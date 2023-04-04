@@ -57,6 +57,7 @@ export const useQuantity = props => {
     return {
         errorMessage: derivedErrorMessage,
         handleUpdateItemQuantity,
-        updateItemLoading
+        updateItemLoading,
+        updateItemCalled
     };
 };

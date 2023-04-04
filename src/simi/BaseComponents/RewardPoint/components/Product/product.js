@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React from "react"
 import defaultClasses from './productRP.module.css';
 import { useProduct } from '../../talons/useProduct'
 import { useStyle } from '@magento/venia-ui/lib/classify';
@@ -26,7 +26,7 @@ const Product = (props) => {
 
     const rewardIcon = icon ? (
         <span className={classes.image}>
-            <img src={icon} />
+            <img alt="rewardIcon" src={icon} />
         </span>
     ) : null
 

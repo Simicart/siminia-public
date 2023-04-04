@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 import defaultClasses from './buttonLoader.module.css';
 import { useStyle } from '@magento/venia-ui/lib/classify';

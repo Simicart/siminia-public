@@ -65,7 +65,7 @@ export const useStoreSwitcher = (props = {}) => {
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const {
         getStoreConfigData,
-        getUrlResolverData,
+        // getUrlResolverData,
         getAvailableStoresData
     } = operations;
     const { pathname } = useLocation();

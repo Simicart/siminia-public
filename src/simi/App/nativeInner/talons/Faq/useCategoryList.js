@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { GET_CATEGORY_LIST } from './Faq.gql';
 
-export const useCategoryList = props => {
+export const useCategoryList = () => {
 	const {
 		data: categoriesData,
 		loading: categoriesLoading,

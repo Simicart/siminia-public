@@ -1,11 +1,11 @@
-import { useCallback, useState, useContext } from 'react';
+import { useCallback,  useContext } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import {  useQuery } from '@apollo/client';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import DEFAULT_OPERATIONS from './priceSummary.gql';
-import { hideFogLoading } from '../../BaseComponents/Loading/GlobalLoading';
-import { useUserContext } from '@magento/peregrine/lib/context/user';
+// import { hideFogLoading } from '../../BaseComponents/Loading/GlobalLoading';
+// import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { GiftCodeCheckoutContext } from '../../App/nativeInner/Checkout/checkoutPage';
 import { GiftCodeCartContext } from '../../App/nativeInner/CartCore/cartPage';
 

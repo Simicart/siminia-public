@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import { simiUseLazyQuery as useLazyQuery } from 'src/simi/Network/Query';
 import Identify from 'src/simi/Helper/Identify';
 import { usePagination } from '@magento/peregrine';

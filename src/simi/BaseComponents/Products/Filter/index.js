@@ -48,6 +48,7 @@ const Filter = props => {
             if (item.filter_items !== null) {
                 options = item.filter_items.map(
                     function(optionItem) {
+
                         const name = (
                             <span className="filter-item-text">
                                 <span
@@ -58,7 +59,8 @@ const Filter = props => {
                                 />
                                 {optionItem.items_count && (
                                     <span className="filter-item-count">
-                                        ({optionItem.items_count})
+                                        {optionItem.items_count}
+                                        <span />
                                     </span>
                                 )}
                             </span>
@@ -247,14 +249,14 @@ const Filter = props => {
         smoothScrollToView(document.getElementById('root'));
     };
 
-    const deleteFilter = attribute => {
-        const { search } = location;
-        const filterParams = filterData ? filterData : {};
-        delete filterParams[attribute];
-        const queryParams = new URLSearchParams(search);
-        queryParams.set('filter', JSON.stringify(filterParams));
-        history.push({ search: queryParams.toString() });
-    };
+    // const deleteFilter = attribute => {
+    //     const { search } = location;
+    //     const filterParams = filterData ? filterData : {};
+    //     delete filterParams[attribute];
+    //     const queryParams = new URLSearchParams(search);
+    //     queryParams.set('filter', JSON.stringify(filterParams));
+    //     history.push({ search: queryParams.toString() });
+    // };
 
     const clickedFilter = (attribute, value) => {
         const newFiltersToApply = filtersToApply;

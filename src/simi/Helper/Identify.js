@@ -12,7 +12,7 @@ class Identify {
         const storeConfigs = this.getStoreConfig();
 
         const configs =
-            storeConfigs && storeConfigs.hasOwnProperty('simiStoreConfig')
+            storeConfigs && Object.prototype.hasOwnProperty.call(storeConfigs,('simiStoreConfig'))
                 ? storeConfigs.simiStoreConfig
                 : null;
 
