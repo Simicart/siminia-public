@@ -424,7 +424,7 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                             </div>
                         </>) : (
                         <>
-                            <div style={{overflowX: "hidden", height: 480}}>
+                            {FBT_Brief_Data.length>0 && (<div style={{overflow: "hidden", height: 500}}>
                                 <Slider {...slickSettings}>
                                     {FBT_Brief_Data.map((element, index) => (
                                         <div key={index}
@@ -460,7 +460,7 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                                         </div>
                                     ))}
                                 </Slider>
-                            </div>
+                            </div>)}
 
                             <div className="fbt-brief-info">
                                 {FBT_Slider_Data.length > 0 && (
