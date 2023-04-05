@@ -121,9 +121,11 @@ const ProductFullDetail = props => {
     const product_sku = product.sku
     const configFBT = useConfigFBT()
     const fbtData = useFbtData(product_sku)
-    let FBT_Slider_Data = []
     const talonProps = useProductFullDetail({ product });
     const location = useLocation()
+
+    const FBT_Config_Data = configFBT.data?.GetConfigFBT
+    const fbtProducts = fbtData.data?.products.items[0].fbt_product_data
 
     const reviewElement = document.querySelector('.show-content')
 
@@ -169,11 +171,7 @@ const ProductFullDetail = props => {
         handleUpdateQuantity
     } = talonProps;
 
-    const FBT_Config_Data = configFBT.data?.GetConfigFBT
-    const fbtProducts = fbtData.data?.products.items[0].fbt_product_data
-
     const sortItemType = () => {
-        
         if (FBT_Config_Data?.show_curent_product === '1') {
             const related_Products = [product, ...relatedProducts]
             const upsell_Products = [product, ...upsellProducts]
@@ -226,10 +224,6 @@ const ProductFullDetail = props => {
                     ? fbtProducts?.slice(0, FBT_Config_Data?.limit_products) : fbtProducts
             }
         }
-    }
-
-    if(!fbtData.loading && !configFBT.loading && fbtProducts) {
-        FBT_Slider_Data = sortItemType()
     }
 
     // get size chart data and display style
@@ -1357,9 +1351,10 @@ const ProductFullDetail = props => {
                     </ProductDetailExtraProducts>
                 )}
 
-                {!fbtData.loading && !configFBT.loading && (<FbtBlock product={product} relatedProducts={relatedProducts}
+                {fbtData.data && configFBT.data && !fbtData.loading && !configFBT.loading && (
+                <FbtBlock product={product} relatedProducts={relatedProducts}
                     upsellProducts={upsellProducts} crosssellProducts={crosssellProducts}
-                    FBT_Config_Data={FBT_Config_Data} FBT_Slider_Data={FBT_Slider_Data}></FbtBlock>)}
+                    FBT_Config_Data={FBT_Config_Data} FBT_Slider_Data={sortItemType()}></FbtBlock>)}
             </div>
             {isMobileSite ? (
                 <FooterFixedBtn

@@ -1,7 +1,6 @@
 import Modal from 'react-modal';
 import React from "react";
-import { Check } from 'react-feather'
-import { AlertCircle } from 'react-feather'; 
+import { Check, AlertCircle } from 'react-feather'
 
 const ReviewStatus = ({reviewStatus, showReviewStatus, setShowReviewStatus}) => {
       Modal.setAppElement('#root')

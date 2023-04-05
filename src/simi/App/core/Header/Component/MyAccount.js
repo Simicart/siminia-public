@@ -1,8 +1,5 @@
 import React, {
-    useState,
-    useRef,
     Suspense,
-    useCallback,
     Fragment
 } from 'react';
 import User from 'src/simi/BaseComponents/Icon/User';

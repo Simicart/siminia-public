@@ -1,10 +1,9 @@
 import React, { Suspense } from 'react';
 import { LazyComponent } from 'src/simi/BaseComponents/LazyComponent';
-import { Route, Switch, useLocation, useParams } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 //import MagentoRoute from '@magento/venia-ui/lib/components/MagentoRoute';
 import { useScrollTopOnChange } from '@magento/peregrine/lib/hooks/useScrollTopOnChange';
 import NoMatch, { endPoint } from '../simi/App/nativeInner/NoMatch';
-import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 import Loader from '../simi/App/nativeInner/Loader'
 import PageBuilderComponent from '../simi/App/core/TapitaPageBuilder/PageBuilderComponent';
 import GiftCardPage from '../giftcard/components/GiftCardPage'
@@ -320,16 +319,6 @@ const CategoryList = props => {
         />
     );
 };
-const MyGiftCard = props => {
-    return (
-        <LazyComponent
-            component={() =>
-                import(/* webpackChunkName: "CategoryList"*/ 'src/simi/App/nativeInner/GiftCard/components/GiftCardDashboard')
-            }
-            {...props}
-        />
-    );
-};
 
 const Faq = props => {
     return (
@@ -462,18 +451,7 @@ const BlogAuthor = props => {
     );
 };
 
-const Page404 = props => {
-    return (
-        <LazyComponent
-            component={() =>
-                import(/* webpackChunkName: "Page404"*/ '../simi/App/nativeInner/NoMatch/Page404')
-            }
-            {...props}
-        />
-    );
-};
-
-const Routes = props => {
+const Routes = () => {
     const { pathname } = useLocation();
     useScrollTopOnChange(pathname);
     //no HomePage -> pagebuilder home page
