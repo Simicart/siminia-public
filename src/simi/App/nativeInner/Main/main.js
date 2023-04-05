@@ -1,5 +1,10 @@
 import React, { Fragment, useEffect } from 'react';
 
+//abs import Header
+import HeaderAbs from '../../../../abenson-cart/components/Header'
+//abs import Footer
+import FooterAbs from '../../../../abenson-cart/components/Footer'
+
 import Header from '../Header';
 import FooterNative from '../FooterNative';
 import Footer from '../Footer';
@@ -14,6 +19,9 @@ import { Helmet } from 'react-helmet';
 import RsSeller from '../../core/Seo/Markup/RsSeller';
 import { useWindowSize } from '@magento/peregrine';
 
+//abs check location
+import { useLocation } from 'react-router-dom';
+
 const mageworxSeoEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&
@@ -24,6 +32,9 @@ const Main = props => {
     const { storeConfig } = props;
     const storeCode = storage.getItem('store_view_code') || null;
     const windowSize = useWindowSize();
+
+    //get location
+    const location = useLocation()
 
     const isPhone = windowSize.innerWidth <= 780;
     const faviconUrl = storeConfig
@@ -128,12 +139,26 @@ const Main = props => {
                 >
                     <LoadingComponent />
                 </div>
-                <Header storeConfig={storeConfig} />
+
+                {/*check location*/}
+
+                {location.pathname === '/cart' ? (
+                    <HeaderAbs></HeaderAbs>
+                ) : (
+                    <Header storeConfig={storeConfig} />
+                )}
+                
 
                 <div id="data-breadcrumb" className={classes.breadcrumb} />
                 <div id="siminia-main-page">{props.children}</div>
-                <FooterNative />
-                {!isPhone && <Footer />}
+                
+                {/*<FooterNative />*/}
+
+                {location.pathname === '/cart' ? (
+                    <FooterAbs></FooterAbs>
+                ) : (
+                    <Footer/>
+                )}
             </main>
         </React.Fragment>
     );
