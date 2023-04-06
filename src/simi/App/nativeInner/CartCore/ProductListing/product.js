@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Heart } from 'react-feather';
 import { gql } from '@apollo/client';
@@ -30,6 +30,12 @@ const IMAGE_SIZE = 100;
 const HeartIcon = <Icon size={16} src={Heart} />;
 
 const Product = props => {
+    const [width, setWidth] = useState(window.innerWidth)
+
+    window.addEventListener('resize', () => {
+        setWidth(window.innerWidth)
+    })
+
     const { item } = props;
     const merchantTaxConfig = taxConfig();
     const showExcludedTax =
@@ -240,7 +246,7 @@ const Product = props => {
         <div className={classes.root}>
             <span className={classes.errorText}>{errorMessage}</span>
             {loading}
-            <div className={itemClassName}>
+            {width > 992 ? (<div className={itemClassName}>
                 <div className={classes.details}>
                     <Link to={itemLink} className={classes.imageContainer}>
                         <Image
@@ -265,11 +271,11 @@ const Product = props => {
                     </div>
                 </div>
 
-                <div className={classes.price}>
+                <div className={itemOption!== '' ? classes.price_conf : classes.price}>
                     {itemOption}
                     <span
                         style={{ color: '#273896' }}
-                        className={classes.price}
+                        className={itemOption!== '' ? classes.price_conf : classes.price}
                     >
                         <span className={classes.labelPrice} />
                         <Price
@@ -346,7 +352,99 @@ const Product = props => {
                         />
                     </li>
                 </Kebab>
-            </div>
+            </div>) : (
+                <div className={itemClassName}>
+                    <div className={classes.details}>
+                        <div className={classes.name}>
+                            <Link to={itemLink}>{name}</Link>
+                        </div>
+                        <div className={classes.price}>
+                            {itemOption}
+                            <span
+                                style={{ color: '#273896' }}
+                                className={classes.price}
+                            >
+                                <span className={classes.labelPrice} />
+                                <Price
+                                    currencyCode={item.prices.price.currency}
+                                    value={item.prices.price.value}
+                                />
+                                <FormattedMessage
+                                    id={'product.price'}
+                                    defaultMessage={' ea.'}
+                                />
+                            </span>
+                            <span className={classes.stockStatusMessage}>
+                                {stockStatusMessage}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className={classes.order}>
+                        <div className={classes.quantity}>
+                            <Quantity
+                                itemId={item.id}
+                                initialValue={quantity}
+                                onChange={handleUpdateItemQuantity}
+                            />
+                        </div>
+
+                        <span
+                            style={{ color: '#273896' }}
+                            className={classes.priceTotal}
+                        >
+                            <span className={classes.labelPrice} />
+                            {showExcludedTax ? (
+                                <Price
+                                    currencyCode={item.prices.row_total.currency}
+                                    value={item.prices.row_total.value}
+                                />
+                            ) : (
+                                <Price
+                                    currencyCode={
+                                        item.prices.row_total_including_tax.currency
+                                    }
+                                    value={
+                                        item.prices.row_total_including_tax.value
+                                    }
+                                />
+                            )}
+                            <FormattedMessage
+                                id={'product.price'}
+                                defaultMessage={' ea.'}
+                            />
+                        </span>
+                    </div>
+
+
+                    <Kebab
+                        classes={{
+                            root: classes.kebab
+                        }}
+                        disabled={true}
+                    >
+                        {editItemSection}
+                        <Section
+                            text={formatMessage({
+                                id: 'product.removeFromCart',
+                                defaultMessage: 'Remove from cart'
+                            })}
+                            onClick={handleRemoveFromCart}
+                            icon="Trash"
+                        />
+                        <li>
+                            <AddToListButton
+                                {...addToWishlistProps}
+                                classes={{
+                                    root: classes.addToListButton,
+                                    root_selected: classes.addToListButton_selected
+                                }}
+                                icon={HeartIcon}
+                            />
+                        </li>
+                    </Kebab>
+                </div>
+            )}
         </div>
     );
 };

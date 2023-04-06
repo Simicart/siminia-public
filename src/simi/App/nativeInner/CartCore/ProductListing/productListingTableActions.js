@@ -110,18 +110,6 @@ const ProductListingTableActions = props => {
                     />
                 }
             />
-            <div className="right-buttons">
-                <Whitebtn
-                    className="continue-shopping"
-                    onClick={() => handleLink('/')}
-                    text={
-                        <FormattedMessage
-                            id={'Continue Shopping'}
-                            defaultMessage={'Continue Shopping'}
-                        />
-                    }
-                />
-            </div>
         </div>
     );
 };

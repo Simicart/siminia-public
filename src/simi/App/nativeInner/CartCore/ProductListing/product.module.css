@@ -15,6 +15,13 @@
     grid-template-columns: 50% 1fr 1fr 1fr min-content;
 }
 
+@media only screen and (max-width: 992px) {
+    .item {
+        grid-template-areas: 'details order remove';
+        grid-template-columns: 1fr 1fr min-content;
+    }
+}
+
 .item > li > button > span > svg {
     stroke: rgba(18, 18, 18);
     width: 24px;
@@ -90,6 +97,15 @@
     letter-spacing: 0;
     line-height: 24px;
     margin-top: 27px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.price_conf {
+    grid-area: price;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 24px;
     text-align: center;
     font-size: 14px;
 }
@@ -217,7 +233,7 @@
     margin-top: 7px;
 }
 
-@media (max-width: 640px) {
+/*@media (max-width: 640px) {
     .details {
         grid-template: none;
         font-size: 12px;
@@ -268,7 +284,7 @@
         padding-inline-end: 0;
         padding-inline-start: 0;
     }
-}
+}*/
 
 .loader {
     @apply absolute w-full h-full;
@@ -286,4 +302,31 @@
     border-color: #fff;
     border-top-color: #f69435;
 
+}
+
+@media only screen and (max-width: 992px) {
+    .details {
+        display: flex;
+        flex-direction: column;
+    }
+    .name {
+        margin-top: 0;
+        margin-left: 0
+    }
+    .price {
+        margin-top: 0;
+        text-align: left;
+    }
+    .options {
+        justify-content: left;
+    }
+    .quantity {
+        margin-top: 0;
+    }
+    .priceTotal {
+        margin-left: 42px;
+    }
+    .kebab {
+        margin-top: 8px;
+    }
 }
