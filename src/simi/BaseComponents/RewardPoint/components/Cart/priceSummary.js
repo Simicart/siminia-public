@@ -43,11 +43,11 @@ const PriceSummary = (props) => {
                     currencyCode={currencyCode}
                 />
                 <span>
-                    ({spendPointAmount}
+                    {spendPointAmount}
                     <FormattedMessage
                         id={'points'}
                         defaultMessage={'points'}
-                    />)
+                    />
                 </span>
             </span>
         </Fragment>

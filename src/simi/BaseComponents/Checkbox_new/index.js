@@ -4,7 +4,7 @@ import {mergeClasses} from 'src/classify';
 import {CheckSquare, Square} from 'react-feather';
 
 export const Checkbox = (props) => {
-    const {classes: _classes, children, iconSize = 24, colors = {}, ...rest} = props || {}
+    const {classes: _classes, children, colors = {}, ...rest} = props || {}
     const propsClasses = _classes || {}
 
     const classes = mergeClasses(defaultClasses, propsClasses);

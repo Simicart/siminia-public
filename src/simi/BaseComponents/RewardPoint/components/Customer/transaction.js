@@ -110,10 +110,10 @@ const Transaction = props => {
                 <p className={classes.rwPoint}>
                     <span>
                         <FormattedMessage
-                            id={'Point'}
-                            defaultMessage={'Point'}
+                            id={'Point:'}
+                            defaultMessage={'Point:'}
                         />
-                        :
+                        
                     </span>
                     <span className={classes.panelPoint}>
                         {detailData.point}
@@ -121,8 +121,8 @@ const Transaction = props => {
                 </p>
                 <p className={classes.rwPoint}>
                     <span>
-                        <FormattedMessage id={'Note'} defaultMessage={'Note'} />
-                        :
+                        <FormattedMessage id={'Note:'} defaultMessage={'Note:'} />
+                        
                     </span>
                     <span className={classes.panelPoint}>
                         {detailData.note}
@@ -131,10 +131,10 @@ const Transaction = props => {
                 <p className={classes.rwPoint}>
                     <span>
                         <FormattedMessage
-                            id={'Created by'}
-                            defaultMessage={'Created by'}
+                            id={'Created by:'}
+                            defaultMessage={'Created by:'}
                         />
-                        :
+                        
                     </span>
                     <span className={classes.panelPoint}>
                         {detailData.created_by}
@@ -143,10 +143,10 @@ const Transaction = props => {
                 <p className={classes.rwPoint}>
                     <span>
                         <FormattedMessage
-                            id={'Transaction type'}
-                            defaultMessage={'Transaction type'}
+                            id={'Transaction type:'}
+                            defaultMessage={'Transaction type:'}
                         />
-                        :
+                        
                     </span>
                     <span className={classes.panelPoint}>
                         {detailData.action}
@@ -155,10 +155,10 @@ const Transaction = props => {
                 <p className={classes.rwPoint}>
                     <span>
                         <FormattedMessage
-                            id={'Transaction date'}
-                            defaultMessage={'Transaction date'}
+                            id={'Transaction date:'}
+                            defaultMessage={'Transaction date:'}
                         />
-                        :
+                        
                     </span>
                     <span className={classes.panelPoint}>
                         {detailData.created_at}

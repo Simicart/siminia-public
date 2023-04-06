@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, useEffect } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
@@ -224,7 +224,7 @@ export const useProductFullDetail = props => {
             error: errorAddingProductToCart,
             loading: isAddProductLoading,
             data: dataAddingProductToCart,
-            called: calledAddingProductToCart
+            // called: calledAddingProductToCart
         }
     ] = useMutation(operations.addProductToCartMutation);
     
@@ -297,7 +297,7 @@ export const useProductFullDetail = props => {
             return acc && !!customOptions[uid];
         }, true);
         // return fCus.length >= requiredCustomOptionLength;
-    }, [product, fCus]);
+    }, [product.options, customOptions]);
 
     const [groupedOptions, setGroupedOptions] = useState({});
 
@@ -565,7 +565,7 @@ export const useProductFullDetail = props => {
                             sku: sku
                         });
                     }
-                    const data = await addProductToCart({ variables });
+                    // const data = await addProductToCart({ variables });
 
                     return;
                 } else {
@@ -891,7 +891,7 @@ export const useProductFullDetail = props => {
         }
 
         return [];
-    });
+    },[dataAddingProductToCart]);
 
     const wishlistItemOptions = useMemo(() => {
         const options = {

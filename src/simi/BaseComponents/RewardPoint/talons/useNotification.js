@@ -43,10 +43,11 @@ export const useNotification = (props = {}) => {
             message: message,
             timeout: 5000
         });
-    });
+    },[addToast, formatMessage, updateNotify]);
 
     return {
         handleSubmit,
-        loading: updateNotifyLoading
+        loading: updateNotifyLoading,
+        updateNotifyError
     };
 };

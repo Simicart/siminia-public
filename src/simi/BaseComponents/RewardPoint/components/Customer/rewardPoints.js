@@ -58,9 +58,9 @@ const RewardPoint = props => {
                                 <p className={classes.rwPoint}>
                                     <span>
                                         <FormattedMessage
-                                            id={'Points balance'}
+                                            id={'Points balance:'}
                                         />
-                                        :
+                                        
                                     </span>
                                     <span className={classes.panelPoint}>
                                         {point}
@@ -68,8 +68,8 @@ const RewardPoint = props => {
                                 </p>
                                 <p className={classes.rwPoint}>
                                     <span>
-                                        <FormattedMessage id={'Total earned'} />
-                                        :
+                                        <FormattedMessage id={'Total earned:'} />
+                                        
                                     </span>
                                     <span className={classes.panelPoint}>
                                         {pointEarned}
@@ -77,7 +77,7 @@ const RewardPoint = props => {
                                 </p>
                                 <p className={classes.rwPoint}>
                                     <span>
-                                        <FormattedMessage id={'Total spent'} />:
+                                        <FormattedMessage id={'Total spent:'} />
                                     </span>
                                     <span className={classes.panelPoint}>
                                         {pointUsed}

@@ -1,5 +1,6 @@
-import { gql } from '@apollo/client';
-import { useQuery } from '@apollo/client';
+import { gql , useQuery} from '@apollo/client';
+// import { useQuery } from '@apollo/client';
+
 const productLabelEnabled =
     window.SMCONFIGS &&
     window.SMCONFIGS.plugins &&

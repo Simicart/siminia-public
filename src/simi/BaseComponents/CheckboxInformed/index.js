@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { bool, node, shape, string } from 'prop-types';
 import { BasicCheckbox, asField } from 'informed';
 import { compose } from 'redux';

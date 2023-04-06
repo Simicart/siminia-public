@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 // import { useQuery } from '@apollo/client';
-import { getRecaptcha, getSiteKey } from '../utils'
+import { getRecaptcha, getSiteKey } from '../utils';
 import useScript from 'src/simi/hooks/useScript';
 
 // import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
@@ -25,15 +25,14 @@ const GOOGLE_RECAPTCHA_URL = 'https://www.google.com/recaptcha/api.js';
  * import { useGoogleReCaptcha } from '@magento/peregrine/lib/hooks/useGoogleReCaptcha';
  */
 export const useGoogleReCaptcha = props => {
-
     const { formAction } = props;
-    const reCaptchaEnable = getRecaptcha()
+    const reCaptchaEnable = getRecaptcha();
 
     if (!globalThis['recaptchaCallbacks']) {
         globalThis['recaptchaCallbacks'] = {};
     }
     const [apiIsReady, setApiIsReady] = useState(
-        globalThis.hasOwnProperty('grecaptcha')
+        Object.prototype.hasOwnProperty.call(globalThis, 'grecaptcha')
     );
     const [isGenerating, setIsGenerating] = useState(false);
     const [widgetId, setWidgetId] = useState(null);
@@ -48,16 +47,14 @@ export const useGoogleReCaptcha = props => {
         }
     }, []);
 
-    const recaptchaBadge = 'inline'
+    const recaptchaBadge = 'inline';
     const recaptchaKey = getSiteKey();
     // const recaptchaLang = configData?.recaptchaV3Config?.language_code;
     // const activeForms = configData?.recaptchaV3Config?.forms || [];
     const isEnabled =
-        reCaptchaEnable &&
-        recaptchaKey &&
-        recaptchaKey.length > 0 
+        reCaptchaEnable && recaptchaKey && recaptchaKey.length > 0;
 
-    console.log(isEnabled)
+    console.log(isEnabled);
     // Determine which type of badge should be loaded
     const isInline = recaptchaBadge === 'inline';
 
@@ -82,8 +79,7 @@ export const useGoogleReCaptcha = props => {
     const status = useScript(!apiIsReady && isEnabled ? scriptUrl : null);
 
     // Wait for config to be loaded and script to be ready
-    const isLoading =
-       (isEnabled && !apiIsReady && status !== 'ready');
+    const isLoading = isEnabled && !apiIsReady && status !== 'ready';
 
     // Render inline widget manually
     useEffect(() => {

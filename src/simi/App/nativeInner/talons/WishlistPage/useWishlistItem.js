@@ -1,12 +1,12 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useMutation, useLazyQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import defaultOperations from './wishlistItem.gql';
 import cartOperations from '../CartPage/cartPage.gql'
 import { useAwaitQuery } from '@magento/peregrine/lib/hooks/useAwaitQuery';
-import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
+// import { CREATE_CART as CREATE_CART_MUTATION } from '@magento/peregrine/lib/talons/CreateAccount/createAccount.gql';
 
 const SUPPORTED_PRODUCT_TYPES = ['SimpleProduct', 'ConfigurableProduct'];
 
@@ -30,16 +30,19 @@ const mergeSupportedProductTypes = (supportedProductTypes = []) => {
  * @returns {WishlistItemProps}
  */
 export const useWishlistItem = props => {
-    const { item, onOpenAddToCartDialog, wishlistId } = props;
+    const { item,
+        //  onOpenAddToCartDialog,
+          wishlistId 
+        } = props;
 
     const {
-        configurable_options: selectedConfigurableOptions = [],
+        // configurable_options: selectedConfigurableOptions = [],
         id: itemId,
         product
     } = item;
 
     const {
-        configurable_options: configurableOptions = [],
+        // configurable_options: configurableOptions = [],
         __typename: productType,
         image,
         sku,
@@ -65,7 +68,7 @@ export const useWishlistItem = props => {
         createCartMutaion
     } = operations;
 
-    const [{ cartId }, { getCartDetails }] = useCartContext();
+    const [{ getCartDetails }] = useCartContext();
 
     const [fetchCartId] = useMutation(createCartMutaion);
     const fetchCartDetails = useAwaitQuery(getCartDetailsQuery);
@@ -86,42 +89,42 @@ export const useWishlistItem = props => {
         setRemoveProductFromWishlistError
     ] = useState(null);
 
-    const cartItem = useMemo(() => {
-        const item = {
-            quantity: 1,
-            sku
-        };
+    // const cartItem = useMemo(() => {
+    //     const item = {
+    //         quantity: 1,
+    //         sku
+    //     };
 
-        // Merge in additional input variables for configurable items
-        if (
-            selectedConfigurableOptions.length &&
-            selectedConfigurableOptions.length === configurableOptions.length
-        ) {
-            const selectedOptionsArray = selectedConfigurableOptions.map(
-                selectedOption => {
-                    const {
-                        id: attributeId,
-                        value_id: selectedValueId
-                    } = selectedOption;
-                    const configurableOption = configurableOptions.find(
-                        option => option.attribute_id_v2 === attributeId
-                    );
-                    const configurableOptionValue = configurableOption.values.find(
-                        optionValue =>
-                            optionValue.value_index === selectedValueId
-                    );
+    //     // Merge in additional input variables for configurable items
+    //     if (
+    //         selectedConfigurableOptions.length &&
+    //         selectedConfigurableOptions.length === configurableOptions.length
+    //     ) {
+    //         const selectedOptionsArray = selectedConfigurableOptions.map(
+    //             selectedOption => {
+    //                 const {
+    //                     id: attributeId,
+    //                     value_id: selectedValueId
+    //                 } = selectedOption;
+    //                 const configurableOption = configurableOptions.find(
+    //                     option => option.attribute_id_v2 === attributeId
+    //                 );
+    //                 const configurableOptionValue = configurableOption.values.find(
+    //                     optionValue =>
+    //                         optionValue.value_index === selectedValueId
+    //                 );
 
-                    return configurableOptionValue.uid;
-                }
-            );
+    //                 return configurableOptionValue.uid;
+    //             }
+    //         );
 
-            Object.assign(item, {
-                selected_options: selectedOptionsArray
-            });
-        }
+    //         Object.assign(item, {
+    //             selected_options: selectedOptionsArray
+    //         });
+    //     }
 
-        return item;
-    }, [configurableOptions, selectedConfigurableOptions, sku]);
+    //     return item;
+    // }, [configurableOptions, selectedConfigurableOptions, sku]);
 
     const [
         addWishlistItemToCart,
@@ -219,18 +222,7 @@ export const useWishlistItem = props => {
         // } else {
         //     onOpenAddToCartDialog(item);
         // }
-    }, [
-        cartId,
-        addWishlistItemToCart,
-        // fetchCartDetails,
-        getCartDetails,
-        fetchCartDetails,
-        fetchCartId,
-        configurableOptions.length,
-        item,
-        onOpenAddToCartDialog,
-        selectedConfigurableOptions.length
-    ]);
+    }, [addWishlistItemToCart, getCartDetails, fetchCartDetails, fetchCartId]);
 
     const handleRemoveProductFromWishlist = useCallback(async () => {
         try {

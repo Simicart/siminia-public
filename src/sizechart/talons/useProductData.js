@@ -24,6 +24,9 @@ const useProductData = (filter) => {
     }
   })
   return {
+    data,
+    loading,
+    error,
     id,
     reviewCount
   }

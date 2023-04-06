@@ -115,7 +115,7 @@ export const convertSimiFilterInputToMagentoFilterInput = (
         } else {
             filterInputs['category_id'] = { eq: String(categoryId) };
         }
-        if(filterInputs.hasOwnProperty('category_uid')) {
+        if(Object.prototype.hasOwnProperty.call(filterInputs,'category_uid')) {
             delete filterInputs['category_uid']
         }
     }

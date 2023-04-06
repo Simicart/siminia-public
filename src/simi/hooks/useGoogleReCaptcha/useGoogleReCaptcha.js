@@ -38,7 +38,7 @@ export const useGoogleReCaptcha = props => {
         globalThis['recaptchaCallbacks'] = {};
     }
     const [apiIsReady, setApiIsReady] = useState(
-        globalThis.hasOwnProperty('grecaptcha')
+        Object.prototype.hasOwnProperty.call(globalThis,'grecaptcha')
     );
     const [isGenerating, setIsGenerating] = useState(false);
     const [widgetId, setWidgetId] = useState(null);

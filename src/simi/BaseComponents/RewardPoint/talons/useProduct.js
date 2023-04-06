@@ -30,7 +30,7 @@ export const useProduct = props => {
         }
 
         return result;
-    });
+    },[type]);
 
     const productPoint = useMemo(() => {
         return item?.reward_point?.product_point || {};

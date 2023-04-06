@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import {  useLocation } from 'react-router-dom';
 import { useApolloClient, useMutation } from '@apollo/client';
 
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
@@ -39,7 +39,7 @@ export const useAccountMenu = props => {
     const [view, setView] = useState('SIGNIN');
     const [username, setUsername] = useState('');
 
-    const history = useHistory();
+    // const history = useHistory();
     const location = useLocation();
     const [revokeToken] = useMutation(signOutMutation);
     const [{ isSignedIn: isUserSignedIn }, { signOut }] = useUserContext();
@@ -59,7 +59,7 @@ export const useAccountMenu = props => {
         // would be to call apolloClient.resetStore() but that would require
         // a large refactor.
         //history.go(0);
-    }, [history, revokeToken, setAccountMenuIsOpen, signOut]);
+    }, [apolloClient, revokeToken, setAccountMenuIsOpen, signOut]);
 
     const handleForgotPassword = useCallback(() => {
         setView('FORGOT_PASSWORD');

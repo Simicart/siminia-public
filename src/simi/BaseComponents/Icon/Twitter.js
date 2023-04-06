@@ -16,7 +16,7 @@ const Twitter = props => {
             style={style}
             className={props.className}
         >
-            <title>icon/social/twitter</title>
+            {/* <title>icon/social/twitter</title> */}
             
             <g id="Shape">
                 <path

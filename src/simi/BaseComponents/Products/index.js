@@ -18,15 +18,15 @@ const Products = props => {
     const {
         data,
         filterData,
-        isSignedIn,
+        // isSignedIn,
         history,
         title,
-        underHeader,
-        type,
+        // underHeader,
+        // type,
         loading,
         loadStyle,
         sortByData,
-        pageType,
+        // pageType,
         pageSize,
         pageControl
     } = props;

@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import { simiUseLazyQuery as useLazyQuery } from 'src/simi/Network/Query';
 import Identify from 'src/simi/Helper/Identify';
 import {
@@ -15,7 +15,7 @@ import {
 
 let sortByData = null;
 let filterData = null;
-const loadedData = null;
+// const loadedData = null;
 
 // use pagination follow site magento default ( change both page and pagesize)
 export const useSearchContentSimiPagination = props => {

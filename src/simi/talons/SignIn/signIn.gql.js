@@ -3,7 +3,6 @@ import { CheckoutPageFragment } from '@magento/peregrine/lib/talons/CheckoutPage
 
 export const GET_CUSTOMER = gql`
     query GetCustomerAfterSignIn {
-        # eslint-disable-next-line @graphql-eslint/require-id-when-available
         customer {
             email
             firstname

@@ -2,7 +2,7 @@ import React, { Suspense, useRef, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { arrayOf, bool, number, shape, string } from 'prop-types';
 import { Form } from 'informed';
-import { Info } from 'react-feather';
+// import { Info } from 'react-feather';
 import Identify from 'src/simi/Helper/Identify';
 import Price from '@simicart/siminia/src/simi/App/core/PriceWrapper/Price.js';
 import { configColor } from 'src/simi/Config';
@@ -11,7 +11,7 @@ import { useProductFullDetail } from '../talons/useProductFullDetail';
 import { isProductConfigurable } from '@magento/peregrine/lib/util/isProductConfigurable';
 import { smoothScrollToView } from 'src/simi/Helper/Behavior';
 import { useStyle } from '@magento/venia-ui/lib/classify';
-import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
+// import Breadcrumbs from 'src/simi/BaseComponents/Breadcrumbs';
 import Button from '@magento/venia-ui/lib/components/Button';
 import Carousel from '../ProductImageCarousel';
 // import FormError from '@magento/venia-ui/lib/components/FormError';
@@ -53,7 +53,8 @@ import {
     ArrowLeft,
     ShoppingCart,
     MoreVertical,
-    ArrowRight
+    // ArrowRight,
+    Info
 } from 'react-feather';
 
 // import icon describe tab show/hidden state
@@ -61,7 +62,7 @@ import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 
 import { BiHelpCircle, BiHome } from 'react-icons/bi';
 // import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
-import { useUserContext } from '@magento/peregrine/lib/context/user';
+// import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useGiftCard } from '../GiftCard/talons/useGiftCard';
 import { GET_ITEM_COUNT_QUERY } from '@simicart/siminia/src/simi/App/core/Header/cartTrigger.gql.js';
 import { useCartTrigger } from 'src/simi/talons/Header/useCartTrigger';
@@ -83,9 +84,9 @@ import FaqProductDetail from '../Faq/FaqProductDetail';
 import ButtonFaq from '../Faq/FaqProductDetail/buttonFaq';
 
 //import talons and fbt component
-import useConfigFBT from "../../../../frequently-bought-together/talons/useConfigFBT"
-import useFbtData from "../../../../frequently-bought-together/talons/useFbtData"
-import FbtBlock from '../../../../frequently-bought-together/components/FbtBlock'
+import useConfigFBT from '../../../../frequently-bought-together/talons/useConfigFBT';
+import useFbtData from '../../../../frequently-bought-together/talons/useFbtData';
+import FbtBlock from '../../../../frequently-bought-together/components/FbtBlock';
 
 require('./productFullDetail.scss');
 
@@ -118,11 +119,11 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
 
 const ProductFullDetail = props => {
     const { product } = props;
-    const product_sku = product.sku
-    const configFBT = useConfigFBT()
-    const fbtData = useFbtData(product_sku)
+    const product_sku = product.sku;
+    const configFBT = useConfigFBT();
+    const fbtData = useFbtData(product_sku);
     const talonProps = useProductFullDetail({ product });
-    const location = useLocation()
+    const location = useLocation();
 
     const FBT_Config_Data = configFBT.data?.GetConfigFBT
     const fbtProducts = fbtData.data?.products.items[0].fbt_product_data
@@ -130,7 +131,9 @@ const ProductFullDetail = props => {
     const reviewElement = document.querySelector('.show-content')
 
     // tab display/hidden state
-    const [showTab, setShowTab] = useState(location.state?.autofocus === 'review' ? 1 : 0);
+    const [showTab, setShowTab] = useState(
+        location.state?.autofocus === 'review' ? 1 : 0
+    );
 
     // tabs display/hidden state native site
     const [showDes, setShowDes] = useState(false);
@@ -138,7 +141,7 @@ const ProductFullDetail = props => {
     const [showSiz, setShowSiz] = useState(false);
 
     if (location.state?.autofocus === 'review') {
-        let topHeight = reviewElement?.offsetTop - 450;
+        const topHeight = reviewElement?.offsetTop - 450;
         window.scrollTo({
             top: topHeight,
             behavior: 'smooth'
@@ -146,7 +149,7 @@ const ProductFullDetail = props => {
     }
 
     const {
-        breadcrumbCategoryId,
+        // breadcrumbCategoryId,
         errorMessage,
         userErrorsMessage,
         handleAddToCart,
@@ -155,7 +158,7 @@ const ProductFullDetail = props => {
         isOutOfStock,
         isAddToCartDisabled,
         isSupportedProductType,
-        mediaGalleryEntries,
+        // mediaGalleryEntries,
         productDetails,
         wishlistButtonProps,
         optionSelections,
@@ -243,12 +246,12 @@ const ProductFullDetail = props => {
         handleAddGiftCardProductToCart,
         handleByNowGiftCardProduct
     } = useGiftCard({ product, setAlertMsg });
-    const [message, setMessage] = useState(null);
-    const [messageType, setMessageType] = useState(null);
+    const [, setMessage] = useState(null);
+    const [, setMessageType] = useState(null);
     const [popupData, setPopUpData] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     const successMsg = `${productDetails.name} was added to shopping cart`;
-    const [{ isSignedIn }] = useUserContext();
+    // const [{ isSignedIn }] = useUserContext();
     const history = useHistory();
 
     const [moreBtn, setMoreBtn] = useState(false);
@@ -259,7 +262,7 @@ const ProductFullDetail = props => {
         parseInt(storeConfig.storeConfig.product_reviews_enabled);
     const [isOpen, setIsOpen] = useState(false);
     const [addToCartPopup, setAddToCartPopup] = useState(false);
-    const [descripttion, setDescripttion] = useState(-1);
+    // const [descripttion, setDescripttion] = useState(-1);
     const isMobileSite = window.innerWidth <= 450;
     const [typeBtn, setTypeBtn] = useState('');
 
@@ -274,12 +277,13 @@ const ProductFullDetail = props => {
     });
 
     const {
-        data,
-        loading,
-        submitReviewLoading,
-        submitReview
+        data
+        // loading,
+        // submitReviewLoading,
+        // submitReview
     } = useProductReview({
         product,
+        isOpen,
         setIsOpen,
         enabledReview
     });
@@ -291,7 +295,7 @@ const ProductFullDetail = props => {
     const { formatMessage } = useIntl();
     const productReview = useRef(null);
     const carouselImgSize = useRef(null);
-    let positionFooterFixed =
+    const positionFooterFixed =
         carouselImgSize && carouselImgSize.current
             ? (40 / carouselImgSize.current.clientHeight) * 100
             : 514;
@@ -301,13 +305,14 @@ const ProductFullDetail = props => {
         setShowTab(1);
         smoothScrollToView(document.querySelector('.selectedReviews'));
     };
-    const desStatus = status => {
-        if (status === -1) {
-            return 'description';
-        } else if (status === false) {
-            return 'description-close';
-        } else return 'description-open';
-    };
+
+    // const desStatus = status => {
+    //     if (status === -1) {
+    //         return 'description';
+    //     } else if (status === false) {
+    //         return 'description-close';
+    //     } else return 'description-open';
+    // };
 
     const classes = useStyle(defaultClasses, props.classes);
 
@@ -325,12 +330,12 @@ const ProductFullDetail = props => {
         />
     );
 
-    const breadcrumbs = breadcrumbCategoryId ? (
-        <Breadcrumbs
-            categoryId={breadcrumbCategoryId}
-            currentProduct={productDetails.name}
-        />
-    ) : null;
+    // const breadcrumbs = breadcrumbCategoryId ? (
+    //     <Breadcrumbs
+    //         categoryId={breadcrumbCategoryId}
+    //         currentProduct={productDetails.name}
+    //     />
+    // ) : null;
 
     // Fill a map with field/section -> error.
     const errors = new Map();
@@ -452,7 +457,9 @@ const ProductFullDetail = props => {
             topInsets = parseInt(simpifyRNinsets.top);
             bottomInsets = parseInt(simpifyRNinsets.bottom);
         }
-    } catch (err) { }
+    } catch (err) {
+        console.log(err);
+    }
 
     const specialPrice =
         product && product.price && product.price.has_special_price ? (
@@ -522,17 +529,21 @@ const ProductFullDetail = props => {
                             'static-rate': classes['static-rate']
                         }}
                     />
-                    <span
+                    <button
+                     className={classes.reviewSumCount}
+                     
                         onClick={() => scrollToReview()}
-                        className={classes.reviewSumCount}
+                        
                     >
-                        ({product.review_count}{' '}
+                        {formatMessage({ id: '(' })}
+                        {product.review_count}{' '}
                         {product.review_count > 1
                             ? formatMessage({ id: 'Reviews' })
                             : formatMessage({ id: 'Review' })}
-                        )
-                    </span>
-                    <span
+                        {formatMessage({ id: ')' })}
+                    </button>
+
+                    <button
                         onClick={() => scrollToReview()}
                         className="submitReview"
                     >
@@ -540,16 +551,16 @@ const ProductFullDetail = props => {
                             id: 'Submit Review',
                             defaultMessage: 'Submit Review'
                         })}
-                    </span>
+                    </button>
                 </section>
             </div>
         ) : (
-            <div onClick={() => scrollToReview()} className={classes.noReview}>
+            <button onClick={() => scrollToReview()} className={classes.noReview}>
                 <FormattedMessage
                     id="Be the first to review this product"
                     defaultMessage="Be the first to review this product"
                 />
-            </div>
+            </button>
         );
 
     const productStock = isOutOfStock ? (
@@ -577,8 +588,8 @@ const ProductFullDetail = props => {
                 {productStock}
             </div>
             {price_tiers &&
-                Array.isArray(price_tiers) &&
-                price_tiers.length > 0 ? (
+            Array.isArray(price_tiers) &&
+            price_tiers.length > 0 ? (
                 <PriceTiers priceTiers={price_tiers} price={price} />
             ) : null}
         </React.Fragment>
@@ -623,16 +634,16 @@ const ProductFullDetail = props => {
         </div>
     );
 
-    const formError = (
-        <div className={classes.wrapperError}>
-            <FormError
-                classes={{
-                    root: classes.formErrors
-                }}
-                errors={errors.get('form') || []}
-            />
-        </div>
-    );
+    // const formError = (
+    //     <div className={classes.wrapperError}>
+    //         <FormError
+    //             classes={{
+    //                 root: classes.formErrors
+    //             }}
+    //             errors={errors.get('form') || []}
+    //         />
+    //     </div>
+    // );
 
     const productDetailCarousel = [];
     if (isMobileSite) {
@@ -654,12 +665,12 @@ const ProductFullDetail = props => {
                         <Suspense fallback={null}>
                             <WishlistButton {...wishlistButtonProps} />
                         </Suspense>{' '}
-                        <div
+                        <button
                             onClick={() => setMoreBtn(!moreBtn)}
                             className="header-icon"
                         >
                             <MoreVertical />
-                        </div>
+                        </button>
                         {moreBtn ? (
                             <ul className="header-more">
                                 <li>
@@ -721,11 +732,12 @@ const ProductFullDetail = props => {
 
     const addToCartArea = !isMobileSite ? (
         <div
-            className={`${product.__typename === 'GroupedProduct' ||
+            className={`${
+                product.__typename === 'GroupedProduct' ||
                 product.__typename === 'BundleProduct'
-                ? 'groupCartAction'
-                : ''
-                } quantityCartAction`}
+                    ? 'groupCartAction'
+                    : ''
+            } quantityCartAction`}
         >
             {wrapperQuantity}
             {cartAction}
@@ -824,7 +836,7 @@ const ProductFullDetail = props => {
                                 ? product.__typename === 'MpGiftCardProduct'
                                     ? handleAddGiftCardProductToCart
                                     : handleAddToCart
-                                : () => { }
+                                : () => {}
                         }
                     >
                         {!isMobileSite ? (
@@ -850,12 +862,13 @@ const ProductFullDetail = props => {
                         {!isMobileSite ? (
                             <div className="wrapperOptions">
                                 <section
-                                    className={`${classes.options} ${product.__typename ===
-                                        'GroupedProduct' ||
+                                    className={`${classes.options} ${
+                                        product.__typename ===
+                                            'GroupedProduct' ||
                                         product.__typename === 'BundleProduct'
-                                        ? 'groupOptions'
-                                        : ''
-                                        }`}
+                                            ? 'groupOptions'
+                                            : ''
+                                    }`}
                                 >
                                     {wrapperPrice}
                                     <div className="optionsSizeChart">
@@ -863,14 +876,14 @@ const ProductFullDetail = props => {
                                     </div>
                                     {product.__typename ===
                                         'MpGiftCardProduct' && (
-                                            <GiftCardInformationForm
-                                                giftCardProductData={
-                                                    giftCardProductData
-                                                }
-                                                giftCardData={giftCardData}
-                                                giftCardActions={giftCardActions}
-                                            />
-                                        )}
+                                        <GiftCardInformationForm
+                                            giftCardProductData={
+                                                giftCardProductData
+                                            }
+                                            giftCardData={giftCardData}
+                                            giftCardActions={giftCardActions}
+                                        />
+                                    )}
                                 </section>
                             </div>
                         ) : null}
@@ -962,8 +975,8 @@ const ProductFullDetail = props => {
 
                             {/*pop up size chart native*/}
                             {enabledSizeChart &&
-                                display === 0 &&
-                                isMobileSite ? (
+                            display === 0 &&
+                            isMobileSite ? (
                                 <SizeChart
                                     display={display}
                                     sizeChartData={sizeChartData}
@@ -1002,19 +1015,39 @@ const ProductFullDetail = props => {
                                             }
                                             onClick={() => setShowTab(0)}
                                         >
-                                            Description
+                                            {formatMessage({
+                                                id: 'Description',
+                                                defaultMessage: 'Description'
+                                            })}
                                         </button>
                                         <button
                                             type="button"
-                                            className={`${showTab === 1
+                                            className={`${
+                                                showTab === 1
                                                     ? 'selected-button'
                                                     : 'deselected-button'
-                                                } selectedReviews`}
+                                            } selectedReviews`}
                                             onClick={() => setShowTab(1)}
-                                        >{`Reviews (${useProductData(
-                                            talonProps.productDetails.sku
-                                        ).reviewCount
-                                            })`}</button>
+                                        >
+                                            {formatMessage({
+                                                id: 'Reviews',
+                                                defaultMessage: 'Reviews'
+                                            })}
+                                            {formatMessage({ id: '(' })}{' '}
+                                            {
+                                                useProductData(
+                                                    talonProps.productDetails
+                                                        .sku
+                                                ).reviewCount
+                                            }
+                                            {formatMessage({ id: ')' })}
+                                            {/* {`Reviews (${
+                                                useProductData(
+                                                    talonProps.productDetails
+                                                        .sku
+                                                ).reviewCount
+                                            })`} */}
+                                        </button>
                                         {enabledSizeChart && display === 1 && (
                                             <button
                                                 type="button"
@@ -1025,7 +1058,10 @@ const ProductFullDetail = props => {
                                                 }
                                                 onClick={() => setShowTab(2)}
                                             >
-                                                Size Chart
+                                                {formatMessage({
+                                                    id: 'Size Chart',
+                                                    defaultMessage: 'Size Chart'
+                                                })}
                                             </button>
                                         )}
 
@@ -1100,7 +1136,11 @@ const ProductFullDetail = props => {
                                                         fontWeight: 'bold'
                                                     }}
                                                 >
-                                                    Description
+                                                    {formatMessage({
+                                                        id: 'Description',
+                                                        defaultMessage:
+                                                            'Description'
+                                                    })}
                                                 </p>
                                             </div>
                                             <div style={{ marginTop: 15 }}>
@@ -1143,11 +1183,28 @@ const ProductFullDetail = props => {
                                                     style={{
                                                         fontWeight: 'bold'
                                                     }}
-                                                >{`Reviews (${useProductData(
-                                                    talonProps
-                                                        .productDetails.sku
-                                                ).reviewCount
-                                                    })`}</p>
+                                                >
+                                                    {formatMessage({
+                                                        id: 'Reviews',
+                                                        defaultMessage:
+                                                            'Reviews'
+                                                    })}
+                                                    {formatMessage({ id: '(' })}{' '}
+                                                    {
+                                                        useProductData(
+                                                            talonProps
+                                                                .productDetails
+                                                                .sku
+                                                        ).reviewCount
+                                                    }
+                                                    {formatMessage({ id: ')' })}
+                                                    {/* {`Reviews (${
+                                                    useProductData(
+                                                        talonProps
+                                                            .productDetails.sku
+                                                    ).reviewCount
+                                                })`} */}
+                                                </p>
                                             </div>
                                             <div style={{ marginTop: 10 }}>
                                                 {showRev ? (
@@ -1186,7 +1243,11 @@ const ProductFullDetail = props => {
                                                             fontWeight: 'bold'
                                                         }}
                                                     >
-                                                        Size chart
+                                                        {formatMessage({
+                                                            id: 'Size Chart',
+                                                            defaultMessage:
+                                                                'Size Chart'
+                                                        })}
                                                     </p>
                                                 </div>
                                                 <div style={{ marginTop: 10 }}>

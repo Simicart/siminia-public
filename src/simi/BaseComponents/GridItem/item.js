@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import defaultClasses from './item.module.css';
 import { configColor } from 'src/simi/Config';
 import PropTypes from 'prop-types';
@@ -10,26 +10,26 @@ import LazyLoad from 'src/simi/BaseComponents/LazyLoad';
 import Image from 'src/simi/BaseComponents/Image';
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import Identify from 'src/simi/Helper/Identify';
-import { Heart } from 'react-feather';
+// import { Heart } from 'react-feather';
 import {
     productUrlSuffix,
-    saveDataToUrl,
+    // saveDataToUrl,
     resourceUrl,
     logoUrl
 } from 'src/simi/Helper/Url';
 import { useIntl } from 'react-intl';
-import Icon from '@magento/venia-ui/lib/components/Icon';
-import { useGridItem } from '../../talons/Category/useGridItem';
+// import Icon from '@magento/venia-ui/lib/components/Icon';
+// import { useGridItem } from '../../talons/Category/useGridItem';
 import { useHistory } from 'react-router-dom';
-import { useCartContext } from '@magento/peregrine/lib/context/cart';
-import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToListButton';
-import ProductLabel from '../../App/core/ProductFullDetail/ProductLabel';
+// import { useCartContext } from '@magento/peregrine/lib/context/cart';
+// import AddToListButton from '@magento/venia-ui/lib/components/Wishlist/AddToListButton';
+// import ProductLabel from '../../App/core/ProductFullDetail/ProductLabel';
 // const AddToListButton = React.lazy(() =>
 //     import('@magento/venia-ui/lib/components/Wishlist/AddToListButton')
 // );
-import { useWindowSize } from '@magento/peregrine';
+// import { useWindowSize } from '@magento/peregrine';
 
-const HeartIcon = <Icon size={20} src={Heart} />;
+// const HeartIcon = <Icon size={20} src={Heart} />;
 
 const Griditem = props => {
     const { lazyImage } = props;
@@ -38,13 +38,13 @@ const Griditem = props => {
     const logo_url = logoUrl();
     const { classes, styles = {} } = props;
     const history = useHistory();
-    const [{ cartId }] = useCartContext();
+    // const [{ cartId }] = useCartContext();
     const handleLink = linkInput => {
         history.push(linkInput);
     };
-    const windowSize = useWindowSize();
+    // const windowSize = useWindowSize();
 
-    const isPhoneSite = windowSize.innerWidth < 450;
+    // const isPhoneSite = windowSize.innerWidth < 450;
 
     const itemClasses = mergeClasses(defaultClasses, classes);
     const {
@@ -55,8 +55,8 @@ const Griditem = props => {
         type_id,
         small_image,
         rating_summary,
-        review_count,
-        mp_label_data
+        review_count
+        // mp_label_data
     } = item;
 
     const product_url = `/${url_key}${productUrlSuffix()}`;
@@ -72,11 +72,11 @@ const Griditem = props => {
             item_data: item
         }
     };
-    const { handleAddCart, handleAddCompare, loading, isPhone } = useGridItem({
-        location,
-        handleLink,
-        cartId
-    });
+    // const { handleAddCart, handleAddCompare, loading, isPhone } = useGridItem({
+    //     location,
+    //     handleLink,
+    //     cartId
+    // });
 
     let imageUrl = small_image;
     //comment out this line when server got issue decoding images
@@ -115,7 +115,10 @@ const Griditem = props => {
                         className={itemClasses.discountBadge}
                         style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
                     >
-                        {`-${item.price.discount_percent}%`}
+                        {/* {`-${item.price.discount_percent}%`} */}
+                        {formatMessage({ id: '-' })}
+                        {item.price.discount_percent}
+                        {formatMessage({ id: '%' })}
                     </div>
                 ) : (
                     ''
@@ -166,11 +169,13 @@ const Griditem = props => {
                             classes={itemClasses}
                         />
                         <span className={itemClasses['item-review-count']}>
-                            ({review_count}{' '}
+                            {formatMessage({ id: `(` })}
+                            {/* ({review_count}{' '} */}
+                            {review_count}
                             {review_count
                                 ? formatMessage({ id: 'Reviews' })
                                 : formatMessage({ id: 'Review' })}
-                            )
+                            {formatMessage({ id: `)` })}
                         </span>
                     </div>
                 ) : (

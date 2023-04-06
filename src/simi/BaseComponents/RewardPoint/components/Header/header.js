@@ -16,7 +16,7 @@ const Header = props => {
 
     const icon = pointIcon ? (
         <span>
-            <img src={pointIcon} />
+            <img alt='pointIcon' src={pointIcon} />
         </span>
     ) : null;
 
