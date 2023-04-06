@@ -240,6 +240,7 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                     sku: FBT_Brief_Data[i].sku,
                     quantity: parseInt(renderBriefInfoData[i].quantity) > 0 ? parseInt(renderBriefInfoData[i].quantity) : 1
                 })
+                listSavedQuantity.push(renderBriefInfoData[i].quantity)
             }
             if (FBT_Brief_Data[i].__typename === 'ConfigurableProduct') {
                 listConfigurableProducts.push(FBT_Brief_Data[i])
@@ -250,6 +251,7 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
         if (listSimpleProducts.length > 0) {
             setConfigurableProduct(listConfigurableProducts)
             setSavedQuantity(listSavedQuantity)
+            setSavedProduct(FBT_Brief_Data)
             addProductsToCart({
                 variables: {
                     cartId: cart_id.slice(1, cart_id.length - 1),
