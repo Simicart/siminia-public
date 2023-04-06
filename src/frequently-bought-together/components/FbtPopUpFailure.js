@@ -10,8 +10,8 @@ import ADD_PRODUCTS_TO_CART from '../talons/useAddProductsToCart';
 import '../styles/styles.scss'
 import { FormattedMessage } from 'react-intl';
 
-const FbtPopUpFailure = ({ isOpen, setIsOpen, setOpenModalFailure, addCartData, setAddCartData,
-    configurableProduct, setOpenPopUp, fbt_config_data, savedQuantity, savedProduct, setOpenPopUpFailure }) => {
+const FbtPopUpFailure = ({ isOpen, setIsOpen, setOpenModalFailure, addCartData, setAddCartData, setOpenModal,
+    configurableProduct, setOpenPopUp, fbt_config_data, savedQuantity, savedProduct }) => {
 
     Modal.setAppElement('#root')
 
@@ -52,7 +52,7 @@ const FbtPopUpFailure = ({ isOpen, setIsOpen, setOpenModalFailure, addCartData, 
             setAddCartData(data)
             if (data.addProductsToCart.user_errors.length === 0) {
                 setOpenModalFailure(false)
-                setOpenPopUpFailure(false)
+                setIsOpen(false)
                 setOpenModal(true)
                 setOpenPopUp(true)
             }

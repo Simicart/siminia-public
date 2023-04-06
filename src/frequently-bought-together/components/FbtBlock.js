@@ -520,10 +520,8 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
 
             {openModalFailure && (<FbtPopUpFailure isOpen={openPopUpFailure} setIsOpen={setOpenPopUpFailure} setOpenModalFailure={setOpenModalFailure}
                 fbt_config_data={FBT_Config_Data} FBT_Brief_Data={FBT_Brief_Data} popUpType={popUpType} addCartData={addCartData}
-                configurableProduct={configurableProduct} setOpenPopUp={setOpenPopUp}
-                setAddCartData={setAddCartData} savedQuantity={savedQuantity}
-                savedProduct={savedProduct} setOpenPopUpFailure={setOpenPopUpFailure}></FbtPopUpFailure>)}
-
+                configurableProduct={configurableProduct} setOpenPopUp={setOpenPopUp} setOpenModal={setOpenModal}
+                setAddCartData={setAddCartData} savedQuantity={savedQuantity} savedProduct={savedProduct}></FbtPopUpFailure>)}
 
             {openModalConfigurable && (<FbtPopUpConfigurable isOpen={openPopUpConfigurable} setIsOpen={setOpenPopUpConfigurable}
                 setOpenModalConfigurable={setOpenModalConfigurable} configurableProduct={configurableProduct} setOpenPopUp={setOpenPopUp}
