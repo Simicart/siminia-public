@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import Identify from 'src/simi/Helper/Identify';
 import WishList from 'src/simi/BaseComponents/Icon/WishList';
 import MenuIcon from 'src/simi/BaseComponents/Icon/Menu';

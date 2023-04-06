@@ -1,10 +1,8 @@
-import React, { useMemo, useEffect } from 'react';
+import React from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
 import defaultClasses from './leftMenu.module.css';
 import { useStyle } from '@magento/venia-ui/lib/classify.js';
 import {
-    Trash2,
-    User,
     Trello,
     Heart,
     Tag,

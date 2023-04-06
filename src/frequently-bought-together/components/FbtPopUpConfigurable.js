@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { X } from 'react-feather';
+import { X, ChevronLeft, ChevronRight } from 'react-feather';
 import Modal from 'react-modal';
 import { useHistory } from 'react-router-dom';
-import { ChevronLeft, ChevronRight } from "react-feather";
 import TinySlider from "tiny-slider-react";
 import 'tiny-slider/dist/tiny-slider.css';
 import '../styles/styles.scss'
+import { FormattedMessage } from 'react-intl';
 
 const FbtPopUpConfigurable = ({ isOpen, setIsOpen, setOpenModalConfigurable, configurableProduct, addCartData, fbt_config_data }) => {
 
@@ -103,9 +103,13 @@ const FbtPopUpConfigurable = ({ isOpen, setIsOpen, setOpenModalConfigurable, con
                     <X size={18}></X>
                 </button>
                 <div className='fbt-pop-up-configurable-content-wrapper'>
-                    <p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>Shopping Cart</p>
+                    <p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>
+                        <FormattedMessage id='Shopping Cart' defaultMessage='Shopping Cart'></FormattedMessage>
+                    </p>
                     <p style={{ textAlign: 'center', marginTop: 5, fontSize: 16, marginBottom: 5 }}>
-                        You have added the following item to the cart:</p>
+                        <FormattedMessage id='You have added the following item to the cart:'
+                            defaultMessage='You have added the following item to the cart:'></FormattedMessage>
+                    </p>
                     <div className='fbt-pop-up-configurable-slider'>
                         <div style={{ position: 'relative' }}>
                             <button className="fbt-pop-up-configurable-slider-prev">
@@ -117,28 +121,40 @@ const FbtPopUpConfigurable = ({ isOpen, setIsOpen, setOpenModalConfigurable, con
                             <TinySlider settings={settings}>
                                 {configurableProduct.map((element, index) => (
                                     <div key={index} style={{ textAlign: 'center', border: '1px solid lightgray' }}>
-                                        <img
-                                            className={`tns-lazy-img`}
-                                            src={element.small_image.url ? element.small_image.url : element.small_image}
-                                            data-src={element.small_image.url ? element.small_image.url : element.small_image}
-                                            alt=""
-                                            style={imgStyles}
-                                            onClick={() => history.push(`/${element.url_key}.html`)}
-                                        />
-                                        <div style={{ height: 32 }}><a dangerouslySetInnerHTML={{ __html: element.name }}
+                                        <a href={`/${element.url_key}.html`}>
+                                            <img
+                                                className={`tns-lazy-img`}
+                                                src={element.small_image.url ? element.small_image.url : element.small_image}
+                                                data-src={element.small_image.url ? element.small_image.url : element.small_image}
+                                                alt=""
+                                                style={imgStyles}
+                                            />
+                                        </a>
+                                        <div><a dangerouslySetInnerHTML={{ __html: element.name }}
                                             href={`/${element.url_key}.html`} className='fbt-pop-up-product-name'></a></div>
-                                        {product_price === '1' && <p style={{ fontWeight: 'bold', fontSize: 16, marginTop: 20 }}>{`$${element.price.regularPrice.amount.value.toFixed(2)}`}</p>}
+                                        {product_price === '1' && <p style={{ fontWeight: 'bold', fontSize: 16 }}>
+                                            <FormattedMessage id={`$${element.price.regularPrice.amount.value.toFixed(2)}`} 
+                                            defaultMessage={`$${element.price.regularPrice.amount.value.toFixed(2)}`}></FormattedMessage>
+                                        </p>}
                                     </div>))}
                             </TinySlider>
                         </div>
                     </div>
 
-                    {mini_cart === '1' && (<span style={{ textAlign: 'center', fontSize: 16}}>There are
-                        <a href='/cart' className='fbt-pop-up-configurable-cart'>{` ${addCartData ? addCartData.addProductsToCart.cart.total_quantity : cartData.cart.total_quantity} items`}</a> in your cart</span>)}
+                    {mini_cart === '1' && (<span style={{ textAlign: 'center', fontSize: 16 }}>
+                        <FormattedMessage id='There are' defaultMessage='There are'></FormattedMessage>
+                        <a href='/cart' className='fbt-pop-up-configurable-cart'>
+                            <FormattedMessage id='number items'
+                                defaultMessage={` ${addCartData ? addCartData.addProductsToCart.cart.total_quantity : cartData.cart.total_quantity} items`}></FormattedMessage>
+                        </a>
+                        <FormattedMessage id=' in your cart' defaultMessage=' in your cart'></FormattedMessage></span>)}
                     {mini_cart === '1' && (<p style={{ textAlign: 'center', fontSize: 16 }}>
-                        {`Cart subtotal: $${addCartData ? addCartData.addProductsToCart.cart.prices.subtotal_excluding_tax.value.toFixed(2) : cartData.cart.prices.subtotal_excluding_tax.value.toFixed(2)}`}</p>)}
+                        <FormattedMessage id='Sub Total' defaultMessage={`Cart subtotal: $${addCartData ? addCartData.addProductsToCart.cart.prices.subtotal_excluding_tax.value.toFixed(2) : cartData.cart.prices.subtotal_excluding_tax.value.toFixed(2)}`}></FormattedMessage>
+                    </p>)}
                     {mini_checkout === '1' && (<a style={{ textAlign: 'center', fontSize: 16 }} className='fbt-pop-up-configurable-check-out'
-                        href='/checkout'>Go to checkout</a>)}
+                        href='/checkout'>
+                        <FormattedMessage id='Go to checkout' defaultMessage='Go to checkout'></FormattedMessage>
+                    </a>)}
 
                     <div style={{
                         display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly',
@@ -152,7 +168,7 @@ const FbtPopUpConfigurable = ({ isOpen, setIsOpen, setOpenModalConfigurable, con
                             className='fbt-pop-up-configurable-continue' onClick={() => {
                                 setIsOpen(false)
                                 setTimeout(() => {
-                                    setOpenModal(false)
+                                    setOpenModalConfigurable(false)
                                 }, 500)
                             }}>{active_countdown === '1' ? `${btn_text_continue} (${remainingCountdown})` : `${btn_text_continue}`}
                         </button>)}

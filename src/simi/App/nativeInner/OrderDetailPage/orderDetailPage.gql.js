@@ -54,6 +54,7 @@ const GET_ORDER_DETAIL = gql`
                 order_delivery_date {
                   time_slot_price {
                       value
+                      currency
                   }
               }`
                   : ''

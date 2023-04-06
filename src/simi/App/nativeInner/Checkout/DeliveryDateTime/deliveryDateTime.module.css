@@ -1,5 +1,12 @@
 .root {
+    border-width: 1px;
+    border-radius: 0;
+    border: 1px solid rgb(var(--venia-global-color-gray-400));
+    border-radius: 0.375rem;
+    padding: 2rem;
+    margin-top: 1.5rem;
 }
+
 .deliveryDate div[class*='react-datepicker-popper'] {
     z-index: 10;
 }
@@ -40,4 +47,7 @@
     letter-spacing: 0;
     line-height: 22px;
     margin-top: 16px;
+}
+.btnApply:disabled{
+    opacity: 0.7;
 }

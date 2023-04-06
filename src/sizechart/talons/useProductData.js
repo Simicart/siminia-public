@@ -16,7 +16,7 @@ const useProductData = (filter) => {
   const [id, setId] = useState(0)
   const [reviewCount, setReviewCount] = useState(0)
 
-  const { data, loading, error }= useQuery(GET_PRODUCT_DATA, {
+  useQuery(GET_PRODUCT_DATA, {
     variables: { filter },
     onCompleted: (data) => {
       setId(data.products.items[0].id)

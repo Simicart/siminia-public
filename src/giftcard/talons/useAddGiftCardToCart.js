@@ -1,4 +1,4 @@
-import { useQuery, gql } from '@apollo/client';
+import { gql } from '@apollo/client';
 
 const ADD_GIFT_CARD_TO_CART = gql`
 mutation addGiftCardProductsToCart($cart_id: String!, $quantity: Float!, $sku: String!, $bss_giftcard_amount: String!,
