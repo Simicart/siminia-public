@@ -85,13 +85,13 @@ const PriceSummary = props => {
 
     const totalPriceLabel = isCheckout
         ? formatMessage({
-              id: 'Total',
-              defaultMessage: 'Total'
-          })
+            id: 'Total',
+            defaultMessage: 'Total'
+        })
         : formatMessage({
-              id: 'Estimated Total',
-              defaultMessage: 'Estimated Total'
-          });
+            id: 'Estimated Total',
+            defaultMessage: 'Estimated Total'
+        });
 
 
     const proceedToCheckoutButton = !isCheckout ? (
@@ -166,12 +166,15 @@ const PriceSummary = props => {
                     data={rewardPoint}
                     currencyCode={subtotal.currency}
                 />
-                {giftCodeData && (giftCodeData.map((element) => 
-                <>
-                    <span style={{maxWidth: 80}}>{element.code}</span>
-                    <span style={{textAlign: 'right'}}>{`-$${element.value}.00`}</span>
-                </>
+                {giftCodeData && (giftCodeData.map((element) =>
+                    <>
+                        <span style={{ maxWidth: 80 }}>{element.code}</span>
+                        <span style={{ textAlign: 'right' }}>{`-$${element.value}.00`}</span>
+                    </>
                 ))}
+            </div>
+
+            <div className={classes.abs_order_total}>
                 <span className={classes.totalLabel}>{totalPriceLabel}</span>
                 <span
                     style={{ color: configColor.price_color }}
@@ -180,7 +183,7 @@ const PriceSummary = props => {
                     <Price value={total.value} currencyCode={total.currency} />
                 </span>
             </div>
-            {proceedToCheckoutButton}
+
         </div>
     );
 };

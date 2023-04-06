@@ -150,9 +150,18 @@ const Main = props => {
                 
 
                 <div id="data-breadcrumb" className={classes.breadcrumb} />
-                <div id="siminia-main-page">{props.children}</div>
+                <div id="siminia-main-page" style={location.pathname==='/cart' ? {
+                    position: 'relative',
+                    backgroundColor: '#f1f1f1',
+                    width: '100%',
+                    height: '100%',
+                    minHeight: '100vh',
+                    padding: '80px 0'
+                } : {}}>{props.children}</div>
                 
                 {/*<FooterNative />*/}
+
+                {/*check location*/}
 
                 {location.pathname === '/cart' ? (
                     <FooterAbs></FooterAbs>

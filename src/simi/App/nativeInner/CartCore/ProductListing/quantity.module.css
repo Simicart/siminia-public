@@ -12,13 +12,13 @@
 .root button {
     height: 45px;
     width: 45px;
-    background-color: #fff;
+    background-color: white;
 }
 .root button:nth-child(2) {
-    background-color: var(--venia-global-color-button);
+    background-color: white;
 }
 .root button:last-child {
-    border: 1px solid #979797;
+    border: none;
 }
 .root input {
     transition: all 0.2s ease-out;
@@ -53,7 +53,7 @@
     display: inline-flex;
     height: 2rem;
     justify-content: center;
-    stroke: white;
+    stroke: #656565;
     width: 2rem;
     border: none;
 }

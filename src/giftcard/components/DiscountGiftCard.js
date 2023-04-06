@@ -30,15 +30,6 @@ const DiscountGiftCard = ({ location }) => {
     const orderGiftCardId = useOrderedGiftCardId()
     const [applyButtonTitle, setApplyButtonTitle] = useState('APPLY')
 
-    if (myGiftCards.loading) return <></>
-    if (myGiftCards.error) return <p>
-        <FormattedMessage id={`Error! ${myGiftCards.error.message}`} defaultMessage={`Error! ${myGiftCards.error.message}`}></FormattedMessage>
-        </p>
-    if (orderGiftCardId.loading) return <></>
-    if (orderGiftCardId.error) return <p>
-        <FormattedMessage id={`Error! ${orderGiftCardId.error.message}`} defaultMessage={`Error! ${orderGiftCardId.error.message}`}></FormattedMessage>
-        </p>
-
     const handleCodeChange = (e) => {
         setGiftCode(e.target.value)
     }

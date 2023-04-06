@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Check } from 'react-feather';
+import { Check, ChevronLeft, ChevronRight } from 'react-feather';
 import { useCartPage } from 'src/simi/App/nativeInner/talons/CartPage/useCartPage.js';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import { useToasts } from '@magento/peregrine';
@@ -51,6 +51,11 @@ const CartPage = props => {
         shouldShowLoadingIndicator,
         wishlistSuccessProps,
     } = talonProps;
+    const [width, setWidth] = useState(window.innerWidth)
+
+    window.addEventListener('resize', () => {
+        setWidth(window.innerWidth)
+    })
 
     const [giftCodeData, setGiftCodeData] = useState([])
    
@@ -76,7 +81,7 @@ const CartPage = props => {
             history={history}
         />
     ) : (
-        <h3>
+        <h3 style={{marginTop: 20}}>
             <FormattedMessage
                 id={'There are no items in your cart.'}
                 defaultMessage={'There are no items in your cart.'}
@@ -110,8 +115,9 @@ const CartPage = props => {
                     defaultMessage: 'Cart'
                 })}
             </StoreTitle>
+
             <div className={classes.heading_container}>
-                <h1 className={classes.heading}>
+                {/*<h1 className={classes.heading}>
                     <FormattedMessage
                         id={'SHOPPING CART'}
                         defaultMessage={'Shopping Cart'}
@@ -122,19 +128,55 @@ const CartPage = props => {
                 </h1>
                 <div className={classes.stockStatusMessageContainer}>
                     <StockStatusMessage cartItems={cartItems} />
-                </div>
+                </div>*/}
+                <p className={classes.heading}>Shopping Cart</p>
+                {hasItems && (<button className={classes.abs_checkout_btn} onClick={() => history.push('/checkout')}>
+                    <p style={{ margin: 0 }}>Checkout</p>
+                    <ChevronRight size={15} style={{ marginTop: 3 }}></ChevronRight>
+                </button>)}
             </div>
+
             <div className={classes.body}>
                 <div className={classes.items_container}>{productListing}</div>
+
                 <div className={classes.price_adjustments_container}>
                     {priceAdjustments}
                 </div>
+
                 <div className={classes.summary_container}>
                     <div className={classes.summary_contents}>
                         {priceSummary}
                     </div>
                 </div>
+
             </div>
+
+            {hasItems && (<div className={classes.abs_nav_btn}>
+                    {width > 992 ? (
+                        <>
+                            <button className={classes.abs_browsing_btn} onClick={() => history.push('/')}>
+                                <ChevronLeft size={15} style={{ marginTop: 3 }}></ChevronLeft>
+                                <p style={{ margin: 0 }}>Back to browsing</p>
+                            </button>
+                            <button className={classes.abs_checkout_btn} onClick={() => history.push('/checkout')}>
+                                <p style={{ margin: 0 }}>Checkout</p>
+                                <ChevronRight size={15} style={{ marginTop: 3 }}></ChevronRight>
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <button className={classes.abs_checkout_btn} onClick={() => history.push('/checkout')}>
+                                <p style={{ margin: 0 }}>Checkout</p>
+                                <ChevronRight size={15} style={{ marginTop: 3 }}></ChevronRight>
+                            </button>
+                            <button className={classes.abs_browsing_btn} onClick={() => history.push('/')}>
+                                <ChevronLeft size={15} style={{ marginTop: 3 }}></ChevronLeft>
+                                <p style={{ margin: 0 }}>Back to browsing</p>
+                            </button>
+                        </>
+                    )}
+
+            </div>)}
         </div>
     </GiftCodeCartContext.Provider>
     );

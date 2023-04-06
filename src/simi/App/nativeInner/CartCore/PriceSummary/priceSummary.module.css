@@ -1,6 +1,13 @@
 .root {
-    padding: 30px 30px;
+    padding: 30px 0 30px 60px;
 }
+
+@media only screen and (max-width: 960px) {
+    .root {
+        padding: 30px 10px;
+    }
+}
+
 .title {
     text-transform: uppercase;
     color: #111111;
@@ -17,9 +24,10 @@
 
 .lineItems {
     display: grid;
-    grid-gap: 0.75rem;
+    grid-gap: 2.5rem;
     grid-template-columns: 1fr auto;
-    color: #111111;
+    text-transform: uppercase;
+    color: #434343;
     font-size: 14px;
     letter-spacing: 0;
     line-height: 14px;
@@ -29,7 +37,8 @@
 
 .lineItemLabel {
     justify-self: start;
-    color: #111111;
+    text-transform: uppercase;
+    color: #434343;
     font-size: 14px;
     letter-spacing: 0;
     line-height: 14px;
@@ -38,30 +47,30 @@
 
 .price {
     justify-self: end;
-    font-size: 14px;
     line-height: 14px;
+    color: #434343;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .totalLabel {
     composes: lineItemLabel;
     font-weight: var(--venia-global-fontWeight-semibold);
-    color: #111111;
-    font-size: 20px;
-    font-weight: 600;
+    color: #d30f8b;
+    font-size: 16px;
+    font-weight: 700;
     letter-spacing: 0;
-    line-height: 14px;
-    margin-top: 10px;
+    margin-top: 30px;
 }
 
 .totalPrice {
     composes: price;
     font-weight: var(--venia-global-fontWeight-semibold);
-    color: #e02020;
-    font-size: 20px;
-    font-weight: 600;
+    color: #d30f8b !important;
+    font-size: 16px;
+    font-weight: 700;
     letter-spacing: 0;
-    line-height: 14px;
-    margin-top: 10px;
+    margin-top: 30px;
 }
 
 .priceUpdating {
@@ -69,12 +78,12 @@
     opacity: 0;
 }
 
-.checkoutButton_container {
+/*.checkoutButton_container {
     align-items: center;
     display: inline-flex;
     justify-content: center;
     margin-top: 44px;
-    /* min-height: 5.5rem; */
+    /* min-height: 5.5rem;
     width: 100%;
 }
 .checkoutButton_container > button {
@@ -110,4 +119,12 @@
         padding: 15px 10px 0 10px;
         margin-bottom: 50px;
     }
+}*/
+
+.abs_order_total {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 30px;
+    border-top: 1px solid #bbb;
 }

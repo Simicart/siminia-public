@@ -86,8 +86,7 @@ const Product = props => {
     const itemLink = useMemo(
         () =>
             resourceUrl(
-                `${
-                    item.__typename === 'BssGiftCardItem' ? 'giftcard' : ''
+                `${item.__typename === 'BssGiftCardItem' ? 'giftcard' : ''
                 }/${urlKey}${urlSuffix || ''}`
             ),
         [urlKey, urlSuffix]
@@ -95,9 +94,9 @@ const Product = props => {
     const stockStatusMessage =
         stockStatus === 'OUT_OF_STOCK'
             ? formatMessage({
-                  id: 'product.outOfStock',
-                  defaultMessage: 'Out-of-stock'
-              })
+                id: 'product.outOfStock',
+                defaultMessage: 'Out-of-stock'
+            })
             : '';
     const optionText = [];
     if (item.configurable_options && item.configurable_options.length) {
@@ -242,31 +241,34 @@ const Product = props => {
             <span className={classes.errorText}>{errorMessage}</span>
             {loading}
             <div className={itemClassName}>
-                <Link to={itemLink} className={classes.imageContainer}>
-                    <Image
-                        alt={name}
-                        classes={{
-                            root: classes.imageRoot,
-                            image: classes.image
-                        }}
-                        width={IMAGE_SIZE}
-                        resource={image}
-                    />
-                    <ProductLabel
-                        page={SHOPPING_CART_PAGE}
-                        productLabel={item?.product?.product_label}
-                        productOutStock={
-                            stockStatus === 'OUT_OF_STOCK' ? true : false
-                        }
-                    />
-                </Link>
                 <div className={classes.details}>
+                    <Link to={itemLink} className={classes.imageContainer}>
+                        <Image
+                            alt={name}
+                            classes={{
+                                root: classes.imageRoot,
+                                image: classes.image
+                            }}
+                            width={IMAGE_SIZE}
+                            resource={image}
+                        />
+                        <ProductLabel
+                            page={SHOPPING_CART_PAGE}
+                            productLabel={item?.product?.product_label}
+                            productOutStock={
+                                stockStatus === 'OUT_OF_STOCK' ? true : false
+                            }
+                        />
+                    </Link>
                     <div className={classes.name}>
                         <Link to={itemLink}>{name}</Link>
                     </div>
+                </div>
+
+                <div className={classes.price}>
                     {itemOption}
                     <span
-                        style={{ color: configColor.price_color }}
+                        style={{ color: '#273896' }}
                         className={classes.price}
                     >
                         <span className={classes.labelPrice} />
@@ -282,42 +284,42 @@ const Product = props => {
                     <span className={classes.stockStatusMessage}>
                         {stockStatusMessage}
                     </span>
-                    <div className={classes.quantity}>
-                        <span className={classes.title}>
-                            {formatMessage({ id: 'Quantity' })}
-                        </span>
-                        <Quantity
-                            itemId={item.id}
-                            initialValue={quantity}
-                            onChange={handleUpdateItemQuantity}
-                        />
-                    </div>
-                    <span
-                        style={{ color: configColor.price_color }}
-                        className={classes.priceTotal}
-                    >
-                        <span className={classes.labelPrice} />
-                        {showExcludedTax ? (
-                            <Price
-                                currencyCode={item.prices.row_total.currency}
-                                value={item.prices.row_total.value}
-                            />
-                        ) : (
-                            <Price
-                                currencyCode={
-                                    item.prices.row_total_including_tax.currency
-                                }
-                                value={
-                                    item.prices.row_total_including_tax.value
-                                }
-                            />
-                        )}
-                        <FormattedMessage
-                            id={'product.price'}
-                            defaultMessage={' ea.'}
-                        />
-                    </span>
                 </div>
+
+                <div className={classes.quantity}>
+                    <Quantity
+                        itemId={item.id}
+                        initialValue={quantity}
+                        onChange={handleUpdateItemQuantity}
+                    />
+                </div>
+
+                <span
+                    style={{ color: '#273896' }}
+                    className={classes.priceTotal}
+                >
+                    <span className={classes.labelPrice} />
+                    {showExcludedTax ? (
+                        <Price
+                            currencyCode={item.prices.row_total.currency}
+                            value={item.prices.row_total.value}
+                        />
+                    ) : (
+                        <Price
+                            currencyCode={
+                                item.prices.row_total_including_tax.currency
+                            }
+                            value={
+                                item.prices.row_total_including_tax.value
+                            }
+                        />
+                    )}
+                    <FormattedMessage
+                        id={'product.price'}
+                        defaultMessage={' ea.'}
+                    />
+                </span>
+
                 <Kebab
                     classes={{
                         root: classes.kebab

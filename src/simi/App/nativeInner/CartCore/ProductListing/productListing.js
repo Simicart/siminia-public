@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, Suspense } from 'react';
+import React, { Fragment, useCallback, Suspense, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useProductListing } from 'src/simi/App/nativeInner/talons/CartPage/useProductListing';
 import DEFAULT_OPERATIONS from './productListing.gql';
@@ -32,6 +32,12 @@ const ProductListing = props => {
         fetchCartDetails,
         history
     } = props;
+
+    const [width, setWidth] = useState(window.innerWidth)
+
+    window.addEventListener('resize', () => {
+        setWidth(window.innerWidth)
+    })
 
     const talonProps = useProductListing({ operations: DEFAULT_OPERATIONS });
 
@@ -76,6 +82,12 @@ const ProductListing = props => {
 
         return (
             <Fragment>
+                {width > 992 && (<div className={classes.abs_list_product_header}>
+                        <div style={{marginLeft: 10}}>Product Name</div>
+                        <div style={{textAlign: "center" }}>Price</div>
+                        <div style={{textAlign: "center" }}>Quantity</div>
+                        <div style={{textAlign: "center" }}>Total</div>
+                </div>)}
                 <ul className={classes.root}>{productComponents}</ul>
                 <ProductListingTableActions
                     handleLink={handleLink}
