@@ -267,9 +267,9 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                         <p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>
                             <FormattedMessage id='Shopping Cart' defaultMessage='Shopping Cart'></FormattedMessage>
                         </p>
-                        {addCartData && (<p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>
+                        {addCartData?.addProductsToCart.user_errors.length===0 && (<p style={{ textAlign: 'center', marginTop: 5, fontSize: 16 }}>
                             <FormattedMessage id='You have added the following items to cart:'
-                                defaultMessage='you have added the following items to cart:'></FormattedMessage>
+                                defaultMessage='You have added the following items to cart:'></FormattedMessage>
                         </p>)}
                         <div className={parseInt(item_popup_slide) < FBT_Brief_Data.filter((element) => element.__typename === 'SimpleProduct').length
                             ? 'fbt-pop-up-slider' : 'fbt-pop-up-no-slider'}>
@@ -308,8 +308,8 @@ const FbtPopUp = ({ isOpen, setIsOpen, setOpenModal, FBT_Brief_Data, popUpType, 
                                 {configurableProduct.map((element, index) => (
                                     <div className='fbt-pop-up-conf-wrapper'>
                                         <p style={{ color: 'red', marginTop: 5, marginLeft: 5, fontSize: 16 }}>
-                                            <FormattedMessage id='You need to choose options for your item.'
-                                            defaultMessage='You need to choose options for your item.'></FormattedMessage>
+                                            <FormattedMessage id={addCartData?.addProductsToCart.user_errors.length>0 ? 'The requested qty is not available' : 'You need to choose options for your item'}
+                                            defaultMessage={addCartData?.addProductsToCart.user_errors.length>0 ? 'The requested qty is not available' : 'You need to choose options for your item'}></FormattedMessage>
                                         </p>
                                         <div className={isMobile ? 'fbt-pop-up-conf-info-mobile' : 'fbt-pop-up-conf-info'}>
                                             <a href={`/${element.url_key}.html`}>
