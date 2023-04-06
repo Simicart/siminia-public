@@ -6,6 +6,7 @@ import { formatDate } from '../../utils';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import defaultClasses from './transaction.module.css';
 import LeftMenu from 'src/simi/App/core/LeftMenu/leftMenu';
+import Pagination from '@magento/venia-ui/lib/components/Pagination';
 
 const Transaction = props => {
     const { noTitle } = props;
@@ -13,9 +14,9 @@ const Transaction = props => {
     const { formatMessage } = useIntl();
     const classes = useStyle(defaultClasses, props.classes);
 
-    const talonProps = useTransaction({});
+    const talonProps = useTransaction({noTitle});
 
-    const { items, isDetail, detailData } = talonProps;
+    const { items, isDetail, detailData, pageControl, setPageSize, pageSize } = talonProps;
 
     const thead = (
         <thead>
@@ -77,7 +78,7 @@ const Transaction = props => {
         return (
             <tr key={index}>
                 <td data-th={formatMessage({id: "Point", description: "Point"})}>{item.point}</td>
-                {noTitle && <td data-th={formatMessage({id: "Balance", description: "Balance"})} />}
+                {noTitle && <td data-th={formatMessage({id: "Balance", description: "Balance"})} >{item.balance}</td>}
                 <td data-th={formatMessage({id: "Note", description: "Note"})}>{item.note}</td>
                 <td data-th={formatMessage({id: "Created by", description: "Created by"})}>{item.created_by}</td>
                 <td data-th={formatMessage({id: "Transaction type", description: "Transaction type"})}>{item.action}</td>
@@ -181,6 +182,29 @@ const Transaction = props => {
                             />
                         </div>
                         {content}
+                        <div className={classes.pagination}>
+                            <Pagination pageControl={pageControl} />
+                        </div>
+                        <div className={classes.pageSize}>
+                            {`Show `}
+                            <span className={classes.pageSizeInput}>
+                                <select
+                                    onChange={e => {
+                                        setPageSize(e.target.value);
+                                        pageControl.setPage(1);
+                                    }}
+                                    value={pageSize}
+                                >
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                </select>
+                            </span>
+                            {formatMessage({
+                                id: 'perPage',
+                                defaultMessage: ' per page'
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>
