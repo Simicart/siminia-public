@@ -12,7 +12,7 @@ export const useTransaction = (props) => {
     const params = useParams()
     const operations = mergeOperations(defaultOperations, props.operations);
     const rewardPointActive = getRewardPointActive();
-    const [pageSize, setPageSize] = useState(noTitle ? 5 : 3);
+    const [pageSize, setPageSize] = useState(noTitle ? 5 : 10);
     const [paginationValues, paginationApi] = usePagination();
     const { currentPage, totalPages } = paginationValues;
     const { setCurrentPage, setTotalPages } = paginationApi;
