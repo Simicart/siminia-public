@@ -58,8 +58,7 @@
     grid-template-areas:
         'name name name'
         'options options options'
-        'price price price'
-        'quantity quantity quantity';
+        'price quantity';
     grid-template-columns: 1fr 1fr max-content;
     line-height: 1.5;
 }
@@ -146,8 +145,8 @@
     font-size: var(--venia-typography-body-S-fontSize);
     display: grid;
     grid-gap: 0.125rem;
-    font-weight: 300;
-    color: rgba(18, 18, 18);
+    font-weight: 500;
+    color: #383D45;
     letter-spacing: 0.06rem;
 }
 
@@ -158,7 +157,7 @@
 }
 
 .optionLabel span:first-of-type {
-    color: #111111;
+    color: #383D45;
     font-size: 14px;
     letter-spacing: 0;
     line-height: 19px;
@@ -169,7 +168,7 @@
 
 .optionLabel span {
     margin-inline-start: 3px;
-    color: #111111;
+    color: #383D45;
     font-size: 14px;
     letter-spacing: 0;
     line-height: 19px;

@@ -191,7 +191,7 @@ export const PriceSummary = props => {
                         <PriceWithColor value={total.value} currencyCode={total.currency}/>
                     </span>
                 </div>
-                {proceedToCheckoutButton}
+                {/*proceedToCheckoutButton*/}
             </div>
         </React.Fragment>
         

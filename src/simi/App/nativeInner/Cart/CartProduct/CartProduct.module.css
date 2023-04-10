@@ -2,26 +2,27 @@
     display: grid;
     row-gap: 0.5rem;
     padding-top: 19px;
-    padding-bottom: 21px;
-    border-bottom: 1px solid #F2F2F3;
 }
 
 .name {
-    color: #4F4F4F;
-    font-size: 0.8rem;
+    color: #383D45;
+    font-size: 1rem;
     letter-spacing: 0;
     line-height: 0.9rem;
     flex: 1;
+    font-weight: bold;
+    margin-top: 5px;
     padding-right: 5px;
 }
 
 .price {
     white-space: nowrap;
-    color: #150826;
+    color: #383D45;
     font-size: 0.8rem;
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: 0;
     line-height: 1rem;
+    margin-top: 5px;
 }
 
 .sideTools {
@@ -34,13 +35,13 @@
 
 .lowerTools {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .optionLabel, .optionLabel > * {
-    color: #C3BEBE;
+    color: #383D45;
     font-size: 0.7rem;
+    font-weight: 500;
     word-break: break-all;
 }
 
@@ -51,7 +52,6 @@
 .deleteIcon {
     cursor: pointer;
 }
-
 
 .imageContainer {
     grid-area: image;
@@ -93,16 +93,17 @@
 
 .upperTools {
     display: flex;
-    align-items: baseline;
     justify-content: space-between;
 }
-
 
 .item {
     align-items: start;
     display: grid;
     grid-template-areas: 'image details remove';
     grid-template-columns: 100px 1fr min-content;
+    background-image: linear-gradient(#8AD5FF 100%,#5CC5FF 100%);
+    padding: 15px;
+    border-radius: 8px;
 }
 
 .item > li > button > span > svg {
@@ -127,10 +128,9 @@
     margin-left: 8px;
 }
 
-
 .quantityContainer {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     margin-top: 10px;
 }
 
@@ -203,7 +203,6 @@
         justify-content: center;
         width: 96px;
         height: 104px;
-        border: solid 1px #EFEFEF;
         border-radius: 8px;
     }
 

@@ -2,8 +2,10 @@ import React, { Fragment, useEffect } from 'react';
 
 //abs import Header
 import HeaderAbs from '../../../../abenson-cart/components/Header'
+import HeaderAbsNative from '../../../../abenson-cart/components/HeaderNative';
 //abs import Footer
 import FooterAbs from '../../../../abenson-cart/components/Footer'
+import FooterAbsNative from '../../../../abenson-cart/components/FooterNative';
 
 import Header from '../Header';
 import FooterNative from '../FooterNative';
@@ -36,7 +38,7 @@ const Main = props => {
     //get location
     const location = useLocation()
 
-    const isPhone = windowSize.innerWidth <= 780;
+    const isPhone = windowSize.innerWidth < 500;
     const faviconUrl = storeConfig
         ? storeConfig['storeConfig']['head_shortcut_icon']
         : null;
@@ -142,15 +144,12 @@ const Main = props => {
 
                 {/*check location*/}
 
-                {location.pathname === '/cart' ? (
-                    <HeaderAbs></HeaderAbs>
-                ) : (
-                    <Header storeConfig={storeConfig} />
-                )}
-                
+                {location.pathname === '/cart' && isPhone && (<HeaderAbsNative></HeaderAbsNative>)}
+                {location.pathname === '/cart' && !isPhone && (<HeaderAbs></HeaderAbs>)}
+                {location.pathname !== '/cart' && (<Header storeConfig={storeConfig} />)}
 
                 <div id="data-breadcrumb" className={classes.breadcrumb} />
-                <div id="siminia-main-page" style={location.pathname==='/cart' ? {
+                <div id="siminia-main-page" style={location.pathname==='/cart' && !isPhone ? {
                     position: 'relative',
                     backgroundColor: '#f1f1f1',
                     width: '100%',
@@ -163,11 +162,10 @@ const Main = props => {
 
                 {/*check location*/}
 
-                {location.pathname === '/cart' ? (
-                    <FooterAbs></FooterAbs>
-                ) : (
-                    <Footer/>
-                )}
+                {location.pathname === '/cart' && isPhone && (<FooterAbsNative></FooterAbsNative>)}
+                {location.pathname === '/cart' && !isPhone && (<FooterAbs></FooterAbs>)}
+                {location.pathname !== '/cart' && (<Footer/>)}
+
             </main>
         </React.Fragment>
     );

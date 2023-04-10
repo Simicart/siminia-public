@@ -352,6 +352,7 @@ const CartProduct = props => {
                         </span>
                     )}
                 </Link>
+
                 <div className={classes.details}>
                     <div className={classes.upperTools}>
                         <div className={classes.name}>
@@ -360,7 +361,7 @@ const CartProduct = props => {
                         <ConfirmPopup
                             trigger={
                                 <VscTrash
-                                    size={30}
+                                    size={20}
                                     className={classes.deleteIcon}
                                     color={configColor.icon_color}
                                 />
@@ -377,11 +378,12 @@ const CartProduct = props => {
                             confirmCallback={handleRemoveFromCart}
                         />
                     </div>
+
                     <div className={classes.secondaryContainer}>
                         <div className={classes.optionContainer}>
                             {itemOption}
                         </div>
-                        <div className={classes.lowerTools}>{pricePiece}</div>
+                        {/*<div className={classes.lowerTools}>{pricePiece}</div>*/}
                     </div>
 
                     <div className={classes.quantityContainer}>
@@ -390,10 +392,11 @@ const CartProduct = props => {
                             initialValue={quantity}
                             onChange={handleUpdateItemQuantity}
                         />
-                    </div>
-                    <div className={classes.priceTotal}>
                         <div className={classes.lowerTools}>{pricePieceTotal}</div>
                     </div>
+
+                    {/*<div className={classes.priceTotal}>   
+                    </div>*/}
                 </div>
             </div>
         </div>
