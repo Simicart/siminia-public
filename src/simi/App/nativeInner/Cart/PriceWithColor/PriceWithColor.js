@@ -8,7 +8,7 @@ import {randomString} from "../../../../Helper/String";
 
 export const PriceWithColor = (props) => {
     const {
-        color = configColor.price_color,
+        color = props.color ? props.color : '#767676',
         ...rest
     } = props
 

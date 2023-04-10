@@ -52,7 +52,7 @@ export const QuantityFields = props => {
                     onClick={handleIncrement}
                     type="button"
                 >
-                    <IconWithColor src={PlusIcon} size={20}/>
+                    <IconWithColor src={PlusIcon} size={18}/>
                 </button>
                 <TextInput
                     aria-label={formatMessage({
@@ -78,7 +78,7 @@ export const QuantityFields = props => {
                     onClick={handleDecrement}
                     type="button"
                 >
-                    <IconWithColor classes={iconClasses} src={MinusIcon} size={22}/>
+                    <IconWithColor classes={iconClasses} src={MinusIcon} size={20}/>
                 </button>
             </div>
             {errorMessage}

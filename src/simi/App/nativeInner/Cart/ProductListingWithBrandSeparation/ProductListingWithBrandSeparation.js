@@ -1,4 +1,4 @@
-import React, {Fragment, useMemo, useEffect} from 'react';
+import React, {Fragment, useState, useMemo, useEffect} from 'react';
 import {useProductListing} from "@magento/peregrine/lib/talons/CartPage/ProductListing/useProductListing";
 import DEFAULT_OPERATIONS from "../../../core/Cart/ProductListing/productListing.gql";
 import {useStyle} from "@magento/venia-ui/lib/classify";
@@ -53,6 +53,9 @@ export const ProductListingWithBrandSeparation = (props) => {
         setFirstProductLoad,
         cartItems
     } = props;
+    
+    const [savedCart, setSavedCart] = useState(cartItems)
+    console.log(cartItems)
 
     const talonProps = useProductListing({operations: DEFAULT_OPERATIONS});
 
@@ -101,7 +104,6 @@ export const ProductListingWithBrandSeparation = (props) => {
         }
     }, [isLoading, cartItems, setFirstProductLoad])
 
-
     if (isLoading) {
         return (
             <Fragment>
@@ -123,10 +125,25 @@ export const ProductListingWithBrandSeparation = (props) => {
                      }}
                 >
                     {hasVendor ? (<VendorIntro classes={classes} zone={zone}/>) : null}
-                    {zone.cartItems.map(product => {
+                    {savedCart ? savedCart.map(product => {
                         return (
                             <CartProduct
                                 item={product}
+                                cartItems={zone.cartItems}
+                                key={product.id}
+                                setActiveEditItem={setActiveEditItem}
+                                setIsCartUpdating={setIsCartUpdating}
+                                onAddToWishlistSuccess={onAddToWishlistSuccess}
+                                fetchCartDetails={fetchCartDetails}
+                                wishlistConfig={wishlistConfig}
+                                makeNotification={makeNotification}
+                            />
+                        )
+                    }) : zone.cartItems.map(product => {
+                        return (
+                            <CartProduct
+                                item={product}
+                                cartItems={zone.cartItems}
                                 key={product.id}
                                 setActiveEditItem={setActiveEditItem}
                                 setIsCartUpdating={setIsCartUpdating}

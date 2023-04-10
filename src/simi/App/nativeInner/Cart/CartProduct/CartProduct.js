@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { VscTrash } from 'react-icons/vsc';
 import { gql } from '@apollo/client';
@@ -9,6 +9,8 @@ import { useStyle } from '@magento/venia-ui/lib/classify';
 import Image from '@magento/venia-ui/lib/components/Image';
 import Section from '@magento/venia-ui/lib/components/LegacyMiniCart/section';
 import { Quantity } from '../Quantity';
+import { useMutation } from '@apollo/client'
+import { fullPageLoadingIndicator } from '@magento/venia-ui/lib/components/LoadingIndicator';
 
 import defaultClasses from '../../../core/Cart/ProductListing/product.module.css';
 import defaultClasses_1 from './CartProduct.module.css';
@@ -19,11 +21,24 @@ import { PriceWithColor } from '../PriceWithColor';
 import { configColor } from '../../../../Config';
 import { bottomNotificationType } from '../bottomNotificationHook';
 import { taxConfig } from '../../../../Helper/Pricing';
+import { XCircle } from 'react-feather';
+
+import ADD_PRODUCT_TO_CART from '../../../../../abenson-cart/talons/useAddProductToCart';
 
 const IMAGE_SIZE = 100;
 
 const CartProduct = props => {
     const { item, makeNotification } = props;
+    const [check, setCheck] = useState(true)
+
+    const [
+        addProductToCart,
+        { loading }
+    ] = useMutation(ADD_PRODUCT_TO_CART);
+
+    const cart_id = JSON.parse(
+        localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__cartId')
+    ).value;
 
     const merchantTaxConfig = taxConfig();
     const showExcludedTax =
@@ -116,6 +131,47 @@ const CartProduct = props => {
     } = product;
     const classes = useStyle(defaultClasses, defaultClasses_1, props.classes);
 
+    const handleAddToCart = useCallback(async () => {
+        let options = []
+        if (item.__typename === 'ConfigurableCartItem') {
+            for (let i = 0; i < product.options.length; i++) {
+                options.push(product.options[i].configurable_product_option_value_uid)
+            }
+        }
+        return (
+            addProductToCart({
+                variables: {
+                    cartId: cart_id.slice(1, cart_id.length - 1),
+                    cartItems: [{
+                        sku: item.product.sku,
+                        quantity: product.quantity,
+                        ...(item.__typename === 'ConfigurableCartItem' && {
+                            selected_options: options
+                        })
+                    }]
+                }
+            }).then(_ => {
+                    makeNotification({
+                        text: formatMessage({
+                            id: 'Successfully add product',
+                            defaultMessage: 'Successfully add product'
+                        }),
+                        type: bottomNotificationType.SUCCESS
+                    });
+                })
+                // this will override error display from network
+                .catch(_ => {
+                    makeNotification({
+                        text: formatMessage({
+                            id: 'Failed to add product',
+                            defaultMessage: 'Failed to add product'
+                        }),
+                        type: bottomNotificationType.FAIL
+                    });
+                })
+        );
+    }, [addProductToCart, makeNotification, formatMessage]);
+
     const itemClassName = isProductUpdating
         ? classes.item_disabled
         : classes.item;
@@ -139,9 +195,9 @@ const CartProduct = props => {
     const stockStatusMessage =
         stockStatus === 'OUT_OF_STOCK'
             ? formatMessage({
-                  id: 'product.outOfStock',
-                  defaultMessage: 'Sold out'
-              })
+                id: 'product.outOfStock',
+                defaultMessage: 'Sold out'
+            })
             : '';
 
     const optionText = [];
@@ -232,7 +288,7 @@ const CartProduct = props => {
             );
         });
     }
-    if(item.giftcard_options && item.giftcard_options.length) {
+    if (item.giftcard_options && item.giftcard_options.length) {
         const gcOptions = item.giftcard_options.slice(2, item.giftcard_options.length)
         gcOptions.map((gcOption, index) => {
             optionText.push(
@@ -302,13 +358,14 @@ const CartProduct = props => {
             <span className={classes.price}>
                 <span className={classes.labelPrice} />
                 {showExcludedTax || !item.prices.row_total_including_tax ? (
-                    <PriceWithColor currencyCode={item.prices.row_total.currency} value={item.prices.row_total.value} />
+                    <PriceWithColor currencyCode={item.prices.row_total.currency} value={item.prices.row_total.value} color='#383D45' />
                 ) : (
                     <PriceWithColor
                         currencyCode={
                             item.prices.row_total_including_tax.currency
                         }
                         value={item.prices.row_total_including_tax.value}
+                        color='#383D45'
                     />
                 )}
 
@@ -331,26 +388,57 @@ const CartProduct = props => {
 
     return (
         <div className={classes.root}>
+            {loading && <div className={classes.loading}>
+                {fullPageLoadingIndicator}
+            </div>}
             {/*<span className={classes.errorText}>{errorMessage}</span>*/}
-            <div className={itemClassName}>
+            {!!!stockStatusMessage && (<input type='checkbox' className={classes.checkItem} defaultChecked={check}
+                onChange={() => {
+                    if (check) {
+                        handleRemoveFromCart()
+                    }
+                    else {
+                        handleAddToCart()
+                    }
+                    setCheck(prev => !prev)
+                }}></input>)}
+            {!!stockStatusMessage && (<div className={classes.stockMessage}>
+                <XCircle size={16}></XCircle>
+                <p>Out of stock</p>
+            </div>)}
+            {!!stockStatusMessage && (<ConfirmPopup
+                trigger={
+                    <VscTrash
+                        size={20}
+                        className={classes.deleteIconStock}
+                        color={configColor.icon_color}
+                    />
+                }
+                content={
+                    <FormattedMessage
+                        id={'Delete Warning'}
+                        defaultMessage={
+                            'Are you sure about remove\n' +
+                            ' this item from the shopping cart?'
+                        }
+                    />
+                }
+                confirmCallback={handleRemoveFromCart}
+            />)}
+
+            <div className={!!stockStatusMessage ? classes.item_out_stock : check ? itemClassName : classes.itemUncheck}>
                 <Link to={itemLink} className={classes.imageContainer}>
                     <Image
                         alt={name}
                         classes={{
                             root: classes.imageRoot,
                             image: classes.image,
-                            placeholder_layoutOnly: `${
-                                classes.placeholder_layoutOnly
-                            } ${classes.placeholder}`
+                            placeholder_layoutOnly: `${classes.placeholder_layoutOnly
+                                } ${classes.placeholder}`
                         }}
                         width={IMAGE_SIZE}
                         resource={image}
                     />
-                    {!!stockStatusMessage && (
-                        <span className={classes.stockStatusMessage}>
-                            {stockStatusMessage}
-                        </span>
-                    )}
                 </Link>
 
                 <div className={classes.details}>
@@ -358,7 +446,7 @@ const CartProduct = props => {
                         <div className={classes.name}>
                             <Link to={itemLink}>{name}</Link>
                         </div>
-                        <ConfirmPopup
+                        {!!!stockStatusMessage && (<ConfirmPopup
                             trigger={
                                 <VscTrash
                                     size={20}
@@ -376,22 +464,22 @@ const CartProduct = props => {
                                 />
                             }
                             confirmCallback={handleRemoveFromCart}
-                        />
+                        />)}
                     </div>
 
                     <div className={classes.secondaryContainer}>
-                        <div className={classes.optionContainer}>
+                        {!!!stockStatusMessage && (<div className={classes.optionContainer}>
                             {itemOption}
-                        </div>
+                        </div>)}
                         {/*<div className={classes.lowerTools}>{pricePiece}</div>*/}
                     </div>
 
-                    <div className={classes.quantityContainer}>
-                        <Quantity
+                    <div className={!!stockStatusMessage || !check ? classes.quantityOutStock : classes.quantityContainer}>
+                        {!!!stockStatusMessage && check && (<Quantity
                             itemId={item.id}
                             initialValue={quantity}
                             onChange={handleUpdateItemQuantity}
-                        />
+                        />)}
                         <div className={classes.lowerTools}>{pricePieceTotal}</div>
                     </div>
 

@@ -16,10 +16,13 @@ import {deriveErrorMessage} from "../../../../../override/deriveErrorMessage";
 export const useProduct = props => {
     const {
         item,
+        cartItems,
         setActiveEditItem,
         setIsCartUpdating,
         wishlistConfig
     } = props;
+
+    const findId = cartItems.filter((ele, ind) => ele.product.sku === item.product.sku)
 
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const {
@@ -111,7 +114,7 @@ export const useProduct = props => {
             await removeItemFromCart({
                 variables: {
                     cartId,
-                    itemId: item.id
+                    itemId: findId[0].id
                 }
             });
             return null
@@ -120,7 +123,7 @@ export const useProduct = props => {
             setDisplayError(true);
             throw err
         }
-    }, [cartId, item.id, removeItemFromCart]);
+    }, [cartId, item, removeItemFromCart]);
 
     const handleUpdateItemQuantity = useCallback(
         async quantity => {
@@ -128,7 +131,7 @@ export const useProduct = props => {
                 await updateItemQuantity({
                     variables: {
                         cartId,
-                        itemId: item.id,
+                        itemId: findId[0].id,
                         quantity
                     }
                 });
@@ -139,7 +142,7 @@ export const useProduct = props => {
                 throw err
             }
         },
-        [cartId, item.id, updateItemQuantity]
+        [cartId, item, updateItemQuantity]
     );
 
     useEffect(() => {

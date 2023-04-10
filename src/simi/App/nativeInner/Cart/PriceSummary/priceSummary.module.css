@@ -1,18 +1,22 @@
 .totalLabel {
     margin-top: 0;
-    color: #150826;
+    color: #4C525C;
     letter-spacing: 0;
     line-height: 21px;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
+    font-family: 'Poppins';
+    font-weight: 700;
 }
 
 .totalPrice {
     letter-spacing: 0;
     margin-top: 0;
     line-height: 21px;
-    font-size: 1.1rem;
-    color: #150826;
+    font-size: 0.9rem;
+    color: #4C525C;
     justify-self: end;
+    font-family: 'Poppins';
+    font-weight: 700;
 }
 
 .checkoutButton_container > button {

@@ -1,5 +1,5 @@
 .root {
-    --stroke: var(--venia-global-color-gray-600);
+    --stroke: white;
     text-align: center;
     display: grid;
     grid-template-columns: 1fr 3rem 1fr;
@@ -11,15 +11,18 @@
 }
 
 .root button {
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 25px;
     background-color: #f4f4f4;
+    z-index: 2;
 }
 
 .root input {
     transition: all 0.2s ease-out;
-    height: 30px;
+    height: 25px;
     border: none;
+    font-size: 12px;
+    font-family: 'Poppins';
 }
 
 .root input:focus {
@@ -63,7 +66,6 @@
 
 .button:disabled,
 .button:disabled:hover {
-    opacity: 0.8;
     /*border-color: rgb(var(--venia-global-color-gray-400));*/
 }
 
@@ -97,10 +99,10 @@
 
 .button_increment, .button_decrement {
     composes: button;
-    border: 1px solid #F2F2F3;
-    border-radius: 4px;
-    background-color: #FFFFFF !important;
-    stroke: #4F4F4F !important;
+    border: none;
+    border-radius: 15px;
+    background-color: #019BF0 !important;
+    stroke: white !important;
 }
 
 .quantity-button:disabled, .quantity-button:disabled:hover {

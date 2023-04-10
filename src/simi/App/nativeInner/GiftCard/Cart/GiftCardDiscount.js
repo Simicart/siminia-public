@@ -76,7 +76,7 @@ const GiftCardDiscount = props => {
     useEffect(() => {
         setIsCartUpdating(true);
         setTimeout(() => {
-            refetchCartPage();
+            //refetchCartPage();
             setIsCartUpdating(false);
         }, 1000);
     }, [setCreditLoading, setCodeLoading, removeCodeLoading]);

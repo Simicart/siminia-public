@@ -1,17 +1,17 @@
 import React from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 // import { usePriceSummary } from '@magento/peregrine/lib/talons/CartPage/PriceSummary/usePriceSummary';
-import {useStyle} from '@magento/venia-ui/lib/classify';
+import { useStyle } from '@magento/venia-ui/lib/classify';
 import defaultClasses from '../../../core/Cart/PriceSummary/priceSummary.module.css';
 import defaultClasses_1 from './priceSummary.module.css';
 import DiscountSummary from '../../../core/Cart/PriceSummary/discountSummary';
 import GiftCardSummary from '@magento/venia-ui/lib/components/CartPage/PriceSummary/giftCardSummary';
 import ShippingSummary from '../../../core/Cart/PriceSummary/shippingSummary';
 import TaxSummary from '../../../core/Cart/PriceSummary/taxSummary';
-import {usePriceSummary} from '../../../../talons/Cart/usePriceSummary';
-import {RedButton} from "../RedButton";
-import {PriceWithColor} from "../PriceWithColor";
-import {getBottomInsets} from 'src/simi/App/nativeInner/Helper/Native'
+import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
+import { RedButton } from "../RedButton";
+import { PriceWithColor } from "../PriceWithColor";
+import { getBottomInsets } from 'src/simi/App/nativeInner/Helper/Native'
 import { useWindowSize } from '@magento/peregrine';
 import RewardPointPriceSummary from 'src/simi/BaseComponents/RewardPoint/components/Cart/priceSummary'
 
@@ -31,12 +31,12 @@ import RewardPointPriceSummary from 'src/simi/BaseComponents/RewardPoint/compone
  * import PriceSummary from "@magento/venia-ui/lib/components/CartPage/PriceSummary";
  */
 export const PriceSummary = props => {
-    const {isUpdating} = props;
+    const { isUpdating } = props;
     const classes = useStyle(defaultClasses, defaultClasses_1, props.classes);
 
     const windowSize = useWindowSize();
     const isMobile = windowSize.innerWidth <= 450;
-    
+
     const talonProps = usePriceSummary();
 
     const {
@@ -48,7 +48,7 @@ export const PriceSummary = props => {
         flatData
     } = talonProps;
 
-    const {formatMessage} = useIntl();
+    const { formatMessage } = useIntl();
 
     if (hasError) {
         return (
@@ -97,7 +97,7 @@ export const PriceSummary = props => {
     const bottomInsets = getBottomInsets()
 
     const proceedToCheckoutButton = !isCheckout ? (
-        <div className={classes.checkoutButton_container}  style={{bottom: bottomInsets}}>
+        <div className={classes.checkoutButton_container} style={{ bottom: bottomInsets }}>
             {!isMobile && <span className={classes.totalPricePiece}>
                 <FormattedMessage
                     id={'Total'}
@@ -105,9 +105,9 @@ export const PriceSummary = props => {
                 />
                 <span>: </span>
                 {!isPriceUpdating ? (
-                        <PriceWithColor value={total.value} currencyCode={total.currency}/>
-                    ) :
-                    <span className={classes.pricePlaceholder}/>
+                    <PriceWithColor value={total.value} currencyCode={total.currency} />
+                ) :
+                    <span className={classes.pricePlaceholder} />
                 }
             </span>}
             <RedButton
@@ -117,10 +117,10 @@ export const PriceSummary = props => {
                 <span>
                     <span>
                         <img src={require('../../../../../../static/icons/lock-closed.svg')}
-                             alt={''}
-                             width={14}
-                             height={14}
-                             className={classes.checkoutLockIcon}
+                            alt={''}
+                            width={14}
+                            height={14}
+                            className={classes.checkoutLockIcon}
                         />
                     </span>
                     <span><FormattedMessage
@@ -178,7 +178,7 @@ export const PriceSummary = props => {
                         data={shipping}
                         isCheckout={isCheckout}
                     />
-                    <RewardPointPriceSummary 
+                    <RewardPointPriceSummary
                         classes={{
                             lineItemLabel: classes.lineItemLabel,
                             price: priceClass
@@ -186,15 +186,19 @@ export const PriceSummary = props => {
                         currencyCode={total.currency}
                         data={rewardPoint}
                     />
+                </div>
+
+                <div style={{display: 'flex', justifyContent: 'space-between', margin: 10}}>
                     <span className={classes.totalLabel}>{totalPriceLabel}</span>
                     <span className={totalPriceClass}>
-                        <PriceWithColor value={total.value} currencyCode={total.currency}/>
+                        <PriceWithColor value={total.value} currencyCode={total.currency} color='#4C525C'/>
                     </span>
                 </div>
+                
                 {/*proceedToCheckoutButton*/}
             </div>
         </React.Fragment>
-        
+
     );
 };
 
