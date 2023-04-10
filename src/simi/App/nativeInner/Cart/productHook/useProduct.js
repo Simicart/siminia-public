@@ -23,6 +23,7 @@ export const useProduct = props => {
     } = props;
 
     const findId = cartItems.filter((ele, ind) => ele.product.sku === item.product.sku)
+    console.log(findId[0]?.id)
 
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const {
@@ -123,7 +124,7 @@ export const useProduct = props => {
             setDisplayError(true);
             throw err
         }
-    }, [cartId, item, removeItemFromCart]);
+    }, [cartId, item, cartItems, removeItemFromCart]);
 
     const handleUpdateItemQuantity = useCallback(
         async quantity => {
@@ -142,7 +143,7 @@ export const useProduct = props => {
                 throw err
             }
         },
-        [cartId, item, updateItemQuantity]
+        [cartId, item, cartItems, updateItemQuantity]
     );
 
     useEffect(() => {

@@ -55,7 +55,6 @@ export const ProductListingWithBrandSeparation = (props) => {
     } = props;
     
     const [savedCart, setSavedCart] = useState(cartItems)
-    console.log(cartItems)
 
     const talonProps = useProductListing({operations: DEFAULT_OPERATIONS});
 
@@ -111,6 +110,9 @@ export const ProductListingWithBrandSeparation = (props) => {
             </Fragment>
         )
     }
+
+    console.log(savedCart)
+    console.log(cartItems)
 
     if (cartItems.length) {
         const segregatedItemLists = segeratedItems.map(zone => {
