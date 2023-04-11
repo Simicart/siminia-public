@@ -2,7 +2,7 @@
     --stroke: white;
     border: none;
     position: relative;
-    width: 106px;
+    width: 90px;
     padding-left: 14px;
 }
 
@@ -104,13 +104,13 @@
 .button_increment {
     position: absolute;
     left: 0;
-    top: 8px;
+    top: 7px;
 }
 
 .button_decrement {
     position: absolute;
-    left: 94px;
-    top: 8px;
+    left: 72px;
+    top: 7px;
 }
 
 .quantity-button:disabled, .quantity-button:disabled:hover {
