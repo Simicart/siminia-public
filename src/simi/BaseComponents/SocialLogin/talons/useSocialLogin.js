@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
-import DEFAULT_OPERATIONS from './socialLogin.ggl';
-import { useQuery } from '@apollo/client';
+// import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
+// import DEFAULT_OPERATIONS from './socialLogin.ggl';
+// import { useQuery } from '@apollo/client';
 import { BUTTON_SHAPE } from '../constants';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useHistory } from 'react-router-dom';
 import Identify from '../../../Helper/Identify';
 
-export const useSocialLogin = (props = {}) => {
-    const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
+export const useSocialLogin = () => {
+    // const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const smStoreConfig = Identify.getStoreConfig();
     
-    const { getStoreConfigQuery, getSocButtonsConfigsQuery } = operations;
+    // const { getStoreConfigQuery, getSocButtonsConfigsQuery } = operations;
     const [{ isSignedIn }] = useUserContext();
     const prevIsSignedIn = useRef(isSignedIn);
     const history = useHistory();

@@ -156,7 +156,7 @@ export const getBundlePrice = settings => {
     const bundles = product.items;
 
     const currentPrice = Object.entries(option_value)
-        .filter(([_, b]) => !!b)
+        .filter(([, b]) => !!b)
         .map(([optionId, choiceId]) => {
             try {
                 const price = bundles

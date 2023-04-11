@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useState, useEffect } from 'react';
+import { useMemo, useCallback, useState } from 'react';
 import { getRewardPointActive, getRewardPointSlider } from '../utils';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useQuery, useMutation } from '@apollo/client';
@@ -137,7 +137,7 @@ export const useApply = (props = {}) => {
             message: message,
             timeout: 5000
         });
-    }, [usePoint, applyRewardPointLoading, applyRewardPoint, addToast]);
+    }, [usePoint, applyRewardPoint, cartId, formatMessage, addToast, refetchCartPage]);
 
     return {
         isActive,
@@ -150,6 +150,7 @@ export const useApply = (props = {}) => {
         currency,
         usePoint,
         handleSetUsePoint,
-        handleApply
+        handleApply,
+        applyRewardPointError
     };
 };

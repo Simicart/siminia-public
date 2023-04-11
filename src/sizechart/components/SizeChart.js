@@ -6,9 +6,8 @@ import { FormattedMessage } from 'react-intl';
 import '../styles/sizechart.css'
 
 const SizeChart = ({ display, isMobileSite, sizeChartData }) => {
-    const [openSizeChart, setOpenSizeChart] = useState(false)
-
-    if(display===0 && !isMobileSite) {
+    const [openSizeChart, setOpenSizeChart] = useState(false);
+    if (display === 0 && !isMobileSite) {
         return (
             <>
                 <div className = 'pop-up-size-chart'>
@@ -27,14 +26,15 @@ const SizeChart = ({ display, isMobileSite, sizeChartData }) => {
                     </div>
                 </div>
 
-                <PopUpContent data={sizeChartData} isMobileSite={isMobileSite}
-                              openSizeChart={openSizeChart} setOpenSizeChart={setOpenSizeChart}
-                ></PopUpContent>
+                <PopUpContent
+                    data={sizeChartData}
+                    isMobileSite={isMobileSite}
+                    openSizeChart={openSizeChart}
+                    setOpenSizeChart={setOpenSizeChart}
+                />
             </>
-        )
-    }
-
-    else if(display===0 && isMobileSite) {
+        );
+    } else if (display === 0 && isMobileSite) {
         return (
             <>
                 <div className = 'pop-up-size-chart-native'>
@@ -52,23 +52,24 @@ const SizeChart = ({ display, isMobileSite, sizeChartData }) => {
                     </div>
                 </div>
 
-                <PopUpContent data={sizeChartData} isMobileSite={isMobileSite}
-                              openSizeChart={openSizeChart} setOpenSizeChart={setOpenSizeChart}
-                ></PopUpContent>
+                <PopUpContent
+                    data={sizeChartData}
+                    isMobileSite={isMobileSite}
+                    openSizeChart={openSizeChart}
+                    setOpenSizeChart={setOpenSizeChart}
+                />
             </>
-        )
-    }
-
-    else if(display===1) {
+        );
+    } else if (display === 1) {
         return (
-            <div className='tab-size-chart'>
-                <h1 style={{fontSize: 24, fontWeight: 'bold'}}>{sizeChartData?.title}</h1>
-                <RichContent html={sizeChartData?.content}></RichContent>
-            </div>  
-        )
-    }
-
-    else if(display===2 && !isMobileSite) {
+            <div className="tab-size-chart">
+                <h1 style={{ fontSize: 24, fontWeight: 'bold' }}>
+                    {sizeChartData?.title}
+                </h1>
+                <RichContent html={sizeChartData?.content} />
+            </div>
+        );
+    } else if (display === 2 && !isMobileSite) {
         return (
             <div className='inline-size-chart'>
                 <h1 style={{fontSize: 16, fontWeight: 'bold'}}>
@@ -91,10 +92,9 @@ const SizeChart = ({ display, isMobileSite, sizeChartData }) => {
                     <RichContent html={sizeChartData?.content}></RichContent>
                 </div>
             </div>
-        )
+        );
     }
+    else return <></>;
+};
 
-    else return <></>
-}
-
-export default SizeChart
+export default SizeChart;

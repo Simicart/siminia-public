@@ -1,9 +1,9 @@
 import React from 'react';
-import Identify from 'src/simi/Helper/Identify';
+// import Identify from 'src/simi/Helper/Identify';
 import { FormattedMessage } from 'react-intl';
 
 const BundlePrice = props => {
-    const { classes, prices, type, formatPrice } = props;
+    const { classes, prices, formatPrice } = props;
 
     let product_from_label = <div />;
     let from_price_excluding_tax = <div />;
@@ -15,49 +15,49 @@ const BundlePrice = props => {
     if (prices.show_ex_in_price && prices.show_ex_in_price === 1) {
         product_from_label = (
             <div>
-                <FormattedMessage id={'From'} />:
+                <FormattedMessage id={'From:'} />
             </div>
         );
         from_price_excluding_tax = (
             <div>
-                <FormattedMessage id={'Excl. Tax'} />:
+                <FormattedMessage id={'Excl. Tax:'} />
                 {formatPrice(prices.minimalPrice.excl_tax_amount.value)}
             </div>
         );
         from_price_including_tax = (
             <div>
-                <FormattedMessage id={'Incl. Tax'} />:{' '}
+                <FormattedMessage id={'Incl. Tax:'} />
                 {formatPrice(prices.minimalPrice.amount.value)}
             </div>
         );
 
         product_to_label = (
             <div>
-                <FormattedMessage id={'To'} />:
+                <FormattedMessage id={'To:'} />
             </div>
         );
         to_price_excluding_tax = (
             <div>
-                <FormattedMessage id={'Excl. Tax'} />:{' '}
+                <FormattedMessage id={'Excl. Tax:'} />
                 {formatPrice(prices.maximalPrice.excl_tax_amount.value)}
             </div>
         );
         to_price_including_tax = (
             <div>
-                <FormattedMessage id={'Incl. Tax'} />:{' '}
+                <FormattedMessage id={'Incl. Tax:'} />
                 {formatPrice(prices.maximalPrice.amount.value)}
             </div>
         );
     } else {
         product_from_label = (
             <div>
-                <FormattedMessage id={'From'} />:{' '}
+                <FormattedMessage id={'From:'} />
                 {formatPrice(prices.minimalPrice.amount.value)}
             </div>
         );
         product_to_label = (
             <div>
-                <FormattedMessage id={'To'} />:{' '}
+                <FormattedMessage id={'To:'} />
                 {formatPrice(prices.maximalPrice.amount.value)}
             </div>
         );

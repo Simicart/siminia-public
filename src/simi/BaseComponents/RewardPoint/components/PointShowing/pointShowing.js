@@ -19,7 +19,7 @@ const PointShowing = props => {
 
     const rewardIcon = icon ? (
         <span className={classes.image}>
-            <img src={icon} />
+            <img alt='rewardIcon' src={icon} />
         </span>
     ) : null;
 

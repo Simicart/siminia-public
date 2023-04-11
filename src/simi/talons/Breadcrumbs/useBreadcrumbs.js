@@ -1,4 +1,4 @@
-import {useEffect, useMemo} from 'react';
+import { useMemo} from 'react';
 import { useQuery } from '@apollo/client';
 import useInternalLink from '@magento/peregrine/lib/hooks/useInternalLink';
 import Identify from 'src/simi/Helper/Identify';
@@ -6,7 +6,7 @@ import Identify from 'src/simi/Helper/Identify';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 
 import DEFAULT_OPERATIONS from '@magento/peregrine/lib/talons/Breadcrumbs/breadcrumbs.gql';
-import TitleHelper from "../../Helper/TitleHelper";
+// import TitleHelper from "../../Helper/TitleHelper";
 
 // Just incase the data is unsorted, lets sort it.
 const sortCrumbs = (a, b) => a.category_level > b.category_level;

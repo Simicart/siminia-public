@@ -17,7 +17,7 @@
 
 import React, { useMemo, useCallback } from 'react';
 import { useIntl } from 'react-intl';
-import { bool, func, shape, string } from 'prop-types';
+// import { bool, func, shape, string } from 'prop-types';
 import { usePlainOffline } from './usePlainOffline';
 
 import { isRequired } from '@magento/venia-ui/lib/util/formValidators';
@@ -73,7 +73,7 @@ const PlainOffline = props => {
          * `3` Payment information mutation intiated
          * `4` All mutations done
          */
-        stepNumber,
+        // stepNumber,
         initialValues,
         shippingAddressCountry
     } = talonProps;

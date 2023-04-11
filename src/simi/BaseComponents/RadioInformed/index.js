@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Circle } from 'react-feather';
+import React from 'react';
+// import { Circle } from 'react-feather';
 import { node, shape, string } from 'prop-types';
 import { Radio } from 'informed';
 import classify from 'src/classify';

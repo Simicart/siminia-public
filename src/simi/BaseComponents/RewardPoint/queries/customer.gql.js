@@ -23,10 +23,14 @@ export const GET_CUSTOMER_REWARD_POINT = gql`
 `;
 
 export const GET_REWARD_POINTS_TRANSACTION = gql`
-    query getRewardPointsTransaction {
-        bssRewardPointsTransaction {
+    query getRewardPointsTransaction($currentPage: Int, $pageSize: Int) {
+        bssRewardPointsTransaction(
+            currentPage: $currentPage, 
+            pageSize: $pageSize
+        ) {
             items {
                 transaction_id
+                balance
                 website_id
                 customer_id
                 point

@@ -188,7 +188,7 @@ class Pagination extends React.Component {
             >
                 {this.props.showInfoItem && (
                     <span style={{ marginRight: 10, fontSize: 16 }}>
-                        <FormattedMessage id={'Items'} /> {firstItem} -{' '}
+                        <FormattedMessage id={'Items'} /> {firstItem} <FormattedMessage id={'-'} /> {' '}
                         {lastItem} <FormattedMessage id={'of'} /> {totalItem}
                     </span>
                 )}

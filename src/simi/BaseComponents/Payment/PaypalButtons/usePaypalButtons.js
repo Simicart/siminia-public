@@ -31,11 +31,11 @@ export const usePaypalButtons = props => {
     const { formatMessage } = useIntl();
     const {
         onSuccess,
-        onReady,
-        onError,
+        // onReady,
+        // onError,
         shouldSubmit,
         resetShouldSubmit,
-        paymentCode
+        // paymentCode
     } = props;
 
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
@@ -401,13 +401,7 @@ export const usePaypalButtons = props => {
             setStepNumber(0);
             resetShouldSubmit();
         }
-    }, [
-        billingAddressMutationError,
-        billingAddressMutationCalled,
-        billingAddressMutationLoading,
-        resetShouldSubmit,
-        payerData
-    ]);
+    }, [billingAddressMutationError, billingAddressMutationCalled, billingAddressMutationLoading, resetShouldSubmit, payerData, updatePaymentDetailsOnCart]);
 
     /**
      * Step 3 effect
@@ -444,16 +438,7 @@ export const usePaypalButtons = props => {
             setStepNumber(0);
             resetShouldSubmit();
         }
-    }, [
-        ccMutationCalled,
-        ccMutationLoading,
-        onSuccess,
-        resetShouldSubmit,
-        ccMutationError,
-        placeOrderCalled,
-        placeOrder,
-        placeOrderLoading
-    ]);
+    }, [ccMutationCalled, ccMutationLoading, onSuccess, resetShouldSubmit, ccMutationError, placeOrderCalled, placeOrder, placeOrderLoading, cartId]);
 
     const errors = useMemo(
         () =>
@@ -465,6 +450,8 @@ export const usePaypalButtons = props => {
     );
 
     return {
+        placeOrderData,
+        placeOrderError,
         errors,
         isBillingAddressSame,
         stepNumber,

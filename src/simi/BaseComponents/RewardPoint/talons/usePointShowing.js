@@ -11,15 +11,15 @@ import {
 import defaultOperations from '../queries/rule.gql';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 
-const ADMIN_CHANGE = 0;
+// const ADMIN_CHANGE = 0;
 const REGISTRATION = 1;
-const BIRTHDAY = 2;
-const FIRST_REVIEW = 3;
+// const BIRTHDAY = 2;
+// const FIRST_REVIEW = 3;
 const REVIEW = 4;
-const FIRST_ORDER = 5;
-const ORDER = 6;
-const ORDER_REFUND = 7;
-const IMPORT = 8;
+// const FIRST_ORDER = 5;
+// const ORDER = 6;
+// const ORDER_REFUND = 7;
+// const IMPORT = 8;
 const SUBSCRIBLE_NEWSLETTERS = 9;
 
 function isNumeric(n) {
@@ -51,6 +51,7 @@ export const usePointShowing = (props = {}) => {
     const object = useMemo(() => {
         let active = false;
         let validatedValue = null;
+
         switch (type) {
             case 'registration':
                 active = getRewardPointMessRegister();
@@ -63,8 +64,10 @@ export const usePointShowing = (props = {}) => {
             case 'review':
                 active = getRewardPointProductReview();
                 validatedValue = REVIEW;
+                break;
             default:
                 break;
+
         }
 
         return { active, validatedValue };
@@ -136,7 +139,7 @@ export const usePointShowing = (props = {}) => {
             });
 
         return findedRule;
-    });
+    },[active, data?.bssRewardPointsRule?.rules, rewardPointActive, validatedValue]);
 
     const isShow = useMemo(() => {
         return validatedRule?.rule_id >= 0 || false;
@@ -144,7 +147,7 @@ export const usePointShowing = (props = {}) => {
 
     const point = useMemo(() => {
         return validatedRule?.point || 0;
-    });
+    },[validatedRule?.point]);
 
     return {
         isShow,

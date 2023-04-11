@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useToasts } from '@magento/peregrine';
@@ -170,7 +170,7 @@ export const useProductAlertSubscription = props => {
             setGlobalLoading(true);
             return addPriceDropNotificationSignedIn()
                 .then(data => {
-                    // console.warn(JSON.stringify(data, null, 2))
+                    console.log(data);
                     addToast({
                         type: 'info',
                         message: formatMessage({
@@ -189,7 +189,7 @@ export const useProductAlertSubscription = props => {
                     setGlobalLoading(false);
                 })
                 .catch(err => {
-                    // console.warn(JSON.stringify(err, null, 2))
+                    console.log(err);
                     addToast({
                         type: 'info',
                         message: formatMessage({
@@ -211,7 +211,7 @@ export const useProductAlertSubscription = props => {
                         variables: { email: email, sku: sku }
                     })
                         .then(data => {
-                            // console.warn(JSON.stringify(data, null, 2))
+                            console.log(data);
                             addToast({
                                 type: 'info',
                                 message: formatMessage({
@@ -231,7 +231,7 @@ export const useProductAlertSubscription = props => {
                             setGlobalLoading(false);
                         })
                         .catch(err => {
-                            // console.warn(JSON.stringify(err, null, 2))
+                            console.log(err);
                             addToast({
                                 type: 'info',
                                 message: formatMessage({
@@ -255,7 +255,7 @@ export const useProductAlertSubscription = props => {
             setGlobalLoading(true);
             return addStockSubscriptionSignIn()
                 .then(data => {
-                    // console.warn(JSON.stringify(data, null, 2))
+                    console.log(data);
                     addToast({
                         type: 'info',
                         message: formatMessage({
@@ -275,6 +275,7 @@ export const useProductAlertSubscription = props => {
                     setGlobalLoading(false);
                 })
                 .catch(err => {
+                    console.log(err);
                     // console.warn(JSON.stringify(err, null, 2))
                     addToast({
                         type: 'info',
@@ -296,6 +297,7 @@ export const useProductAlertSubscription = props => {
                         variables: { email: email, sku: sku }
                     })
                         .then(data => {
+                            console.log(data);
                             // console.warn(JSON.stringify(data, null, 2))
                             setMessage(
                                 priceAlertData.MpProductAlertsConfigs
@@ -305,6 +307,7 @@ export const useProductAlertSubscription = props => {
                             setGlobalLoading(false);
                         })
                         .catch(err => {
+                            console.log(err);
                             // console.warn(JSON.stringify(err, null, 2))
                             addToast({
                                 type: 'info',
@@ -341,6 +344,21 @@ export const useProductAlertSubscription = props => {
         shouldShowPriceSubscription: shouldShowPriceSubscription,
         shouldShowStockSubscription: shouldShowStockSubscription,
         print: JSON.stringify(configData ? configData : 'no'),
-        isGlobalLoading: isGlobalLoading
+        isGlobalLoading: isGlobalLoading,
+        priceSubCustomerData,
+        priceSubCustomerLoading,
+        priceSubCustomerError,
+        priceSubGuestData,
+        priceSubGuestLoading,
+        priceSubGuestError,
+        stockSubCustomerData,
+        stockSubCustomerLoading,
+        stockSubCustomerError,
+        stockSubGuestData,
+        stockSubGuestLoading,
+        stockSubGuestError,
+        loadingConfig,
+        priceAlertLoading,
+        priceAlertError
     };
 };

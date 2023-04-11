@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useIntl } from 'react-intl';
+// import { useIntl } from 'react-intl';
 import { useMutation, useQuery } from '@apollo/client';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
@@ -192,7 +192,7 @@ export const useProductFullDetail = props => {
 
     const [{ cartId }] = useCartContext();
     const [{ isSignedIn }] = useUserContext();
-    const { formatMessage } = useIntl();
+    // const { formatMessage } = useIntl();
 
     const { data: storeConfigData } = useQuery(
         operations.getWishlistConfigQuery,
@@ -288,7 +288,7 @@ export const useProductFullDetail = props => {
             return acc && !!customOptions[uid];
         }, true);
         // return fCus.length >= requiredCustomOptionLength;
-    }, [product, fCus]);
+    }, [product.options, customOptions]);
 
     const [groupedOptions, setGroupedOptions] = useState({});
 

@@ -12,7 +12,7 @@ const Star = props => {
             className={props.className}
             viewBox="0 0 58 49.733"
         >
-            <title>5stars</title>
+            {/* <title>5stars</title> */}
             <polygon points="26.146 38.489 9.987 49.733 15.688 30.89 0 18.996 19.683 18.595 26.146 0 32.61 18.595 52.293 18.996 36.605 30.89 42.306 49.733 26.146 38.489" />
         </svg>
     );

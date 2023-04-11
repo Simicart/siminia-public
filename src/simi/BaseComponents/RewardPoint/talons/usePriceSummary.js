@@ -10,7 +10,7 @@ export const usePriceSummary = props => {
 
     const isActive = useMemo(() => {
         return rewardPointActive && isSignedIn && rewardPointCartOrderSummary;
-    }, [rewardPointActive, isSignedIn]);
+    }, [rewardPointActive, isSignedIn, rewardPointCartOrderSummary]);
 
     const spendPointAsMoney = useMemo(() => {
         return spentPoint?.as_money_amount || 0;
@@ -18,7 +18,7 @@ export const usePriceSummary = props => {
 
     const spendPointAmount = useMemo(() => {
         return spentPoint?.point_amount || 0;
-    });
+    },[spentPoint?.point_amount]);
 
     return {
         isActive,

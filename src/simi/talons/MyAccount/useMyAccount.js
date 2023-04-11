@@ -46,6 +46,7 @@ export const useMyAccount = props => {
         handleSignOut,
         subtitle,
         title,
-        isSignedIn
+        isSignedIn,
+        isSigningOut
     };
 };

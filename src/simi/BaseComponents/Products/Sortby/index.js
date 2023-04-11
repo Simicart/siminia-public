@@ -1,6 +1,6 @@
 import React from 'react';
 import { Check } from 'react-feather';
-import { configColor } from 'src/simi/Config';
+// import { configColor } from 'src/simi/Config';
 import Dropdownoption from 'src/simi/BaseComponents/Dropdownoption/';
 import { withRouter } from 'react-router-dom';
 import { useIntl } from 'react-intl';

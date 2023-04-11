@@ -1,18 +1,18 @@
 import React, { useMemo, useRef } from 'react';
 import { string, array, number } from 'prop-types';
-import WithoutContent from './withoutContent';
-import WithContent from './withContent';
+// import WithoutContent from './withoutContent';
+// import WithContent from './withContent';
 import Content from './content'
 import { getOutsideViewportTransformValue } from '../../../utils';
 
-const types = {
-    0: WithoutContent,
-    1: WithContent
-};
+// const types = {
+//     0: WithoutContent,
+//     1: WithContent
+// };
 
 const SubMenuContent = props => {
     const {
-        submenu_type,
+        // submenu_type,
         content,
         subCategories,
         isMobile,

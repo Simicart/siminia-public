@@ -8,7 +8,7 @@ import { useIntl } from 'react-intl';
 
 const SimiPagination = props => {
     const {
-        data,
+        // data,
         itemCount,
         pageSize,
         pageControl,
@@ -23,7 +23,7 @@ const SimiPagination = props => {
         setEndPage,
         currentPage,
         setPageAndLimit,
-        totalPages
+        // totalPages
     } = pageControl;
 
     const talonProps = usePagination({
@@ -186,7 +186,7 @@ const SimiPagination = props => {
 
                      <span className='wrapItemCount'>
                         <span>{formatMessage({id:'Items'})}</span>
-                        <span className='itemCount'>{firstItem} - {lastItem} </span>
+                        <span className='itemCount'>{firstItem} {formatMessage({id:'-'})} {lastItem} </span>
                         <span>{formatMessage({id:'of'})}</span>
                         <span className='itemCount'>{totalItem}</span>
                     </span>

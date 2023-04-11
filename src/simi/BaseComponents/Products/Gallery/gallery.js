@@ -19,7 +19,7 @@ const Gallery = props => {
 
     const handleLink = useCallback(link => {
         history.push(link);
-    }, []);
+    }, [history]);
 
     const galleryItems = useMemo(
         () =>
@@ -37,7 +37,7 @@ const Gallery = props => {
                     />
                 );
             }),
-        [items, styles]
+        [handleLink, items, overRideClasses, styles]
     );
 
     return (

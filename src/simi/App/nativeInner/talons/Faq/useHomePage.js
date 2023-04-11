@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { GET_HOME_PAGE } from './Faq.gql';
 
-export const useHomePage = props => {
+export const useHomePage = () => {
     const {
         data: homepageData,
         loading: homepageLoading,
