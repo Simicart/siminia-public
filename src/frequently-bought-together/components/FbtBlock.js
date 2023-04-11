@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client"
 import FbtPopUp from './FbtPopUp.js'
 import FbtPopUpFailure from "./FbtPopUpFailure.js"
 import FbtPopUpConfigurable from "./FbtPopUpConfigurable"
+import FbtPopUpNoProduct from "./FbtPopUpNoProduct.js"
 import { fullPageLoadingIndicator } from "@magento/venia-ui/lib/components/LoadingIndicator"
 import TinySlider from 'tiny-slider-react';
 import 'tiny-slider/dist/tiny-slider.css';
@@ -48,9 +49,11 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
     const [openPopUp, setOpenPopUp] = useState(false)
     const [openPopUpFailure, setOpenPopUpFailure] = useState(false)
     const [openPopUpConfigurable, setOpenPopUpConfigurable] = useState(false)
+    const [openPopUpNoProduct, setOpenPopUpNoProduct] = useState(false)
     const [openModal, setOpenModal] = useState(false)
     const [openModalFailure, setOpenModalFailure] = useState(false)
     const [openModalConfigurable, setOpenModalConfigurable] = useState(false)
+    const [openModalNoProduct, setOpenModalNoProduct] = useState(false)
     const [popUpType, setPopUpType] = useState('')
     const [addCartData, setAddCartData] = useState()
     const [briefInfoData, setBriefInfoData] = useState(FBT_Config_Data.display_list !== '0' ? initListProductStatus : [])
@@ -262,11 +265,17 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
         }
 
         else {
-            setConfigurableProduct(listConfigurableProducts)
-            setSavedQuantity(listSavedQuantity)
-            setPopUpType('add all cart')
-            setOpenModal(true)
-            setOpenPopUp(true)
+            if (listConfigurableProducts.length === 0) {
+                setOpenModalNoProduct(true)
+                setOpenPopUpNoProduct(true)
+            }
+            else {
+                setConfigurableProduct(listConfigurableProducts)
+                setSavedQuantity(listSavedQuantity)
+                setPopUpType('add all cart')
+                setOpenModal(true)
+                setOpenPopUp(true)
+            }
         }
     }
 
@@ -292,8 +301,8 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
             }
         }
         else {
-            setOpenModal(true)
-            setOpenPopUp(true)
+            setOpenModalNoProduct(true)
+            setOpenPopUpNoProduct(true)
         }
     }
 
@@ -426,7 +435,7 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
                             </div>
                         </>) : (
                         <>
-                            {FBT_Brief_Data.length>0 && (<div style={{overflow: "hidden", height: 500}}>
+                            {FBT_Brief_Data.length > 0 && (<div style={{ overflow: "hidden", height: 500 }}>
                                 <Slider {...slickSettings}>
                                     {FBT_Brief_Data.map((element, index) => (
                                         <div key={index}
@@ -528,6 +537,9 @@ const FbtBlock = ({ FBT_Config_Data, FBT_Slider_Data }) => {
             {openModalConfigurable && (<FbtPopUpConfigurable isOpen={openPopUpConfigurable} setIsOpen={setOpenPopUpConfigurable}
                 setOpenModalConfigurable={setOpenModalConfigurable} configurableProduct={configurableProduct} setOpenPopUp={setOpenPopUp}
                 addCartData={addCartData} fbt_config_data={FBT_Config_Data} ></FbtPopUpConfigurable>)}
+            
+            {openModalNoProduct && (<FbtPopUpNoProduct isOpen={openPopUpNoProduct} setIsOpen={setOpenPopUpNoProduct}
+                setOpenModalNoProduct={setOpenModalNoProduct}></FbtPopUpNoProduct>)}
         </>
     )
 }
