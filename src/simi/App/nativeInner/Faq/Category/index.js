@@ -11,6 +11,13 @@ import Sidebar from '../Sidebar';
 import { useParams } from 'react-router-dom';
 import { useCategory } from '../talons/useCategory';
 import CategoryContent from './categoryContent';
+import Page404 from '../../NoMatch/Page404';
+
+const faqsEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_FAQS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;
 
 const Category = props => {
     const { formatMessage } = useIntl();
@@ -19,6 +26,8 @@ const Category = props => {
         defaultMessage: 'FAQs Category'
     });
     const classes = defaultClasses;
+
+    if(faqsEnabled === 0) return <Page404></Page404>
 
     return (
         <div className={`${classes.wrapperMainPage} container`}>

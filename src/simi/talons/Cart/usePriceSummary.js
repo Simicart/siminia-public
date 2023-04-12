@@ -71,9 +71,9 @@ const flattenData = (data, giftCodeData) => {
             earnPoint: data?.cart?.earn_point,
             spentPoint: data?.cart?.spent_point
         },
-        shipping_arrival_timeslot: data.cart?.delivery_date.shipping_arrival_timeslot || "",
-        shipping_arrival_date: data.cart?.delivery_date.shipping_arrival_date || "",
-        shipping_arrival_comments: data.cart?.delivery_date.shipping_arrival_comments || "",
+        shipping_arrival_timeslot: data.cart?.delivery_date?.shipping_arrival_timeslot || "",
+        shipping_arrival_date: data.cart?.delivery_date?.shipping_arrival_date || "",
+        shipping_arrival_comments: data.cart?.delivery_date?.shipping_arrival_comments || "",
     };
 };
 

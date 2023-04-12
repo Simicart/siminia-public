@@ -1,6 +1,12 @@
 import { useQuery } from '@apollo/client';
 import { GET_TAG_FAQS } from './Faq.gql';
 
+const faqsEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_FAQS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;
+
 export const useTagList = props => {
     const { url_key } = props
     const {
@@ -9,7 +15,8 @@ export const useTagList = props => {
         error: tagListError
     } = useQuery(GET_TAG_FAQS, { 
         variables:{ tag_list: url_key, sort_by : "" },
-        fetchPolicy:"no-cache"
+        fetchPolicy:"no-cache",
+        skip: faqsEnabled === 0
     });
    
     let derivedErrorMessage;

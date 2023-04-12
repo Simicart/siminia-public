@@ -1,12 +1,18 @@
 import { useQuery } from '@apollo/client';
 import { GET_FAQ_CONFIG } from './Faq.gql';
 
+const faqsEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_FAQS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;
+
 export const useStoreConfig = props => {
     const {
         data: storeConfig,
         loading: storeConfigLoading,
         error: storeConfigError
-    } = useQuery(GET_FAQ_CONFIG, { fetchPolicy: 'no-cache' });
+    } = useQuery(GET_FAQ_CONFIG, { fetchPolicy: 'no-cache', skip: faqsEnabled === 0 });
 
     let derivedErrorMessage;
     if (storeConfigError) {
