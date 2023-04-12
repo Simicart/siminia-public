@@ -113,12 +113,10 @@ const CheckoutPage = props => {
         toggleSignInContent
     } = talonProps;
 
-
-
-    const deliveryData = useDeliveryDateTime({
+    let deliveryData = deliveryTimeEnabled !== 0 ? useDeliveryDateTime({
         setPageIsUpdating: setIsUpdating,
         isUpdating: isUpdating
-    });
+    }) : '';
 
     const deliveryDateTime = useRef(null);
 
