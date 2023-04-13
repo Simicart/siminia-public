@@ -1,7 +1,8 @@
 @import 'mediaQueryCustomOption';
 
 .custom-options {
-    padding: 0 15px;
+    padding: 0 1.5rem;
+    margin-bottom: 30px;
     @include mobile {
         margin: 0 0.4rem;
     }
