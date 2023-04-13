@@ -8,13 +8,20 @@ import {
     SET_QUOTE_CHECKOUT_CUSTOM_FIELD
 } from './checkoutCustomField.gql';
 
+const checkoutCustomFieldEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_CHECKOUT_CUSTOM_FIELD &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_CHECKOUT_CUSTOM_FIELD) === 1;
+
 export const useCheckoutCustomFieldData = props => {
     const {
         data: checkoutCustomFieldData,
         loading: checkoutCustomFieldLoading,
         error: checkoutCustomFieldError
     } = useQuery(GET_ALL_CHECKOUT_CUSTOM_FIELD_DATA, {
-        fetchPolicy: 'no-cache'
+        fetchPolicy: 'no-cache',
+        skip: checkoutCustomFieldEnabled === 0
     });
 
     let derivedErrorMessage;
