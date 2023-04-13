@@ -17,7 +17,7 @@ export const useHeader = props => {
 
     const isActive = useMemo(() => {
         return rewardPointActive && isSignedIn && rewardPointHeader;
-    }, [rewardPointActive, isSignedIn]);
+    }, [rewardPointActive, isSignedIn, rewardPointHeader]);
 
     const { data } = useQuery(getCustomerRewardPoint, {
         skip: !isActive

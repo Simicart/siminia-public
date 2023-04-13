@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Star } from 'react-feather';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import ReviewStatus from './ReviewStatus';
 import convertRatings from '../talons/convertRatings';
 import SUBMIT_PREVIEW from '../talons/useSubmitReview';
@@ -10,6 +10,7 @@ import {
     changeRatingStar
 } from '../functions/gift-card-review/StarHandle';
 import '../styles/styles.scss';
+import { FormattedMessage } from 'react-intl'
 
 const GiftCardReivew = ({ giftCardData }) => {
     //handle star state
@@ -56,15 +57,14 @@ const GiftCardReivew = ({ giftCardData }) => {
 
     //define add review function
     const [
-        addReview,
-        { data: reviewData, loading: reviewLoading, error: reviewError }
+        addReview
     ] = useMutation(SUBMIT_PREVIEW, {
-        onCompleted: reviewData => {
+        onCompleted: () => {
             setSubmitButton('Submit');
             setReviewStatus('Submit review successful!');
             setShowReviewStatus(true);
         },
-        onError: reviewError => {
+        onError: () => {
             setSubmitButton('Submit');
             setReviewStatus('Some errors occurred. Please try again later');
             setShowReviewStatus(true);
@@ -117,25 +117,25 @@ const GiftCardReivew = ({ giftCardData }) => {
         element4.style.boxShadow = 'none';
 
         if (valueIndex === -1) {
-            let topHeight = element1.offsetTop - 450;
+            const topHeight = element1.offsetTop - 450;
             window.scrollTo({
                 top: topHeight,
                 behavior: 'smooth'
             });
         } else if (priceIndex === -1) {
-            let topHeight = element1.offsetTop - 450;
+            const topHeight = element1.offsetTop - 450;
             window.scrollTo({
                 top: topHeight,
                 behavior: 'smooth'
             });
         } else if (ratingIndex === -1) {
-            let topHeight = element1.offsetTop - 450;
+            const topHeight = element1.offsetTop - 450;
             window.scrollTo({
                 top: topHeight,
                 behavior: 'smooth'
             });
         } else if (nickName.length === 0) {
-            let topHeight = element2.offsetTop - 450;
+            const topHeight = element2.offsetTop - 450;
             window.scrollTo({
                 top: topHeight,
                 behavior: 'smooth'
@@ -143,7 +143,7 @@ const GiftCardReivew = ({ giftCardData }) => {
             element2.style.boxShadow = '0 0 10px #206dac';
             element2.focus({ preventScroll: true });
         } else if (title.length === 0) {
-            let topHeight = element3.offsetTop - 450;
+            const topHeight = element3.offsetTop - 450;
             window.scrollTo({
                 top: topHeight,
                 behavior: 'smooth'
@@ -151,7 +151,7 @@ const GiftCardReivew = ({ giftCardData }) => {
             element3.style.boxShadow = '0 0 10px #206dac';
             element3.focus({ preventScroll: true });
         } else if (details.length === 0) {
-            let topHeight = element4.offsetTop - 450;
+            const topHeight = element4.offsetTop - 450;
             window.scrollTo({
                 top: topHeight,
                 behavior: 'smooth'
@@ -191,7 +191,8 @@ const GiftCardReivew = ({ giftCardData }) => {
     return (
         <div className="gift-card-review-wrapper">
             <h1 style={{ fontSize: 24, fontWeight: 'bold' }}>
-                You're reviewing:{' '}
+                <FormattedMessage id="You're reviewing:" defaultMessage="You\'re reviewing:"></FormattedMessage>
+                {' '}
                 <span style={{ fontWeight: 300 }}>
                     {giftCardData.products.items[0]?.name}
                 </span>
@@ -204,7 +205,10 @@ const GiftCardReivew = ({ giftCardData }) => {
                     borderBottom: '2px solid gray'
                 }}
             >
-                Your rating <span style={{ color: 'red' }}>*</span>
+                <FormattedMessage id='Your rating ' defaultMessage='Your rating '></FormattedMessage>
+                <span style={{ color: 'red' }}>
+                <FormattedMessage id='*' defaultMessage='*'></FormattedMessage>
+                </span>
             </p>
             <div style={{ marginTop: 40 }}>
                 <div className="gift-card-value-rating">
@@ -216,7 +220,7 @@ const GiftCardReivew = ({ giftCardData }) => {
                         }}
                     >
                         <p style={{ fontSize: 14, position: 'absolute', top: '20%' }}>
-                            Value
+                            <FormattedMessage id='Value' defaultMessage='Value'></FormattedMessage>
                         </p>
                     </div>
                     <div className="gift-card-star-wrapper">
@@ -239,8 +243,8 @@ const GiftCardReivew = ({ giftCardData }) => {
                         <div style={{ marginTop: 20 }}>
                             {starValueError && (
                                 <p style={{ color: 'red' }}>
-                                    Please select at least one star for value
-                                    above.
+                                    <FormattedMessage id='Please select at least one star for value above.' 
+                                    defaultMessage='Please select at least one star for value above.'></FormattedMessage>     
                                 </p>
                             )}
                         </div>
@@ -255,7 +259,7 @@ const GiftCardReivew = ({ giftCardData }) => {
                         }}
                     >
                         <p style={{ fontSize: 14, position: 'absolute', top: '25%' }}>
-                            Price
+                            <FormattedMessage id='Price' defaultMessage='Price'></FormattedMessage>
                         </p>
                     </div>
                     <div className="gift-card-star-wrapper">
@@ -278,8 +282,8 @@ const GiftCardReivew = ({ giftCardData }) => {
                         <div style={{ marginTop: 20 }}>
                             {starPriceError && (
                                 <p style={{ color: 'red' }}>
-                                    Please select at least one star for price
-                                    above.
+                                    <FormattedMessage id='Please select at least one star for value above.' 
+                                    defaultMessage='Please select at least one star for value above.'></FormattedMessage>
                                 </p>
                             )}
                         </div>
@@ -294,7 +298,7 @@ const GiftCardReivew = ({ giftCardData }) => {
                         }}
                     >
                         <p style={{ fontSize: 14, position: 'absolute', top: '25%' }}>
-                            Rating
+                        <FormattedMessage id='Raing' defaultMessage='Rating'></FormattedMessage>
                         </p>
                     </div>
                     <div className="gift-card-star-wrapper">
@@ -317,8 +321,8 @@ const GiftCardReivew = ({ giftCardData }) => {
                         <div style={{ marginTop: 20 }}>
                             {starRatingError && (
                                 <p style={{ color: 'red' }}>
-                                    Please select at least one star for rating
-                                    above.
+                                    <FormattedMessage id='Please select at least one star for value above.' 
+                                    defaultMessage='Please select at least one star for value above.'></FormattedMessage>
                                 </p>
                             )}
                         </div>
@@ -334,11 +338,17 @@ const GiftCardReivew = ({ giftCardData }) => {
                     marginBottom: 40
                 }}
             >
-                User info <span style={{ color: 'red' }}>*</span>
+                <FormattedMessage id='User info ' defaultMessage='User info '></FormattedMessage>
+                <span style={{ color: 'red' }}>
+                    <FormattedMessage id='*' defaultMessage='*'></FormattedMessage>
+                </span>
             </p>
             <div style={{ marginBottom: 20 }}>
                 <p style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 5 }}>
-                    Nickname <span style={{ color: 'red' }}>*</span>
+                    <FormattedMessage id='Nickname ' defaultMessage='Nickname '></FormattedMessage>
+                    <span style={{ color: 'red' }}>
+                        <FormattedMessage id='*' defaultMessage='*'></FormattedMessage>
+                    </span>
                 </p>
                 <input
                     className="gift-card-nickname-input"
@@ -356,13 +366,16 @@ const GiftCardReivew = ({ giftCardData }) => {
                 />
                 {nickNameError && (
                     <p style={{ color: 'red', fontSize: 12, marginTop: 5 }}>
-                        This is a required field.
+                        <FormattedMessage id='This is a required field.' defaultMessage='This is a required field.'></FormattedMessage>
                     </p>
                 )}
             </div>
             <div style={{ marginBottom: 20 }}>
                 <p style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 5 }}>
-                    Title <span style={{ color: 'red' }}>*</span>
+                    <FormattedMessage id='Title ' defaultMessage='Title'></FormattedMessage>
+                    <span style={{ color: 'red' }}>
+                        <FormattedMessage id='*' defaultMessage='*'></FormattedMessage>
+                    </span>
                 </p>
                 <input
                     className="gift-card-title-input"
@@ -380,13 +393,16 @@ const GiftCardReivew = ({ giftCardData }) => {
                 />
                 {titleError && (
                     <p style={{ color: 'red', fontSize: 12, marginTop: 5 }}>
-                        This is a required field.
+                        <FormattedMessage id='This is a required field.' defaultMessage='This is a required field.'></FormattedMessage>
                     </p>
                 )}
             </div>
             <div>
                 <p style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 5 }}>
-                    Details <span style={{ color: 'red' }}>*</span>
+                    <FormattedMessage id='Details ' defaultMessage='Details '></FormattedMessage>
+                    <span style={{ color: 'red' }}>
+                        <FormattedMessage id='*' defaultMessage='*'></FormattedMessage>
+                    </span>
                 </p>
                 <textarea
                     className="gift-card-details-input"
@@ -404,7 +420,7 @@ const GiftCardReivew = ({ giftCardData }) => {
                 />
                 {detailsError && (
                     <p style={{ color: 'red', fontSize: 12, marginTop: 5 }}>
-                        This is a required field.
+                        <FormattedMessage id='This is a required field.' defaultMessage='This is a required field.'></FormattedMessage>
                     </p>
                 )}
             </div>

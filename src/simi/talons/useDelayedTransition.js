@@ -100,7 +100,7 @@ const useDelayedTransition = () => {
                             isPbPage = true;
                     });
                     if (isPbPage) return proceed(true);
-                } catch (err) {}
+                } catch (err) {console.log(err)}
             }
 
             setPageLoading(true);

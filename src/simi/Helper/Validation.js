@@ -123,10 +123,11 @@ export const validateDate = (value) => {
         lopera1 = opera1.length;
         lopera2 = opera2.length;
         // Extract the string into month, date and year
+        var pdate = '';
         if (lopera1>1) {
-            var pdate = value.split('/');
+             pdate = value.split('/');
         } else if (lopera2>1) {
-            var pdate = value.split('-');
+             pdate = value.split('-');
         }
         var mm = parseInt(pdate[0]);
         var dd = parseInt(pdate[1]);

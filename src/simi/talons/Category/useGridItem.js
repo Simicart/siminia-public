@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { simiUseMutation as useMutation } from 'src/simi/Network/Query';
 import { useWindowSize, useToasts } from '@magento/peregrine';
 import Identify from 'src/simi/Helper/Identify';
@@ -15,10 +15,14 @@ const ErrIc = <Icon src={AlertCircleIcon} attrs={{ width: 18 }} />;
 
 export const useGridItem = props => {
     const { updateCompare, handleLink, cartId, location } = props;
-    const giftCardLocation = {
-        ...location,
-        pathname: `giftcard${location.pathname}`
-    }
+    // const giftCardLocation = {
+    //     ...location,
+    //     pathname: `giftcard${location.pathname}`
+    // };
+    const giftCardLocation = useMemo(() => {
+        return { ...location, pathname: `giftcard${location.pathname}` };
+    }, [location]);
+
     const [, { addToast }] = useToasts();
     const { formatMessage } = useIntl();
     const [quickView, setQuickView] = useState(false);
@@ -100,25 +104,31 @@ export const useGridItem = props => {
         async (item, quantity = 1) => {
             if (
                 item.type_id === 'simple' &&
-                (!item.hasOwnProperty('options') ||
-                    (item.hasOwnProperty('options') && item.options === null))
+                (!Object.prototype.hasOwnProperty.call(item, 'options') ||
+                    (Object.prototype.hasOwnProperty.call(item, 'options') &&
+                        item.options === null))
             ) {
                 try {
-                    const {data: addProductsToCartData} = await addCart({
+                    const { data: addProductsToCartData } = await addCart({
                         variables: {
                             cartId,
                             product: [{ sku: item.sku, quantity }]
                         }
                     });
 
-                    if(
-                        addProductsToCartData 
-                        && addProductsToCartData.addProductsToCart 
-                        && addProductsToCartData.addProductsToCart.user_errors 
-                        && Array.isArray(addProductsToCartData.addProductsToCart.user_errors) 
-                        && addProductsToCartData.addProductsToCart.user_errors.length > 0
+                    if (
+                        addProductsToCartData &&
+                        addProductsToCartData.addProductsToCart &&
+                        addProductsToCartData.addProductsToCart.user_errors &&
+                        Array.isArray(
+                            addProductsToCartData.addProductsToCart.user_errors
+                        ) &&
+                        addProductsToCartData.addProductsToCart.user_errors
+                            .length > 0
                     ) {
-                        const messages = addProductsToCartData.addProductsToCart.user_errors.map((user_error) => user_error.message)
+                        const messages = addProductsToCartData.addProductsToCart.user_errors.map(
+                            user_error => user_error.message
+                        );
 
                         addToast({
                             type: 'error',
@@ -126,7 +136,6 @@ export const useGridItem = props => {
                             message: messages.join(', '),
                             timeout: 3000
                         });
-
                     } else {
                         addToast({
                             type: 'info',
@@ -140,8 +149,6 @@ export const useGridItem = props => {
                             timeout: 3000
                         });
                     }
-
-                    
                 } catch (error) {
                     if (process.env.NODE_ENV !== 'production') {
                         console.error(error);
@@ -156,11 +163,20 @@ export const useGridItem = props => {
                     });
                 }
             } else {
-                if(item.__typename === 'BssGiftCardProduct') handleLink(giftCardLocation)
+                if (item.__typename === 'BssGiftCardProduct')
+                    handleLink(giftCardLocation);
                 else handleLink(location);
             }
         },
-        [addCart, cartId, handleLink, location, addToast, formatMessage]
+        [
+            addCart,
+            cartId,
+            addToast,
+            formatMessage,
+            handleLink,
+            giftCardLocation,
+            location
+        ]
     );
 
     let derivedErrorMessage;

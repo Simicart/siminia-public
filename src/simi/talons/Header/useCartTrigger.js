@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useApolloClient, useQuery, useMutation, gql } from '@apollo/client';
+import {  useQuery, gql } from '@apollo/client';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
-import { useAppContext } from '@magento/peregrine/lib/context/app';
-import { useAwaitQuery } from '@magento/peregrine/lib/hooks/useAwaitQuery';
+// import { useAppContext } from '@magento/peregrine/lib/context/app';
+// import { useAwaitQuery } from '@magento/peregrine/lib/hooks/useAwaitQuery';
 import { useWindowSize } from '@magento/peregrine';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
@@ -23,17 +23,19 @@ const CHECK_USER_IS_AUTHED = gql`
 
 export const useCartTrigger = props => {
     const {
-        mutations: { createCartMutation },
-        queries: { getCartDetailsQuery, getItemCountQuery },
-        storeConfig
+        // mutations: { createCartMutation },
+        queries: { 
+            // getCartDetailsQuery, 
+            getItemCountQuery },
+        // storeConfig
     } = props;
     const history = useHistory();
     const location = useLocation();
     const [isHidden, setIsHidden] = useState(() =>
         DENIED_MINI_CART_ROUTES.includes(location.pathname)
     );
-    const apolloClient = useApolloClient();
-    const [{ drawer }, { toggleDrawer, closeDrawer }] = useAppContext();
+    // const apolloClient = useApolloClient();
+    // const [{ drawer }, { toggleDrawer, closeDrawer }] = useAppContext();
     const [{ isSignedIn }, { signOut }] = useUserContext();
     const [reloadInterval, setReloadInterval] = useState(1);
     const [{ cartId }] = useCartContext();

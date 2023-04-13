@@ -1,4 +1,10 @@
-import React, { forwardRef, useState, useImperativeHandle } from 'react';
+import React, {
+    forwardRef,
+    useState,
+    useImperativeHandle,
+    useEffect,
+    useCallback
+} from 'react';
 import defaultClasses from './deliveryDateTime.module.css';
 import Identify from 'src/simi/Helper/Identify';
 import { useStyle } from '@magento/venia-ui/lib/classify';
@@ -11,11 +17,34 @@ import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import DEFAULT_OPERATIONS from './deliveryDateTime.gql';
 import Button from '@magento/venia-ui/lib/components/Button';
 import Loader from '../../Loader';
+import { usePriceSummary } from '../../../../talons/Cart/usePriceSummary';
+import { useDeliveryDateTime } from './useDeliveryDateTime';
 
 const DeliveryDateTime = forwardRef((props, ref) => {
     const classes = useStyle(defaultClasses, props.classes);
-    const storeConfig = Identify.getStoreConfig();
-    const { bssDeliveryDateStoreConfig } = storeConfig || {};
+    const { deliveryData } = props;
+    // const storeConfig = Identify.getStoreConfig();
+    // const [isSubmit, setIsSubmit] = useState(false);
+    // const { bssDeliveryDateStoreConfig } = storeConfig || {};
+    
+    const {
+        bssDeliveryDateStoreConfig,
+        handleSubmit,
+        isSubmit,
+        deliTime,
+        startDate,
+        setStartDate,
+        minDate,
+        dateOff,
+        daysOff,
+        handleChange,
+        flatData,
+        deliveryTimeLoading,
+        deliveryComment,
+        filterDaysOff,
+        filterDate
+    } = deliveryData;
+    // const { flatData } = usePriceSummary();
 
     const { formatMessage } = useIntl();
     if (
@@ -58,105 +87,62 @@ const DeliveryDateTime = forwardRef((props, ref) => {
             date.getFullYear()
         );
     };
-    const now = new Date();
-    // const holidays = block_out_holidays
-    //     .split('{s:4:"date";s:10:')
-    //     .filter(item => item.indexOf('content') !== -1);
-    const daysOff = date_day_off.split(',');
-    const dateOff = block_out_holidays;
+    // const now = new Date();
 
-    // holidays.forEach(function(element) {
-    //     dateOff.push(element.slice(1, 11));
-    // });
-    const filterDate = (date, dateOff) => {
-        let d =
-            date.getDate() < '10' ? '' + '0' + date.getDate() : date.getDate();
+    // const daysOff = date_day_off.split(',');
+    // const dateOff = block_out_holidays;
 
-        let m =
-            date.getMonth() + 1 < '10'
-                ? '0' + parseInt(date.getMonth() + 1)
-                : '' + parseInt(date.getMonth() + 1);
-        let y = date.getFullYear();
-        let thisDay = m + '/' + d + '/' + y;
-        if (dateOff.findIndex(item => item.date === thisDay) !== -1) {
-            return false;
-        }
-        return true;
-    };
+    // const filterDate = (date, dateOff) => {
+    //     let d =
+    //         date.getDate() < '10' ? '' + '0' + date.getDate() : date.getDate();
 
-    const filterDaysOff = (date, daysOff) => {
-        if (daysOff.includes(date)) {
-            return false;
-        }
-        return true;
-    };
-
-    const handleSelectedDate = () => {
-        const selectedDate = new Date();
-        selectedDate.setDate(now.getDate() + 1 + Number(process_time));
-        if (!filterDaysOff(selectedDate.getDay().toString(), daysOff)) {
-            selectedDate.setDate(selectedDate.getDate() + 1);
-            if (!filterDate(selectedDate, dateOff)) {
-                selectedDate.setDate(selectedDate.getDate() + 1);
-            }
-        }
-        return selectedDate;
-    };
-
-    const [startDate, setStartDate] = useState(handleSelectedDate());
-    const excludeHolidays =
-        as_processing_days === '0'
-            ? dateOff.filter(
-                  date =>
-                      date >= formatDate(now, '/') &&
-                      date <= formatDate(handleSelectedDate(), '/')
-              ).length
-            : 0;
-    const minDate = new Date();
-    minDate.setDate(now.getDate() + 1 + Number(process_time) + excludeHolidays);
-
-    // const handleSubString = (str, number) => {
-    //     return str.substring(0, str.length - number);
-    // };
-
-    // const chunkArray = (arr, size) => {
-    //     let index = 0;
-    //     let arrayLength = arr.length;
-    //     let tempArray = [];
-
-    //     for (index = 0; index < arrayLength; index += size) {
-    //         let myChunk = arr.slice(index, index + size);
-    //         tempArray.push(myChunk);
+    //     let m =
+    //         date.getMonth() + 1 < '10'
+    //             ? '0' + parseInt(date.getMonth() + 1)
+    //             : '' + parseInt(date.getMonth() + 1);
+    //     let y = date.getFullYear();
+    //     let thisDay = m + '/' + d + '/' + y;
+    //     if (dateOff.findIndex(item => item.date === thisDay) !== -1) {
+    //         return false;
     //     }
-
-    //     return tempArray;
+    //     return true;
     // };
 
-    // const handletimeSlots = () => {
-    //     const strTimeSlots = time_slots.slice(5);
-    //     let tempArray = [];
-    //     handleSubString(strTimeSlots, 1)
-    //         .split('s:18:')
-    //         .filter(item => item.indexOf('name') !== -1)
-    //         .map(element => {
-    //             const item = handleSubString(element.slice(26), 2).split(';');
-    //             item.map(i => {
-    //                 tempArray.push(
-    //                     handleSubString(i.slice(i.indexOf('"') + 1), 1)
-    //                 );
-    //             });
-    //         });
-    //     const arraySplit = chunkArray(tempArray, 10);
-    //     let deliveryTimeSlot = [];
-    //     arraySplit.forEach(function(element) {
-    //         let splitHalf = chunkArray(element, 2);
-    //         const entries = new Map(splitHalf);
-    //         const obj = Object.fromEntries(entries);
-    //         deliveryTimeSlot.push(obj);
-    //     });
-    //     return deliveryTimeSlot;
+    // const filterDaysOff = (date, daysOff) => {
+    //     if (daysOff.includes(date)) {
+    //         return false;
+    //     }
+    //     return true;
     // };
-    // const deliveryTime = time_slots;
+
+    // const handleSelectedDate = () => {
+    //     if (flatData.shipping_arrival_date) {
+    //         const selectedDate = new Date(flatData.shipping_arrival_date);
+    //         return selectedDate;
+    //     } else {
+    //         const selectedDate = new Date();
+    //         selectedDate.setDate(now.getDate() + 1 + Number(process_time));
+    //         if (!filterDaysOff(selectedDate.getDay().toString(), daysOff)) {
+    //             selectedDate.setDate(selectedDate.getDate() + 1);
+    //             if (!filterDate(selectedDate, dateOff)) {
+    //                 selectedDate.setDate(selectedDate.getDate() + 1);
+    //             }
+    //         }
+    //         return selectedDate;
+    //     }
+    // };
+    // const [startDate, setStartDate] = useState(handleSelectedDate());
+    // const excludeHolidays =
+    //     as_processing_days === '0'
+    //         ? dateOff.filter(
+    //               date =>
+    //                   date >= formatDate(now, '/') &&
+    //                   date <= formatDate(handleSelectedDate(), '/')
+    //           ).length
+    //         : 0;
+    // const minDate = new Date();
+    // minDate.setDate(now.getDate() + 1 + Number(process_time) + excludeHolidays);
+
     const OptionDeliveryTime = time_slots.map((time, index) => {
         return (
             <option value={time.value} key={index}>
@@ -165,18 +151,30 @@ const DeliveryDateTime = forwardRef((props, ref) => {
         );
     });
 
-    const [deliTime, setDeliTime] = useState('');
-    const [deliveryComment, setDeliveryComment] = useState('');
+    // const [deliTime, setDeliTime] = useState(
+    //     flatData.shipping_arrival_timeslot
+    // );
+    // const [deliveryComment, setDeliveryComment] = useState(
+    //     flatData.shipping_arrival_comments
+    // );
 
-    const handleChange = e => {
-        let name = e.target.name;
-        if (name == 'deliveryTime') {
-            setDeliTime(e.target.value);
-        }
-        if (name == 'Delivery Comment') {
-            setDeliveryComment(e.target.value);
-        }
-    };
+    // useEffect(() => {
+    //     setDeliTime(flatData.shipping_arrival_timeslot);
+    //     setDeliveryComment(flatData.shipping_arrival_comments);
+    // }, [
+    //     flatData.shipping_arrival_timeslot,
+    //     flatData.shipping_arrival_comments
+    // ]);
+
+    // const handleChange = e => {
+    //     let name = e.target.name;
+    //     if (name == 'deliveryTime') {
+    //         setDeliTime(e.target.value);
+    //     }
+    //     if (name == 'Delivery Comment') {
+    //         setDeliveryComment(e.target.value);
+    //     }
+    // };
     const DeliveryComment =
         shipping_comment === '1' ? (
             <label className="text-area">
@@ -194,30 +192,60 @@ const DeliveryDateTime = forwardRef((props, ref) => {
                 />
             </label>
         ) : null;
-    const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
-    const { deliveryTimeMutation } = operations;
-    const [{ cartId }] = useCartContext();
-    const handleSubmit = () => {
-        deliveryMutation({
-            variables: {
-                cart_id: cartId,
-                shipping_arrival_comments: deliveryComment,
-                shipping_arrival_date: formatDate(startDate, '-', 1),
-                shipping_arrival_timeslot: deliTime
-            }
-        });
-    };
-    const [
-        deliveryMutation,
-        { data: mutationData, loading: mutationLoading, error: mutationError }
-    ] = useMutation(deliveryTimeMutation);
+    // const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
+    // const { deliveryTimeMutation } = operations;
+    // const [{ cartId }] = useCartContext();
 
-    if (mutationLoading) {
+    // const [
+    //     deliveryMutation,
+    //     {
+    //         called: applyDeliveryTimeCalled,
+    //         error: deliveryTimeError,
+    //         loading: deliveryTimeLoading
+    //     }
+    // ] = useMutation(deliveryTimeMutation);
+
+    // const handleSubmit = () => {
+    //     deliveryMutation({
+    //         variables: {
+    //             cart_id: cartId,
+    //             shipping_arrival_comments: deliveryComment,
+    //             shipping_arrival_date: formatDate(startDate, '-', 1),
+    //             shipping_arrival_timeslot: deliTime
+    //         }
+    //     });
+    // };
+
+    // useEffect(() => {
+    //     if (applyDeliveryTimeCalled) {
+    //         setPageIsUpdating(deliveryTimeLoading);
+    //     }
+    // }, [applyDeliveryTimeCalled, deliveryTimeLoading, setPageIsUpdating]);
+
+    // useEffect(() => {
+    //     if (
+    //         (Number(is_field_required_comment) === 1 &&
+    //             deliveryComment === '') ||
+    //         (Number(is_field_required_timeslot) === 1 && deliTime === '')
+    //     ) {
+    //         setIsSubmit(true);
+    //     } else {
+    //         setIsSubmit(false);
+    //     }
+    // }, [deliveryComment, deliTime]);
+
+    // useEffect(() => {
+    //     if (flatData.shipping_arrival_date) {
+    //         setStartDate(handleSelectedDate());
+    //     }
+    // }, [flatData.shipping_arrival_date]);
+
+    if (deliveryTimeLoading) {
         return <Loader />;
     }
 
     return (
-        <div className={classes.root}>
+        <div id="deliveryDateTime" className={classes.root}>
             <div className={classes.deliveryDate}>
                 <div className={classes.title}>Delivery Date</div>
                 <DatePicker
@@ -239,7 +267,7 @@ const DeliveryDateTime = forwardRef((props, ref) => {
                     id="deliveryTime"
                     placeholder="Please"
                 >
-                    <option>
+                    <option value="">
                         {formatMessage({
                             id: 'Please select delivery time slot',
                             defaultMessage: 'Please select delivery time slot'
@@ -254,6 +282,7 @@ const DeliveryDateTime = forwardRef((props, ref) => {
                 onClick={() => handleSubmit()}
                 priority={'normal'}
                 type={'button'}
+                disabled={isSubmit}
             >
                 <FormattedMessage id={'Apply'} defaultMessage={'Apply'} />
             </Button>

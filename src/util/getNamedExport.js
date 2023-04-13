@@ -11,7 +11,7 @@ const getNamedExport = (obj, name = 'default') =>
             throw new Error('Invalid namespace object provided.');
         }
 
-        if (!mod.hasOwnProperty(name)) {
+        if (!Object.prototype.hasOwnProperty.call(mod, name)) {
             throw new Error(`Binding ${name} not found.`);
         }
 

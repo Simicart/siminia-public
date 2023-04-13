@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import {
     GET_CUSTOMER_REWARD_POINTS,
@@ -9,7 +9,6 @@ import {
 } from './rewardPoints.gql';
 import { deriveErrorMessage } from '@magento/peregrine/lib/util/deriveErrorMessage';
 import { useAppContext } from '@magento/peregrine/lib/context/app';
-
 
 const rewardPointEnabled =
     window.SMCONFIGS &&
@@ -34,7 +33,6 @@ export const useGetRewardPointData = props => {
         skip: !rewardPointEnabled || !isSignedIn
     });
 
-
     const {
         data: rewardPointConfig,
         loading: rewardPointConfigLoading,
@@ -44,13 +42,14 @@ export const useGetRewardPointData = props => {
         skip: !rewardPointEnabled || !isSignedIn
     });
 
-
     const { data: rewardTransactionData } = useQuery(GET_CUSTOMER_TRANSACTION, {
         variables: { pageSize: 100 },
         fetchPolicy: 'cache-and-network',
         skip: !rewardPointEnabled || !isSignedIn || (props && props.onCart)
     });
-    const [mpRewardPoints,{loading : setSubcribeLoading}] = useMutation(SET_REWARD_SUBSCRIBE_STATUS);
+    const [mpRewardPoints, { loading: setSubcribeLoading }] = useMutation(
+        SET_REWARD_SUBSCRIBE_STATUS
+    );
     const customerRewardPoint = rewardPointData
         ? rewardPointData.customer.mp_reward
         : [];
@@ -66,7 +65,7 @@ export const useGetRewardPointData = props => {
     );
     useEffect(() => {
         setPageLoading(isBackgroundLoading);
-    }, [isBackgroundLoading, setPageLoading,setSubcribeLoading]);
+    }, [isBackgroundLoading, setPageLoading, setSubcribeLoading]);
     return {
         errorMessage: derivedErrorMessage,
         isBackgroundLoading,
@@ -77,6 +76,8 @@ export const useGetRewardPointData = props => {
         customerRewardPoint,
         customerTransactions,
         rewardTransactionData,
-        rewardPointConfig
+        rewardPointConfig,
+        rewardPointConfigLoading,
+        rewardPointConfigError
     };
 };

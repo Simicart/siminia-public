@@ -2,14 +2,14 @@ import React from 'react';
 import {
     EmailShareButton,
     FacebookShareButton,
-    InstapaperShareButton,
+    // InstapaperShareButton,
     TelegramShareButton,
     TwitterShareButton,
-    InstapaperIcon,
-    EmailIcon,
-    FacebookIcon,
-    TelegramIcon,
-    TwitterIcon
+    // InstapaperIcon,
+    // EmailIcon,
+    // FacebookIcon,
+    // TelegramIcon,
+    // TwitterIcon
 } from 'react-share';
 import {FaFacebookF, FaTwitter , FaTelegramPlane} from 'react-icons/fa'
 import {GrMail} from 'react-icons/gr'

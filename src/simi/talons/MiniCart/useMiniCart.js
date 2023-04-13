@@ -52,7 +52,7 @@ export const useMiniCart = props => {
     const {
         removeItemMutation,
         miniCartQuery,
-        getStoreConfigQuery
+        // getStoreConfigQuery
     } = operations;
 
     const [{ cartId }] = useCartContext();

@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { GET_SEARCH_BOX } from './Faq.gql';
 
-export const useSearchBox = props => {
+export const useSearchBox = () => {
 	const {
 		data: searchboxData,
 		loading: searchboxLoading,

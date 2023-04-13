@@ -1,14 +1,15 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const Simple = props => {
-    const { classes, prices, type, formatPrice } = props;
+    const { classes, prices, formatPrice } = props;
     ////simple, configurable ....
     let price_label = <div />;
     let special_price_label = <div />;
     let price_excluding_tax = <div />;
     let price_including_tax = <div />;
     let price = <div />;
+    const { formatMessage } = useIntl();
 
     if (prices.has_special_price) {
         if (prices.show_ex_in_price !== null && prices.show_ex_in_price === 1) {
@@ -20,8 +21,7 @@ const Simple = props => {
             price_excluding_tax = (
                 <div className="excl-price">
                     <span className="excl-price-label">
-                        <FormattedMessage id={'Excl. Tax'} />
-                        {' : '}
+                        <FormattedMessage id={'Excl. Tax:'} />
                     </span>
                     <span className="excl-price-value">
                         {formatPrice(
@@ -34,8 +34,7 @@ const Simple = props => {
             price_including_tax = (
                 <div className="incl-price">
                     <span className="incl-price-label">
-                        <FormattedMessage id={'Incl. Tax'} />
-                        {' : '}
+                        <FormattedMessage id={'Incl. Tax:'} />
                     </span>
                     <span className="incl-price-value">
                         {formatPrice(
@@ -59,7 +58,7 @@ const Simple = props => {
         price_label = (
             <div className="regular-price">
                 <span className="regular-price-label">
-                    <FormattedMessage id={'Regular Price'} /> {' : '}
+                    <FormattedMessage id={'Regular Price:'} />
                 </span>
                 <span className="regular-price-value">
                     {formatPrice(
@@ -69,7 +68,9 @@ const Simple = props => {
                     )}{' '}
                 </span>
                 <span className={`${classes['sale_off']} sale_off`}>
-                    -{prices.discount_percent}%
+                    {formatMessage({ id: '-' })}
+                    {prices.discount_percent}
+                    {formatMessage({ id: '%' })}
                 </span>
             </div>
         );
@@ -78,8 +79,7 @@ const Simple = props => {
             price_excluding_tax = (
                 <div className="excl-price">
                     <span className="excl-price-label">
-                        <FormattedMessage id={'Excl. Tax'} />
-                        {' : '}
+                        <FormattedMessage id={'Excl. Tax:'} />
                     </span>
                     <span className="excl-price-value">
                         {formatPrice(
@@ -92,8 +92,7 @@ const Simple = props => {
             price_including_tax = (
                 <div className="incl-price">
                     <span className="incl-price-label">
-                        <FormattedMessage id={'Incl. Tax'} />
-                        {' : '}
+                        <FormattedMessage id={'Incl. Tax:'} />
                     </span>
                     <span className="incl-price-value">
                         {formatPrice(

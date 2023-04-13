@@ -1,10 +1,10 @@
 import { useCallback, useMemo } from 'react';
-import { getFormFields } from '../utils';
+import { getFormFields , getIsShowCustomerFields} from '../utils';
 import { useMutation } from '@apollo/client';
 import { useToasts } from '@magento/peregrine';
 import { useAppContext } from '@magento/peregrine/lib/context/app';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
-import { getIsShowCustomerFields } from '../utils'
+// import { getIsShowCustomerFields } from '../utils'
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import defaultOperations from '../queries/callForPrice.gql';
 
@@ -86,7 +86,7 @@ export const useForm = (props = {}) => {
 
             closeDrawer();
         },
-        [callForPrice, closeDrawer, addToast]
+        [callForPrice, productSku, formatMessage, addToast, closeDrawer]
     );
 
     const filedsFilted = useMemo(() => {

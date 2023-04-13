@@ -11,7 +11,7 @@ const Arrowup = props => {
             id={props.id?props.id:''}
                 className={props.className}
             style={style}>
-            <title>icon/arrow/arrow-up</title>
+            {/* <title>icon/arrow/arrow-up</title> */}
             
             <g id="Mask">
             </g>

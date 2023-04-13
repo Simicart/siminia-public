@@ -1,5 +1,5 @@
 import React from 'react';
-import Identify from 'src/simi/Helper/Identify';
+// import Identify from 'src/simi/Helper/Identify';
 import { randomString } from 'src/simi/Helper/String';
 
 class Abstract extends React.PureComponent {

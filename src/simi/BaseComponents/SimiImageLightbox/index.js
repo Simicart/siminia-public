@@ -4,7 +4,9 @@ require('./simiImageLightbox.scss');
 import {
     X as XIcon,
     ZoomIn as ZoomInIcon,
-    ZoomOut as ZoomOutIcon
+    ZoomOut as ZoomOutIcon,
+    ChevronRight,
+    ChevronLeft
 } from 'react-feather';
 
 class SimiImageLightbox extends Component {
@@ -96,41 +98,43 @@ class SimiImageLightbox extends Component {
                 className={`lighbox-modal modal ${open ? 'active' : ''}`}
             >
                 <div className="bar-icon">
-                    <span
+                    <button
                         className="zoom-in cursor"
                         onClick={() => this.handleZoom('in')}
                     >
                         <ZoomInIcon />
-                    </span>
-                    <span
+                    </button>
+                    <button
                         className="zoom-out cursor"
                         onClick={() => this.handleZoom('out')}
                     >
                         <ZoomOutIcon />
                         <i className="icon-circle-minus" />
-                    </span>
-                    <span
+                    </button>
+                    <button
                         className="close-icon cursor"
                         onClick={this.closeLightbox}
                     >
                         <XIcon />
-                    </span>
+                    </button>
                 </div>
 
                 <div className="modal-content">
                     <div className="images-wrapper">{this.renderImages()}</div>
-                    <div
+                    <button
                         className="prev"
                         onClick={() => this.handlePlusSlide(-1)}
                     >
-                        &#10094;
-                    </div>
-                    <div
+                        {/* &#10094; */}
+                        <ChevronLeft/>
+                    </button>
+                    <button
                         className="next"
                         onClick={() => this.handlePlusSlide(1)}
                     >
-                        &#10095;
-                    </div>
+                        {/* &#10095; */}
+                        <ChevronRight/>
+                    </button>
                 </div>
             </div>
         );

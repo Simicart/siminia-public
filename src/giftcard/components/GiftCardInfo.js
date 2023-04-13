@@ -10,6 +10,7 @@ import ADD_GIFT_CARD_TO_WISHLIST from '../talons/useAddGiftCardToWishlist';
 import GiftCardPreview from './GiftCardPreview';
 import StatusPopUp from './StatusPopUp';
 import '../styles/styles.scss';
+import { FormattedMessage } from 'react-intl'
 
 import {
     handlePriceInput,
@@ -23,7 +24,6 @@ import {
     imgStyles,
     selectedImgStyles,
     settings,
-    loadingImage
 } from '../functions/gift-card-info/CarouselConfig';
 
 const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
@@ -75,9 +75,6 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
     const [heartFill, setHeartFill] = useState('white');
 
     const [templateId, setTemplateId] = useState();
-
-    //templates data and price range
-    const [templateImage,setTemplateImage] = useState();
     
     const min_value =
         giftCardData.products.items[0]?.giftcard_options.dynamic_price
@@ -93,6 +90,11 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
         giftCardData?.products?.items[0]?.giftcard_options?.template || [];
     const [codeColor, setCodeColor] = useState()
     const [messageColor, setMessageColor] = useState()
+
+    const chooseAmount = 'Choose an amount...'
+    const otherAmount = 'Other Amount...'
+    const chooseTemplate = 'Choose a Template'
+    const chooseTimezone = 'Choose a Timezone'
 
     const [listImage,setListImage] = useState() 
     // const imgs =
@@ -135,7 +137,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
 
     //template submit
     const handleTemplateOption = e => {
-        let imageArray = ListTemplate.find(item=>item.template_id === Number(e.target.value))
+        const imageArray = ListTemplate.find(item=>item.template_id === Number(e.target.value))
        
         if (document.getElementById('gc').value !== 'default') {
             setTemplateId(Number(e.target.value));
@@ -292,7 +294,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
         element8.style.boxShadow = 'none';
 
         if (element1.value === 'default') {
-            let topHeight = element1.offsetTop - 450;
+            const topHeight = element1.offsetTop - 450;
             window.scrollTo({
                 top: topHeight,
                 behavior: 'smooth'
@@ -307,7 +309,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                 (Number(element7.value) > 0 &&
                     Number(element7.value) > max_value))
         ) {
-            let topHeight = element1.offsetTop - 450;
+            const topHeight = element1.offsetTop - 450;
             window.scrollTo({
                 top: topHeight,
                 behavior: 'smooth'
@@ -315,14 +317,14 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
             element7.style.boxShadow = '0 0 10px #206dac';
             element7.focus({ preventScroll: true });
         } else if (element2.value === 'default' || !imageId) {
-            let topHeight = element2.offsetTop - 450;
+            const topHeight = element2.offsetTop - 450;
             window.scrollTo({
                 top: topHeight,
                 behavior: 'smooth'
             });
             element2.style.boxShadow = '0 0 10px #206dac';
         } else if (senderName === '') {
-            let topHeight = element3.offsetTop - 450;
+            const topHeight = element3.offsetTop - 450;
             window.scrollTo({
                 top: topHeight,
                 behavior: 'smooth'
@@ -330,7 +332,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
             element3.style.boxShadow = '0 0 10px #206dac';
             element3.focus({ preventScroll: true });
         } else if (recipientName === '') {
-            let topHeight = element4.offsetTop - 450;
+            const topHeight = element4.offsetTop - 450;
             window.scrollTo({
                 top: topHeight,
                 behavior: 'smooth'
@@ -343,7 +345,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
             !validateEmail(senderEmail) ||
             !validateEmail(recipientEmail)
         ) {
-            let topHeight = element5.offsetTop - 450;
+            const topHeight = element5.offsetTop - 450;
             window.scrollTo({
                 top: topHeight,
                 behavior: 'smooth'
@@ -365,7 +367,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
             Number(quantity) < 1 ||
             !Number.isInteger(Number(quantity))
         ) {
-            let topHeight = element8.offsetTop - 450;
+            const topHeight = element8.offsetTop - 450;
             window.scrollTo({
                 top: topHeight,
                 behavior: 'smooth'
@@ -395,17 +397,16 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
 
     //define addGiftCardToCart function
     const [
-        addGiftCardToCart,
-        { data: addCartData, loading: addCartLoading, error: addCartError }
+        addGiftCardToCart
     ] = useMutation(ADD_GIFT_CARD_TO_CART, {
-        onCompleted: addCartData => {
+        onCompleted: () => {
             setCartButton('Add to Cart');
             setCartStatus(
                 `${giftCardData.products.items[0].name.toUpperCase()} was added to your shopping cart`
             );
             setShowCartStatus(true);
         },
-        onError: addCartError => {
+        onError: () => {
             setCartButton('Add to Cart');
             setCartStatus('Some errors occurred. Please try again later');
             setShowCartStatus(true);
@@ -460,21 +461,16 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
 
     //define addGiftCardToWishlist function
     const [
-        addGiftCardToWishlist,
-        {
-            data: addWishlistData,
-            loading: addWishlistLoading,
-            error: addWishlistError
-        }
+        addGiftCardToWishlist
     ] = useMutation(ADD_GIFT_CARD_TO_WISHLIST, {
-        onCompleted: addWishlistData => {
+        onCompleted: () => {
             setWishlistStatus(
                 `${giftCardData.products.items[0].name.toUpperCase()} was added to your wishlist`
             );
             setShowWishlistStatus(true);
             setHeartFill('rgba(236, 91, 98, 1)');
         },
-        onError: addWishlistError => {
+        onError: () => {
             setWishlistStatus('Some errors occurred. Please try again later');
             setShowWishlistStatus(true);
         }
@@ -566,7 +562,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                 style={{ textAlign: 'left' }}
                             >
                                 <p className="gift-card-nav-review">
-                                    Be the first to review this product
+                                    <FormattedMessage id='Be the first to review this product' defaultMessage='Be the first to review this product'></FormattedMessage>                       
                                 </p>
                             </button>
                             <h1 style={{ fontSize: 20, fontWeight: 'bold' }}>
@@ -581,21 +577,25 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                           .join(' ')
                                     : 'OUT OF STOCK'}
                             </h3>
-                            <p>{`SKU#: ${
-                                giftCardData.products.items[0]?.sku
-                            }`}</p>
-                            <p>{`Expires after: ${
-                                giftCardData.products.items[0]?.giftcard_options
-                                    .expires_at
-                            } day(s)`}</p>
+                            <p>
+                                <FormattedMessage id={`SKU#: ${giftCardData.products.items[0]?.sku}`}
+                                defaultMessage={`SKU#: ${giftCardData.products.items[0]?.sku}`}></FormattedMessage>
+                                </p>
+                            <p>
+                                <FormattedMessage id={`Expires after: ${giftCardData.products.items[0]?.giftcard_options.expires_at} day(s)`}
+                                defaultMessage={`Expires after: ${giftCardData.products.items[0]?.giftcard_options.expires_at} day(s)`}></FormattedMessage>
+                                </p>
                         </div>
                     </div>
 
                     {(storeConfigData.bssGiftCardStoreConfig.active && ListTemplate.length > 0) ? (<div style={{ textAlign: 'left' }}>
                         <div style={{ marginTop: 20 }}>
                             <p style={{ fontWeight: 'bold', marginBottom: 5 }}>
-                                Card value{' '}
-                                <span style={{ color: 'red' }}>*</span>
+                                <FormattedMessage id='Card value' defaultMessage='Card value'></FormattedMessage>
+                                {' '}
+                                <span style={{ color: 'red' }}>
+                                    <FormattedMessage id='*' defaultMessage='*'></FormattedMessage>
+                                </span>
                             </p>
                             <div
                                 style={{
@@ -615,7 +615,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                         onChange={handlePriceSubmit}
                                     >
                                         <option value="default">
-                                            Choose an Amount...
+                                            {chooseAmount}
                                         </option>
                                         {giftCardData.products.items[0]
                                             ?.giftcard_options.amount &&
@@ -623,7 +623,8 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                                 (element, index) => (
                                                     <option
                                                         value={`val${index}`}
-                                                    >{`$${
+                                                    >
+                                                        {`$${
                                                         element.value
                                                     }.00`}</option>
                                                 )
@@ -632,7 +633,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                             ?.giftcard_options.dynamic_price
                                             .enable === 1 && (
                                             <option value="other">
-                                                Other Amount...
+                                                {otherAmount}
                                             </option>
                                         )}
                                     </select>
@@ -644,7 +645,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                                 marginTop: 5
                                             }}
                                         >
-                                            This is a required field.
+                                            <FormattedMessage id='This is a required field.' defaultMessage='This is a required field.'></FormattedMessage>
                                         </p>
                                     )}
                                 </div>
@@ -699,7 +700,8 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                         </div>
                         <div style={{ marginTop: 20 }}>
                             <p style={{ fontWeight: 'bold', marginBottom: 5 }}>
-                                Template <span style={{ color: 'red' }}>*</span>
+                                <FormattedMessage id='Template ' defaultMessage='Template '></FormattedMessage>
+                                <span style={{ color: 'red' }}><FormattedMessage id='*' defaultMessage='*'></FormattedMessage></span>
                             </p>
                             <select
                                 name="gift-card"
@@ -712,7 +714,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                 onChange={e => handleTemplateOption(e)}
                             >
                                 <option value="default">
-                                    Choose a Template...
+                                    {chooseTemplate}
                                 </option>
                                 {/* <option
                                     value={giftCardData.products.items[0]?.name}
@@ -754,6 +756,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                     <TinySlider settings={settings}>
                                         {listImage.map((el, index) => (
                                             <div key={index}>
+                                                <button style={{width: '100%'}} onClick={() => handleChoose(el)}>
                                                 <img
                                                     className={`tns-lazy-img`}
                                                     src={el.url}
@@ -765,11 +768,8 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                                             ? //(!template && index === 0)
                                                               selectedImgStyles
                                                             : imgStyles
-                                                    }
-                                                    onClick={() =>
-                                                        handleChoose(el)
-                                                    }
-                                                />
+                                                    }/>
+                                                </button>
                                             </div>
                                         ))}
                                     </TinySlider>
@@ -778,8 +778,11 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                         </div>
                         <div style={{ marginTop: 20 }}>
                             <p style={{ fontWeight: 'bold', marginBottom: 5 }}>
-                                Sender name{' '}
-                                <span style={{ color: 'red' }}>*</span>
+                                <FormattedMessage id='Sender name' defaultMessage='Sender name'></FormattedMessage>
+                                {' '}
+                                <span style={{ color: 'red' }}>
+                                    <FormattedMessage id='*' defaultMessage='*'></FormattedMessage>
+                                </span>
                             </p>
                             <input
                                 id="se-name"
@@ -810,14 +813,18 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                         marginTop: 5
                                     }}
                                 >
-                                    This is a required field.
+                                    <FormattedMessage id='This is a required field'
+                                    defaultMessage='This is a required field'></FormattedMessage>
                                 </p>
                             )}
                         </div>
                         <div style={{ marginTop: 20 }}>
                             <p style={{ fontWeight: 'bold', marginBottom: 5 }}>
-                                Recipient name{' '}
-                                <span style={{ color: 'red' }}>*</span>
+                                <FormattedMessage id='Recipient name' defaultMessage='Recipient name'></FormattedMessage>
+                                {' '}
+                                <span style={{ color: 'red' }}>
+                                <FormattedMessage id='*' defaultMessage='*'></FormattedMessage>
+                                </span>
                             </p>
                             <input
                                 id="re-name"
@@ -848,7 +855,8 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                         marginTop: 5
                                     }}
                                 >
-                                    This is a required field.
+                                    <FormattedMessage id='This is a required field'
+                                    defaultMessage='This is a required field'></FormattedMessage>
                                 </p>
                             )}
                         </div>
@@ -860,8 +868,11 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                         marginBottom: 5
                                     }}
                                 >
-                                    Sender email{' '}
-                                    <span style={{ color: 'red' }}>*</span>
+                                    <FormattedMessage id='Sender email' defaultMessage='Sender email'></FormattedMessage>
+                                    {' '}
+                                    <span style={{ color: 'red' }}>
+                                    <FormattedMessage id='*' defaultMessage='*'></FormattedMessage>
+                                    </span>
                                 </p>
                                 <input
                                     id="se-email"
@@ -903,8 +914,10 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                         marginBottom: 5
                                     }}
                                 >
-                                    Recipient email{' '}
-                                    <span style={{ color: 'red' }}>*</span>
+                                    <FormattedMessage id='Recipient email' defaultMessage='Recipient email'></FormattedMessage>{' '}
+                                    <span style={{ color: 'red' }}>
+                                    <FormattedMessage id='*' defaultMessage='*'></FormattedMessage>
+                                    </span>
                                 </p>
                                 <input
                                     id="re-email"
@@ -945,7 +958,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                         </div>
                         <div style={{ marginTop: 20 }}>
                             <p style={{ fontWeight: 'bold', marginBottom: 5 }}>
-                                Message
+                            <FormattedMessage id='Message' defaultMessage='Message'></FormattedMessage>
                             </p>
                             <textarea
                                 id="msg"
@@ -973,7 +986,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                         </div>
                         <div style={{ marginTop: 20 }}>
                             <p style={{ fontWeight: 'bold', marginBottom: 5 }}>
-                                Delivery Date
+                            <FormattedMessage id='Delivery Date' defaultMessage='Delivery Date'></FormattedMessage>
                             </p>
                             <DatePicker
                                 id="calendar"
@@ -997,7 +1010,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                         </div>
                         <div style={{ marginTop: 20 }}>
                             <p style={{ fontWeight: 'bold', marginBottom: 5 }}>
-                                Timezone
+                            <FormattedMessage id='Timezone' defaultMessage='Timezone'></FormattedMessage>
                             </p>
                             <select
                                 name="time-zone"
@@ -1018,7 +1031,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                     ).style.boxShadow = 'none';
                                 }}
                             >
-                                <option value="">Choose a Timezone...</option>
+                                <option value="">{chooseTimezone}</option>
                                 {timezoneData.bssGetListTimezone.map(
                                     element => (
                                         <option value={element.value}>
@@ -1032,7 +1045,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                             className="gift-card-preview-button"
                             onClick={handlePreview}
                         >
-                            Preview
+                            <FormattedMessage id='Preview' defaultMessage='Preview'></FormattedMessage>
                         </button>
                         <GiftCardPreview
                             open={showPreview}
@@ -1046,7 +1059,7 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                             value={priceTitle}
                         />
                         <p style={{ fontWeight: 'bold', marginBottom: 5 }}>
-                            Quantity
+                        <FormattedMessage id='Quantity' defaultMessage='Quantity'></FormattedMessage>
                         </p>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
                             <div className="gift-card-input-quantity">
@@ -1107,7 +1120,9 @@ const GiftCardInfo = ({ giftCardData, timezoneData, storeConfigData }) => {
                                 />
                             </div>
                             <div>
-                                <p style={{ marginTop: 5 }}>Add to Favorites</p>
+                                <p style={{ marginTop: 5 }}>
+                                <FormattedMessage id='Add to Favorites' defaultMessage='Add to Favorites'></FormattedMessage>
+                                </p>
                             </div>
                         </div>
                     </div>) : <></>}

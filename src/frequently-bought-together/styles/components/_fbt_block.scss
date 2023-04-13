@@ -18,8 +18,23 @@
 .fbt-header {
     display: flex;
     flex-direction: row;
-    margin-top: 30px; 
-    justify-content: space-between
+    margin: 30px 10px 30px 10px;
+    justify-content: space-between;
+    gap: 30px
+}
+
+.fbt-header-title {
+    font-size: 22px;
+    font-weight: bold
+}
+
+.fbt-header-title-mobile {
+    color: #150826;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 19px;
 }
 
 .fbt-slider-button {
@@ -27,6 +42,15 @@
     flex-direction: row;
     text-align: center; 
     gap: 32px
+}
+
+.fbt-slider-button-hide {
+    display: flex; 
+    flex-direction: row;
+    text-align: center; 
+    gap: 32px;
+    position: fixed;
+    top: -50%
 }
 
 .fbt-slider-prev {
@@ -45,19 +69,50 @@
     padding-left: 5px;
 }
 
+.fbt-slider-prev-2 {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: 60px;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #333;
+    padding-left: 5px;
+    z-index: 2
+}
+
+.fbt-slider-next-2 {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #333;
+    padding-left: 5px;
+}
+
+@media only screen and (max-width: 500px) {
+    .fbt-slider-prev-2 {
+        margin-right: 70px;
+    }
+    .fbt-slider-next-2 {
+        margin-right: 10px;
+    }
+}
+
 .fbt-slider-first {
     margin-bottom: 20px;
-    padding: 20px
+    padding: 20px;
 }
 
 .fbt-slider {
     margin-bottom: 20px;
-    padding: 20px
+    padding: 20px;
 }
 
 .fbt-slider-last {
     margin-bottom: 20px;
-    padding: 20px
+    padding: 20px;
 }
 
 .fbt-slider-first:hover {
@@ -92,7 +147,8 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
-    gap: 5px
+    gap: 5px;
+    z-index: 1
 }
 
 .fbt-product-review {
@@ -142,7 +198,18 @@
 .fbt-brief-info {
     display: flex;
     flex-direction: column;
-    width: 700px;
+    max-width: 700px;
+    width: 100%;
     gap: 25px;
     margin-top: 50px
+}
+
+.fbt-brief-info-mobile {
+    display: flex;
+    flex-direction: column;
+    max-width: 700px;
+    width: 100%;
+    gap: 25px;
+    margin-top: 50px;
+    padding: 0 10px;
 }

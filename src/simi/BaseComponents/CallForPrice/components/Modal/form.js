@@ -80,6 +80,7 @@ const HidePriceForm = props => {
                         />
                     </div>
                 );
+                break;
             default:
                 break;
         }

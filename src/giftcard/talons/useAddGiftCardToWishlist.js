@@ -1,4 +1,4 @@
-import { useQuery, gql } from '@apollo/client';
+import { gql } from '@apollo/client';
 
 const ADD_GIFT_CARD_TO_WISHLIST = gql`
     mutation addGiftCardProductsToWishList(

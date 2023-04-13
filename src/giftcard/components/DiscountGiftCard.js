@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react"
 import '../styles/styles.scss'
 import { ChevronDown, ChevronUp } from "react-feather"
-import { useOrderedGiftCards, GET_ORDERED_GIFT_CARDS } from '../talons/useOrderedGiftCards'
-import { useOrderedGiftCardId, GET_ORDERED_GIFT_CARD_ID } from '../talons/useOrderedGiftCardId'
+import { useOrderedGiftCards } from '../talons/useOrderedGiftCards'
+import { useOrderedGiftCardId } from '../talons/useOrderedGiftCardId'
 import { GiftCodeCheckoutContext } from '../../simi/App/nativeInner/Checkout/checkoutPage'
 import { GiftCodeCartContext } from "../../simi/App/nativeInner/CartCore/cartPage"
-import { useLazyQuery } from "@apollo/client"
+import { FormattedMessage } from "react-intl"
 
 const DiscountGiftCard = ({ location }) => {
     let giftCodeData = null
@@ -26,14 +26,19 @@ const DiscountGiftCard = ({ location }) => {
     const [applyId, setApplyId] = useState()
     const [giftCodeError, setGiftCodeError] = useState(false)
     const [matchCode, setMatchCode] = useState()
-    const myGiftCards = useOrderedGiftCards()
-    const orderGiftCardId = useOrderedGiftCardId()
+    //let myGiftCards = useOrderedGiftCards()
+    //let orderGiftCardId = useOrderedGiftCardId()
     const [applyButtonTitle, setApplyButtonTitle] = useState('APPLY')
 
-    if (myGiftCards.loading) return <></>
-    if (myGiftCards.error) return <p>{`Error! ${myGiftCards.error.message}`}</p>
-    if (orderGiftCardId.loading) return <></>
-    if (orderGiftCardId.error) return <p>{`Error! ${orderGiftCardId.error.message}`}</p>
+    if(customerToken) {
+        let myGiftCards = useOrderedGiftCards()
+        let orderGiftCardId = useOrderedGiftCardId()
+        if (myGiftCards.loading) return <></>
+        if (orderGiftCardId.loading) return <></>
+    }
+    else {
+        return <></>
+    }
 
     const handleCodeChange = (e) => {
         setGiftCode(e.target.value)
@@ -138,16 +143,23 @@ const DiscountGiftCard = ({ location }) => {
     return (
         <>
             <div className="discount-gift-card-wrapper">
-                <div className="discount-gift-card-header" onClick={() => setExpand(prev => !prev)}>
+                <button onClick={() => setExpand(prev => !prev)} style={{width: '100%'}}>
+                <div className="discount-gift-card-header" >
                     <div>
-                        <h1 className="discount-gift-card-title">Enter Gift Card Code</h1>
+                        <h1 className="discount-gift-card-title">
+                            <FormattedMessage id='Enter Gift Card Code' defaultMessage='Enter Gift Card Code'></FormattedMessage>
+                        </h1>
                     </div>
                     <div>
                         {expand ? (<ChevronUp></ChevronUp>) : (<ChevronDown></ChevronDown>)}
                     </div>
                 </div>
+                </button>
+                
                 {expand && (<div>
-                    <p style={{ fontSize: 14, marginTop: 40, marginBottom: 6 }}>Gift Card Code</p>
+                    <p style={{ fontSize: 14, marginTop: 40, marginBottom: 6 }}>
+                        <FormattedMessage id='Gift Card Code' defaultMessage='Gift Card Code'></FormattedMessage>
+                    </p>
                     <div className="discount-gift-card-input-wrapper">
                         <div style={{ flexGrow: 1 }}>
                             <input style={{ width: '100%', height: 50, paddingLeft: 15 }} placeholder="Enter code" onChange={handleCodeChange} value={giftCode}></input>
@@ -161,23 +173,27 @@ const DiscountGiftCard = ({ location }) => {
                 {matchCode && (
                     <>
                         <div className="discount-gift-card-info">
-                            <p>Code:</p>
+                            <p><FormattedMessage id='Code' defaultMessage='Code'></FormattedMessage></p>
                             <p>{matchCode.code}</p>
                         </div>
                         <div className="discount-gift-card-info">
-                            <p>Value:</p>
-                            <p>{`$${matchCode.value}.00`}</p>
+                            <p><FormattedMessage id='Value:' defaultMessage='Value:'></FormattedMessage></p>
+                            <p>
+                                <FormattedMessage id={`$${matchCode.value}.00`} defaultMessage={`$${matchCode.value}.00`}></FormattedMessage>
+                            </p>
                         </div>
                         <div className="discount-gift-card-info">
-                            <p>Status:</p>
+                            <p><FormattedMessage id='Status:' defaultMessage='Status:'></FormattedMessage></p>
                             <p>{matchCode.status.label}</p>
                         </div>
                         <div className="discount-gift-card-info">
-                            <p>Expire date:</p>
+                            <p><FormattedMessage id='Expire Date:' defaultMessage='Expire Date:'></FormattedMessage></p>
                             <p>{matchCode.expire_date}</p>
                         </div>
                         <div>
-                            <button className='discount-gift-card-remove-button' onClick={handleRemoveGiftCode}>REMOVE</button>
+                            <button className='discount-gift-card-remove-button' onClick={handleRemoveGiftCode}>
+                                <FormattedMessage id='REMOVE' defaultMessage='REMOVE'></FormattedMessage>
+                            </button>
                         </div>
                     </>
                 )}

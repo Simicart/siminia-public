@@ -11,7 +11,7 @@ import { useAppContext } from '@magento/peregrine/lib/context/app';
 const PATCH_TO_IMG = '/media/amasty/megamenu/submenu_background_image/';
 
 const MenuItem = props => {
-    const { level, width, view, id, status } = props;
+    const { level, view, id, status } = props;
     const {
         isMobile,
         isShowIcons,
@@ -29,6 +29,7 @@ const MenuItem = props => {
 
     const hoverHandler = useCallback(
         e => {
+            console.log(e)
             if (isMainLevel && view === 'topMenu' && !changePage && !isMobile) {
                 toggleAction(id);
             }
@@ -38,18 +39,19 @@ const MenuItem = props => {
 
     const clickHandler = useCallback(
         e => {
+            console.log(e)
             if (isMainLevel && view === 'topMenu' && isMobile) {
                 toggleActionMobile(id);
             }
         },
-        [isMainLevel, toggleAction, view, id, changePage, isMobile]
+        [isMainLevel, view, isMobile, toggleActionMobile, id]
     );
 
     const onNavigation = useCallback(() => {
         setChangePage(true);
         toggleAction(id);
         isMobile && closeDrawer();
-    }, [id, isMobile]);
+    }, [closeDrawer, id, isMobile, toggleAction]);
 
     useEffect(() => {
         if (changePage) {
@@ -132,7 +134,8 @@ const MenuItem = props => {
     }
 
     return (
-        <li
+        //li
+        <button
             id={'menu-item-' + id}
             className={rootClass}
             style={amStyle}
@@ -163,7 +166,7 @@ const MenuItem = props => {
                     main: subContainerMainClass
                 }}
             />
-        </li>
+        </button>
     );
 };
 

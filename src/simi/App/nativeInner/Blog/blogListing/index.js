@@ -75,26 +75,26 @@ const BlogListing = props => {
             />
             <div className={classes.pagination}>
                 <Pagination pageControl={pageControl} />
-            </div>
-            <div className={classes.pageSize}>
-                {`Show `}
-                <span className={classes.pageSizeInput}>
-                    <select
-                        onChange={e => {
-                            setPageSize(e.target.value);
-                            pageControl.setPage(1);
-                        }}
-                        value={pageSize}
-                    >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                    </select>
-                </span>
-                {formatMessage({
-                    id: 'perPage',
-                    defaultMessage: ' per page'
-                })}
+                <div className={classes.pageSize}>
+                    {`Show `}
+                    <span className={classes.pageSizeInput}>
+                        <select
+                            onChange={e => {
+                                setPageSize(e.target.value);
+                                pageControl.setPage(1);
+                            }}
+                            value={pageSize}
+                        >
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                        </select>
+                    </span>
+                    {formatMessage({
+                        id: 'perPage',
+                        defaultMessage: ' per page'
+                    })}
+                </div>
             </div>
         </div>
     );

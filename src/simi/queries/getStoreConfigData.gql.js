@@ -361,7 +361,7 @@ const GET_STORE_CONFIG = gql`
                 hide_price_customers
                 hide_price_not_apply
             }
-                ` : null
+                ` : ''
         }
     }
 `;

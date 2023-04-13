@@ -1,4 +1,10 @@
-import React, { createContext, Fragment, useEffect, useRef, useState } from 'react';
+import React, {
+    createContext,
+    Fragment,
+    useEffect,
+    useRef,
+    useState
+} from 'react';
 import { shape, string } from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {
@@ -12,6 +18,7 @@ import {
     CHECKOUT_STEP,
     useCheckoutPage
 } from 'src/simi/App/nativeInner/talons/CheckoutPage/useCheckoutPage';
+import CheckoutCustomField from '../CheckoutCustomField';
 
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import Button from '@magento/venia-ui/lib/components/Button';
@@ -49,6 +56,7 @@ const deliveryTimeEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_DELIVERY_TIME) === 1;
 import { useLocation } from 'react-router-dom';
+import { useDeliveryDateTime } from './DeliveryDateTime/useDeliveryDateTime';
 
 export const GiftCodeCheckoutContext = createContext({});
 
@@ -60,12 +68,12 @@ const CheckoutPage = props => {
     const [openDeli, setOpenDeli] = useState(false);
 
     const [{ cartId }] = useCartContext();
-    const location = useLocation()
-    let initGiftCode = []
-    if(location?.state?.cartGiftCode) {
-        initGiftCode = location?.state?.cartGiftCode
+    const location = useLocation();
+    let initGiftCode = [];
+    if (location?.state?.cartGiftCode) {
+        initGiftCode = location?.state?.cartGiftCode;
     }
-    const [giftCodeData, setGiftCodeData] = useState(initGiftCode)
+    const [giftCodeData, setGiftCodeData] = useState(initGiftCode);
 
     const {
         /**
@@ -105,6 +113,11 @@ const CheckoutPage = props => {
         toggleSignInContent
     } = talonProps;
 
+    let deliveryData = deliveryTimeEnabled !== 0 ? useDeliveryDateTime({
+        setPageIsUpdating: setIsUpdating,
+        isUpdating: isUpdating
+    }) : '';
+
     const deliveryDateTime = useRef(null);
 
     const [, { addToast }] = useToasts();
@@ -115,10 +128,10 @@ const CheckoutPage = props => {
                 error && error.message
                     ? error.message
                     : formatMessage({
-                        id: 'checkoutPage.errorSubmit',
-                        defaultMessage:
-                            'Oops! An error occurred while submitting. Please try again.'
-                    });
+                          id: 'checkoutPage.errorSubmit',
+                          defaultMessage:
+                              'Oops! An error occurred while submitting. Please try again.'
+                      });
             addToast({
                 type: 'error',
                 icon: errorIcon,
@@ -201,8 +214,8 @@ const CheckoutPage = props => {
             )
                 window.location.replace(
                     storeConfig.storeConfig.base_url +
-                    '/myfatoorah/checkout/index?gateway=myfatoorah&order_id=' +
-                    orderNumber
+                        '/myfatoorah/checkout/index?gateway=myfatoorah&order_id=' +
+                        orderNumber
                 );
             return '';
         }
@@ -287,21 +300,10 @@ const CheckoutPage = props => {
                         setPageIsUpdating={setIsUpdating}
                     />
                     {deliveryTimeEnabled ? (
-                        <React.Fragment>
-                            <div className="main-delivery">
-                                <label className="check-container">
-                                    {formatMessage({ id: 'Delivery time', defaultMessage: 'Delivery Time' })}
-                                    <input
-                                        onClick={() => setOpenDeli(!openDeli)}
-                                        type="checkbox"
-                                    />
-                                    <span className="checkmark" />
-                                </label>
-                            </div>
-                            {openDeli ? (
-                                <DeliveryDateTime ref={deliveryDateTime} />
-                            ) : null}
-                        </React.Fragment>
+                        <DeliveryDateTime
+                            deliveryData={deliveryData}
+                            ref={deliveryDateTime}
+                        />
                     ) : (
                         ''
                     )}
@@ -361,7 +363,7 @@ const CheckoutPage = props => {
                         setIsCartUpdating={setIsUpdating}
                         isMobile={isMobile}
                         hideEstimateShipping={true}
-                        location='checkout'
+                        location="checkout"
                     />
                 </div>
             ) : null;
@@ -444,7 +446,7 @@ const CheckoutPage = props => {
 
         const orderSummary = shouldRenderPriceSummary ? (
             <div className={classes.summaryContainer}>
-                <OrderSummary isUpdating={isUpdating} location='checkout'/>
+                <OrderSummary isUpdating={isUpdating} location="checkout" />
             </div>
         ) : null;
 
@@ -518,6 +520,9 @@ const CheckoutPage = props => {
                         </ScrollAnchor>
                     </div>
                 )}
+                <div className={classes.checkout_custom_field}>
+                    <CheckoutCustomField />
+                </div>
                 {!isVirtual && (
                     <div className={classes.shipping_method_container}>
                         <ScrollAnchor ref={shippingMethodRef}>
@@ -554,7 +559,9 @@ const CheckoutPage = props => {
     ) : null;
 
     return (
-        <GiftCodeCheckoutContext.Provider value={{giftCodeData, setGiftCodeData}}>
+        <GiftCodeCheckoutContext.Provider
+            value={{ giftCodeData, setGiftCodeData }}
+        >
             <div className={`${classes.root} checkout-step-${checkoutStep}`}>
                 <StoreTitle>
                     {formatMessage({

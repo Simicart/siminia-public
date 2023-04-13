@@ -1,11 +1,9 @@
-import { useCallback, useState, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { useCartContext } from '@magento/peregrine/lib/context/cart';
 import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 import DEFAULT_OPERATIONS from './priceSummary.gql';
-import { hideFogLoading } from '../../BaseComponents/Loading/GlobalLoading';
-import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { GiftCodeCheckoutContext } from '../../App/nativeInner/Checkout/checkoutPage';
 import { GiftCodeCartContext } from '../../App/nativeInner/CartCore/cartPage';
 
@@ -19,31 +17,52 @@ import { GiftCodeCartContext } from '../../App/nativeInner/CartCore/cartPage';
  * @param {Object} data query data
  */
 const flattenData = (data, giftCodeData) => {
-   
+    let giftCodeValue = 0;
+    let total = {};
+
     if (!data) return {};
     if (giftCodeData) {
-        let giftCodeValue = 0
-        for(let i=0; i<giftCodeData.length; i++) {
-            giftCodeValue += giftCodeData[i].value
+        for (let i = 0; i < giftCodeData.length; i++) {
+            giftCodeValue += giftCodeData[i].value;
         }
-        const total = {
+
+        total = {
             ...data.cart.prices.grand_total,
-            value: data.cart.prices.grand_total.value - giftCodeValue > 0 ? (data.cart.prices.grand_total.value - giftCodeValue).toFixed(2) : 0
-        }
-        return {
-            subtotal: data.cart.prices.subtotal_excluding_tax,
-            total: total,
-            discounts: data.cart.prices.discounts,
-            giftCards: data.cart.mp_giftcard_config,
-            taxes: data.cart.prices.applied_taxes,
-            shipping: data.cart.shipping_addresses,
-            priceData: data.cart.prices.mp_reward_segments
+            value:
+                data.cart.prices.grand_total.value - giftCodeValue > 0
+                    ? (
+                          data.cart.prices.grand_total.value - giftCodeValue
+                      ).toFixed(2)
+                    : 0
         };
     }
-    
+    if (data.cart.delivery_date) {
+        const { shipping_arrival_timeslot } = data.cart.delivery_date;
+        const indexStart = shipping_arrival_timeslot?.indexOf('(+$');
+        const indexEnd = shipping_arrival_timeslot?.indexOf(')"');
+        const priceStr = shipping_arrival_timeslot?.slice(
+            indexStart + 3,
+            indexEnd
+        );
+       
+        if (Number(priceStr) > 0) {
+            total = {
+                ...data.cart.prices.grand_total,
+                value: data.cart.prices.grand_total.value + Number(priceStr)
+            };
+        } else {
+            total = {
+                ...data.cart.prices.grand_total
+            };
+        }
+    }
+
     return {
         subtotal: data.cart.prices.subtotal_excluding_tax,
-        total: data.cart.prices.grand_total,
+        total:
+            giftCodeData?.length > 0 || data?.cart?.delivery_date
+                ? total
+                : data.cart.prices.grand_total,
         discounts: data.cart.prices.discounts,
         giftCards: data.cart.mp_giftcard_config,
         taxes: data.cart.prices.applied_taxes,
@@ -51,7 +70,10 @@ const flattenData = (data, giftCodeData) => {
         rewardPoint: {
             earnPoint: data?.cart?.earn_point,
             spentPoint: data?.cart?.spent_point
-        }
+        },
+        shipping_arrival_timeslot: data.cart?.delivery_date?.shipping_arrival_timeslot || "",
+        shipping_arrival_date: data.cart?.delivery_date?.shipping_arrival_date || "",
+        shipping_arrival_comments: data.cart?.delivery_date?.shipping_arrival_comments || "",
     };
 };
 
@@ -77,7 +99,6 @@ export const usePriceSummary = (props = {}) => {
     const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const { getPriceSummaryQuery } = operations;
 
-    
     const [{ cartId }] = useCartContext();
     const history = useHistory();
     // We don't want to display "Estimated" or the "Proceed" button in checkout.
@@ -85,20 +106,17 @@ export const usePriceSummary = (props = {}) => {
     const isCheckout = !!match;
     
     let giftCodeData = null
-    let setGiftCodeData = null
     
     if(isCheckout) {
         giftCodeData = useContext(GiftCodeCheckoutContext).giftCodeData
-        setGiftCodeData = useContext(GiftCodeCheckoutContext).setGiftCodeData
     }
     else {
         giftCodeData = useContext(GiftCodeCartContext).giftCodeData
-        setGiftCodeData = useContext(GiftCodeCartContext).setGiftCodeData
     }
 
     const { error, loading, data } = useQuery(getPriceSummaryQuery, {
-        fetchPolicy: 'cache-and-network',
-        nextFetchPolicy: 'cache-first',
+        fetchPolicy: 'network-only',
+        // nextFetchPolicy: 'cache-first',
         skip: !cartId,
         variables: {
             cartId
@@ -113,14 +131,17 @@ export const usePriceSummary = (props = {}) => {
     //     }
     // });
 
-    const handleProceedToCheckout = useCallback((cartGiftCode) => {
-        history.push({
-            pathname: '/checkout',
-            state: {
-                cartGiftCode: cartGiftCode
-            }
-        });
-    }, [history]);
+    const handleProceedToCheckout = useCallback(
+        cartGiftCode => {
+            history.push({
+                pathname: '/checkout',
+                state: {
+                    cartGiftCode: cartGiftCode
+                }
+            });
+        },
+        [history]
+    );
 
     return {
         handleProceedToCheckout,

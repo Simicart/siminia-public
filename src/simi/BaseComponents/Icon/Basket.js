@@ -11,7 +11,7 @@ const Basket = props => {
             viewBox="0 0 50 50"
             className={props.className}
             style={style}>
-            <title>icon/header/hover/basket</title>
+            {/* <title>icon/header/hover/basket</title> */}
             
             <g id="Combined-Shape">
                 <path id="path-1_1_" className="st0" d="M18.2,17c0.7-4,3.9-7,7.7-7c3.8,0,7,3,7.7,7H38c1.3,0,1.9,0.7,1.9,2v21H11V18.9

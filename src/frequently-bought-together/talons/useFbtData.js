@@ -1,10 +1,11 @@
 import { useQuery, gql } from '@apollo/client'
 import {SimiPriceFragment} from '../../simi/queries/catalog_gql/catalogFragment.gql';
 
-const GET_PRODUCT_DATA = gql`
-query getProductData($sku: String) {
-    products(filter: { sku: { eq: $sku } }) {
+const GET_FBT_PRODUCT_DATA = gql`
+query getFbtProductData($product_sku: String) {
+    products(filter: { sku: { eq: $product_sku } }) {
       items {
+        name
         fbt_product_data {
           ...on ConfigurableProduct {
             configurable_options {
@@ -61,17 +62,23 @@ query getProductData($sku: String) {
   }
   ${SimiPriceFragment}
 `
+const fbtEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_FREQUENTLY_BOUGHT_TOGETHER &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FREQUENTLY_BOUGHT_TOGETHER) === 1;
 
-const useProductData = (sku) => {
-  const product = useQuery(GET_PRODUCT_DATA, {
+const useFbtData = (product_sku) => {
+  const product = useQuery(GET_FBT_PRODUCT_DATA, {
     variables: {
-      sku: sku
+      product_sku: product_sku
     },
     fetchPolicy: 'network-only',
-    nextFetchPolicy: 'cache-and-network'
+    nextFetchPolicy: 'cache-and-network',
+    skip: fbtEnabled === 0
   })
 
   return product
 }
 
-export default useProductData
+export default useFbtData

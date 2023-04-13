@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useState, useEffect } from 'react';
+import { useMemo, useCallback, useState } from 'react';
 import { getRewardPointActive, getRewardPointSlider } from '../utils';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useQuery, useMutation } from '@apollo/client';
@@ -10,6 +10,7 @@ import Identify from 'src/simi/Helper/Identify';
 
 export const useApply = (props = {}) => {
     const { formatMessage, rewardPoint, refetchCartPage } = props;
+    console.log(rewardPoint)
     const [{ isSignedIn }] = useUserContext();
     const storeConfigData = Identify.getStoreConfig();
     const rewardPointActive = getRewardPointActive();
@@ -25,23 +26,22 @@ export const useApply = (props = {}) => {
 
     const [usePoint, setUsePoint] = useState(usedPoint);
 
-    useEffect(() => {
-        if (usePoint !== usedPoint) {
-            setUsePoint(usedPoint);
-        }
-    }, [usedPoint]);
-
     const operations = mergeOperations(defaultOperations, props.operations);
 
-    const { getCustomerRewardPoint, applyRewardPointMutation } = operations;
+    const { getCustomerRewardPoint, applyRewardPointMutation, getRewardPointExchangeRate } = operations;
 
     const isActive = useMemo(() => {
         return rewardPointActive && isSignedIn;
     }, [rewardPointActive, isSignedIn]);
 
     const { data } = useQuery(getCustomerRewardPoint, {
-        skip: !isActive
+        skip: !isActive,
+        fetchPolicy: 'cache-and-network'
     });
+
+    const { data: rewardPointExchangeRateData } = useQuery(getRewardPointExchangeRate, {
+        skip: !isActive
+    })
 
     const [
         applyRewardPoint,
@@ -57,16 +57,20 @@ export const useApply = (props = {}) => {
     }, [customerRewardPointData]);
 
     const balancePoint = useMemo(() => {
-        if (point > usedPoint) {
-            return point - usedPoint;
+        if (point > usePoint) {
+            return point - usePoint;
         }
 
         return 0;
-    }, [point, usedPoint]);
+    }, [point, usePoint]);
 
-    const rate = useMemo(() => {
-        return customerRewardPointData.rate_point || 0;
-    }, [customerRewardPointData]);
+    const pointExchangeRate = useMemo(() => {
+        return rewardPointExchangeRateData?.bssRewardPointsExchangeRate?.currency_to_point_rate || 0;
+    }, [rewardPointExchangeRateData]);
+
+    const currencyExchaneRate = useMemo(() => {
+        return rewardPointExchangeRateData?.bssRewardPointsExchangeRate?.point_rate_to_currency || 0;
+    }, [rewardPointExchangeRateData])
 
     const currency = useMemo(() => {
         const { storeConfig } = storeConfigData || {};
@@ -91,6 +95,19 @@ export const useApply = (props = {}) => {
     );
 
     const handleApply = useCallback(async () => {
+
+        if(usePoint <= 0) {
+            addToast({
+                type: 'error',
+                message:  formatMessage({
+                    id: 'Please enter point greater than 0',
+                    default: 'Please enter point greater than 0'
+                }),
+                timeout: 5000
+            });
+
+            return;
+        } 
 
         const { data } = await applyRewardPoint({
             variables: {
@@ -120,7 +137,7 @@ export const useApply = (props = {}) => {
             message: message,
             timeout: 5000
         });
-    }, [usePoint, applyRewardPointLoading, applyRewardPoint, addToast]);
+    }, [usePoint, applyRewardPoint, cartId, formatMessage, addToast, refetchCartPage]);
 
     return {
         isActive,
@@ -128,10 +145,12 @@ export const useApply = (props = {}) => {
         point,
         loading: applyRewardPointLoading,
         balancePoint,
-        rate,
+        pointExchangeRate,
+        currencyExchaneRate,
         currency,
         usePoint,
         handleSetUsePoint,
-        handleApply
+        handleApply,
+        applyRewardPointError
     };
 };

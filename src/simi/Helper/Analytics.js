@@ -16,7 +16,9 @@ export const analyticClickGTM = (name, id, price) => {
                 },
             });
         }
-    } catch (err) { }
+    } catch (err) {
+        console.log(err);
+     }
 }
 
 export const analyticAddCartGTM = (name, id, price) => {
@@ -36,7 +38,7 @@ export const analyticAddCartGTM = (name, id, price) => {
                 }
             });
         }
-    } catch (err) { }
+    } catch (err) { console.log(err); }
 }
 
 export const analyticRemoveCartGTM = (name, id, price, qty = 1) => {
@@ -57,13 +59,13 @@ export const analyticRemoveCartGTM = (name, id, price, qty = 1) => {
                 }
             });
         }
-    } catch (err) { }
+    } catch (err) { console.log(err); }
 }
 
 
 export const analyticsViewDetailsGTM = (product) => {
     if (window.dataLayer) {
-        const { id, price, name } = product;
+        const { id, name } = product;
         dataLayer.push({
             'ecommerce': {
                 'event': 'productDetailView',
@@ -73,7 +75,7 @@ export const analyticsViewDetailsGTM = (product) => {
                         'id': id || 0
                     }]
                 },
-                'event': 'product_detail_view'
+                // 'event': 'product_detail_view'
             }
         });
     }
@@ -97,7 +99,7 @@ export const analyticPurchaseGTM = (dataOrder) => {
                 }
             });
         }
-    } catch (err) { }
+    } catch (err) {  console.log(err);}
 }
 
 export const analyticImpressionsGTM = (products, category = '', list_name = '') => {
@@ -149,5 +151,5 @@ export const analyticImpressionsGTM = (products, category = '', list_name = '') 
                 }
             });
         }
-    } catch (err) { }
+    } catch (err) {  console.log(err);}
 }

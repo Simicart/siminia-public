@@ -45,7 +45,7 @@ const GiftCard = React.lazy(() =>
  * import PriceAdjustments from '@magento/venia-ui/lib/components/CartPage/PriceAdjustments'
  */
 const PriceAdjustments = props => {
-    const { setIsCartUpdating, giftCardConfig, refetchCartPage, priceSummaryData, isCheckout } = props;
+    const { setIsCartUpdating, refetchCartPage, priceSummaryData, isCheckout } = props;
     const classes = useStyle(defaultClasses, props.classes);
     const { formatMessage } = useIntl();
 

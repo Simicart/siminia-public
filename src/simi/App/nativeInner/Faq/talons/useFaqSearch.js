@@ -1,6 +1,12 @@
 import { useQuery } from '@apollo/client';
 import { GET_SEARCH_FAQS } from './Faq.gql';
 
+const faqsEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_FAQS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;
+
 export const useFaqSearch = props => {
     const { key_word, category_id } = props;
     const {
@@ -11,7 +17,8 @@ export const useFaqSearch = props => {
         variables: {
             key_word: key_word,
             category_id: category_id,
-            sort_by: ''
+            sort_by: '',
+            skip: faqsEnabled === 0
         },
         fetchPolicy: 'no-cache'
     });

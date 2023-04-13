@@ -1,12 +1,18 @@
 import { useQuery } from '@apollo/client';
 import { GET_MAIN_PAGE_FAQS } from './Faq.gql';
 
+const faqsEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_FAQS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;
+
 export const useMainPage = props => {
     const {
         data: mainPageData,
         loading: mainPageLoading,
         error: mainPageError
-    } = useQuery(GET_MAIN_PAGE_FAQS, { fetchPolicy: 'cache-and-network' });
+    } = useQuery(GET_MAIN_PAGE_FAQS, { fetchPolicy: 'cache-and-network', skip: faqsEnabled === 0 });
 
     let derivedErrorMessage;
     if (mainPageError) {
