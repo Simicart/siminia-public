@@ -681,7 +681,7 @@ const Routes = () => {
                 />
                 <Route
                     exact
-                    path="/reward-transactions"
+                    path="/reward-transactions/:transactionId?"
                     render={props => <RewardTransactions {...props} />}
                 />
 

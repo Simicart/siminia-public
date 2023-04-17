@@ -130,7 +130,7 @@ const RewardPoint = props => {
                                 </Link>
                             </div>
                             <div className={classes.blockContent}>
-                                <Transaction noTitle={true} />
+                                <Transaction isTransactionsPage={false} />
                             </div>
                         </div>
                         <div className={classes.block}>
