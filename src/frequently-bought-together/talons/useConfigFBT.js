@@ -47,10 +47,17 @@ query getConfigFBT {
   }  
 `
 
+const fbtEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_FREQUENTLY_BOUGHT_TOGETHER &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FREQUENTLY_BOUGHT_TOGETHER) === 1
+
 const useConfigFBT = () => {
     const configFBT = useQuery(GET_CONFIG_FBT, {
         fetchPolicy: 'network-only',
-        nextFetchPolicy: 'cache-and-network'
+        nextFetchPolicy: 'cache-and-network',
+        skip: fbtEnabled === 0
     })
 
     return configFBT

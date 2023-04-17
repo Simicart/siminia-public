@@ -44,8 +44,6 @@ const productAlertConfigQuery = gql`
     query($sku: String!) {
         products(filter: { sku: { eq: $sku } }) {
             items {
-                mp_productalerts_price_alert
-                mp_productalerts_stock_notify
                 stock_status
             }
         }

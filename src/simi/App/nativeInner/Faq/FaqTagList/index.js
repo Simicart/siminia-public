@@ -5,6 +5,13 @@ import defaultClasses from '../MainPage/mainPage.module.css';
 import SearchBox from '../SearchBox';
 import Sidebar from '../Sidebar';
 import TagListContent from './tagListContent';
+import Page404 from '../../NoMatch/Page404';
+
+const faqsEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_FAQS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;
 
 const FaqTagList = props => {
     const {strTagName} = props
@@ -14,6 +21,8 @@ const FaqTagList = props => {
         defaultMessage: 'FAQs Question with Tag'
     });
     const classes = defaultClasses;
+
+    if(faqsEnabled === 0) return <Page404/>
 
     return (
         <div className={`${classes.wrapperMainPage} container`}>

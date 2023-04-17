@@ -237,7 +237,7 @@ const ProductFullDetail = props => {
     const arr = sizeChartData?.display_popup;
     const display = arr ? arr[0] : null;
     const enabledSizeChart =
-        sizeChartEnabled && sizeChartData?.storeConfig?.isEnabled;
+        sizeChartEnabled !== 0 && sizeChartData?.storeConfig?.isEnabled;
     const {
         giftCardProductData,
         giftCardData,

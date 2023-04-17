@@ -38,8 +38,7 @@ export const GET_CALCULATOR_VOTE_API = gql`
         }
     }
 `;
-export const FaqFragment = faqsEnabled
-    ? gql`
+export const FaqFragment = gql`
           fragment FaqFragment on getMainContent {
               faq {
                   answer
@@ -64,11 +63,9 @@ export const FaqFragment = faqsEnabled
                   use_real_vote_data
               }
           }
-      `
-    : '';
+      `;
 
-export const CategoryFragment = faqsEnabled
-    ? gql`
+export const CategoryFragment = gql`
           fragment CategoryFragment on sidebarOutPut {
               category {
                   color
@@ -85,11 +82,9 @@ export const CategoryFragment = faqsEnabled
                   url_key
               }
           }
-      `
-    : '';
+      `;
 
-export const MostFaqFragment = faqsEnabled
-    ? gql`
+export const MostFaqFragment = gql`
           fragment MostFaqFragment on sidebarOutPut {
               most_faq {
                   answer
@@ -114,8 +109,7 @@ export const MostFaqFragment = faqsEnabled
                   use_real_vote_data
               }
           }
-      `
-    : '';
+      `;
 export const GET_QUESTION_BY_URL = gql`
     query GetQuestionByUrl($url: String) {
         questionUrl(url: $url) {
@@ -300,8 +294,7 @@ export const ASK_A_QUESTION = gql`
     }
 `;
 
-export const FaqDetailFragment = faqsEnabled
-    ? gql`
+export const FaqDetailFragment = gql`
           fragment FaqDetailFragment on ProductInterface {
               faqs {
                   answer
@@ -326,8 +319,7 @@ export const FaqDetailFragment = faqsEnabled
                   use_real_vote_data
               }
           }
-      `
-    : '';
+      `;
 
 export const GET_FAQ_INFO_PRODUCT_DETAIL = gql`
     query getProductDetailForProductPage($urlKey: String!) {

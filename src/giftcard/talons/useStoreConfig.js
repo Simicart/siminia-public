@@ -18,13 +18,20 @@ query bssGiftCardStoreConfig($store_view: Int) {
 }
 `
 
+const giftCardEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_GIFT_CARD) === 1;
+
 const useStoreConfig = () => {
     const storeConfig = useQuery(GET_GIFT_CARD_CONFIG, {
         fetchPolicy: 'network-only',
         nextFetchPolicy: 'cache-and-network',
         variables: {
             store_view: 1
-        }
+        },
+        skip: giftCardEnabled === 0
     })
 
     return storeConfig

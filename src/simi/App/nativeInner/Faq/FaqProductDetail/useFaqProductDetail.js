@@ -1,6 +1,12 @@
 import { useQuery } from '@apollo/client';
 import { GET_FAQ_INFO_PRODUCT_DETAIL } from '../talons/Faq.gql';
 
+const faqsEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_FAQS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;
+
 export const useFaqProductDetail = props => {
     const { urlKey } = props;
     const {
@@ -9,7 +15,8 @@ export const useFaqProductDetail = props => {
         error: faqDetailError,
     } = useQuery(GET_FAQ_INFO_PRODUCT_DETAIL, {
         variables: { urlKey: urlKey }, 
-        fetchPolicy: 'no-cache'
+        fetchPolicy: 'no-cache',
+        skip: faqsEnabled === 0
     });
     let derivedErrorMessage;
     if (faqDetailError) {

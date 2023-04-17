@@ -91,6 +91,15 @@
     padding-left: 5px;
 }
 
+@media only screen and (max-width: 500px) {
+    .fbt-slider-prev-2 {
+        margin-right: 70px;
+    }
+    .fbt-slider-next-2 {
+        margin-right: 10px;
+    }
+}
+
 .fbt-slider-first {
     margin-bottom: 20px;
     padding: 20px;
@@ -189,7 +198,18 @@
 .fbt-brief-info {
     display: flex;
     flex-direction: column;
-    width: 700px;
+    max-width: 700px;
+    width: 100%;
     gap: 25px;
     margin-top: 50px
+}
+
+.fbt-brief-info-mobile {
+    display: flex;
+    flex-direction: column;
+    max-width: 700px;
+    width: 100%;
+    gap: 25px;
+    margin-top: 50px;
+    padding: 0 10px;
 }

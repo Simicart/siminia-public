@@ -20,6 +20,13 @@ import { ADD_VOTE_FAQ } from '../talons/Faq.gql';
 import { useMutation } from '@apollo/client';
 import faqImg from '../Image/faq.png';
 import { useVoteFaq } from '../talons/useVoteFaq';
+import Page404 from '../../NoMatch/Page404';
+
+const faqsEnabled =
+    window.SMCONFIGS &&
+    window.SMCONFIGS.plugins &&
+    window.SMCONFIGS.plugins.SM_ENABLE_FAQS &&
+    parseInt(window.SMCONFIGS.plugins.SM_ENABLE_FAQS) === 1;
 
 const FaqQuestion = props => {
     const stateParam = useLocation()?.state?.stateParam || '';
@@ -28,7 +35,7 @@ const FaqQuestion = props => {
         storeConfigLoading,
         storeConfigError
     } = useStoreConfig();
-    const { social_button, related_faq_show } =
+    const { social_button, related_faq_show, enable } =
         storeConfig?.bssFaqsConfig || '';
     const bgColor = storeConfig?.bssFaqsConfig?.background_color || '';
     const { questionUrl = '' } = useParams();
@@ -147,6 +154,7 @@ const FaqQuestion = props => {
         });
     };
 
+    if(faqsEnabled === 0 || parseInt(enable) === 0) return <Page404/>
     if (questionLoading) {
         return <Loader />;
     }
