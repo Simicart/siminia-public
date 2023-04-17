@@ -788,23 +788,37 @@ export const useProductFullDetail = props => {
 
     const handleUpdateQuantity = useCallback(
         quantity => {
-            const { price_tiers } = product;
+            const { price_tiers, tier_prices} = product;
+            for(let i=0; i<price_tiers.length; i++) {
+                price_tiers[i].customer_group_id = tier_prices[i].customer_group_id
+            }
+            console.log(price_tiers)
             if (
                 productType !== 'ConfigurableProduct' &&
                 price_tiers &&
                 Array.isArray(price_tiers) &&
                 price_tiers.length > 0
             ) {
-                const findPriceTier = price_tiers.find(priceTier => {
+                const findPriceTier = price_tiers.reverse().find(priceTier => {
                     if (
                         priceTier.quantity &&
-                        priceTier.quantity >= parseInt(quantity)
+                        priceTier.quantity <= parseInt(quantity)
                     ) {
-                        return true;
+                        if(priceTier.customer_group_id !== '0') {
+                            return true;
+                        }
+                        else {
+                            if(localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token')) {
+                                return false
+                            }
+                            else return true
+                        }
                     }
 
                     return false;
                 });
+
+                price_tiers.reverse()
 
                 if (
                     findPriceTier &&

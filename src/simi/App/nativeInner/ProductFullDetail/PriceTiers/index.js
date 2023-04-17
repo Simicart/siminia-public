@@ -11,14 +11,21 @@ const TierPrice = props => {
 
     const { formatMessage } = useIntl();
 
-    const {priceTiers, price} = props
+    const {priceTiers, price, tier_prices} = props
+
+    const filterPriceTiers = priceTiers.filter((element, index) => {
+        if(localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token') && tier_prices[index].customer_group_id === '0') {
+            return false
+        }
+        else return true
+    })
 
     let productFinalPrice = 0
     if(price && price.minimalPrice && price.minimalPrice.amount && price.minimalPrice.amount.value) {
         productFinalPrice = price.minimalPrice.amount.value
     }  
 
-    const tier_label = priceTiers.map((tier, idx) => {
+    const tier_label = filterPriceTiers.map((tier, idx) => {
         const { discount, final_price, quantity } = tier;
 
         if(productFinalPrice <= final_price.value) return null

@@ -510,7 +510,7 @@ const ProductFullDetail = props => {
             ? specialPrice
             : pricePiece;
 
-    const { price, sku, price_tiers } = product || {};
+    const { price, sku, price_tiers, tier_prices } = product || {};
 
     const review =
         product && product.review_count && product.rating_summary ? (
@@ -590,7 +590,7 @@ const ProductFullDetail = props => {
             {price_tiers &&
             Array.isArray(price_tiers) &&
             price_tiers.length > 0 ? (
-                <PriceTiers priceTiers={price_tiers} price={price} />
+                <PriceTiers priceTiers={price_tiers} price={price} tier_prices={tier_prices} />
             ) : null}
         </React.Fragment>
     );
