@@ -792,7 +792,6 @@ export const useProductFullDetail = props => {
             for(let i=0; i<price_tiers.length; i++) {
                 price_tiers[i].customer_group_id = tier_prices[i].customer_group_id
             }
-            console.log(price_tiers)
             if (
                 productType !== 'ConfigurableProduct' &&
                 price_tiers &&
@@ -804,14 +803,20 @@ export const useProductFullDetail = props => {
                         priceTier.quantity &&
                         priceTier.quantity <= parseInt(quantity)
                     ) {
-                        if(priceTier.customer_group_id !== '0') {
+                        if(priceTier.customer_group_id !== '0' && priceTier.customer_group_id !== '1' && priceTier.customer_group_id !== '2'
+                        && priceTier.customer_group_id !== '3') {
                             return true;
                         }
                         else {
-                            if(localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token')) {
+                            if(priceTier.customer_group_id === '1' || priceTier.customer_group_id === '2' || priceTier.customer_group_id === '3') {
                                 return false
                             }
-                            else return true
+                            if(localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token') && priceTier.customer_group_id === '0') {
+                                return false
+                            }
+                            if(!localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token') && priceTier.customer_group_id === '0') {
+                                return true
+                            }
                         }
                     }
 
