@@ -1,0 +1,39 @@
+.cmp-wrapper {
+    width: 100%;
+    margin: auto;
+    height: 100px;
+    background-color: red;
+}
+
+@media only screen and (min-width: 1330px) {
+    .cmp-wrapper {
+        max-width: 1280px;
+    }
+}
+
+@media only screen and (max-width: 1330px) and (min-width: 1280px) {
+    .cmp-wrapper {
+        margin: 0 20px;
+        width: calc(100% - 40px)
+    }
+}
+
+@media only screen and (max-width: 1280px) {
+    .cmp-wrapper {
+        max-width: 1024px;
+    }
+}
+
+@media only screen and (max-width: 1060px) {
+    .cmp-wrapper {
+        margin: 0 20px;
+        width: calc(100% - 40px)
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .cmp-wrapper {
+        max-width: 750px;
+    }
+}
+

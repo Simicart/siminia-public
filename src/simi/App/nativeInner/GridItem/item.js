@@ -11,7 +11,7 @@ import LazyLoad from 'src/simi/BaseComponents/LazyLoad';
 import Image from 'src/simi/BaseComponents/Image';
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import Identify from 'src/simi/Helper/Identify';
-import { Heart } from 'react-feather';
+import { Heart, BarChart2 } from 'react-feather';
 import {
     productUrlSuffix,
     saveDataToUrl,
@@ -302,6 +302,17 @@ const Griditem = props => {
         </button>
     );
 
+    const addProductToComparisonList = () => {
+        if(localStorage.getItem("comparison-list")) {
+            const comparisonList = JSON.parse(localStorage.getItem("comparison-list"))
+            comparisonList.push(item)
+            localStorage.setItem("comparison-list", JSON.stringify(comparisonList))
+        }
+        else {
+            localStorage.setItem("comparison-list", JSON.stringify([item]))
+        }
+    }
+
     return (
         <div
             className={` ${
@@ -387,6 +398,9 @@ const Griditem = props => {
                         }}
                     />
                 </div>
+                <button className={itemClasses['compare-button']} onClick={addProductToComparisonList}>
+                    <BarChart2 size={24}></BarChart2>
+                </button>
             </div>
         </div>
     );
