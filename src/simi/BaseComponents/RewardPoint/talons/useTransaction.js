@@ -63,8 +63,9 @@ export const useTransactionPagination = (props) => {
         const { search } = location;
         const queryParams = new URLSearchParams(search);
         queryParams.set('limit', e.target.value);
+        queryParams.set('page', 1);
         history.push({ search: queryParams.toString() });
-    })
+    }, [])
 
     return {
         items,
