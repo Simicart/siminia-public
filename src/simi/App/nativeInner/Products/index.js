@@ -165,6 +165,7 @@ const Products = props => {
                 >
                     {filter}
                     {renderShopByBrand()}
+                    <h1>Hello</h1>
                 </div>
             );
         }
