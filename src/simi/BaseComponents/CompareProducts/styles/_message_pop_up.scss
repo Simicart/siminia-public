@@ -1,29 +1,29 @@
-.added-pop-up-portal {
+.message-pop-up-portal {
     position: fixed;
     top: 0;
     z-index: 2;
     height: 100vh;
 }
 
-.added-pop-up-overlay {
+.message-pop-up-overlay {
     opacity: 0;
     transform: translateY(-50%);
     transition: all 500ms ease-in-out;
 }
 
-.added-pop-up-overlay-afterOpen {
+.message-pop-up-overlay-afterOpen {
     opacity: 1;
     transform: translateY(0);
 }
   
-.added-pop-up-overlay-beforeClose {
+.message-pop-up-overlay-beforeClose {
     opacity: 0;
     transform: translateY(-50%);
 }
 
-.added-pop-up-content {
+.message-pop-up-content {
     position: fixed;
-    top: 88vh;
+    top: 84vh;
     transform: translateX(-100%);
     left: 95vw;
     width: max-content;
@@ -33,13 +33,13 @@
 }
 
 @media only screen and (max-width: 800px) {
-    .added-pop-up-content {
-        top: 80vh;
+    .message-pop-up-content {
+        top: 76vh;
         left: 92vw
     }
 }
 
-.added-pop-up-success {
+.message-pop-up-success {
     width: 300px;
     border: none;
     border-bottom: 3px solid green;

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { X } from 'react-feather'
 import { useHistory } from "react-router-dom";
 import RemovePopUp from "./RemovePopUp";
-import { set } from "lodash";
 
 const ComparisonColumn = () => {
     const history = useHistory()

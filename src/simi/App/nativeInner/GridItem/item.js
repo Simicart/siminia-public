@@ -33,13 +33,14 @@ import ProductRewardPoint from 'src/simi/BaseComponents/RewardPoint/components/P
 import { CATALOG_PAGE, SEARCH_PAGE, HOME_PAGE } from '../ProductLabel/consts';
 import checkDisabledGiftCard from '../../../../giftcard/functions/gift-card-store-config/checkDisabledGiftCard';
 import { addProductToComparisonList } from '../../../BaseComponents/CompareProducts/functions';
-import AddedPopUp from '../../../BaseComponents/CompareProducts/components/AddedPopUp';
+import MessagePopUp from '../../../BaseComponents/CompareProducts/components/MessagePopUp';
 
 const HeartIcon = <Icon size={20} src={Heart} />;
 
 const Griditem = props => {
     const { lazyImage } = props;
     const [isOpen, setIsOpen] = useState(false)
+    const [openMessagePopUp, setOpenMessagePopUp] = useState(false)
     const { formatMessage } = useIntl();
     const item = prepareProduct(props.item);
     const giftCardDisabled = checkDisabledGiftCard()
@@ -304,6 +305,15 @@ const Griditem = props => {
         </button>
     );
 
+    window.onload = function() {
+        const reload = localStorage.getItem("reload");
+        if(reload) {
+            localStorage.removeItem("reload")
+            setOpenMessagePopUp(true)
+            setIsOpen(true)
+        }
+    }
+
     return (
         <div
             className={` ${itemClasses['siminia-product-grid-item']
@@ -387,10 +397,11 @@ const Griditem = props => {
                         }}
                     />
                 </div>
-                <button className={itemClasses['compare-button']} onClick={() => addProductToComparisonList(item, setIsOpen)}>
+                <button className={itemClasses['compare-button']} onClick={() => addProductToComparisonList(item)}>
                     <BarChart2 size={24}></BarChart2>
                 </button>
-                <AddedPopUp isOpen={isOpen} setIsOpen={setIsOpen}></AddedPopUp>
+                {openMessagePopUp && (<MessagePopUp isOpen={isOpen} setIsOpen={setIsOpen} 
+                                                  setOpenMessagePopUp={setOpenMessagePopUp}></MessagePopUp>)}
             </div>
         </div>
     );
