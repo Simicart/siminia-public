@@ -1,0 +1,86 @@
+.remove-pop-up-portal {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    height: 100vh;
+    background-color: rgba(45, 45, 45, 0.7) !important;
+}
+
+.remove-pop-up-overlay {
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: all 500ms ease-in-out;
+}
+
+.remove-pop-up-overlay-afterOpen {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.remove-pop-up-overlay-beforeClose {
+    opacity: 0;
+    transform: translateY(-50%);
+}
+
+.remove-pop-up-content {
+    width: 100vw;
+}
+
+.remove-pop-up-wrapper {
+    background-color: white;
+    width: 450px;
+    height: 180px;
+    margin: auto;
+    margin-top: 5vh;
+    padding: 30px;
+    position: relative;
+}
+
+.remove-pop-up-btn {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.remove-pop-up-close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.remove-pop-up-close-button:hover {
+    color: rgb(108, 108, 108)
+}
+
+.remove-pop-up-cancel-button {
+    margin-top: 25px;
+    padding: 0 15px;
+    width: max-content;
+    height: 30px;
+    color: black;
+    background-color: #eeeeee;
+    border: 1px solid #ccc;
+    transition: background-color 500ms;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.remove-pop-up-cancel-button:hover {
+    background-color: #cacaca;
+}
+
+.remove-pop-up-ok-button {
+    margin-top: 25px;
+    padding: 0 15px;
+    width: max-content;
+    height: 30px;
+    color: white;
+    background-color: #1979C3;
+    transition: background-color 500ms;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.remove-pop-up-ok-button:hover {
+    background-color: #005288;
+}

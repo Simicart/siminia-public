@@ -1,6 +1,11 @@
 .wrapperForm {
     scroll-behavior: smooth;
     margin-top: 100px;
+    .wrapperButtonArea {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
     .wrapperWishlist {
         margin: 0 1.5rem;
         .btnWishlist {
@@ -22,6 +27,20 @@
                 letter-spacing: 0;
                 line-height: 16px;
             }
+        }
+    }
+    .wrapperCompare {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        .btnCompare {
+            border: 1px solid #999999;
+            border-radius: 50%;
+            padding: 12px;
+        }
+        .btnCompareTitle {
+            margin-top: 5px;
         }
     }
     .groupCartAction {

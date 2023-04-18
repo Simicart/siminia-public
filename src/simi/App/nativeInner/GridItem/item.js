@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import defaultClasses from './item.module.css';
 import { configColor } from 'src/simi/Config';
 import PropTypes from 'prop-types';
@@ -32,11 +32,14 @@ import {
 import ProductRewardPoint from 'src/simi/BaseComponents/RewardPoint/components/Product';
 import { CATALOG_PAGE, SEARCH_PAGE, HOME_PAGE } from '../ProductLabel/consts';
 import checkDisabledGiftCard from '../../../../giftcard/functions/gift-card-store-config/checkDisabledGiftCard';
+import { addProductToComparisonList } from '../../../BaseComponents/CompareProducts/functions';
+import AddedPopUp from '../../../BaseComponents/CompareProducts/components/AddedPopUp';
 
 const HeartIcon = <Icon size={20} src={Heart} />;
 
 const Griditem = props => {
     const { lazyImage } = props;
+    const [isOpen, setIsOpen] = useState(false)
     const { formatMessage } = useIntl();
     const item = prepareProduct(props.item);
     const giftCardDisabled = checkDisabledGiftCard()
@@ -301,19 +304,6 @@ const Griditem = props => {
         </button>
     );
 
-    const addProductToComparisonList = () => {
-        if (localStorage.getItem("comparison-list")) {
-            const comparisonList = JSON.parse(localStorage.getItem("comparison-list"))
-            if (!comparisonList.find(ele => ele.sku === item.sku)) {
-                comparisonList.push(item)
-                localStorage.setItem("comparison-list", JSON.stringify(comparisonList))
-            }
-        }
-        else {
-            localStorage.setItem("comparison-list", JSON.stringify([item]))
-        }
-    }
-
     return (
         <div
             className={` ${itemClasses['siminia-product-grid-item']
@@ -397,9 +387,10 @@ const Griditem = props => {
                         }}
                     />
                 </div>
-                <button className={itemClasses['compare-button']} onClick={addProductToComparisonList}>
+                <button className={itemClasses['compare-button']} onClick={() => addProductToComparisonList(item, setIsOpen)}>
                     <BarChart2 size={24}></BarChart2>
                 </button>
+                <AddedPopUp isOpen={isOpen} setIsOpen={setIsOpen}></AddedPopUp>
             </div>
         </div>
     );

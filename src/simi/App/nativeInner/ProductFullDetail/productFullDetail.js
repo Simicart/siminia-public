@@ -54,7 +54,8 @@ import {
     ShoppingCart,
     MoreVertical,
     // ArrowRight,
-    Info
+    Info,
+    BarChart2
 } from 'react-feather';
 
 // import icon describe tab show/hidden state
@@ -116,6 +117,8 @@ const ERROR_MESSAGE_TO_FIELD_MAPPING = {
 const ERROR_FIELD_TO_MESSAGE_MAPPING = {
     quantity: 'The requested quantity is not available.'
 };
+
+import { addProductToComparisonList } from '../../../BaseComponents/CompareProducts/functions'
 
 const ProductFullDetail = props => {
     const { product } = props;
@@ -897,6 +900,7 @@ const ProductFullDetail = props => {
                             />
                         ) : null}
                         {wrapperAddToCartArea}
+                        <div className="wrapperButtonArea">
                         <div className="wrapperWishlist">
                             {!isMobileSite && (
                                 <Suspense fallback={null}>
@@ -917,6 +921,11 @@ const ProductFullDetail = props => {
                             )}
                         </div>
 
+                        <div className="wrapperCompare">
+                            <button className="btnCompare" onClick={() => addProductToComparisonList(product)}><BarChart2></BarChart2></button>
+                            <p className='btnCompareTitle'>Add to Compare</p>
+                        </div>
+                        </div>
                         {/*inline size chart web and native*/}
                         {enabledSizeChart && display === 2 ? (
                             <SizeChart

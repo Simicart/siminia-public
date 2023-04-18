@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import { BiFilterAlt } from 'react-icons/bi';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import { ChevronDown, ChevronUp, ArrowRight } from 'react-feather';
+import ComparisonColumn from '../../../BaseComponents/CompareProducts/components/ComparisonColumn';
 // import CategoryDesription from '../CategoryList/CategoryDescription';
 // import { useBrands } from '../ShopByBrand/talons/useBrands';
 require('./products.scss');
@@ -165,7 +166,7 @@ const Products = props => {
                 >
                     {filter}
                     {renderShopByBrand()}
-                    <h1>Hello</h1>
+                    {windowSize.innerWidth > 768 && (<ComparisonColumn></ComparisonColumn>)}
                 </div>
             );
         }
@@ -474,6 +475,7 @@ const Products = props => {
                     style={{ display: 'inline-block', width: '100%' }}
                 >
                     {renderList()}
+                    {windowSize.innerWidth <= 768 && <ComparisonColumn></ComparisonColumn>}
                 </div>
             </div>
             {showFilter ? <div className="bg-white" /> : ''}

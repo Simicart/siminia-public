@@ -9,7 +9,7 @@ import PageBuilderComponent from '../simi/App/core/TapitaPageBuilder/PageBuilder
 import GiftCardPage from '../giftcard/components/GiftCardPage'
 import MyGiftCards from '../giftcard/components/MyGiftCards';
 import checkDisabledGiftCard from '../giftcard/functions/gift-card-store-config/checkDisabledGiftCard';
-import { ComparisonList } from '../simi/BaseComponents/CompareProducts';
+import ComparisonList from '../simi/BaseComponents/CompareProducts/components/ComparisonList';
 //import Login from 'src/simi/App/core/Customer/Login';
 const Login = props => {
     return (
@@ -768,7 +768,7 @@ const Routes = () => {
 
                 <Route
                     exact
-                    path="/compare-products.html"
+                    path="/compare-product.html"
                     render={() => (
                         <ComparisonList/>
                     )}
