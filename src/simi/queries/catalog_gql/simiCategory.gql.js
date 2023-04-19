@@ -118,6 +118,9 @@ export const getCateNoFilter = gql`
             simiNoFilter: true
         ) {
             items {
+                description {
+                    html
+                }
                 ...CallForPriceFragment
                 ...ProductOfListFragment
                 ...ProductLabelFragment

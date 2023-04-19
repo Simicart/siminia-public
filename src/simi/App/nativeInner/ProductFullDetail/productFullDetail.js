@@ -1,4 +1,4 @@
-import React, { Suspense, useRef, useState } from 'react';
+import React, { Suspense, useRef, useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { arrayOf, bool, number, shape, string } from 'prop-types';
 import { Form } from 'informed';
@@ -89,6 +89,7 @@ import useConfigFBT from '../../../../frequently-bought-together/talons/useConfi
 import useFbtData from '../../../../frequently-bought-together/talons/useFbtData';
 import FbtBlock from '../../../../frequently-bought-together/components/FbtBlock';
 
+import MessagePopUp from '../../../BaseComponents/CompareProducts/components/MessagePopUp'
 require('./productFullDetail.scss');
 
 const mageworxSeoEnabled =
@@ -123,6 +124,14 @@ import { addProductToComparisonList } from '../../../BaseComponents/CompareProdu
 const ProductFullDetail = props => {
     const { product } = props;
     const product_sku = product.sku;
+    const [isOpenMessage, setIsOpenMessage] = useState(false)
+    const [openMessagePopUp, setOpenMessagePopUp] = useState(false)
+    useEffect(() => {
+        setTimeout(() => {
+            setOpenMessagePopUp(false)
+            localStorage.removeItem('changeList')
+        }, 4000)
+    }, [openMessagePopUp])
     const configFBT = useConfigFBT();
     const fbtData = useFbtData(product_sku);
     const talonProps = useProductFullDetail({ product });
@@ -751,8 +760,18 @@ const ProductFullDetail = props => {
         <HideAddToCartBtn product={product} addToCartBtn={addToCartArea} />
     ) : null;
 
+    window.onload = function () {
+        const reload = localStorage.getItem("reload");
+        if (reload) {
+            localStorage.removeItem("reload")
+            setIsOpenMessage(true)
+            setOpenMessagePopUp(true)
+        }
+    }
+
     return (
         <div className={isMobileSite ? 'main-product-detail-native' : null}>
+            {openMessagePopUp && (<MessagePopUp isOpen={isOpenMessage} setIsOpen={setIsOpenMessage}></MessagePopUp>)}
             <div style={{ height: topInsets }} />
             <AlertMessages
                 message={successMsg}

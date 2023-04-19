@@ -3,19 +3,14 @@ import React from "react";
 import { Check } from 'react-feather'
 import '../styles.scss'
 
-const MessagePopUp = ({ isOpen, setIsOpen, setOpenMessagePopUp }) => {
+const MessagePopUp = ({ isOpen, setIsOpen }) => {
   Modal.setAppElement('#root')
 
   const showInfo = JSON.parse(localStorage.getItem("changeList"))
 
   setTimeout(() => {
-      setIsOpen(false)
+    setIsOpen(false)
   }, 3000)
-
-  setTimeout(() => {
-    setOpenMessagePopUp(false)
-    localStorage.removeItem('changeList')
-  }, 5000)
 
   return (
     <Modal
@@ -38,9 +33,9 @@ const MessagePopUp = ({ isOpen, setIsOpen, setOpenMessagePopUp }) => {
           <Check style={{ color: 'green' }}></Check>
         </div>
         <div style={{ width: '85%' }}>
-          <p style={{ textAlign: 'left' }}>{showInfo.type === 'add' ? (`You have add ${showInfo.value} to Comparison List`) : 
-          (showInfo.type === 'remove' ? `You have remove ${showInfo.value} from Comparison List` : 
-          'You have remove all products from Comparison List')}</p>
+          <p style={{ textAlign: 'left' }}>{showInfo.type === 'add' ? (`You have add ${showInfo.value} to Comparison List`) :
+            (showInfo.type === 'remove' ? `You have remove ${showInfo.value} from Comparison List` :
+              'You have remove all products from Comparison List')}</p>
         </div>
       </div>
     </Modal>

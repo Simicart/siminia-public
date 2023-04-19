@@ -2,7 +2,12 @@
     width: 100%;
     margin: auto;
     height: 100px;
-    background-color: red;
+    display: grid;
+    grid-template-areas:
+    "blank product-list"
+    "sku sku-list"
+    "des des-list";
+    grid-template-columns: max-content 1fr;
 }
 
 @media only screen and (min-width: 1330px) {
@@ -29,5 +34,31 @@
         width: calc(100% - 30px);
         max-width: 720px;
     }
+}
+
+.cmp-product-list {
+    grid-area: product-list;
+    display: flex;
+    flex-direction: row;
+}
+
+.cmp-sku {
+    grid-area: sku;
+}
+
+.cmp-sku-list {
+    grid-area: sku-list;
+    display: flex;
+    flex-direction: row;
+}
+
+.cmp-des {
+    grid-area: des;
+}
+
+.cmp-des-list {
+    grid-area: des-list;
+    display: flex;
+    flex-direction: row;
 }
 

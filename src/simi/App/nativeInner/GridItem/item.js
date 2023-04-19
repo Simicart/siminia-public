@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import defaultClasses from './item.module.css';
 import { configColor } from 'src/simi/Config';
 import PropTypes from 'prop-types';
@@ -41,6 +41,12 @@ const Griditem = props => {
     const { lazyImage } = props;
     const [isOpen, setIsOpen] = useState(false)
     const [openMessagePopUp, setOpenMessagePopUp] = useState(false)
+    useEffect(() => {
+        setTimeout(() => {
+            setOpenMessagePopUp(false)
+            localStorage.removeItem('changeList')
+        }, 4000)
+    }, [openMessagePopUp])
     const { formatMessage } = useIntl();
     const item = prepareProduct(props.item);
     const giftCardDisabled = checkDisabledGiftCard()
@@ -305,12 +311,12 @@ const Griditem = props => {
         </button>
     );
 
-    window.onload = function() {
+    window.onload = function () {
         const reload = localStorage.getItem("reload");
-        if(reload) {
+        if (reload) {
             localStorage.removeItem("reload")
-            setOpenMessagePopUp(true)
             setIsOpen(true)
+            setOpenMessagePopUp(true)
         }
     }
 
@@ -400,8 +406,7 @@ const Griditem = props => {
                 <button className={itemClasses['compare-button']} onClick={() => addProductToComparisonList(item)}>
                     <BarChart2 size={24}></BarChart2>
                 </button>
-                {openMessagePopUp && (<MessagePopUp isOpen={isOpen} setIsOpen={setIsOpen} 
-                                                  setOpenMessagePopUp={setOpenMessagePopUp}></MessagePopUp>)}
+                {openMessagePopUp && (<MessagePopUp isOpen={isOpen} setIsOpen={setIsOpen}></MessagePopUp>)}
             </div>
         </div>
     );
