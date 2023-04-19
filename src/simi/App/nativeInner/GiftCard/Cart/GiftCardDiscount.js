@@ -280,7 +280,7 @@ const GiftCardDiscount = props => {
                         </button>
                     </div>
                     <div className={classes['gift-card-used']}>
-                        {giftCardUsed?.map(data => {
+                        {giftCardUsed.map(data => {
                             return (
                                 <div className={classes['gift-card-used-item']}>
                                     <a
