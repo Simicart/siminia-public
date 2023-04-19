@@ -52,7 +52,6 @@
 }
 
 .pageSize {
-    margin-top: 5px;
     display: flex;
     justify-content: flex-end;
     line-height: 38px;

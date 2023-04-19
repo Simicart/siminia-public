@@ -1,50 +1,22 @@
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
-import {
-    useTransaction,
-    useTransactionPagination
-} from '../../talons/useTransaction';
+import { useTransaction } from '../../talons/useTransaction';
 import { formatDate } from '../../utils';
 import { useStyle } from '@magento/venia-ui/lib/classify';
-import { useParams, Redirect } from 'react-router-dom';
 import defaultClasses from './transaction.module.css';
 import LeftMenu from 'src/simi/App/core/LeftMenu/leftMenu';
 import Pagination from '@magento/venia-ui/lib/components/Pagination';
-import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
-import Page404 from 'src/simi/App/nativeInner/NoMatch/Page404';
 
 const Transaction = props => {
-    const { isTransactionsPage } = props;
+    const { noTitle } = props;
 
-    const params = useParams();
     const { formatMessage } = useIntl();
     const classes = useStyle(defaultClasses, props.classes);
 
-    const isDetail = !!params?.transactionId || false;
+    const talonProps = useTransaction({noTitle});
 
-    const talonProps =
-        !isTransactionsPage || isDetail
-            ? useTransaction({ isDetail })
-            : useTransactionPagination({ isDetail });
-
-    const {
-        items,
-        detailData,
-        pageControl,
-        setPageSize,
-        pageSize,
-        handleSetPageSize,
-        isActive,
-        isSignedIn,
-        loading
-    } = talonProps;
-
-    if ((isTransactionsPage || isDetail) && !isActive) return <Page404 />;
-
-    if ((isTransactionsPage || isDetail) && !isSignedIn) return <Redirect to="/sign-in" />;
-
-    if (loading) return <LoadingIndicator />;
+    const { items, isDetail, detailData, pageControl, setPageSize, pageSize } = talonProps;
 
     const thead = (
         <thead>
@@ -52,7 +24,7 @@ const Transaction = props => {
                 <th>
                     <FormattedMessage id="Point" defaultMessage="Point" />
                 </th>
-                {!isTransactionsPage && (
+                {noTitle && (
                     <th>
                         <FormattedMessage
                             id="Balance"
@@ -81,7 +53,7 @@ const Transaction = props => {
                         defaultMessage="Transaction date"
                     />
                 </th>
-                {!isTransactionsPage && (
+                {noTitle && (
                     <th>
                         <FormattedMessage
                             id="Expiry date"
@@ -105,69 +77,14 @@ const Transaction = props => {
         };
         return (
             <tr key={index}>
-                <td
-                    data-th={formatMessage({
-                        id: 'Point',
-                        description: 'Point'
-                    })}
-                >
-                    {item.point}
-                </td>
-                {!isTransactionsPage && (
-                    <td
-                        data-th={formatMessage({
-                            id: 'Balance',
-                            description: 'Balance'
-                        })}
-                    >
-                        {item.balance}
-                    </td>
-                )}
-                <td
-                    data-th={formatMessage({ id: 'Note', description: 'Note' })}
-                >
-                    {item.note}
-                </td>
-                <td
-                    data-th={formatMessage({
-                        id: 'Created by',
-                        description: 'Created by'
-                    })}
-                >
-                    {item.created_by}
-                </td>
-                <td
-                    data-th={formatMessage({
-                        id: 'Transaction type',
-                        description: 'Transaction type'
-                    })}
-                >
-                    {item.action}
-                </td>
-                <td
-                    data-th={formatMessage({
-                        id: 'Transaction date',
-                        description: 'Transaction date'
-                    })}
-                >
-                    {formatDate(item.created_at)}
-                </td>
-                {!isTransactionsPage && (
-                    <td
-                        data-th={formatMessage({
-                            id: 'Expiry date',
-                            description: 'Expiry date'
-                        })}
-                    >
-                        {formatDate(item.expires_at)}
-                    </td>
-                )}
-                <td
-                    data-th={formatMessage({
-                        id: 'Actions',
-                        description: 'Actions'
-                    })}
-                >
+                <td data-th={formatMessage({id: "Point", description: "Point"})}>{item.point}</td>
+                {noTitle && <td data-th={formatMessage({id: "Balance", description: "Balance"})} >{item.balance}</td>}
+                <td data-th={formatMessage({id: "Note", description: "Note"})}>{item.note}</td>
+                <td data-th={formatMessage({id: "Created by", description: "Created by"})}>{item.created_by}</td>
+                <td data-th={formatMessage({id: "Transaction type", description: "Transaction type"})}>{item.action}</td>
+                <td data-th={formatMessage({id: "Transaction date", description: "Transaction date"})}>{formatDate(item.created_at)}</td>
+                {noTitle && <td data-th={formatMessage({id: "Expiry date", description: "Expiry date"})}>{formatDate(item.expires_at)}</td>}
+                <td data-th={formatMessage({id: "Actions", description: "Actions"})}>
                     <Link to={location} className={classes.view}>
                         <FormattedMessage id="View" defaultMessage="View" />
                     </Link>
@@ -183,12 +100,11 @@ const Transaction = props => {
         </table>
     );
 
-    if (!isTransactionsPage) {
+    if (noTitle) {
         return table;
     }
 
     let content = table;
-    let pagination = null;
     if (isDetail) {
         content = (
             <div className={classes.detail}>
@@ -198,6 +114,7 @@ const Transaction = props => {
                             id={'Point:'}
                             defaultMessage={'Point:'}
                         />
+                        
                     </span>
                     <span className={classes.panelPoint}>
                         {detailData.point}
@@ -205,10 +122,8 @@ const Transaction = props => {
                 </p>
                 <p className={classes.rwPoint}>
                     <span>
-                        <FormattedMessage
-                            id={'Note:'}
-                            defaultMessage={'Note:'}
-                        />
+                        <FormattedMessage id={'Note:'} defaultMessage={'Note:'} />
+                        
                     </span>
                     <span className={classes.panelPoint}>
                         {detailData.note}
@@ -220,6 +135,7 @@ const Transaction = props => {
                             id={'Created by:'}
                             defaultMessage={'Created by:'}
                         />
+                        
                     </span>
                     <span className={classes.panelPoint}>
                         {detailData.created_by}
@@ -231,6 +147,7 @@ const Transaction = props => {
                             id={'Transaction type:'}
                             defaultMessage={'Transaction type:'}
                         />
+                        
                     </span>
                     <span className={classes.panelPoint}>
                         {detailData.action}
@@ -242,34 +159,13 @@ const Transaction = props => {
                             id={'Transaction date:'}
                             defaultMessage={'Transaction date:'}
                         />
+                        
                     </span>
                     <span className={classes.panelPoint}>
                         {detailData.created_at}
                     </span>
                 </p>
             </div>
-        );
-    } else {
-        pagination = (
-            <React.Fragment>
-                <div className={classes.pagination}>
-                    <Pagination pageControl={pageControl} />
-                </div>
-                <div className={classes.pageSize}>
-                    {`Show `}
-                    <span className={classes.pageSizeInput}>
-                        <select onChange={handleSetPageSize} value={pageSize}>
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                        </select>
-                    </span>
-                    {formatMessage({
-                        id: 'perPage',
-                        defaultMessage: ' per page'
-                    })}
-                </div>
-            </React.Fragment>
         );
     }
 
@@ -286,16 +182,34 @@ const Transaction = props => {
                             />
                         </div>
                         {content}
-                        {pagination}
+                        <div className={classes.pagination}>
+                            <Pagination pageControl={pageControl} />
+                        </div>
+                        <div className={classes.pageSize}>
+                            {`Show `}
+                            <span className={classes.pageSizeInput}>
+                                <select
+                                    onChange={e => {
+                                        setPageSize(e.target.value);
+                                        pageControl.setPage(1);
+                                    }}
+                                    value={pageSize}
+                                >
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                </select>
+                            </span>
+                            {formatMessage({
+                                id: 'perPage',
+                                defaultMessage: ' per page'
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     );
-};
-
-Transaction.defaultProps = {
-    isTransactionsPage: true
 };
 
 export default Transaction;
