@@ -112,7 +112,6 @@ const CheckoutPage = props => {
         toggleAddressBookContent,
         toggleSignInContent
     } = talonProps;
-
     let deliveryData = deliveryTimeEnabled !== 0 ? useDeliveryDateTime({
         setPageIsUpdating: setIsUpdating,
         isUpdating: isUpdating
