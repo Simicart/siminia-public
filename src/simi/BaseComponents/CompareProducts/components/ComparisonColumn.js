@@ -13,7 +13,8 @@ const ComparisonColumn = () => {
 
     return (
         <div className="cmp-col-wrapper">
-            <h2 className="cmp-col-title">{comparisonList && comparisonList.length>0 ? `Compare Products (${comparisonList.length} items)` : 'Compare Products'}</h2>
+            <h2 className="cmp-col-title">{comparisonList ? (comparisonList.length===1 ? `Compare Products (1 item)` : 
+                                            `Compare Products (${comparisonList.length} items)`) : 'Compare Products'}</h2>
             {comparisonList && comparisonList.length>0 ? (
                 comparisonList.map((element, index) => (
                     <div className="cmp-col-item">

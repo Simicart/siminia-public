@@ -31,10 +31,10 @@ const RemovePopUp = ({ isOpen, setIsOpen, setOpenRemovePopUp, removeType, index 
                     <X size={18}></X>
                 </button>
                 <p style={{ fontSize: 16, marginTop: 10 }}>
-                    {removeType === 'single' ? (<FormattedMessage id='Are you sure you want to remove this item from your Comparison List?'
-                        defaultMessage='Are you sure you want to remove this item from your Comparison List?'></FormattedMessage>)
-                        : (<FormattedMessage id='Are you sure you want to remove all items from your Comparison List?'
-                            defaultMessage='Are you sure you want to remove all items from your Comparison List?'></FormattedMessage>)}
+                    {removeType === 'single' ? (<FormattedMessage id='Are you sure you want to remove this item from your Compare Products List?'
+                        defaultMessage='Are you sure you want to remove this item from your Compare Products List?'></FormattedMessage>)
+                        : (<FormattedMessage id='Are you sure you want to remove all items from your Compare Products List?'
+                            defaultMessage='Are you sure you want to remove all items from your Compare Products List?'></FormattedMessage>)}
                 </p>
                 <div className='remove-pop-up-btn'>
                     <button onClick={() => {

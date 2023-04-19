@@ -156,10 +156,10 @@ const Header = props => {
                     <StoreSwitcher />
                 </div>
 
-                {comparisonList && comparisonList.length > 0 && (
+                {comparisonList && (
                     <div className={classes['comparison-list']}>
-                        <a href='/compare-product.html'>{comparisonList.length === 1 ? `Comparison Products (1 item)`
-                                                        : `Comparison Products (${comparisonList.length} items)`}</a>
+                        <a href='/compare-product.html'>{comparisonList.length === 1 ? `Compare Products (1 item)`
+                                                        : `Compare Products (${comparisonList.length} items)`}</a>
                     </div>
                 )}
 

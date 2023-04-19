@@ -27,7 +27,7 @@
     "blank product-list"
     "sku sku-list"
     "des des-list";
-    grid-template-columns: max-content 1fr;
+    grid-template-columns: 1fr 1fr;
     overflow-x: scroll;
 
     &:nth-child(-n+1) {
@@ -98,6 +98,12 @@
     flex-direction: row;
     flex-wrap: nowrap;
     border-left: 1px solid #bbb;
+}
+
+.cmp-remove-btn {
+    position: absolute;
+    top: 0;
+    right: 5px;
 }
 
 .cmp-product-image {

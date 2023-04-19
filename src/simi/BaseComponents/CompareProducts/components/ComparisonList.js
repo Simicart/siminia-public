@@ -1,20 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/styles.scss";
 import RichContent from '@magento/venia-ui/lib/components/RichContent';
 import { StaticRate } from '../../Rate'
 import { useHistory } from 'react-router-dom'
-import { useCurrencySwitcher } from '@magento/peregrine/lib/talons/Header/useCurrencySwitcher';
-import CurrencySymbol from '@magento/venia-ui/lib/components/CurrencySymbol';
-import { Heart } from 'react-feather';
+import { Heart, X } from 'react-feather';
 import ADD_PRODUCT_TO_CART from '../talons/useAddProductToCart'
 import ADD_PRODUCT_TO_WISHLIST from '../talons/useAddProductToWishlist'
 import { fullPageLoadingIndicator } from "@magento/venia-ui/lib/components/LoadingIndicator"
 import { useMutation } from '@apollo/client'
+import Price from '../../GridItem/Price'
+import RemovePopUp from "./RemovePopUp";
 
 const ComparisonList = () => {
     const comparisonList = JSON.parse(localStorage.getItem('comparison-list'))
+    const [isOpen, setIsOpen] = useState(false)
+    const [openRemovePopUp, setOpenRemovePopUp] = useState(false)
+    const [removeType, setRemoveType] = useState()
+    const [index, setIndex] = useState(-1)
     const history = useHistory()
-    const { currentCurrencyCode } = useCurrencySwitcher();
+
+    const gridTemplateColumns = () => {
+        if (comparisonList.length === 1) {
+            return '1fr 1fr'
+        }
+        if (comparisonList.length === 2) {
+            return '1fr 2fr'
+        }
+        if (comparisonList.length === 3) {
+            return '1fr 3fr'
+        }
+        if (comparisonList.length === 4) {
+            return '1fr 4fr'
+        }
+        if (comparisonList.length >= 5) {
+            return '1fr 5fr'
+        }
+    }
 
     const [
         addProductToCart,
@@ -34,7 +55,7 @@ const ComparisonList = () => {
             localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__cartId')
         ).value;
 
-        if(element.__typename === 'ConfigurableProduct') {
+        if (element.__typename === 'ConfigurableProduct') {
             history.push(`/${element.url_key}.html`)
         }
         else {
@@ -73,10 +94,18 @@ const ComparisonList = () => {
                 {fullPageLoadingIndicator}
             </div>)}
             <h1 className="cmp-title">Compare Products</h1>
-            <div className="cmp-list-wrapper">
+            <div className="cmp-list-wrapper" style={{ gridTemplateColumns: gridTemplateColumns() }}>
                 <div className="cmp-product-list">
-                    {comparisonList.map((element) => (
-                        <div style={{ flex: '0 0 20%', padding: 15 }}>
+                    {comparisonList.map((element, index) => (
+                        <div style={{ flex: '0 0 20%', padding: 15, position: 'relative' }}>
+                            <button className="cmp-remove-btn" onClick={() => {
+                                setRemoveType('single')
+                                setIndex(index)
+                                setOpenRemovePopUp(true)
+                                setIsOpen(true)
+                            }}>
+                                <X size={18} color='#757575'></X>
+                            </button>
                             <img src={element.small_image} className="cmp-product-image"></img>
                             <p dangerouslySetInnerHTML={{ __html: element.name }} className="cmp-product-name"></p>
                             {element.review_count > 1 && (<div className="cmp-review-wrapper">
@@ -92,11 +121,7 @@ const ComparisonList = () => {
                             </div>)}
                             <div className="cmp-price-wrapper">
                                 {element.__typename === 'ConfigurableProduct' && (<p style={{ marginRight: 3 }}>As low as</p>)}
-                                <CurrencySymbol
-                                    currencyCode={currentCurrencyCode}
-                                    currencyDisplay={'narrowSymbol'}
-                                />
-                                <p>{element.price.regularPrice.excl_tax_amount.value.toFixed(2)}</p>
+                                <Price prices={element.price} type={element.type_id}></Price>
                             </div>
                             <div className="cmp-btn-wrapper">
                                 <button className="cmp-btn-add-cart" onClick={() => handleAddProductToCart(element)}>Add to Cart</button>
@@ -132,6 +157,8 @@ const ComparisonList = () => {
                     ))}
                 </div>
             </div>
+            {openRemovePopUp && (<RemovePopUp isOpen={isOpen} setIsOpen={setIsOpen} index={index}
+                setOpenRemovePopUp={setOpenRemovePopUp} removeType={removeType}></RemovePopUp>)}
         </div>
     )
 }
