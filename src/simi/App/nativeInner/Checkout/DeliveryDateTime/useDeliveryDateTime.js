@@ -18,7 +18,6 @@ export const useDeliveryDateTime = props => {
     const storeConfig = Identify.getStoreConfig();
     const [isSubmit, setIsSubmit] = useState(false);
     const { bssDeliveryDateStoreConfig } = storeConfig || {};
-
     const { flatData } = usePriceSummary();
 
     const {
@@ -36,7 +35,7 @@ export const useDeliveryDateTime = props => {
         process_time,
         shipping_comment,
         time_slots
-    } = bssDeliveryDateStoreConfig;
+    } = bssDeliveryDateStoreConfig || '';
     const formatDate = (date, type, mutation) => {
         if (mutation) {
             return (
@@ -57,7 +56,7 @@ export const useDeliveryDateTime = props => {
     };
     const now = new Date();
 
-    const daysOff = date_day_off.split(',');
+    const daysOff = date_day_off?.split(',');
     const dateOff = block_out_holidays;
 
     const filterDate = (date, dateOff) => {
@@ -77,7 +76,7 @@ export const useDeliveryDateTime = props => {
     };
 
     const filterDaysOff = (date, daysOff) => {
-        if (daysOff.includes(date)) {
+        if (daysOff?.includes(date)) {
             return false;
         }
         return true;
@@ -102,7 +101,7 @@ export const useDeliveryDateTime = props => {
     const [startDate, setStartDate] = useState(handleSelectedDate());
     const excludeHolidays =
         as_processing_days === '0'
-            ? dateOff.filter(
+            ? dateOff?.filter(
                   date =>
                       date >= formatDate(now, '/') &&
                       date <= formatDate(handleSelectedDate(), '/')
