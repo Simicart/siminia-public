@@ -1,16 +1,12 @@
 import Modal from 'react-modal';
-import React from "react";
+import React, { useEffect } from "react";
 import { Check } from 'react-feather'
-import '../styles.scss'
+import '../styles/styles.scss'
 
 const MessagePopUp = ({ isOpen, setIsOpen }) => {
   Modal.setAppElement('#root')
 
   const showInfo = JSON.parse(localStorage.getItem("changeList"))
-
-  setTimeout(() => {
-    setIsOpen(false)
-  }, 3000)
 
   return (
     <Modal

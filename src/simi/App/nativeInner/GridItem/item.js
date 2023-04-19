@@ -41,12 +41,26 @@ const Griditem = props => {
     const { lazyImage } = props;
     const [isOpen, setIsOpen] = useState(false)
     const [openMessagePopUp, setOpenMessagePopUp] = useState(false)
+
     useEffect(() => {
-        setTimeout(() => {
-            setOpenMessagePopUp(false)
-            localStorage.removeItem('changeList')
-        }, 4000)
-    }, [openMessagePopUp])
+        if (isOpen && openMessagePopUp) {
+          console.log(isOpen, openMessagePopUp)
+          const timeoutModal = setTimeout(() => {
+            setIsOpen(false)
+          }, 3000);
+          return () => clearTimeout(timeoutModal);
+        }
+        if(!isOpen && openMessagePopUp) {
+            const timeoutShowModal = setTimeout(() => {
+                console.log(isOpen, openMessagePopUp)
+                localStorage.removeItem('changeList')
+                setOpenMessagePopUp(false)
+            }, 5000)
+    
+            return () => clearTimeout(timeoutShowModal);
+        }
+      }, [isOpen, openMessagePopUp]);
+
     const { formatMessage } = useIntl();
     const item = prepareProduct(props.item);
     const giftCardDisabled = checkDisabledGiftCard()
@@ -315,8 +329,8 @@ const Griditem = props => {
         const reload = localStorage.getItem("reload");
         if (reload) {
             localStorage.removeItem("reload")
-            setIsOpen(true)
             setOpenMessagePopUp(true)
+            setIsOpen(true)
         }
     }
 

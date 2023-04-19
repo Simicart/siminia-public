@@ -23,7 +23,7 @@ const ComparisonColumn = () => {
                             setOpenRemovePopUp(true)
                             setIsOpen(true)
                         }}><X size={18}></X></button>
-                        <p className="cmp-col-item-name" dangerouslySetInnerHTML={{ __html: element.name }}></p>
+                        <a className="cmp-col-item-name" href={`/${element.url_key}.html`} dangerouslySetInnerHTML={{ __html: element.name }}></a>
                     </div>
                 ))
             ) : (<p>You have no items to compare.</p>)}

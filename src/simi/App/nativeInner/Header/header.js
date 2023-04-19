@@ -46,6 +46,7 @@ const Header = props => {
     const { formatMessage } = useIntl();
     const windowSize = useWindowSize();
     const isPhone = windowSize.innerWidth < 1024;
+    const comparisonList = JSON.parse(localStorage.getItem('comparison-list'))
 
     const storeConfig = Identify.getStoreConfig();
 
@@ -147,14 +148,20 @@ const Header = props => {
     const renderRightBar = () => {
         return (
             <div
-                className={`${classes['right-bar']} ${
-                    Identify.isRtl() ? 'right-bar-rtl' : ''
-                }`}
+                className={`${classes['right-bar']} ${Identify.isRtl() ? 'right-bar-rtl' : ''
+                    }`}
                 style={{ height: headerHeight }}
             >
                 <div className={classes['right-bar-item']}>
                     <StoreSwitcher />
                 </div>
+
+                {comparisonList && comparisonList.length > 0 && (
+                    <div className={classes['comparison-list']}>
+                        <a href='/compare-product.html'>{comparisonList.length === 1 ? `Comparison Products (1 item)`
+                                                        : `Comparison Products (${comparisonList.length} items)`}</a>
+                    </div>
+                )}
 
                 <FaqHeader classes={classes} />
 
@@ -348,10 +355,10 @@ const Header = props => {
                     .split('/')[1]
                     .replaceAll('-', ' ')
                     .slice(1); +
-                type
-                    .split('/')[1]
-                    .replaceAll('-', ' ')
-                    .slice(1);
+                        type
+                            .split('/')[1]
+                            .replaceAll('-', ' ')
+                            .slice(1);
             return (
                 <div
                     className={classes.specHeader}

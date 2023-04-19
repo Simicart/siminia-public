@@ -1,0 +1,157 @@
+.cmp-wrapper {
+    width: 100%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.cmp-loading-indicator {
+    width: 100vw; 
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    padding-top: 40vh;
+    left: 0; 
+    z-index: 9999;
+    background-color: rgba(45, 45, 45, 0.7);
+}
+
+.cmp-title {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.cmp-list-wrapper {
+    display: grid;
+    margin-top: 50px;
+    grid-template-areas:
+    "blank product-list"
+    "sku sku-list"
+    "des des-list";
+    grid-template-columns: max-content 1fr;
+    overflow-x: scroll;
+
+    &:nth-child(-n+1) {
+        border: 1px solid #bbb
+    }
+}
+
+@media only screen and (min-width: 1330px) {
+    .cmp-wrapper {
+        max-width: 1280px;
+    }
+}
+
+@media only screen and (max-width: 1330px) and (min-width: 1280px) {
+    .cmp-wrapper {
+        margin: 0 15px;
+        width: calc(100% - 30px)
+    }
+}
+
+@media only screen and (max-width: 1280px) {
+    .cmp-wrapper {
+        max-width: 994px;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .cmp-wrapper {
+        width: calc(100% - 30px);
+        max-width: 720px;
+    }
+}
+
+.cmp-product-list {
+    grid-area: product-list;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border-left: 1px solid #bbb;
+}
+
+.cmp-sku {
+    grid-area: sku;
+    padding-top: 15px;
+    font-weight: bold;
+    padding-right: 15px;
+    border-top: 1px solid #bbb;
+}
+
+.cmp-sku-list {
+    grid-area: sku-list;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border-left: 1px solid #bbb;
+}
+
+.cmp-des {
+    grid-area: des;
+    padding-top: 15px;
+    font-weight: bold;
+    padding-right: 15px;
+}
+
+.cmp-des-list {
+    grid-area: des-list;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border-left: 1px solid #bbb;
+}
+
+.cmp-product-image {
+    height: 150px;
+    margin: auto;
+}
+
+.cmp-product-name {
+    margin-top: 20px;
+}
+
+.cmp-review-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.cmp-review-btn {
+    color: #006bb4;
+}
+
+.cmp-review-btn:hover {
+    color: #536fd8;
+    text-decoration-line: underline;
+}
+
+.cmp-review-btn:active {
+    color: orange;
+    text-decoration-line: underline;
+}
+
+.cmp-price-wrapper {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+.cmp-btn-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.cmp-btn-add-cart {
+    padding: 8px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    background-color: rgb(0, 107, 180);
+}
+
+.cmp-btn-add-cart:hover {
+    background-color: rgba(0, 107, 180, 0.8);
+}

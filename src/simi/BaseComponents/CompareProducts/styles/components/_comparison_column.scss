@@ -17,7 +17,18 @@
 }
 
 .cmp-col-item-name {
-    margin-top: 2px
+    margin-top: 2px;
+    color: #006bb4;
+}
+
+.cmp-col-item-name:hover {
+    color: #536fd8;
+    text-decoration-line: underline;
+}
+
+.cmp-col-item-name:active {
+    color: orange;
+    text-decoration-line: underline;
 }
 
 .cmp-col-button {
