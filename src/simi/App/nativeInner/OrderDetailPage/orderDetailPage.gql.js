@@ -13,88 +13,76 @@ const rewardPointEnabled =
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_REWARD_POINTS) === 1;
 
 const GET_ORDER_DETAIL = gql`
-    query GetOrderDetail($orderId: String!)  {
-    customer {
-    orders(filter: {number: {eq: $orderId}}) {
-      total_count
-      items {
-        id
-        number
-        order_date
-        status
-        shipping_method
-        payment_methods{
-          name
-        }
-        billing_address {
-          firstname
-          lastname
-          street
-          telephone
-          city
-          region
-          postcode
-          company
-          
-        }
-        items {
-          product_name
-          product_url_key
-          product_sku
-          quantity_ordered
-          product_sale_price {
-            currency
-            value
-          }
-        }
-        total {
-          ${
-              deliveryTimeEnabled
-                  ? `
-                order_delivery_date {
-                  time_slot_price {
-                      value
-                      currency
-                  }
-              }`
-                  : ''
-          }
-          discounts {
-            amount {
-              currency
-              value
+    query GetOrderDetail($orderId: String!) {
+        customer {
+            orders(filter: { number: { eq: $orderId } }) {
+                total_count
+                items {
+                    id
+                    number
+                    order_date
+                    status
+                    shipping_method
+                    payment_methods {
+                        name
+                    }
+                    billing_address {
+                        firstname
+                        lastname
+                        street
+                        telephone
+                        city
+                        region
+                        postcode
+                        company
+                    }
+                    items {
+                        product_name
+                        product_url_key
+                        product_sku
+                        quantity_ordered
+                        product_sale_price {
+                            currency
+                            value
+                        }
+                    }
+                    total {
+                        discounts {
+                            amount {
+                                currency
+                                value
+                            }
+                            label
+                        }
+                        base_grand_total {
+                            currency
+                            value
+                        }
+                        subtotal {
+                            currency
+                            value
+                        }
+                        total_shipping {
+                            currency
+                            value
+                        }
+                        total_tax {
+                            currency
+                            value
+                        }
+                    }
+                    invoices {
+                        total {
+                            subtotal {
+                                currency
+                                value
+                            }
+                        }
+                    }
+                }
             }
-            label
-          }
-          base_grand_total {
-            currency
-            value
-          }
-          subtotal {
-            currency
-            value
-          }
-          total_shipping {
-            currency
-            value
-          }
-          total_tax {
-            currency
-            value
-          }
         }
-        invoices {
-          total{
-            subtotal {
-              currency
-              value
-            }
-          }
-        }
-      }
     }
-  }
-}
 `;
 
 const REORDER_MUTATION = gql`

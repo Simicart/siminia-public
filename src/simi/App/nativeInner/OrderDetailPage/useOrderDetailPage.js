@@ -20,6 +20,7 @@ export const useOrderDetailPage = props => {
             orderId
         }
     });
+    console.log("dataaaaaa",data);
     return {
         loadingDetail: loading,
         dataDetail: data,

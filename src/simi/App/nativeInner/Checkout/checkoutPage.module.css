@@ -31,13 +31,17 @@
 .root select,
 .root input[type='password'],
 .root input[type='text'],
-.root input:not([type]) {
+.root input:not([type]),
+.root textarea {
     height: 48px;
     font-size: 14px;
     padding-inline-start: 22px;
     padding-inline-end: 22px;
 }
-
+.root textarea {
+    line-height: 48px;
+    height: 60px;
+}
 .root div[class*='orderSummary'] h1[class*='title'] {
     position: unset;
     height: auto;
