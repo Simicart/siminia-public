@@ -1,5 +1,6 @@
 import Modal from 'react-modal';
 import React from "react";
+import { useHistory } from 'react-router-dom'
 import { X } from 'react-feather';
 import { FormattedMessage } from 'react-intl';
 
@@ -7,6 +8,7 @@ const AddCartPopUp = ({ isOpen, setIsOpen, setOpenAddCartPopUp, cartData }) => {
 
     Modal.setAppElement('#root')
     const cartLength = cartData.addProductsToCart.cart.items.length - 1
+    const history = useHistory()
 
     return (
         <Modal
@@ -44,9 +46,11 @@ const AddCartPopUp = ({ isOpen, setIsOpen, setOpenAddCartPopUp, cartData }) => {
                             className='add-cart-pop-up-product-name'>
                         </a> <FormattedMessage id=' to your shopping cart' defaultMessage=' to your shopping cart'></FormattedMessage>
                     </span>
-                    <img src={cartData.addProductsToCart.cart.items[cartLength].product.image.url}
-                        alt='' style={{ objectFit: "ratio" }} className='add-cart-pop-up-image'>
-                    </img>
+                    <a href={`/${cartData.addProductsToCart.cart.items[cartLength].product.url_key}.html`}>
+                        <img src={cartData.addProductsToCart.cart.items[cartLength].product.image.url}
+                            alt='' style={{ objectFit: "ratio" }} className='add-cart-pop-up-image'>
+                        </img>
+                    </a>
 
                     <span style={{ textAlign: 'center', fontSize: 16 }}>
                         <FormattedMessage id='There are' defaultMessage='There are'></FormattedMessage>
@@ -75,7 +79,7 @@ const AddCartPopUp = ({ isOpen, setIsOpen, setOpenAddCartPopUp, cartData }) => {
                             View Cart
                         </button>
 
-                        <button className='add-cart-pop-up-continue' 
+                        <button className='add-cart-pop-up-continue'
                             onClick={() => {
                                 setIsOpen(false)
                                 setTimeout(() => {
