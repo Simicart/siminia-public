@@ -1,0 +1,65 @@
+.cmp-col-wrapper {
+    margin-top: 50px;
+    margin-bottom: 50px
+}
+
+.cmp-col-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.cmp-col-item {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-bottom: 5px;
+}
+
+.cmp-col-item-name {
+    margin-top: 2px;
+    color: #006bb4;
+}
+
+.cmp-col-item-name:hover {
+    color: #536fd8;
+    text-decoration-line: underline;
+}
+
+.cmp-col-item-name:active {
+    color: orange;
+    text-decoration-line: underline;
+}
+
+.cmp-col-button {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.cmp-col-compare-btn {
+    font-weight: bold;
+    border: 1px solid black;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.cmp-col-clear-btn {
+    color: #006bb4
+}
+
+.cmp-col-clear-btn:hover {
+    text-decoration-line: underline;
+}
+
+.cmp-col-clear-btn:active {
+    text-decoration-line: underline;
+    color: orange;
+}
+
+@media only screen and (max-width: 1024px) {
+    .cmp-col-button {
+        flex-direction: column;
+    }
+}

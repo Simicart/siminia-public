@@ -478,3 +478,17 @@ body.fixed-scroll {
         display: none;
     }
 }
+
+.comparison-list {
+    color: #006bb4;
+}
+
+.comparison-list:hover {
+    color: #536fd8;
+    text-decoration-line: underline;
+}
+
+.comparison-list:active {
+    color: orange;
+    text-decoration-line: underline;
+}

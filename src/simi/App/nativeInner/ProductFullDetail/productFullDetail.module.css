@@ -126,7 +126,6 @@
 
 .options {
     grid-area: options;
-    display: grid;
     grid-template-columns: 1fr max-content;
 }
 

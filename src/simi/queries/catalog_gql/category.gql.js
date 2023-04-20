@@ -88,6 +88,10 @@ export const getCateNoFilter = gql`
             sort: $sort
         ) {
             items {
+                activity
+                description {
+                    html
+                }
                 ...CallForPriceFragment
                 ...ProductOfListFragment
                 ...ProductLabelFragment
