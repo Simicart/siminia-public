@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/styles.scss";
 import RichContent from '@magento/venia-ui/lib/components/RichContent';
 import { StaticRate } from '../../Rate'
@@ -10,11 +10,38 @@ import { fullPageLoadingIndicator } from "@magento/venia-ui/lib/components/Loadi
 import { useMutation } from '@apollo/client'
 import Price from '../../GridItem/Price'
 import RemovePopUp from "./RemovePopUp";
+import MessagePopUp from "./MessagePopUp";
+import AddCartPopUp from "./AddCartPopUp";
+import { useWindowSize } from '@magento/peregrine';
 
 const ComparisonList = () => {
     const comparisonList = JSON.parse(localStorage.getItem('comparison-list'))
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpenRemovePopUp, setIsOpenRemovePopUp] = useState(false)
     const [openRemovePopUp, setOpenRemovePopUp] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
+    const [openMessagePopUp, setOpenMessagePopUp] = useState(false)
+    const [isOpenAddCartPopUp, setIsOpenAddCartPopUp] = useState(false)
+    const [openAddCartPopUp, setOpenAddCartPopUp] = useState(false)
+    const [cartData, setCartData] = useState()
+    const windowSize = useWindowSize()
+
+    useEffect(() => {
+        if (isOpen && openMessagePopUp) {
+            localStorage.removeItem("reload")
+            const timeoutModal = setTimeout(() => {
+                setIsOpen(false)
+            }, 3000);
+            return () => clearTimeout(timeoutModal);
+        }
+        if (!isOpen && openMessagePopUp) {
+            const timeoutShowModal = setTimeout(() => {
+                localStorage.removeItem('changeList')
+                setOpenMessagePopUp(false)
+            }, 1000)
+
+            return () => clearTimeout(timeoutShowModal);
+        }
+    }, [isOpen, openMessagePopUp]);
     const [removeType, setRemoveType] = useState()
     const [index, setIndex] = useState(-1)
     const history = useHistory()
@@ -37,13 +64,50 @@ const ComparisonList = () => {
         }
     }
 
-    const [
-        addProductToCart,
-        { loading }
-    ] = useMutation(ADD_PRODUCT_TO_CART);
+    const flexDisplay = () => {
+        if (comparisonList.length === 1) {
+            return '0 0 100%'
+        }
+        if (comparisonList.length === 2) {
+            if(windowSize.innerWidth <= 600) {
+                return '0 0 100%'
+            }
+            return '0 0 50%'
+        }
+        if (comparisonList.length === 3) {
+            if(windowSize.innerWidth <= 760) {
+                return '0 0 50%'
+            }
+            return '0 0 calc(100% / 3)'
+        }
+        if (comparisonList.length === 4) {
+            if(windowSize.innerWidth <= 1024) {
+                return '0 0 calc(100% / 3)'
+            }
+            return '0 0 25%'
+        }
+        if (comparisonList.length >= 5) {
+            if(comparisonList.length === 5 && windowSize.innerWidth <= 1280) {
+                return '0 0 25%'
+            }
+            return '0 0 20%'
+        }
+    }
 
     const [
-        addProductToWishlist
+        addProductToCart,
+        { loading: cartLoading }
+    ] = useMutation(ADD_PRODUCT_TO_CART, {
+        onCompleted: data => {
+            setCartData(data)
+            setOpenAddCartPopUp(true)
+            setIsOpenAddCartPopUp(true)
+        }
+    });
+
+    const [
+        addProductToWishlist,
+        { loading: wishlistLoading }
     ] = useMutation(ADD_PRODUCT_TO_WISHLIST, {
         onCompleted: data => {
             if (data) history.push('/wishlist')
@@ -55,7 +119,7 @@ const ComparisonList = () => {
             localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__cartId')
         ).value;
 
-        if (element.__typename === 'ConfigurableProduct') {
+        if (element.__typename !== 'SimpleProduct') {
             history.push(`/${element.url_key}.html`)
         }
         else {
@@ -88,26 +152,40 @@ const ComparisonList = () => {
         }
     }
 
+    window.onload = function () {
+        const reload = localStorage.getItem("reload");
+        if (reload) {
+            setOpenMessagePopUp(true)
+            setIsOpen(true)
+        }
+    }
+
+    console.log(cartData)
+
     return (
         <div className="cmp-wrapper">
-            {(loading) && (<div className="cmp-loading-indicator">
+            {(cartLoading || wishlistLoading) && (<div className="cmp-loading-indicator">
                 {fullPageLoadingIndicator}
             </div>)}
             <h1 className="cmp-title">Compare Products</h1>
-            <div className="cmp-list-wrapper" style={{ gridTemplateColumns: gridTemplateColumns() }}>
+            {comparisonList ? (<div className="cmp-list-wrapper" style={{ gridTemplateColumns: gridTemplateColumns() }}>
                 <div className="cmp-product-list">
                     {comparisonList.map((element, index) => (
-                        <div style={{ flex: '0 0 20%', padding: 15, position: 'relative' }}>
+                        <div style={{ flex: flexDisplay(), padding: 15, position: 'relative' }}>
                             <button className="cmp-remove-btn" onClick={() => {
                                 setRemoveType('single')
                                 setIndex(index)
                                 setOpenRemovePopUp(true)
-                                setIsOpen(true)
+                                setIsOpenRemovePopUp(true)
                             }}>
                                 <X size={18} color='#757575'></X>
                             </button>
-                            <img src={element.small_image} className="cmp-product-image"></img>
-                            <p dangerouslySetInnerHTML={{ __html: element.name }} className="cmp-product-name"></p>
+                            <a href={`/${element.url_key}.html`}>
+                                <img src={element.small_image} className="cmp-product-image"></img>
+                            </a>
+                            <a href={`/${element.url_key}.html`}>
+                                <p dangerouslySetInnerHTML={{ __html: element.name }} className="cmp-product-name"></p>
+                            </a>
                             {element.review_count > 1 && (<div className="cmp-review-wrapper">
                                 <StaticRate rate={element.rating_summary}></StaticRate>
                                 <button onClick={() => history.push({
@@ -139,7 +217,7 @@ const ComparisonList = () => {
 
                 <div className="cmp-sku-list">
                     {comparisonList.map((element) => (
-                        <div style={{ flex: '0 0 20%', padding: 15, borderTop: '1px solid #bbb' }}>
+                        <div style={{ flex: flexDisplay(), padding: 15, borderTop: '1px solid #bbb' }}>
                             <h1>{element.sku}</h1>
                         </div>
                     ))}
@@ -151,14 +229,32 @@ const ComparisonList = () => {
 
                 <div className="cmp-des-list">
                     {comparisonList.map((element) => (
-                        <div style={{ flex: '0 0 20%', padding: 15 }}>
+                        <div style={{ flex: flexDisplay(), padding: 15 }}>
                             <RichContent html={element.description.html}></RichContent>
                         </div>
                     ))}
                 </div>
-            </div>
-            {openRemovePopUp && (<RemovePopUp isOpen={isOpen} setIsOpen={setIsOpen} index={index}
+
+                {comparisonList.find(element => element.activity !== null) && (
+                    <div className="cmp-activity">
+                        <h3>Activity</h3>
+                    </div>)}
+
+                {comparisonList.find(element => element.activity !== null) && (
+                    <div className="cmp-activity-list">
+                        {comparisonList.map((element) => (
+                            <div style={{ flex: flexDisplay(), padding: 15 }}>
+                                <h1>{element.activity}</h1>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>) : (<p style={{ marginTop: 20, fontSize: 16 }}>You have no items to compare.</p>)}
+            {openRemovePopUp && (<RemovePopUp isOpen={isOpenRemovePopUp} setIsOpen={setIsOpenRemovePopUp} index={index}
                 setOpenRemovePopUp={setOpenRemovePopUp} removeType={removeType}></RemovePopUp>)}
+            {openMessagePopUp && (<MessagePopUp isOpen={isOpen} setIsOpen={setIsOpen}></MessagePopUp>)}
+            {openAddCartPopUp && (<AddCartPopUp isOpen={isOpenAddCartPopUp} setIsOpen={setIsOpenAddCartPopUp} 
+               setOpenAddCartPopUp={setOpenAddCartPopUp} cartData={cartData}></AddCartPopUp>)}
         </div>
     )
 }

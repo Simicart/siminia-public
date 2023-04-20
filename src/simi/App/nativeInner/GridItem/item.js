@@ -44,22 +44,22 @@ const Griditem = props => {
 
     useEffect(() => {
         if (isOpen && openMessagePopUp) {
-          console.log(isOpen, openMessagePopUp)
+            localStorage.removeItem("reload")
           const timeoutModal = setTimeout(() => {
             setIsOpen(false)
           }, 3000);
+          
           return () => clearTimeout(timeoutModal);
         }
         if(!isOpen && openMessagePopUp) {
             const timeoutShowModal = setTimeout(() => {
-                console.log(isOpen, openMessagePopUp)
                 localStorage.removeItem('changeList')
                 setOpenMessagePopUp(false)
-            }, 5000)
+            }, 1000)
     
             return () => clearTimeout(timeoutShowModal);
         }
-      }, [isOpen, openMessagePopUp]);
+      }, [isOpen]);
 
     const { formatMessage } = useIntl();
     const item = prepareProduct(props.item);
@@ -328,7 +328,6 @@ const Griditem = props => {
     window.onload = function () {
         const reload = localStorage.getItem("reload");
         if (reload) {
-            localStorage.removeItem("reload")
             setOpenMessagePopUp(true)
             setIsOpen(true)
         }

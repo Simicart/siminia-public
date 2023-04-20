@@ -1,7 +1,6 @@
 .cmp-wrapper {
     width: 100%;
-    margin: auto;
-    margin-top: 30px;
+    margin: 30px auto;
 }
 
 .cmp-loading-indicator {
@@ -26,9 +25,10 @@
     grid-template-areas:
     "blank product-list"
     "sku sku-list"
-    "des des-list";
+    "des des-list"
+    "activity activity-list";
     grid-template-columns: 1fr 1fr;
-    overflow-x: scroll;
+    overflow-x: auto;
 
     &:nth-child(-n+1) {
         border: 1px solid #bbb
@@ -100,6 +100,21 @@
     border-left: 1px solid #bbb;
 }
 
+.cmp-activity {
+    grid-area: activity;
+    padding-top: 15px;
+    font-weight: bold;
+    padding-right: 15px;
+}
+
+.cmp-activity-list {
+    grid-area: activity-list;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border-left: 1px solid #bbb;
+}
+
 .cmp-remove-btn {
     position: absolute;
     top: 0;
@@ -113,6 +128,11 @@
 
 .cmp-product-name {
     margin-top: 20px;
+}
+
+.cmp-product-name:hover {
+    margin-top: 20px;
+    text-decoration-line: underline;
 }
 
 .cmp-review-wrapper {
