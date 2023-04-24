@@ -26,7 +26,7 @@ const LinkComponent = props => {
 
 const MenuLink = props => {
   const {
-    id,
+    uid,
     url,
     name,
     label,
@@ -38,11 +38,8 @@ const MenuLink = props => {
     view,
     level,
     isOpen,
-    isTitle,
-    isMainTitle,
     isShowIcons,
-    onNavigate,
-    hideIcon
+    onNavigate
   } = props;
 
   const { pathname } = useLocation();
@@ -83,10 +80,10 @@ const MenuLink = props => {
     ) : null;
 
   const toggleBtn =
-    Array.isArray(subCategories) && subCategories.length && !hideIcon ? (
+    Array.isArray(subCategories) && subCategories.length ? (
       <ToggleTrigger
         classes={props.classes}
-        action={() => toggleAction(id)}
+        action={() => toggleAction(uid)}
         isOpen={isOpen}
       />
     ) : null;
@@ -100,25 +97,20 @@ const MenuLink = props => {
     ' '
   );
 
-  let menuLinkClass = classes.menuLink
-  if(isTitle) {
-    menuLinkClass = classes.menuLinkTitle
-  }
-  if(isMainTitle) {
-    menuLinkClass = classes.menuLinkRootTitle
-  }
-
   return (
     <div className={rootClass}>
       <LinkComponent
-        className={menuLinkClass}
+        className={classes.menuLink}
         onClick={handleNavigate}
         to={url}
       >
         {iconContent}
+
         <span className={classes.title}>{name}</span>
+
         {labelContent}
       </LinkComponent>
+
       {toggleBtn}
     </div>
   );

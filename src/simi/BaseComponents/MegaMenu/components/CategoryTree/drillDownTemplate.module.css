@@ -15,3 +15,7 @@
   composes: menuLink from '../MenuTree/menuLink.module.css';
   height: 3.5rem;
 }
+
+.menuLink:not(.level1) {
+  height: 3.5rem;
+}

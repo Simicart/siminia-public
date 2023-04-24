@@ -5,7 +5,8 @@ import { buildTree } from '../utils';
 const CATEGORY_IDX = 'category-node-';
 
 export const useAccordionTemplate = () => {
-  const { allItems: items, isMobile } = useAmMegaMenuContext() || {};
+  const { allItems: items, isMobile, config } = useAmMegaMenuContext();
+  const { root_category_uid: rootCategoryId } = config;
 
   const menuTree = useMemo(() => {
     if (!Array.isArray(items) || !items.length) {
@@ -16,8 +17,8 @@ export const useAccordionTemplate = () => {
       ? items
       : items.filter(item => item.id.includes(CATEGORY_IDX));
 
-    return buildTree(itemList);
-  }, [items, isMobile]);
+    return buildTree(itemList, rootCategoryId);
+  }, [items, isMobile, rootCategoryId]);
 
   return {
     menuTree

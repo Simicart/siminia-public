@@ -7,14 +7,14 @@ import mergeOperations from '@magento/peregrine/lib/util/shallowMerge';
 
 export const useDrillDownTemplate = props => {
   const { categoryId, updateCategories } = props;
-  const { allItems, config, isShowIcons } = useAmMegaMenuContext() || {};
+  const { allItems, config, isShowIcons } = useAmMegaMenuContext();
 
   const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
   const { getNavigationMenuQuery } = operations;
 
   const [runQuery, queryResult] = useLazyQuery(getNavigationMenuQuery, {
-    fetchPolicy: 'no-cache',
-    // nextFetchPolicy: 'cache-first'
+    fetchPolicy: 'cache-and-network',
+    nextFetchPolicy: 'cache-first'
   });
   const { data } = queryResult;
 
@@ -27,12 +27,12 @@ export const useDrillDownTemplate = props => {
 
   // update redux with fetched categories
   useEffect(() => {
-    if (data && data.category) {
-      updateCategories(data.category);
+    if (data && data.categories.items[0]) {
+      updateCategories(data.categories.items[0]);
     }
   }, [data, updateCategories]);
 
-  const { root_category_id: rootCategoryId } = config;
+  const { root_category_uid: rootCategoryId } = config;
   const isTopLevel = categoryId === rootCategoryId;
 
   const categories = useMemo(() => {
@@ -40,22 +40,22 @@ export const useDrillDownTemplate = props => {
       return null;
     }
 
-    const tree = buildTree(mapItems(allItems), true);
+    const tree = buildTree(mapItems(allItems), rootCategoryId, true);
 
     if (isTopLevel) {
-      return [...tree.values()].filter(({ parent_id }) => !parent_id);
+      return [...tree.values()].filter(
+        ({ parent_uid }) => parent_uid === rootCategoryId
+      );
     }
 
     const category = tree.get(categoryId);
-    // const { subCategories, name } = category;
-    const subCategories = category && category.subCategories ? category.subCategories : ''
-    const name = category && category.name ? category.name : ''
+    const { subCategories, name } = category;
 
     return [
       { ...category, name: `All ${name}`, subCategories: null },
       ...subCategories
     ];
-  }, [allItems, categoryId, isTopLevel]);
+  }, [allItems, categoryId, isTopLevel, rootCategoryId]);
 
   return {
     categories,

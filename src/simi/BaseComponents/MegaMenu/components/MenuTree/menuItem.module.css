@@ -6,49 +6,28 @@
   --am-mega-menu-submenu-text-hover-color: var(--venia-global-color-teal);
 }
 
-/* .root {
+.root {
   position: relative;
-} */
+}
 
 .topMenu.main {
-  padding: 13px 15px;
-  display: flex;
+  padding: 0 0.5rem;
 }
 
-.topMenu:hover {
-  background-color: rgb(var(--am-mega-menu-main-menu-background-hover-color));
-}
-
-.topMenu:hover a[class*='menuLink-menuLinkRootTitle'] {
-  color: rgb(var(--am-mega-menu-main-menu-text-hover-color));
-}
-
-/* .topMenu.fullWidth {
+.topMenu.fullWidth {
   position: static;
-} */
+}
 
 .subContainer {
   display: none;
 }
 
-.subContainerMain {
-  /* height: 0;
-  overflow: hidden;
-  transition: height .4s ease; */
+.topMenu.main:hover .subContainerMain:not(:empty) {
+  display: block;
+  z-index: 2;
 }
 
-.subContainerMainOpen {
-  composes: subContainerMain;
-}
-
-/* .topMenu.main:hover .subContainerMain:not(:empty) {
-  z-index: 99;
-  top: calc(100% - 2px);
-  visibility: visible;
-  opacity: 1;
-} */
-
-/* .hamburger.main {
+.hamburger.main {
   align-items: center;
   border-bottom: 1px solid rgba(var(--am-mega-menu-text-color) / 0.2);
   margin: 0 1.25rem;
@@ -66,16 +45,16 @@
 .hamburger.open > .subContainerRoot:not(:empty) {
   display: block;
   padding-left: 1rem;
-} */
+}
 
 /*
  * Desktop specific styles
  */
 
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
   .subContainerMain {
     --venia-global-color-text: var(--am-mega-menu-submenu-text-color);
-    /* position: absolute;
+    position: absolute;
     padding: 2rem;
     border-radius: 1px;
     box-shadow: 0 1px 6px rgb(var(--venia-global-color-gray-900) / 0.2);
@@ -87,44 +66,19 @@
     background-position: center center;
     background-repeat: no-repeat;
     max-height: 70vh;
-    overflow-y: auto; */
-    position: absolute;
-    z-index: 9;
-    top: 150%;
-    visibility: hidden;
-    min-width: 280px;
-    margin: 0;
-    padding: 20px 0;
-    list-style: none;
-    transition: all .5s ease 0s;
-    letter-spacing: 0;
-    opacity: 0;
-    background-color: #fff;
-    -webkit-box-shadow: -1px 10px 80px -15px rgb(0 0 0 / 30%);
-    box-shadow: -1px 10px 80px -15px #0000004d;
+    overflow-y: auto;
   }
 
-  .subContainerMain {
-    color: rgb(var(--am-mega-menu-submenu-text-color));
-  }
-
-  .subContainerMainOpen {
-    z-index: 99;
-    top: calc(100% - 2px);
-    visibility: visible;
-    opacity: 1;
-  }
-
-  /* .hamburger.main.open > .subContainerMain:not(:empty) {
+  .hamburger.main.open > .subContainerMain:not(:empty) {
     display: block;
     top: 0;
     left: 100%;
     width: max-content;
     margin-left: 1.25rem;
     max-width: calc(100vw - 24rem);
-  } */
+  }
 
-  /* .fullWidth.hamburger.main.open > .subContainerMain {
+  .fullWidth.hamburger.main.open > .subContainerMain {
     width: 100vw;
   }
 
@@ -139,17 +93,5 @@
   .autoWidth > .subContainerMain {
     width: max-content;
     max-width: 60vw;
-  } */
-}
-
-@media(max-width: 1023px) {
-  .main {
-    padding: 10px 0px;
-  }
-
-  .subContainerMain {
-    height: 0;
-    overflow: hidden;
-    transition: height .4s ease;
   }
 }
