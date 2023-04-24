@@ -49,7 +49,6 @@ const Header = props => {
     const comparisonList = JSON.parse(localStorage.getItem('comparison-list'))
 
     const storeConfig = Identify.getStoreConfig();
-
     // const { rewardPointConfig, customerRewardPoint } = useGetRewardPointData();
     // const pointBalance =
     //     customerRewardPoint && customerRewardPoint.point_balance

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { mergeClasses } from '@magento/venia-ui/lib/classify';
 import { number, shape, string } from 'prop-types';
 import defaultClasses from './menuItem.module.css';
@@ -6,182 +6,120 @@ import MenuLink from './menuLink';
 import SubMenuContent from './SubMenuContent';
 import { useAmMegaMenuContext } from '../../context';
 import { isEnableMenuItem } from '../../utils';
-import { useAppContext } from '@magento/peregrine/lib/context/app';
 
 const PATCH_TO_IMG = '/media/amasty/megamenu/submenu_background_image/';
 
+const widthTypes = {
+  0: 'fullWidth',
+  1: 'autoWidth',
+  2: 'customWidth'
+};
+
 const MenuItem = props => {
-    const { level, view, id, status } = props;
-    const {
-        isMobile,
-        isShowIcons,
-        config,
-        toggleAction,
-        toggleActionMobile,
-        openCategoryIds
-    } = useAmMegaMenuContext();
+  const { level, width, view, uid, status } = props;
 
-    const [, { closeDrawer }] = useAppContext();
+  const {
+    isMobile,
+    isShowIcons,
+    config,
+    toggleAction,
+    openCategoryIds
+  } = useAmMegaMenuContext();
+  const isMainLevel = level === 1;
 
-    const [changePage, setChangePage] = useState(false);
-
-    const isMainLevel = level === 1;
-
-    const hoverHandler = useCallback(
-        e => {
-            console.log(e)
-            if (isMainLevel && view === 'topMenu' && !changePage && !isMobile) {
-                toggleAction(id);
-            }
-        },
-        [isMainLevel, toggleAction, view, id, changePage, isMobile]
-    );
-
-    const clickHandler = useCallback(
-        e => {
-            console.log(e)
-            if (isMainLevel && view === 'topMenu' && isMobile) {
-                toggleActionMobile(id);
-            }
-        },
-        [isMainLevel, view, isMobile, toggleActionMobile, id]
-    );
-
-    const onNavigation = useCallback(() => {
-        setChangePage(true);
-        toggleAction(id);
-        isMobile && closeDrawer();
-    }, [closeDrawer, id, isMobile, toggleAction]);
-
-    useEffect(() => {
-        if (changePage) {
-            setTimeout(() => {
-                setChangePage(false);
-            }, 1000);
-        }
-    }, [changePage]);
-
-    if (!isEnableMenuItem(status, isMobile)) {
-        return null;
+  const hoverHandler = useCallback(() => {
+    if (isMainLevel && view === 'topMenu') {
+      toggleAction(uid);
     }
+  }, [isMainLevel, toggleAction, view, uid]);
 
-    const classes = mergeClasses(defaultClasses, props.classes);
-    const isOpen = openCategoryIds && openCategoryIds.has(id);
-    const openClass = isOpen ? classes.open : '';
-    const levelClass = isMainLevel ? classes.main : classes.child;
+  if (!isEnableMenuItem(status, isMobile)) {
+    return null;
+  }
 
-    // const widthClass = isMainLevel
-    //   ? classes[widthTypes[width] || widthTypes[0]]
-    //   : '';
+  const classes = mergeClasses(defaultClasses, props.classes);
+  const isOpen = openCategoryIds && openCategoryIds.has(uid);
+  const openClass = isOpen ? classes.open : '';
+  const levelClass = isMainLevel ? classes.main : classes.child;
 
-    const rootClass = [classes.root, openClass, classes[view], levelClass].join(
-        ' '
-    );
+  const widthClass = isMainLevel
+    ? classes[widthTypes[width] || widthTypes[0]]
+    : '';
 
-    const {
-        ammegamenu_color_submenu_text,
-        ammegamenu_color_submenu_background_color,
-        ammegamenu_color_color_template,
-        ammegamenu_color_submenu_background_image,
-        ammegamenu_color_main_menu_text_hover,
-        ammegamenu_color_submenu_text_hover,
-        ammegamenu_color_main_menu_background_hover
-    } = config;
+  const rootClass = [
+    classes.root,
+    openClass,
+    classes[view],
+    levelClass,
+    widthClass
+  ].join(' ');
 
-    const amStyle =
-        isMainLevel && ammegamenu_color_color_template !== 'blank'
-            ? {
-                  '--am-mega-menu-submenu-text-color': ammegamenu_color_submenu_text,
-                  '--am-mega-menu-submenu-text-hover-color': ammegamenu_color_submenu_text_hover,
-                  '--am-mega-menu-submenu-bg-color': ammegamenu_color_submenu_background_color,
-                  '--am-mega-menu-text-hover-color': ammegamenu_color_main_menu_text_hover,
-                  '--am-mega-menu-item-bg-hover': ammegamenu_color_main_menu_background_hover,
-                  '--am-mega-menu-submenu-bg-image':
-                      view === 'topMenu' &&
-                      ammegamenu_color_submenu_background_image
-                          ? `url("${PATCH_TO_IMG +
-                                ammegamenu_color_submenu_background_image}")`
-                          : ammegamenu_color_submenu_background_color
-              }
-            : null;
+  const {
+    ammegamenu_color_submenu_text,
+    ammegamenu_color_submenu_background_color,
+    ammegamenu_color_color_template,
+    ammegamenu_color_submenu_background_image,
+    ammegamenu_color_main_menu_text_hover,
+    ammegamenu_color_submenu_text_hover,
+    ammegamenu_color_main_menu_background_hover
+  } = config;
 
-    const menuItemNode = document.getElementById('menu-item-' + id);
-    const menuItemContainerNode = document.getElementById(
-        'menu-item-container-' + id
-    );
-    const menuTreeNode = document.getElementById('menu-tree');
-    const style = { pointerEvents: 'none' };
-    let subContainerMainClass = classes.subContainerMain;
-    if (isOpen) {
-        if (!isMobile) {
-            if (amStyle && menuItemNode && menuTreeNode) {
-                const menuTreeHeight = menuTreeNode.clientHeight;
-                const offsetTop = menuItemNode.offsetTop;
-                const positionMenuItem = offsetTop + menuItemNode.clientHeight;
-                const percent = positionMenuItem / menuTreeHeight;
-                if (percent > 0) {
-                    style.top = `calc(${100 * percent}% - 2px)`;
-                }
-            }
-        } else {
-            if (menuItemContainerNode) {
-                const menuHeight = menuItemContainerNode.clientHeight;
-                style.height = menuHeight;
-            }
+  const amStyle =
+    isMainLevel && ammegamenu_color_color_template !== 'blank'
+      ? {
+          '--am-mega-menu-submenu-text-color': ammegamenu_color_submenu_text,
+          '--am-mega-menu-submenu-text-hover-color': ammegamenu_color_submenu_text_hover,
+          '--am-mega-menu-submenu-bg-color': ammegamenu_color_submenu_background_color,
+          '--am-mega-menu-text-hover-color': ammegamenu_color_main_menu_text_hover,
+          '--am-mega-menu-item-bg-hover': ammegamenu_color_main_menu_background_hover,
+          '--am-mega-menu-submenu-bg-image':
+            view === 'topMenu' && ammegamenu_color_submenu_background_image
+              ? `url("${PATCH_TO_IMG +
+                  ammegamenu_color_submenu_background_image}")`
+              : ammegamenu_color_submenu_background_color
         }
-        style.pointerEvents = 'all';
-        subContainerMainClass = classes.subContainerMainOpen;
-    }
+      : null;
 
-    return (
-        //li
-        <button
-            id={'menu-item-' + id}
-            className={rootClass}
-            style={amStyle}
-            onMouseEnter={hoverHandler}
-            onMouseLeave={hoverHandler}
-            onClick={clickHandler}
-            onFocus={() => void 0}
-        >
-            <MenuLink
-                {...props}
-                toggleAction={toggleAction}
-                isOpen={isOpen}
-                onNavigate={onNavigation}
-                isShowIcons={isShowIcons}
-                isMainTitle={true}
-            />
-            <SubMenuContent
-                {...props}
-                menuItemId={id}
-                isMobile={isMobile}
-                isOpen={isOpen}
-                isShowIcons={isShowIcons}
-                hideIcon={true}
-                style={style}
-                onNavigation={onNavigation}
-                classes={{
-                    root: classes.subContainerRoot,
-                    main: subContainerMainClass
-                }}
-            />
-        </button>
-    );
+  return (
+    <li
+      className={rootClass}
+      style={amStyle}
+      onMouseEnter={hoverHandler}
+      onMouseLeave={hoverHandler}
+      onFocus={() => void 0}
+    >
+      <MenuLink
+        {...props}
+        toggleAction={toggleAction}
+        isOpen={isOpen}
+        isShowIcons={isShowIcons}
+      />
+      <SubMenuContent
+        {...props}
+        isMobile={isMobile}
+        isOpen={isOpen}
+        isShowIcons={isShowIcons}
+        classes={{
+          root: classes.subContainerRoot,
+          main: classes.subContainerMain
+        }}
+      />
+    </li>
+  );
 };
 
 MenuItem.propTypes = {
-    id: string,
-    view: string,
-    width: number,
-    level: number,
-    classes: shape({
-        root: string
-    })
+  id: string,
+  view: string,
+  width: number,
+  level: number,
+  classes: shape({
+    root: string
+  })
 };
 
 MenuItem.defaultProps = {
-    level: 1
+  level: 1
 };
 
 export default MenuItem;

@@ -5,7 +5,7 @@ import { shape, string } from 'prop-types';
 import defaultClasses from './menuLink.module.css';
 import Trigger from '@magento/venia-ui/lib/components/Trigger';
 import Icon from '@magento/venia-ui/lib/components/Icon';
-import { ChevronDown as ArrowIcon } from 'react-feather';
+import { ChevronRight as ArrowIcon } from 'react-feather';
 
 const ToggleTrigger = props => {
   const { action, isOpen } = props;
@@ -16,7 +16,7 @@ const ToggleTrigger = props => {
   return (
     <div className={rootClass}>
       <Trigger action={action}>
-        <Icon src={ArrowIcon} width={16} classes={{icon: classes.iconRoot}} />
+        <Icon src={ArrowIcon} />
       </Trigger>
     </div>
   );
