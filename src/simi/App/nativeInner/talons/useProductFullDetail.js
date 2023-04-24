@@ -788,23 +788,42 @@ export const useProductFullDetail = props => {
 
     const handleUpdateQuantity = useCallback(
         quantity => {
-            const { price_tiers } = product;
+            const { price_tiers, tier_prices} = product;
+            for(let i=0; i<price_tiers.length; i++) {
+                price_tiers[i].customer_group_id = tier_prices[i].customer_group_id
+            }
             if (
                 productType !== 'ConfigurableProduct' &&
                 price_tiers &&
                 Array.isArray(price_tiers) &&
                 price_tiers.length > 0
             ) {
-                const findPriceTier = price_tiers.find(priceTier => {
+                const findPriceTier = price_tiers.reverse().find(priceTier => {
                     if (
                         priceTier.quantity &&
-                        priceTier.quantity >= parseInt(quantity)
+                        priceTier.quantity <= parseInt(quantity)
                     ) {
-                        return true;
+                        if(priceTier.customer_group_id !== '0' && priceTier.customer_group_id !== '1' && priceTier.customer_group_id !== '2'
+                        && priceTier.customer_group_id !== '3') {
+                            return true;
+                        }
+                        else {
+                            if(priceTier.customer_group_id === '1' || priceTier.customer_group_id === '2' || priceTier.customer_group_id === '3') {
+                                return false
+                            }
+                            if(localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token') && priceTier.customer_group_id === '0') {
+                                return false
+                            }
+                            if(!localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token') && priceTier.customer_group_id === '0') {
+                                return true
+                            }
+                        }
                     }
 
                     return false;
                 });
+
+                price_tiers.reverse()
 
                 if (
                     findPriceTier &&

@@ -321,6 +321,12 @@ export const ProductDetailsFragment = gql`
                 percent_off
             }
         }
+        tier_prices {
+            customer_group_id
+            percentage_value
+            qty
+            value
+        }
         short_description {
             html
         }

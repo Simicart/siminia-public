@@ -1,4 +1,4 @@
-import React, { Suspense, useRef, useState } from 'react';
+import React, { Suspense, useRef, useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { arrayOf, bool, number, shape, string } from 'prop-types';
 import { Form } from 'informed';
@@ -54,7 +54,8 @@ import {
     ShoppingCart,
     MoreVertical,
     // ArrowRight,
-    Info
+    Info,
+    BarChart2
 } from 'react-feather';
 
 // import icon describe tab show/hidden state
@@ -88,6 +89,7 @@ import useConfigFBT from '../../../../frequently-bought-together/talons/useConfi
 import useFbtData from '../../../../frequently-bought-together/talons/useFbtData';
 import FbtBlock from '../../../../frequently-bought-together/components/FbtBlock';
 
+import MessagePopUp from '../../../BaseComponents/CompareProducts/components/MessagePopUp'
 require('./productFullDetail.scss');
 
 const mageworxSeoEnabled =
@@ -117,9 +119,19 @@ const ERROR_FIELD_TO_MESSAGE_MAPPING = {
     quantity: 'The requested quantity is not available.'
 };
 
+import { addProductToComparisonList } from '../../../BaseComponents/CompareProducts/functions'
+
 const ProductFullDetail = props => {
     const { product } = props;
     const product_sku = product.sku;
+    const [isOpenMessage, setIsOpenMessage] = useState(false)
+    const [openMessagePopUp, setOpenMessagePopUp] = useState(false)
+    useEffect(() => {
+        setTimeout(() => {
+            setOpenMessagePopUp(false)
+            localStorage.removeItem('changeList')
+        }, 4000)
+    }, [openMessagePopUp])
     const configFBT = useConfigFBT();
     const fbtData = useFbtData(product_sku);
     const talonProps = useProductFullDetail({ product });
@@ -510,7 +522,7 @@ const ProductFullDetail = props => {
             ? specialPrice
             : pricePiece;
 
-    const { price, sku, price_tiers } = product || {};
+    const { price, sku, price_tiers, tier_prices } = product || {};
 
     const review =
         product && product.review_count && product.rating_summary ? (
@@ -590,7 +602,7 @@ const ProductFullDetail = props => {
             {price_tiers &&
             Array.isArray(price_tiers) &&
             price_tiers.length > 0 ? (
-                <PriceTiers priceTiers={price_tiers} price={price} />
+                <PriceTiers priceTiers={price_tiers} price={price} tier_prices={tier_prices} />
             ) : null}
         </React.Fragment>
     );
@@ -748,8 +760,18 @@ const ProductFullDetail = props => {
         <HideAddToCartBtn product={product} addToCartBtn={addToCartArea} />
     ) : null;
 
+    window.onload = function () {
+        const reload = localStorage.getItem("reload");
+        if (reload) {
+            localStorage.removeItem("reload")
+            setIsOpenMessage(true)
+            setOpenMessagePopUp(true)
+        }
+    }
+
     return (
         <div className={isMobileSite ? 'main-product-detail-native' : null}>
+            {openMessagePopUp && (<MessagePopUp isOpen={isOpenMessage} setIsOpen={setIsOpenMessage}></MessagePopUp>)}
             <div style={{ height: topInsets }} />
             <AlertMessages
                 message={successMsg}
@@ -897,6 +919,7 @@ const ProductFullDetail = props => {
                             />
                         ) : null}
                         {wrapperAddToCartArea}
+                        <div className="wrapperButtonArea">
                         <div className="wrapperWishlist">
                             {!isMobileSite && (
                                 <Suspense fallback={null}>
@@ -917,6 +940,11 @@ const ProductFullDetail = props => {
                             )}
                         </div>
 
+                        <div className="wrapperCompare">
+                            <button className="btnCompare" onClick={() => addProductToComparisonList(product)}><BarChart2></BarChart2></button>
+                            <p className='btnCompareTitle'>Add to Compare</p>
+                        </div>
+                        </div>
                         {/*inline size chart web and native*/}
                         {enabledSizeChart && display === 2 ? (
                             <SizeChart

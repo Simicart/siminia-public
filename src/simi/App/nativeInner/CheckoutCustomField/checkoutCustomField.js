@@ -102,7 +102,7 @@ const CheckoutCustomField = props => {
                                                     <input
                                                         onChange={handleChange}
                                                         id={option.value_id}
-                                                        value={option.value_id}
+                                                        value={option.option_id}
                                                         name={attribute_code}
                                                         type="checkbox"
                                                         // checked = {isChecked}
@@ -134,7 +134,7 @@ const CheckoutCustomField = props => {
                                                     type="radio"
                                                     id={option.value_id}
                                                     name={attribute_code}
-                                                    value={option.value_id}
+                                                    value={option.option_id}
                                                 />
                                                 <label for={option.value}>
                                                     {option.value}
@@ -208,7 +208,7 @@ const CheckoutCustomField = props => {
                                         .filter(item => item.store_id === id)
                                         .map(option => {
                                             return (
-                                                <option value={option.value_id}>
+                                                <option value={option.option_id}>
                                                     {option.value}
                                                 </option>
                                             );

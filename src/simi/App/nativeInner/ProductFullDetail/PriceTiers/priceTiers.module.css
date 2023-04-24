@@ -1,13 +1,8 @@
 .wrapper {
-    padding: 20px;
-    background-color: #fafafa;
-    margin: 0 1.5rem;
-    margin-top: 20px;
+    background-color: white;
+    margin: 30px 1.5rem;
 }
 
-.root {
-    margin: 0 1.5rem;
-}
 .root li {
     margin-bottom: 11px;
     color: #000000;

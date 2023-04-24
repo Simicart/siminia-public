@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import defaultClasses from './item.module.css';
 import { configColor } from 'src/simi/Config';
 import PropTypes from 'prop-types';
@@ -11,7 +11,7 @@ import LazyLoad from 'src/simi/BaseComponents/LazyLoad';
 import Image from 'src/simi/BaseComponents/Image';
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
 import Identify from 'src/simi/Helper/Identify';
-import { Heart } from 'react-feather';
+import { Heart, BarChart2 } from 'react-feather';
 import {
     productUrlSuffix,
     saveDataToUrl,
@@ -32,11 +32,35 @@ import {
 import ProductRewardPoint from 'src/simi/BaseComponents/RewardPoint/components/Product';
 import { CATALOG_PAGE, SEARCH_PAGE, HOME_PAGE } from '../ProductLabel/consts';
 import checkDisabledGiftCard from '../../../../giftcard/functions/gift-card-store-config/checkDisabledGiftCard';
+import { addProductToComparisonList } from '../../../BaseComponents/CompareProducts/functions';
+import MessagePopUp from '../../../BaseComponents/CompareProducts/components/MessagePopUp';
 
 const HeartIcon = <Icon size={20} src={Heart} />;
 
 const Griditem = props => {
     const { lazyImage } = props;
+    const [isOpen, setIsOpen] = useState(false)
+    const [openMessagePopUp, setOpenMessagePopUp] = useState(false)
+
+    useEffect(() => {
+        if (isOpen && openMessagePopUp) {
+            localStorage.removeItem("reload")
+          const timeoutModal = setTimeout(() => {
+            setIsOpen(false)
+          }, 3000);
+          
+          return () => clearTimeout(timeoutModal);
+        }
+        if(!isOpen && openMessagePopUp) {
+            const timeoutShowModal = setTimeout(() => {
+                localStorage.removeItem('changeList')
+                setOpenMessagePopUp(false)
+            }, 1000)
+    
+            return () => clearTimeout(timeoutShowModal);
+        }
+      }, [isOpen]);
+
     const { formatMessage } = useIntl();
     const item = prepareProduct(props.item);
     const giftCardDisabled = checkDisabledGiftCard()
@@ -233,8 +257,8 @@ const Griditem = props => {
                 )}
 
                 {item.price &&
-                item.price.has_special_price &&
-                !productOutStock ? (
+                    item.price.has_special_price &&
+                    !productOutStock ? (
                     <div
                         className={itemClasses.discountBadge}
                         style={Identify.isRtl() ? { right: 8 } : { left: 8 }}
@@ -252,9 +276,8 @@ const Griditem = props => {
         <div className={`${itemClasses['price-each-product']}`}>
             <div
                 role="presentation"
-                className={`${itemClasses['prices-layout']} ${
-                    Identify.isRtl() ? itemClasses['prices-layout-rtl'] : ''
-                }`}
+                className={`${itemClasses['prices-layout']} ${Identify.isRtl() ? itemClasses['prices-layout-rtl'] : ''
+                    }`}
                 style={{
                     flexWrap: type_id === 'configurable' ? 'wrap' : 'nowrap'
                 }}
@@ -281,8 +304,8 @@ const Griditem = props => {
                 id: productOutStock || giftCardDisabled
                     ? 'Out of stock'
                     : loading
-                    ? 'Adding'
-                    : 'Add To Cart'
+                        ? 'Adding'
+                        : 'Add To Cart'
             })}
         </button>
     ) : (
@@ -296,17 +319,24 @@ const Griditem = props => {
                 id: productOutStock
                     ? 'Out of stock'
                     : loading
-                    ? 'Adding'
-                    : 'Add To Cart'
+                        ? 'Adding'
+                        : 'Add To Cart'
             })}
         </button>
     );
 
+    window.onload = function () {
+        const reload = localStorage.getItem("reload");
+        if (reload) {
+            setOpenMessagePopUp(true)
+            setIsOpen(true)
+        }
+    }
+
     return (
         <div
-            className={` ${
-                itemClasses['siminia-product-grid-item']
-            } siminia-product-grid-item ${productOutStock &&
+            className={` ${itemClasses['siminia-product-grid-item']
+                } siminia-product-grid-item ${productOutStock &&
                 itemClasses['item-outstock']}`}
             style={styles['siminia-product-grid-item']}
         >
@@ -345,9 +375,8 @@ const Griditem = props => {
                 )}
                 <div
                     role="presentation"
-                    className={`${itemClasses['product-name']} ${
-                        itemClasses['small']
-                    }`}
+                    className={`${itemClasses['product-name']} ${itemClasses['small']
+                        }`}
                     onClick={() => {
                         if (
                             location.state.item_data.type_id === 'bss_giftcard'
@@ -387,6 +416,10 @@ const Griditem = props => {
                         }}
                     />
                 </div>
+                <button className={itemClasses['compare-button']} onClick={() => addProductToComparisonList(item)}>
+                    <BarChart2 size={24}></BarChart2>
+                </button>
+                {openMessagePopUp && (<MessagePopUp isOpen={isOpen} setIsOpen={setIsOpen}></MessagePopUp>)}
             </div>
         </div>
     );

@@ -1,0 +1,137 @@
+.add-cart-pop-up-portal {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    height: 100vh;
+    background-color: rgba(45, 45, 45, 0.7) !important;
+}
+
+.add-cart-pop-up-overlay {
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: all 500ms ease-in-out;
+}
+
+.add-cart-pop-up-overlay-afterOpen {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.add-cart-pop-up-overlay-beforeClose {
+    opacity: 0;
+    transform: translateY(-50%);
+}
+
+.add-cart-pop-up-content {
+    width: 100vw;
+}
+
+.add-cart-pop-up-wrapper {
+    background-color: white;
+    width: 600px;
+    height: 420px;
+    margin: auto;
+    margin-top: calc(50vh - 225px);
+    position: relative;
+}
+
+@media only screen and (max-width: 700px) {
+    .add-cart-pop-up-wrapper {
+        width: 90%;
+        margin-left: calc(5% - 10px);
+        margin-top: 22.5vh;
+        overflow-x: hidden;
+    }
+}
+
+.add-cart-pop-up-content-wrapper {
+    position: absolute;
+    top: 5%;
+    height: 90%;
+    width: 90%;
+    left: 5%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.add-cart-pop-up-close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.add-cart-pop-up-close-button:hover {
+    color: rgb(108, 108, 108)
+}
+
+.add-cart-pop-up-product-name {
+    color: #1979C3;
+    font-size: 16px;
+}
+
+.add-cart-pop-up-product-name:hover {
+    text-decoration-line: underline;
+}
+
+.add-cart-pop-up-product-name:active {
+    color: orange;
+}
+
+.add-cart-pop-up-image {
+    width: 120px;
+    height: 150px;
+    cursor: pointer;
+    margin: 10px auto;
+}
+
+.add-cart-pop-up-cart {
+    color: #1979C3
+}
+
+.add-cart-pop-up-cart:hover {
+    text-decoration-line: underline;
+}
+
+.add-cart-pop-up-cart:active {
+    text-decoration-line: underline;
+    color: orange
+}
+
+.add-cart-pop-up-check-out {
+    color: #1979C3
+}
+
+.add-cart-pop-up-check-out:hover {
+    text-decoration-line: underline;
+}
+
+.add-cart-pop-up-check-out:active {
+    text-decoration-line: underline;
+    color: orange
+}
+
+.add-cart-pop-up-view-cart {
+    padding: 10px 20px;
+    width: max-content;
+    font-weight: bold;
+    background-color: #1979C3;
+    color: white;
+}
+
+.add-cart-pop-up-view-cart:hover {
+    background-color: #005288;
+}
+
+.add-cart-pop-up-continue {
+    padding: 10px 20px;
+    width: max-content;
+    font-weight: bold;
+    color: black;
+    background-color: #eeeeee;
+    border: 1px solid #ccc;
+}
+
+.add-cart-pop-up-continue:hover {
+    background-color: #cacaca;
+}

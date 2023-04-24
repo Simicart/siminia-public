@@ -28,6 +28,7 @@ export const GET_REWARD_POINTS_TRANSACTION = gql`
             currentPage: $currentPage, 
             pageSize: $pageSize
         ) {
+            total_page
             items {
                 transaction_id
                 balance
