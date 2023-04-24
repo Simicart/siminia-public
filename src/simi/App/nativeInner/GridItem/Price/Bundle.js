@@ -11,6 +11,8 @@ const BundlePrice = props => {
     let to_price_excluding_tax = <div />;
     let to_price_including_tax = <div />;
 
+    const currencyRate = prices.regularPrice.amount.value / prices.minimalPrice.amount.value
+
     if (prices.show_ex_in_price && prices.show_ex_in_price === 1) {
         product_from_label = (
             <div className='from'>
@@ -20,13 +22,13 @@ const BundlePrice = props => {
         from_price_excluding_tax = (
             <div>
                 <FormattedMessage id={'Excl. Tax'} />:
-                {formatPrice(prices.minimalPrice.excl_tax_amount.value)}
+                {formatPrice(prices.minimalPrice.excl_tax_amount.value * currencyRate)}
             </div>
         );
         from_price_including_tax = (
             <div>
                 <FormattedMessage id={'Incl. Tax'} />:{' '}
-                {formatPrice(prices.minimalPrice.amount.value)}
+                {formatPrice(prices.minimalPrice.amount.value * currencyRate)}
             </div>
         );
 
@@ -38,26 +40,26 @@ const BundlePrice = props => {
         to_price_excluding_tax = (
             <div>
                 <FormattedMessage id={'Excl. Tax'} />:{' '}
-                {formatPrice(prices.maximalPrice.excl_tax_amount.value)}
+                {formatPrice(prices.maximalPrice.excl_tax_amount.value * currencyRate)}
             </div>
         );
         to_price_including_tax = (
             <div>
                 <FormattedMessage id={'Incl. Tax'} />:{' '}
-                {formatPrice(prices.maximalPrice.amount.value)}
+                {formatPrice(prices.maximalPrice.amount.value * currencyRate)}
             </div>
         );
     } else {
         product_from_label = (
             <div className='from'>
                 <FormattedMessage id={'From'} />:{' '}
-                {formatPrice(prices.minimalPrice.amount.value)}
+                {formatPrice(prices.minimalPrice.amount.value * currencyRate)}
             </div>
         );
         product_to_label = (
             <div className='to'>
                 <FormattedMessage id={'To'} />:{' '}
-                {formatPrice(prices.maximalPrice.amount.value)}
+                {formatPrice(prices.maximalPrice.amount.value * currencyRate)}
             </div>
         );
     }

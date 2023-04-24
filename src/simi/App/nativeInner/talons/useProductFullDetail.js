@@ -803,20 +803,14 @@ export const useProductFullDetail = props => {
                         priceTier.quantity &&
                         priceTier.quantity <= parseInt(quantity)
                     ) {
-                        if(priceTier.customer_group_id !== '0' && priceTier.customer_group_id !== '1' && priceTier.customer_group_id !== '2'
-                        && priceTier.customer_group_id !== '3') {
+                        if(priceTier.customer_group_id !== '0') {
                             return true;
                         }
                         else {
-                            if(priceTier.customer_group_id === '1' || priceTier.customer_group_id === '2' || priceTier.customer_group_id === '3') {
+                            if(localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token')) {
                                 return false
                             }
-                            if(localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token') && priceTier.customer_group_id === '0') {
-                                return false
-                            }
-                            if(!localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token') && priceTier.customer_group_id === '0') {
-                                return true
-                            }
+                            else return true
                         }
                     }
 
