@@ -1,18 +1,18 @@
 const CATEGORY_IDX = 'category-node-';
 
-export const buildTree = (items, fullMap) => {
+export const buildTree = (items, rootCategoryUid, fullMap) => {
   if (!Array.isArray(items) || !items.length) {
     return null;
   }
 
-  const map = new Map(items.map(_item => [_item.id, { ..._item }]));
+  const map = new Map(items.map(_item => [_item.uid, { ..._item }]));
 
   for (const item of map.values()) {
-    if (!map.has(item.parent_id)) {
+    if (!map.has(item.parent_uid)) {
       continue;
     }
 
-    const parent = map.get(item.parent_id);
+    const parent = map.get(item.parent_uid);
     parent.subCategories = [...(parent.subCategories || []), item];
   }
 
@@ -20,7 +20,9 @@ export const buildTree = (items, fullMap) => {
     return map;
   }
 
-  return [...map.values()].filter(item => !item.parent_id);
+  return Array.from(map.values()).filter(
+    ({ parent_uid }) => rootCategoryUid === parent_uid
+  );
 };
 
 export const hexToRgb = hex => {
@@ -41,7 +43,7 @@ export const hexToRgb = hex => {
 
 const parseCategoryId = id => {
   if (!id || !id.toString().startsWith(CATEGORY_IDX)) {
-    return id;
+    return Number(id);
   }
 
   return Number(id.toString().replace(CATEGORY_IDX, ''));

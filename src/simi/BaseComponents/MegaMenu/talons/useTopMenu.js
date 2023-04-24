@@ -10,10 +10,13 @@ export const useTopMenu = () => {
     config,
     isEnabledMegaMenu,
     isMobile
-  } = useAmMegaMenuContext() || {};
+  } = useAmMegaMenuContext();
 
   const menuTree = useMemo(() => {
-    const { ammegamenu_general_hamburger_enabled: isHamburger } = config || {};
+    const {
+      ammegamenu_general_hamburger_enabled: isHamburger,
+      root_category_uid: rootCategoryId
+    } = config;
 
     if (!Array.isArray(items) || !items.length) {
       return null;
@@ -23,13 +26,12 @@ export const useTopMenu = () => {
       ? items.filter(item => !item.id.includes(CATEGORY_IDX))
       : items;
 
-    return buildTree(itemList);
+    return buildTree(itemList, rootCategoryId);
   }, [items, config]);
 
   const isEnabled = !isMobile && isEnabledMegaMenu;
 
   return {
-    config,
     menuTree,
     isEnabled
   };

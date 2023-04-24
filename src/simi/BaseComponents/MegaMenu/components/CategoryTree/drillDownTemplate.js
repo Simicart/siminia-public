@@ -1,6 +1,6 @@
 import React from 'react';
 import { mergeClasses } from '@magento/venia-ui/lib/classify';
-import { func, number, shape, string } from 'prop-types';
+import { func, shape, string } from 'prop-types';
 import { useDrillDownTemplate } from '../../talons/useDrillDownTemplate';
 import { isEnableMenuItem } from '../../utils';
 import defaultClasses from './drillDownTemplate.module.css';
@@ -47,7 +47,7 @@ const DrillDownTemplate = props => {
 };
 
 DrillDownTemplate.propTypes = {
-  categoryId: number.isRequired,
+  categoryId: string.isRequired,
   onNavigate: func.isRequired,
   setCategoryId: func.isRequired,
   updateCategories: func.isRequired,
