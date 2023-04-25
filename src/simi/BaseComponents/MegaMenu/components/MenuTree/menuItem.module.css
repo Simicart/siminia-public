@@ -86,8 +86,7 @@
     left: 0;
     right: 0;
     width: 100vw;
-    max-width: var(--venia-global-maxWidth);
-    margin: 0 auto;
+    margin: 0;
   }
 
   .autoWidth > .subContainerMain {
