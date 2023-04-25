@@ -191,7 +191,7 @@ export const ProductDetailsFragment = gql`
         price {
             ...SimiPriceFragment    
         }
-        ...ProductCustomAttributesFragment
+        
         ...RewardPointFragment
         sku
         small_image {
@@ -345,7 +345,6 @@ export const ProductDetailsFragment = gql`
         }
     }
     ${SimiPriceFragment}
-    ${ProductCustomAttributesFragment}
     ${RewardPointFragment}
 `;
 

@@ -542,10 +542,10 @@ const ProductFullDetail = props => {
                         }}
                     />
                     <button
-                     className={classes.reviewSumCount}
-                     
+                        className={classes.reviewSumCount}
+
                         onClick={() => scrollToReview()}
-                        
+
                     >
                         {formatMessage({ id: '(' })}
                         {product.review_count}{' '}
@@ -600,8 +600,8 @@ const ProductFullDetail = props => {
                 {productStock}
             </div>
             {price_tiers &&
-            Array.isArray(price_tiers) &&
-            price_tiers.length > 0 ? (
+                Array.isArray(price_tiers) &&
+                price_tiers.length > 0 ? (
                 <PriceTiers priceTiers={price_tiers} price={price} tier_prices={tier_prices} />
             ) : null}
         </React.Fragment>
@@ -744,12 +744,11 @@ const ProductFullDetail = props => {
 
     const addToCartArea = !isMobileSite ? (
         <div
-            className={`${
-                product.__typename === 'GroupedProduct' ||
-                product.__typename === 'BundleProduct'
+            className={`${product.__typename === 'GroupedProduct' ||
+                    product.__typename === 'BundleProduct'
                     ? 'groupCartAction'
                     : ''
-            } quantityCartAction`}
+                } quantityCartAction`}
         >
             {wrapperQuantity}
             {cartAction}
@@ -858,7 +857,7 @@ const ProductFullDetail = props => {
                                 ? product.__typename === 'MpGiftCardProduct'
                                     ? handleAddGiftCardProductToCart
                                     : handleAddToCart
-                                : () => {}
+                                : () => { }
                         }
                     >
                         {!isMobileSite ? (
@@ -884,13 +883,12 @@ const ProductFullDetail = props => {
                         {!isMobileSite ? (
                             <div className="wrapperOptions">
                                 <section
-                                    className={`${classes.options} ${
-                                        product.__typename ===
+                                    className={`${classes.options} ${product.__typename ===
                                             'GroupedProduct' ||
-                                        product.__typename === 'BundleProduct'
+                                            product.__typename === 'BundleProduct'
                                             ? 'groupOptions'
                                             : ''
-                                    }`}
+                                        }`}
                                 >
                                     {wrapperPrice}
                                     <div className="optionsSizeChart">
@@ -898,14 +896,14 @@ const ProductFullDetail = props => {
                                     </div>
                                     {product.__typename ===
                                         'MpGiftCardProduct' && (
-                                        <GiftCardInformationForm
-                                            giftCardProductData={
-                                                giftCardProductData
-                                            }
-                                            giftCardData={giftCardData}
-                                            giftCardActions={giftCardActions}
-                                        />
-                                    )}
+                                            <GiftCardInformationForm
+                                                giftCardProductData={
+                                                    giftCardProductData
+                                                }
+                                                giftCardData={giftCardData}
+                                                giftCardActions={giftCardActions}
+                                            />
+                                        )}
                                 </section>
                             </div>
                         ) : null}
@@ -920,30 +918,30 @@ const ProductFullDetail = props => {
                         ) : null}
                         {wrapperAddToCartArea}
                         <div className="wrapperButtonArea">
-                        <div className="wrapperWishlist">
-                            {!isMobileSite && (
-                                <Suspense fallback={null}>
-                                    <div className="btnWishlist">
-                                        <WishlistButton
-                                            {...wishlistButtonProps}
-                                        />
-                                        <span>
-                                            <FormattedMessage
-                                                id={'Add to Favourites'}
-                                                defaultMessage={
-                                                    'Add to Favourites'
-                                                }
+                            <div className="wrapperWishlist">
+                                {!isMobileSite && (
+                                    <Suspense fallback={null}>
+                                        <div className="btnWishlist">
+                                            <WishlistButton
+                                                {...wishlistButtonProps}
                                             />
-                                        </span>
-                                    </div>
-                                </Suspense>
-                            )}
-                        </div>
+                                            <span>
+                                                <FormattedMessage
+                                                    id={'Add to Favourites'}
+                                                    defaultMessage={
+                                                        'Add to Favourites'
+                                                    }
+                                                />
+                                            </span>
+                                        </div>
+                                    </Suspense>
+                                )}
+                            </div>
 
-                        <div className="wrapperCompare">
-                            <button className="btnCompare" onClick={() => addProductToComparisonList(product)}><BarChart2></BarChart2></button>
-                            <p className='btnCompareTitle'>Add to Compare</p>
-                        </div>
+                            <div className="wrapperCompare">
+                                <button className="btnCompare" onClick={() => addProductToComparisonList(product)}><BarChart2></BarChart2></button>
+                                <p className='btnCompareTitle'>Add to Compare</p>
+                            </div>
                         </div>
                         {/*inline size chart web and native*/}
                         {enabledSizeChart && display === 2 ? (
@@ -1003,8 +1001,8 @@ const ProductFullDetail = props => {
 
                             {/*pop up size chart native*/}
                             {enabledSizeChart &&
-                            display === 0 &&
-                            isMobileSite ? (
+                                display === 0 &&
+                                isMobileSite ? (
                                 <SizeChart
                                     display={display}
                                     sizeChartData={sizeChartData}
@@ -1050,11 +1048,10 @@ const ProductFullDetail = props => {
                                         </button>
                                         <button
                                             type="button"
-                                            className={`${
-                                                showTab === 1
+                                            className={`${showTab === 1
                                                     ? 'selected-button'
                                                     : 'deselected-button'
-                                            } selectedReviews`}
+                                                } selectedReviews`}
                                             onClick={() => setShowTab(1)}
                                         >
                                             {formatMessage({
@@ -1361,13 +1358,16 @@ const ProductFullDetail = props => {
                     ) : null}
                 </div>
 
-                {product.hasOwnProperty('custom_attributes') &&
+                {/* {product.hasOwnProperty('custom_attributes') &&
                     product.custom_attributes.length > 0 && (
                         <CustomAttributes
+                            product={product}
                             customAttributes={product.custom_attributes}
                         />
-                    )}
-
+                    )} */}
+                <CustomAttributes
+                    product={product}
+                />
                 {isMobileSite ? (
                     <ProductDetailExtraProductsMB
                         classes={classes}
@@ -1441,9 +1441,9 @@ const ProductFullDetail = props => {
                 )}
 
                 {fbtData.data && configFBT.data && !fbtData.loading && !configFBT.loading && (
-                <FbtBlock product={product} relatedProducts={relatedProducts}
-                    upsellProducts={upsellProducts} crosssellProducts={crosssellProducts}
-                    FBT_Config_Data={FBT_Config_Data} FBT_Slider_Data={sortItemType()}></FbtBlock>)}
+                    <FbtBlock product={product} relatedProducts={relatedProducts}
+                        upsellProducts={upsellProducts} crosssellProducts={crosssellProducts}
+                        FBT_Config_Data={FBT_Config_Data} FBT_Slider_Data={sortItemType()}></FbtBlock>)}
             </div>
             {isMobileSite ? (
                 <FooterFixedBtn
