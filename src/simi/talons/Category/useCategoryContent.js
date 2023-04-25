@@ -11,11 +11,15 @@ let loadedData = null;
 
 import {
     getCateNoFilter,
-    getFilterFromCate
+    getFilterFromCate,
+    getCateNoFilterGiftCard
 } from 'src/simi/queries/catalog_gql/simiCategory.gql'; //'src/simi/queries/catalog_gql/category.gql';
+
+import { useLocation } from 'react-router-dom';
 
 export const useCategoryContent = props => {
     const { categoryId, productsPageDesktop, productsPagePhone } = props;
+    const location = useLocation()
 
     const [thisPage, setThisPage] = useState(false);
 
@@ -57,7 +61,7 @@ export const useCategoryContent = props => {
     const [
         getProductsByCategory,
         { data: oriProductsData, error: error, loading: loading }
-    ] = useLazyQuery(getCateNoFilter);
+    ] = useLazyQuery(location.pathname === '/gift-card.html' ? getCateNoFilterGiftCard : getCateNoFilter);
 
     const [getFilterByCategory, { data: oriFilterData }] = useLazyQuery(
         getFilterFromCate
