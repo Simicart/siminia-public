@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Qty } from 'src/simi/BaseComponents/Input';
@@ -86,6 +86,27 @@ export const BundleOptions = props => {
             ? optionData.products.items[0].items
             : false;
 
+    let listOptionQuantity = []
+
+    for(let key in bundleOptions.option_value) {
+        const findItem = items.find(ele => Number(ele.option_id) === Number(key))
+        if(findItem) {
+            listOptionQuantity.push({
+                id: key,
+                quantity: bundleOptions.quantity[key],
+                value: findItem.options.find(ele => ele.id === bundleOptions.option_value[key][0]).product.price_range.maximum_price.final_price.value
+            })
+        } 
+    }
+
+    const finalOptionPrice = useCallback(() => {
+        let result = 0
+        for(let i=0; i<listOptionQuantity.length; i++) {
+            result += Number(listOptionQuantity[i].quantity) * listOptionQuantity[i].value
+        }
+        return result
+    }, [listOptionQuantity])
+
     useEffect(() => {
         return () => {
             resetBundleOption();
@@ -159,7 +180,7 @@ export const BundleOptions = props => {
                 0
             }
             classes={classes}
-            price={extraPrice}
+            price={{...extraPrice, value: finalOptionPrice()}}
         >
             {bundleList}
         </OptionSummary>

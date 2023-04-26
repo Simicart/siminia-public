@@ -12,12 +12,14 @@ import { GET_BRANDS_LIST } from '../../App/nativeInner/ShopByBrand/talons/Brand.
 
 import {
     getCateNoFilter,
-    getFilterFromCate
+    getFilterFromCate,
+    getCateNoFilterGiftCard
 } from 'src/simi/queries/catalog_gql/category.gql'; 
 
 import {
     getCateNoFilter as getSimiCateNoFilter,
-    getFilterFromCate as getSimiFilterFromCate
+    getFilterFromCate as getSimiFilterFromCate,
+    getCateNoFilterGiftCard as getSimiCateNoFilterGiftCard
 } from 'src/simi/queries/catalog_gql/simiCategory.gql'; 
 import { useUserContext } from '@magento/peregrine/lib/context/user';
 import { useQuery } from '@apollo/client';
@@ -34,8 +36,11 @@ const connectorEnabled =
     window.SMCONFIGS.plugins.SM_ENABLE_CONNECTOR &&
     parseInt(window.SMCONFIGS.plugins.SM_ENABLE_CONNECTOR) === 1;
 
+import { useLocation } from 'react-router-dom';
+
 // use pagination follow site magento default ( change both page and pagesize)
 export const useCategoryContentSimiPagination = props => {
+    const location = useLocation()
     const {
         categoryId,
         parameter1,
@@ -91,7 +96,9 @@ export const useCategoryContentSimiPagination = props => {
         }
     }
 
-    const queryGetProductByCategory = connectorEnabled ? getSimiCateNoFilter : getCateNoFilter
+    const queryGetProductByCategory = connectorEnabled 
+          ? (location.pathname === '/gift-card.html' ? getSimiCateNoFilterGiftCard : getSimiCateNoFilter) 
+          : (location.pathname === '/gift-card.html' ? getCateNoFilterGiftCard : getCateNoFilter)
     const [
         getProductsByCategory,
         { data: oriProductsData, error: error, loading: loading }

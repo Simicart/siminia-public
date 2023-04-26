@@ -14,9 +14,7 @@ const TierPrice = props => {
     const {priceTiers, price, tier_prices} = props
 
     const filterPriceTiers = priceTiers.filter((element, index) => {
-        if(localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token') && tier_prices[index].customer_group_id === '0'
-        || tier_prices[index].customer_group_id === '1' || tier_prices[index].customer_group_id === '2'
-        || tier_prices[index].customer_group_id === '3') {
+        if(localStorage.getItem('M2_VENIA_BROWSER_PERSISTENCE__signin_token') && tier_prices[index].customer_group_id === '0') {
             return false
         }
         else return true

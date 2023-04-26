@@ -144,6 +144,57 @@ export const getCateNoFilter = gql`
     ${RewardPointFragment}
 `;
 
+export const getCateNoFilterGiftCard = gql`
+    query getCateNoFilter(
+        $id: Int
+        $pageSize: Int
+        $currentPage: Int
+        $filters: ProductAttributeFilterInput
+        $sort: ProductAttributeSortInput
+    ) {
+        category(id: $id) {
+            ...CategoryFragment
+            children {
+                id
+                name
+                url_path
+                description
+                cms_block {
+                    identifier
+                    title
+                    content
+                }
+                display_mode
+            }
+        }
+        products(
+            pageSize: $pageSize
+            currentPage: $currentPage
+            filter: $filters
+            sort: $sort
+        ) {
+            items {
+                description {
+                    html
+                }
+                ...CallForPriceFragment
+                ...ProductOfListFragment
+                ...ProductLabelFragment
+                ...GiftCardFragment
+            }
+            page_info {
+                total_pages
+            }
+            total_count
+        }
+    }
+    ${ProductLabelFragment}
+    ${CategoryFragment}
+    ${CallForPriceFragment}
+    ${GiftCardFragment}
+    ${ProductOfListFragment}
+`;
+
 export const getFilterFromCate = gql`
     query getFilterFromCate(
         $currentPage: Int
