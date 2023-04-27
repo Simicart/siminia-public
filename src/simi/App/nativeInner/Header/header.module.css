@@ -99,6 +99,7 @@ header {
     margin: 0 auto;
     position: relative;
     z-index: 2;
+    background-color: #fff;
 }
 .header-logo .siminia-logo {
     cursor: pointer;
