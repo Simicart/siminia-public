@@ -230,7 +230,7 @@ const ComparisonList = () => {
                 {comparisonList.find(element => element.description) && (<div className="cmp-des-list">
                     {comparisonList.map((element) => (
                         <div style={{ flex: flexDisplay(), padding: 15 }}>
-                            <RichContent html={element.description.html}></RichContent>
+                            <RichContent html={element.description?.html ? element.description?.html : ''}></RichContent>
                         </div>
                     ))}
                 </div>)}
@@ -244,7 +244,7 @@ const ComparisonList = () => {
                     <div className="cmp-activity-list">
                         {comparisonList.map((element) => (
                             <div style={{ flex: flexDisplay(), padding: 15 }}>
-                                <h1>{element.activity}</h1>
+                                <h1>{element.activity ? element.activity : ''}</h1>
                             </div>
                         ))}
                     </div>
