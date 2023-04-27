@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../styles/styles.scss";
+import { useQuery } from "@apollo/client";
+import GET_PRODUCT_DESCRIPTION from "../talons/useQueryDescription";
 import RichContent from '@magento/venia-ui/lib/components/RichContent';
 import { StaticRate } from '../../Rate'
 import { useHistory } from 'react-router-dom'
@@ -16,6 +18,20 @@ import { useWindowSize } from '@magento/peregrine';
 
 const ComparisonList = () => {
     const comparisonList = JSON.parse(localStorage.getItem('comparison-list'))
+    if (comparisonList && comparisonList.length > 0) {
+        for (let i = 0; i < comparisonList.length; i++) {
+            const { data, loading } = useQuery(GET_PRODUCT_DESCRIPTION, {
+                variables: {
+                    urlKey: comparisonList[i].url_key
+                }
+            })
+            if (!loading) {
+                comparisonList[i].description = data.products.items[0].description
+                comparisonList[i].activity = JSON.parse(data.products.items[0].simiExtraField?.replaceAll('\\', '')).additional?.activity?.value
+            }
+        }
+    }
+
     const [isOpenRemovePopUp, setIsOpenRemovePopUp] = useState(false)
     const [openRemovePopUp, setOpenRemovePopUp] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
@@ -69,25 +85,25 @@ const ComparisonList = () => {
             return '0 0 100%'
         }
         if (comparisonList.length === 2) {
-            if(windowSize.innerWidth <= 600) {
+            if (windowSize.innerWidth <= 600) {
                 return '0 0 100%'
             }
             return '0 0 50%'
         }
         if (comparisonList.length === 3) {
-            if(windowSize.innerWidth <= 760) {
+            if (windowSize.innerWidth <= 760) {
                 return '0 0 50%'
             }
             return '0 0 calc(100% / 3)'
         }
         if (comparisonList.length === 4) {
-            if(windowSize.innerWidth <= 1024) {
+            if (windowSize.innerWidth <= 1024) {
                 return '0 0 calc(100% / 3)'
             }
             return '0 0 25%'
         }
         if (comparisonList.length >= 5) {
-            if(comparisonList.length === 5 && windowSize.innerWidth <= 1280) {
+            if (comparisonList.length === 5 && windowSize.innerWidth <= 1280) {
                 return '0 0 25%'
             }
             return '0 0 20%'
@@ -159,8 +175,6 @@ const ComparisonList = () => {
             setIsOpen(true)
         }
     }
-
-    console.log(cartData)
 
     return (
         <div className="cmp-wrapper">
@@ -253,8 +267,8 @@ const ComparisonList = () => {
             {openRemovePopUp && (<RemovePopUp isOpen={isOpenRemovePopUp} setIsOpen={setIsOpenRemovePopUp} index={index}
                 setOpenRemovePopUp={setOpenRemovePopUp} removeType={removeType}></RemovePopUp>)}
             {openMessagePopUp && (<MessagePopUp isOpen={isOpen} setIsOpen={setIsOpen}></MessagePopUp>)}
-            {openAddCartPopUp && (<AddCartPopUp isOpen={isOpenAddCartPopUp} setIsOpen={setIsOpenAddCartPopUp} 
-               setOpenAddCartPopUp={setOpenAddCartPopUp} cartData={cartData}></AddCartPopUp>)}
+            {openAddCartPopUp && (<AddCartPopUp isOpen={isOpenAddCartPopUp} setIsOpen={setIsOpenAddCartPopUp}
+                setOpenAddCartPopUp={setOpenAddCartPopUp} cartData={cartData}></AddCartPopUp>)}
         </div>
     )
 }
