@@ -65,7 +65,7 @@ const OrderDetailPage = props => {
         }
     }, [data, error]);
 
-    const items = dataDetail ? dataDetail.customer.orders.items[0].items : [];
+    const items = dataDetail ? dataDetail.customer.orders.items[0]?.items : [];
 
     const talonThumbnail = useOrderRow({ items });
 
@@ -97,7 +97,7 @@ const OrderDetailPage = props => {
     const result = Object.entries(talonThumbnail.imagesData);
     const listImage =
         dataDetail && dataDetail.customer
-            ? dataDetail.customer.orders.items[0].items
+            ? dataDetail.customer.orders.items[0]?.items
             : [];
 
     if (loadingDetail) {

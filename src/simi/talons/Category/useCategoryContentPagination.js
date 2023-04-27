@@ -9,15 +9,19 @@ import {
 
 import {
     getCateNoFilter,
-    getFilterFromCate
+    getFilterFromCate,
+    getCateNoFilterGiftCard
 } from 'src/simi/queries/catalog_gql/simiCategory.gql'; //'src/simi/queries/catalog_gql/category.gql';
 
 let sortByData = null;
 let filterData = null;
 
+import { useLocation } from 'react-router-dom';
+
 // use default venia pagination ( only change page, not change pagesize)
 export const useCategoryContentPagination = props => {
     const { categoryId, productsPageDesktop, productsPagePhone } = props;
+    const location = useLocation()
 
     const [paginationValues, paginationApi] = usePagination();
     let pageSize = Identify.findGetParameter('product_list_limit');
@@ -56,7 +60,7 @@ export const useCategoryContentPagination = props => {
     const [
         getProductsByCategory,
         { data: oriProductsData, error: error, loading: loading }
-    ] = useLazyQuery(getCateNoFilter);
+    ] = useLazyQuery(location.pathname === '/gift-card.html' ? getCateNoFilterGiftCard : getCateNoFilter);
 
     const [getFilterByCategory, { data: oriFilterData }] = useLazyQuery(
         getFilterFromCate

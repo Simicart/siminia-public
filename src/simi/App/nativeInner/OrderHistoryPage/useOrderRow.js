@@ -22,7 +22,7 @@ export const useOrderRow = props => {
     } = operations;
 
     const urlKeys = useMemo(() => {
-        return items.map(item => item.product_url_key).sort();
+        return items?.map(item => item.product_url_key).sort();
     }, [items]);
 
     const { data, loading } = useQuery(getProductThumbnailsQuery, {
