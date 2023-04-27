@@ -223,28 +223,28 @@ const ComparisonList = () => {
                     ))}
                 </div>
 
-                <div className="cmp-des">
+                {comparisonList.find(element => element.description) && (<div className="cmp-des">
                     <h3>Description</h3>
-                </div>
+                </div>)}
 
-                <div className="cmp-des-list">
+                {comparisonList.find(element => element.description) && (<div className="cmp-des-list">
                     {comparisonList.map((element) => (
                         <div style={{ flex: flexDisplay(), padding: 15 }}>
-                            <RichContent html={element.description.html}></RichContent>
+                            <RichContent html={element.description?.html ? element.description?.html : ''}></RichContent>
                         </div>
                     ))}
-                </div>
+                </div>)}
 
-                {comparisonList.find(element => element.activity !== null) && (
+                {comparisonList.find(element => element.activity) && (
                     <div className="cmp-activity">
                         <h3>Activity</h3>
                     </div>)}
 
-                {comparisonList.find(element => element.activity !== null) && (
+                {comparisonList.find(element => element.activity) && (
                     <div className="cmp-activity-list">
                         {comparisonList.map((element) => (
                             <div style={{ flex: flexDisplay(), padding: 15 }}>
-                                <h1>{element.activity}</h1>
+                                <h1>{element.activity ? element.activity : ''}</h1>
                             </div>
                         ))}
                     </div>

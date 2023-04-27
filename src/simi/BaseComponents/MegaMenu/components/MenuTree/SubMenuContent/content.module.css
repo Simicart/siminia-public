@@ -51,7 +51,8 @@
     }
 
     .columnView, .horizontal {
-        display: grid;
+        display: flex;
+        justify-content: center;
     }
 
     .categoriesMain > li:first-child {
