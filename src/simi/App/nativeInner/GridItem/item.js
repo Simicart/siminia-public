@@ -43,6 +43,14 @@ const Griditem = props => {
     const [openMessagePopUp, setOpenMessagePopUp] = useState(false)
 
     useEffect(() => {
+        const reload = localStorage.getItem("reload");
+        if (reload) {
+            setOpenMessagePopUp(true)
+            setIsOpen(true)
+        }
+    }, [])
+
+    useEffect(() => {
         if (isOpen && openMessagePopUp) {
             localStorage.removeItem("reload")
           const timeoutModal = setTimeout(() => {
@@ -324,14 +332,6 @@ const Griditem = props => {
             })}
         </button>
     );
-
-    window.onload = function () {
-        const reload = localStorage.getItem("reload");
-        if (reload) {
-            setOpenMessagePopUp(true)
-            setIsOpen(true)
-        }
-    }
 
     return (
         <div
