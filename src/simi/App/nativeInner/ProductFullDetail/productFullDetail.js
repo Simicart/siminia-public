@@ -125,13 +125,37 @@ const ProductFullDetail = props => {
     const { product } = props;
     const product_sku = product.sku;
     const [isOpenMessage, setIsOpenMessage] = useState(false)
-    const [openMessagePopUp, setOpenMessagePopUp] = useState(false)
+    const [detailsOpenMessagePopUp, setDetailsOpenMessagePopUp] = useState(false)
+
     useEffect(() => {
-        setTimeout(() => {
-            setOpenMessagePopUp(false)
-            localStorage.removeItem('changeList')
-        }, 4000)
-    }, [openMessagePopUp])
+        const reload = localStorage.getItem("reload");
+        if (reload) {
+            console.log("Hello")
+            setIsOpenMessage(true)
+            setDetailsOpenMessagePopUp(true)
+        }
+    }, [])
+    
+    useEffect(() => {
+        if (isOpenMessage && detailsOpenMessagePopUp) {
+          console.log('Huhu')
+          localStorage.removeItem("reload")
+          const timeoutModal = setTimeout(() => {
+            setIsOpenMessage(false)
+          }, 3000);
+          
+          return () => clearTimeout(timeoutModal);
+        }
+        if(!isOpenMessage && detailsOpenMessagePopUp) {
+            const timeoutShowModal = setTimeout(() => {
+                localStorage.removeItem('changeList')
+                setDetailsOpenMessagePopUp(false)
+            }, 1000)
+    
+            return () => clearTimeout(timeoutShowModal);
+        }
+      }, [isOpenMessage]);
+
     const configFBT = useConfigFBT();
     const fbtData = useFbtData(product_sku);
     const talonProps = useProductFullDetail({ product });
@@ -759,18 +783,8 @@ const ProductFullDetail = props => {
         <HideAddToCartBtn product={product} addToCartBtn={addToCartArea} />
     ) : null;
 
-    window.onload = function () {
-        const reload = localStorage.getItem("reload");
-        if (reload) {
-            localStorage.removeItem("reload")
-            setIsOpenMessage(true)
-            setOpenMessagePopUp(true)
-        }
-    }
-
     return (
         <div className={isMobileSite ? 'main-product-detail-native' : null}>
-            {openMessagePopUp && (<MessagePopUp isOpen={isOpenMessage} setIsOpen={setIsOpenMessage}></MessagePopUp>)}
             <div style={{ height: topInsets }} />
             <AlertMessages
                 message={successMsg}
@@ -1444,6 +1458,8 @@ const ProductFullDetail = props => {
                     <FbtBlock product={product} relatedProducts={relatedProducts}
                         upsellProducts={upsellProducts} crosssellProducts={crosssellProducts}
                         FBT_Config_Data={FBT_Config_Data} FBT_Slider_Data={sortItemType()}></FbtBlock>)}
+
+                {detailsOpenMessagePopUp && (<MessagePopUp isOpen={isOpenMessage} setIsOpen={setIsOpenMessage}></MessagePopUp>)}
             </div>
             {isMobileSite ? (
                 <FooterFixedBtn
