@@ -130,7 +130,6 @@ const ProductFullDetail = props => {
     useEffect(() => {
         const reload = localStorage.getItem("reload");
         if (reload) {
-            console.log("Hello")
             setIsOpenMessage(true)
             setDetailsOpenMessagePopUp(true)
         }
@@ -138,7 +137,6 @@ const ProductFullDetail = props => {
     
     useEffect(() => {
         if (isOpenMessage && detailsOpenMessagePopUp) {
-          console.log('Huhu')
           localStorage.removeItem("reload")
           const timeoutModal = setTimeout(() => {
             setIsOpenMessage(false)
