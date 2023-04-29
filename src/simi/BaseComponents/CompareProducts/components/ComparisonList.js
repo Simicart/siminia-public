@@ -234,21 +234,6 @@ const ComparisonList = () => {
                         </div>
                     ))}
                 </div>)}
-
-                {comparisonList.find(element => element.activity) && (
-                    <div className="cmp-activity">
-                        <h3>Activity</h3>
-                    </div>)}
-
-                {comparisonList.find(element => element.activity) && (
-                    <div className="cmp-activity-list">
-                        {comparisonList.map((element) => (
-                            <div style={{ flex: flexDisplay(), padding: 15 }}>
-                                <h1>{element.activity ? element.activity : ''}</h1>
-                            </div>
-                        ))}
-                    </div>
-                )}
             </div>) : (<p style={{ marginTop: 20, fontSize: 16 }}>You have no items to compare.</p>)}
             {openRemovePopUp && (<RemovePopUp isOpen={isOpenRemovePopUp} setIsOpen={setIsOpenRemovePopUp} index={index}
                 setOpenRemovePopUp={setOpenRemovePopUp} removeType={removeType}></RemovePopUp>)}
