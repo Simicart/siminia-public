@@ -9,14 +9,14 @@ Based on PWA Studio, our open-source PWA theme for Magento 2 is an easy way to t
 ### Requirements
 
 - Magento version >= 2.4.3
-- PWA Studio 12
+- PWA Studio 13
 
 ### 1. Clone pwa-studio
 
 ```
 git clone https://github.com/magento/pwa-studio/
 cd pwa-studio
-git checkout release/12.6
+git checkout release/13.0
 ```
 
 ### 2. Modify `package.json` at PWA Studio root folder
@@ -55,6 +55,43 @@ yarn install
 yarn run build
 ```
 
+### 4. Point to your own Magento backend
+
+Update configuration at `packages/siminia/.env`
+
+```
+MAGENTO_BACKEND_URL=https://your.magento.site.com/
+```
+
+Edit the file at:
+```
+packages/siminia/template.html
+```
+disable the modules that have not got installed on your site, 0 mean disabled:
+```
+plugins: {
+    'SM_ENABLE_CONNECTOR': 1, //https://github.com/Simicart/SimiCart-Magento2.x-GraphQl
+    'SM_ENABLE_META_PACKAGES': 1, //https://github.com/magento/magento2-pwa
+    'SM_ENABLE_PRODUCT_LABEL': 1,    
+    'SM_ENABLE_SHOP_BY_BRAND': 0,
+    'SM_ENABLE_REWARD_POINTS': 1,   
+    'SM_ENABLE_REWARD_POINTS_PRO': 0,
+    'SM_ENABLE_DELIVERY_TIME': 1,
+    'SM_ENABLE_SIZE_CHART': 1,    
+    'SM_ENABLE_SOCIAL_LOGIN': 1,
+    'SM_ENABLE_MAGEWORX_SEO': 0,
+    'SM_ENABLE_FAQS': 1,   
+    'SM_ENABLE_BETTER_BLOG': 0,
+    'SM_ENABLE_CALL_FOR_PRICE': 1,    
+    'SM_ENABLE_MEGA_MENU': 1,
+    'SM_ENABLE_GIFT_CARD': 1,    
+    'SM_ENABLE_FORCE_LOGIN': 0,
+    'SM_ENABLE_FREQUENTLY_BOUGHT_TOGETHER': 1,    
+    'SM_ENABLE_CHECKOUT_CUSTOM_FIELD': 1    
+}
+```
+
+
 ### 4. Run watch/stage
 
 To run watch
@@ -69,13 +106,7 @@ To run production
 NODE_ENV=production PORT=8080 yarn run stage:siminia
 ```
 
-### 5. Use your own Magento backend
 
-Update configuration at `packages/siminia/.env`
-
-```
-MAGENTO_BACKEND_URL=https://your.magento.site.com/
-```
 
 ### 6. (Optional) Connect your frontend with Tapita Page Builder
 
