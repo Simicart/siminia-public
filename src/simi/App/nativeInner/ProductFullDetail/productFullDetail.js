@@ -124,27 +124,20 @@ import { addProductToComparisonList } from '../../../BaseComponents/CompareProdu
 const ProductFullDetail = props => {
     const { product } = props;
     const product_sku = product.sku;
-    const [isOpenMessage, setIsOpenMessage] = useState(false)
-    const [detailsOpenMessagePopUp, setDetailsOpenMessagePopUp] = useState(false)
-
-    useEffect(() => {
-        const reload = localStorage.getItem("reload");
-        if (reload) {
-            setIsOpenMessage(true)
-            setDetailsOpenMessagePopUp(true)
-        }
-    }, [])
+    const reload = localStorage.getItem("reload");
+    const [isOpenMessage, setIsOpenMessage] = useState(reload ? true : false)
+    const [detailsOpenMessagePopUp, setDetailsOpenMessagePopUp] = useState(reload ? true : false)
     
     useEffect(() => {
         if (isOpenMessage && detailsOpenMessagePopUp) {
           localStorage.removeItem("reload")
           const timeoutModal = setTimeout(() => {
             setIsOpenMessage(false)
-          }, 3000);
+          }, 5000);
           
           return () => clearTimeout(timeoutModal);
         }
-        if(!isOpenMessage && detailsOpenMessagePopUp) {
+        if(!isOpenMessage) {
             const timeoutShowModal = setTimeout(() => {
                 localStorage.removeItem('changeList')
                 setDetailsOpenMessagePopUp(false)
@@ -950,10 +943,13 @@ const ProductFullDetail = props => {
                                 )}
                             </div>
 
-                            <div className="wrapperCompare">
+                            {isMobileSite ? (<button onClick={() => addProductToComparisonList(product)} className='btnCompareMobile'>
+                                <p className='btnCompareTitleMobile'>Add to Compare</p>
+                                <BarChart2></BarChart2>
+                            </button>) : (<div className="wrapperCompare">
                                 <button className="btnCompare" onClick={() => addProductToComparisonList(product)}><BarChart2></BarChart2></button>
                                 <p className='btnCompareTitle'>Add to Compare</p>
-                            </div>
+                            </div>)}
                         </div>
                         {/*inline size chart web and native*/}
                         {enabledSizeChart && display === 2 ? (

@@ -27,6 +27,7 @@ const initialState = {
 
 const reducerMap = {
     [actions.setToken]: (state, { payload }) => {
+        localStorage.removeItem('comparison-list')
         return {
             ...state,
             isSignedIn: true,
@@ -34,6 +35,7 @@ const reducerMap = {
         };
     },
     [actions.clearToken]: state => {
+        localStorage.removeItem('comparison-list')
         return {
             ...state,
             isSignedIn: false,

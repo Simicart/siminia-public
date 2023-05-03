@@ -6,7 +6,7 @@ import defaultClasses from './buttonCFP.module.css';
 
 export const checkIsHidePriceEnable = (product) => {
     const { advancedhideprice } = product || {};
-    return !!advancedhideprice.advancedhideprice_text && !!advancedhideprice.advancedhideprice_type
+    return !!advancedhideprice?.advancedhideprice_text && !!advancedhideprice.advancedhideprice_type
 }
 
 const Modal = React.lazy(() =>

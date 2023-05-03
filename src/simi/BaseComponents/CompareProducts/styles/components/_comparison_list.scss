@@ -19,6 +19,21 @@
     font-weight: 700;
 }
 
+.cmp-print-btn {
+    color: #006bb4;
+    margin-top: 20px;
+}
+
+.cmp-print-btn:hover {
+    color: #536fd8;
+    text-decoration-line: underline;
+}
+
+.cmp-print-btn:active {
+    color: orange;
+    text-decoration-line: underline;
+}
+
 .cmp-list-wrapper {
     display: grid;
     margin-top: 50px;

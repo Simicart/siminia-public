@@ -43,6 +43,16 @@
             margin-top: 5px;
         }
     }
+    .btnCompareMobile {
+        display: flex;
+        flex-direction: row;
+        padding: 10px 0;
+        gap: 10px;
+        align-items: center;
+    }
+    .btnCompareTitleMobile {
+        font-size: 14px;
+    }
     .groupCartAction {
         margin-inline-start: 1.5rem;
     }

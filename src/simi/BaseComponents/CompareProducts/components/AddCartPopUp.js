@@ -4,10 +4,9 @@ import { useHistory } from 'react-router-dom'
 import { X } from 'react-feather';
 import { FormattedMessage } from 'react-intl';
 
-const AddCartPopUp = ({ isOpen, setIsOpen, setOpenAddCartPopUp, cartData }) => {
+const AddCartPopUp = ({ isOpen, setIsOpen, setOpenAddCartPopUp, cartData, addCartProduct }) => {
 
     Modal.setAppElement('#root')
-    const cartLength = cartData.addProductsToCart.cart.items.length - 1
     const history = useHistory()
 
     return (
@@ -41,13 +40,13 @@ const AddCartPopUp = ({ isOpen, setIsOpen, setOpenAddCartPopUp, cartData }) => {
                     </p>
                     <span style={{ textAlign: 'center', marginTop: 15, fontSize: 16 }}>
                         <FormattedMessage id='You added' defaultMessage='You added '></FormattedMessage>
-                        <a href={`/${cartData.addProductsToCart.cart.items[cartLength].product.url_key}.html`}
-                            dangerouslySetInnerHTML={{ __html: cartData.addProductsToCart.cart.items[cartLength].product.name }}
+                        <a href={`/${addCartProduct.url_key}.html`}
+                            dangerouslySetInnerHTML={{ __html: addCartProduct.name }}
                             className='add-cart-pop-up-product-name'>
                         </a> <FormattedMessage id=' to your shopping cart' defaultMessage=' to your shopping cart'></FormattedMessage>
                     </span>
-                    <a href={`/${cartData.addProductsToCart.cart.items[cartLength].product.url_key}.html`}>
-                        <img src={cartData.addProductsToCart.cart.items[cartLength].product.image.url}
+                    <a href={`/${addCartProduct.url_key}.html`}>
+                        <img src={addCartProduct.small_image}
                             alt='' style={{ objectFit: "ratio" }} className='add-cart-pop-up-image'>
                         </img>
                     </a>

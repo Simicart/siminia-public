@@ -1,9 +1,9 @@
 import Modal from 'react-modal';
-import React, { useEffect } from "react";
+import React from "react";
 import { Check } from 'react-feather'
 import '../styles/styles.scss'
 
-const MessagePopUp = ({ isOpen, setIsOpen }) => {
+const MessagePopUp = ({ isOpen }) => {
   Modal.setAppElement('#root')
 
   const showInfo = JSON.parse(localStorage.getItem("changeList"))

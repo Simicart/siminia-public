@@ -50,6 +50,14 @@ const addProductToComparisonList = (item) => {
             }))
             window.location.reload()
         }
+        else {
+            localStorage.setItem("reload", true)
+            localStorage.setItem("changeList", JSON.stringify({
+                type: "add",
+                value: item.name
+            }))
+            window.location.reload()
+        }
     }
     else {
         localStorage.setItem("comparison-list", JSON.stringify([item]))

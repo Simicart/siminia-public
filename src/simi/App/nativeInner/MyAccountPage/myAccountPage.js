@@ -29,7 +29,8 @@ import {
     HelpCircle,
     CreditCard,
     Pocket, 
-    Bell
+    Bell,
+    BarChart2
 } from 'react-feather';
 import { Link } from 'react-router-dom';
 import Icon from '@magento/venia-ui/lib/components/Icon';
@@ -44,7 +45,8 @@ const servicesList = [
     'Reward Points',
     'Contact Us',
     'Saved Payments',
-    'Product Alert'
+    'Product Alert',
+    'Compare Product'
 ];
 const signInRequired = [
     'Address Book',
@@ -53,7 +55,8 @@ const signInRequired = [
     'Account Information',
     'Account Subcriptions',
     'Reward Points',
-    'Product Alert'
+    'Product Alert',
+    'My Gift Cards'
 ];
 const giftCard = [
     "My Gift Cards",
@@ -77,7 +80,8 @@ const MyAccountPage = props => {
         <Icon className={classes.icon} size={22} src={Gift} />,
         <Icon className={classes.icon} size={22} src={Users} />,
         <Icon className={classes.icon} size={22} src={Pocket} />,
-        <Icon className={classes.icon} size={22} src={Bell} />
+        <Icon className={classes.icon} size={22} src={Bell} />,
+        <Icon className={classes.icon} size={22} src={BarChart2} />,
     ];
 
     const giftCardIconList = [        
@@ -184,7 +188,7 @@ const MyAccountPage = props => {
         const urlText = reformat.toLowerCase();
         return (
             <Link
-                to={`/${urlText}`}
+                to={urlText === 'compare-product' ? `/${urlText}.html` : `/${urlText}`}
                 key={index}
                 className={
                     isSignedIn

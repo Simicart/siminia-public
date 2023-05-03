@@ -18,26 +18,36 @@ import { useWindowSize } from '@magento/peregrine';
 
 const ComparisonList = () => {
     const comparisonList = JSON.parse(localStorage.getItem('comparison-list'))
-    if (comparisonList && comparisonList.length > 0) {
+    const listUrlKey = []
+
+    if (comparisonList) {
         for (let i = 0; i < comparisonList.length; i++) {
-            const { data, loading } = useQuery(GET_PRODUCT_DESCRIPTION, {
-                variables: {
-                    urlKey: comparisonList[i].url_key
-                }
-            })
-            if (!loading) {
-                comparisonList[i].description = data.products.items[0].description
-                comparisonList[i].activity = JSON.parse(data.products.items[0].simiExtraField?.replaceAll('\\', '')).additional?.activity?.value
-            }
+            listUrlKey.push(comparisonList[i].url_key)
         }
     }
 
-    const [isOpenRemovePopUp, setIsOpenRemovePopUp] = useState(false)
+    const { data, loading } = useQuery(GET_PRODUCT_DESCRIPTION, {
+        variables: {
+            urlKey: listUrlKey
+        },
+        skip: listUrlKey.length === 0
+    })
+
+    if (listUrlKey.length > 0 && !loading) {
+        for (let i = 0; i < comparisonList.length; i++) {
+            comparisonList[i].description = data.products.items[i].description
+        }
+        localStorage.setItem('comparison-list', JSON.stringify(comparisonList))
+    }
+
+    const reload = localStorage.getItem("reload");
     const [openRemovePopUp, setOpenRemovePopUp] = useState(false)
-    const [isOpen, setIsOpen] = useState(false)
-    const [openMessagePopUp, setOpenMessagePopUp] = useState(false)
-    const [isOpenAddCartPopUp, setIsOpenAddCartPopUp] = useState(false)
+    const [isOpenRemovePopUp, setIsOpenRemovePopUp] = useState(false)
+    const [openMessagePopUp, setOpenMessagePopUp] = useState(reload ? true : false)
+    const [isOpen, setIsOpen] = useState(reload ? true : false)
     const [openAddCartPopUp, setOpenAddCartPopUp] = useState(false)
+    const [isOpenAddCartPopUp, setIsOpenAddCartPopUp] = useState(false)
+    const [addCartProduct, setAddCartProduct] = useState()
     const [cartData, setCartData] = useState()
     const windowSize = useWindowSize()
 
@@ -46,10 +56,10 @@ const ComparisonList = () => {
             localStorage.removeItem("reload")
             const timeoutModal = setTimeout(() => {
                 setIsOpen(false)
-            }, 3000);
+            }, 5000);
             return () => clearTimeout(timeoutModal);
         }
-        if (!isOpen && openMessagePopUp) {
+        if (!isOpen) {
             const timeoutShowModal = setTimeout(() => {
                 localStorage.removeItem('changeList')
                 setOpenMessagePopUp(false)
@@ -57,7 +67,8 @@ const ComparisonList = () => {
 
             return () => clearTimeout(timeoutShowModal);
         }
-    }, [isOpen, openMessagePopUp]);
+    }, [isOpen]);
+    
     const [removeType, setRemoveType] = useState()
     const [index, setIndex] = useState(-1)
     const history = useHistory()
@@ -138,7 +149,9 @@ const ComparisonList = () => {
         if (element.__typename !== 'SimpleProduct') {
             history.push(`/${element.url_key}.html`)
         }
+
         else {
+            setAddCartProduct(element)
             addProductToCart({
                 variables: {
                     cartId: cart_id.slice(1, cart_id.length - 1),
@@ -168,20 +181,13 @@ const ComparisonList = () => {
         }
     }
 
-    window.onload = function () {
-        const reload = localStorage.getItem("reload");
-        if (reload) {
-            setOpenMessagePopUp(true)
-            setIsOpen(true)
-        }
-    }
-
     return (
         <div className="cmp-wrapper">
             {(cartLoading || wishlistLoading) && (<div className="cmp-loading-indicator">
                 {fullPageLoadingIndicator}
             </div>)}
             <h1 className="cmp-title">Compare Products</h1>
+            {comparisonList && (<button onClick={() => window.print()} className="cmp-print-btn">Print This Page</button>)}
             {comparisonList ? (<div className="cmp-list-wrapper" style={{ gridTemplateColumns: gridTemplateColumns() }}>
                 <div className="cmp-product-list">
                     {comparisonList.map((element, index) => (
@@ -268,7 +274,7 @@ const ComparisonList = () => {
                 setOpenRemovePopUp={setOpenRemovePopUp} removeType={removeType}></RemovePopUp>)}
             {openMessagePopUp && (<MessagePopUp isOpen={isOpen} setIsOpen={setIsOpen}></MessagePopUp>)}
             {openAddCartPopUp && (<AddCartPopUp isOpen={isOpenAddCartPopUp} setIsOpen={setIsOpenAddCartPopUp}
-                setOpenAddCartPopUp={setOpenAddCartPopUp} cartData={cartData}></AddCartPopUp>)}
+                setOpenAddCartPopUp={setOpenAddCartPopUp} cartData={cartData} addCartProduct={addCartProduct}></AddCartPopUp>)}
         </div>
     )
 }
