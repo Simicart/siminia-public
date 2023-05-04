@@ -222,7 +222,9 @@ const ComparisonList = () => {
                                 <Price prices={element.price} type={element.type_id}></Price>
                             </div>
                             <div className="cmp-btn-wrapper">
-                                <button className="cmp-btn-add-cart" onClick={() => handleAddProductToCart(element)}>Add to Cart</button>
+                                {element.stock_status !== 'OUT_OF_STOCK' ? 
+                                (<button className="cmp-btn-add-cart" onClick={() => handleAddProductToCart(element)}>Add to Cart</button>) :
+                                (<button className="cmp-btn-out-stock">Out of Stock</button>)}
                                 <button onClick={() => handleAddProductToWishlist(element)}>
                                     <Heart></Heart>
                                 </button>

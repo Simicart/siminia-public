@@ -60,7 +60,7 @@ const Griditem = props => {
 
             return () => clearTimeout(timeoutShowModal);
         }
-    }, [isOpen]);
+    }, [isOpen, openMessagePopUp]);
 
     const { formatMessage } = useIntl();
     const item = prepareProduct(props.item);
