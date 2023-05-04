@@ -45,8 +45,8 @@ const Griditem = props => {
 
     useEffect(() => {
         if (isOpen && openMessagePopUp) {
-            localStorage.removeItem("reload")
             const timeoutModal = setTimeout(() => {
+                localStorage.removeItem("reload")
                 setIsOpen(false)
             }, 5000);
 
