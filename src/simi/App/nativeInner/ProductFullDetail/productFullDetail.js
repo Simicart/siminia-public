@@ -130,9 +130,9 @@ const ProductFullDetail = props => {
     
     useEffect(() => {
         if (isOpenMessage && detailsOpenMessagePopUp) {
-          localStorage.removeItem("reload")
-          const timeoutModal = setTimeout(() => {
-            setIsOpenMessage(false)
+            const timeoutModal = setTimeout(() => {
+                localStorage.removeItem("reload")
+                setIsOpenMessage(false)
           }, 5000);
           
           return () => clearTimeout(timeoutModal);
