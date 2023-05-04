@@ -39,16 +39,15 @@ const HeartIcon = <Icon size={20} src={Heart} />;
 
 const Griditem = props => {
     const { lazyImage } = props;
-    const reload = localStorage.getItem("reload");
-    const [isOpen, setIsOpen] = useState(reload ? true : false)
-    const [openMessagePopUp, setOpenMessagePopUp] = useState(reload ? true : false)
+    const [openMessagePopUp, setOpenMessagePopUp] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
         if (isOpen && openMessagePopUp) {
             const timeoutModal = setTimeout(() => {
                 localStorage.removeItem("reload")
                 setIsOpen(false)
-            }, 5000);
+            }, 2000);
 
             return () => clearTimeout(timeoutModal);
         }
@@ -60,7 +59,7 @@ const Griditem = props => {
 
             return () => clearTimeout(timeoutShowModal);
         }
-    }, [isOpen, openMessagePopUp]);
+    }, [isOpen])
 
     const { formatMessage } = useIntl();
     const item = prepareProduct(props.item);
@@ -409,7 +408,7 @@ const Griditem = props => {
                         }}
                     />
                 </div>
-                <button className={itemClasses['compare-button']} onClick={() => addProductToComparisonList(item)}>
+                <button className={itemClasses['compare-button']} onClick={() => addProductToComparisonList(item, setIsOpen, setOpenMessagePopUp)}>
                     <BarChart2 size={24}></BarChart2>
                 </button>
                 {openMessagePopUp && (<MessagePopUp isOpen={isOpen} setIsOpen={setIsOpen}></MessagePopUp>)}

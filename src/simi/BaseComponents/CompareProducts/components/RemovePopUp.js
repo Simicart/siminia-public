@@ -4,7 +4,7 @@ import { X } from 'react-feather';
 import { FormattedMessage } from 'react-intl';
 import { removeAllProductsFromComparisonList, removeProductFromComparisonList } from "../functions";
 
-const RemovePopUp = ({ isOpen, setIsOpen, setOpenRemovePopUp, removeType, index }) => {
+const RemovePopUp = ({ isOpen, setIsOpen, setOpenRemovePopUp, removeType, index, setIsOpenMsg, setOpenMsg }) => {
     return (
         <Modal
             isOpen={isOpen}
@@ -51,10 +51,10 @@ const RemovePopUp = ({ isOpen, setIsOpen, setOpenRemovePopUp, removeType, index 
                             setOpenRemovePopUp(false)
                         }, 500)
                         if (removeType === 'single') {
-                            removeProductFromComparisonList(index)
+                            removeProductFromComparisonList(index, setIsOpenMsg, setOpenMsg)
                         }
                         else {
-                            removeAllProductsFromComparisonList()
+                            removeAllProductsFromComparisonList(setIsOpenMsg, setOpenMsg)
                         }
                     }} className='remove-pop-up-ok-button'>
                         <FormattedMessage id='OK' defaultMessage='OK'></FormattedMessage>

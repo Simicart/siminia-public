@@ -1,15 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { X } from 'react-feather'
 import { useHistory } from "react-router-dom";
 import RemovePopUp from "./RemovePopUp";
+import MessagePopUp from "./MessagePopUp";
 
 const ComparisonColumn = () => {
     const history = useHistory()
     const comparisonList = JSON.parse(localStorage.getItem('comparison-list'))
     const [isOpen, setIsOpen] = useState(false)
     const [openRemovePopUp, setOpenRemovePopUp] = useState(false)
+    const [isOpenMsg, setIsOpenMsg] = useState(false)
+    const [openMsg, setOpenMsg] = useState(false)
     const [removeType, setRemoveType] = useState()
     const [index, setIndex] = useState(-1)
+
+    useEffect(() => {
+        if (isOpenMsg && openMsg) {
+            const timeoutModal = setTimeout(() => {
+                localStorage.removeItem("reload")
+                setIsOpenMsg(false)
+            }, 2000);
+
+            return () => clearTimeout(timeoutModal);
+        }
+        if (!isOpenMsg) {
+            const timeoutShowModal = setTimeout(() => {
+                localStorage.removeItem('changeList')
+                setOpenMsg(false)
+            }, 1000)
+
+            return () => clearTimeout(timeoutShowModal);
+        }
+    }, [isOpenMsg])
 
     return (
         <div className="cmp-col-wrapper">
@@ -38,7 +60,9 @@ const ComparisonColumn = () => {
             </div>)}
 
             {openRemovePopUp && (<RemovePopUp isOpen={isOpen} setIsOpen={setIsOpen} index={index}
-                                              setOpenRemovePopUp={setOpenRemovePopUp} removeType={removeType}></RemovePopUp>)}
+                                              setOpenRemovePopUp={setOpenRemovePopUp} removeType={removeType}
+                                              setIsOpenMsg={setIsOpenMsg} setOpenMsg={setOpenMsg}></RemovePopUp>)}
+            {openMsg && (<MessagePopUp isOpen={isOpenMsg} setIsOpen={setIsOpenMsg}></MessagePopUp>)}
         </div>
     )
 }

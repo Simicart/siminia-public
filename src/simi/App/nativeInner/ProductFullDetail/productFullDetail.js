@@ -124,16 +124,15 @@ import { addProductToComparisonList } from '../../../BaseComponents/CompareProdu
 const ProductFullDetail = props => {
     const { product } = props;
     const product_sku = product.sku;
-    const reload = localStorage.getItem("reload");
-    const [isOpenMessage, setIsOpenMessage] = useState(reload ? true : false)
-    const [detailsOpenMessagePopUp, setDetailsOpenMessagePopUp] = useState(reload ? true : false)
+    const [isOpenMessage, setIsOpenMessage] = useState(false)
+    const [detailsOpenMessagePopUp, setDetailsOpenMessagePopUp] = useState(false)
     
     useEffect(() => {
         if (isOpenMessage && detailsOpenMessagePopUp) {
             const timeoutModal = setTimeout(() => {
                 localStorage.removeItem("reload")
                 setIsOpenMessage(false)
-          }, 5000);
+          }, 2000);
           
           return () => clearTimeout(timeoutModal);
         }
@@ -943,11 +942,11 @@ const ProductFullDetail = props => {
                                 )}
                             </div>
 
-                            {isMobileSite ? (<button onClick={() => addProductToComparisonList(product)} className='btnCompareMobile'>
+                            {isMobileSite ? (<button onClick={() => addProductToComparisonList(product, setIsOpenMessage, setDetailsOpenMessagePopUp)} className='btnCompareMobile'>
                                 <p className='btnCompareTitleMobile'>Add to Compare</p>
                                 <BarChart2></BarChart2>
                             </button>) : (<div className="wrapperCompare">
-                                <button className="btnCompare" onClick={() => addProductToComparisonList(product)}><BarChart2></BarChart2></button>
+                                <button className="btnCompare" onClick={() => addProductToComparisonList(product, setIsOpenMessage, setDetailsOpenMessagePopUp)}><BarChart2></BarChart2></button>
                                 <p className='btnCompareTitle'>Add to Compare</p>
                             </div>)}
                         </div>

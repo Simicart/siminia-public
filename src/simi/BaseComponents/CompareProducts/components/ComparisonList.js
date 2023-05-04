@@ -258,7 +258,7 @@ const ComparisonList = () => {
                 </div>)}
             </div>) : (<p style={{ marginTop: 20, fontSize: 16 }}>You have no items to compare.</p>)}
             {openRemovePopUp && (<RemovePopUp isOpen={isOpenRemovePopUp} setIsOpen={setIsOpenRemovePopUp} index={index}
-                setOpenRemovePopUp={setOpenRemovePopUp} removeType={removeType}></RemovePopUp>)}
+                setOpenRemovePopUp={setOpenRemovePopUp} removeType={removeType} setIsOpenMsg={setIsOpen} setOpenMsg={setOpenMessagePopUp}></RemovePopUp>)}
             {openMessagePopUp && (<MessagePopUp isOpen={isOpen} setIsOpen={setIsOpen}></MessagePopUp>)}
             {openAddCartPopUp && (<AddCartPopUp isOpen={isOpenAddCartPopUp} setIsOpen={setIsOpenAddCartPopUp}
                 setOpenAddCartPopUp={setOpenAddCartPopUp} cartData={cartData} addCartProduct={addCartProduct}></AddCartPopUp>)}
