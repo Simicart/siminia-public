@@ -149,7 +149,7 @@ export const ProductDetailsFragment = gql`
         small_image {
             url
         }
-        stock_status
+        # stock_status
         url_key
         ... on ConfigurableProduct {
             configurable_options {
@@ -191,7 +191,7 @@ export const ProductDetailsFragment = gql`
                         position
                     }
                     sku
-                    stock_status
+                    # stock_status
                     price {
                         ...SimiPriceFragment
                     }

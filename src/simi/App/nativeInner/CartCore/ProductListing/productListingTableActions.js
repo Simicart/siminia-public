@@ -5,7 +5,7 @@ import { useProductListingTableActions } from 'src/simi/talons/Cart/useProductLi
 import { showToastMessage } from 'src/simi/Helper/Message';
 import { showFogLoading } from 'src/simi/BaseComponents/Loading/GlobalLoading';
 import { confirmAlert } from 'src/simi/BaseComponents/ConfirmAlert';
-import { CartPageFragment } from '@magento/peregrine/lib/talons/CartPage/cartPageFragments.gql.js';
+import { CartPageFragment } from 'src/simi/App/nativeInner/talons/CartPage/cartPageFragments.gql';
 import { AvailableShippingMethodsCartFragment } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/ShippingMethods/shippingMethodsFragments.gql.js';
 import { FormattedMessage, useIntl } from 'react-intl';
 require('./productListingTableActions.scss');

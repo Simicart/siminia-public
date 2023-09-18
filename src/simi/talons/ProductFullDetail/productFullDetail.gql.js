@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 import { CartTriggerFragment } from '@magento/peregrine/lib/talons/Header/cartTriggerFragments.gql';
-import { MiniCartFragment } from '@magento/peregrine/lib/talons/MiniCart/miniCartFragments.gql';
+import { MiniCartFragment } from 'src/simi/App/nativeInner/MiniCart/miniCartFragments.gql';
 
 export const ADD_PRODUCT_TO_CART = gql`
     mutation AddProductToCart($cartId: String!, $product: [CartItemInput!]!) {

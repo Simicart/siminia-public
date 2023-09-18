@@ -44,7 +44,7 @@ export const GET_RELATED_PRODUCT_QUERY = gql`
                     special_from_date
                     type_id
                     special_to_date
-                    stock_status
+                    # stock_status
                     price {
                         ...SimiPriceFragment
                     }

@@ -8,7 +8,7 @@ export const CheckoutPageFragment = gql`
             id
             product {
                 id
-                stock_status
+                # stock_status
             }
         }
         is_virtual

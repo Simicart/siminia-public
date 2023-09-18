@@ -44,7 +44,8 @@ const productAlertConfigQuery = gql`
     query($sku: String!) {
         products(filter: { sku: { eq: $sku } }) {
             items {
-                stock_status
+                id
+                # stock_status
             }
         }
     }

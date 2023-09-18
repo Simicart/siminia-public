@@ -16,7 +16,7 @@ export const ProductListingFragment = gql`
                 small_image {
                     url
                 }
-                stock_status
+                # stock_status
                 ... on ConfigurableProduct {
                     variants {
                         attributes {

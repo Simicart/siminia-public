@@ -67,7 +67,7 @@ export const logoUrl = () => {
         );
         return url.href;
     }
-    return 'https://www.simicart.com/skin/frontend/default/simicart2.1/images/simicart/new_logo_small.png';
+    return 'https://hortusplanta.co.uk/media/logo/stores/1/Computer_Logo_ebay.png';
 };
 
 /*

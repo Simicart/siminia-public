@@ -22,7 +22,7 @@ export const SimiProductInterfaceFragment = gql`
         special_from_date
         type_id
         special_to_date
-        stock_status
+        # stock_status
         price {
             ...SimiPriceFragment
         }
@@ -83,7 +83,7 @@ export const GET_PRODUCT_UPSELL_CROSSSELL_QUERY = gql`
                     special_from_date
                     type_id
                     special_to_date
-                    stock_status
+                    # stock_status
                     price {
                         ...SimiPriceFragment
                     }
@@ -134,7 +134,7 @@ export const GET_PRODUCT_UPSELL_CROSSSELL_QUERY = gql`
                     special_from_date
                     type_id
                     special_to_date
-                    stock_status
+                    # stock_status
                     price {
                         ...SimiPriceFragment
                     }

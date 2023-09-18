@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 import { MiniCartFragment } from './miniCartFragments.gql';
-import { CartPageFragment } from '@magento/peregrine/lib/talons/CartPage/cartPageFragments.gql.js';
+import { CartPageFragment } from 'src/simi/App/nativeInner/talons/CartPage/cartPageFragments.gql';
 
 /**
  * @deprecated - Moved to @magento/peregrine/lib/talons/MiniCart/miniCartFragments.gql

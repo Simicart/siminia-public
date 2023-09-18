@@ -34,7 +34,7 @@ query category($currentPage: Int, $pageSize: Int, $stringId: String, $sort: Prod
             special_from_date
             type_id
             special_to_date
-            stock_status
+            # stock_status
             price {
                 ... SimiPrice
             }

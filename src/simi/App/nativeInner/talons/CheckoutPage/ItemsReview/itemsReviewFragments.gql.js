@@ -13,7 +13,7 @@ export const SimiItemsReviewFragment = gql`
             product {
                 id
                 name
-                stock_status
+                # stock_status
                 ${
                     productLabelEnabled
                         ? `

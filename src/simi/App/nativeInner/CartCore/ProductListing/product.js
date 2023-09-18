@@ -18,7 +18,7 @@ import Quantity from './quantity';
 
 import defaultClasses from './product.module.css';
 
-import { CartPageFragment } from '@magento/peregrine/lib/talons/CartPage/cartPageFragments.gql.js';
+import { CartPageFragment } from '../cartPageFragments.gql.js';
 import { AvailableShippingMethodsCartFragment } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/ShippingMethods/shippingMethodsFragments.gql.js';
 import { func } from 'prop-types';
 import { configColor } from 'src/simi/Config';

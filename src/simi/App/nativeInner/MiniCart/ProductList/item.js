@@ -14,9 +14,8 @@ import Icon from '@magento/venia-ui/lib/components/Icon';
 import { useStyle } from '@magento/venia-ui/lib/classify';
 import configuredVariant from '@magento/peregrine/lib/util/configuredVariant';
 
-import { useProduct } from '@magento/peregrine/lib/talons/CartPage/ProductListing/useProduct';
-import { CartPageFragment } from '@magento/peregrine/lib/talons/CartPage/cartPageFragments.gql.js';
-import { AvailableShippingMethodsCartFragment } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/ShippingMethods/shippingMethodsFragments.gql.js';
+import { CartPageFragment } from 'src/simi/App/nativeInner/talons/CartPage/cartPageFragments.gql';
+import { AvailableShippingMethodsCartFragment } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/ShippingMethods/shippingMethodsFragments.gql';
 import { gql } from '@apollo/client';
 
 import defaultClasses from './item.module.css';

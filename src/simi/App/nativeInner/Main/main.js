@@ -65,18 +65,18 @@ const Main = props => {
                 key={1}
                 rel="icon"
                 type="image/x-icon"
-                href="/static/icons/siminia_square_512.png"
+                href="/static/icons/Logo_with_whitebackground.png"
             />,
             <link
                 key={2}
                 rel="apple-touch-icon"
-                href="/static/icons/siminia_square_512.png"
+                href="/static/icons/Logo_with_whitebackground.png"
             />,
             <link
                 key={3}
                 rel="apple-touch-icon"
                 sizes="180x180"
-                href="/static/icons/apple-touch-icon.png"
+                href="/static/icons/Logo_with_whitebackground.png"
             />
         ];
     }
