@@ -44,7 +44,7 @@ const servicesList = [
     'Reward Points',
     'Contact Us',
     'Saved Payments',
-    'Product Alert'
+    // 'Product Alert'
 ];
 const signInRequired = [
     'Address Book',
@@ -53,7 +53,7 @@ const signInRequired = [
     'Account Information',
     'Account Subcriptions',
     'Reward Points',
-    'Product Alert'
+    // 'Product Alert'
 ];
 const giftCard = [
     "My Gift Cards",

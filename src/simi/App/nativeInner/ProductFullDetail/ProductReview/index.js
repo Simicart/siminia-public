@@ -5,12 +5,10 @@ import React, {
     useRef,
     useEffect
 } from 'react';
-import { useHistory } from 'react-router-dom';
 import { mergeClasses } from '@magento/venia-ui/lib/classify';
 import { useIntl } from 'react-intl';
 import defaultClasses from './productreview.module.css';
 import { StaticRate } from 'src/simi/BaseComponents/Rate';
-import { XSquare, X } from 'react-feather';
 import Field from '@magento/venia-ui/lib/components/Field';
 import TextInput from '@magento/venia-ui/lib/components/TextInput';
 import { Form } from 'informed';
@@ -19,7 +17,6 @@ import ProductRating from './ProductRating';
 import { isRequired } from '@magento/venia-ui/lib/util/formValidators';
 import { configColor } from 'src/simi/Config';
 import Identify from 'src/simi/Helper/Identify';
-import { useUserContext } from '@magento/peregrine/lib/context/user';
 import DataStructure from '@simicart/siminia/src/simi/App/core/Seo/Markup/Product.js';
 import DataStructureBasic from '@simicart/siminia/src/simi/App/core/SeoBasic/Markup/Product.js';
 import RewardPointShowing from 'src/simi/BaseComponents/RewardPoint/components/PointShowing'
@@ -34,8 +31,8 @@ require('./productReview.scss');
 
 const ProductReview = forwardRef((props, ref) => {
     const { product, topInsets } = props;
-    const history = useHistory();
     const reviewPopupWrapperRef = useRef(null);
+    const reviewForm = useRef(null)
     const storeConfig = Identify.getStoreConfig();
     const enabledReview =
         storeConfig &&
@@ -46,7 +43,6 @@ const ProductReview = forwardRef((props, ref) => {
         storeConfig.storeConfig &&
         parseInt(storeConfig.storeConfig.allow_guests_to_write_product_reviews);
 
-    const [{ isSignedIn }] = useUserContext();
     const { formatMessage } = useIntl();
     const [isOpen, setIsOpen] = useState(false);
     const [ratingVal, setRatingVal] = useState({});
@@ -94,7 +90,9 @@ const ProductReview = forwardRef((props, ref) => {
     const reviews =
         data && data.products.items[0] ? data.products.items[0].reviews : false;
     if (!enabledReview) return '';
+
     const handleSubmitReview = formVal => {
+
         const valueToSubmit = { ...formVal, ...{ sku: product.sku } };
         const ratingArr = [];
         const ratingData =
@@ -115,130 +113,136 @@ const ProductReview = forwardRef((props, ref) => {
                         value_id: value
                     });
             });
-        }
-        valueToSubmit.ratings = ratingArr;
-        submitReview({
-            variables: {
-                reviewInput: valueToSubmit
-            }
-        });
-    };
-    const countRating = reviews => {
-        let arr = [0, 0, 0, 0, 0];
-        if (reviews.items.length > 0) {
-            reviews.items.forEach((item, index) => {
-                if (
-                    item &&
-                    item.ratings_breakdown &&
-                    item.ratings_breakdown[0]
-                ) {
-                    if (item.ratings_breakdown[0].value == 1) {
-                        arr[0] = arr[0] + 1;
-                    }
-                    if (item.ratings_breakdown[0].value == 2) {
-                        arr[1] = arr[1] + 1;
-                    }
-                    if (item.ratings_breakdown[0].value == 3) {
-                        arr[2] = arr[2] + 1;
-                    }
-                    if (item.ratings_breakdown[0].value == 4) {
-                        arr[3] = arr[3] + 1;
-                    }
-                    if (item.ratings_breakdown[0].value == 5) {
-                        arr[4] = arr[4] + 1;
-                    }
+
+            valueToSubmit.ratings = ratingArr;
+            submitReview({
+                variables: {
+                    reviewInput: valueToSubmit
                 }
             });
-            return arr;
         }
-        return null;
     };
-    const popupWriteReview = () => {
-        let html = null;
-        html = (
-            <div className={classes.mainPopup} ref={reviewPopupWrapperRef}>
-                <div style={{ height: topInsets }} />
-                <div className={classes.heading}>
-                    <div className={classes.closeBtn}>
-                        <button onClick={togglePopup}>
-                            <X />
-                        </button>
-                    </div>
-                    <img
-                        className={classes.reviewImage}
-                        src={product.small_image}
-                        alt="review"
-                    />
-                    <p className={classes.reviewProductName}>{product.name}</p>
-                </div>
-                <div className={classes.fieldsContainer}>
-                    <div className={classes.content}>
-                        <p>Required fileds are maked with *</p>
-                    </div>
-                    {data && data.productReviewRatingsMetadata ? (
-                        <ProductRating
-                            productReviewRatingsMetadata={
-                                data.productReviewRatingsMetadata
-                            }
-                            {...{ setRatingVal, ratingVal, classes }}
-                        />
-                    ) : (
-                        ''
-                    )}
-                    <Form onSubmit={handleSubmitReview} id="form-write-review">
-                        <Field required={true}>
-                            <TextInput
-                                placeholder={formatMessage({
-                                    id: 'Name',
-                                    defaultMessage: 'Name'
-                                })}
-                                field="nickname"
-                                type="text"
-                                validate={isRequired}
-                            />
-                        </Field>
-                        <Field required={true}>
-                            <TextInput
-                                placeholder={formatMessage({
-                                    id: 'Title',
-                                    defaultMessage: 'Title'
-                                })}
-                                field="summary"
-                                type="text"
-                                validate={isRequired}
-                            />
-                        </Field>
-                        <Field required={true}>
-                            <TextInput
-                                placeholder={formatMessage({
-                                    id: 'Description',
-                                    defaultMessage: 'Description'
-                                })}
-                                field="text"
-                                type="text"
-                                validate={isRequired}
-                            />
-                        </Field>
-                        <div className={classes.submitBtnContainer}>
-                            <button
-                                className={classes.submitReviewBtn}
-                                type="submit"
-                            >
-                                {submitReviewLoading
-                                    ? formatMessage({
-                                          id: 'Loading'
-                                      }).toUpperCase()
-                                    : formatMessage({
-                                          id: 'Submit Review'
-                                      }).toUpperCase()}
-                            </button>
-                        </div>
-                    </Form>
-                </div>
-            </div>
-        );
-        return html;
-    };
+    // const countRating = reviews => {
+    //     let arr = [0, 0, 0, 0, 0];
+    //     if (reviews.items.length > 0) {
+    //         reviews.items.forEach((item, index) => {
+    //             if (
+    //                 item &&
+    //                 item.ratings_breakdown &&
+    //                 item.ratings_breakdown[0]
+    //             ) {
+    //                 if (item.ratings_breakdown[0].value == 1) {
+    //                     arr[0] = arr[0] + 1;
+    //                 }
+    //                 if (item.ratings_breakdown[0].value == 2) {
+    //                     arr[1] = arr[1] + 1;
+    //                 }
+    //                 if (item.ratings_breakdown[0].value == 3) {
+    //                     arr[2] = arr[2] + 1;
+    //                 }
+    //                 if (item.ratings_breakdown[0].value == 4) {
+    //                     arr[3] = arr[3] + 1;
+    //                 }
+    //                 if (item.ratings_breakdown[0].value == 5) {
+    //                     arr[4] = arr[4] + 1;
+    //                 }
+    //             }
+    //         });
+    //         return arr;
+    //     }
+    //     return null;
+    // };
+    // const popupWriteReview = () => {
+    //     let html = null;
+    //     html = (
+    //         <div className={classes.mainPopup} ref={reviewPopupWrapperRef}>
+    //             <div style={{ height: topInsets }} />
+    //             <div className={classes.heading}>
+    //                 <div className={classes.closeBtn}>
+    //                     <button onClick={togglePopup}>
+    //                         <X />
+    //                     </button>
+    //                 </div>
+    //                 <img
+    //                     className={classes.reviewImage}
+    //                     src={product.small_image}
+    //                     alt="review"
+    //                 />
+    //                 <p className={classes.reviewProductName}>{product.name}</p>
+    //             </div>
+    //             <div className={classes.fieldsContainer}>
+    //                 <div className={classes.content}>
+    //                     <p>Required fileds are maked with *</p>
+    //                 </div>
+    //                 {data && data.productReviewRatingsMetadata ? (
+    //                     <ProductRating
+    //                         productReviewRatingsMetadata={
+    //                             data.productReviewRatingsMetadata
+    //                         }
+    //                         {...{ setRatingVal, ratingVal, classes }}
+    //                     />
+    //                 ) : (
+    //                     ''
+    //                 )}
+    //                 <Form onSubmit={handleSubmitReview} id="form-write-review" method='POST'>
+    //                     <Field required={true}>
+    //                         <TextInput
+    //                             placeholder={formatMessage({
+    //                                 id: 'Name',
+    //                                 defaultMessage: 'Name'
+    //                             })}
+    //                             field="nickname"
+    //                             type="text"
+    //                             validate={isRequired}
+    //                         />
+    //                     </Field>
+    //                     <Field required={true}>
+    //                         <TextInput
+    //                             placeholder={formatMessage({
+    //                                 id: 'Title',
+    //                                 defaultMessage: 'Title'
+    //                             })}
+    //                             field="summary"
+    //                             type="text"
+    //                             validate={isRequired}
+    //                         />
+    //                     </Field>
+    //                     <Field required={true}>
+    //                         <TextInput
+    //                             placeholder={formatMessage({
+    //                                 id: 'Description',
+    //                                 defaultMessage: 'Description'
+    //                             })}
+    //                             field="text"
+    //                             type="text"
+    //                             validate={isRequired}
+    //                         />
+    //                     </Field>
+    //                     <div className={classes.submitBtnContainer}>
+    //                         <button
+    //                             className={classes.submitReviewBtn}
+    //                             type="submit"
+    //                         >
+    //                             {submitReviewLoading
+    //                                 ? formatMessage({
+    //                                       id: 'Loading'
+    //                                   }).toUpperCase()
+    //                                 : formatMessage({
+    //                                       id: 'Submit Review'
+    //                                   }).toUpperCase()}
+    //                         </button>
+    //                     </div>
+    //                 </Form>
+    //             </div>
+    //         </div>
+    //     );
+    //     return html;
+    // };
+
+    const handleSubmit = () => {
+        reviewForm && reviewForm.current.submitForm();
+    }
+
     const handleWriteReview = () => {
         let html = null;
         html = (
@@ -264,7 +268,7 @@ const ProductReview = forwardRef((props, ref) => {
                     ) : (
                         ''
                     )}
-                    <Form className='form' onSubmit={handleSubmitReview} id="form-write-review">
+                    <Form className='form' onSubmit={handleSubmitReview} id="form-write-review" apiRef={reviewForm} >
                         <Field
                             label={formatMessage({
                                 id: 'Nick name',
@@ -310,7 +314,8 @@ const ProductReview = forwardRef((props, ref) => {
                         <div className={classes.submitBtnContainer}>
                             <button
                                 className={classes.submitReviewBtn}
-                                type="submit"
+                                onClick={() => handleSubmit()}
+                                type="button"
                             >
                                 {submitReviewLoading
                                     ? formatMessage({
@@ -327,92 +332,92 @@ const ProductReview = forwardRef((props, ref) => {
         );
         return html;
     };
-    const reviewRating = () => {
-        let html = null;
-        const arr = countRating(reviews);
-        const formatArr =
-            arr && arr.length
-                ? arr.map(item => {
-                      if (item < 10) {
-                          return `0${item}`;
-                      } else return item;
-                  })
-                : [];
-        html = (
-            <div className="ratingBlock">
-                <div className="ratingSummary">
-                    <span>{(product.rating_summary * 5) / 100}/5</span>
-                    <div>
-                        <StaticRate
-                            rate={parseInt(product.rating_summary)}
-                            classes={{
-                                'static-rate': classes['static-rate']
-                            }}
-                            size={25}
-                            backgroundColor={configColor.content_color}
-                        />
-                    </div>
-                </div>
+    // const reviewRating = () => {
+    //     let html = null;
+    //     const arr = countRating(reviews);
+    //     const formatArr =
+    //         arr && arr.length
+    //             ? arr.map(item => {
+    //                   if (item < 10) {
+    //                       return `0${item}`;
+    //                   } else return item;
+    //               })
+    //             : [];
+    //     html = (
+    //         <div className="ratingBlock">
+    //             <div className="ratingSummary">
+    //                 <span>{(product.rating_summary * 5) / 100}/5</span>
+    //                 <div>
+    //                     <StaticRate
+    //                         rate={parseInt(product.rating_summary)}
+    //                         classes={{
+    //                             'static-rate': classes['static-rate']
+    //                         }}
+    //                         size={25}
+    //                         backgroundColor={configColor.content_color}
+    //                     />
+    //                 </div>
+    //             </div>
 
-                <div className="rating">
-                    <StaticRate
-                        rate={100}
-                        classes={{
-                            'static-rate': classes['static-rate']
-                        }}
-                        size={25}
-                        backgroundColor={configColor.content_color}
-                    />
-                    <span className="count">{formatArr[4]}</span>
-                </div>
-                <div className="rating">
-                    <StaticRate
-                        rate={80}
-                        classes={{
-                            'static-rate': classes['static-rate']
-                        }}
-                        size={25}
-                        backgroundColor={configColor.content_color}
-                    />
-                    <span className="count">{formatArr[3]}</span>
-                </div>
-                <div className="rating">
-                    <StaticRate
-                        rate={60}
-                        classes={{
-                            'static-rate': classes['static-rate']
-                        }}
-                        size={25}
-                        backgroundColor={configColor.content_color}
-                    />
-                    <span className="count">{formatArr[2]}</span>
-                </div>
-                <div className="rating">
-                    <StaticRate
-                        rate={40}
-                        classes={{
-                            'static-rate': classes['static-rate']
-                        }}
-                        size={25}
-                        backgroundColor={configColor.content_color}
-                    />
-                    <span className="count">{formatArr[1]}</span>
-                </div>
-                <div className="rating">
-                    <StaticRate
-                        rate={20}
-                        classes={{
-                            'static-rate': classes['static-rate']
-                        }}
-                        size={25}
-                        backgroundColor={configColor.content_color}
-                    />
-                    <span className="count">{formatArr[0]}</span>
-                </div>
-            </div>
-        );
-        return html;
-    };
+    //             <div className="rating">
+    //                 <StaticRate
+    //                     rate={100}
+    //                     classes={{
+    //                         'static-rate': classes['static-rate']
+    //                     }}
+    //                     size={25}
+    //                     backgroundColor={configColor.content_color}
+    //                 />
+    //                 <span className="count">{formatArr[4]}</span>
+    //             </div>
+    //             <div className="rating">
+    //                 <StaticRate
+    //                     rate={80}
+    //                     classes={{
+    //                         'static-rate': classes['static-rate']
+    //                     }}
+    //                     size={25}
+    //                     backgroundColor={configColor.content_color}
+    //                 />
+    //                 <span className="count">{formatArr[3]}</span>
+    //             </div>
+    //             <div className="rating">
+    //                 <StaticRate
+    //                     rate={60}
+    //                     classes={{
+    //                         'static-rate': classes['static-rate']
+    //                     }}
+    //                     size={25}
+    //                     backgroundColor={configColor.content_color}
+    //                 />
+    //                 <span className="count">{formatArr[2]}</span>
+    //             </div>
+    //             <div className="rating">
+    //                 <StaticRate
+    //                     rate={40}
+    //                     classes={{
+    //                         'static-rate': classes['static-rate']
+    //                     }}
+    //                     size={25}
+    //                     backgroundColor={configColor.content_color}
+    //                 />
+    //                 <span className="count">{formatArr[1]}</span>
+    //             </div>
+    //             <div className="rating">
+    //                 <StaticRate
+    //                     rate={20}
+    //                     classes={{
+    //                         'static-rate': classes['static-rate']
+    //                     }}
+    //                     size={25}
+    //                     backgroundColor={configColor.content_color}
+    //                 />
+    //                 <span className="count">{formatArr[0]}</span>
+    //             </div>
+    //         </div>
+    //     );
+    //     return html;
+    // };
     const itemPerPage = reviews => {
         let showItemsReview;
         if (reviews.items.length > 0) {
@@ -478,6 +483,7 @@ const ProductReview = forwardRef((props, ref) => {
             return html;
         } else return null;
     };
+
     const items = (reviews && reviews.items) || [];
     const classes = mergeClasses(props.classes, defaultClasses);
     return reviews && reviews.items ? (

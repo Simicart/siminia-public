@@ -1,0 +1,7 @@
+.megaMenu {
+    composes: megaMenu from '@magento/venia-ui/lib/components/MegaMenu/megaMenu.module.css'
+}
+
+.megaMenu div[class*='submenu-submenuItems'] {
+    min-width: unset !important;
+}

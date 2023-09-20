@@ -939,7 +939,7 @@ const ProductFullDetail = props => {
                             </div>
 
                             <div className="wrapperCompare">
-                                <button className="btnCompare" onClick={() => addProductToComparisonList(product)}><BarChart2></BarChart2></button>
+                                <button type="button" className="btnCompare" onClick={() => addProductToComparisonList(product)}><BarChart2></BarChart2></button>
                                 <p className='btnCompareTitle'>Add to Compare</p>
                             </div>
                         </div>

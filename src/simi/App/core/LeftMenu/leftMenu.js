@@ -82,11 +82,11 @@ const LeftMenu = props => {
             url: '/account-subcriptions'
         },
 
-        {
-            name: 'Product Alert',
-            id: 'Product Alert',
-            url: '/product-alert'
-        }
+        // {
+        //     name: 'Product Alert',
+        //     id: 'Product Alert',
+        //     url: '/product-alert'
+        // }
     ];
     const rewardMenuContent = [
         {

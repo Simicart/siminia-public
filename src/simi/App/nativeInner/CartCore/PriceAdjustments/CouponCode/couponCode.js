@@ -4,11 +4,11 @@ import { AlertCircle as AlertCircleIcon } from 'react-feather';
 import { useToasts } from '@magento/peregrine';
 import { deriveErrorMessage } from '@magento/peregrine/lib/util/deriveErrorMessage';
 import { useCouponCode } from '@magento/peregrine/lib/talons/CartPage/PriceAdjustments/CouponCode/useCouponCode';
-
-import { useStyle } from '@magento/venia-ui/lib/classify';
-
-import Button from '@magento/venia-ui/lib/components/Button';
 import { Form } from 'informed';
+import { useStyle } from '@magento/venia-ui/lib/classify';
+import { CartPageFragment } from '../../cartPageFragments.gql';
+import { gql } from '@apollo/client';
+import Button from '@magento/venia-ui/lib/components/Button';
 import Field from '@magento/venia-ui/lib/components/Field';
 import Icon from '@magento/venia-ui/lib/components/Icon';
 import LinkButton from '@magento/venia-ui/lib/components/LinkButton';
@@ -24,6 +24,25 @@ const errorIcon = (
         }}
     />
 );
+
+const APPLY_COUPON_MUTATION = gql`
+    mutation applyCouponToCart($cartId: String!, $couponCode: String!) {
+        applyCouponToCart(
+            input: { cart_id: $cartId, coupon_code: $couponCode }
+        ) @connection(key: "applyCouponToCart") {
+            cart {
+                id
+                ...CartPageFragment
+                # If this mutation causes "free" to become available we need to know.
+                available_payment_methods {
+                    code
+                    title
+                }
+            }
+        }
+    }
+    ${CartPageFragment}
+`;
 
 /**
  * A child component of the PriceAdjustments component.
@@ -44,7 +63,10 @@ const CouponCode = props => {
     const classes = useStyle(defaultClasses, props.classes);
 
     const talonProps = useCouponCode({
-        setIsCartUpdating: props.setIsCartUpdating
+        setIsCartUpdating: props.setIsCartUpdating,
+        operations: {
+            applyCouponMutation: APPLY_COUPON_MUTATION
+        }
     });
     const [, { addToast }] = useToasts();
     const {

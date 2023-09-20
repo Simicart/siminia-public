@@ -1,5 +1,6 @@
 import React from 'react';
 import { SwipeableRate } from 'src/simi/BaseComponents/Rate';
+import { useIntl } from 'react-intl';
 
 const ProductRating = props => {
     const {
@@ -8,6 +9,9 @@ const ProductRating = props => {
         ratingVal,
         classes
     } = props;
+
+    const { formatMessage } = useIntl();
+
     const changedRating = (newVal, ratingItm) => {
         const newRatingVal = Object.assign({}, ratingVal);
         if (ratingItm.values && ratingItm.values[newVal]) {
@@ -43,7 +47,7 @@ const ProductRating = props => {
             </div>
         );
     }
-    return '';
+    return <div style={{ color: 'red'}}>{formatMessage({id: 'Review rating not found', defaultMessage: "Review rating not found"})}</div>;
 };
 
 export default ProductRating;
